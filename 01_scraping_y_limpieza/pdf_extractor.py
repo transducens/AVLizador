@@ -7,9 +7,9 @@ i guarda el resultat en JSONL. Cap PDF es guarda al disc.
 INSTAL·LACIÓ:
     pip install pymupdf requests
 
-US:
-    python pdf_extractor.py --source fonts_pdf.txt
-    python pdf_extractor.py --url https://exemple.com/doc.pdf
+US (des de l'arrel del repositori):
+    python 01_scraping_y_limpieza/pdf_extractor.py --source 01_scraping_y_limpieza/fonts_pdf.txt
+    python 01_scraping_y_limpieza/pdf_extractor.py --url https://exemple.com/doc.pdf
 
 SORTIDA:
     corpus/pdf/raw/avl_pdfs.jsonl
@@ -30,6 +30,7 @@ import re
 import sys
 import time
 from datetime import datetime, timezone
+from pathlib import Path
 from urllib.parse import unquote, urlparse
 
 import pymupdf
@@ -44,7 +45,9 @@ HEADERS = {
 
 DELAY_MIN   = 5
 DELAY_MAX   = 10
-OUTPUT_DIR  = "corpus/pdf/raw"
+# Ancorat a __file__ (no al directori de treball): este fitxer viu a
+# 01_scraping_y_limpieza/, i "corpus/" és a l'arrel del repositori.
+OUTPUT_DIR  = str(Path(__file__).resolve().parent.parent / "corpus" / "pdf" / "raw")
 OUTPUT_FILE = "avl_pdfs.jsonl"
 MIN_TOKENS  = 50
 

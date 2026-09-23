@@ -8,7 +8,7 @@ traducción.
 ## Estructura
 
 ```
-materiales conversion/
+02_reglas_dialectales/
 ├── reglas_prompt/      documentación para leer y revisar (empieza aquí)
 ├── lexico/             datos estructurados: pares valenciano-catalán en JSON
 └── fuentes/             material bruto de origen (no pensado para leer directo)
@@ -37,7 +37,7 @@ en resumen:
 | `apertium_368_val_cat.json` | Las 368 formas que Apertium marca como valencianas, separadas en confirmadas (68) y pendientes (3, sin pareja encontrada, sin inventar nada). De aquí salen las 30 entradas de origen "apertium" de `lexico_fiable.json` (68 confirmadas por Apertium, reducidas a formas base tras quitar numerales compuestos redundantes). |
 | `contrastius_paula_guerrero.json` | 35 pares valenciano-catalán categorizados (determinantes, verbos incoativos, léxico...), de una fuente externa curada aparte. 34 de los 35 ya están volcados en `lexico_fiable.json`. |
 | `pares_valenciano_catalan.json` | El listado más amplio: 1.601 pares valenciano→catalán (Apertium + la lista curada completa). Ya no lo usa el pipeline ni la guía — se queda como referencia si algún día hace falta más cobertura. |
-| `palabras_traducidas.json` | Copia de trabajo del léxico **antiguo** (el original vive en `evalua_modelos/palabras_traducidas.json`, ya no usado por el pipeline). Sigue siendo útil como cantera: si al revisarlo encuentras una palabra de la que estás completamente seguro, añádela a `lexico_fiable.json` con `anyade_paraula.py`. |
+| `palabras_traducidas.json` | Copia de trabajo del léxico **antiguo** (el original vive en `03_seleccion_de_modelo/palabras_traducidas.json`, ya no usado por el pipeline). Sigue siendo útil como cantera: si al revisarlo encuentras una palabra de la que estás completamente seguro, añádela a `lexico_fiable.json` con `anyade_paraula.py`. |
 
 ### `fuentes/` — material bruto de origen
 
@@ -73,10 +73,10 @@ se ejecute el pipeline, ya la usa.
    con `anyade_paraula.py` (o dime cuáles y las añado yo).
 3. Si quieres que una corrección también se aplique al corpus ya generado
    (no solo a futuras generaciones), se amplía
-   `corpus_sinteticos/repara_corpus.py` con la reversión correspondiente.
+   `04_corpus_sintetico/repara_corpus.py` con la reversión correspondiente.
 
 ## Cómo corregir/ampliar una regla morfológica
 
 Revisa `reglas_prompt/guia_dialectal_valencia_catala.md` (secciones 1-8).
 Si hay que cambiar el prompt que usa el modelo, dímelo y lo aplico en
-`evalua_modelos/evalua_models.py` (`SYSTEM_PROMPT_BASE`).
+`03_seleccion_de_modelo/evalua_models.py` (`SYSTEM_PROMPT_BASE`).

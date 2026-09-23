@@ -13,7 +13,7 @@ import json
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "evalua_modelos"))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "03_seleccion_de_modelo"))
 import evalua_models as em
 
 

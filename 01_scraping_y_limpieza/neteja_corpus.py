@@ -1,6 +1,11 @@
 # neteja_corpus.py
 import json
 import re
+from pathlib import Path
+
+# Ancorat a __file__ (no al directori de treball): este fitxer viu a
+# 01_scraping_y_limpieza/, i "corpus/" és a l'arrel del repositori.
+ROOT_DIR = Path(__file__).resolve().parent.parent
 
 def neteja_text(text: str) -> str:
     if not text:
@@ -79,23 +84,24 @@ def processa_fitxer(input_path: str, output_path: str, min_tokens: int = 50):
 
 
 if __name__ == "__main__":
+    C = ROOT_DIR / "corpus"
     fitxers = [
-        ("corpus/raw/avl_butlleti.jsonl",       "corpus/clean/avl_butlleti.jsonl",       100),
-        ("corpus/raw/avl_glossary.jsonl",        "corpus/clean/avl_glossary.jsonl",        100),
-        ("corpus/raw/avl_posts.jsonl",           "corpus/clean/avl_posts.jsonl",           200),
-        ("corpus/raw/avl_gnv.jsonl",             "corpus/clean/avl_gnv.jsonl",             100),
-        ("corpus/raw/avl_gvb.jsonl",             "corpus/clean/avl_gvb.jsonl",              50),
-        ("corpus/raw/avl_pages.jsonl",           "corpus/clean/avl_pages.jsonl",           200),
-        ("corpus/raw/avl_notes-de-premsa.jsonl", "corpus/clean/avl_notes-de-premsa.jsonl", 100),
-        ("corpus/raw/avl_salutacio.jsonl",       "corpus/clean/avl_salutacio.jsonl",        50),
-        ("corpus/raw/avl_legislacio.jsonl",      "corpus/clean/avl_legislacio.jsonl",      200),
-        ("corpus/raw/avl_escriptors.jsonl",      "corpus/clean/avl_escriptors.jsonl",      100),
-        ("corpus/raw/avl_seu.jsonl",             "corpus/clean/avl_seu.jsonl",             100),
-        ("corpus/pdf/raw/avl_pdfs.jsonl", "corpus/pdf/clean/avl_pdfs.jsonl", 100),
+        (str(C / "raw" / "avl_butlleti.jsonl"),       str(C / "clean" / "avl_butlleti.jsonl"),       100),
+        (str(C / "raw" / "avl_glossary.jsonl"),        str(C / "clean" / "avl_glossary.jsonl"),        100),
+        (str(C / "raw" / "avl_posts.jsonl"),           str(C / "clean" / "avl_posts.jsonl"),           200),
+        (str(C / "raw" / "avl_gnv.jsonl"),             str(C / "clean" / "avl_gnv.jsonl"),             100),
+        (str(C / "raw" / "avl_gvb.jsonl"),             str(C / "clean" / "avl_gvb.jsonl"),              50),
+        (str(C / "raw" / "avl_pages.jsonl"),           str(C / "clean" / "avl_pages.jsonl"),           200),
+        (str(C / "raw" / "avl_notes-de-premsa.jsonl"), str(C / "clean" / "avl_notes-de-premsa.jsonl"), 100),
+        (str(C / "raw" / "avl_salutacio.jsonl"),       str(C / "clean" / "avl_salutacio.jsonl"),        50),
+        (str(C / "raw" / "avl_legislacio.jsonl"),      str(C / "clean" / "avl_legislacio.jsonl"),      200),
+        (str(C / "raw" / "avl_escriptors.jsonl"),      str(C / "clean" / "avl_escriptors.jsonl"),      100),
+        (str(C / "raw" / "avl_seu.jsonl"),             str(C / "clean" / "avl_seu.jsonl"),             100),
+        (str(C / "pdf" / "raw" / "avl_pdfs.jsonl"), str(C / "pdf" / "clean" / "avl_pdfs.jsonl"), 100),
     ]
 
     import os
-    os.makedirs("corpus/clean", exist_ok=True)
+    os.makedirs(str(C / "clean"), exist_ok=True)
 
     for inp, out, min_tok in fitxers:
         if os.path.exists(inp):

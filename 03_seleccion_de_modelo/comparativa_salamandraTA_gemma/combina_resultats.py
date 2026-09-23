@@ -31,7 +31,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--resultats-dir", default=str(Path(__file__).resolve().parent.parent / "resultats"),
-        help="Carpeta amb els benchmark_*.json (per defecte evalua_modelos/resultats)"
+        help="Carpeta amb els benchmark_*.json (per defecte 03_seleccion_de_modelo/resultats)"
     )
     parser.add_argument(
         "--minuts", type=float, default=240,

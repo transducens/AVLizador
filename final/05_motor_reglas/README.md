@@ -22,7 +22,7 @@ Este paquete no sustituye al LLM (todavía no cubre ni de lejos todas las
 reglas documentadas — ver "Qué falta" más abajo), pero es una base
 determinista, auditable y sin dependencias, pensada para:
 - comparar directamente contra el LLM en el mismo benchmark (`--model
-  traductor` en `evalua_modelos/evalua_models.py`, junto al `--model
+  traductor` en `03_seleccion_de_modelo/evalua_models.py`, junto al `--model
   regles` ya existente — ver "Relación con el sistema de reglas antiguo"),
 - servir de capa de post-procesado/verificación sobre la salida del LLM,
 - o, a medida que crezca, sustituir al LLM en los casos que ya cubre con
@@ -85,7 +85,7 @@ Se ejecuta una sola vez, antes de la primera regla: marca `is_proper_noun`
 en toda palabra capitalizada que **no** sea la primera del texto (la
 primera letra de una frase siempre va en mayúscula, sea o no nombre
 propio). Es la misma heurística ya probada en
-`evalua_modelos/evalua_models.py::glossari_per_frase()`, añadida allí tras
+`03_seleccion_de_modelo/evalua_models.py::glossari_per_frase()`, añadida allí tras
 un incidente real con `blanca`/`Blanca` y `roig`/`Roig` (ver
 `metodologia_y_resultados.md`, sección 6). Límite conocido, heredado sin
 arreglo: un nombre propio que es la **primera** palabra del texto nunca se
@@ -116,7 +116,7 @@ parece elidir) y producía `"d'vuitanta"`, incorrecto. Arreglado mirando
 ## Cada regla, en una frase
 
 - **`lexic.py`** — sustitución directa vía `traductor/data/lexico_fiable.json`
-  (copia de trabajo de `materiales conversion/lexico/lexico_fiable.json`,
+  (copia de trabajo de `02_reglas_dialectales/lexico/lexico_fiable.json`,
   194 entradas; **provisional**, a la espera del léxico completo). El JSON
   usa arrays paralelos singular/plural (`["ametla","ametles"] → ["ametlla","ametlles"]`),
   no "una palabra, varias alternativas" — solo hay una excepción real de
@@ -221,7 +221,7 @@ nueva — es el mismo criterio que ya usó la fuente para `vosté/vostés`.
 
 ## Relación con el sistema de reglas antiguo
 
-`evalua_modelos/evalua_models.py` ya tenía un sistema de reglas
+`03_seleccion_de_modelo/evalua_models.py` ya tenía un sistema de reglas
 (`tradueix_regles`, opción `--model regles`) — sustituciones con regex
 sobre la frase completa. Es distinto y **no se ha tocado ni sustituido**:
 el paquete `traductor/` se añade como una opción nueva,
@@ -229,7 +229,7 @@ el paquete `traductor/` se añade como una opción nueva,
 benchmark:
 
 ```bash
-cd evalua_modelos
+cd 03_seleccion_de_modelo
 python evalua_models.py --model traductor                    # motor nuevo (traductor/)
 python evalua_models.py --model regles                       # sistema antiguo (regex)
 python evalua_models.py --model tots                          # todo a la vez, incluidos ambos
@@ -237,7 +237,7 @@ python evalua_models.py --model tots                          # todo a la vez, i
 
 El adaptador (`tradueix_traductor_nou` en `evalua_models.py`) añade la
 raíz del repositorio a `sys.path` antes de importar `traductor/`, porque
-el script siempre se ejecuta desde dentro de `evalua_modelos/` y Python no
+el script siempre se ejecuta desde dentro de `03_seleccion_de_modelo/` y Python no
 encuentra ahí un paquete que vive en la carpeta de al lado.
 
 ## Uso directo

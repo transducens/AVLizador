@@ -2,7 +2,7 @@
 
 > **Actualización**: el pipeline ya no lee `palabras_traducidas.json` — desde
 > que se detectaron las entradas de esta página, se sustituyó por
-> `materiales conversion/lexico/lexico_fiable.json` (194 entradas revisadas
+> `02_reglas_dialectales/lexico/lexico_fiable.json` (194 entradas revisadas
 > a mano). El mecanismo de abajo no ha cambiado, solo el fichero de origen;
 > las referencias a `palabras_traducidas.json` en el resto de esta página
 > son historial (así se encontraron los problemas), no la situación actual.
@@ -10,7 +10,7 @@
 Además del system prompt (`system_prompt.md`), cada frase recibe una pista
 extra construida sobre la marcha a partir del léxico fiable, con formato
 `[VOCABULARI: valenciano=catalán, ...]` insertado delante de la frase a
-traducir. Código en `evalua_modelos/evalua_models.py`, funciones
+traducir. Código en `03_seleccion_de_modelo/evalua_models.py`, funciones
 `carrega_lexic()` (línea 148) y `glossari_per_frase()` (línea 239).
 
 ## Cómo se decide qué palabras entran en la pista

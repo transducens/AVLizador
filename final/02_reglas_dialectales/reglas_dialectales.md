@@ -429,7 +429,7 @@ la conclusió. Dos fonts, amb metodologies distintes:
   una cobertura baixa vol dir excepcions freqüents, i que la regla NO s'ha
   d'aplicar de manera mecànica.
 - **Anàlisi del benchmark de traducció** (60 frases occidental/oriental,
-  `evalua_modelos/benchmark_corpus.json`): patrons que només es veuen
+  `03_seleccion_de_modelo/benchmark_corpus.json`): patrons que només es veuen
   comparant frases completes, no paraules soltes — és d'ací d'on ix la
   secció 11 (sintaxi).
 

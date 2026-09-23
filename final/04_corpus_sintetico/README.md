@@ -4,15 +4,15 @@
 maduras (etapa 2), se traduce frase a frase todo el corpus fuente limpio
 (etapa 1) para producir el corpus paralelo valencià→català final.
 
-Los scripts de esta etapa viven en `corpus_sinteticos/` (no se han copiado
+Los scripts de esta etapa viven en `04_corpus_sintetico/` (no se han copiado
 aquí, son el motor activo del proyecto):
 
 | Fichero | Qué hace |
 |---|---|
-| `corpus_sinteticos/genera_corpus_sintetico.py` | Segmenta el corpus fuente en frases, las traduce reutilizando el motor de `evalua_modelos/evalua_models.py`, y exporta el corpus limpio |
-| `corpus_sinteticos/repara_corpus.py` | Corrige bugs conocidos sobre un corpus ya generado, sin volver a traducir nada |
-| `corpus_sinteticos/slurm/` | Scripts `sbatch` para generar en el clúster con GPU (mucho más rápido que en CPU local) |
-| `corpus_sinteticos/README.md` | Instrucciones de uso completas |
+| `04_corpus_sintetico/genera_corpus_sintetico.py` | Segmenta el corpus fuente en frases, las traduce reutilizando el motor de `03_seleccion_de_modelo/evalua_models.py`, y exporta el corpus limpio |
+| `04_corpus_sintetico/repara_corpus.py` | Corrige bugs conocidos sobre un corpus ya generado, sin volver a traducir nada |
+| `04_corpus_sintetico/slurm/` | Scripts `sbatch` para generar en el clúster con GPU (mucho más rápido que en CPU local) |
+| `04_corpus_sintetico/README.md` | Instrucciones de uso completas |
 
 ## Cómo se segmenta y filtra el texto
 
@@ -27,7 +27,7 @@ aquí, son el motor activo del proyecto):
 
 - **v1** (generada con el léxico y prompt anteriores a esta ronda de
   mejoras): 46.315 frases, auditada por completo — ver
-  `corpus_sinteticos/generado/` y `../metodologia_y_resultados.md`
+  `04_corpus_sintetico/generado/` y `../metodologia_y_resultados.md`
   sección 6 para los bugs encontrados y corregidos.
 - **v2** (pendiente/en curso): regeneración completa con qwen2.5:14b, el
   léxico de 194 entradas y todas las reglas nuevas (BLEU 91,08 en el
@@ -38,7 +38,7 @@ aquí, son el motor activo del proyecto):
 ## Fichero final a usar (una vez generado)
 
 ```
-corpus_sinteticos/generado/parallel_val_cat.jsonl
+04_corpus_sintetico/generado/parallel_val_cat.jsonl
 ```
 
 Formato `{"val": "...", "cat": "..."}`, una pareja por línea, sin ninguna

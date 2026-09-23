@@ -2,7 +2,7 @@
 
 Prueba de si hay una alternativa mejor a qwen2.5:14b para la conversión
 occidental→oriental, usando el mismo benchmark de 60 frases
-(`evalua_modelos/benchmark_corpus.json`) sobre 5 GPUs en paralelo (4
+(`03_seleccion_de_modelo/benchmark_corpus.json`) sobre 5 GPUs en paralelo (4
 candidatos, uno de ellos — SalamandraTA — repartido en 2 GPUs).
 
 **Ajustado a las GPUs reales del clúster** (nodo "abaco": 8×11264 MiB = 11 GB
@@ -152,7 +152,7 @@ de la llamada a vLLM, dejando solo `CUDA_VISIBLE_DEVICES=2`).
 ```bash
 # sincroniza los cambios al clúster primero (evalua_models.py + esta carpeta)
 
-cd scrapeo/evalua_modelos/comparativa_salamandraTA_gemma
+cd scrapeo/03_seleccion_de_modelo/comparativa_salamandraTA_gemma
 sbatch comparar_salamandraTA_gemma.sh
 
 # seguir el progreso
@@ -162,7 +162,7 @@ tail -f <jobid>_compara.out
 
 ## Dónde salen los resultados
 
-- `evalua_modelos/resultats/benchmark_<modelo>_<timestamp>.json` — un
+- `03_seleccion_de_modelo/resultats/benchmark_<modelo>_<timestamp>.json` — un
   fichero por candidato (5 en total: gemma3:12b, salamandra-7b-instruct,
   qwen2.5:14b, salamandraTA_traduccio, salamandraTA_traduccio_lexic), igual que
   cualquier ejecución normal de `evalua_models.py`.

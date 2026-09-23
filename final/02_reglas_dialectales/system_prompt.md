@@ -3,11 +3,11 @@
 Este es el texto **exacto** que se le pasa al modelo (qwen2.5:14b) en el
 campo `system` de cada petición a Ollama — copiado directamente del código,
 no un resumen. Si quieres corregir una regla, es aquí donde nace:
-`evalua_modelos/evalua_models.py`, variable `SYSTEM_PROMPT_BASE`.
+`03_seleccion_de_modelo/evalua_models.py`, variable `SYSTEM_PROMPT_BASE`.
 
 Se usa en dos sitios ligeramente distintos (ver más abajo la diferencia):
-1. El benchmark de comparación de modelos (`evalua_modelos/evalua_models.py`).
-2. La generación del corpus sintético (`corpus_sinteticos/genera_corpus_sintetico.py`)
+1. El benchmark de comparación de modelos (`03_seleccion_de_modelo/evalua_models.py`).
+2. La generación del corpus sintético (`04_corpus_sintetico/genera_corpus_sintetico.py`)
    — el mismo texto de arriba, más una regla añadida solo ahí (protección
    de siglas de instituciones).
 
@@ -202,4 +202,4 @@ en el prompt.
 |---|---|---|
 | `temperature` | `0` | para reproducibilidad — decodificación voraz (greedy), no aleatoria |
 | `num_predict` | `200` | tokens máximos de respuesta — heredado del benchmark, con frases cortas; por eso `genera_corpus_sintetico.py` descarta frases de origen de más de 280 caracteres, para no arriesgar un corte a mitad |
-| `model` | `qwen2.5:14b` | ver `evalua_modelos/resultats/` para la comparativa contra otros modelos |
+| `model` | `qwen2.5:14b` | ver `03_seleccion_de_modelo/resultats/` para la comparativa contra otros modelos |

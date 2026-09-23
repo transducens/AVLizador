@@ -2,7 +2,7 @@
 
 `generar_corpus_colab.ipynb` ejecuta `sinteticos/genera_corpus_sintetico.py`
 con GPU gratuita de Colab, usando exactamente el mismo motor (system prompt +
-glosario de `evalua_modelos/evalua_models.py`, modelo qwen2.5:14b) que ya
+glosario de `03_seleccion_de_modelo/evalua_models.py`, modelo qwen2.5:14b) que ya
 probaste en local.
 
 ## Cómo abrirlo

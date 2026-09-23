@@ -5,7 +5,7 @@ Parteix del corpus ja depurat i verificat com a valencià pur
 (``corpus/final/dialectal/corpus_occidental_net.jsonl``, generat per
 ``estudi_dialectal.py``) i genera, frase a frase, la seua traducció al
 català oriental amb el model que millor va puntuar al benchmark de
-``evalua_modelos/evalua_models.py`` (qwen2.5:14b, BLEU 84.52 / chrF 92.34 /
+``03_seleccion_de_modelo/evalua_models.py`` (qwen2.5:14b, BLEU 84.52 / chrF 92.34 /
 chrF++ 91.84).
 
 Reutilitza D'EVALUA_MODELS.PY, sense duplicar-los, el system prompt, el
@@ -72,7 +72,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent          # sinteticos/
 ROOT_DIR = BASE_DIR.parent                          # scrapeo/
-EVALUA_DIR = ROOT_DIR / "evalua_modelos"
+EVALUA_DIR = ROOT_DIR / "03_seleccion_de_modelo"
 
 sys.path.insert(0, str(EVALUA_DIR))
 import evalua_models as em  # noqa: E402  (reutilitza system prompt + glossari + Ollama)

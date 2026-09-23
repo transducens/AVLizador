@@ -168,8 +168,8 @@ import requests
 BENCHMARK_PATH  = Path(__file__).parent / "benchmark_corpus.json"
 # lexico_fiable.json (revisado a mano) sustituye a palabras_traducidas.json:
 # ese fichero tenía entradas sin revisar de origen poco fiable (ver
-# materiales conversion/reglas_prompt/glossari_dinamic.md para el historial).
-LEXIC_PATH      = Path(__file__).parent.parent / "materiales conversion" / "lexico" / "lexico_fiable.json"
+# 02_reglas_dialectales/reglas_prompt/glossari_dinamic.md para el historial).
+LEXIC_PATH      = Path(__file__).parent.parent / "02_reglas_dialectales" / "lexico" / "lexico_fiable.json"
 OUTPUT_DIR      = Path(__file__).parent / "resultats"
 OUTPUT_DIR.mkdir(exist_ok=True)
 OLLAMA_URL      = "http://localhost:11434"
@@ -999,7 +999,7 @@ def tradueix_regles(frase: str) -> str:
 def tradueix_traductor_nou(frase: str) -> str:
     """
     Adaptador cap al paquet `traductor/` (arrel del projecte, fora
-    d'evalua_modelos/) -- el motor de regles nou basat en tokens amb flags
+    d'03_seleccion_de_modelo/) -- el motor de regles nou basat en tokens amb flags
     `is_translated`/`is_proper_noun`, en compte de les substitucions regex
     sobre el text sencer que fa `tradueix_regles()` de dalt ("Sistema_de_
     Regles"). Import fet dins de la funció (peresós) perquè
@@ -1008,8 +1008,8 @@ def tradueix_traductor_nou(frase: str) -> str:
     Vore final/05_motor_reglas/README.md per l'arquitectura completa.
 
     `traductor/` viu a l'arrel del projecte (germana d'esta carpeta,
-    evalua_modelos/), no dins d'ella -- s'afig eixa arrel a sys.path ací
-    perquè l'script sempre s'ha executat des de dins d'evalua_modelos/
+    03_seleccion_de_modelo/), no dins d'ella -- s'afig eixa arrel a sys.path ací
+    perquè l'script sempre s'ha executat des de dins d'03_seleccion_de_modelo/
     (vore els exemples d'ús dalt), on Python no la troba per defecte.
     """
     import sys

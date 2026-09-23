@@ -28,18 +28,19 @@ a la sección correspondiente de este documento para el detalle completo.
 ## Cómo se relaciona esto con el código del repositorio
 
 Los ficheros de esta carpeta son en su mayoría **copias** de los originales
-(reglas, léxico, prompts), que se siguen editando en `materiales
-conversion/`. Si corriges una regla o el léxico, el cambio real se hace
-allí y luego se vuelve a copiar aquí para que esta carpeta no quede
+(reglas, léxico, prompts), que se siguen editando en
+`02_reglas_dialectales/`. Si corriges una regla o el léxico, el cambio real
+se hace allí y luego se vuelve a copiar aquí para que esta carpeta no quede
 desactualizada. El código en sí (scraping, benchmark, generación del
-corpus) no se ha duplicado aquí — vive donde siempre:
+corpus) no se ha duplicado aquí — vive en la carpeta de cada etapa, al
+mismo nivel que esta:
 
 ```
-avl_crawler.py, neteja_corpus.py, estudi_dialectal.py...  (raíz)   → etapa 1
-materiales conversion/                                            → etapa 2
-evalua_modelos/                                                    → etapa 3
-corpus_sinteticos/                                                 → etapa 4
-traductor/                                                         → etapa 5
+01_scraping_y_limpieza/   → etapa 1 (avl_crawler.py, neteja_corpus.py, estudi_dialectal.py...)
+02_reglas_dialectales/    → etapa 2
+03_seleccion_de_modelo/   → etapa 3
+04_corpus_sintetico/      → etapa 4
+traductor/                → etapa 5
 ```
 
 La etapa 5 es la única excepción a "esta carpeta son copias": `traductor/`

@@ -135,7 +135,7 @@ documentado en `reglas_dialectales.md`:
 ## 3. Selección del modelo de traducción
 
 Se construyó un benchmark de 60 frases valencià→català con referencia
-humana (`evalua_modelos/benchmark_corpus.json`) y se probaron varias
+humana (`03_seleccion_de_modelo/benchmark_corpus.json`) y se probaron varias
 opciones:
 
 | Modelo | BLEU | chrF | chrF++ | Notas |
@@ -169,7 +169,7 @@ analizar los errores reales, no de buscar un modelo más grande o más caro.
 
 ## 4. El léxico: de `palabras_traducidas.json` a `lexico_fiable.json`
 
-El léxico original (`evalua_modelos/palabras_traducidas.json`, ~1.600
+El léxico original (`03_seleccion_de_modelo/palabras_traducidas.json`, ~1.600
 entradas) se descartó del pipeline por no ser una fuente fiable —mezclaba
 entradas sin revisar de origen incierto, encontradas solo al auditar el
 corpus generado (ver sección 6). Se sustituyó por `lexico_fiable.json`,
@@ -218,13 +218,13 @@ comparación en el futuro.
 
 Antes de dar por bueno el primer corpus generado (46.315 frases, con el
 léxico y prompt de la versión inicial) se hizo una auditoría completa
-(`corpus_sinteticos/generado/analisi_corpus.html`), contrastando cada regla
+(`04_corpus_sintetico/generado/analisi_corpus.html`), contrastando cada regla
 documentada contra lo que el modelo hizo de verdad en las 46.315 frases
 reales, no solo confiando en el benchmark de 60 frases.
 
 ### Bugs encontrados y corregidos (sin volver a traducir nada)
 
-Corregidos con `corpus_sinteticos/repara_corpus.py` — manipulación de texto
+Corregidos con `04_corpus_sintetico/repara_corpus.py` — manipulación de texto
 sobre el corpus ya generado:
 
 | Problema | Casos | Causa raíz | Arreglo |
@@ -267,10 +267,10 @@ prompt (sección 3) antes de dar el corpus por definitivo.
 Con el léxico, el prompt y las reglas ya maduros (qwen2.5:14b, BLEU 91,08
 en el benchmark), se está regenerando el corpus completo desde cero
 (v2) con esta configuración, en el clúster SLURM. El corpus v1 descrito en
-la sección 6 queda en `corpus_sinteticos/generado/` como referencia
+la sección 6 queda en `04_corpus_sintetico/generado/` como referencia
 histórica de la auditoría, pero **el fichero a usar es el de la
-regeneración v2** una vez termine — ver `corpus_sinteticos/README.md` para
-las instrucciones de ejecución y `corpus_sinteticos/slurm/` para los
+regeneración v2** una vez termine — ver `04_corpus_sintetico/README.md` para
+las instrucciones de ejecución y `04_corpus_sintetico/slurm/` para los
 scripts de SLURM.
 
 ## 8. Limitaciones conocidas
@@ -415,7 +415,7 @@ i (c) de dalt), que no arregla este canvi.
 
 Comparativa completa en el mismo benchmark de 60 frases, 4 candidatos en
 paralelo sobre el clúster SLURM (script y detalle completo en
-`evalua_modelos/comparativa_salamandraTA_gemma/`):
+`03_seleccion_de_modelo/comparativa_salamandraTA_gemma/`):
 
 | Modelo | BLEU | chrF | chrF++ | Exactas |
 |---|---|---|---|---|
@@ -463,7 +463,7 @@ que el problema de la segunda fuera solo "el prompt es demasiado largo":
 Antes de tener este resultado se encontraron y resolvieron, en orden,
 cuatro problemas reales de infraestructura del clúster (nodo "abaco", 8
 GPUs RTX 2080 Ti de 11 GB, arquitectura Turing/compute capability 7.5) —
-documentados con detalle en `evalua_modelos/comparativa_salamandraTA_gemma/README.md`:
+documentados con detalle en `03_seleccion_de_modelo/comparativa_salamandraTA_gemma/README.md`:
 
 1. `pip install` directo rechazado (`externally-managed-environment`,
    PEP 668) → entorno virtual dedicado en `~/venv_vllm`.

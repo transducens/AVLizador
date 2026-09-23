@@ -11,7 +11,7 @@ seua fiabilitat:
   eixa combinació gramatical) — una cobertura baixa vol dir que hi ha
   excepcions freqüents i que NO s'ha d'aplicar de manera mecànica.
 - **Anàlisi del benchmark de traducció** (secció 4): patrons detectats
-  comparant les 60 frases occidental/oriental de `evalua_modelos/benchmark_corpus.json`
+  comparant les 60 frases occidental/oriental de `03_seleccion_de_modelo/benchmark_corpus.json`
   frase per frase — útil per a diferències sintàctiques que el diccionari
   de paraules soles no pot mostrar (com l'orde dels temps verbals).
 - **`paralelos.txt`** (secció 5): llista de vocabulari revisada a mà,

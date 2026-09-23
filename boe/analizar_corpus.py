@@ -2,7 +2,7 @@
 """Analitica del corpus paralelo catala/valencia + informe HTML autonomo.
 
 Lee boe_corpus/corpus.json (generado por construir_corpus.py) y los
-materiales linguisticos de "materiales conversion" (reglas morfologicas,
+materiales linguisticos de "02_reglas_dialectales" (reglas morfologicas,
 vocabulario dialectal y formas exclusivas de valencia extraidas del
 diccionario Apertium) para:
 
@@ -44,7 +44,7 @@ BOE_DIR = Path(__file__).resolve().parent
 CORPUS_DIR = BOE_DIR / "boe_corpus"
 CORPUS_JSON = CORPUS_DIR / "corpus.json"
 BLEUALIGN_JSONL = CORPUS_DIR / "corpus_bleualign.jsonl"
-MATERIALES_DIR = BOE_DIR.parent / "materiales conversion"
+MATERIALES_DIR = BOE_DIR.parent / "02_reglas_dialectales"
 SALIDA_HTML = CORPUS_DIR / "analitica_corpus.html"
 
 sys.path.insert(0, str(BOE_DIR))
@@ -78,7 +78,7 @@ def cargar_bleualign() -> list[dict] | None:
 
 
 def _leer_json_materiales(nombre: str) -> dict:
-    # materiales conversion/ se reorganizó en subcarpetas: lexico/ (JSON de
+    # 02_reglas_dialectales/ se reorganizó en subcarpetas: lexico/ (JSON de
     # pares de palabras) y fuentes/ (material bruto, incl. reglas_cat_val.md).
     # Busca primero en la raíz por compatibilidad, luego en esas subcarpetas.
     candidatos = [MATERIALES_DIR / nombre, MATERIALES_DIR / "lexico" / nombre, MATERIALES_DIR / "fuentes" / nombre]
@@ -1532,7 +1532,7 @@ def generar_html(
 <header class="cabecera">
   <h1>Analitica del corpus paralelo BOE catala / valencia</h1>
   <p>{resumen["total_pares"]} documentos emparejados &middot; periodo {anios_txt} &middot; generado a partir de
-     <code>boe_corpus/corpus.json</code> y los materiales de <code>materiales conversion</code>.</p>
+     <code>boe_corpus/corpus.json</code> y los materiales de <code>02_reglas_dialectales</code>.</p>
 </header>
 
 <nav class="pestanas">
@@ -1690,7 +1690,7 @@ def generar_html(
         caen en el lado dialectal donde se esperaria encontrarla. No implica necesariamente un error: la AVL
         admite variantes compartidas para varias formas (p.ej. demostratius), y algunas palabras del glosario
         son sinonimos validos en ambas variantes.</li>
-    <li><strong>Fuente de los materiales linguisticos:</strong> carpeta <code>materiales conversion</code>
+    <li><strong>Fuente de los materiales linguisticos:</strong> carpeta <code>02_reglas_dialectales</code>
         (diccionario Apertium <code>apertium-cat.cat.dix</code>, glosario curado y reglas derivadas).</li>
   </ul>
 </section>

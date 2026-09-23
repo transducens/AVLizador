@@ -339,12 +339,12 @@ cualquier navegador sin internet) para estudiar el corpus y, en concreto,
 cuánto se sostiene en la práctica la separación dialectal català/valencià:
 
 ```bash
-python analizar_corpus.py   # corpus.json + materiales conversion -> boe_corpus/analitica_corpus.html
+python analizar_corpus.py   # corpus.json + 02_reglas_dialectales -> boe_corpus/analitica_corpus.html
 ```
 
 Requiere `corpus.json` ya generado (`construir_corpus.py`), opcionalmente
 `corpus_bleualign.jsonl` (`alinear_corpus_bleualign.py`, si no existe esa
-pestaña simplemente no aparece), y la carpeta `../materiales conversion`
+pestaña simplemente no aparece), y la carpeta `../02_reglas_dialectales`
 con estos ficheros — `cargar_materiales()` los busca primero en la raíz de
 esa carpeta y si no están ahí, en `lexico/` y `fuentes/` (la carpeta se
 reorganizó en subcarpetas para un pipeline distinto que también la usa; ver

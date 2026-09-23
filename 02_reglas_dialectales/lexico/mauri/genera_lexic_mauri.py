@@ -20,9 +20,9 @@ US:
 
 Despres, per a provar-lo AMB el benchmark real (no ho executa este
 script, cal fer-ho a ma):
-    cd ../../../evalua_modelos
+    cd ../../../03_seleccion_de_modelo
     python evalua_models.py --model ollama --ollama-model qwen2.5:14b ^
-        --lexic "../materiales conversion/lexico/mauri/lexic_mauri.json"
+        --lexic "../02_reglas_dialectales/lexico/mauri/lexic_mauri.json"
 """
 
 import json

@@ -30,6 +30,7 @@ import hashlib
 import json
 import os
 from datetime import datetime, timezone
+from pathlib import Path
 
 from bs4 import BeautifulSoup
 from playwright.async_api import async_playwright
@@ -37,7 +38,9 @@ from playwright.async_api import async_playwright
 # ─── Configuració ─────────────────────────────────────────────────────────────
 
 URL = "https://www.avl.gva.es/gnv/buscador.jsp?gramatica=GVB&index=GVB_GNV"
-OUTPUT_DIR = "corpus/raw"
+# Ancorat a __file__ (no al directori de treball): este fitxer viu a
+# 01_scraping_y_limpieza/, i "corpus/" és a l'arrel del repositori.
+OUTPUT_DIR = str(Path(__file__).resolve().parent.parent / "corpus" / "raw")
 
 # Classes que contenen text de contingut real
 CLASSES_CONTINGUT = {"text", "text_exemple", "text_llista"}

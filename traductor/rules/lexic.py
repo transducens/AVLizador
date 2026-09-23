@@ -1,7 +1,7 @@
 """
 lexic.py -- Capa 1 del pipeline: substitució directa per lèxic diferencial
 (traductor/data/lexico_fiable.json, ~194 entrades revisades a mà, còpia de
-materiales conversion/lexico/lexico_fiable.json -- fitxer de treball
+02_reglas_dialectales/lexico/lexico_fiable.json -- fitxer de treball
 provisional, vore nota de l'esquema baix).
 
 Esta és la ÚNICA capa que fa lookup en un diccionari en compte d'aplicar una
@@ -48,7 +48,7 @@ def carrega_lexic(path: Path = DEFAULT_LEXIC_PATH) -> dict[str, str]:
     docstring del mòdul). Entrades sense alguna de les dos llistes, o amb
     `categoria == "nombre"`, es descarten (esta última categoria no
     apareix mai al fitxer actual, però es filtra per si el lèxic complet
-    futur en du -- mateix criteri que `evalua_modelos/evalua_models.py`).
+    futur en du -- mateix criteri que `03_seleccion_de_modelo/evalua_models.py`).
 
     >>> lookup = carrega_lexic()
     >>> lookup["abellir"]

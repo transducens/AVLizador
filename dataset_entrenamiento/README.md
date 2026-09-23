@@ -10,9 +10,9 @@ listos.
 
 | Fichero | De dónde sale | Qué es |
 |---|---|---|
-| `corpus_sinteticos/generado/corpus_sintetic_val_cat.jsonl` | `corpus_sinteticos/genera_corpus_sintetico.py` (ver `corpus_sinteticos/README.md`) | El corpus sintético **con metadatos** (`doc_id`, `motius_sospita`...) — **NO** uses `parallel_val_cat.jsonl` para esto, ese export ya no tiene `doc_id` y no se puede agrupar por documento. |
+| `04_corpus_sintetico/generado/corpus_sintetic_val_cat.jsonl` | `04_corpus_sintetico/genera_corpus_sintetico.py` (ver `04_corpus_sintetico/README.md`) | El corpus sintético **con metadatos** (`doc_id`, `motius_sospita`...) — **NO** uses `parallel_val_cat.jsonl` para esto, ese export ya no tiene `doc_id` y no se puede agrupar por documento. |
 | `boe/boe_corpus/corpus_entrenamiento.jsonl` | `boe/exportar_entrenamiento.py` (ver `boe/README.md`) | El corpus real del BOE ya filtrado (268.735 pares en la versión actual). |
-| `evalua_modelos/benchmark_corpus.json` | Ya existe, no se toca | Las 60 frases con traducción de referencia humana — el test final "de verdad", fuera de todo lo de aquí. |
+| `03_seleccion_de_modelo/benchmark_corpus.json` | Ya existe, no se toca | Las 60 frases con traducción de referencia humana — el test final "de verdad", fuera de todo lo de aquí. |
 
 Si alguno de los dos primeros no existe todavía, genera antes ese corpus —
 este script no descarga ni traduce nada, solo reorganiza lo que ya está
@@ -30,7 +30,7 @@ del repositorio). Para usar otro fichero (p. ej. cuando termine la
 regeneración v2 del corpus sintético, o si tiene otro nombre):
 
 ```bash
-python prepara_dataset.py --sintetic ../corpus_sinteticos/generado/corpus_sintetic_val_cat_v2.jsonl
+python prepara_dataset.py --sintetic ../04_corpus_sintetico/generado/corpus_sintetic_val_cat_v2.jsonl
 ```
 
 Otros argumentos:
@@ -38,7 +38,7 @@ Otros argumentos:
 | Argumento | Por defecto | Qué controla |
 |---|---|---|
 | `--boe` | `boe/boe_corpus/corpus_entrenamiento.jsonl` | Ruta al corpus BOE |
-| `--sintetic` | `corpus_sinteticos/generado/corpus_sintetic_val_cat.jsonl` | Ruta al corpus sintético (con metadatos) |
+| `--sintetic` | `04_corpus_sintetico/generado/corpus_sintetic_val_cat.jsonl` | Ruta al corpus sintético (con metadatos) |
 | `--output-dir` | `dataset_entrenamiento/dataset/` | Dónde se escriben los ficheros de salida |
 | `--seed` | `42` | Semilla del barajado — mismo seed, mismo split siempre (reproducible) |
 | `--prop-dev` | `0.05` (5%) | Proporción aproximada de frases del sintético para `dev.jsonl` |
@@ -89,7 +89,7 @@ azar; guarda la evaluación sobre el fichero completo para el final.
   infla la métrica de forma artificial.
 - **Se descartan las frases sospechosas del sintético** (`motius_sospita`
   no vacío) antes de nada — mismo criterio que usa
-  `corpus_sinteticos/genera_corpus_sintetico.py::exporta_nets()` para
+  `04_corpus_sintetico/genera_corpus_sintetico.py::exporta_nets()` para
   producir `parallel_val_cat.jsonl`, pero aplicado aquí sobre el fichero
   con metadatos para no perder el `doc_id`.
 - **Deduplicación exacta dentro de cada corpus** (antes del split): el BOE

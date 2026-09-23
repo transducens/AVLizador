@@ -157,7 +157,7 @@ def marca_noms_propis(tokens: list[Token]) -> None:
 
     Heurística senzilla, sense NLP real -- és la mateixa ja provada al
     pipeline de generació del corpus sintètic
-    (evalua_modelos/evalua_models.py, `glossari_per_frase()`), afegida
+    (03_seleccion_de_modelo/evalua_models.py, `glossari_per_frase()`), afegida
     allí després d'un incident real: paraules com "blanca"/"Blanca" o
     "roig"/"Roig" són a la vegada un adjectiu de color normal i un nom o
     cognom, i el lèxic les estava traduint totes dos sense distinció.

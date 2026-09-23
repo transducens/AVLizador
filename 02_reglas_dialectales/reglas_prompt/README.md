@@ -24,15 +24,15 @@ dentro de dos ficheros distintos.
    desactualizada.
 3. Si quieres que las correcciones también se apliquen al corpus ya
    generado (no solo a futuras generaciones), se amplía
-   `corpus_sinteticos/repara_corpus.py` con las nuevas reversiones. El
+   `04_corpus_sintetico/repara_corpus.py` con las nuevas reversiones. El
    análisis de qué falla en el corpus vive aparte, en
-   `corpus_sinteticos/generado/analisi_corpus.html` y en las revisiones
+   `04_corpus_sintetico/generado/analisi_corpus.html` y en las revisiones
    manuales — no en esta carpeta.
 
 ## Relación con el resto del proyecto
 
 - El texto de estos documentos **no se edita aquí** — están copiados de
-  `evalua_modelos/evalua_models.py` y `corpus_sinteticos/genera_corpus_sintetico.py`.
+  `03_seleccion_de_modelo/evalua_models.py` y `04_corpus_sintetico/genera_corpus_sintetico.py`.
   Si decides cambiar una regla, el cambio real se hace en esos ficheros de
   código; vuelve a copiar el texto actualizado aquí después para que esta
   carpeta no quede desactualizada.
@@ -43,10 +43,10 @@ dentro de dos ficheros distintos.
 - El léxico antiguo (para seguir sacando palabras confirmadas de ahí) y el
   listado combinado más amplio (Apertium + lista curada + léxico del
   corpus) están en `../lexico/` (ver el README general de
-  `materiales conversion/`).
+  `02_reglas_dialectales/`).
 - Las reglas morfológicas "de fondo" (de dónde salió el número exacto de
   casos de cada regla) están en `../fuentes/reglas_cat_val.md` — este
   documento nuevo se centra en el prompt y el glosario, no en repetir esa
   tabla.
 - La auditoría completa de cuánto se cumple cada regla en el corpus real
-  está en `corpus_sinteticos/generado/analisi_corpus.html`.
+  está en `04_corpus_sintetico/generado/analisi_corpus.html`.

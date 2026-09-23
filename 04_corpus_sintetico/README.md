@@ -12,7 +12,7 @@ per a entrenar o afinar un model de traducció occidental↔oriental.
   complet evita ensenyar-li al model parelles on l'"original" ja estava en
   català.
 - **Model**: `qwen2.5:14b` via Ollama local, amb el mateix system prompt i el
-  mateix glossari dinàmic per frase que `evalua_modelos/evalua_models.py`
+  mateix glossari dinàmic per frase que `03_seleccion_de_modelo/evalua_models.py`
   (BLEU 90,87 / chrF 95,86 / chrF++ 95,55 al benchmark del 17/09/2026, amb
   el lèxic de 194 entrades i les regles de pretèrit perifràstic/institucions/
   elisió ja afegides) — la millor configuració provada fins ara. Comparat
@@ -95,7 +95,7 @@ corre en un altre lloc. Dues opcions ja preparades:
 ## Sortida
 
 ```
-corpus_sinteticos/
+04_corpus_sintetico/
 ├── corpus_sintetic_val_cat.jsonl   # Fitxer principal: totes les parelles + metadades + qualitat
 ├── parallel_val_cat.jsonl          # Exportació neta {"val", "cat"} (sense sospitoses)
 ├── parallel.val / parallel.cat     # El mateix, en 2 fitxers alineats línia a línia (format Moses/OPUS)

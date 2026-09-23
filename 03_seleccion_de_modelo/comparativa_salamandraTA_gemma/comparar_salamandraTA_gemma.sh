@@ -80,7 +80,7 @@
 # VLLM_MAX_MODEL_LEN ahí baix abans de res més.
 #
 # Lanzarlo:
-#   cd evalua_modelos/comparativa_salamandraTA_gemma
+#   cd 03_seleccion_de_modelo/comparativa_salamandraTA_gemma
 #   sbatch comparar_salamandraTA_gemma.sh
 
 #SBATCH --job-name=compara-salamandraTA-gemma
@@ -100,7 +100,7 @@ GEMMA_PETIT="gemma3:12b"                        # ~8 GB en Ollama (Q4) -- cabe h
 SALAMANDRA_INSTRUCT="hdnh2006/salamandra-7b-instruct"  # ~4-5 GB en Ollama (Q4) -- de sobra
 # ("hdnh2006/" es obligatorio: es el nombre real en el registro de Ollama,
 # no está publicado como "salamandra-7b-instruct" a secas. Confirmado con los
-# resultados ya guardados de la vez anterior: evalua_modelos/resultats/
+# resultados ya guardados de la vez anterior: 03_seleccion_de_modelo/resultats/
 # benchmark_Ollama_hdnh2006-salamandra-7b-instruct_*.json)
 QWEN_REF="qwen2.5:14b"                          # ~9.2 GB en Ollama (Q4) -- ya confirmado que cabe en este nodo
 SALAMANDRA_HF="BSC-LT/salamandraTA-7b-instruct"
@@ -158,7 +158,7 @@ if [ -n "${SLURM_SUBMIT_DIR:-}" ]; then
 else
     SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 fi
-EVALUA_DIR="$(dirname "$SCRIPT_DIR")"           # evalua_modelos/
+EVALUA_DIR="$(dirname "$SCRIPT_DIR")"           # 03_seleccion_de_modelo/
 BENCHMARK="$EVALUA_DIR/benchmark_corpus.json"
 LOGS_DIR="$SCRIPT_DIR/logs"
 mkdir -p "$LOGS_DIR"

@@ -2,10 +2,9 @@
 
 Primera etapa del proyecto: conseguir texto real en valencià occidental,
 verificado, para poder generar sobre él el corpus sintético. Los scripts
-de esta etapa siguen viviendo en la raíz del repositorio (no se han movido
-aquí, para no romper las rutas relativas entre ellos) — esta carpeta solo
-documenta qué hace cada uno, de dónde saca los datos y en qué orden se
-ejecutan.
+de esta etapa viven en `01_scraping_y_limpieza/` (raíz del repositorio,
+mismo nivel que las demás etapas) — esta carpeta solo documenta qué hace
+cada uno, de dónde saca los datos y en qué orden se ejecutan.
 
 ## Qué es la AVL y por qué es la fuente
 

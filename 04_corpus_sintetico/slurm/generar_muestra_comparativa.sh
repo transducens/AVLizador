@@ -6,7 +6,7 @@
 # generación completa.
 #
 # Modelos comparados -- los 3 que salieron viables en
-# evalua_modelos/comparativa_salamandraTA_gemma/ (SalamandraTA descartado
+# 03_seleccion_de_modelo/comparativa_salamandraTA_gemma/ (SalamandraTA descartado
 # del todo, ver final/metodologia_y_resultados.md sección 10):
 #   GPU 0: qwen2.5:14b                      (el actual, mejor en el benchmark)
 #   GPU 1: gemma3:12b                       (casi empatado en el benchmark, más barato)
@@ -17,7 +17,7 @@
 # si no, estarías comparando peras con manzanas.
 #
 # Lanzarlo (500 frases por defecto):
-#   cd corpus_sinteticos/slurm
+#   cd 04_corpus_sintetico/slurm
 #   sbatch generar_muestra_comparativa.sh
 #
 # Con otro tamaño de muestra (p.ej. 100 para algo más rápido):
@@ -156,7 +156,7 @@ echo ""
 echo "Hecho. Salida en $OUT_DIR/:"
 echo "  corpus_qwen.jsonl, corpus_gemma.jsonl, corpus_salamandra.jsonl"
 echo ""
-echo "NOTA: informe_generacio.txt y generacio.log dentro de corpus_sinteticos/"
+echo "NOTA: informe_generacio.txt y generacio.log dentro de 04_corpus_sintetico/"
 echo "son ficheros COMPARTIDOS por los 3 procesos (limitación ya existente del"
 echo "script, la misma que afecta a --num-shards) -- se pisan entre sí, no te"
 echo "fíes de ellos para comparar. Usa los logs de $LOGS_DIR/generar_*.log"

@@ -1,6 +1,6 @@
 """
 prueba_lexico_mauri.py -- Evalua si val la pena incorporar el lexic
-exhaustiu que ha recopilat un company (materiales conversion/lexico/mauri/)
+exhaustiu que ha recopilat un company (02_reglas_dialectales/lexico/mauri/)
 al pipeline real.
 
 Reutilitza el motor d'evalua_models.py (mateix SYSTEM_PROMPT_BASE, mateixa
@@ -38,7 +38,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 import evalua_models as em  # noqa: E402  (reutilitza prompt + traduccio + lexic actual)
 
 BASE_DIR = Path(__file__).parent.parent
-MAURI_DIR = BASE_DIR / "materiales conversion" / "lexico" / "mauri"
+MAURI_DIR = BASE_DIR / "02_reglas_dialectales" / "lexico" / "mauri"
 CORPUS_PATH = BASE_DIR / "corpus" / "final" / "dialectal" / "corpus_occidental_net.jsonl"
 
 MAURI_FILES = [
@@ -207,7 +207,7 @@ def compara(mostra: int, paraula_filtre: str | None, timeout: int, model: str):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Prova el lexic exhaustiu del company (materiales conversion/lexico/mauri/)")
+    parser = argparse.ArgumentParser(description="Prova el lexic exhaustiu del company (02_reglas_dialectales/lexico/mauri/)")
     parser.add_argument("--informe", action="store_true", help="Analisi estatica: noves entrades + frequencia real, sense cridar cap model")
     parser.add_argument("--compara", action="store_true", help="Tradueix frases reals dos vegades (lexic actual vs lexic+nou) i compara")
     parser.add_argument("--mostra", type=int, default=10, help="Quantes paraules candidates provar en --compara (per defecte 10, les mes frequents)")

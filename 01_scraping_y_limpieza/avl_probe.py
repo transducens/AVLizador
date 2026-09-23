@@ -35,6 +35,7 @@ import random
 import sys
 import time
 from datetime import datetime, timezone
+from pathlib import Path
 
 import requests
 from bs4 import BeautifulSoup
@@ -76,7 +77,9 @@ MIN_TOKENS = {
     "notes-de-premsa":  100,
 }
 
-OUTPUT_DIR = "corpus/raw"
+# Ancorat a __file__ (no al directori de treball): este fitxer viu a
+# 01_scraping_y_limpieza/, i "corpus/" és a l'arrel del repositori.
+OUTPUT_DIR = str(Path(__file__).resolve().parent.parent / "corpus" / "raw")
 
 # ─── Funcions base ────────────────────────────────────────────────────────────
 

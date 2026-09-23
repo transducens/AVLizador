@@ -66,7 +66,7 @@ Reglas de segmentación (`genera_corpus_sintetico.py`):
 para reproducibilidad).
 
 **Por qué este modelo y no otro**: se benchmarkearon varias opciones en
-`evalua_modelos/` (varios tamaños de Ollama, reglas deterministas, NLLB-200)
+`03_seleccion_de_modelo/` (varios tamaños de Ollama, reglas deterministas, NLLB-200)
 sobre 60 frases con referencia humana. qwen2.5:14b + el prompt/glosario de
 abajo dio **BLEU 84,52 / chrF 92,34 / chrF++ 91,84**, muy por encima del
 resto (NLLB-200-600M, por comparación, dio BLEU 53,13 sin ese prompt/glosario
@@ -74,12 +74,12 @@ resto (NLLB-200-600M, por comparación, dio BLEU 53,13 sin ese prompt/glosario
 tamaño del modelo).
 
 **Prompt y glosario**: se reutiliza tal cual el motor de
-`evalua_modelos/evalua_models.py` (el mismo que se usó en el benchmark, para
+`03_seleccion_de_modelo/evalua_models.py` (el mismo que se usó en el benchmark, para
 no perder esa validación):
 - Un system prompt con las reglas morfológicas documentadas (demostrativos,
   posesivos, infinitivos irregulares, subjuntivo presente/imperfecto,
   numerales, léxico base) — el mismo conjunto que hay explicado como guía de
-  estudio en `materiales conversion/reglas_prompt/guia_dialectal_valencia_catala.md`.
+  estudio en `02_reglas_dialectales/reglas_prompt/guia_dialectal_valencia_catala.md`.
 - Un glosario dinámico por frase: antes de llamar al modelo se buscan en
   `palabras_traducidas.json` (1.604 formas) las palabras valencianas
   presentes en esa frase concreta, y se le pasan como pista
@@ -95,12 +95,12 @@ tocan, y solo si ya estaban en el original.
 
 **Dónde se ejecutó**: en el clúster SLURM de la universidad ("abaco", 8x
 RTX 2080 Ti), repartiendo el corpus en fragmentos por hash del id de cada
-frase para traducir con varias GPUs a la vez (ver `corpus_sinteticos/slurm/`).
+frase para traducir con varias GPUs a la vez (ver `04_corpus_sintetico/slurm/`).
 
 ## 4. Auditoría de calidad
 
 Antes de dar el corpus por bueno se hizo una auditoría completa
-(`corpus_sinteticos/generado/analisi_corpus.html`, generada a partir de este mismo
+(`04_corpus_sintetico/generado/analisi_corpus.html`, generada a partir de este mismo
 corpus), contrastando **cada una de las reglas dialectales documentadas**
 contra lo que el modelo hizo de verdad, no solo confiando en que un LLM con
 buen BLEU en 60 frases se comportaría igual en 46.315 frases reales de todo
@@ -120,7 +120,7 @@ que existe `repara_corpus.py`.
 
 ## 5. Bugs encontrados y corregidos (sin volver a traducir nada)
 
-Todo esto se corrigió con `corpus_sinteticos/repara_corpus.py` — manipulación de
+Todo esto se corrigió con `04_corpus_sintetico/repara_corpus.py` — manipulación de
 texto sobre el corpus ya generado, sin llamar otra vez a Ollama:
 
 | Problema | Casos | Cómo se corrigió |
@@ -172,7 +172,7 @@ otro (conversación, prensa informal, literatura).
 ## 7. Qué fichero usar
 
 ```
-corpus_sinteticos/generado/
+04_corpus_sintetico/generado/
 ├── corpus_sintetic_val_cat.jsonl            ← el corpus completo, con metadatos
 ├── corpus_sintetic_val_cat.abans_de_reparar.jsonl  ← copia de seguridad pre-reparación
 ├── parallel_val_cat.jsonl                   ← ⭐ EL BUENO para entrenar/usar
@@ -194,8 +194,8 @@ corpus_sinteticos/generado/
 
 ## 8. Cómo se generó / cómo reproducirlo o ampliarlo
 
-Ver `corpus_sinteticos/README.md` (uso del script principal) y
-`corpus_sinteticos/slurm/README.md` (ejecución en el clúster con GPU). Resumen:
+Ver `04_corpus_sintetico/README.md` (uso del script principal) y
+`04_corpus_sintetico/slurm/README.md` (ejecución en el clúster con GPU). Resumen:
 
 ```bash
 python genera_corpus_sintetico.py                 # generación completa (reanudable)

@@ -25,7 +25,7 @@
 # respeta CUDA_VISIBLE_DEVICES).
 #
 # Lanzarlo:
-#   cd evalua_modelos/relanza_benchmark
+#   cd 03_seleccion_de_modelo/relanza_benchmark
 #   sbatch relanza_benchmark.sh
 
 #SBATCH --job-name=relanza-benchmark
@@ -53,7 +53,7 @@ if [ -n "${SLURM_SUBMIT_DIR:-}" ]; then
 else
     SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 fi
-EVALUA_DIR="$(dirname "$SCRIPT_DIR")"           # evalua_modelos/
+EVALUA_DIR="$(dirname "$SCRIPT_DIR")"           # 03_seleccion_de_modelo/
 BENCHMARK="$EVALUA_DIR/benchmark_corpus.json"
 LOGS_DIR="$SCRIPT_DIR/logs"
 mkdir -p "$LOGS_DIR"
