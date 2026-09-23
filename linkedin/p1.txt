@@ -1,0 +1,22 @@
+
+Construyendo un traductor automático entre valenciano y catalán oriental 🌐
+
+(o cómo dar a una lengua de recursos escasos acceso al mundo del PLN)
+
+El valenciano es una lengua de recursos escasos para el procesamiento del lenguaje natural: poco corpus, pocos alineamientos, poca presencia en los grandes modelos. El catalán oriental, en cambio, dispone de una cantidad mucho mayor de datos.
+
+La idea de mi proyecto es sencilla: construir un traductor dialectal fiable entre ambas variedades para poder usar el catalán como puente y aprovechar todos sus recursos para tareas en valenciano que, ahora mismo, son inviables por falta de datos directos.
+
+Dos fuentes de corpus muy distintas:
+
+📄 Corpus real del BOE. La única fuente de traducción profesional humana ya pareada entre los dos dialectos: ciertos documentos legales se publican simultáneamente en valenciano y en catalán. Resultado: 268.735 pares de frases alineados (2009-2015), obtenidos de forma ética respetando los ritmos del servidor.
+
+🤖 Corpus sintético (AVL + LLM + reglas dialectales). Como no existe un corpus paralelo general, he extraído texto monolingüe normativo de la AVL, he definido con rigor lingüístico las diferencias entre dialectos (demostrativos, posesivos, morfología verbal, léxico diferencial…) y guío un LLM para que genere la traducción al catalán oriental frase a frase, siguiendo siempre reglas explícitas.
+
+Un principio que he seguido en todo el proyecto: nunca inventar una traducción. Si un patrón no tiene cobertura suficiente demostrada en fuentes reales, no se generaliza — se deja como lista cerrada de palabras verificadas una a una.
+
+Ahora mismo estoy regenerando el corpus sintético completo con las reglas y el léxico ya maduros. En el próximo post compartiré los resultados: qué modelos funcionan mejor, qué errores aparecen y por qué son tan difíciles de detectar automáticamente.
+
+Mucho por hacer, pero los cimientos ya están.
+
+¿Qué te parece? También puedes añadir al final una línea con los hashtags que uses habitualmente (#NLP #LowResourceNLP #ValencianLanguage etc.) — en LinkedIn ayudan bastante al alcance.

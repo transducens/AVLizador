@@ -5,7 +5,7 @@ per a entrenar o afinar un model de traducció occidental↔oriental.
 
 ## Font i model
 
-- **Font**: `corpus/final/dialectal/corpus_occidental_net.jsonl` — no el
+- **Font**: `data/avl/final/dialectal/corpus_occidental_net.jsonl` — no el
   `unified.jsonl` general, sinó el subconjunt que `estudi_dialectal.py` ja va
   filtrar i verificar com a valencià pur (1.778 documents, 821K tokens, sense
   contaminació de textos orientals). Traduir des d'ací en compte del corpus

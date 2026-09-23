@@ -125,9 +125,9 @@ def main():
     parser = argparse.ArgumentParser(
         description="Prepara train/dev/test SOLO del sintetico; normaliza BOE aparte como eval fuera de dominio"
     )
-    parser.add_argument("--boe", default=str(ROOT / "boe" / "boe_corpus" / "corpus_entrenamiento.jsonl"))
-    parser.add_argument("--sintetic", default=str(ROOT / "04_corpus_sintetico" / "generado" / "corpus_sintetic_val_cat.jsonl"))
-    parser.add_argument("--output-dir", default=str(ROOT / "dataset_entrenamiento" / "dataset"))
+    parser.add_argument("--boe", default=str(ROOT / "data" / "boe" / "corpus_entrenamiento.jsonl"))
+    parser.add_argument("--sintetic", default=str(ROOT / "data" / "sintetico" / "corpus_sintetic_val_cat.jsonl"))
+    parser.add_argument("--output-dir", default=str(ROOT / "data" / "dataset_entrenamiento"))
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--prop-dev", type=float, default=0.05, help="Proporcio de frases del sintetic per a dev (per defecte 5%%)")
     parser.add_argument("--prop-test", type=float, default=0.05, help="Proporcio de frases del sintetic per a test (per defecte 5%%)")

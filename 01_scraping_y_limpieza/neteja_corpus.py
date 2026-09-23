@@ -84,7 +84,7 @@ def processa_fitxer(input_path: str, output_path: str, min_tokens: int = 50):
 
 
 if __name__ == "__main__":
-    C = ROOT_DIR / "corpus"
+    C = ROOT_DIR / "data" / "avl"
     fitxers = [
         (str(C / "raw" / "avl_butlleti.jsonl"),       str(C / "clean" / "avl_butlleti.jsonl"),       100),
         (str(C / "raw" / "avl_glossary.jsonl"),        str(C / "clean" / "avl_glossary.jsonl"),        100),

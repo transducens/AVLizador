@@ -10,8 +10,8 @@ listos.
 
 | Fichero | De dónde sale | Qué es |
 |---|---|---|
-| `04_corpus_sintetico/generado/corpus_sintetic_val_cat.jsonl` | `04_corpus_sintetico/genera_corpus_sintetico.py` (ver `04_corpus_sintetico/README.md`) | El corpus sintético **con metadatos** (`doc_id`, `motius_sospita`...) — **NO** uses `parallel_val_cat.jsonl` para esto, ese export ya no tiene `doc_id` y no se puede agrupar por documento. |
-| `boe/boe_corpus/corpus_entrenamiento.jsonl` | `boe/exportar_entrenamiento.py` (ver `boe/README.md`) | El corpus real del BOE ya filtrado (268.735 pares en la versión actual). |
+| `data/sintetico/corpus_sintetic_val_cat.jsonl` | `04_corpus_sintetico/genera_corpus_sintetico.py` (ver `04_corpus_sintetico/README.md`) | El corpus sintético **con metadatos** (`doc_id`, `motius_sospita`...) — **NO** uses `parallel_val_cat.jsonl` para esto, ese export ya no tiene `doc_id` y no se puede agrupar por documento. |
+| `data/boe/corpus_entrenamiento.jsonl` | `boe/exportar_entrenamiento.py` (ver `boe/README.md`) | El corpus real del BOE ya filtrado (268.735 pares en la versión actual). |
 | `03_seleccion_de_modelo/benchmark_corpus.json` | Ya existe, no se toca | Las 60 frases con traducción de referencia humana — el test final "de verdad", fuera de todo lo de aquí. |
 
 Si alguno de los dos primeros no existe todavía, genera antes ese corpus —
@@ -30,16 +30,16 @@ del repositorio). Para usar otro fichero (p. ej. cuando termine la
 regeneración v2 del corpus sintético, o si tiene otro nombre):
 
 ```bash
-python prepara_dataset.py --sintetic ../04_corpus_sintetico/generado/corpus_sintetic_val_cat_v2.jsonl
+python prepara_dataset.py --sintetic ../data/sintetico/corpus_sintetic_val_cat_v2.jsonl
 ```
 
 Otros argumentos:
 
 | Argumento | Por defecto | Qué controla |
 |---|---|---|
-| `--boe` | `boe/boe_corpus/corpus_entrenamiento.jsonl` | Ruta al corpus BOE |
-| `--sintetic` | `04_corpus_sintetico/generado/corpus_sintetic_val_cat.jsonl` | Ruta al corpus sintético (con metadatos) |
-| `--output-dir` | `dataset_entrenamiento/dataset/` | Dónde se escriben los ficheros de salida |
+| `--boe` | `data/boe/corpus_entrenamiento.jsonl` | Ruta al corpus BOE |
+| `--sintetic` | `data/sintetico/corpus_sintetic_val_cat.jsonl` | Ruta al corpus sintético (con metadatos) |
+| `--output-dir` | `data/dataset_entrenamiento/` | Dónde se escriben los ficheros de salida |
 | `--seed` | `42` | Semilla del barajado — mismo seed, mismo split siempre (reproducible) |
 | `--prop-dev` | `0.05` (5%) | Proporción aproximada de frases del sintético para `dev.jsonl` |
 | `--prop-test` | `0.05` (5%) | Proporción aproximada de frases del sintético para `test.jsonl` |

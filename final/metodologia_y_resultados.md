@@ -39,18 +39,18 @@ a cada tipo de página:
 ```
 avl_probe.py / avl_crawler.py / gnv_extractor.py / gvb_extractor.py / pdf_extractor.py
         ↓
-corpus/raw/*.jsonl  →  neteja_corpus.py  →  corpus/clean/*.jsonl
+data/avl/raw/*.jsonl  →  neteja_corpus.py  →  data/avl/clean/*.jsonl
         ↓ (unificación de todas las fuentes)
-corpus/final/unified.jsonl          (2.233 documentos, todo unificado)
+data/avl/final/unified.jsonl          (2.233 documentos, todo unificado)
         ↓ estudi_dialectal.py
-corpus/final/dialectal/corpus_occidental_net.jsonl
+data/avl/final/dialectal/corpus_occidental_net.jsonl
         (1.778 documentos, 821.195 tokens — SOLO texto verificado
          como valenciano occidental puro)
 ```
 
 `estudi_dialectal.py` clasifica cada documento contando cuántas palabras
 del texto coinciden con una lista de marcadores dialectales ya conocidos
-(`corpus/final/lexic/marcadors_dialectals.json`, con una lista de
+(`data/avl/final/lexic/marcadors_dialectals.json`, con una lista de
 marcadores occidentales y otra de orientales — el mismo tipo de contraste
 léxico que se documenta en la etapa 2, pero usado aquí para *clasificar*
 documentos en vez de para traducir). Para cada documento se calcula:
@@ -218,7 +218,7 @@ comparación en el futuro.
 
 Antes de dar por bueno el primer corpus generado (46.315 frases, con el
 léxico y prompt de la versión inicial) se hizo una auditoría completa
-(`04_corpus_sintetico/generado/analisi_corpus.html`), contrastando cada regla
+(`data/sintetico/analisi_corpus.html`), contrastando cada regla
 documentada contra lo que el modelo hizo de verdad en las 46.315 frases
 reales, no solo confiando en el benchmark de 60 frases.
 
@@ -267,7 +267,7 @@ prompt (sección 3) antes de dar el corpus por definitivo.
 Con el léxico, el prompt y las reglas ya maduros (qwen2.5:14b, BLEU 91,08
 en el benchmark), se está regenerando el corpus completo desde cero
 (v2) con esta configuración, en el clúster SLURM. El corpus v1 descrito en
-la sección 6 queda en `04_corpus_sintetico/generado/` como referencia
+la sección 6 queda en `data/sintetico/` como referencia
 histórica de la auditoría, pero **el fichero a usar es el de la
 regeneración v2** una vez termine — ver `04_corpus_sintetico/README.md` para
 las instrucciones de ejecución y `04_corpus_sintetico/slurm/` para los
@@ -291,7 +291,7 @@ scripts de SLURM.
   necesariamente representativo de todo el corpus.
 - **Validación contra texto humano pendiente**: para saber si un futuro
   modelo generaliza más allá de este corpus sintético, convendría validar
-  contra traducciones de origen humano (ver `boe/boe_corpus/`, traducciones
+  contra traducciones de origen humano (ver `data/boe/`, traducciones
   oficiales del BOE — explorado en paralelo pero fuera del alcance de este
   documento).
 
@@ -299,7 +299,7 @@ scripts de SLURM.
 
 Al revisar a mano una muestra generada con qwen2.5:14b + `lexico_fiable.json`
 ya maduros, la calidad seguía sin convencer. Antes de tocar el prompt o
-probar otro modelo otra vez, se auditó `corpus/final/dialectal/corpus_occidental_net.jsonl`
+probar otro modelo otra vez, se auditó `data/avl/final/dialectal/corpus_occidental_net.jsonl`
 (1.778 documentos) reproduciendo exactamente la segmentación de
 `genera_corpus_sintetico.py::extreu_frases_document()` sobre las 48.037
 frases candidatas reales. Conclusión: **el cuello de botella está en la

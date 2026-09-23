@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Analitica del corpus paralelo catala/valencia + informe HTML autonomo.
 
-Lee boe_corpus/corpus.json (generado por construir_corpus.py) y los
+Lee ../data/boe/corpus.json (generado por construir_corpus.py) y los
 materiales linguisticos de "02_reglas_dialectales" (reglas morfologicas,
 vocabulario dialectal y formas exclusivas de valencia extraidas del
 diccionario Apertium) para:
@@ -22,7 +22,7 @@ Genera un unico HTML autonomo (sin CDN, funciona en local sin internet)
 con tablas interactivas (filtro + orden) y graficos SVG generados en
 Python. Pensado para ejecutarse cuando el corpus este mas completo; se
 puede relanzar en cualquier momento, siempre parte de lo que haya en
-boe_corpus/corpus.json en ese momento.
+../data/boe/corpus.json en ese momento.
 
 Uso:
     python analizar_corpus.py
@@ -41,7 +41,9 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 BOE_DIR = Path(__file__).resolve().parent
-CORPUS_DIR = BOE_DIR / "boe_corpus"
+# Los datos del BOE ahora viven en data/boe/ (junto a los del resto de
+# fuentes del proyecto), no dentro de boe/ como antes.
+CORPUS_DIR = BOE_DIR.parent / "data" / "boe"
 CORPUS_JSON = CORPUS_DIR / "corpus.json"
 BLEUALIGN_JSONL = CORPUS_DIR / "corpus_bleualign.jsonl"
 MATERIALES_DIR = BOE_DIR.parent / "02_reglas_dialectales"
@@ -802,7 +804,7 @@ def _marcar_par_html(fc: str, fv: str) -> tuple[bool, str, str]:
 
 
 def analizar_bleualign(registros: list[dict] | None) -> dict | None:
-    """Analiza boe_corpus/corpus_bleualign.jsonl (generado aparte por
+    """Analiza ../data/boe/corpus_bleualign.jsonl (generado aparte por
     alinear_corpus_bleualign.py): cobertura, distribucion de similitud,
     resumen por documento, y una lista acotada de "candidatos a revision"
     (similitud baja) para inspeccionar a ojo la calidad de lo que decide
@@ -1532,7 +1534,7 @@ def generar_html(
 <header class="cabecera">
   <h1>Analitica del corpus paralelo BOE catala / valencia</h1>
   <p>{resumen["total_pares"]} documentos emparejados &middot; periodo {anios_txt} &middot; generado a partir de
-     <code>boe_corpus/corpus.json</code> y los materiales de <code>02_reglas_dialectales</code>.</p>
+     <code>../data/boe/corpus.json</code> y los materiales de <code>02_reglas_dialectales</code>.</p>
 </header>
 
 <nav class="pestanas">

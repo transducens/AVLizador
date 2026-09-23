@@ -21,8 +21,8 @@ US:
     python gvb_extractor.py
 
 SORTIDA:
-    corpus/raw/avl_gvb.jsonl       — un document per subapartat (capítol)
-    corpus/raw/avl_gvb_full.jsonl  — un sol document amb tot el text
+    data/avl/raw/avl_gvb.jsonl       — un document per subapartat (capítol)
+    data/avl/raw/avl_gvb_full.jsonl  — un sol document amb tot el text
 """
 
 import asyncio
@@ -40,7 +40,7 @@ from playwright.async_api import async_playwright
 URL = "https://www.avl.gva.es/gnv/buscador.jsp?gramatica=GVB&index=GVB_GNV"
 # Ancorat a __file__ (no al directori de treball): este fitxer viu a
 # 01_scraping_y_limpieza/, i "corpus/" és a l'arrel del repositori.
-OUTPUT_DIR = str(Path(__file__).resolve().parent.parent / "corpus" / "raw")
+OUTPUT_DIR = str(Path(__file__).resolve().parent.parent / "data" / "avl" / "raw")
 
 # Classes que contenen text de contingut real
 CLASSES_CONTINGUT = {"text", "text_exemple", "text_llista"}

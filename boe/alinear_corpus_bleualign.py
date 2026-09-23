@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Alinea boe_corpus/corpus.json por similitud de texto usando Bleualign,
+"""Alinea ../data/boe/corpus.json por similitud de texto usando Bleualign,
 en vez de por coincidencia exacta de conteo de parrafos/frases (eso
 descarta documentos enteros por una sola discrepancia, aunque el 95% del
 documento sea perfectamente paralelo: a veces el preambulo de una version
@@ -33,7 +33,7 @@ Algoritmo de Bleualign (visto en su codigo, bleualign/align.py):
 Requiere el paquete `bleualign` (ver requirements.txt):
     pip install git+https://github.com/rsennrich/Bleualign.git
 
-Salida: boe_corpus/corpus_bleualign.jsonl. Bleualign no expone
+Salida: ../data/boe/corpus_bleualign.jsonl. Bleualign no expone
 directamente su puntuacion BLEU interna por par via su API sencilla, asi
 que el campo "similitud" de cada registro se recalcula con solapamiento
 de palabras normalizadas (Jaccard) sobre el par que Bleualign decide —
@@ -55,7 +55,9 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 BOE_DIR = Path(__file__).resolve().parent
-CORPUS_DIR = BOE_DIR / "boe_corpus"
+# Los datos del BOE ahora viven en data/boe/ (junto a los del resto de
+# fuentes del proyecto), no dentro de boe/ como antes.
+CORPUS_DIR = BOE_DIR.parent / "data" / "boe"
 ENTRADA_PATH = CORPUS_DIR / "corpus.json"
 SALIDA_PATH = CORPUS_DIR / "corpus_bleualign.jsonl"
 

@@ -15,14 +15,14 @@ oficial real (clase `puntoPDFsup`), respetando `robots.txt` y con ritmo de
 cortesía (8s-2min de espera entre peticiones). Detalles y cifras de tiempo
 en ["Hallazgos importantes"](#hallazgos-importantes-léelo-antes-de-ejecutar)
 y ["Cortesía con el servidor"](#cortesía-con-el-servidor-por-qué-tardará-varios-días)
-más abajo. Salida: `boe_corpus/{catalan,valenciano}/<año>/BOE-*.pdf`.
+más abajo. Salida: `../data/boe/{catalan,valenciano}/<año>/BOE-*.pdf`.
 
 **2. Extracción** (`construir_corpus.py`) — texto de cada PDF a nivel de
 **párrafo real** (bloque de PyMuPDF, con info de fuente para fusionar
 correctamente párrafos cortados por saltos de página sin confundir títulos
 en cursiva con cuerpo de texto — ver
 ["Construcción del corpus"](#construcción-del-corpus-para-estudio) más
-abajo para el porqué exacto). Salida: `boe_corpus/corpus.json`, 45,5M/45,4M
+abajo para el porqué exacto). Salida: `../data/boe/corpus.json`, 45,5M/45,4M
 caracteres, 6,83M/6,80M palabras (català/valencià).
 
 **3. Alineación** (`alinear_corpus_bleualign.py`, con `texto_comun.py`) —
@@ -30,7 +30,7 @@ por similitud de texto con [Bleualign](https://github.com/rsennrich/Bleualign)
 en vez de por coincidencia exacta de conteo (eso descartaba documentos
 enteros por una sola discrepancia). Antes se excluyen los párrafos
 tabulares (presupuestos/aranceles/formularios, `texto_comun.es_tabla`) para
-no ensuciar la alineación. Salida: `boe_corpus/corpus_bleualign.jsonl`,
+no ensuciar la alineación. Salida: `../data/boe/corpus_bleualign.jsonl`,
 **302.977 pares de frase** (94,0% de cobertura sobre las frases en català
 tras excluir tablas, similitud media 0,71).
 Detalle completo en
@@ -112,7 +112,7 @@ python scraper_boe.py --max-documentos 3 --verbose
 
 El scraper es **reanudable**: puede interrumpirse (Ctrl+C) y volver a
 lanzarse con el mismo comando; retomará justo donde se quedó gracias a
-`boe_corpus/progreso.json` (días ya procesados y documentos ya descargados
+`../data/boe/progreso.json` (días ya procesados y documentos ya descargados
 no se vuelven a pedir). Un día solo se marca como completado si **todos**
 sus documentos se descargaron correctamente; si alguno falla o se corta la
 ejecución a medias, ese día se reintenta en la siguiente ejecución.
@@ -120,7 +120,7 @@ ejecución a medias, ese día se reintenta en la siguiente ejecución.
 ## Salida
 
 ```
-boe_corpus/
+../data/boe/
 ├── progreso.json          # registro de reanudación
 ├── scraper.log             # log completo con timestamp, URL y status code
 ├── catalan/
@@ -172,7 +172,7 @@ cualquier momento (p.ej. según el scraper vaya descargando más parejas):
 recorre lo que haya en disco y regenera la salida entera cada vez.
 
 ```bash
-python construir_corpus.py   # PDF -> boe_corpus/corpus.json
+python construir_corpus.py   # PDF -> ../data/boe/corpus.json
 ```
 
 ### `corpus.json` (nivel documento)
@@ -250,7 +250,7 @@ Volk, 2010):
 
 ```bash
 pip install -r requirements.txt   # instala pymupdf y bleualign
-python alinear_corpus_bleualign.py   # corpus.json -> boe_corpus/corpus_bleualign.jsonl
+python alinear_corpus_bleualign.py   # corpus.json -> ../data/boe/corpus_bleualign.jsonl
 ```
 
 Bleualign está pensado para pares de idiomas *distintos*: necesita una
@@ -308,7 +308,7 @@ documento peor alineado baja de 0,62 de similitud media.
 ### `corpus_entrenamiento.jsonl` (subconjunto limpio para entrenar)
 
 ```bash
-python exportar_entrenamiento.py   # corpus_bleualign.jsonl -> boe_corpus/corpus_entrenamiento.jsonl
+python exportar_entrenamiento.py   # corpus_bleualign.jsonl -> ../data/boe/corpus_entrenamiento.jsonl
 ```
 
 Un único umbral de similitud no separa bien "par correcto de similitud
@@ -339,7 +339,7 @@ cualquier navegador sin internet) para estudiar el corpus y, en concreto,
 cuánto se sostiene en la práctica la separación dialectal català/valencià:
 
 ```bash
-python analizar_corpus.py   # corpus.json + 02_reglas_dialectales -> boe_corpus/analitica_corpus.html
+python analizar_corpus.py   # corpus.json + 02_reglas_dialectales -> ../data/boe/analitica_corpus.html
 ```
 
 Requiere `corpus.json` ya generado (`construir_corpus.py`), opcionalmente

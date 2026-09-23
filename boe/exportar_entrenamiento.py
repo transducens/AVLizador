@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Filtra boe_corpus/corpus_bleualign.jsonl a un subconjunto limpio para
-entrenamiento: boe_corpus/corpus_entrenamiento.jsonl.
+"""Filtra ../data/boe/corpus_bleualign.jsonl a un subconjunto limpio para
+entrenamiento: ../data/boe/corpus_entrenamiento.jsonl.
 
 No se aplica un unico umbral de similitud (Jaccard sobre palabras
 normalizadas) porque la zona baja de esa metrica mezcla dos cosas muy
@@ -42,7 +42,9 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 BOE_DIR = Path(__file__).resolve().parent
-CORPUS_DIR = BOE_DIR / "boe_corpus"
+# Los datos del BOE ahora viven en data/boe/ (junto a los del resto de
+# fuentes del proyecto), no dentro de boe/ como antes.
+CORPUS_DIR = BOE_DIR.parent / "data" / "boe"
 ENTRADA_PATH = CORPUS_DIR / "corpus_bleualign.jsonl"
 SALIDA_PATH = CORPUS_DIR / "corpus_entrenamiento.jsonl"
 

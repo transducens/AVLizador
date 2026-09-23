@@ -76,13 +76,13 @@ Lee las URLs de `fonts_pdf.txt` y `fonts_pdf_publicacions.txt`:
 ```
 avl_probe.py / avl_crawler.py / gnv_extractor.py / gvb_extractor.py / pdf_extractor.py
         ↓
-corpus/raw/*.jsonl
+data/avl/raw/*.jsonl
         ↓ neteja_corpus.py
-corpus/clean/*.jsonl
+data/avl/clean/*.jsonl
         ↓ (unificación de todas las fuentes)
-corpus/final/unified.jsonl                    (2.233 documentos)
+data/avl/final/unified.jsonl                    (2.233 documentos)
         ↓ estudi_dialectal.py
-corpus/final/dialectal/corpus_occidental_net.jsonl
+data/avl/final/dialectal/corpus_occidental_net.jsonl
         (1.778 documentos, 821.195 tokens — el fichero que de verdad
          se usa como fuente para el corpus sintético)
 ```
@@ -90,7 +90,7 @@ corpus/final/dialectal/corpus_occidental_net.jsonl
 ## Cómo clasifica `estudi_dialectal.py`
 
 Cuenta, en cada documento, cuántas palabras coinciden con una lista de
-marcadores dialectales ya conocidos (`corpus/final/lexic/marcadors_dialectals.json`
+marcadores dialectales ya conocidos (`data/avl/final/lexic/marcadors_dialectals.json`
 — una lista de marcadores occidentales y otra de orientales, el mismo tipo
 de contraste léxico que se documenta en la etapa 2, pero usado aquí para
 *clasificar* documentos en vez de para traducir). Calcula:

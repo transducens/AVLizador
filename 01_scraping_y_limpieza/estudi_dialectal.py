@@ -23,7 +23,7 @@ from typing import Iterator
 # --------------------------------------------------------------------------
 
 BASE_DIR = Path(__file__).resolve().parent.parent  # raiz del repositori (este fitxer viu a 01_scraping_y_limpieza/)
-CORPUS_DIR = BASE_DIR / "corpus"
+CORPUS_DIR = BASE_DIR / "data" / "avl"
 FINAL_DIR = CORPUS_DIR / "final"
 UNIFIED_PATH = FINAL_DIR / "unified.jsonl"
 

@@ -6,7 +6,7 @@ US:
     python avl_crawler.py --section salutacio
 
 SORTIDA:
-    corpus/raw/avl_<section>.jsonl
+    data/avl/raw/avl_<section>.jsonl
 """
 
 import argparse
@@ -39,7 +39,7 @@ DELAY_MIN = 4
 DELAY_MAX = 8
 # Ancorat a __file__ (no al directori de treball): este fitxer viu a
 # 01_scraping_y_limpieza/, i "corpus/" és a l'arrel del repositori.
-OUTPUT_DIR = str(Path(__file__).resolve().parent.parent / "corpus" / "raw")
+OUTPUT_DIR = str(Path(__file__).resolve().parent.parent / "data" / "avl" / "raw")
 
 SECCIONS = {
     # Pàgina única — extreu directament

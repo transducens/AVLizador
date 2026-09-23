@@ -2,7 +2,7 @@
 """genera_corpus_sintetico.py — Corpus paral·lel sintètic valencià → català.
 
 Parteix del corpus ja depurat i verificat com a valencià pur
-(``corpus/final/dialectal/corpus_occidental_net.jsonl``, generat per
+(``data/avl/final/dialectal/corpus_occidental_net.jsonl``, generat per
 ``estudi_dialectal.py``) i genera, frase a frase, la seua traducció al
 català oriental amb el model que millor va puntuar al benchmark de
 ``03_seleccion_de_modelo/evalua_models.py`` (qwen2.5:14b, BLEU 84.52 / chrF 92.34 /
@@ -33,7 +33,7 @@ configuració que va donar eixos resultats al benchmark.
     # I, quan tots els fragments han acabat, fusionar-los:
     python genera_corpus_sintetico.py --merge-shards 8
 
-SORTIDA (dins de sinteticos/):
+SORTIDA (dins de data/sintetico/):
     corpus_sintetic_val_cat.jsonl   Fitxer principal: totes les parelles amb
                                      metadades i marques de qualitat. Es va
                                      escrivint frase a frase (append + flush),
@@ -123,14 +123,21 @@ def tradueix(frase: str, model: str, timeout: int) -> str:
         return f"ERROR: {e}"
 
 
-DEFAULT_INPUT = ROOT_DIR / "corpus" / "final" / "dialectal" / "corpus_occidental_net.jsonl"
+DEFAULT_INPUT = ROOT_DIR / "data" / "avl" / "final" / "dialectal" / "corpus_occidental_net.jsonl"
 
-OUTPUT_PATH   = BASE_DIR / "corpus_sintetic_val_cat.jsonl"
-PARALLEL_JSONL = BASE_DIR / "parallel_val_cat.jsonl"
-PARALLEL_VAL  = BASE_DIR / "parallel.val"
-PARALLEL_CAT  = BASE_DIR / "parallel.cat"
-LOG_PATH      = BASE_DIR / "generacio.log"
-INFORME_PATH  = BASE_DIR / "informe_generacio.txt"
+# Bug real trobat en organitzar el projecte: fins ara estes constants
+# apuntaven a BASE_DIR (la carpeta del propi script), pero el corpus ja
+# generat sempre s'havia guardat/mogut a ma a un subdirectori "generado/"
+# (vore repara_corpus.py, que SI ja esperava eixe subdirectori) -- amb la
+# reorganitzacio en carpeta data/, ara totes dos coincidixen de veritat:
+# tot el corpus sintetic (input i output) viu a data/sintetico/.
+GENERAT_DIR   = ROOT_DIR / "data" / "sintetico"
+OUTPUT_PATH   = GENERAT_DIR / "corpus_sintetic_val_cat.jsonl"
+PARALLEL_JSONL = GENERAT_DIR / "parallel_val_cat.jsonl"
+PARALLEL_VAL  = GENERAT_DIR / "parallel.val"
+PARALLEL_CAT  = GENERAT_DIR / "parallel.cat"
+LOG_PATH      = GENERAT_DIR / "generacio.log"
+INFORME_PATH  = GENERAT_DIR / "informe_generacio.txt"
 
 DEFAULT_MODEL = "qwen2.5:14b"
 DEFAULT_TIMEOUT = 300  # segons per petició (model gran, recomanat a evalua_models.py)
@@ -142,7 +149,7 @@ logger = logging.getLogger("genera_corpus_sintetic")
 
 
 def configurar_logging(verbose: bool) -> None:
-    BASE_DIR.mkdir(parents=True, exist_ok=True)
+    GENERAT_DIR.mkdir(parents=True, exist_ok=True)
     nivell = logging.DEBUG if verbose else logging.INFO
     formato = "%(asctime)s [%(levelname)s] %(message)s"
     logger.setLevel(nivell)

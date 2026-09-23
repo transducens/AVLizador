@@ -12,7 +12,7 @@ US (des de l'arrel del repositori):
     python 01_scraping_y_limpieza/pdf_extractor.py --url https://exemple.com/doc.pdf
 
 SORTIDA:
-    corpus/pdf/raw/avl_pdfs.jsonl
+    data/avl/pdf/raw/avl_pdfs.jsonl
 
 FORMAT fonts_pdf.txt (una URL per línia, # per comentaris):
     # Legislació
@@ -47,7 +47,7 @@ DELAY_MIN   = 5
 DELAY_MAX   = 10
 # Ancorat a __file__ (no al directori de treball): este fitxer viu a
 # 01_scraping_y_limpieza/, i "corpus/" és a l'arrel del repositori.
-OUTPUT_DIR  = str(Path(__file__).resolve().parent.parent / "corpus" / "pdf" / "raw")
+OUTPUT_DIR  = str(Path(__file__).resolve().parent.parent / "data" / "avl" / "pdf" / "raw")
 OUTPUT_FILE = "avl_pdfs.jsonl"
 MIN_TOKENS  = 50
 

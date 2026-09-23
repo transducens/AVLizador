@@ -26,7 +26,7 @@ dentro de dos ficheros distintos.
    generado (no solo a futuras generaciones), se amplía
    `04_corpus_sintetico/repara_corpus.py` con las nuevas reversiones. El
    análisis de qué falla en el corpus vive aparte, en
-   `04_corpus_sintetico/generado/analisi_corpus.html` y en las revisiones
+   `data/sintetico/analisi_corpus.html` y en las revisiones
    manuales — no en esta carpeta.
 
 ## Relación con el resto del proyecto
@@ -49,4 +49,4 @@ dentro de dos ficheros distintos.
   documento nuevo se centra en el prompt y el glosario, no en repetir esa
   tabla.
 - La auditoría completa de cuánto se cumple cada regla en el corpus real
-  está en `04_corpus_sintetico/generado/analisi_corpus.html`.
+  está en `data/sintetico/analisi_corpus.html`.

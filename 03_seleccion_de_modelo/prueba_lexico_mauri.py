@@ -39,7 +39,7 @@ import evalua_models as em  # noqa: E402  (reutilitza prompt + traduccio + lexic
 
 BASE_DIR = Path(__file__).parent.parent
 MAURI_DIR = BASE_DIR / "02_reglas_dialectales" / "lexico" / "mauri"
-CORPUS_PATH = BASE_DIR / "corpus" / "final" / "dialectal" / "corpus_occidental_net.jsonl"
+CORPUS_PATH = BASE_DIR / "data" / "avl" / "final" / "dialectal" / "corpus_occidental_net.jsonl"
 
 MAURI_FILES = [
     "acentuacion_cat_val.json",

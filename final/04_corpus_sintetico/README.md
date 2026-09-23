@@ -27,7 +27,7 @@ aquí, son el motor activo del proyecto):
 
 - **v1** (generada con el léxico y prompt anteriores a esta ronda de
   mejoras): 46.315 frases, auditada por completo — ver
-  `04_corpus_sintetico/generado/` y `../metodologia_y_resultados.md`
+  `data/sintetico/` y `../metodologia_y_resultados.md`
   sección 6 para los bugs encontrados y corregidos.
 - **v2** (pendiente/en curso): regeneración completa con qwen2.5:14b, el
   léxico de 194 entradas y todas las reglas nuevas (BLEU 91,08 en el
@@ -38,7 +38,7 @@ aquí, son el motor activo del proyecto):
 ## Fichero final a usar (una vez generado)
 
 ```
-04_corpus_sintetico/generado/parallel_val_cat.jsonl
+data/sintetico/parallel_val_cat.jsonl
 ```
 
 Formato `{"val": "...", "cat": "..."}`, una pareja por línea, sin ninguna

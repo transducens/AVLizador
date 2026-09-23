@@ -50,6 +50,7 @@ else
     SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 fi
 SINTETICOS_DIR="$(dirname "$SCRIPT_DIR")"
+ROOT_DIR="$(dirname "$SINTETICOS_DIR")"
 
 # El aislamiento de GPU por cgroups de SLURM no está activo en "abaco" --
 # se restringe a mano a las 3 GPUs físicas 0-2, y se desactiva Vulkan en
@@ -61,7 +62,7 @@ echo "Restringiendo el job a las GPUs físicas: $CUDA_VISIBLE_DEVICES"
 export OLLAMA_MODELS="${OLLAMA_MODELS:-$HOME/ollama_models}"
 mkdir -p "$OLLAMA_MODELS"
 
-OUT_DIR="$SINTETICOS_DIR/generado/muestra_comparativa_$(date +%Y%m%d_%H%M)"
+OUT_DIR="$ROOT_DIR/data/sintetico/muestra_comparativa_$(date +%Y%m%d_%H%M)"
 LOGS_DIR="$OUT_DIR/logs"
 mkdir -p "$LOGS_DIR"
 echo "Salida en: $OUT_DIR"

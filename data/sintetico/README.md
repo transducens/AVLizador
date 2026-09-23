@@ -15,13 +15,13 @@ avl_crawler.py / avl_probe.py / gnv_extractor.py / gvb_extractor.py / pdf_extrac
         ↓ (scraping por secciones: butlletí, glossari, gramàtica normativa,
         ↓  notes de premsa, pàgines, posts, legislació, acords normatius,
         ↓  publicacions, biografies...)
-corpus/raw/*.jsonl  →  neteja_corpus.py  →  corpus/clean/*.jsonl
+data/avl/raw/*.jsonl  →  neteja_corpus.py  →  data/avl/clean/*.jsonl
         ↓
-corpus/final/unified.jsonl          (2.233 documentos, todo unificado)
+data/avl/final/unified.jsonl          (2.233 documentos, todo unificado)
         ↓ estudi_dialectal.py (clasifica cada documento como occidental/
         ↓  oriental/mixto según marcadores dialectales, y descarta lo que
         ↓  no es claramente valenciano occidental)
-corpus/final/dialectal/corpus_occidental_net.jsonl
+data/avl/final/dialectal/corpus_occidental_net.jsonl
         (1.778 documentos, 821.195 tokens — SOLO texto verificado
          como valenciano occidental puro)
 ```
@@ -100,7 +100,7 @@ frase para traducir con varias GPUs a la vez (ver `04_corpus_sintetico/slurm/`).
 ## 4. Auditoría de calidad
 
 Antes de dar el corpus por bueno se hizo una auditoría completa
-(`04_corpus_sintetico/generado/analisi_corpus.html`, generada a partir de este mismo
+(`data/sintetico/analisi_corpus.html`, generada a partir de este mismo
 corpus), contrastando **cada una de las reglas dialectales documentadas**
 contra lo que el modelo hizo de verdad, no solo confiando en que un LLM con
 buen BLEU en 60 frases se comportaría igual en 46.315 frases reales de todo
@@ -161,7 +161,7 @@ llegar a acercarse a la calidad de qwen2.5:14b en esta tarea (y ser mucho
 más barato/rápido de ejecutar), pero no la va a superar; el techo de calidad
 es el del modelo que lo generó. Para saber si un futuro modelo generaliza
 más allá de este corpus, conviene validar contra texto de origen humano
-(ver `boe/boe_corpus/` — traducciones oficiales reales, pendiente de
+(ver `data/boe/` — traducciones oficiales reales, pendiente de
 extraer y alinear; se deja aparte por ahora).
 
 **Otra limitación**: el corpus está concentrado en registro institucional/
@@ -172,7 +172,7 @@ otro (conversación, prensa informal, literatura).
 ## 7. Qué fichero usar
 
 ```
-04_corpus_sintetico/generado/
+data/sintetico/
 ├── corpus_sintetic_val_cat.jsonl            ← el corpus completo, con metadatos
 ├── corpus_sintetic_val_cat.abans_de_reparar.jsonl  ← copia de seguridad pre-reparación
 ├── parallel_val_cat.jsonl                   ← ⭐ EL BUENO para entrenar/usar
