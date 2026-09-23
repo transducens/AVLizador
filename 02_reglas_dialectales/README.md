@@ -1,9 +1,33 @@
-# Materiales de conversión valencià ↔ català
+# Etapa 2 — Reglas dialectales y léxico
 
 Todo lo relacionado con las diferencias dialectales entre valenciano
 (occidental, norma AVL/GVA) y catalán (oriental, norma IEC): de dónde salen,
 cómo se documentan, y los datos estructurados que usa el pipeline de
-traducción.
+traducción. Con el corpus fuente ya limpio (etapa 1), esta etapa define
+**qué cambia** entre los dos dialectos — las reglas que luego usa el modelo
+para traducir (etapas 3-4).
+
+**[`reglas_dialectales_con_evidencia.md`](reglas_dialectales_con_evidencia.md)**
+— empieza por aquí si quieres las reglas explicadas como un tema de estudio
+(demostrativos, posesivos, morfología verbal, numerales, gentilicios,
+sintaxis, léxico diferencial), con un apéndice de evidencia numérica de
+cada una.
+
+## Metodología: cómo se derivaron las reglas
+
+Se derivaron comparando, dentro del diccionario morfológico de Apertium
+(`apertium-cat.cat.dix`), las formas marcadas `v="val_gva"` (occidental) con
+sus equivalentes `v="cat"`/`v="val_uni"` (oriental). Cada patrón se
+documenta con su **cobertura** (cuántos casos reales lo siguen) — un patrón
+con cobertura baja no se convierte en regla general, se deja como lista
+cerrada de palabras confirmadas una a una. Dos reglas salen de fuentes
+distintas al diccionario, documentadas explícitamente donde corresponde: el
+pretèrit perifràstic (de analizar frases completas del benchmark) y la
+concordancia de género de "dos/dues" (de normativa AVL/IEC citada
+directamente).
+
+Ver `documentacion/metodologia_y_resultados.md` secciones 2 y 4 para el
+detalle completo del proceso.
 
 ## Estructura
 

@@ -21,7 +21,7 @@ generado.
 ## Cómo ejecutarlo
 
 ```bash
-cd dataset_entrenamiento
+cd 06_dataset_entrenamiento
 python prepara_dataset.py
 ```
 

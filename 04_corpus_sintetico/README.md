@@ -17,7 +17,7 @@ per a entrenar o afinar un model de traducció occidental↔oriental.
   el lèxic de 194 entrades i les regles de pretèrit perifràstic/institucions/
   elisió ja afegides) — la millor configuració provada fins ara. Comparat
   també amb salamandra-7b-instruct (BSC) — vore
-  `final/metodologia_y_resultados.md` secció 5 per a la comparativa completa.
+  `documentacion/metodologia_y_resultados.md` secció 5 per a la comparativa completa.
 - **Diferència respecte al benchmark**: el benchmark tradueix frases soltes
   sense noms d'institucions. En aplicar-ho a text real de l'AVL es va
   detectar que el model "traduïa" sigles (`AVL` → `IEC`), un error factual,
@@ -95,13 +95,25 @@ corre en un altre lloc. Dues opcions ja preparades:
 ## Sortida
 
 ```
-04_corpus_sintetico/
+data/sintetico/
 ├── corpus_sintetic_val_cat.jsonl   # Fitxer principal: totes les parelles + metadades + qualitat
 ├── parallel_val_cat.jsonl          # Exportació neta {"val", "cat"} (sense sospitoses)
 ├── parallel.val / parallel.cat     # El mateix, en 2 fitxers alineats línia a línia (format Moses/OPUS)
 ├── generacio.log                   # Log complet amb timestamp
 └── informe_generacio.txt           # Resum: parelles per tipus de document, sospitoses, temps
 ```
+
+## Estado del corpus generado
+
+- **v1** (léxico y prompt anteriores a esta ronda de mejoras): 46.315
+  frases, auditada por completo — ver `data/sintetico/` y
+  `documentacion/metodologia_y_resultados.md` sección 6 para los bugs
+  encontrados y corregidos.
+- **v2**: regeneración con el léxico de 194 entradas y todas las reglas
+  maduras — es la versión que hay que usar una vez esté lista. Fichero
+  final: `data/sintetico/parallel_val_cat.jsonl` (formato
+  `{"val": "...", "cat": "..."}`, una pareja por línea, listo para
+  entrenar).
 
 `corpus_sintetic_val_cat.jsonl` guarda, per cada frase única: el text
 valencià, la traducció, el document d'origen (`doc_id`, `source_url`,

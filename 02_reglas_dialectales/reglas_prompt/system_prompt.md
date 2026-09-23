@@ -14,7 +14,7 @@ Se usa en dos sitios ligeramente distintos (ver más abajo la diferencia):
 > **Nota (17/09/2026)**: existió una variante `SYSTEM_PROMPT_SALAMANDRA`
 > para el modelo salamandra-7b-instruct, retirada del código porque de
 > momento no se va a usar ese modelo. Si se retoma en el futuro, revisar
-> el historial de `final/metodologia_y_resultados.md` para las reglas
+> el historial de `../../documentacion/metodologia_y_resultados.md` para las reglas
 > específicas que necesitaba (edición mínima, EXEMPLE sin etiqueta
 > copiable) antes de recrearla.
 
@@ -187,7 +187,7 @@ hueco de prompt. **Recomendación para la generación del corpus completo**:
 añadir una comprobación determinista en `repara_corpus.py` (si el original
 tiene "valencià"/"valenciana" y la traducción tiene "català"/"catalana",
 revertir) en vez de confiar solo en el prompt — igual que ya se hace con
-otros bugs conocidos (ver `final/metodologia_y_resultados.md` sección 6).
+otros bugs conocidos (ver `../../documentacion/metodologia_y_resultados.md` sección 6).
 
 También se ha visto, dos veces en proyectos distintos (`Beneixida→Benedita`
 en el corpus real, `Innsburck→Innsbruck` en el benchmark), que el modelo

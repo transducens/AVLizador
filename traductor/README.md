@@ -1,8 +1,10 @@
-# Motor de reglas determinista (`traductor/`)
+# Motor de reglas determinista — etapa 5
 
-Código: [`traductor/`](../../traductor/), en la raíz del repositorio (fuera
-de `final/` — esta carpeta es su documentación, no una copia de sus
-ficheros, a diferencia de las etapas 1-4).
+Este paquete (`traductor/`) vive en la raíz del repositorio, sin el prefijo
+numérico de las demás etapas (`01_...` a `04_...`), porque es un paquete
+Python que se importa por nombre (`import traductor`) desde otras partes
+del código — un nombre de módulo no puede empezar por un dígito en Python.
+Conceptualmente es la etapa 5 del proyecto.
 
 ## Por qué existe esto
 
@@ -11,7 +13,7 @@ glosario dinámico para generar el corpus sintético. Funciona razonablemente
 bien (BLEU ~93 en el benchmark de 60 frases), pero la revisión manual
 encontró un ~20% de errores reales frente al ~1,5% que detectan las
 comprobaciones automáticas — la mayoría, alucinaciones del modelo sin
-relación con ninguna regla dialectal (ver `metodologia_y_resultados.md`,
+relación con ninguna regla dialectal (ver `../documentacion/metodologia_y_resultados.md`,
 secciones 6 y 9).
 
 La conversión occidental→oriental es, en su mayor parte, un problema
@@ -87,7 +89,7 @@ primera letra de una frase siempre va en mayúscula, sea o no nombre
 propio). Es la misma heurística ya probada en
 `03_seleccion_de_modelo/evalua_models.py::glossari_per_frase()`, añadida allí tras
 un incidente real con `blanca`/`Blanca` y `roig`/`Roig` (ver
-`metodologia_y_resultados.md`, sección 6). Límite conocido, heredado sin
+`../documentacion/metodologia_y_resultados.md`, sección 6). Límite conocido, heredado sin
 arreglo: un nombre propio que es la **primera** palabra del texto nunca se
 detecta.
 
@@ -102,7 +104,7 @@ detecta.
 | 5 | `gentilicis` | Regla de sufijo general, pero acotada por las excepciones "és"/"més" |
 | 6 | `morfologia_verbal` | Solo fase 1 (presente indicativo); lista cerrada, sin riesgo de interacción |
 | 7 | `perfet` | Genera una **frase** ("va passar"), no una palabra — mejor después de que todo lo demás ya esté resuelto palabra por palabra |
-| 8 | `elisio` | **Deliberadamente la última**: opera sobre el resultado ya transformado (`tok.translated`, no `tok.surface`) de la palabra siguiente. Si fuera antes, una regla posterior podría cambiar esa palabra y dejar la elisión apuntando a una vocal/consonante que ya no está — es exactamente lo que dice la fuente (`reglas_dialectales.md`, §11.2): "cal aplicar l'elisió cada vegada que una altra regla la dispara" |
+| 8 | `elisio` | **Deliberadamente la última**: opera sobre el resultado ya transformado (`tok.translated`, no `tok.surface`) de la palabra siguiente. Si fuera antes, una regla posterior podría cambiar esa palabra y dejar la elisión apuntando a una vocal/consonante que ya no está — es exactamente lo que dice la fuente (`../02_reglas_dialectales/reglas_dialectales_con_evidencia.md`, §11.2): "cal aplicar l'elisió cada vegada que una altra regla la dispara" |
 
 **Bug real encontrado al verificar este orden** (no solo revisado a ojo,
 con doctest de regresión en `elisio.py`): la primera implementación de
@@ -124,7 +126,7 @@ parece elidir) y producía `"d'vuitanta"`, incorrecto. Arreglado mirando
   cogiendo siempre el primer sinónimo (documentado, no arreglado del
   todo: da `corders→xai` en singular en vez de plural).
 - **`demostratius.py`** — este/esta/estos/estes→aquest...; eixe/eixa/eixos/eixes→aqueix...
-  Tabla copiada literal de `reglas_dialectales.md` §1.
+  Tabla copiada literal de `../02_reglas_dialectales/reglas_dialectales_con_evidencia.md` §1.
 - **`possessius.py`** — meua/teua/seua (+ plurales) → meva/teva/seva. Solo
   formas átonas femeninas; masculinas y tónicas no cambian (§2).
 - **`numerals.py`** — tres mecanismos independientes: raíz `huit→vuit`
@@ -166,7 +168,7 @@ parece elidir) y producía `"d'vuitanta"`, incorrecto. Arreglado mirando
 
 ## Qué falta (gaps conocidos, no una promesa de qué se hará)
 
-Reglas que **sí están documentadas** en `reglas_dialectales.md` pero que
+Reglas que **sí están documentadas** en `../02_reglas_dialectales/reglas_dialectales_con_evidencia.md` pero que
 **ningún** fichero de `traductor/` cubre todavía:
 
 | Sección de la fuente | Contenido | Dónde encajaría |
@@ -184,7 +186,7 @@ nueva — es el mismo criterio que ya usó la fuente para `vosté/vostés`.
 
 ## Cómo añadir una regla nueva
 
-1. Confirma la tabla/patrón en `final/02_reglas_dialectales/reglas_dialectales.md`
+1. Confirma la tabla/patrón en `../02_reglas_dialectales/reglas_dialectales_con_evidencia.md`
    — **nunca la inventes**; si la fuente no la confirma con evidencia, no
    se implementa (ver cómo se documentaron los huecos de arriba).
 2. Decide: ¿es un patrón productivo (sufijo/regla general) o un puñado de

@@ -2,3 +2,10 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+
+# 07_entrenamiento_modelos/: pesos de modelos y logs de ejecucion, nunca a git
+# (los .gitkeep mantienen la carpeta en el repo aunque este vacia)
+07_entrenamiento_modelos/checkpoints/*
+!07_entrenamiento_modelos/checkpoints/.gitkeep
+07_entrenamiento_modelos/runs/*
+!07_entrenamiento_modelos/runs/.gitkeep
