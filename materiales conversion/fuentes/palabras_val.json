@@ -1,0 +1,4279 @@
+{
+  "total_entradas": 368,
+  "total_palabras_unicas": 364,
+  "palabras": [
+    {
+      "palabra": "bla",
+      "lema": "bla",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "bo__adj",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "huitantè",
+      "lema": "huitanté",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "huit-centè",
+      "lema": "huit-centé",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "huitcentista",
+      "lema": "huitcentista",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "agrícol/a__adj",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "llavable",
+      "lema": "llavable",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "abdominal__adj",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "nadador",
+      "lema": "nadador",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "absolut__adj",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "tèrbol",
+      "lema": "tèrbol",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "absolut__adj",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "térbol",
+      "lema": "térbol",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "absolut__adj",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "vuitantè",
+      "lema": "vuitantè",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "vuit-centè",
+      "lema": "vuit-centè",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "vuitcentista",
+      "lema": "vuitcentista",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "agrícol/a__adj",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "vuitanta-unè",
+      "lema": "vuitanta-unè",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "vuitanta-dosè",
+      "lema": "vuitanta-dosè",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "vuitanta-tresè",
+      "lema": "vuitanta-tresè",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "vuitanta-quatrè",
+      "lema": "vuitanta-quatrè",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "vuitanta-cinquè",
+      "lema": "vuitanta-cinquè",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "vuitanta-sisè",
+      "lema": "vuitanta-sisè",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "vuitanta-setè",
+      "lema": "vuitanta-setè",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "vuitanta-vuitè",
+      "lema": "vuitanta-vuitè",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "/vuitè__adj",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "vuitanta-novè",
+      "lema": "vuitanta-novè",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "huitanta-unè",
+      "lema": "huitanta-unè",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "huitanta-dosè",
+      "lema": "huitanta-dosè",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "huitanta-tresè",
+      "lema": "huitanta-tresè",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "huitanta-quatrè",
+      "lema": "huitanta-quatrè",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "huitanta-cinquè",
+      "lema": "huitanta-cinquè",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "huitanta-sisè",
+      "lema": "huitanta-sisè",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "huitanta-setè",
+      "lema": "huitanta-setè",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "huitanta-huitè",
+      "lema": "huitanta-huitè",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "huitanta-novè",
+      "lema": "huitanta-novè",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "noranta-huitè",
+      "lema": "noranta-huitè",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "alfàbega",
+      "lema": "alfàbega",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "alg/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "algepsaire",
+      "lema": "algepsaire",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "acompanyant__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "ametla",
+      "lema": "ametla",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "ametler",
+      "lema": "ametler",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "arrancada",
+      "lema": "arrancada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "bes",
+      "lema": "bes",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "as__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "beset",
+      "lema": "beset",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "bigot",
+      "lema": "bigot",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "bresquilla",
+      "lema": "bresquilla",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "bresquillera",
+      "lema": "bresquillera",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "cèrcol",
+      "lema": "cèrcol",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "cércol",
+      "lema": "cércol",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "clòtxina",
+      "lema": "clòtxina",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "comitè de direcció",
+      "lema": "comitè de direcció",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "comité de direcció",
+      "lema": "comité de direcció",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "comitè executiu",
+      "lema": "comitè executiu",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "atletisme__n",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "comitès executius",
+      "lema": "comitè executiu",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "afores__n",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "comité executiu",
+      "lema": "comité executiu",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "atletisme__n",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "comités executius",
+      "lema": "comité executiu",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "afores__n",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "contramotlura",
+      "lema": "contramotlura",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "corder",
+      "lema": "corder",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "cosquerelles",
+      "lema": "cosquerelles",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "escombraries__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "creïlla",
+      "lema": "creïlla",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "cuixa de corder",
+      "lema": "cuixa de corder",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "dacsa",
+      "lema": "dacsa",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "depòsit",
+      "lema": "depòsit",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "eixida",
+      "lema": "eixida",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "embós",
+      "lema": "embós",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "calab/ós__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "envernissador",
+      "lema": "envernissador",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "senyor__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "calfament",
+      "lema": "calfament",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "escaló",
+      "lema": "escaló",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "aband/ó__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "espatla",
+      "lema": "espatla",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "espatlera",
+      "lema": "espatlera",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "espatleta",
+      "lema": "espatleta",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "espill",
+      "lema": "espill",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "estrela",
+      "lema": "estrela",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "fardatxo",
+      "lema": "fardatxo",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "faena",
+      "lema": "faena",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "faena a mitja jornada",
+      "lema": "faena a mitja jornada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "fenoll",
+      "lema": "fenoll",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "fesol",
+      "lema": "fesol",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "forma de reembossament",
+      "lema": "forma de reembossament",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "granera",
+      "lema": "granera",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "guardaespatles",
+      "lema": "guardaespatles",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "guardaespatlles__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "joguet",
+      "lema": "joguet",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "jupetí",
+      "lema": "jupetí",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "boc/í__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "llentilla",
+      "lema": "llentilla",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "manganès",
+      "lema": "manganès",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "atletisme__n",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "manganés",
+      "lema": "manganés",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "atletisme__n",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "meló d'Alger",
+      "lema": "meló d'Alger",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "aband/ó__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "motle",
+      "lema": "motle",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "motlura",
+      "lema": "motlura",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "òbila",
+      "lema": "òbila",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "oroneta",
+      "lema": "oroneta",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "pallola",
+      "lema": "pallola",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "pellorfa",
+      "lema": "pellorfa",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "pesebre",
+      "lema": "pesebre",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "pèsol",
+      "lema": "pèsol",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "pésol",
+      "lema": "pésol",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "pitxer",
+      "lema": "pitxer",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "punyada",
+      "lema": "punyada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "rabosa",
+      "lema": "rabosa",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "llavadora",
+      "lema": "llavadora",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "llavaplats",
+      "lema": "llavaplats",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "campus__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "renyonera",
+      "lema": "renyonera",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "respatler",
+      "lema": "respatler",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "revetla",
+      "lema": "revetla",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "sègol",
+      "lema": "sègol",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "ségol",
+      "lema": "ségol",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "sèmola",
+      "lema": "sèmola",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "sémola",
+      "lema": "sémola",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "terratrèmol",
+      "lema": "terratrèmol",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "terratrémol",
+      "lema": "terratrémol",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "teuladí",
+      "lema": "teuladí",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "boc/í__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "tomaca",
+      "lema": "tomaca",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "acústi/ca__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "tomaca d'arbre",
+      "lema": "tomaca d'arbre",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "acústi/ca__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "tret d'eixida",
+      "lema": "tret d'eixida",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "trèvol",
+      "lema": "trèvol",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "trévol",
+      "lema": "trévol",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "ulls ametlats",
+      "lema": "ulls ametlats",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "afores__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "vesprada",
+      "lema": "vesprada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "vetla",
+      "lema": "vetla",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "xarrada",
+      "lema": "xarrada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "xic",
+      "lema": "xic",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "asiàti/c__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "ximenera",
+      "lema": "ximenera",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "xiquet",
+      "lema": "xiquet",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "senyor__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "company de faena",
+      "lema": "company de faena",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "senyor__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "vetlada",
+      "lema": "vetlada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "pista de bitles",
+      "lema": "pista de bitles",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_uni val_gva"
+    },
+    {
+      "palabra": "gestor d'arrancada",
+      "lema": "gestor d'arrancada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "prima de reembossament",
+      "lema": "prima de reembossament",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "batle",
+      "lema": "batle",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "alcalde__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "bitla",
+      "lema": "bitla",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "butla",
+      "lema": "butla",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "guatla",
+      "lema": "guatla",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "amerar",
+      "lema": "amerar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "depòsit funerari",
+      "lema": "depòsit funerari",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "atletisme__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "depòsits funeraris",
+      "lema": "depòsit funerari",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "afores__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "li la",
+      "lema": "li la",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "pronombre",
+      "paradigma": null,
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "ací",
+      "lema": "ací",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "a colp calent",
+      "lema": "a colp calent",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "a imatge i semblança seua",
+      "lema": "a imatge i semblança seua",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "a la vesprada",
+      "lema": "a la vesprada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "al caient de la vesprada",
+      "lema": "al caient de la vesprada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "a les huit",
+      "lema": "a les huit",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "a les vesprades",
+      "lema": "a les vesprades",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "a les vuit",
+      "lema": "a les vuit",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "al més prompte possible",
+      "lema": "al més prompte possible",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "al més prompte",
+      "lema": "al més prompte",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "amb prou faenes",
+      "lema": "amb prou faenes",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "a mig vesprada",
+      "lema": "a mig vesprada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "a mitjan vesprada",
+      "lema": "a mitjan vesprada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "a petició meua",
+      "lema": "a petició meua",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "a petició seua",
+      "lema": "a petició seua",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "a petició teua",
+      "lema": "a petició teua",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "arrere",
+      "lema": "arrere",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "avant",
+      "lema": "avant",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "avui dia",
+      "lema": "avui dia",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "avui en dia",
+      "lema": "avui en dia",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "avui",
+      "lema": "avui",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "cada colp",
+      "lema": "cada colp",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "cap ací",
+      "lema": "cap ací",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "com més prompte millor",
+      "lema": "com més prompte millor",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "com més prompte",
+      "lema": "com més prompte",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "coste el que coste",
+      "lema": "coste el que coste",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "d'ara en avant",
+      "lema": "d'ara endavant",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "de colp i volta",
+      "lema": "de colp i volta",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "de colp",
+      "lema": "de colp",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "despús-ahir",
+      "lema": "despús-ahir",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "despús-anit",
+      "lema": "despús-anit",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "despús-demà",
+      "lema": "despús-demà",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "de vesprada",
+      "lema": "de vesprada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "dins del termini i en la forma escaient",
+      "lema": "dins del termini i en la forma escaient",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "dins seu",
+      "lema": "dins seu",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "d'una plomada",
+      "lema": "d'una plomada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "enguany",
+      "lema": "enguany",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "en la mesura que siga possible",
+      "lema": "en la mesura que siga possible",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "en tant que siga possible",
+      "lema": "en tant que siga possible",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "fins avui",
+      "lema": "fins avui",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "fins hui",
+      "lema": "fins hui",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "en data d'avui",
+      "lema": "en data d'avui",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "en data de hui",
+      "lema": "en data de hui",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "fóra com fóra",
+      "lema": "fóra com fóra",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "heus ací",
+      "lema": "heus ací",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "hui dia",
+      "lema": "hui dia",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "hui en dia",
+      "lema": "hui en dia",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "hui",
+      "lema": "hui",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "matí i vesprada",
+      "lema": "matí i vesprada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "matí vesprada i nit",
+      "lema": "matí vesprada i nit",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "per la meua banda",
+      "lema": "per la meua banda",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "per la seua banda",
+      "lema": "per la seua banda",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "per la teua banda",
+      "lema": "per la teua banda",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "per part meua",
+      "lema": "per part meua",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "per part seua",
+      "lema": "per part seua",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "per la seua part",
+      "lema": "per la seua part",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "per part teua",
+      "lema": "per part teua",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "per primer colp",
+      "lema": "per primer colp",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "per segon colp",
+      "lema": "per segon colp",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "per tercer colp",
+      "lema": "per tercer colp",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "prompte",
+      "lema": "prompte",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "siga com siga",
+      "lema": "siga com siga",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "siga el que siga",
+      "lema": "siga el que siga",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "tan bé com siga possible",
+      "lema": "tan bé com siga possible",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "tan prompte",
+      "lema": "tan prompte",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "per un colp de sort",
+      "lema": "per un colp de sort",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "més avant",
+      "lema": "més avant",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "més arrere",
+      "lema": "més arrere",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "molt arrere",
+      "lema": "molt arrere",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "a la faena",
+      "lema": "a la faena",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "en contra de la meua voluntat",
+      "lema": "en contra de la meua voluntat",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "sempre a la seua disposició",
+      "lema": "sempre a la seua disposició",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "ahir a la vesprada",
+      "lema": "ahir a la vesprada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "demà a la vesprada",
+      "lema": "demà a la vesprada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "aquesta vesprada",
+      "lema": "aquesta vesprada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "l'altra vesprada",
+      "lema": "l'altra vesprada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "d'hora a la vesprada",
+      "lema": "d'hora a la vesprada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "a mitja vesprada",
+      "lema": "a mitja vesprada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "fins prompte",
+      "lema": "fins prompte",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "interjeccion",
+      "paradigma": "a_reveure__ij",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "o siga",
+      "lema": "o sigui",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "conjuncion",
+      "paradigma": "i__cnjcoo",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "aqueix",
+      "lema": "aqueix",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "determinante",
+      "paradigma": "aqueix__det",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "vuitanta-un",
+      "lema": "vuitanta-un",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "determinante",
+      "paradigma": "cinquanta-un__det",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "huitanta-un",
+      "lema": "huitanta-un",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "determinante",
+      "paradigma": "cinquanta-un__det",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "bona vesprada",
+      "lema": "bona vesprada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": null,
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "espatla ibèrica d'enceball",
+      "lema": "espatla ibèrica d'enceball",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": null,
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "espatles ibèriques d'enceball",
+      "lema": "espatla ibèrica d'enceball",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": null,
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "cinquanta-vuit",
+      "lema": "cinquanta-vuit",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "cinquanta-huit",
+      "lema": "cinquanta-huit",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "dinou",
+      "lema": "dinou",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "disset",
+      "lema": "disset",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "divuit",
+      "lema": "divuit",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "dènou",
+      "lema": "dènou",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "dèsset",
+      "lema": "dèsset",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "díhuit",
+      "lema": "díhuit",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "noranta-vuit",
+      "lema": "noranta-vuit",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "noranta-huit",
+      "lema": "noranta-huit",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "quaranta-vuit",
+      "lema": "quaranta-vuit",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "quaranta-huit",
+      "lema": "quaranta-huit",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "seixanta-vuit",
+      "lema": "seixanta-vuit",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "seixanta-huit",
+      "lema": "seixanta-huit",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "setanta-vuit",
+      "lema": "setanta-vuit",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "setanta-huit",
+      "lema": "setanta-huit",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "trenta-vuit",
+      "lema": "trenta-vuit",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "trenta-huit",
+      "lema": "trenta-huit",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "vint-i-vuit",
+      "lema": "vint-i-vuit",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "vint-i-huit",
+      "lema": "vint-i-huit",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "vuit",
+      "lema": "vuit",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "huit",
+      "lema": "huit",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "vuit-cents",
+      "lema": "vuit-cents",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "cinc-cent/s__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "huit-cents",
+      "lema": "huit-cents",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "cinc-cent/s__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "vuitanta",
+      "lema": "vuitanta",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "huitanta",
+      "lema": "huitanta",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "vuitanta-cinc",
+      "lema": "vuitanta-cinc",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "huitanta-cinc",
+      "lema": "huitanta-cinc",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "vuitanta-dos",
+      "lema": "vuitanta-dos",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "cinquanta-d/os__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "huitanta-dos",
+      "lema": "huitanta-dos",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "cinquanta-d/os__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "vuitanta-nou",
+      "lema": "vuitanta-nou",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "huitanta-nou",
+      "lema": "huitanta-nou",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "vuitanta-quatre",
+      "lema": "vuitanta-quatre",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "huitanta-quatre",
+      "lema": "huitanta-quatre",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "vuitanta-set",
+      "lema": "vuitanta-set",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "huitanta-set",
+      "lema": "huitanta-set",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "vuitanta-sis",
+      "lema": "vuitanta-sis",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "huitanta-sis",
+      "lema": "huitanta-sis",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "vuitanta-tres",
+      "lema": "vuitanta-tres",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "huitanta-tres",
+      "lema": "huitanta-tres",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "vuitanta-u",
+      "lema": "vuitanta-u",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "cinquanta-u__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "huitanta-u",
+      "lema": "huitanta-u",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "cinquanta-u__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "vuitanta-vuit",
+      "lema": "vuitanta-vuit",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "huitanta-huit",
+      "lema": "huitanta-huit",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "sis__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "vuit",
+      "lema": "vuit",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "numeral",
+      "paradigma": "mil(1)__num",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "huit",
+      "lema": "huit",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "numeral",
+      "paradigma": "mil(1)__num",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "aqueix",
+      "lema": "aqueix",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "pronombre",
+      "paradigma": "aqueix__prn",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "vos",
+      "lema": "vos",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "pronombre",
+      "paradigma": "us__prn",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "abellir",
+      "lema": "abellir",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abarat/ir__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "acatxar",
+      "lema": "acatxar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "anar a la seua",
+      "lema": "anar a la seua",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "/anar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "aparèixer",
+      "lema": "aparèixer",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "aparéixer",
+      "lema": "aparèixer",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "arrancar a córrer",
+      "lema": "arrancar a córrer",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abo/car__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "arrancar",
+      "lema": "arrancar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abo/car__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "atès",
+      "lema": null,
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": null,
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "atés",
+      "lema": null,
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "verbo",
+      "paradigma": null,
+      "v": "val_gva"
+    },
+    {
+      "palabra": "buscar",
+      "lema": "buscar",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abo/car__vblex",
+      "v": "cat val_gva"
+    },
+    {
+      "palabra": "comparèixer",
+      "lema": "comparèixer",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "comparéixer",
+      "lema": "comparèixer",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "conèixer el marro",
+      "lema": "conèixer el marro",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "conéixer el marro",
+      "lema": "conèixer el marro",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "conèixer",
+      "lema": "conèixer",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "conéixer",
+      "lema": "conèixer",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "convèncer",
+      "lema": "convèncer",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "convèn/cer__vblex",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "convéncer",
+      "lema": "convèncer",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "verbo",
+      "paradigma": "convèn/cer__vblex",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "desaparèixer",
+      "lema": "desaparèixer",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "desaparéixer",
+      "lema": "desaparèixer",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "desconèixer",
+      "lema": "desconèixer",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "desconéixer",
+      "lema": "desconèixer",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "desembossar",
+      "lema": "desembossar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "desvetlar",
+      "lema": "desvetlar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "eixir d'un mal pas",
+      "lema": "eixir d'un mal pas",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "/eixir__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "emmotlar",
+      "lema": "emmotlar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "envernissar",
+      "lema": "envernissar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "calfar",
+      "lema": "calfar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "acurtar",
+      "lema": "acurtar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "esguitar",
+      "lema": "esguitar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "espatlar",
+      "lema": "espatlar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "espentar",
+      "lema": "espentar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "fer cosquerelles",
+      "lema": "fer cosquerelles",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "f/er__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "fer el desentès",
+      "lema": "fer el desentès",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "f/er__vblex",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "fer el desentés",
+      "lema": "fer el desentés",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "verbo",
+      "paradigma": "f/er__vblex",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "fer una besada",
+      "lema": "fer una besada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "f/er__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "llavar",
+      "lema": "llavar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "amprar",
+      "lema": "manllevar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "mesclar",
+      "lema": "mesclar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "nadar",
+      "lema": "nadar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "rascar",
+      "lema": "rascar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abo/car__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "reaparèixer",
+      "lema": "reaparèixer",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "reaparéixer",
+      "lema": "reaparèixer",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "recollir",
+      "lema": "recollir",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "verbo",
+      "paradigma": "ac/ollir__vblex",
+      "v": "cat val_gva"
+    },
+    {
+      "palabra": "reconèixer",
+      "lema": "reconèixer",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "reconéixer",
+      "lema": "reconèixer",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "no reconèixer",
+      "lema": "no reconèixer",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "no reconéixer",
+      "lema": "no reconèixer",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "vèncer",
+      "lema": "vèncer",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "convèn/cer__vblex",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "véncer",
+      "lema": "vèncer",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "verbo",
+      "paradigma": "convèn/cer__vblex",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "vetlar",
+      "lema": "vetlar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "xarrar",
+      "lema": "xarrar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "arrancar el bull",
+      "lema": "arrancar el bull",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abo/car__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "arrancar la cabellera",
+      "lema": "arrancar la cabellera",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abo/car__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "tancar de colp",
+      "lema": "tancar de colp",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abo/car__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "tenir fam",
+      "lema": "tenir fam",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "/tenir__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "fer marxa arrere",
+      "lema": "fer marxa arrere",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "f/er__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "desunflar",
+      "lema": "desunflar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "bellota",
+      "lema": "bellota",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "misto",
+      "lema": "misto",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "xocolate",
+      "lema": "xocolate",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "xuplar",
+      "lema": "xuplar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "entropessar",
+      "lema": "entropessar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "empenyiment",
+      "lema": "empenyiment",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "espuma",
+      "lema": "espuma",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "espumadora",
+      "lema": "espumadora",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "espumejar",
+      "lema": "espumejar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "agreu/jar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "anou",
+      "lema": "anou",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "accessibilitat__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "pimentó",
+      "lema": "pimentó",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "aband/ó__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "reembossar",
+      "lema": "reembossar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "reembossable",
+      "lema": "reembossable",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "abdominal__adj",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "romer",
+      "lema": "romer",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "algeps",
+      "lema": "algeps",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "campus__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "camallada",
+      "lema": "camallada",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "polit",
+      "lema": "polit",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "parèixer",
+      "lema": "parèixer",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "paréixer",
+      "lema": "parèixer",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "verbo",
+      "paradigma": "acré/ixer__vblex",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "perquè en prengui coneixement",
+      "lema": "perquè en prenga coneixement",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "vuitavat",
+      "lema": "vuitavat",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "triparti/t__adj",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "huitavt",
+      "lema": "vuitavat",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "triparti/t__adj",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "d'un colp de ploma",
+      "lema": "d'un cop de ploma",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "precalfament",
+      "lema": "preescalfament",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "emotlament",
+      "lema": "emmotllament",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "argilaga",
+      "lema": "argelaga",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "alg/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "arrancament",
+      "lema": "arrencament",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "xafable",
+      "lema": "trepitjable",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adjetivo",
+      "paradigma": "abdominal__adj",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "motlurar",
+      "lema": "motllurar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "emmotlurar",
+      "lema": "motllurar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "paracolps",
+      "lema": "paracops",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "campus__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "embossar",
+      "lema": "embussar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "recalfar",
+      "lema": "reescalfar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "sobrecalfar",
+      "lema": "sobreescalfar",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "verbo",
+      "paradigma": "abander/ar__vblex",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "pescateria",
+      "lema": "peixateria",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "calfaplats",
+      "lema": "escalfaplats",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "campus__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "que trau foc pels queixals",
+      "lema": "que treu foc pels queixals",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "llavamans",
+      "lema": "rentamans",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "campus__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "llavamans",
+      "lema": "rentamans",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "campus__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "sàndwitx",
+      "lema": "sandvitx",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "as__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "colpet",
+      "lema": "copet",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "sobrecalfament",
+      "lema": "sobreescalfament",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abric__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "redonesa",
+      "lema": "rodonesa",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "parlant de patuès",
+      "lema": "parlant de patuès",
+      "variantes": [
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "acompanyant__n",
+      "v": "cat val_uni"
+    },
+    {
+      "palabra": "parlant de patués",
+      "lema": "parlant de patuès",
+      "variantes": [
+        "val_gva"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "acompanyant__n",
+      "v": "val_gva"
+    },
+    {
+      "palabra": "antevespra",
+      "lema": "antevigília",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "abell/a__n",
+      "v": "val_gva val_uni"
+    },
+    {
+      "palabra": "tocacollons",
+      "lema": "torracollons",
+      "variantes": [
+        "val_gva",
+        "val_uni"
+      ],
+      "categoria": "sustantivo",
+      "paradigma": "guardaespatlles__n",
+      "v": "val_gva val_uni"
+    }
+  ],
+  "lista_palabras": [
+    "a colp calent",
+    "a imatge i semblança seua",
+    "a la faena",
+    "a la vesprada",
+    "a les huit",
+    "a les vesprades",
+    "a les vuit",
+    "a mig vesprada",
+    "a mitja vesprada",
+    "a mitjan vesprada",
+    "a petició meua",
+    "a petició seua",
+    "a petició teua",
+    "abellir",
+    "acatxar",
+    "acurtar",
+    "ací",
+    "ahir a la vesprada",
+    "al caient de la vesprada",
+    "al més prompte",
+    "al més prompte possible",
+    "alfàbega",
+    "algeps",
+    "algepsaire",
+    "amb prou faenes",
+    "amerar",
+    "ametla",
+    "ametler",
+    "amprar",
+    "anar a la seua",
+    "anou",
+    "antevespra",
+    "aparèixer",
+    "aparéixer",
+    "aqueix",
+    "aquesta vesprada",
+    "argilaga",
+    "arrancada",
+    "arrancament",
+    "arrancar",
+    "arrancar a córrer",
+    "arrancar el bull",
+    "arrancar la cabellera",
+    "arrere",
+    "atès",
+    "atés",
+    "avant",
+    "avui",
+    "avui dia",
+    "avui en dia",
+    "batle",
+    "bellota",
+    "bes",
+    "beset",
+    "bigot",
+    "bitla",
+    "bla",
+    "bona vesprada",
+    "bresquilla",
+    "bresquillera",
+    "buscar",
+    "butla",
+    "cada colp",
+    "calfament",
+    "calfaplats",
+    "calfar",
+    "camallada",
+    "cap ací",
+    "cinquanta-huit",
+    "cinquanta-vuit",
+    "clòtxina",
+    "colpet",
+    "com més prompte",
+    "com més prompte millor",
+    "comitè de direcció",
+    "comitè executiu",
+    "comitès executius",
+    "comité de direcció",
+    "comité executiu",
+    "comités executius",
+    "company de faena",
+    "comparèixer",
+    "comparéixer",
+    "contramotlura",
+    "convèncer",
+    "convéncer",
+    "conèixer",
+    "conèixer el marro",
+    "conéixer",
+    "conéixer el marro",
+    "corder",
+    "cosquerelles",
+    "coste el que coste",
+    "creïlla",
+    "cuixa de corder",
+    "cèrcol",
+    "cércol",
+    "d'ara en avant",
+    "d'hora a la vesprada",
+    "d'un colp de ploma",
+    "d'una plomada",
+    "dacsa",
+    "de colp",
+    "de colp i volta",
+    "de vesprada",
+    "demà a la vesprada",
+    "depòsit",
+    "depòsit funerari",
+    "depòsits funeraris",
+    "desaparèixer",
+    "desaparéixer",
+    "desconèixer",
+    "desconéixer",
+    "desembossar",
+    "despús-ahir",
+    "despús-anit",
+    "despús-demà",
+    "desunflar",
+    "desvetlar",
+    "dinou",
+    "dins del termini i en la forma escaient",
+    "dins seu",
+    "disset",
+    "divuit",
+    "dènou",
+    "dèsset",
+    "díhuit",
+    "eixida",
+    "eixir d'un mal pas",
+    "embossar",
+    "embós",
+    "emmotlar",
+    "emmotlurar",
+    "emotlament",
+    "empenyiment",
+    "en contra de la meua voluntat",
+    "en data d'avui",
+    "en data de hui",
+    "en la mesura que siga possible",
+    "en tant que siga possible",
+    "enguany",
+    "entropessar",
+    "envernissador",
+    "envernissar",
+    "escaló",
+    "esguitar",
+    "espatla",
+    "espatla ibèrica d'enceball",
+    "espatlar",
+    "espatlera",
+    "espatles ibèriques d'enceball",
+    "espatleta",
+    "espentar",
+    "espill",
+    "espuma",
+    "espumadora",
+    "espumejar",
+    "estrela",
+    "faena",
+    "faena a mitja jornada",
+    "fardatxo",
+    "fenoll",
+    "fer cosquerelles",
+    "fer el desentès",
+    "fer el desentés",
+    "fer marxa arrere",
+    "fer una besada",
+    "fesol",
+    "fins avui",
+    "fins hui",
+    "fins prompte",
+    "forma de reembossament",
+    "fóra com fóra",
+    "gestor d'arrancada",
+    "granera",
+    "guardaespatles",
+    "guatla",
+    "heus ací",
+    "hui",
+    "hui dia",
+    "hui en dia",
+    "huit",
+    "huit-cents",
+    "huit-centè",
+    "huitanta",
+    "huitanta-cinc",
+    "huitanta-cinquè",
+    "huitanta-dos",
+    "huitanta-dosè",
+    "huitanta-huit",
+    "huitanta-huitè",
+    "huitanta-nou",
+    "huitanta-novè",
+    "huitanta-quatre",
+    "huitanta-quatrè",
+    "huitanta-set",
+    "huitanta-setè",
+    "huitanta-sis",
+    "huitanta-sisè",
+    "huitanta-tres",
+    "huitanta-tresè",
+    "huitanta-u",
+    "huitanta-un",
+    "huitanta-unè",
+    "huitantè",
+    "huitavt",
+    "huitcentista",
+    "joguet",
+    "jupetí",
+    "l'altra vesprada",
+    "li la",
+    "llavable",
+    "llavadora",
+    "llavamans",
+    "llavaplats",
+    "llavar",
+    "llentilla",
+    "manganès",
+    "manganés",
+    "matí i vesprada",
+    "matí vesprada i nit",
+    "meló d'Alger",
+    "mesclar",
+    "misto",
+    "molt arrere",
+    "motle",
+    "motlura",
+    "motlurar",
+    "més arrere",
+    "més avant",
+    "nadador",
+    "nadar",
+    "no reconèixer",
+    "no reconéixer",
+    "noranta-huit",
+    "noranta-huitè",
+    "noranta-vuit",
+    "o siga",
+    "oroneta",
+    "pallola",
+    "paracolps",
+    "parlant de patuès",
+    "parlant de patués",
+    "parèixer",
+    "paréixer",
+    "pellorfa",
+    "per la meua banda",
+    "per la seua banda",
+    "per la seua part",
+    "per la teua banda",
+    "per part meua",
+    "per part seua",
+    "per part teua",
+    "per primer colp",
+    "per segon colp",
+    "per tercer colp",
+    "per un colp de sort",
+    "perquè en prengui coneixement",
+    "pescateria",
+    "pesebre",
+    "pimentó",
+    "pista de bitles",
+    "pitxer",
+    "polit",
+    "precalfament",
+    "prima de reembossament",
+    "prompte",
+    "punyada",
+    "pèsol",
+    "pésol",
+    "quaranta-huit",
+    "quaranta-vuit",
+    "que trau foc pels queixals",
+    "rabosa",
+    "rascar",
+    "reaparèixer",
+    "reaparéixer",
+    "recalfar",
+    "recollir",
+    "reconèixer",
+    "reconéixer",
+    "redonesa",
+    "reembossable",
+    "reembossar",
+    "renyonera",
+    "respatler",
+    "revetla",
+    "romer",
+    "seixanta-huit",
+    "seixanta-vuit",
+    "sempre a la seua disposició",
+    "setanta-huit",
+    "setanta-vuit",
+    "siga com siga",
+    "siga el que siga",
+    "sobrecalfament",
+    "sobrecalfar",
+    "sàndwitx",
+    "sègol",
+    "sèmola",
+    "ségol",
+    "sémola",
+    "tan bé com siga possible",
+    "tan prompte",
+    "tancar de colp",
+    "tenir fam",
+    "terratrèmol",
+    "terratrémol",
+    "teuladí",
+    "tocacollons",
+    "tomaca",
+    "tomaca d'arbre",
+    "trenta-huit",
+    "trenta-vuit",
+    "tret d'eixida",
+    "trèvol",
+    "trévol",
+    "tèrbol",
+    "térbol",
+    "ulls ametlats",
+    "vesprada",
+    "vetla",
+    "vetlada",
+    "vetlar",
+    "vint-i-huit",
+    "vint-i-vuit",
+    "vos",
+    "vuit",
+    "vuit-cents",
+    "vuit-centè",
+    "vuitanta",
+    "vuitanta-cinc",
+    "vuitanta-cinquè",
+    "vuitanta-dos",
+    "vuitanta-dosè",
+    "vuitanta-nou",
+    "vuitanta-novè",
+    "vuitanta-quatre",
+    "vuitanta-quatrè",
+    "vuitanta-set",
+    "vuitanta-setè",
+    "vuitanta-sis",
+    "vuitanta-sisè",
+    "vuitanta-tres",
+    "vuitanta-tresè",
+    "vuitanta-u",
+    "vuitanta-un",
+    "vuitanta-unè",
+    "vuitanta-vuit",
+    "vuitanta-vuitè",
+    "vuitantè",
+    "vuitavat",
+    "vuitcentista",
+    "vèncer",
+    "véncer",
+    "xafable",
+    "xarrada",
+    "xarrar",
+    "xic",
+    "ximenera",
+    "xiquet",
+    "xocolate",
+    "xuplar",
+    "òbila"
+  ]
+}

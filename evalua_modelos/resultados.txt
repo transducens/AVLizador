@@ -1,0 +1,10 @@
+Resultados (53 frases, reglas usadas del reglas_cat_val.md)
+Modelo	BLEU	chrF	chrF++	Exactas
+Sistema de Reglas (baseline)	85.90	95.52	94.47	34/53 (64%)
+Ollama llama3.1:8b	73.59	85.71	84.73	22/53 (42%)
+Ollama qwen2.5:7b	71.95	88.30	87.02	15/53 (28%)
+El sistema de reglas gana claramente a los dos LLMs. Tiene sentido: para esto (sustituciones léxicas/morfológicas bien definidas) un enfoque determinista es más fiable que un modelo generativo de 7-8B parámetros sin fine-tuning.
+
+Entre los dos modelos: llama3.1:8b tiene más traducciones exactas (22 vs 15) y mejor BLEU, pero qwen2.5:7b tiene mejor chrF — es decir, qwen se acerca más carácter a carácter aunque acierte menos veces la frase completa.
+
+Fallos más graves (chrF muy bajo): llama3.1 en BM029 directamente se negó a traducir ("No puc ajudar a crear continguts..." — falso positivo de seguridad) y en BM006 inventó una frase entera sin relación con el original. qwen2.5 en BM040 alucinó palabras inexistentes ("vuit-pressec", "llig"). En categorías: ambos LLMs caen fuerte en subjuntiu_imperfet y text_formal, mientras el sistema de reglas se mantiene sólido en todas.

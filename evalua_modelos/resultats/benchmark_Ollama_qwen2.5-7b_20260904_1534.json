@@ -1,0 +1,941 @@
+{
+  "model": "Ollama_qwen2.5:7b",
+  "timestamp": "2026-09-04T15:43:51.673714",
+  "n_frases": 53,
+  "errors": 0,
+  "bleu_mitja": 71.95,
+  "chrf_mitja": 88.3,
+  "chrf_pp_mitja": 87.02,
+  "exactes": 15,
+  "exactes_pct": 28.3,
+  "per_categoria": {
+    "numeral": {
+      "n": 2,
+      "bleu": 70.2,
+      "chrf": 93.77,
+      "exactes": 0
+    },
+    "subjuntiu": {
+      "n": 6,
+      "bleu": 76.85,
+      "chrf": 88.48,
+      "exactes": 4
+    },
+    "demostratiu_simple": {
+      "n": 4,
+      "bleu": 76.84,
+      "chrf": 92.94,
+      "exactes": 1
+    },
+    "morfologia_verbal": {
+      "n": 2,
+      "bleu": 71.38,
+      "chrf": 90.16,
+      "exactes": 0
+    },
+    "text_formal": {
+      "n": 2,
+      "bleu": 56.54,
+      "chrf": 84.45,
+      "exactes": 0
+    },
+    "sense_canvis": {
+      "n": 5,
+      "bleu": 70.54,
+      "chrf": 89.44,
+      "exactes": 1
+    },
+    "lexic_avançat": {
+      "n": 9,
+      "bleu": 80.81,
+      "chrf": 90.61,
+      "exactes": 5
+    },
+    "morfologia_possessiu": {
+      "n": 3,
+      "bleu": 62.67,
+      "chrf": 85.86,
+      "exactes": 0
+    },
+    "lexic_basic": {
+      "n": 6,
+      "bleu": 64.05,
+      "chrf": 84.42,
+      "exactes": 1
+    },
+    "locucions": {
+      "n": 4,
+      "bleu": 88.53,
+      "chrf": 90.89,
+      "exactes": 3
+    },
+    "morfologia_verbal_complexa": {
+      "n": 3,
+      "bleu": 59.73,
+      "chrf": 81.7,
+      "exactes": 0
+    },
+    "mixt_complexe": {
+      "n": 5,
+      "bleu": 69.68,
+      "chrf": 88.23,
+      "exactes": 0
+    },
+    "subjuntiu_imperfet": {
+      "n": 2,
+      "bleu": 57.34,
+      "chrf": 82.05,
+      "exactes": 0
+    }
+  },
+  "per_dificultat": {
+    "baixa": {
+      "n": 25,
+      "bleu": 81.81,
+      "chrf": 93.18
+    },
+    "alta": {
+      "n": 13,
+      "bleu": 58.22,
+      "chrf": 82.14
+    },
+    "trampa": {
+      "n": 4,
+      "bleu": 70.5,
+      "chrf": 89.01
+    },
+    "trampa_parcial": {
+      "n": 1,
+      "bleu": 70.71,
+      "chrf": 91.16
+    },
+    "mitjana": {
+      "n": 10,
+      "bleu": 65.86,
+      "chrf": 83.56
+    }
+  },
+  "resultats": [
+    {
+      "id": "BM001",
+      "categoria": "demostratiu_simple",
+      "dificultat": "baixa",
+      "occidental": "Este document és molt important per a la comissió.",
+      "referencia": "Aquest document és molt important per a la comissió.",
+      "hipotesi": "Aquest document és molt important per a la commissió.",
+      "regles": [
+        "este→aquest"
+      ],
+      "bleu": 78.25,
+      "chrf": 95.37,
+      "chrf_pp": 92.5,
+      "exacte": false
+    },
+    {
+      "id": "BM002",
+      "categoria": "demostratiu_simple",
+      "dificultat": "baixa",
+      "occidental": "Esta proposta ha sigut aprovada per unanimitat.",
+      "referencia": "Aquesta proposta ha estat aprovada per unanimitat.",
+      "hipotesi": "Aquesta proposta ha estat aprovada per unanimitat.",
+      "regles": [
+        "esta→aquesta",
+        "ha sigut→ha estat"
+      ],
+      "bleu": 100.0,
+      "chrf": 100.0,
+      "chrf_pp": 100.0,
+      "exacte": true
+    },
+    {
+      "id": "BM003",
+      "categoria": "demostratiu_simple",
+      "dificultat": "baixa",
+      "occidental": "Estos criteris s'apliquen a tots els casos.",
+      "referencia": "Aquests criteris s'apliquen a tots els casos.",
+      "hipotesi": "Aquests criteris s'apliquen a totes les casos.",
+      "regles": [
+        "estos→aquests"
+      ],
+      "bleu": 41.11,
+      "chrf": 85.49,
+      "chrf_pp": 80.64,
+      "exacte": false
+    },
+    {
+      "id": "BM004",
+      "categoria": "demostratiu_simple",
+      "dificultat": "baixa",
+      "occidental": "Estes normes entraran en vigor el mes que ve.",
+      "referencia": "Aquestes normes entraran en vigor el mes que ve.",
+      "hipotesi": "Aquests normes entraran en vigor el mes que ve.",
+      "regles": [
+        "estes→aquestes"
+      ],
+      "bleu": 88.01,
+      "chrf": 90.92,
+      "chrf_pp": 90.56,
+      "exacte": false
+    },
+    {
+      "id": "BM005",
+      "categoria": "lexic_basic",
+      "dificultat": "baixa",
+      "occidental": "La faena del camp és molt dura a l'estiu.",
+      "referencia": "La feina del camp és molt dura a l'estiu.",
+      "hipotesi": "La feina del camp és molt dura a l'avui estiu.",
+      "regles": [
+        "faena→feina"
+      ],
+      "bleu": 69.89,
+      "chrf": 89.13,
+      "chrf_pp": 87.39,
+      "exacte": false
+    },
+    {
+      "id": "BM006",
+      "categoria": "lexic_basic",
+      "dificultat": "baixa",
+      "occidental": "El xiquet ha portat hui els deures a classe.",
+      "referencia": "El nen ha portat avui els deures a classe.",
+      "hipotesi": "L'nen ha portat avui els deures a classe.",
+      "regles": [
+        "xiquet→nen",
+        "hui→avui"
+      ],
+      "bleu": 77.26,
+      "chrf": 93.63,
+      "chrf_pp": 90.4,
+      "exacte": false
+    },
+    {
+      "id": "BM007",
+      "categoria": "lexic_basic",
+      "dificultat": "mitjana",
+      "occidental": "Les xiquetes jugaven en el parc este vesprada.",
+      "referencia": "Les nenes jugaven al parc aquesta tarda.",
+      "hipotesi": "Les nenes jugaven en el parc on avui ha estat molt bona.",
+      "regles": [
+        "xiquetes→nenes",
+        "este→aquesta",
+        "vesprada→tarda"
+      ],
+      "bleu": 13.07,
+      "chrf": 54.54,
+      "chrf_pp": 51.04,
+      "exacte": false
+    },
+    {
+      "id": "BM008",
+      "categoria": "lexic_basic",
+      "dificultat": "mitjana",
+      "occidental": "Hui hem decidit anar al mercat a comprar bresquilles i creïlles.",
+      "referencia": "Avui hem decidit anar al mercat a comprar préssecs i patates.",
+      "hipotesi": "Avui hem decidit anar al mercat a comprar pressecs i patatas.",
+      "regles": [
+        "hui→avui",
+        "bresquilles→préssecs",
+        "creïlles→patates"
+      ],
+      "bleu": 64.84,
+      "chrf": 88.1,
+      "chrf_pp": 84.45,
+      "exacte": false
+    },
+    {
+      "id": "BM009",
+      "categoria": "lexic_basic",
+      "dificultat": "baixa",
+      "occidental": "Cal llavar la roba amb aigua freda per conservar el color.",
+      "referencia": "Cal rentar la roba amb aigua freda per conservar el color.",
+      "hipotesi": "Cal rentar la roba amb aigua freda per conservar el color.",
+      "regles": [
+        "llavar→rentar"
+      ],
+      "bleu": 100.0,
+      "chrf": 100.0,
+      "chrf_pp": 100.0,
+      "exacte": true
+    },
+    {
+      "id": "BM010",
+      "categoria": "lexic_basic",
+      "dificultat": "alta",
+      "occidental": "El mestre els va demanar que traigueren el llibre de la bossa.",
+      "referencia": "El mestre els va demanar que tragueren el llibre de la bossa.",
+      "hipotesi": "El mestre els va demanar que treuren el llibre de la borsa.",
+      "regles": [
+        "traure→treure (forma conjugada)"
+      ],
+      "bleu": 59.23,
+      "chrf": 81.11,
+      "chrf_pp": 79.75,
+      "exacte": false
+    },
+    {
+      "id": "BM011",
+      "categoria": "subjuntiu",
+      "dificultat": "mitjana",
+      "occidental": "Espere que puga vindre a la reunió de demà.",
+      "referencia": "Espero que pugui venir a la reunió de demà.",
+      "hipotesi": "Espera que pugui venir a la reunión de avui.",
+      "regles": [
+        "puga→pugui",
+        "vindre→venir"
+      ],
+      "bleu": 42.73,
+      "chrf": 68.82,
+      "chrf_pp": 65.92,
+      "exacte": false
+    },
+    {
+      "id": "BM012",
+      "categoria": "subjuntiu",
+      "dificultat": "alta",
+      "occidental": "És necessari que tots els membres tinga el carnet actualitzat.",
+      "referencia": "És necessari que tots els membres tinguin el carnet actualitzat.",
+      "hipotesi": "És necessari que totes les meves tenin el carnè actualitzat.",
+      "regles": [
+        "tinga→tingui (3a pl → tinguin)"
+      ],
+      "bleu": 18.36,
+      "chrf": 62.07,
+      "chrf_pp": 57.13,
+      "exacte": false
+    },
+    {
+      "id": "BM013",
+      "categoria": "subjuntiu",
+      "dificultat": "baixa",
+      "occidental": "No vull que vinga tard a la cerimònia.",
+      "referencia": "No vull que vingui tard a la cerimònia.",
+      "hipotesi": "No vull que vingui tard a la cerimònia.",
+      "regles": [
+        "vinga→vingui"
+      ],
+      "bleu": 100.0,
+      "chrf": 100.0,
+      "chrf_pp": 100.0,
+      "exacte": true
+    },
+    {
+      "id": "BM014",
+      "categoria": "subjuntiu",
+      "dificultat": "mitjana",
+      "occidental": "Busquem un lloc a on puguen descansar els visitants.",
+      "referencia": "Busquem un lloc on puguin descansar els visitants.",
+      "hipotesi": "Busquem un lloc on puguin descansar els visitants.",
+      "regles": [
+        "a on→on",
+        "puguen→puguin"
+      ],
+      "bleu": 100.0,
+      "chrf": 100.0,
+      "chrf_pp": 100.0,
+      "exacte": true
+    },
+    {
+      "id": "BM015",
+      "categoria": "subjuntiu",
+      "dificultat": "baixa",
+      "occidental": "Farem el que diga el president de la comissió.",
+      "referencia": "Farem el que digui el president de la comissió.",
+      "hipotesi": "Farem el que digui el president de la comissió.",
+      "regles": [
+        "diga→digui"
+      ],
+      "bleu": 100.0,
+      "chrf": 100.0,
+      "chrf_pp": 100.0,
+      "exacte": true
+    },
+    {
+      "id": "BM016",
+      "categoria": "subjuntiu",
+      "dificultat": "baixa",
+      "occidental": "Cal que ho faga correctament i sense errors.",
+      "referencia": "Cal que ho faci correctament i sense errors.",
+      "hipotesi": "Cal que ho faci correctament i sense errors.",
+      "regles": [
+        "faga→faci"
+      ],
+      "bleu": 100.0,
+      "chrf": 100.0,
+      "chrf_pp": 100.0,
+      "exacte": true
+    },
+    {
+      "id": "BM017",
+      "categoria": "subjuntiu_imperfet",
+      "dificultat": "alta",
+      "occidental": "Si haguera sabut la notícia, t'haguera avisat immediatament.",
+      "referencia": "Si hagués sabut la notícia, t'hauria avisat immediatament.",
+      "hipotesi": "Si hagués sabut la notícia, t'hagués avisat immediatament.",
+      "regles": [
+        "haguera→hagués",
+        "haguera→hauria"
+      ],
+      "bleu": 65.8,
+      "chrf": 86.78,
+      "chrf_pp": 86.06,
+      "exacte": false
+    },
+    {
+      "id": "BM018",
+      "categoria": "subjuntiu_imperfet",
+      "dificultat": "alta",
+      "occidental": "Desitjava que poguera assistir a l'acte.",
+      "referencia": "Desitjava que pogués assistir a l'acte.",
+      "hipotesi": "Desitjava que puguesi assistir a l'acte.",
+      "regles": [
+        "-era→-és (imperf. subj.)"
+      ],
+      "bleu": 48.89,
+      "chrf": 77.31,
+      "chrf_pp": 77.03,
+      "exacte": false
+    },
+    {
+      "id": "BM019",
+      "categoria": "morfologia_verbal",
+      "dificultat": "mitjana",
+      "occidental": "Ell vinga o no, la reunió continuarà.",
+      "referencia": "Vingui o no, la reunió continuarà.",
+      "hipotesi": "Ell vingui o no, la reunió continuarà.",
+      "regles": [
+        "vinga→vingui"
+      ],
+      "bleu": 72.6,
+      "chrf": 94.07,
+      "chrf_pp": 91.64,
+      "exacte": false
+    },
+    {
+      "id": "BM020",
+      "categoria": "morfologia_verbal",
+      "dificultat": "baixa",
+      "occidental": "Vullga o no, haurà de complir la normativa vigent.",
+      "referencia": "Vulgui o no, haurà de complir la normativa vigent.",
+      "hipotesi": "Vulgui o no, hagué de complir la normativa vigent.",
+      "regles": [
+        "vullga→vulgui"
+      ],
+      "bleu": 70.17,
+      "chrf": 86.26,
+      "chrf_pp": 86.06,
+      "exacte": false
+    },
+    {
+      "id": "BM021",
+      "categoria": "lexic_avançat",
+      "dificultat": "baixa",
+      "occidental": "Cal espentar la porta amb força per obrir-la.",
+      "referencia": "Cal empènyer la porta amb força per obrir-la.",
+      "hipotesi": "Cal empènyer la porta amb força per obrir-la.",
+      "regles": [
+        "espentar→empènyer"
+      ],
+      "bleu": 100.0,
+      "chrf": 100.0,
+      "chrf_pp": 100.0,
+      "exacte": true
+    },
+    {
+      "id": "BM022",
+      "categoria": "lexic_avançat",
+      "dificultat": "baixa",
+      "occidental": "El fesol és un dels llegums més consumits al País Valencià.",
+      "referencia": "La mongeta és un dels llegums més consumits al País Valencià.",
+      "hipotesi": "La mongeta és un dels legums més consumits al País Valencià.",
+      "regles": [
+        "fesol→mongeta"
+      ],
+      "bleu": 73.49,
+      "chrf": 94.78,
+      "chrf_pp": 92.77,
+      "exacte": false
+    },
+    {
+      "id": "BM023",
+      "categoria": "lexic_avançat",
+      "dificultat": "mitjana",
+      "occidental": "Ha sigut una faena molt ben feta per part de tots.",
+      "referencia": "Ha estat una feina molt ben feta per part de tots.",
+      "hipotesi": "Ha estat una feina molt ben hecha per part de totes.",
+      "regles": [
+        "ha sigut→ha estat",
+        "faena→feina"
+      ],
+      "bleu": 54.52,
+      "chrf": 80.57,
+      "chrf_pp": 78.81,
+      "exacte": false
+    },
+    {
+      "id": "BM024",
+      "categoria": "lexic_avançat",
+      "dificultat": "baixa",
+      "occidental": "Necessitem calfar l'habitació perquè fa molt de fred.",
+      "referencia": "Necessitem escalfar l'habitació perquè fa molt de fred.",
+      "hipotesi": "Necessitem escalfar l'habitació perquè fa molt de fred.",
+      "regles": [
+        "calfar→escalfar"
+      ],
+      "bleu": 100.0,
+      "chrf": 100.0,
+      "chrf_pp": 100.0,
+      "exacte": true
+    },
+    {
+      "id": "BM025",
+      "categoria": "lexic_avançat",
+      "dificultat": "mitjana",
+      "occidental": "El nen volia traure totes les joguetes de la capsa.",
+      "referencia": "El nen volia treure totes les joguines de la capsa.",
+      "hipotesi": "El nen volia treure totes les joguines de la cepsa.",
+      "regles": [
+        "traure→treure",
+        "joguetes→joguines"
+      ],
+      "bleu": 80.71,
+      "chrf": 91.39,
+      "chrf_pp": 89.9,
+      "exacte": false
+    },
+    {
+      "id": "BM026",
+      "categoria": "morfologia_possessiu",
+      "dificultat": "baixa",
+      "occidental": "La meua mare treballa en l'hospital des de fa molts anys.",
+      "referencia": "La meva mare treballa a l'hospital des de fa molts anys.",
+      "hipotesi": "La meva mare treballa en l'hospital des de molts anys.",
+      "regles": [
+        "meua→meva"
+      ],
+      "bleu": 39.59,
+      "chrf": 81.65,
+      "chrf_pp": 79.94,
+      "exacte": false
+    },
+    {
+      "id": "BM027",
+      "categoria": "morfologia_possessiu",
+      "dificultat": "baixa",
+      "occidental": "Este és el seu gat, no el nostre.",
+      "referencia": "Aquest és el seu gat, no el nostre.",
+      "hipotesi": "Aquest és el seu gat, no el nòstre.",
+      "regles": [
+        "este→aquest"
+      ],
+      "bleu": 78.25,
+      "chrf": 85.76,
+      "chrf_pp": 85.29,
+      "exacte": false
+    },
+    {
+      "id": "BM028",
+      "categoria": "morfologia_possessiu",
+      "dificultat": "baixa",
+      "occidental": "La seua actitud ha sorprès a tothom a la reunió.",
+      "referencia": "La seva actitud ha sorprès a tothom a la reunió.",
+      "hipotesi": "La seva actitud ha sorpres a tothom a la reunió.",
+      "regles": [
+        "seua→seva"
+      ],
+      "bleu": 70.17,
+      "chrf": 90.17,
+      "chrf_pp": 88.99,
+      "exacte": false
+    },
+    {
+      "id": "BM029",
+      "categoria": "locucions",
+      "dificultat": "mitjana",
+      "occidental": "A on vas tan de pressa este vesprada?",
+      "referencia": "On vas tan de pressa aquesta tarda?",
+      "hipotesi": "On vas tan de pressa avui tard?",
+      "regles": [
+        "a on→on",
+        "este→aquesta",
+        "vesprada→tarda"
+      ],
+      "bleu": 54.11,
+      "chrf": 63.55,
+      "chrf_pp": 64.23,
+      "exacte": false
+    },
+    {
+      "id": "BM030",
+      "categoria": "locucions",
+      "dificultat": "baixa",
+      "occidental": "Hui dia és molt difícil trobar feina sense experiència.",
+      "referencia": "Avui dia és molt difícil trobar feina sense experiència.",
+      "hipotesi": "Avui dia és molt difícil trobar feina sense experiència.",
+      "regles": [
+        "hui dia→avui dia"
+      ],
+      "bleu": 100.0,
+      "chrf": 100.0,
+      "chrf_pp": 100.0,
+      "exacte": true
+    },
+    {
+      "id": "BM031",
+      "categoria": "mixt_complexe",
+      "dificultat": "alta",
+      "occidental": "Este matí la xiqueta ha eixit de casa sense el paraigüa.",
+      "referencia": "Aquest matí la nena ha sortit de casa sense el paraigua.",
+      "hipotesi": "Aquest matí la nena ha sortit de casa sense el paraigüa.",
+      "regles": [
+        "este→aquest",
+        "xiqueta→nena",
+        "eixir→sortir"
+      ],
+      "bleu": 82.65,
+      "chrf": 94.19,
+      "chrf_pp": 92.33,
+      "exacte": false
+    },
+    {
+      "id": "BM032",
+      "categoria": "mixt_complexe",
+      "dificultat": "alta",
+      "occidental": "La faena d'estos dies ha sigut molt intensa per a tot l'equip.",
+      "referencia": "La feina d'aquests dies ha estat molt intensa per a tot l'equip.",
+      "hipotesi": "La feina d'aquests dies avui ha estat molt intensa per a tot l'equip.",
+      "regles": [
+        "faena→feina",
+        "estos→aquests",
+        "ha sigut→ha estat"
+      ],
+      "bleu": 78.25,
+      "chrf": 93.45,
+      "chrf_pp": 93.67,
+      "exacte": false
+    },
+    {
+      "id": "BM033",
+      "categoria": "mixt_complexe",
+      "dificultat": "alta",
+      "occidental": "Cal que els xiquets puga participar en estes activitats hui.",
+      "referencia": "Cal que els nens puguin participar en aquestes activitats avui.",
+      "hipotesi": "Cal que els nens pugui participar en aquests activitats avui.",
+      "regles": [
+        "xiquets→nens",
+        "puga→puguin",
+        "estes→aquestes",
+        "hui→avui"
+      ],
+      "bleu": 37.82,
+      "chrf": 86.85,
+      "chrf_pp": 82.87,
+      "exacte": false
+    },
+    {
+      "id": "BM034",
+      "categoria": "mixt_complexe",
+      "dificultat": "alta",
+      "occidental": "A on vullga que vinga, ha de portar este document firmat.",
+      "referencia": "On vulgui que vingui, ha de portar aquest document signat.",
+      "hipotesi": "On vulgui que vingui, ha de portar aquest document firmat.",
+      "regles": [
+        "a on→on",
+        "vullga→vulgui",
+        "vinga→vingui",
+        "este→aquest"
+      ],
+      "bleu": 82.65,
+      "chrf": 87.34,
+      "chrf_pp": 87.19,
+      "exacte": false
+    },
+    {
+      "id": "BM035",
+      "categoria": "mixt_complexe",
+      "dificultat": "alta",
+      "occidental": "La xiqueta meua ha aprés hui a llavar els plats ella sola.",
+      "referencia": "La nena meva ha après avui a rentar els plats ella sola.",
+      "hipotesi": "La nena meva ha vist hui a rentar els plats ella sola.",
+      "regles": [
+        "xiqueta→nena",
+        "meua→meva",
+        "hui→avui",
+        "llavar→rentar"
+      ],
+      "bleu": 67.03,
+      "chrf": 79.31,
+      "chrf_pp": 79.44,
+      "exacte": false
+    },
+    {
+      "id": "BM036",
+      "categoria": "numeral",
+      "dificultat": "baixa",
+      "occidental": "Han assistit huit-cents trenta participants a la conferència.",
+      "referencia": "Han assistit vuit-cents trenta participants a la conferència.",
+      "hipotesi": "Han assistit vuit-cents trenta participantes a la conferència.",
+      "regles": [
+        "huit-cents→vuit-cents"
+      ],
+      "bleu": 59.69,
+      "chrf": 94.66,
+      "chrf_pp": 91.48,
+      "exacte": false
+    },
+    {
+      "id": "BM037",
+      "categoria": "numeral",
+      "dificultat": "baixa",
+      "occidental": "El huitau capítol tracta sobre la morfologia verbal del valencià.",
+      "referencia": "El vuitè capítol tracta sobre la morfologia verbal del valencià.",
+      "hipotesi": "El vuitau capítol tracta sobre la morfologia verbal del valencià.",
+      "regles": [
+        "huitau→vuitè"
+      ],
+      "bleu": 80.71,
+      "chrf": 92.87,
+      "chrf_pp": 91.01,
+      "exacte": false
+    },
+    {
+      "id": "BM038",
+      "categoria": "lexic_avançat",
+      "dificultat": "baixa",
+      "occidental": "La dacsa és un cereal molt important en la gastronomia valenciana.",
+      "referencia": "El blat de moro és un cereal molt important en la gastronomia valenciana.",
+      "hipotesi": "El blat de moro és un cereal molt important en la gastronomia valenciana.",
+      "regles": [
+        "dacsa→blat de moro"
+      ],
+      "bleu": 100.0,
+      "chrf": 100.0,
+      "chrf_pp": 100.0,
+      "exacte": true
+    },
+    {
+      "id": "BM039",
+      "categoria": "lexic_avançat",
+      "dificultat": "mitjana",
+      "occidental": "Van anar a buscar l'eixida d'emergència a on indicava el senyal.",
+      "referencia": "Van anar a buscar la sortida d'emergència on indicava el senyal.",
+      "hipotesi": "Van anar a buscar la sortida d'emergència on indicava el senyal.",
+      "regles": [
+        "eixida→sortida",
+        "a on→on"
+      ],
+      "bleu": 100.0,
+      "chrf": 100.0,
+      "chrf_pp": 100.0,
+      "exacte": true
+    },
+    {
+      "id": "BM040",
+      "categoria": "lexic_avançat",
+      "dificultat": "baixa",
+      "occidental": "El vell espill de la iaia reflectia la llum del matí.",
+      "referencia": "El vell mirall de l'àvia reflectia la llum del matí.",
+      "hipotesi": "L'vuit-pressec de la iaia reflectia la llig del matí.",
+      "regles": [
+        "espill→mirall"
+      ],
+      "bleu": 18.6,
+      "chrf": 48.77,
+      "chrf_pp": 47.37,
+      "exacte": false
+    },
+    {
+      "id": "BM041",
+      "categoria": "sense_canvis",
+      "dificultat": "trampa",
+      "occidental": "La llengua valenciana té una llarga tradició literària.",
+      "referencia": "La llengua valenciana té una llarga tradició literària.",
+      "hipotesi": "La llengua valenciana té una llarga tradició literària.",
+      "regles": [],
+      "bleu": 100.0,
+      "chrf": 100.0,
+      "chrf_pp": 100.0,
+      "exacte": true
+    },
+    {
+      "id": "BM042",
+      "categoria": "sense_canvis",
+      "dificultat": "trampa",
+      "occidental": "L'Acadèmia Valenciana de la Llengua publica normatives cada any.",
+      "referencia": "L'Acadèmia Valenciana de la Llengua publica normatives cada any.",
+      "hipotesi": "L'Acedèmia Valenciana de la Llengua publica normatives cada any.",
+      "regles": [],
+      "bleu": 88.01,
+      "chrf": 93.68,
+      "chrf_pp": 92.62,
+      "exacte": false
+    },
+    {
+      "id": "BM043",
+      "categoria": "sense_canvis",
+      "dificultat": "trampa_parcial",
+      "occidental": "El document ha sigut aprovat en la sessió plenària.",
+      "referencia": "El document ha estat aprovat en la sessió plenària.",
+      "hipotesi": "El document ha estat aprovat en la sessiò plenària.",
+      "regles": [
+        "ha sigut→ha estat"
+      ],
+      "bleu": 70.71,
+      "chrf": 91.16,
+      "chrf_pp": 89.35,
+      "exacte": false
+    },
+    {
+      "id": "BM044",
+      "categoria": "sense_canvis",
+      "dificultat": "trampa",
+      "occidental": "Els membres del consell es reuniran el proper divendres.",
+      "referencia": "Els membres del consell es reuniran el proper divendres.",
+      "hipotesi": "Els membres del consell es reuniràn el proper divendres.",
+      "regles": [],
+      "bleu": 65.8,
+      "chrf": 92.16,
+      "chrf_pp": 90.09,
+      "exacte": false
+    },
+    {
+      "id": "BM045",
+      "categoria": "sense_canvis",
+      "dificultat": "trampa",
+      "occidental": "La proposta inclou mesures per millorar la qualitat de l'ensenyament.",
+      "referencia": "La proposta inclou mesures per millorar la qualitat de l'ensenyament.",
+      "hipotesi": "La proposta inclou mesures per millorar la qualitat de l'ensenyament. (Esta frase no requiere traducción según las reglas proporcionadas, ya que no contiene palabras o estructuras que necesiten ser modificadas.)",
+      "regles": [],
+      "bleu": 28.18,
+      "chrf": 70.2,
+      "chrf_pp": 70.03,
+      "exacte": false
+    },
+    {
+      "id": "BM046",
+      "categoria": "morfologia_verbal_complexa",
+      "dificultat": "alta",
+      "occidental": "Si tinguera més temps, acabaria el projecte esta setmana.",
+      "referencia": "Si tingués més temps, acabaria el projecte aquesta setmana.",
+      "hipotesi": "Si hagués més temps, acabaria el projecte avui setmana.",
+      "regles": [
+        "tinguera→tingués",
+        "esta→aquesta"
+      ],
+      "bleu": 53.48,
+      "chrf": 75.21,
+      "chrf_pp": 74.15,
+      "exacte": false
+    },
+    {
+      "id": "BM047",
+      "categoria": "morfologia_verbal_complexa",
+      "dificultat": "alta",
+      "occidental": "Quan poguera, vindria a ajudar-te amb la faena.",
+      "referencia": "Quan pogués, vindria a ajudar-te amb la feina.",
+      "hipotesi": "Quan pugués, veniria a ajudar-te amb la feina.",
+      "regles": [
+        "poguera→pogués",
+        "faena→feina"
+      ],
+      "bleu": 55.55,
+      "chrf": 75.7,
+      "chrf_pp": 73.72,
+      "exacte": false
+    },
+    {
+      "id": "BM048",
+      "categoria": "morfologia_verbal_complexa",
+      "dificultat": "alta",
+      "occidental": "Volem que tots els participants vagen a on els corresponga.",
+      "referencia": "Volem que tots els participants vagin on els correspongui.",
+      "hipotesi": "Volem que tots els participants vagin a on els correspongui.",
+      "regles": [
+        "vagen→vagin",
+        "a on→on",
+        "corresponga→correspongui"
+      ],
+      "bleu": 70.17,
+      "chrf": 94.2,
+      "chrf_pp": 93.8,
+      "exacte": false
+    },
+    {
+      "id": "BM049",
+      "categoria": "text_formal",
+      "dificultat": "mitjana",
+      "occidental": "Este acord normatiu establix les bases per al funcionament de la institució.",
+      "referencia": "Aquest acord normatiu estableix les bases per al funcionament de la institució.",
+      "hipotesi": "Aquest acord normatiu estableix les bases per al funcionament de l'institució.",
+      "regles": [
+        "este→aquest",
+        "establix→estableix"
+      ],
+      "bleu": 76.04,
+      "chrf": 94.58,
+      "chrf_pp": 91.23,
+      "exacte": false
+    },
+    {
+      "id": "BM050",
+      "categoria": "text_formal",
+      "dificultat": "alta",
+      "occidental": "Les faenes previstes en este pla d'actuació es duran a terme hui i demà.",
+      "referencia": "Les feines previstes en aquest pla d'actuació es duran a terme avui i demà.",
+      "hipotesi": "Les feines previstes en aquests pla d'actuació s'enen a terme avui i avui dia.",
+      "regles": [
+        "faenes→feines",
+        "este→aquest",
+        "hui→avui"
+      ],
+      "bleu": 37.03,
+      "chrf": 74.33,
+      "chrf_pp": 71.17,
+      "exacte": false
+    },
+    {
+      "id": "BM051",
+      "categoria": "lexic_avançat",
+      "dificultat": "baixa",
+      "occidental": "Cal calfar la llet abans d'afegir el cacau.",
+      "referencia": "Cal escalfar la llet abans d'afegir el cacau.",
+      "hipotesi": "Cal escalfar la llet abans d'afegir el cacau.",
+      "regles": [
+        "calfar→escalfar"
+      ],
+      "bleu": 100.0,
+      "chrf": 100.0,
+      "chrf_pp": 100.0,
+      "exacte": true
+    },
+    {
+      "id": "BM052",
+      "categoria": "locucions",
+      "dificultat": "baixa",
+      "occidental": "No sabem a on han guardat les claus.",
+      "referencia": "No sabem on han guardat les claus.",
+      "hipotesi": "No sabem on han guardat les claus.",
+      "regles": [
+        "a on→on"
+      ],
+      "bleu": 100.0,
+      "chrf": 100.0,
+      "chrf_pp": 100.0,
+      "exacte": true
+    },
+    {
+      "id": "BM053",
+      "categoria": "locucions",
+      "dificultat": "baixa",
+      "occidental": "Hui dia quasi tothom té telèfon mòbil.",
+      "referencia": "Avui dia quasi tothom té telèfon mòbil.",
+      "hipotesi": "Avui dia quasi tothom té telèfon mòbil.",
+      "regles": [
+        "hui dia→avui dia"
+      ],
+      "bleu": 100.0,
+      "chrf": 100.0,
+      "chrf_pp": 100.0,
+      "exacte": true
+    }
+  ]
+}

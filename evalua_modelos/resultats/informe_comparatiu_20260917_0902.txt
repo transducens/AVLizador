@@ -1,0 +1,30 @@
+======================================================================
+INFORME COMPARATIU DE MODELS — BENCHMARK OCCIDENTAL↔ORIENTAL
+Data: 2026-09-17 09:58
+======================================================================
+
+Model                         BLEU     chrF   chrF++    Exactes
+-----------------------------------------------------------------
+Ollama_qwen2.5:14b           87.56    94.28    93.87   18/60 (30.0%)
+Ollama_hdnh2006/salamandra-7b-instruct    86.74    93.79    93.44   21/60 (35.0%)
+
+
+--- Ollama_qwen2.5:14b per categoria ---
+  sense_categoria                n=60  BLEU= 87.6  chrF= 94.3  exactes=18
+
+--- Ollama_hdnh2006/salamandra-7b-instruct per categoria ---
+  sense_categoria                n=60  BLEU= 86.7  chrF= 93.8  exactes=21
+
+--- ERRORS MÉS COMUNS ---
+
+Ollama_qwen2.5:14b:
+  [RC003] chrF=55.3
+    OCC: Hui es debat en el Congrés de Diputats una moció de censura.
+    REF: Avui es debat en el Congrés de Diputats una moció de censura.
+    HIP: Avui es debat al Parlament una moció de censura.
+
+Ollama_hdnh2006/salamandra-7b-instruct:
+  [RC045] chrF=58.1
+    OCC: Amb tot, en estos moments l'ús més general de la paraula bumerang és possiblement per a referir-nos a una acció que mamprén algú, sovint amb la intenció de perjudicar una altra persona, i, al final, es torna en contra d'ella.
+    REF: Amb tot, en aquests moments l'ús més general de la paraula bumerang és possiblement per a referir-nos a una acció que emprèn algú, sovint amb la intenció de perjudicar una altra persona, i, al final, es torna en contra d'ella.
+    HIP: Tot i així, en l'actualitat l'ús més habitual de la paraula bumerang és per a referir-nos a una acció que algú inicia, sovint amb la intenció de fer mal a una altra persona, i que, finalment, acaba tornant-se en contra seva.

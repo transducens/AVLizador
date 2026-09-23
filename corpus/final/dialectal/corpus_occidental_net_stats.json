@@ -1,0 +1,66 @@
+{
+  "total_documents": 1778,
+  "total_tokens": 821195,
+  "per_doc_type": {
+    "butlleti": {
+      "documents": 39,
+      "tokens": 23861
+    },
+    "biografia": {
+      "documents": 1,
+      "tokens": 212
+    },
+    "glossari": {
+      "documents": 1394,
+      "tokens": 326154
+    },
+    "gramatica_normativa": {
+      "documents": 117,
+      "tokens": 90800
+    },
+    "nota-de-premsa": {
+      "documents": 168,
+      "tokens": 76526
+    },
+    "pagina": {
+      "documents": 23,
+      "tokens": 24445
+    },
+    "post": {
+      "documents": 3,
+      "tokens": 1172
+    },
+    "legislacio": {
+      "documents": 3,
+      "tokens": 14759
+    },
+    "acord-normatiu": {
+      "documents": 25,
+      "tokens": 76012
+    },
+    "publicacions": {
+      "documents": 5,
+      "tokens": 187254
+    }
+  },
+  "per_source_name": {
+    "AVL": {
+      "documents": 1661,
+      "tokens": 730395
+    },
+    "AVL-GNV": {
+      "documents": 37,
+      "tokens": 54861
+    },
+    "AVL-GVB": {
+      "documents": 80,
+      "tokens": 35939
+    }
+  },
+  "comparacio_amb_corpus_complet": {
+    "total_documents_complet": 2233,
+    "total_tokens_complet": 1530748,
+    "percentatge_documents_conservats": 79.6238,
+    "percentatge_tokens_conservats": 53.6466
+  }
+}

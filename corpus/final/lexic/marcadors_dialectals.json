@@ -1,0 +1,211 @@
+{
+  "occidental": {
+    "faena": {
+      "frequencia": 60,
+      "documents_amb_paraula": 42,
+      "percentatge_documents": 1.8809
+    },
+    "este": {
+      "frequencia": 2869,
+      "documents_amb_paraula": 1178,
+      "percentatge_documents": 52.7541
+    },
+    "esta": {
+      "frequencia": 2450,
+      "documents_amb_paraula": 1060,
+      "percentatge_documents": 47.4698
+    },
+    "estos": {
+      "frequencia": 726,
+      "documents_amb_paraula": 363,
+      "percentatge_documents": 16.2562
+    },
+    "estes": {
+      "frequencia": 628,
+      "documents_amb_paraula": 328,
+      "percentatge_documents": 14.6888
+    },
+    "xiquet": {
+      "frequencia": 80,
+      "documents_amb_paraula": 55,
+      "percentatge_documents": 2.4631
+    },
+    "xiqueta": {
+      "frequencia": 26,
+      "documents_amb_paraula": 21,
+      "percentatge_documents": 0.9404
+    },
+    "hui": {
+      "frequencia": 327,
+      "documents_amb_paraula": 185,
+      "percentatge_documents": 8.2848
+    },
+    "a on": {
+      "frequencia": 301,
+      "documents_amb_paraula": 245,
+      "percentatge_documents": 10.9718
+    },
+    "parlar": {
+      "frequencia": 566,
+      "documents_amb_paraula": 141,
+      "percentatge_documents": 6.3144
+    },
+    "chico": {
+      "frequencia": 2,
+      "documents_amb_paraula": 2,
+      "percentatge_documents": 0.0896
+    },
+    "llavar": {
+      "frequencia": 19,
+      "documents_amb_paraula": 10,
+      "percentatge_documents": 0.4478
+    },
+    "rebre": {
+      "frequencia": 163,
+      "documents_amb_paraula": 85,
+      "percentatge_documents": 3.8065
+    },
+    "creïlla": {
+      "frequencia": 7,
+      "documents_amb_paraula": 6,
+      "percentatge_documents": 0.2687
+    },
+    "bresquilla": {
+      "frequencia": 9,
+      "documents_amb_paraula": 5,
+      "percentatge_documents": 0.2239
+    },
+    "cacau": {
+      "frequencia": 6,
+      "documents_amb_paraula": 5,
+      "percentatge_documents": 0.2239
+    },
+    "dacsa": {
+      "frequencia": 17,
+      "documents_amb_paraula": 14,
+      "percentatge_documents": 0.627
+    },
+    "traure": {
+      "frequencia": 76,
+      "documents_amb_paraula": 47,
+      "percentatge_documents": 2.1048
+    },
+    "calfar": {
+      "frequencia": 11,
+      "documents_amb_paraula": 9,
+      "percentatge_documents": 0.403
+    },
+    "espentar": {
+      "frequencia": 7,
+      "documents_amb_paraula": 6,
+      "percentatge_documents": 0.2687
+    }
+  },
+  "oriental": {
+    "feina": {
+      "frequencia": 34,
+      "documents_amb_paraula": 5,
+      "percentatge_documents": 0.2239
+    },
+    "aquest": {
+      "frequencia": 765,
+      "documents_amb_paraula": 38,
+      "percentatge_documents": 1.7017
+    },
+    "aquesta": {
+      "frequencia": 690,
+      "documents_amb_paraula": 37,
+      "percentatge_documents": 1.657
+    },
+    "aquests": {
+      "frequencia": 260,
+      "documents_amb_paraula": 13,
+      "percentatge_documents": 0.5822
+    },
+    "aquestes": {
+      "frequencia": 283,
+      "documents_amb_paraula": 16,
+      "percentatge_documents": 0.7165
+    },
+    "nen": {
+      "frequencia": 1,
+      "documents_amb_paraula": 1,
+      "percentatge_documents": 0.0448
+    },
+    "nena": {
+      "frequencia": 2,
+      "documents_amb_paraula": 1,
+      "percentatge_documents": 0.0448
+    },
+    "avui": {
+      "frequencia": 75,
+      "documents_amb_paraula": 11,
+      "percentatge_documents": 0.4926
+    },
+    "on": {
+      "frequencia": 1514,
+      "documents_amb_paraula": 582,
+      "percentatge_documents": 26.0636
+    },
+    "xerrar": {
+      "frequencia": 0,
+      "documents_amb_paraula": 0,
+      "percentatge_documents": 0.0
+    },
+    "noi": {
+      "frequencia": 3,
+      "documents_amb_paraula": 3,
+      "percentatge_documents": 0.1343
+    },
+    "rentar": {
+      "frequencia": 9,
+      "documents_amb_paraula": 5,
+      "percentatge_documents": 0.2239
+    },
+    "obtenir": {
+      "frequencia": 13,
+      "documents_amb_paraula": 5,
+      "percentatge_documents": 0.2239
+    },
+    "patata": {
+      "frequencia": 2,
+      "documents_amb_paraula": 2,
+      "percentatge_documents": 0.0896
+    },
+    "préssec": {
+      "frequencia": 2,
+      "documents_amb_paraula": 2,
+      "percentatge_documents": 0.0896
+    },
+    "cacauet": {
+      "frequencia": 0,
+      "documents_amb_paraula": 0,
+      "percentatge_documents": 0.0
+    },
+    "blat de moro": {
+      "frequencia": 2,
+      "documents_amb_paraula": 2,
+      "percentatge_documents": 0.0896
+    },
+    "treure": {
+      "frequencia": 1,
+      "documents_amb_paraula": 1,
+      "percentatge_documents": 0.0448
+    },
+    "escalfar": {
+      "frequencia": 2,
+      "documents_amb_paraula": 2,
+      "percentatge_documents": 0.0896
+    },
+    "empènyer": {
+      "frequencia": 0,
+      "documents_amb_paraula": 0,
+      "percentatge_documents": 0.0
+    }
+  },
+  "resum": {
+    "total_frequencia_occidental": 8350,
+    "total_frequencia_oriental": 3658,
+    "total_documents_analitzats": 2233
+  }
+}

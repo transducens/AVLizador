@@ -1,0 +1,24 @@
+======================================================================
+INFORME COMPARATIU DE MODELS — BENCHMARK OCCIDENTAL↔ORIENTAL
+Data: 2026-09-17 11:26
+======================================================================
+
+Model                         BLEU     chrF   chrF++    Exactes
+-----------------------------------------------------------------
+Ollama_qwen2.5:14b           90.87    95.86    95.55   23/60 (38.3%)
+Ollama_hdnh2006/salamandra-7b-instruct    86.29    93.62    93.17   19/60 (31.7%)
+
+
+--- Ollama_qwen2.5:14b per categoria ---
+  sense_categoria                n=60  BLEU= 90.9  chrF= 95.9  exactes=23
+
+--- Ollama_hdnh2006/salamandra-7b-instruct per categoria ---
+  sense_categoria                n=60  BLEU= 86.3  chrF= 93.6  exactes=19
+
+--- ERRORS MÉS COMUNS ---
+
+Ollama_hdnh2006/salamandra-7b-instruct:
+  [RC042] chrF=42.4
+    OCC: Traure el cap per una obertura o per damunt d'alguna cosa.
+    REF: Treure el cap per una obertura o per sobre d'alguna cosa.
+    HIP: Tirar el cap per una abertura o por encima de algo.

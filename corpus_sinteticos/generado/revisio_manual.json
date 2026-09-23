@@ -1,0 +1,1802 @@
+[
+  {
+    "id": 1,
+    "doc_type": "publicacions",
+    "val": "Per això et comptaran fins a deu punts.",
+    "cat": "Per això et comptaran fins a deu punts.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "118c7083ac36dd9f"
+  },
+  {
+    "id": 2,
+    "doc_type": "nota-de-premsa",
+    "val": "L’activitat central fou una espectacular demostració de la Muixaranga d’Algemesí en l’interior de l’església.",
+    "cat": "L'activitat central fou una espectacular demostració de la Muixaranga d'Algemesí en l'interior de l'església.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "e9a0273e84f7f1f1"
+  },
+  {
+    "id": 3,
+    "doc_type": "glossari",
+    "val": "Es tracta d’un préstec del napolità",
+    "cat": "Es tracta d'un préstec del napolità",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "d1e8077a0cb1ed11"
+  },
+  {
+    "id": 4,
+    "doc_type": "gramatica_normativa",
+    "val": "Segons el mode d'articulació, les consonants ròtiques poden ser",
+    "cat": "Segons el mode d'articulació, les consonants ròtiques poden ser",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "0e57ed04446031d3"
+  },
+  {
+    "id": 5,
+    "doc_type": "acord-normatiu",
+    "val": "c) Grup o subgrup de classificació professional.",
+    "cat": "Grup o subgrup de classificació professional.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "8cf8805ef346c195"
+  },
+  {
+    "id": 6,
+    "doc_type": "publicacions",
+    "val": "en casa (33%) és el mateix que el del conjunt de la població de la",
+    "cat": "en casa (33%) és el mateix que el del conjunt de la població de la",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "64b864e8e0b3351a"
+  },
+  {
+    "id": 7,
+    "doc_type": "gramatica_normativa",
+    "val": "[Ex: Laia ha menjat tant com Anna.]",
+    "cat": "Laia ha menjat tant com Anna.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "d492fa8a5b1f3c1d"
+  },
+  {
+    "id": 8,
+    "doc_type": "gramatica_normativa",
+    "val": "a) La pronunciació en una sola síl·laba de la vocal final d'una paraula i la vocal inicial de la paraula següent en casos com ara",
+    "cat": "La pronunciació en una sola síl·laba de la vocal final d'una paraula i la vocal inicial de la paraula següent en casos com ara",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "90d9e4a665295db7"
+  },
+  {
+    "id": 9,
+    "doc_type": "acord-normatiu",
+    "val": "compliment de les seues funcions com a institució normativa del valencià,",
+    "cat": "comentari de les seves funcions com a institució normativa del valencià,",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "d3f1c241807df1ce"
+  },
+  {
+    "id": 10,
+    "doc_type": "gramatica_normativa",
+    "val": "També funciona com a adverbi quan modifica un altre adverbi o un sintagma preposicional:",
+    "cat": "També funciona com a adverbi quan modifica un altre adverbi o un sintagma preposicional:",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "f4e03b557ffa7ef4"
+  },
+  {
+    "id": 11,
+    "doc_type": "publicacions",
+    "val": "Conselleria de la Generalitat Valenciana responsable de l’aplicació i",
+    "cat": "Conselleria de la Generalitat Valenciana responsable de l'aplicació i",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "32b362a4c48d6f01"
+  },
+  {
+    "id": 12,
+    "doc_type": "glossari",
+    "val": "Els parlants, sovint de manera inconscient, apliquen estratègies per a fer-se més fàcil el que els resulta difícil d’articular o assimilar.",
+    "cat": "Els parlants, sovint de manera inconscient, apliquen estratègies per a fer-se més fàcil el que els resulta difícil d'articular o assimilar.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "ad0a2860fe28ad94"
+  },
+  {
+    "id": 13,
+    "doc_type": "gramatica_normativa",
+    "val": "[Ex: un infant (‘un xiquet’ o ‘una xiqueta’)]",
+    "cat": "[Ex: un nen ('un nen' o 'una nena')]",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "3193814c1906ebd4"
+  },
+  {
+    "id": 14,
+    "doc_type": "publicacions",
+    "val": "dels mitjans audiovisuals en valencià.",
+    "cat": "dels mitjans audiovisuals en valencià.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "584c3dc15c768200"
+  },
+  {
+    "id": 15,
+    "doc_type": "gramatica_normativa",
+    "val": "[Ex: el Premi Nobel de la Pau el Premi d'Honor de les Lletres Valencianes l'Alta Distinció de la Generalitat Valenciana la Medalla d'Or de les Belles Arts el Premi Príncep d'Astúries de les Arts]",
+    "cat": "[Ex: el Premi Nobel de la Pau el Premi d'Honor de les Lletres Valencianes l'Alta Distinció de la Generalitat Valenciana la Medalla d'Or de les Belles Arts el Premi Príncep d'Astúries de les Arts]",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "29a321dbe1054b7c"
+  },
+  {
+    "id": 16,
+    "doc_type": "publicacions",
+    "val": "• Quan l’article determinat va davant del dia de la setmana pot indicar",
+    "cat": "• Quan l'article determinat va davant del dia de la setmana pot indicar",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "468f9c7cc63e5ba9"
+  },
+  {
+    "id": 17,
+    "doc_type": "publicacions",
+    "val": "Dubtes freqüents Diccionari del català col·loquial.",
+    "cat": "Dubtes freqüents Diccionari del català col·loquial.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "31da6b9ee4c37cd3"
+  },
+  {
+    "id": 18,
+    "doc_type": "publicacions",
+    "val": "col·laboració activa, es puguen ﬁxar unes convencions lingüístiques útils",
+    "cat": "col·laboració activa, es puguin ﬁxar unes convencions lingüístiques útils",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "73ad4de458928006"
+  },
+  {
+    "id": 19,
+    "doc_type": "glossari",
+    "val": "Per a aconseguir este efecte, se sol recórrer a una gesticulació o a un to peculiars, que servixen per a advertir l’interlocutor de la intenció burlesca amb què estan dites.",
+    "cat": "Per a aconseguir aquest efecte, se sol recórrer a una gesticulació o a un to pecularis, que serveixen per a advertir l'interlocutor de la intenció burlesca amb què estan dites.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "89e685eb349d3dba"
+  },
+  {
+    "id": 20,
+    "doc_type": "nota-de-premsa",
+    "val": "Ferrer ha afirmat que “des del respecte i la independència treballarem per a aconseguir una llengua més forta i estimada”.",
+    "cat": "Ferrer ha afirmat que “des del respecte i la independència treballarem per aconseguir una llengua més forta i estimada”.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "77970b016bd94ff2"
+  },
+  {
+    "id": 21,
+    "doc_type": "pagina",
+    "val": "2023 Beneixida Dionís Seguí Penadés / Àlvar Soriano Samper / Acadèmia Valenciana de la Llengua",
+    "cat": "2023 Benedita Dionís Seguí Penadés / Àlvar Soriano Samper / Acadèmia Valenciana de la Llengua",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "477922b6d6379d4b"
+  },
+  {
+    "id": 22,
+    "doc_type": "pagina",
+    "val": "Acadèmics Joan Rafael Ramos Alfajarín joanrafael.ramos@avl.gva.es",
+    "cat": "Acadèmics Joan Rafael Ramos Alfajarín joanrafael.ramos@avl.gva.es",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "2f15d6fabe21a422"
+  },
+  {
+    "id": 23,
+    "doc_type": "glossari",
+    "val": "En un primer moment, sembla que està lligat amb els rituals màgics relacionats amb la caça, i les representacions servien per a mostrar didàcticament els moviments d’aproximació a les preses i, alhora, exalçar l’astúcia i el valor dels caçadors.",
+    "cat": "En un primer moment, sembla que està lligat amb els rituals màgics relacionats amb la caça, i les representacions servien per a mostrar didàcticament els moviments d'aproximació a les preses i, alhora, exalçar l'astúcia i el valor dels caçadors.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "173a974c4949e30a"
+  },
+  {
+    "id": 24,
+    "doc_type": "glossari",
+    "val": "Però, curiosament, esta paraula no està (encara) en el diccionari.",
+    "cat": "Però, curiosament, aquesta paraula no està (encara) en el diccionari.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "f5190eb1c96e83cd"
+  },
+  {
+    "id": 25,
+    "doc_type": "legislacio",
+    "val": "l’article tercer de l’esmentada Llei fixa com a principi d’actuació del Consell",
+    "cat": "l'article tercer de l'esmentada Llei fixa com a principi d'actuació del Consell",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "31f57d0fa26b0ae5"
+  },
+  {
+    "id": 26,
+    "doc_type": "glossari",
+    "val": "Però, a poc a poc, en un nou salt metafòric,",
+    "cat": "Però, a poc a poc, en un nou salt metafòric,",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "93afcd48c9888d32"
+  },
+  {
+    "id": 27,
+    "doc_type": "butlleti",
+    "val": "te negre, xopsuei o gàrum.",
+    "cat": "te negre, copsuei o gàrum.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "0be16366ac7e1cf6"
+  },
+  {
+    "id": 28,
+    "doc_type": "publicacions",
+    "val": "en el sector terciari, industrial, mestresses de casa i treballadors",
+    "cat": "en el sector terciari, industrial, mestresses de casa i treballadors",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "a09c766fe5c7e3e1"
+  },
+  {
+    "id": 29,
+    "doc_type": "glossari",
+    "val": "I d’ací, a partir del segle XIII, la paraula farsa",
+    "cat": "I d'ací, a partir del segle XIII, la paraula farsa",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "c01a4be3e9744d4c"
+  },
+  {
+    "id": 30,
+    "doc_type": "publicacions",
+    "val": "23. Incentivar l’ús del valencià en superfícies comercials, en entitats bancàries i en caixes d’estalvi, en organitzacions socioeconòmiques i en entitats esportives.",
+    "cat": "23. Incentivar l'ús del valencià en superfícies comercials, en entitats bancàries i en caixes d'estalvi, en organitzacions socioeconòmiques i en entitats esportives.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "617c539adc223ca7"
+  },
+  {
+    "id": 31,
+    "doc_type": "gramatica_normativa",
+    "val": "Excepcionalment, també s'escriu amb z la paraula brunz, tot i que es pronuncia com a sorda [s], per a mantindre el paral·lelisme amb brunzir.",
+    "cat": "Excepcionalment, també s'escriu amb z la paraula brunz, tot i que es pronuncia com a sorda [s], per a mantindre el paral·lelisme amb brunzir.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "fcff10e3e873a85b"
+  },
+  {
+    "id": 32,
+    "doc_type": "publicacions",
+    "val": "Per tot això, en l'elaboració del Llibre blanc de l’ús del valencià s'han fixat els objectius següents:",
+    "cat": "Per tot això, en l'elaboració del Llibre blanc de l'ús del valencià s'han fixat els objectius següents:",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "b1ebbfb670d6f368"
+  },
+  {
+    "id": 33,
+    "doc_type": "publicacions",
+    "val": "casa parla sempre, generalment o més valencià, davant dell 44%",
+    "cat": "casa parla sempre, generalment o més valencià, davant del 44%",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "7d7a74718b2890cd"
+  },
+  {
+    "id": 34,
+    "doc_type": "glossari",
+    "val": "sweet potato, és a dir, ‘creïlla dolça’. Entre nosaltres, és habitual consumir-lo en el menjar conegut col·loquialment com a",
+    "cat": "patata dolça, és a dir, 'creïlla dolça'. Entre nosaltres, és habitual consumir-la en el menjar conegut col·loquialment com a",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "b645062729ff3315"
+  },
+  {
+    "id": 35,
+    "doc_type": "publicacions",
+    "val": "locals d’oci, sinó El Consell ha aprovat un decret que regula l’horari de",
+    "cat": "locals d'oci, sinó el Consell ha aprovat un decreto que regula l'horari de",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "1e6c4e07e5fc2389"
+  },
+  {
+    "id": 36,
+    "doc_type": "publicacions",
+    "val": "h) Els compostos de determinats noms propis:",
+    "cat": "h) Els compostos de determinats noms propis:",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "73752ed120b2bfeb"
+  },
+  {
+    "id": 37,
+    "doc_type": "pagina",
+    "val": "Doctora en Dret Constitucional per la Universitat de València.",
+    "cat": "Doctora en Dret Constitucional per la Universitat de València.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "f0f45b97aeae1bd2"
+  },
+  {
+    "id": 38,
+    "doc_type": "glossari",
+    "val": "El seu consum com a aperitiu és molt habitual en terres valencianes, si bé en el continent europeu se sol utilitzar com a fertilitzant, per la capacitat dels tramussos de fixar el nitrogen a terra.",
+    "cat": "El seu consum com a aperitiu és molt habitual en terres valencianes, si bé en el continent europeu se sol utilitzar com a fertilitzant, per la capacitat dels tramolls de fixar el nitrogen a terra.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "f1a8aaac6c940689"
+  },
+  {
+    "id": 39,
+    "doc_type": "glossari",
+    "val": "La segona notícia destacada també té relació amb els impulsos sexuals descontrolats.",
+    "cat": "La segona notícia destacada també té relació amb els impulsos sexuals descontrolats.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "d8e81f32082c2ceb"
+  },
+  {
+    "id": 40,
+    "doc_type": "glossari",
+    "val": "S’utilitzava amb el significat de ‘guia, conductor’. La relació semàntica amb el nostre",
+    "cat": "S'utilitzava amb el significat de 'guia, conductor'. La relació semàntica amb el nostre",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "8120483932f0a039"
+  },
+  {
+    "id": 41,
+    "doc_type": "acord-normatiu",
+    "val": "màrgens o marges, òrfens o orfes, òrguens o orgues, ràvens o raves, térmens",
+    "cat": "marges o orfes, orgues o orgues, raves o raves, tèrmins",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "ad390f74747c8653"
+  },
+  {
+    "id": 42,
+    "doc_type": "publicacions",
+    "val": "Com que no has vingut, hem començat sense tu, i no *Com no has",
+    "cat": "Com que no has vingut, hem començat sense tu, i no *Com no has",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "806e7659ed902de0"
+  },
+  {
+    "id": 43,
+    "doc_type": "glossari",
+    "val": "La paraula dèspota prové del grec despótēs, a on s’usava amb el significat de ‘amo, senyor’. Més tard, del segle IV al XV, passà a utilitzar-se per a referir-se específicament a l’emperador bizantí i a altres membres de la família imperial.",
+    "cat": "La paraula dèspota prové del grec despótēs, on s'usava amb el significat de 'amo, senyor'. Més tard, del segle IV al XV, passà a utilitzar-se per a referir-se específicament a l'emperador bizantí i a altres membres de la família imperial.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "3922678674dfd0ff"
+  },
+  {
+    "id": 44,
+    "doc_type": "gramatica_normativa",
+    "val": "## 23.2.1. Els pronoms reflexius i no reflexius",
+    "cat": "## 23.2.1. Els pronoms reflexius i no reflexius",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "f9f1596cddcf10a9"
+  },
+  {
+    "id": 45,
+    "doc_type": "gramatica_normativa",
+    "val": "[Ex: una editorial (‘empresa editora’)]",
+    "cat": "[Ex: una editorial ('empresa editora')]",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "78a88be853d32e53"
+  },
+  {
+    "id": 46,
+    "doc_type": "publicacions",
+    "val": "el valencià; una de cada set persones (14%) el sap parlar; una de",
+    "cat": "el valencià; una de cada set persones (14%) el sap parlar; una de",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "2a046c37053ef2d2"
+  },
+  {
+    "id": 47,
+    "doc_type": "publicacions",
+    "val": "nivells» (CVC) i «concretar, desenrotllar i actualitzar els manaments de la Llei",
+    "cat": "nivells» (CVC) i «concretar, desenrotllar i actualitzar els maniments de la Llei",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "f34b98f7201ead94"
+  },
+  {
+    "id": 48,
+    "doc_type": "glossari",
+    "val": "La h és una de les lletres que més maldecaps causa als estudiants.",
+    "cat": "La h és una de les lletres que més maldecaps causa als estudiants.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "dd8ce71c4e3239e1"
+  },
+  {
+    "id": 49,
+    "doc_type": "publicacions",
+    "val": "LLIG ESCRIU GT. 053. Entén i parla.",
+    "cat": "LLIG ESCRIU GT. 053. Entén i parla.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "5931cd5bc94cefea"
+  },
+  {
+    "id": 50,
+    "doc_type": "glossari",
+    "val": "Reforçant esta imatge tenebrosa, a vegades va abillada amb un barret de copa negre i una capa.",
+    "cat": "Reforçant aquesta imatge tenebrosa, a vegades va abillada amb un barret de copa negre i una capa.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "f4691e6f76c9c926"
+  },
+  {
+    "id": 51,
+    "doc_type": "butlleti",
+    "val": "En este sentit, la variant",
+    "cat": "En aquest sentit, la variant",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "6190de5e9aed2be0"
+  },
+  {
+    "id": 52,
+    "doc_type": "legislacio",
+    "val": "Les actes s'aprovaran en la sessió ordinària posterior.",
+    "cat": "Les actes s'aprovaran en la sessió ordinària posterior.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "d2c18b651bf5e920"
+  },
+  {
+    "id": 53,
+    "doc_type": "gramatica_normativa",
+    "val": "La v pot designar-se igualment com a ve baixa.",
+    "cat": "La v pot designar-se igualment com a ve baixa.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "bbe05d0e002b27bf"
+  },
+  {
+    "id": 54,
+    "doc_type": "publicacions",
+    "val": "llengua oficial per a tot el seu conjunt, hi ha altres llengües oficials en deter·",
+    "cat": "llengua oficial per a tot el seu conjunt, hi ha altres llengües oficials en detall",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "f504ff8bf7ef8126"
+  },
+  {
+    "id": 55,
+    "doc_type": "acord-normatiu",
+    "val": "«4. En els centres privats concertats, i aquells a què fa referència l’article 2.2,",
+    "cat": "«4. En els centres privats concertats, i aquells a què fa referència l'article 2.2,",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "1d846ba3171f11fe"
+  },
+  {
+    "id": 56,
+    "doc_type": "glossari",
+    "val": "El llenguatge és un invent prodigiós de l’espècie humana.",
+    "cat": "El llenguatge és un invente prodigious de l'espècie humana.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "6820687a49d80919"
+  },
+  {
+    "id": 57,
+    "doc_type": "acord-normatiu",
+    "val": "mes de gener i emeten un informe per a la Junta de Govern». Així mateix,",
+    "cat": "mes de gener i emeten un informe per a la Junta de Govern». Així mateix,",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "46e8f2cca01f58a9"
+  },
+  {
+    "id": 58,
+    "doc_type": "publicacions",
+    "val": "Guapo, atractiu, ben plantat, polit.",
+    "cat": "Guapo, atractiu, ben plantat, educat.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "5b32168dc2d77314"
+  },
+  {
+    "id": 59,
+    "doc_type": "glossari",
+    "val": "És precisament esta singularitat la que originà el nom de",
+    "cat": "És precisament aquesta singularitat la que originà el nom de",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "2c0f2c996375b7ba"
+  },
+  {
+    "id": 60,
+    "doc_type": "acord-normatiu",
+    "val": "la mateixa llengua utilitzada” (art. 9.2.). L’Estatut d’Autonomia també atorga caràcter",
+    "cat": "la mateixa llengua utilitzada” (art. 9.2.). L'Estatut d'Autonomia també atorga caràcter",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "20656b674f648815"
+  },
+  {
+    "id": 61,
+    "doc_type": "gramatica_normativa",
+    "val": "Tot i el caràcter recursiu, hi ha alguns sufixos que han quedat fossilitzats en determinats contextos i que no poden aparéixer a final de paraula.",
+    "cat": "Tot i el caràcter recursiu, hi ha alguns sufixos que han quedat fossilitzats en determinats contextos i que no poden aparèixer a final de paraula.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "d18669058a94ae18"
+  },
+  {
+    "id": 62,
+    "doc_type": "glossari",
+    "val": "Al final, adoptaren la dràstica resolució de mantindre’ls a pa i aigua.",
+    "cat": "Al final, adoptaren la dràstica resolució de mantenir'ls a pa i aigua.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "7fa99492b3c69f68"
+  },
+  {
+    "id": 63,
+    "doc_type": "publicacions",
+    "val": "Séquia de la Mota. 2. Boquera d’una séquia.",
+    "cat": "Sèquia de la Mota. 2. Boquera d'una sèquia.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "04c5c9154bcda20c"
+  },
+  {
+    "id": 64,
+    "doc_type": "publicacions",
+    "val": "El dadaisme és un moviment artístic i literari iniciat l’any 1916.",
+    "cat": "El dadaisme és un moviment artístic i literari iniciat l'any 1916.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "1cbf4dcd9b65a56f"
+  },
+  {
+    "id": 65,
+    "doc_type": "glossari",
+    "val": "Però, si som nosaltres —o l’oratge— els que llevem la humitat sobrevinguda a un objecte a través d’un procés artificial (calfant l’objecte, llançant un xorro d’aire, passant un drap…), en eixe cas l’eixuguem; no el sequem.",
+    "cat": "Però, si som nosaltres —o l'oratge— els que llevem la humitat sobrevinguda a un objecte a través d'un procés artificial (calfant l'objecte, llançant un xorro d'aire, passant un drap…), en aqueix cas l'aixecuem; no el sequem.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "87ff4fc13d44acb5"
+  },
+  {
+    "id": 66,
+    "doc_type": "acord-normatiu",
+    "val": "serra de l’Ave per la serra d’El Ave.",
+    "cat": "serra de l'Ave per la serra d'El Ave.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "859814c3a748fcd2"
+  },
+  {
+    "id": 67,
+    "doc_type": "publicacions",
+    "val": "botigues tradicionals i en els bancs.",
+    "cat": "botigues tradicionals i en els bancs",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "240e3ca8c8fa54e7"
+  },
+  {
+    "id": 68,
+    "doc_type": "glossari",
+    "val": "-osi, que, derivat del grec ôsis, s’utilitza per a referir-se a un procés patològic.",
+    "cat": "-osi, que, derivat del grec ôsis, s'utilitza per a referir-se a un procés patològic.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "9c83824d46039af4"
+  },
+  {
+    "id": 69,
+    "doc_type": "acord-normatiu",
+    "val": "Inicialment, els projectes lingüístics dels centres educatius contindran els programes",
+    "cat": "Inicialment, els projectes lingüístics dels centres educatius contindran els programes",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "395b3b159b6f94e0"
+  },
+  {
+    "id": 70,
+    "doc_type": "pagina",
+    "val": "sirena sitja sobines sobrassada sobreseïment soca",
+    "cat": "sirena sitja sobresobirassada sobreseïment rabassa",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "f264177563ab83be"
+  },
+  {
+    "id": 71,
+    "doc_type": "glossari",
+    "val": "A partir del segle XVIII, amb la idea subjacent de sacrifici mortuori, amplià el seu significat per a al·ludir a matances de grups ètnics o culturals.",
+    "cat": "A partir del segle XVIII, amb la idea subjacent de sacrifici mortuori, amplià el seu significat per a al·ludir a matances de grups ètnics o culturals.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "669a23db1d5a8d26"
+  },
+  {
+    "id": 72,
+    "doc_type": "glossari",
+    "val": "El mot autobús és un préstec del francés.",
+    "cat": "El mot autobús és un préstec del francès.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "20455ede382dddfe"
+  },
+  {
+    "id": 73,
+    "doc_type": "glossari",
+    "val": "cagar i el substantiu niu.",
+    "cat": "cagar i el substantiu niu",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "c17b8bfa70452277"
+  },
+  {
+    "id": 74,
+    "doc_type": "nota-de-premsa",
+    "val": "El joc de pilota, la columbicultura i altres esports tradicionals són el millor exemple i testimoni del ric patrimoni cultural i lingüístic valencià.",
+    "cat": "El joc de pilota, la columbicultura i altres esports tradicionals són el millor exemple i testimoni del ric patrimoni cultural i lingüístic valencià.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "d91d7bcc7f1645a4"
+  },
+  {
+    "id": 75,
+    "doc_type": "glossari",
+    "val": "parany: els pardalets es paren sobre les branquetes untades amb visc, atretes pel dolç aroma que desprén esta substància, i hi queden fatalment enganxats.",
+    "cat": "parany: els pardalets es paren sobre les branquetes untades amb vesc, atretes pel dolç aroma que desprèn aquesta substància, i hi queden fatalment enganxats.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "974740e043638855"
+  },
+  {
+    "id": 76,
+    "doc_type": "publicacions",
+    "val": "3. En l’àmbit territorial en què és pròpia, la pronunciació com a e de",
+    "cat": "3. En l'àmbit territorial en què és pròpia, la pronunciació com a e de",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "5e7d4f5bfb091465"
+  },
+  {
+    "id": 77,
+    "doc_type": "publicacions",
+    "val": "L’AVL assumix el patrocini econòmic del curs de postgrau d’Onomàstica",
+    "cat": "L'AVL assumeix el patrocini econòmic del curs de postgrau d'Onomàstica",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "7e2d369f0784cc0d"
+  },
+  {
+    "id": 78,
+    "doc_type": "glossari",
+    "val": "La necessitat de tindre una paraula específica sorgí quan es prengué consciència del pecat.",
+    "cat": "La necessitat de tenir una paraula específica sorgí quan es prengué consciència del pecat.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "548e6c10bbd0ac8f"
+  },
+  {
+    "id": 79,
+    "doc_type": "legislacio",
+    "val": "Podran ser consultats pels acadèmics i seran d'accés públic en els termes que",
+    "cat": "Podran ser consultats pels acadèmics i seran d'accés públic en els termes que",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "31ca1770b5ed217a"
+  },
+  {
+    "id": 80,
+    "doc_type": "glossari",
+    "val": "El laïcisme és un corrent de pensament sorgit durant el segle xix, basat en l’humanisme renaixentista, que defén una organització de la societat al marge de les confessions religioses.",
+    "cat": "El laïcisme és un corrent de pensament sorgit durant el segle xix, basat en l'humanisme renaixentista, que defensa una organització de la societat al marge de les confessions religioses.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "5d8b8c38addfaad0"
+  },
+  {
+    "id": 81,
+    "doc_type": "gramatica_normativa",
+    "val": "## 34.5.2. Les conjuncions condicionals",
+    "cat": "## 34.5.2. Les conjuncions condicionals",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "a14cfae261f16353"
+  },
+  {
+    "id": 82,
+    "doc_type": "publicacions",
+    "val": "en la regió d’Alacant (56%).",
+    "cat": "en la regió d'Alacant (56%)",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "5c3fe519292929f1"
+  },
+  {
+    "id": 83,
+    "doc_type": "legislacio",
+    "val": "k) Qualsevol altra que li atribuïsca la present Llei.",
+    "cat": "k) Qualsevulla altra que li atribuïsca la present Llei.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "f93c82e3c3ec0eb4"
+  },
+  {
+    "id": 84,
+    "doc_type": "glossari",
+    "val": "Tot molt difícil de ponderar.",
+    "cat": "Tot molt difícil de ponderar.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "f9617b92996b933e"
+  },
+  {
+    "id": 85,
+    "doc_type": "publicacions",
+    "val": "depenen de la Generalitat Valenciana, de les entitats locals radicades a la",
+    "cat": "depenen de la Generalitat Valenciana, de les entitats locals radicades a la",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "a99eac7fe0f4b3ae"
+  },
+  {
+    "id": 86,
+    "doc_type": "publicacions",
+    "val": "mesures previstes en la LUEV fins a l’actualitat.",
+    "cat": "mesures previstes en la LUEV fins a l'actualitat.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "e59b54290eb6b914"
+  },
+  {
+    "id": 87,
+    "doc_type": "glossari",
+    "val": "S’ha de llegir com a [ks]. El seu gènere és ambivalent: pot ser masculí o femení.",
+    "cat": "S'ha de llegir com a [ks]. El seu gènere és ambivalent: pot ser masculí o femení.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "79073347fa3190e6"
+  },
+  {
+    "id": 88,
+    "doc_type": "butlleti",
+    "val": "La brevetat ha esdevingut no sols una (presumpta) virtut, sinó també una exigència ineludible.",
+    "cat": "La brevetat ha esdevingut no sols una (presumpta) virtut, sinó també una exigència ineludible.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "5ea66c0ad477cedd"
+  },
+  {
+    "id": 89,
+    "doc_type": "publicacions",
+    "val": "mots en contacte no és possible interpretar identitat vocàlica no s’indica",
+    "cat": "mots en contacte no és possible interpretar identitat vocàlica no s'indica",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "8c66e73916404452"
+  },
+  {
+    "id": 90,
+    "doc_type": "nota-de-premsa",
+    "val": "Ferrer s’ha dirigit al filòleg guardonat com a referent dins d’una llarga i fructífera generació de filòlegs valencians.",
+    "cat": "Ferrer s'ha dirigit al filòleg guardonat com a referent dins d'una llarga i fructífera generació de filòlegs valencians.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "35291e6104c692cf"
+  },
+  {
+    "id": 91,
+    "doc_type": "acord-normatiu",
+    "val": "s’hagen assajat diverses solucions per a intentar fer explícita la presència dels dos sexes en el",
+    "cat": "s'hagin assajat diverses solucions per a intentar fer explícita la presència dels dos sexes en el",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "59c4c5b6a72aa8c4"
+  },
+  {
+    "id": 92,
+    "doc_type": "acord-normatiu",
+    "val": "reducción de veintiuno a once académicos y académicas lleva a reformar todos",
+    "cat": "reducció de vint-i-un a onze acadèmics i acadèmiques lleva a reformar tots",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "87cac30901f87906"
+  },
+  {
+    "id": 93,
+    "doc_type": "glossari",
+    "val": "Coses evengudes en la ciutat y regne de València: «Y·ls frares del Carme guanyaren moltíssim diner enbabucant la gent».",
+    "cat": "Coses evengudes a la ciutat i regne de València: «I els frare del Carme guanyaren moltíssim diners enbabucant la gent».",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "7ca42535cdf64a55"
+  },
+  {
+    "id": 94,
+    "doc_type": "publicacions",
+    "val": "o dos punts, estos signes han d’anar immediatament després del parèntesi:",
+    "cat": "o dos punts, aquests signes han d'anar immediatament després del parèntesi:",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "cd7b7556d61929cd"
+  },
+  {
+    "id": 95,
+    "doc_type": "acord-normatiu",
+    "val": "«La nueva norma se asienta, así, sobre cuatro pilares esenciales.",
+    "cat": "La nova norma se asentament, així, sobre quatre pilares essencials.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "463ac8892e667943"
+  },
+  {
+    "id": 96,
+    "doc_type": "glossari",
+    "val": "lambĕre, ‘llepar’, aquella antiga dingua es transformà en",
+    "cat": "lambre, 'llepar', aquella antiga llengua es va transformar en",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "b3233d16453ceb68"
+  },
+  {
+    "id": 97,
+    "doc_type": "publicacions",
+    "val": "4. L’article 8 del Decret 15/2011, de 18 de febrer, del Consell, pel qual es regula el Registre",
+    "cat": "4. L'article 8 del Decret 15/2011, de 18 de febrer, del Consell, pel qual es regula el Registre",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "6efcad97536aaf53"
+  },
+  {
+    "id": 98,
+    "doc_type": "publicacions",
+    "val": "poc, l’excepcional fotograﬁa, saturada de color i d’ombres, és obra",
+    "cat": "poc, l'excepcional fotografia, saturada de color i d'ombres, és obra",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "83b468e5b513703e"
+  },
+  {
+    "id": 99,
+    "doc_type": "gramatica_normativa",
+    "val": "antecedent (ús anafòric), o a l'element que s'introduïx tot seguit, anomenat",
+    "cat": "antecedent (ús anafòric), o a l'element que s'introduïx tot seguit, anomenat",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "b267d4bef677d0fa"
+  },
+  {
+    "id": 100,
+    "doc_type": "glossari",
+    "val": "Amb evident intenció crítica, s’hi apunta que, «Entre estos viu / lo ardit Borràs, / tan",
+    "cat": "Amb evident intenció crítica, s'hi apunta que, «Entre aquestes viu / el cremat Borràs, / tan",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "e548bfe05a70800e"
+  },
+  {
+    "id": 101,
+    "doc_type": "publicacions",
+    "val": "en l’exposició del pla de treball.",
+    "cat": "en l'exposició del pla de treball",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "516591353b719b8f"
+  },
+  {
+    "id": 102,
+    "doc_type": "glossari",
+    "val": "Els valencians hem tingut una intensa relació comercial durant tota l’Edat Mitjana amb el port d’Alger, i de fet el nom de",
+    "cat": "Els valencians hem tingut una intensa relació comercial durant tota l'Edat Mitjana amb el port d'Alger, i de fet el nom de",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "8a449172f705f6b0"
+  },
+  {
+    "id": 103,
+    "doc_type": "gramatica_normativa",
+    "val": "Les paraules monosíl·labes poden ser tòniques o àtones: les primeres tenen accent de paraula (",
+    "cat": "Les paraules monosíl·labes poden ser tòniques o àtones: les primeres tenen accent de paraula (",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "0c2c065cb5afe241"
+  },
+  {
+    "id": 104,
+    "doc_type": "glossari",
+    "val": "farcir en molts altres sentits figurats, sempre amb la idea implícita d’un excés d’elements que se sobreposen a alguna altra cosa.",
+    "cat": "emplenar en molts altres sentits figurats, sempre amb la idea implícita d'un excés d'elements que se sobreposen a alguna altra cosa.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "1648ef6ad1ca96a9"
+  },
+  {
+    "id": 105,
+    "doc_type": "glossari",
+    "val": "En 1296, Berenguer de Ripoll, camarlenc de Pere el Cerimoniós, escrivia que «e del dit consseyl e ab les nostres pròpries missions dur a acabament denant qualsevulle jutge eclesiàstich o seglar». En l’actualitat encara manté una forta vitalitat entre molts parlants.",
+    "cat": "En 1296, Berenguer de Ripoll, camarlenc de Pere el Cerimoniós, escrivia que «e del dit consseyl e ab les nostres pròpies missions dur a acabament denant qualsevulla jutge eclesiàstich o seglar». En l'actualitat encara manté una forta vitalitat entre molts parlants.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "6bb3ef03f418a4d7"
+  },
+  {
+    "id": 106,
+    "doc_type": "glossari",
+    "val": "A banda del sentit bàsic ja comentat, el verb",
+    "cat": "A banda del sentit bàsic ja comentat, el verb",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "9f7de6d983c50cac"
+  },
+  {
+    "id": 107,
+    "doc_type": "nota-de-premsa",
+    "val": "La data per a la proclamació de les candidatures per part de la Junta de Govern serà el dia 2 de març.",
+    "cat": "La data per a la proclamació de les candidatures per part de la Junta de Govern serà el dia 2 de març.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "383b03263f20d7ca"
+  },
+  {
+    "id": 108,
+    "doc_type": "publicacions",
+    "val": "l’Església, al rei o a altres propietaris, generalment nobles.",
+    "cat": "l'Església, al rei o a altres propietaris, generalment nobles.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "47b892c1eef754db"
+  },
+  {
+    "id": 109,
+    "doc_type": "glossari",
+    "val": "Així, podem dir, per exemple, que a un menjar li falta sal o que a una persona li falta delicadesa.",
+    "cat": "Així, podem dir, per exemple, que a un menjar li falta sal o que a una persona li falta delicadesa.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "c88d389f77800860"
+  },
+  {
+    "id": 110,
+    "doc_type": "acord-normatiu",
+    "val": "Artículo 11. L’Escola Valenciana d’Administració Pública.",
+    "cat": "Article 11. L'Escola Valenciana d'Administració Pública.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "621e90f434af0fb1"
+  },
+  {
+    "id": 111,
+    "doc_type": "glossari",
+    "val": "Cosa tallada o treballada obliquament.",
+    "cat": "Cosa tallada o treballada obliquament.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "9448f2f512567772"
+  },
+  {
+    "id": 112,
+    "doc_type": "glossari",
+    "val": "zero, de fet, és un préstec del segle XVII provinent de l’italià",
+    "cat": "zero, de fet, és un préstec del segle XVII provinent de l'italià",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "3bf39384ce7e6012"
+  },
+  {
+    "id": 113,
+    "doc_type": "glossari",
+    "val": "El sentit originari de la paraula cabut servia igualment per a qualificar les persones que tenien el cap desproporcionadament gran respecte al cos.",
+    "cat": "El sentit originari de la paraula cabut servia igualment per a qualificar les persones que tenien el cap desproporcionadament gran respecte al cos.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "6187c7802f945564"
+  },
+  {
+    "id": 114,
+    "doc_type": "acord-normatiu",
+    "val": "pública no ha augmentat en la mesura que seria desitjable, segons es desprén",
+    "cat": "pública no ha augmentat en la mesura que seria desitjable, segons es desprèn",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "1bf8b298612e67a5"
+  },
+  {
+    "id": 115,
+    "doc_type": "publicacions",
+    "val": "matissar m. Formació vegetal constituïda per mates i arbustos baixos,",
+    "cat": "matissar m. Formació vegetal constituda per mates i arbustos baixos,",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "be18210bcaf68227"
+  },
+  {
+    "id": 116,
+    "doc_type": "publicacions",
+    "val": "Això no obstant i mentres no es modifique el Mapa Oficial de Carrete·",
+    "cat": "Això no obstant i mentres no es modifique el Mapa Oficial de Carrete·",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "97e2697188dab806"
+  },
+  {
+    "id": 117,
+    "doc_type": "glossari",
+    "val": "Potser per això la paraula odiador no sempre és percebuda per molts usuaris com una alternativa satisfactòria per a reemplaçar",
+    "cat": "Potser per això la paraula odiador no sempre és percebuda per molts usuaris com una alternativa satisfactòria per a reemplaçar",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "b2255d7b1d594a23"
+  },
+  {
+    "id": 118,
+    "doc_type": "acord-normatiu",
+    "val": "contribuyo en gran manera al desarrollo de nuestros principales romances, castellano,",
+    "cat": "contribue en gran manera al desenvolupament de nostres principals romans, castellà,",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "4727878497dfc20e"
+  },
+  {
+    "id": 119,
+    "doc_type": "acord-normatiu",
+    "val": "Mecenes de la Comunitat Valenciana, als",
+    "cat": "Mecenes de la Comunitat Valenciana, als",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "2a76cfb6622b8852"
+  },
+  {
+    "id": 120,
+    "doc_type": "glossari",
+    "val": "S’usava per a designar la figura d’un animal fabulós —una espècie de mulassa imponent— que es fa desfilar en moltes festes populars.",
+    "cat": "S'esdevia per a designar la figura d'un animal fabulós —una espècie de mulassa imponent— que es fa desfilar en moltes festes populars.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "350340050c9fc43b"
+  },
+  {
+    "id": 121,
+    "doc_type": "acord-normatiu",
+    "val": "que garantisca tant el pluralisme com la pluralitat.",
+    "cat": "que garantisca tant el pluralisme com la pluralitat.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "9edd1643dd76e2ca"
+  },
+  {
+    "id": 122,
+    "doc_type": "acord-normatiu",
+    "val": "pel seu ús normal, considera que l’avantprojecte de Llei facilita l’adopció de",
+    "cat": "pel seu ús normal, considera que l'avantprojecte de Llei facilita l'adopció de",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "456f5005ae3fb53d"
+  },
+  {
+    "id": 123,
+    "doc_type": "publicacions",
+    "val": "ELS GUIONS El guió (—) s’utilitza en els casos següents:",
+    "cat": "ELS GUIONS El guió (—) s'utilitza en els casos següents:",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "3e35e62b9789e633"
+  },
+  {
+    "id": 124,
+    "doc_type": "glossari",
+    "val": "muno, amb què es designa una ‘xicoteta elevació del terreny’. Esta mateixa idea de prominència també apareix en altres paraules de la mateixa família, com",
+    "cat": "muno, amb què es designa una 'xicoteta elevació del terreny'. Aquesta mateixa idea de prominència també apareix en altres paraules de la mateixa família, com",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "9da9e5e5b5b8f5cb"
+  },
+  {
+    "id": 125,
+    "doc_type": "gramatica_normativa",
+    "val": "b ) Per a indicar oposició o alternança de paraules, expressions, etc.:",
+    "cat": "b ) Per a indicar oposició o alternança de paraules, expressions, etc.:",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "15f80686b886a91a"
+  },
+  {
+    "id": 126,
+    "doc_type": "publicacions",
+    "val": "transcendència negativa que per al poble valencià tingué la Batalla d’Almansa",
+    "cat": "transcendència negativa que per al poble valencià tingués la Batalla d'Almansa",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "67eecc460b4d210a"
+  },
+  {
+    "id": 127,
+    "doc_type": "glossari",
+    "val": "Gràcies a això, atenent la distància entre la Terra i el Sol, la temperatura mitjana de la superfície del planeta no seria de 15 °C (que és la que tenim actualment), sinó de ˗18 °C.",
+    "cat": "Gràcies a això, atenent la distància entre la Terra i el Sol, la temperatura mitjana de la superfície del planeta no seria de 15 °C (que és la que tenim actualment), sinó de ˗18 °C.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "8baa1a9a381619a9"
+  },
+  {
+    "id": 128,
+    "doc_type": "glossari",
+    "val": "Apareix esparsa, ací i allà, en moltes llengües.",
+    "cat": "Apareix esparsa, aquí i enllà, en moltes llengües.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "1eda8bcb43b2dadc"
+  },
+  {
+    "id": 129,
+    "doc_type": "glossari",
+    "val": "Això és degut al fet que, per una banda, té un valor de nom propi quan designa el nom de l’astre: «La Lluna és un satèl·lit de la Terra». En este sentit, per tant, seria equivalent a",
+    "cat": "Això és degut al fet que, per una banda, té un valor de nom propi quan designa el nom de l'astre: «La Lluna és un satèl·lit de la Terra». En aquest sentit, per tant, seria equivalent a",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "d1b02edf92ffafa4"
+  },
+  {
+    "id": 130,
+    "doc_type": "acord-normatiu",
+    "val": "correlativa desprotecció de la valenciana, defrauda els preceptes estatutaris i",
+    "cat": "correlativa desprotecció del valencià, defrauda els preceptes estatuaris i",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "c39f7e660b150e7f"
+  },
+  {
+    "id": 131,
+    "doc_type": "pagina",
+    "val": "76. 2021 · «Dret i polítiques públiques lingüístiques al",
+    "cat": "76. 2021 · «Dret i polítiques públiques lingüístiques al",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "a35afad75b7092e7"
+  },
+  {
+    "id": 132,
+    "doc_type": "publicacions",
+    "val": "cosa les característiques de la llengua s’han d’adaptar a les condicions d’ús, que tradicional­",
+    "cat": "cosa les característiques de la llengua s'han d'adaptar a les condicions d'ús, que tradicional",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "1e79705528ec6c80"
+  },
+  {
+    "id": 133,
+    "doc_type": "gramatica_normativa",
+    "val": "La concordança de persona presenta menys especificitats.",
+    "cat": "La concordança de persona presenta menys especificitats.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "bbb4701f2a44550a"
+  },
+  {
+    "id": 134,
+    "doc_type": "pagina",
+    "val": "1976, Barcelona Fou elegida acadèmica pel Ple de l’AVL el 12 de març del",
+    "cat": "1976, Barcelona Fou elegida acadèmica pel Plenari de l'AVL el 12 de març del",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "90c2cbdfb3d42fa8"
+  },
+  {
+    "id": 135,
+    "doc_type": "publicacions",
+    "val": "—Qui ha vingut? —Ningú. / —No ningú.",
+    "cat": "—Qui ha venut? —Ningú. / —No ningú.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "7206c380aaa92b77"
+  },
+  {
+    "id": 136,
+    "doc_type": "glossari",
+    "val": "Se sol usar pejorativament per a referir-se a algú que és molt pobre, no pinta res en una organització o no es considera un bon partit per a establir una relació estable.",
+    "cat": "Se sol usar pejorativament per a referir-se a algú que és molt pobre, no pinta res en una organització o no es considera un bon partit per a establir una relació estable.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "ce7b504966032150"
+  },
+  {
+    "id": 137,
+    "doc_type": "glossari",
+    "val": "I també per a designar un ‘lloc situat en esta direcció’. A Benidorm, per exemple, hi ha la platja de Llevant.",
+    "cat": "I també per a designar un 'lloc situat en aquesta direcció'. A Benidorm, per exemple, hi ha la platja de Llevant.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "ce4c67460c052a27"
+  },
+  {
+    "id": 138,
+    "doc_type": "nota-de-premsa",
+    "val": "Oracional valencià com un llibre “entranyable” perquè arreplega moltes de les pregàries més estimades pels creients, i ha recordat com a punt de partida de l’obra la Jornada Llengua i Església celebrada l’any 2010.",
+    "cat": "Oració valenciana com un llibre “entranyable” perquè arreplega moltes de les pregueries més estimades pels creients, i ha recordat com a punt de partida de l'obra la Jornada Llengua i Església celebrada l'any 2010.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "293ed83797f5ca56"
+  },
+  {
+    "id": 139,
+    "doc_type": "publicacions",
+    "val": "d’estalvis va disminuint d’acord amb el descens de l’edat de la",
+    "cat": "d'estalvis va disminuint d'acord amb el descens de l'edat de la",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "40124751e79e425f"
+  },
+  {
+    "id": 140,
+    "doc_type": "glossari",
+    "val": "benvinguda, volem manifestar els nostres bons desitjos a les set noves acadèmiques que s’incorporen a esta institució.",
+    "cat": "benvingudes, volem manifestar els nostres bons desitjos a les set noves acadèmiques que s'incorporen a aquesta institució.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "a8c354cfeaa44a65"
+  },
+  {
+    "id": 141,
+    "doc_type": "publicacions",
+    "val": "S’han de respectar les construccions «lo + (de) + (article) + antropònim» en les zones on són habituals: Lo de Insa, Lo Candel.",
+    "cat": "S'han de respectar les construccions «lo + (de) + (article) + antropònim» en les zones on són habituals: Lo de Insa, Lo Candel.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "1003ccf36ab28fe9"
+  },
+  {
+    "id": 142,
+    "doc_type": "glossari",
+    "val": "toronja: «null hom o fembra qui vena vy en menut no gos tenir rams sinó de toronges», es diu en el",
+    "cat": "toronja: «null hom o fembra qui vingui en menut no gosin tenir rams sinó de toronges», es diu en el",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "6acd8eba782ef9c3"
+  },
+  {
+    "id": 143,
+    "doc_type": "publicacions",
+    "val": "relació amb la seua activitat (63%), a TVV (61%) i als mitjans de",
+    "cat": "relació amb la seva activitat (63%), a TVV (61%) i als mitjans de",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "ca99d86af47f0431"
+  },
+  {
+    "id": 144,
+    "doc_type": "publicacions",
+    "val": "la classe baixa o mitjana-baixa (45%).",
+    "cat": "la classe baixa o mitjana-baixa (45%).",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "fee5ec42deea77bc"
+  },
+  {
+    "id": 145,
+    "doc_type": "publicacions",
+    "val": "previst un apartat «L’elocució en la comunicació audiovisual», perquè tan",
+    "cat": "previst un apartat «L'elocució en la comunicació audiovisual», perquè tan",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "839a7c101bccaa16"
+  },
+  {
+    "id": 146,
+    "doc_type": "glossari",
+    "val": "O millor dit: està prohibit difondre missatges que tinguen com a objectiu captar adeptes per a qualsevol credo religiós que no siga l’islam.",
+    "cat": "O millor dit: està prohibit difondre missatges que tinguin com a objectiu captar adeptes per a qualsevulla credo religiós que no sigui l'islam.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "cd16c586881f1112"
+  },
+  {
+    "id": 147,
+    "doc_type": "glossari",
+    "val": "aspra, prové del llatí asper, que ja s’usava, igual que actualment, per a referir-se a una fusta, a un teixit o a qualsevol superfície que presenta rugositats o resulta desagradable al tacte.",
+    "cat": "aspra, prové del llatí asper, que ja s'usava, igual que actualment, per a referir-se a una fusta, a un teixit o a qualsevulla superfície que presenta rugositats o resulta desagradable al tacte.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "4bc9044c973e5a66"
+  },
+  {
+    "id": 148,
+    "doc_type": "acord-normatiu",
+    "val": "significa «que no diferix gens», el terme semblant vol dir «que té quasi la mateixa",
+    "cat": "significa «que no diferis gaire», el terme semblant vol dir «que té gairebé la mateixa»",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "b1fbdc4eb17eadc7"
+  },
+  {
+    "id": 149,
+    "doc_type": "publicacions",
+    "val": "l'AVL: «L’Acadèmia Valenciana de la Llengua és la institució normativa de",
+    "cat": "l'AVL: «l'Acadèmia Valenciana de la Llengua és la institució normativa de",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "31def68d0f1d57fd"
+  },
+  {
+    "id": 150,
+    "doc_type": "gramatica_normativa",
+    "val": "na) en els casos següents:",
+    "cat": "en els casos següents:",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "8c8c04f524108253"
+  },
+  {
+    "id": 151,
+    "doc_type": "glossari",
+    "val": "I això mateix passa amb les idees.",
+    "cat": "I això mateix passa amb les idees.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "e42a92e600da2dfe"
+  },
+  {
+    "id": 152,
+    "doc_type": "publicacions",
+    "val": "Règims jurídics Els substantius i adjectius que formen part del nom de ﬁgures jurídiques",
+    "cat": "Règims jurídics Els substantius i adjectius que formen part del nom de figures jurídiques",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "9e12221edfb45e9e"
+  },
+  {
+    "id": 153,
+    "doc_type": "publicacions",
+    "val": "de les institucions pròpies i de l’ús oficial del valencià,",
+    "cat": "de les institucions pròpies i de l'ús oficial del valencià,",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "07ff716ea6f1b05d"
+  },
+  {
+    "id": 154,
+    "doc_type": "glossari",
+    "val": "bulo, una paraula procedent del caló, la llengua parlada pels gitanos.",
+    "cat": "bulo, una paraula procedent del caló, la llengua parlada pels gitanos.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "3a105e2962836b6c"
+  },
+  {
+    "id": 155,
+    "doc_type": "glossari",
+    "val": "I si l’últim dia, parlant precisament del verb",
+    "cat": "I si l'últim dia, parlant precisament del verb",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "9b6d779a6ccc7630"
+  },
+  {
+    "id": 156,
+    "doc_type": "butlleti",
+    "val": "De les visites rebudes, 1.866 eren estudiants de Secundària, 290 de Batxiller i 142 adults.",
+    "cat": "De les visites rebudes, 1.866 eren estudiants de segonària, 290 de batxiller i 142 adults.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "85134b3f58c8a568"
+  },
+  {
+    "id": 157,
+    "doc_type": "glossari",
+    "val": "El verb acoquinar deriva del francés acoquiner.",
+    "cat": "El verb acoquinar deriva del francès acoquiner.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "2d167f562d3287ce"
+  },
+  {
+    "id": 158,
+    "doc_type": "publicacions",
+    "val": "tindre present que és habitual que el primer full del document enviat per",
+    "cat": "tenir present que és habitual que el primer full del document enviat per",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "6efce0decd8db5ad"
+  },
+  {
+    "id": 159,
+    "doc_type": "glossari",
+    "val": "En valencià es documenta ja des de ben antic.",
+    "cat": "En valencià es documenta ja des de ben antic.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "7b0b6ad20ee099dc"
+  },
+  {
+    "id": 160,
+    "doc_type": "acord-normatiu",
+    "val": "habilidades y destrezas, en la comprobación del conocimiento del valenciano y de otros",
+    "cat": "habilidades i destrezes, en la comprovació del coneixement del valencian i d'altres",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "93826ef5ae485031"
+  },
+  {
+    "id": 161,
+    "doc_type": "publicacions",
+    "val": "50,35 Insatisf. o Molt insatisf.",
+    "cat": "50,35 Insatisf. o Molt insatisf.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "7588232c05960211"
+  },
+  {
+    "id": 162,
+    "doc_type": "glossari",
+    "val": "En definitiva, traçar un pla de treball.",
+    "cat": "En definitiva, traçar un pla de treball.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "2b6a385b207dfeca"
+  },
+  {
+    "id": 163,
+    "doc_type": "gramatica_normativa",
+    "val": "## 20. Els quantificadors: els quantitatius",
+    "cat": "## 20. Els quantificadors: els quantitatius",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "c80c3e33f247a635"
+  },
+  {
+    "id": 164,
+    "doc_type": "glossari",
+    "val": "-isme, que li conferix un valor doctrinal.",
+    "cat": "-isme, que li conferte un valor doctrinal.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "5ca142ca6839925b"
+  },
+  {
+    "id": 165,
+    "doc_type": "glossari",
+    "val": "pujar a la gepa a algú per a indicar que domina la seua voluntat.",
+    "cat": "pujar a la gepa a algú per a indicar que domina la seva voluntat.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "1010f159c424eac2"
+  },
+  {
+    "id": 166,
+    "doc_type": "glossari",
+    "val": "L’èxit de la festa es basa en el desig irrefrenable per les activitats lúdiques i, segurament també, per la fascinació que ens desperta la truculència.",
+    "cat": "L'èxit de la festa es basa en el desig irrefrenable per les activitats lúdiques i, segurament també, per la fascinació que ens desperta la truculència.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "e74067c8b3a7dd5b"
+  },
+  {
+    "id": 167,
+    "doc_type": "glossari",
+    "val": "Era —i és encara— un arcaisme recuperat en la llengua literària, que no es diu espontàniament en cap àrea del domini lingüístic.",
+    "cat": "Era —i és encara— un arcaisme recuperat en la llengua literària, que no es diu espontàniament en cap àrea del domini lingüístic.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "e58d495ffb4f3c54"
+  },
+  {
+    "id": 168,
+    "doc_type": "legislacio",
+    "val": "Article 20 1. Correspon al Ple de la AVL aprovar anualment, a proposta de la Junta de Govern,",
+    "cat": "Article 20 1. Correspon al Ple de la AVL aprovar anualment, a proposta de la Junta de Govern,",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "63792c536cbd2453"
+  },
+  {
+    "id": 169,
+    "doc_type": "acord-normatiu",
+    "val": "d’unes bases «per a la unificació de l’ortografia valenciana». Ho feren",
+    "cat": "d'unes bases «per a la unificació de l'ortografia valenciana». Ho fan",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "b189aa6c93125496"
+  },
+  {
+    "id": 170,
+    "doc_type": "post",
+    "val": "Així mateix, els comuniquem que el Registre de l’Acadèmia Valenciana de la Llengua estarà obert en l’horari habitual.",
+    "cat": "Així mateix, els comuniquem que el Registre de l'Acadèmia Valenciana de la Llengua estarà obert en l'horari habitual.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "cd9d51803cd93310"
+  },
+  {
+    "id": 171,
+    "doc_type": "gramatica_normativa",
+    "val": "b ) En les oracions subordinades temporals introduïdes per abans que o fins que:",
+    "cat": "b ) En les oracions subordinades temporals introduïdes per abans que o fins que:",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "952bb74508a27568"
+  },
+  {
+    "id": 172,
+    "doc_type": "publicacions",
+    "val": "La reunió l’han ajornada per a després",
+    "cat": "La reunió la han ajornada per a després",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "e4cd2bb40f7c6d01"
+  },
+  {
+    "id": 173,
+    "doc_type": "publicacions",
+    "val": "estes relacions, els nivells d’ús més alts es donen en les regions",
+    "cat": "aquestes relacions, els nivells d'ús més alts es donen a les regions",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "8768352c5530d72f"
+  },
+  {
+    "id": 174,
+    "doc_type": "nota-de-premsa",
+    "val": "Verònica Cantó, ha recordat que, en eixe camí, l’Acadèmia mai no ha renunciat als principis que van inspirar la seua creació.",
+    "cat": "Verònica Cantó, ha recordat que, en aqueix camí, l'Acadèmia mai no ha renunciat als principis que van inspirar la seva creació.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "6963355f346f1b0c"
+  },
+  {
+    "id": 175,
+    "doc_type": "gramatica_normativa",
+    "val": "[Ex: La carretera per la qual ( o per on) passem normalment l'han tallada per obres.]",
+    "cat": "La carretera per la qual (o per la qual) passem normalment l'han tallada per obres.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "a578b0d232558f78"
+  },
+  {
+    "id": 176,
+    "doc_type": "glossari",
+    "val": "La sensació de fragilitat vital, així com la calor i les vacacions, clar!, han contribuït a dinamitzar l’oci nocturn.",
+    "cat": "La sensació de fragilitat vital, així com la calor i les vacances, clar!, han contribuït a dinamitzar l'oci nocturn.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "9205993203e438f0"
+  },
+  {
+    "id": 177,
+    "doc_type": "publicacions",
+    "val": "majúscula inicial, mentres que el segon (que fa referència a l’espècie) s’escriu en minúscula:",
+    "cat": "Majúscula inicial, mentres que el segon (que fa referència a l'espècie) s'escriu en minúscula:",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "e5c40ed4ced20a74"
+  },
+  {
+    "id": 178,
+    "doc_type": "acord-normatiu",
+    "val": "valencià en totes les activitats oficials de les institucions valencianes [...].",
+    "cat": "català en totes les activitats oficials de les institucions valencianes [...]",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "558ed46bf99f05dc"
+  },
+  {
+    "id": 179,
+    "doc_type": "glossari",
+    "val": "restauració és una adaptació de restauration, i",
+    "cat": "restauració és una adaptació de restaureció, i",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "e5a8a6c3694a6938"
+  },
+  {
+    "id": 180,
+    "doc_type": "pagina",
+    "val": "Codirectora de la Càtedra de Drets Lingüístics de la Universitat",
+    "cat": "Codirectora de la Càtedra de Drets Lingüístics de la Universitat",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "03a4adcd28be3e4f"
+  },
+  {
+    "id": 181,
+    "doc_type": "publicacions",
+    "val": "està més estesa entre la població jove (el 47% pensa que s’usa",
+    "cat": "està més estesa entre la població jove (el 47% pensa que s'usa)",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "d6bff74d16b99e18"
+  },
+  {
+    "id": 182,
+    "doc_type": "acord-normatiu",
+    "val": "drets lingüístics i la promoció del valencià, en especial en els àmbits en què es",
+    "cat": "drets lingüístics i la promoció del valencià, en especial en els àmbits en què es",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "34d0593d5b29d2f6"
+  },
+  {
+    "id": 183,
+    "doc_type": "glossari",
+    "val": "Fem festa sense festejar-la realment, i fins i tot fem fogueres sense haver de botar foc.",
+    "cat": "Fem festa sense festejar-la realment, i fins i tot fem fogueres sense haver de saltar foc.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "1e8a3f7511806747"
+  },
+  {
+    "id": 184,
+    "doc_type": "glossari",
+    "val": "En realitat, inicialment foren batejades en anglés amb el nom de",
+    "cat": "En realitat, inicialment foren batejades en anglès amb el nom de",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "362736702b380db5"
+  },
+  {
+    "id": 185,
+    "doc_type": "acord-normatiu",
+    "val": "Atés que el 6 de febrer del 2003 es va constituir la Comissió",
+    "cat": "Atés que el 6 de febrer del 2003 es va constituir la Comissió",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "d7926bb21f3397e2"
+  },
+  {
+    "id": 186,
+    "doc_type": "acord-normatiu",
+    "val": "discriminació lingüística dels valencianoparlants cal «garantir el dret dels",
+    "cat": "discriminació lingüística dels valencianoparlants cal «garantir el dret dels»",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "8adf89c93871767a"
+  },
+  {
+    "id": 187,
+    "doc_type": "publicacions",
+    "val": "agricultura tradicional, que ocupava mà d’obra abundant, a una agricultura evolucionada o de mercat.",
+    "cat": "agricultura tradicional, que ocupava mà d'obra abundant, a una agricultura evolucionada o de mercat.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "2243be447f65c17d"
+  },
+  {
+    "id": 188,
+    "doc_type": "publicacions",
+    "val": "textos escrits que acompanyen l’audiovisual (retolació de pel·lícules inclosa).",
+    "cat": "textos escrits que acompanyen l'audiovisual (retolació de pel·lícules inclosa).",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "562d49c6ed6d8ea6"
+  },
+  {
+    "id": 189,
+    "doc_type": "glossari",
+    "val": "És per a protegir-se de la voracitat de les cabres i altres herbívors terrestres.",
+    "cat": "És per a protegir-se de la voracitat de les cabres i altres herbívors terrestres.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "1b9488fc91de4f71"
+  },
+  {
+    "id": 190,
+    "doc_type": "acord-normatiu",
+    "val": "valencià i per l’aprovació del Consell Escolar per la majoria de dos",
+    "cat": "català i per l'aprovació del Consell Escolar per la majoria de dos",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "4176cc99dfa46ff4"
+  },
+  {
+    "id": 191,
+    "doc_type": "glossari",
+    "val": "Però, per a este tipus de reunions de caràcter polític, no en teníem cap.",
+    "cat": "Però, per a aquest tipus de reunions de caràcter polític, no en teníem cap.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "f3a3f184c27b6f30"
+  },
+  {
+    "id": 192,
+    "doc_type": "acord-normatiu",
+    "val": "representar ni substituir en exclusiva el conjunt d'expressions de la llengua, i alhora",
+    "cat": "representar ni substituir en exclusiva el conjunt d'expressions de la llengua, i alhora",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "c1287a4d80a9e174"
+  },
+  {
+    "id": 193,
+    "doc_type": "publicacions",
+    "val": "Pel que fa a la vocalització, cal entendre la tensió com a",
+    "cat": "Pel que fa a la vocalització, cal entendre la tensió com a",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "ec34855a9571a121"
+  },
+  {
+    "id": 194,
+    "doc_type": "glossari",
+    "val": "Actualment la variació de formes i materials utilitzats és grandíssima.",
+    "cat": "Actualment la variació de formes i materials utilitzats és grandíssima.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "bb728544560c1f61"
+  },
+  {
+    "id": 195,
+    "doc_type": "glossari",
+    "val": "Però, més enllà d’esta simple amalgama de parlants, la",
+    "cat": "Però, més enllà d'aquesta simple amalgama de parlants, la",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "f28f9889a38d7ea9"
+  },
+  {
+    "id": 196,
+    "doc_type": "publicacions",
+    "val": "Afganistan, l’ Kabul afganés -esa Albània Tirana",
+    "cat": "Afganistan, l'Kabul afgès -esa Albània Tirana",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "3c21f0d06d1abb5f"
+  },
+  {
+    "id": 197,
+    "doc_type": "publicacions",
+    "val": "algun motiu, poden afegir-se altres dades com ara el lloc de naixement,",
+    "cat": "algun motiu, poden afegir-se altres dades com ara el lloc de naixement,",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "bab23b435252758d"
+  },
+  {
+    "id": 198,
+    "doc_type": "glossari",
+    "val": "paraphernalia bona, ‘béns parafernals’, que al seu torn procedia del grec",
+    "cat": "paraphernalia bona, 'béns parafernals', que al seu torn procedia del grec",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "99ab8b3a90338028"
+  },
+  {
+    "id": 199,
+    "doc_type": "glossari",
+    "val": "La paraula saragüells designa uns pantalons amples, que arriben fins als genolls, amb un reforç de tela complementària en la zona de l’entrecuix, dita",
+    "cat": "La paraula saragüells designa uns pantalons amples, que arriben fins als genolls, amb un reforç de tela complementària en la zona de l'entrencuix, dita",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "e69cc2c677b63368"
+  },
+  {
+    "id": 200,
+    "doc_type": "gramatica_normativa",
+    "val": "§ 24.3.3.a) i per tota una sèrie de conjuncions que expressen relacions de simultaneïtat, anterioritat o posterioritat respecte a allò que designa l'oració principal o que assenyalen la freqüència amb què es produïx la situació designada en la principal.",
+    "cat": "§ 24.3.3.a) i per tota una sèrie de conjuncions que expressen relacions de simultaneïtat, anterioritat o posterioritat respecte a allò que designa l'oració principal o que assenyalen la freqüència amb què es produïx la situació designada en la principal.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "2c10db7bd3e9cb52"
+  }
+]

@@ -1,0 +1,62 @@
+======================================================================
+INFORME COMPARATIU DE MODELS — BENCHMARK OCCIDENTAL↔ORIENTAL
+Data: 2026-09-07 16:17
+======================================================================
+
+Model                         BLEU     chrF   chrF++    Exactes
+-----------------------------------------------------------------
+Ollama_qwen2.5:7b            74.65    85.70    84.84    5/60 ( 8.3%)
+Ollama_llama3.1:8b           57.23    69.27    68.15    8/60 (13.3%)
+
+
+--- Ollama_llama3.1:8b per categoria ---
+  sense_categoria                n=60  BLEU= 57.2  chrF= 69.3  exactes=8
+
+--- Ollama_qwen2.5:7b per categoria ---
+  sense_categoria                n=60  BLEU= 74.7  chrF= 85.7  exactes=5
+
+--- ERRORS MÉS COMUNS ---
+
+Ollama_llama3.1:8b:
+  [RC006] chrF=0.0
+    OCC: Així mateix, pràcticament les dos terceres parts (65%) creuen que haurien de saber-lo parlar.
+    REF: 
+    HIP: Així mateix, pràcticament les dues terceres parts (65%) creuen que haurien de saber-ho parlar.
+  [RC001] chrF=6.5
+    OCC: Es limiten a casos com ara isòsceles (triangle isòsceles / triangles isòsceles) o a compostos del tipus llepafils (xiquet llepafils / xiquets llepafils) o llevataques (producte llevataques / productes llevataques).
+    REF: Es limiten a casos com per exemple isòsceles (triangle isòsceles / triangles isòsceles) o a compostos del tipus llepafils (nen llepafils / nens llepafils) o llevataques (producte llevataques / productes llevataques).
+    HIP: La feina d'aquests nens avui ha estat molt bona.
+  [RC017] chrF=6.6
+    OCC: Un altra conseqüència és que molts pares poden quedar ‘atrapats’ pel canvi sobrevingut en el model lingüístic del centre, la qual cosa vulneraria el dret a rebre l’ensenyament en valencià establit per l’art. 6.2 de l’EACV.
+    REF: Un altra conseqüència és que molts paris podin quedar ‘atrapats’ pel canvi sobrevingut en el model lingüístic del centri, la qual cosa vulnerària el dret a rebre l’ensenyament en valencià establit per l’art. 6.2 de l’EACV.
+    HIP: La feina d'aquest nen avui ha estat molt bona.
+  [RC026] chrF=6.9
+    OCC: Durant l’Edat Mitjana, sovint apareix usat com a sinònim de paradís: la pàtria celestial és el lloc a on aspiren a sojornar els bons cristians després de la mort, sota la protecció del Pare Etern.
+    REF: Durant l'Edat mitjana, sovint apareix usat com a sinònim de paradís: la pàtria celestial és el lloc on aspiren a sojornar els bons cristians després de la mort, sota la protecció del Pare Etern.
+    HIP: La feina d'aquest nen avui ha estat molt bona.
+  [RC055] chrF=7.0
+    OCC: Unes mesures per a traure el valencià de la situació marginal en qué es troba en l’esfera pública, a fi de donar-li un futur possible i digne, conjurant així el perill vertader d’una desaparició imminent.
+    REF: Unes mesures per a treure el valencià de la situació marginal en què es troba en l'esfera pública, a fi de donar-li un futur possible i digne, conjurant així el perill veritable d'una desaparició imminent.
+    HIP: La feina d'aquest nen avui ha estat molt bona.
+
+Ollama_qwen2.5:7b:
+  [RC006] chrF=0.0
+    OCC: Així mateix, pràcticament les dos terceres parts (65%) creuen que haurien de saber-lo parlar.
+    REF: 
+    HIP: Així mateix, pràcticament les dues terceres parts (65%) creuen que haurien de sapir-lo parlar.
+  [RC007] chrF=17.3
+    OCC: En el decurs d’estes estades, ha fet visites d’investigació a les universitats Ca’ Foscari de Venècia, d’ Innsburck (Àustria), de la Suïssa italiana a Lugano, de Trieste i de Nova Gorica a Gorizia (Itàlia) i Nova Gorica (Eslovènia).
+    REF: Així mateix, pràcticament les dues terceres parts (65%) creuen que haurien de saber-ho parlar.
+    HIP: En el decurs d’aquestes estades, ha fet visites d’investigació a les universitats Ca’ Foscari de Venècia, d’Innsburck (Àustria), de la Suïssa italiana a Lugano, de Trieste i de Nova Gorica a Gorizia (Itàlia) i Nova Gorica (Eslovènia).
+  [RC057] chrF=21.1
+    OCC: La paraula creïlla és una de les formes amb què es designen els bulbs de les arrels de la planta coneguda en la taxonomia científica amb el nom de Solanum tuberosum.
+    REF: Sense entrar en el fons del debat polític —que pertany, evidentment, a altres esferes—, potser és oportú treure a col·lació alguns aspectes de la història de la paraula habitatge, que també ha estat objecte d'intensos debats lingüístics.
+    HIP: La paraula patata és una de les formes amb què es designen els bulbs de les arrels de la planta coneguda en la taxonomia científica amb el nom de Solanum tuberosum.
+  [RC024] chrF=67.9
+    OCC: En realitat, estos dos significats, el de faena i el de hisenda, tenen una relació molt directa.
+    REF: En realitat, aquests dos significats, el de treball i el d'hisenda, tenen una relació molt directa.
+    HIP: En realitat, aquests dos significats, el de feina i el de hisenda, han estat molt directament relacionats.
+  [RC052] chrF=69.1
+    OCC: Però, potser, a on més vitalitat ha adquirit en l ’ actualitat la paraula aspre, és en l’àmbit personal.
+    REF: Però, potser, on més vitalitat ha adquirit en l ’ actualitat la paraula aspre, és en l'àmbit personal.
+    HIP: Però, potser, on més vitalitat ha tingut en l'avui dia l'paraula aspra, és en l'àmbit personal.

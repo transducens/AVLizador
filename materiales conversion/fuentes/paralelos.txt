@@ -1,0 +1,363 @@
+TRADUCCIONS VALENCIÀ → CATALÀ (normativa IEC)
+==============================================
+
+Expressió valenciana                          | Equivalent en català (IEC)
+----------------------------------------------|------------------------------------------
+a colp calent                                 | a cop calent
+a imatge i semblança seua                     | a imatge i semblança seva
+a la faena                                    | a la feina
+a la vesprada                                 | a la tarda
+a les huit                                    | a les vuit
+a les vesprades                               | a les tardes
+a les vuit                                    | a les vuit
+a mig vesprada                                | a mitja tarda
+a mitja vesprada                              | a mitja tarda
+a mitjan vesprada                             | a mig tarda
+a petició meua                                | a petició meva
+a petició seua                                | a petició seva
+a petició teua                                | a petició teva
+abellir                                       | plaure
+acatxar                                       | ajupir
+acurtar                                       | escurçar
+ací                                           | aquí
+ahir a la vesprada                            | ahir a la tarda
+al caient de la vesprada                      | al capvespre
+al més prompte                                | al més aviat
+al més prompte possible                       | al més aviat possible
+alfàbega                                      | alfàbrega
+algeps                                        | guix
+algepsaire                                    | guixaire
+amb prou faenes                               | amb prou feines
+amerar                                        | xopar
+ametla                                        | ametlla
+ametler                                       | ametller
+amprar                                        | manllevar
+anar a la seua                                | anar a la seva
+anou                                          | nou
+antevespra                                    | antevigília
+aparèixer                                     | aparèixer
+aparéixer                                     | aparèixer
+aqueix                                        | aquell
+aquesta vesprada                              | aquesta tarda
+argilaga                                      | argelaga
+arrancada                                     | arrencada
+arrancament                                   | arrencament
+arrancar                                      | arrencar
+arrancar a córrer                             | arrencar a córrer
+arrancar el bull                              | arrencar el bull
+arrancar la cabellera                         | arrencar la cabellera
+arrere                                        | enrere
+atès                                          | atès
+atés                                          | atès
+avant                                         | endavant
+avui                                          | avui
+avui dia                                      | avui dia
+avui en dia                                   | avui en dia
+batle                                         | batlle
+bellota                                       | gla
+bes                                           | petó
+beset                                         | petonet
+bigot                                         | bigoti
+bitla                                         | bitlla
+bla                                           | tou
+bona vesprada                                 | bona tarda
+bresquilla                                    | préssec
+bresquillera                                  | presseguer
+buscar                                        | cercar
+butla                                         | butlla
+cada colp                                     | cada cop
+calfament                                     | escalfament
+calfaplats                                    | escalfaplats
+calfar                                        | escalfar
+camallada                                     | gambada
+cap ací                                       | cap aquí
+cinquanta-huit                                | cinquanta-vuit
+cinquanta-vuit                                | cinquanta-vuit
+clòtxina                                      | musclo
+colpet                                        | copet
+com més prompte                               | com més aviat
+com més prompte millor                        | com més aviat millor
+comitè de direcció                            | comitè de direcció
+comitè executiu                               | comitè executiu
+comitès executius                             | comitès executius
+comité de direcció                            | comitè de direcció
+comité executiu                               | comitè executiu
+comités executius                             | comitès executius
+company de faena                              | company de feina
+comparèixer                                   | comparèixer
+comparéixer                                   | comparèixer
+contramotlura                                 | contramotllura
+convèncer                                     | convèncer
+convéncer                                     | convèncer
+conèixer                                      | conèixer
+conèixer el marro                             | conèixer el marro
+conéixer                                      | conèixer
+conéixer el marro                             | conèixer el marro
+corder                                        | xai / be / anyell
+cosquerelles                                  | pessigolles
+coste el que coste                            | costi el que costi
+creïlla                                       | patata
+cuixa de corder                               | cuixa de xai / cuixa d'anyell
+cércol                                        | cèrcol
+cèrcol                                        | cèrcol
+d'ara en avant                                | d'ara endavant
+d'hora a la vesprada                          | d'hora a la tarda
+d'un colp de ploma                            | d'un cop de ploma
+d'una plomada                                 | d'una plomada
+dacsa                                         | blat de moro
+de colp                                       | de cop
+de colp i volta                               | de cop i volta
+de vesprada                                   | a la tarda
+demà a la vesprada                            | demà a la tarda
+depòsit                                       | dipòsit
+depòsit funerari                              | dipòsit funerari
+depòsits funeraris                            | dipòsits funeraris
+desaparèixer                                  | desaparèixer
+desaparéixer                                  | desaparèixer
+desconèixer                                   | desconèixer
+desconéixer                                   | desconèixer
+desembossar                                   | desembussar
+despús-ahir                                   | abans-d'ahir
+despús-anit                                   | fa dues nits
+despús-demà                                   | demà passat
+desunflar                                     | desinflar
+desvetlar                                     | desvetllar
+dinou                                         | dinou
+dins del termini i en la forma escaient       | dins del termini i en la forma escaient
+dins seu                                      | dins seu
+disset                                        | disset
+divuit                                        | divuit
+dènou                                         | dinou
+dèsset                                        | disset
+díhuit                                        | divuit
+eixida                                        | sortida
+eixir d'un mal pas                            | sortir d'un mal pas
+embossar                                      | embutxacar
+embós                                         | embús
+emmotlar                                      | emmotllar
+emmotlurar                                    | emmotllurar
+emotlament                                    | emmotllament
+empenyiment                                   | embranzida
+en contra de la meua voluntat                 | en contra de la meva voluntat
+en data d'avui                                | en data d'avui
+en data de hui                                | en data d'avui
+en la mesura que siga possible                | en la mesura que sigui possible
+en tant que siga possible                     | en tant que sigui possible
+enguany                                       | enguany
+entropessar                                   | ensopegar
+envernissador                                 | vernissador
+envernissar                                   | vernissar
+escaló                                        | graó
+esguitar                                      | esquitxar
+espatla                                       | espatlla
+espatla ibèrica d'enceball                    | espatlla ibèrica de gla
+espatlar                                      | espatllar
+espatlera                                     | espatllera
+espatles ibèriques d'enceball                 | espatllles ibèriques de gla
+espatleta                                     | espatlleta
+espentar                                      | empènyer
+espill                                        | mirall
+espuma                                        | escuma
+espumadora                                    | escumadora
+espumejar                                     | escumejar
+estrela                                       | estrella
+faena                                         | feina
+faena a mitja jornada                         | feina a mitja jornada
+fardatxo                                      | llangardaix
+fenoll                                        | fonoll
+fer cosquerelles                              | fer pessigolles
+fer el desentès                               | fer el desentès
+fer el desentés                               | fer el desentès
+fer marxa arrere                              | fer marxa enrere
+fer una besada                                | fer un petó
+fesol                                         | mongeta
+fins avui                                     | fins avui
+fins hui                                      | fins avui
+fins prompte                                  | fins aviat
+forma de reembossament                        | forma de reemborsament
+gestor d'arrancada                            | gestor d'arrencada
+granera                                       | escombra
+guardaespatles                                | guardaespatlles
+guatla                                        | guatlla
+heus ací                                      | heus aquí
+hui                                           | avui
+hui dia                                       | avui dia
+hui en dia                                    | avui dia
+huit                                          | vuit
+huit-cents                                    | vuit-cents
+huit-centè                                    | vuit-centè
+huitanta                                      | vuitanta
+huitanta-cinc                                 | vuitanta-cinc
+huitanta-cinquè                               | vuitanta-cinquè
+huitanta-dos                                  | vuitanta-dos
+huitanta-dosè                                 | vuitanta-dosè
+huitanta-huit                                 | vuitanta-vuit
+huitanta-huitè                                | vuitanta-vuitè
+huitanta-nou                                  | vuitanta-nou
+huitanta-novè                                 | vuitanta-novè
+huitanta-quatre                               | vuitanta-quatre
+huitanta-quatrè                               | vuitanta-quatrè
+huitanta-set                                  | vuitanta-set
+huitanta-setè                                 | vuitanta-setè
+huitanta-sis                                  | vuitanta-sis
+huitanta-sisè                                 | vuitanta-sisè
+huitanta-tres                                 | vuitanta-tres
+huitanta-tresè                                | vuitanta-tresè
+huitanta-u                                    | vuitanta-u
+huitanta-un                                   | vuitanta-un
+huitanta-unè                                  | vuitanta-unè
+huitantè                                      | vuitantè
+huitavt                                       | vuitè
+huitcentista                                  | vuitcentista
+joguet                                        | joguina
+jupetí                                        | armilla
+l'altra vesprada                              | l'altra tarda
+li la                                         | li la
+llavable                                      | rentable
+llavadora                                     | rentadora
+llavamans                                     | rentamans
+llavaplats                                    | rentaplats
+llavar                                        | rentar
+llentilla                                     | llentia
+manganès                                      | manganès
+manganés                                      | manganès
+matí i vesprada                               | matí i tarda
+matí vesprada i nit                           | matí tarda i nit
+meló d'Alger                                  | síndria
+mesclar                                       | barrejar
+misto                                         | llumí
+molt arrere                                   | molt enrere
+motle                                         | motlle
+motlura                                       | motllura
+motlurar                                      | motllurar
+més arrere                                    | més enrere
+més avant                                     | més endavant
+nadador                                       | nedador
+nadar                                         | nedar
+no reconèixer                                 | no reconèixer
+no reconéixer                                 | no reconèixer
+noranta-huit                                  | noranta-vuit
+noranta-huitè                                 | noranta-vuitè
+noranta-vuit                                  | noranta-vuit
+o siga                                        | o sigui
+oroneta                                       | oreneta
+pallola                                       | xarampió
+paracolps                                     | paracops
+parlant de patuès                             | parlant de patès
+parlant de patués                             | parlant de patès
+parèixer                                      | semblar 
+paréixer                                      | semblar
+pellorfa                                      | pellofa
+per la meua banda                             | per la meva banda
+per la seua banda                             | per la seva banda
+per la seua part                              | per la seva part
+per la teua banda                             | per la teva banda
+per part meua                                 | per part meva
+per part seua                                 | per part seva
+per part teua                                 | per part teva
+per primer colp                               | per primer cop
+per segon colp                                | per segon cop
+per tercer colp                               | per tercer cop
+per un colp de sort                           | per un cop de sort
+perquè en prengui coneixement                 | perquè en prengui coneixement
+pescateria                                    | peixateria
+pesebre                                       | pessebre
+pimentó                                       | pebrot
+pista de bitles                               | pista de bitlles
+pitxer                                        | gerra
+precalfament                                  | preescalfament
+prima de reembossament                        | prima de reemborsament
+prompte                                       | aviat
+punyada                                       | cop de puny
+pèsol                                         | pèsol
+pésol                                         | pèsol
+quaranta-huit                                 | quaranta-vuit
+quaranta-vuit                                 | quaranta-vuit
+que trau foc pels queixals                    | que treu foc pels queixals
+rabosa                                        | guineu
+rascar                                        | gratar
+reaparèixer                                   | reaparèixer
+reaparéixer                                   | reaparèixer
+recalfar                                      | reescalfar
+recollir                                      | recollir
+reconèixer                                    | reconèixer
+reconéixer                                    | reconèixer
+redonesa                                      | rodonia
+reembossable                                  | reemborsable
+reembossar                                    | reemborsar
+renyonera                                     | ronyonera
+respatler                                     | respatller
+revetla                                       | revetlla
+romer                                         | romaní
+seixanta-huit                                 | seixanta-vuit
+seixanta-vuit                                 | seixanta-vuit
+sempre a la seua disposició                   | sempre a la seva disposició
+setanta-huit                                  | setanta-vuit
+setanta-vuit                                  | setanta-vuit
+siga com siga                                 | sigui com sigui
+siga el que siga                              | sigui el que sigui
+sobrecalfament                                | sobreescalfament
+sobrecalfar                                   | sobreescalfar
+sàndwitx                                      | sandvitx
+sègol                                         | sègol
+sèmola                                        | sèmola
+ségol                                         | sègol
+sémola                                        | sèmola
+tan bé com siga possible                      | tan bé com sigui possible
+tan prompte                                   | tan aviat
+tancar de colp                                | tancar de cop
+tenir fam                                     | tenir gana
+terratrèmol                                   | terratrèmol
+terratrémol                                   | terratrèmol
+tocacollons                                   | tocacollons
+tomaca                                        | tomàquet
+trenta-huit                                   | trenta-vuit
+trenta-vuit                                   | trenta-vuit
+tret d'eixida                                 | tret de sortida
+trèvol                                        | trèvol
+trévol                                        | trèvol
+tèrbol                                        | tèrbol
+térbol                                        | tèrbol
+ulls ametlats                                 | ulls ametllats
+vesprada                                      | tarda
+vetla                                         | vetlla
+vetlada                                       | vetllada
+vetlar                                        | vetllar
+vint-i-huit                                   | vint-i-vuit
+vint-i-vuit                                   | vint-i-vuit
+vuit                                          | vuit
+vuit-cents                                    | vuit-cents
+vuit-centè                                    | vuit-centè
+vuitanta                                      | vuitanta
+vuitanta-cinc                                 | vuitanta-cinc
+vuitanta-cinquè                               | vuitanta-cinquè
+vuitanta-dos                                  | vuitanta-dos
+vuitanta-dosè                                 | vuitanta-dosè
+vuitanta-nou                                  | vuitanta-nou
+vuitanta-novè                                 | vuitanta-novè
+vuitanta-quatre                               | vuitanta-quatre
+vuitanta-quatrè                               | vuitanta-quatrè
+vuitanta-set                                  | vuitanta-set
+vuitanta-setè                                 | vuitanta-setè
+vuitanta-sis                                  | vuitanta-sis
+vuitanta-sisè                                 | vuitanta-sisè
+vuitanta-tres                                 | vuitanta-tres
+vuitanta-tresè                                | vuitanta-tresè
+vuitanta-u                                    | vuitanta-u
+vuitanta-un                                   | vuitanta-un
+vuitanta-unè                                  | vuitanta-unè
+vuitanta-vuit                                 | vuitanta-vuit
+vuitanta-vuitè                                | vuitanta-vuitè
+vuitantè                                      | vuitantè
+vuitavat                                      | vuitè
+vuitcentista                                  | vuitcentista
+vèncer                                        | vèncer
+xafable                                       | trepitjable
+xarrada                                       | xerrada
+xarrar                                        | xerrar
+xic                                           | noi
+ximenera                                      | xemeneia
+xiquet                                        | nen
+xocolate                                      | xocolata
+xuplar                                        | xuclar
+òbila                                         | òliba

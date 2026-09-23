@@ -1,0 +1,4 @@
+2026-09-15 14:51:46,731 [INFO] Ollama: http://localhost:11434
+2026-09-15 14:51:47,867 [INFO] Documents llegits: 1778 ({'butlleti': 39, 'biografia': 1, 'glossari': 1394, 'gramatica_normativa': 117, 'nota-de-premsa': 168, 'pagina': 23, 'post': 3, 'legislacio': 3, 'acord-normatiu': 25, 'publicacions': 5})
+2026-09-15 14:51:47,867 [INFO] Frases candidates: 48037 → 46315 úniques (1722 duplicades descartades)
+2026-09-15 14:51:47,868 [INFO] [--dry-run] 5 frases seleccionades per a traduir (no es crida cap model).

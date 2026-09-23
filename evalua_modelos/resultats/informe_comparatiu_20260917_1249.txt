@@ -1,0 +1,46 @@
+======================================================================
+INFORME COMPARATIU DE MODELS — BENCHMARK OCCIDENTAL↔ORIENTAL
+Data: 2026-09-17 13:33
+======================================================================
+
+Model                         BLEU     chrF   chrF++    Exactes
+-----------------------------------------------------------------
+Ollama_qwen2.5:14b           91.08    95.34    95.06   30/60 (50.0%)
+Ollama_hdnh2006               0.13     8.97     6.77    0/60 ( 0.0%)
+
+
+--- Ollama_qwen2.5:14b per categoria ---
+  sense_categoria                n=60  BLEU= 91.1  chrF= 95.3  exactes=30
+
+--- Ollama_hdnh2006 per categoria ---
+  sense_categoria                n=60  BLEU=  0.1  chrF=  9.0  exactes=0
+
+--- ERRORS MÉS COMUNS ---
+
+Ollama_qwen2.5:14b:
+  [RC001] chrF=6.8
+    OCC: Es limiten a casos com ara isòsceles (triangle isòsceles / triangles isòsceles) o a compostos del tipus llepafils (xiquet llepafils / xiquets llepafils) o llevataques (producte llevataques / productes llevataques).
+    REF: Es limiten a casos com ara isòsceles (triangle isòsceles / triangles isòsceles) o a compostos del tipus llepafils (nen llepafils / nens llepafils) o llevataques (producte llevataques / productes llevataques).
+    HIP: ERROR: HTTPConnectionPool(host='localhost', port=11434): Read timed out. (read timeout=300)
+
+Ollama_hdnh2006:
+  [RC038] chrF=6.1
+    OCC: El primer component del tàxon llatí (Caprimulgus) és el resultat de combinar els termes llatins capra, 'cabra', i mulgere, 'munyir', que fa referència a la creença que estos pardals mamaven la llet de les cabres.
+    REF: El primer component del tàxon llatí (Caprimulgus) és el resultat de combinar els termes llatins capra, 'cabra', i mulgere, 'munyir', que fa referència a la creença que aquests pardals mamaven la llet de les cabres.
+    HIP: ERROR: 404 Client Error: Not Found for url: http://localhost:11434/api/generate
+  [RC001] chrF=6.2
+    OCC: Es limiten a casos com ara isòsceles (triangle isòsceles / triangles isòsceles) o a compostos del tipus llepafils (xiquet llepafils / xiquets llepafils) o llevataques (producte llevataques / productes llevataques).
+    REF: Es limiten a casos com ara isòsceles (triangle isòsceles / triangles isòsceles) o a compostos del tipus llepafils (nen llepafils / nens llepafils) o llevataques (producte llevataques / productes llevataques).
+    HIP: ERROR: 404 Client Error: Not Found for url: http://localhost:11434/api/generate
+  [RC018] chrF=6.2
+    OCC: Amb este concepte es designa una zona desmilitaritzada temporalment, destinada a permetre el trànsit de combois d'ajuda humanitària i de refugiats, de manera que puguen entrar o eixir amb seguretat en una regió afectada per un conflicte bèl·lic.
+    REF: Amb aquest concepte es designa una zona desmilitaritzada temporalment, destinada a permetre el trànsit de combois d'ajuda humanitària i de refugiats, de manera que puguin entrar o sortir amb seguretat en una regió afectada per un conflicte bèl·lic.
+    HIP: ERROR: 404 Client Error: Not Found for url: http://localhost:11434/api/generate
+  [RC007] chrF=6.3
+    OCC: En el decurs d'estes estades, ha fet visites d'investigació a les universitats Ca' Foscari de Venècia, d' Innsburck (Àustria), de la Suïssa italiana a Lugano, de Trieste i de Nova Gorica a Gorizia (Itàlia) i Nova Gorica (Eslovènia).
+    REF: En el decurs d'aquestes estades, ha fet visites d'investigació a les universitats Ca' Foscari de Venècia, d'Innsburck (Àustria), de la Suïssa italiana a Lugano, de Trieste i de Nova Gorica a Gorizia (Itàlia) i Nova Gorica (Eslovènia).
+    HIP: ERROR: 404 Client Error: Not Found for url: http://localhost:11434/api/generate
+  [RC056] chrF=6.3
+    OCC: Sense entrar en el fons del debat polític —que pertany, evidentment, a unes altres esferes—, potser és oportú traure a col·lació alguns aspectes de la història de la paraula vivenda, que també ha sigut objecte d'intensos debats lingüístics.
+    REF: Sense entrar en el fons del debat polític —que pertany, evidentment, a unes altres esferes—, potser és oportú treure a col·lació alguns aspectes de la història de la paraula vivenda, que també ha estat objecte d'intensos debats lingüístics.
+    HIP: ERROR: 404 Client Error: Not Found for url: http://localhost:11434/api/generate

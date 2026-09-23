@@ -1,0 +1,1802 @@
+[
+  {
+    "id": 1,
+    "doc_type": "butlleti",
+    "val": "Des d’ací entenc també el rigor filològic.",
+    "cat": "Des d'ací entenc també el rigor filològic.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "dd3bbf8da227a218"
+  },
+  {
+    "id": 2,
+    "doc_type": "butlleti",
+    "val": "Entenc que caldrà una bona dosi de sentit institucional, de mesura i de trellat.",
+    "cat": "Entenc que caldrà una bona dosi de sentit institucional, de mesura i de trellat.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "6249bc085bd4f410"
+  },
+  {
+    "id": 3,
+    "doc_type": "butlleti",
+    "val": "Personalment un honor, i també una obligació de fer tot allò possible per a retornar a la societat valenciana l’orgull per la seua llengua.",
+    "cat": "Personalment un honor, i també una obligació de fer tot allò possible per a retornar a la societat valenciana l'orgull per la seva llengua.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "46857aada94dc128"
+  },
+  {
+    "id": 4,
+    "doc_type": "butlleti",
+    "val": "L’entomo amb la millor de les disposicions com un servici més a la llengua del territori que m’ha vist nàixer.",
+    "cat": "L'entomo amb la millor de les disposicions com un servei més a la llengua del territori que m'he vist néixer.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "2dabd69d2416bf00"
+  },
+  {
+    "id": 5,
+    "doc_type": "butlleti",
+    "val": "Ha sigut reportera, redactora, locutora, editora, presentadora, guionista i dobladora, i ha dirigit diferents programes informatius i d’entreteniment en ràdio i televisió.",
+    "cat": "Ha estat reportera, redactora, locutora, editora, presentadora, guionista i dobladora, i ha dirigit diferents programes informatius i d'entreteniment en ràdio i televisió.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "1898c78125398ec0"
+  },
+  {
+    "id": 6,
+    "doc_type": "butlleti",
+    "val": "A més, les meues habilitats professionals poden aportar sensibilitat lingüística i domini dels registres útils per a la definició i actualització de la normativa del valencià.",
+    "cat": "A més, les meves habilitats professionals poden aportar sensibilitat lingüística i domini dels registres útils per a la definició i actualització de la normativa del valencià.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "5094cb9e51f9b7a0"
+  },
+  {
+    "id": 7,
+    "doc_type": "butlleti",
+    "val": "D’on venen i quins són els noms i cognoms de la nostra societat.",
+    "cat": "D'on venen i quins són els noms i cognoms de la nostra societat.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "ed86c267114649f0"
+  },
+  {
+    "id": 8,
+    "doc_type": "butlleti",
+    "val": "És cert que té competències normatives i, per tant, administratives, però també juga un paper de recuperació i de difusió de la nostra llengua que no poden fer altres institucions.",
+    "cat": "És cert que té competències normatives i, per tant, administratives, però també juga un paper de recuperació i de difusió de la nostra llengua que no poden fer altres institucions.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "431f50751a0630e8"
+  },
+  {
+    "id": 9,
+    "doc_type": "butlleti",
+    "val": "M. Isabel Guardiola Savall (Bolulla, 1973) és professora titular del Departament de Filologia Catalana de la Universitat d’Alacant, on es va doctorar en Llengua i Literatura Catalanes.",
+    "cat": "M. Isabel Guardiola Savall (Bolulla, 1973) és professora titular del Departament de Filologia Catalana de la Universitat d'Alacant, on es va doctorar en Llengua i Literatura Catalanes.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "13e0ddd6238eb5e0"
+  },
+  {
+    "id": 10,
+    "doc_type": "butlleti",
+    "val": "Considere que puc aportar, sobretot, la meua experiència en els àmbits de la lexicografia, la terminologia i l’onomàstica.",
+    "cat": "Considere que puc aportar, sobretot, la meva experiència en els àmbits de la lexicografia, la terminologia i l'onomàstica.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "cc5c6df342639680"
+  },
+  {
+    "id": 11,
+    "doc_type": "butlleti",
+    "val": "Esta experiència pot contribuir de manera directa a dos de les funcions que té encomanades l’AVL: d’una banda, la normativització lingüística, i de l’altra, la gestió de la competència onomàstica en l’àmbit legal i administratiu.",
+    "cat": "Aquesta experiència pot contribuir de manera directa a dos de les funcions que té encomades l'AVL: d'una banda, la normativització lingüística, i de l'altra, la gestió de la competència onomàstica en l'àmbit legal i administratiu.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "4d37e7fa5f0e9df8"
+  },
+  {
+    "id": 12,
+    "doc_type": "butlleti",
+    "val": "La inscripció és gratuïta i s’ha de fer a través del formulari de la pàgina web de l’ALV.",
+    "cat": "La inscripció és gratuïta i s'ha de fer a través del formulari de la pàgina web de l'ALV.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "d2013940f9076d08"
+  },
+  {
+    "id": 13,
+    "doc_type": "butlleti",
+    "val": "L’any 2026 confluïxen dos efemèrides de gran rellevància: el 25é aniversari de la creació de l’AVL i la celebració de les 25 edicions de les Jornades AETER.",
+    "cat": "L'any 2026 confluïxen dos efemèrides de gran rellevància: el 25è aniversari de la creació de l'AVL i la cel·lebració de les 25 edicions de les Jornades AETER.",
+    "correcte": false,
+    "nota": "cel·lebració hauria de ser celebració",
+    "id_corpus": "2c8db49ba30f3328"
+  },
+  {
+    "id": 14,
+    "doc_type": "butlleti",
+    "val": "Les jornades es configuren com un fòrum de debat sobre l’estat de la terminologia actual en els seus vessants teòric, pràctic i aplicat, a través de les aportacions d’especialistes i professionals.",
+    "cat": "Les jornades es configuren com un fòrum de debat sobre l'estat de la terminologia actual en els seus vessants teòric, pràctic i aplicat, a través de les aportacions d'especialistes i professionals.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "ca7a71d94ff5d7d0"
+  },
+  {
+    "id": 15,
+    "doc_type": "butlleti",
+    "val": "D’esta anàlisi conclou que l’estudi tècnic incorporat per l’Ajuntament de València «no aporta cap novetat rellevant i no oferix un corpus argumental sòlid que permeta justificar l’abandonament de la forma normativa i oficial fins ara.",
+    "cat": "D'aquesta anàlisi conclou que l'estudi tècnic incorporat per l'Ajuntament de València «no aporta cap novetat rellevant i no oferix un corpus argumental sòlid que permeti justificar l'abandonament de la forma normativa i oficial fins ara.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "25093ef9cb5cf1e8"
+  },
+  {
+    "id": 16,
+    "doc_type": "butlleti",
+    "val": "«En conseqüència, esta institució ratifica íntegrament la posició sostinguda en l’informe de 2016 i ho fa, a més, ampliant els arguments, i considera injustificat modificar la forma valenciana del topònim».",
+    "cat": "«En conseqüència, aquesta institució ratifica íntegrament la posició sostinguda en l'informe de 2016 i ho fa, a més, ampliant els arguments, i considera injustificat modificar la forma valenciana del topònim».",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "8cf27a1ef7eef428"
+  },
+  {
+    "id": 17,
+    "doc_type": "butlleti",
+    "val": "Una quantitat important del vocabulari propi de cada llengua correspon a realitats culturals específiques de la societat en què es parla.",
+    "cat": "Una quantitat important del vocabulari propi de cada llengua correspon a realitats culturals específiques de la societat en què es parla.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "81458cea9f11df88"
+  },
+  {
+    "id": 18,
+    "doc_type": "butlleti",
+    "val": "contrició, amb el sentit de sentiment de penediment per una falta comesa.",
+    "cat": "contracció, amb el sentit de sentiment de penediment per una falta cometida.",
+    "correcte": false,
+    "nota": "contracció no es contricció i cometida no es comesa",
+    "id_corpus": "c7173be5e2f8e9f8"
+  },
+  {
+    "id": 19,
+    "doc_type": "butlleti",
+    "val": "autònom, autònoma i l’ús com a adjectiu i locució adjectival de",
+    "cat": "autònom, autònoma i l'ús com a adjectiu i locució adjectival de",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "795917cfa6099b48"
+  },
+  {
+    "id": 20,
+    "doc_type": "butlleti",
+    "val": "Pel que fa a les paraules que han entrat com a novetat durant els últims mesos, podem destacar",
+    "cat": "Pel que fa a les paraules que han entrat com a novetat durant els últims mesos, podem destacar",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "8c50be4aaf4e0410"
+  },
+  {
+    "id": 21,
+    "doc_type": "butlleti",
+    "val": "Criteris per a la fixació de la toponímia valenciana",
+    "cat": "Criteris per a la fixació de la toponímia valenciana",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "9c5fff4d35feffb0"
+  },
+  {
+    "id": 22,
+    "doc_type": "butlleti",
+    "val": "En la pantalla inicial l’usuari trobarà dos tipus de consulta: simple i avançada.",
+    "cat": "En la pantalla inicial l'usuari trobarà dos tipus de consulta: simple i avançada.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "f58c3ca1b962d830"
+  },
+  {
+    "id": 23,
+    "doc_type": "butlleti",
+    "val": "cinquanta mil euros en 2025 a la promoció del valencià en mitjans de comunicació locals i publicacions especialitzades.",
+    "cat": "cinquanta mil euros en 2025 a la promoció del valencià en mitjans de comunicació locals i publicacions especialitzades.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "f4c63f977836d870"
+  },
+  {
+    "id": 24,
+    "doc_type": "butlleti",
+    "val": "A més, el comitè avaluador proposa que per a la convocatòria del 2026 es prenga en consideració la possibilitat de subvencionar revistes digitals, atés que actualment la majoria dels estudis i articles d’investigació es publiquen en revistes digitals.",
+    "cat": "A més, el comitè avaluador proposa que per a la convocatòria del 2026 es prengui en consideració la possibilitat de subvencionar revistes digitals, atès que actualment la majoria dels estudis i articles d'investigació es publiquin en revistes digitals.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "8344a54944282408"
+  },
+  {
+    "id": 25,
+    "doc_type": "butlleti",
+    "val": "No obstant això, a partir de l’extensió i l’ús de les variants, en alguns casos s’ha optat per repetir la definició i donar la categoria de forma principal a les diverses variants.",
+    "cat": "No obstant això, a partir de l'extensió i l'ús de les variants, en alguns casos s'ha optat per repetir la definició i donar la categoria de forma principal a les diverses variants.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "ce78ddf11164e6e8"
+  },
+  {
+    "id": 26,
+    "doc_type": "butlleti",
+    "val": "En este sentit, la variant",
+    "cat": "En aquest sentit, la variant",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "6190de5e9aed2be0"
+  },
+  {
+    "id": 27,
+    "doc_type": "butlleti",
+    "val": "i fum de canya (o de canyes): es pot triar de la parada.",
+    "cat": "i fum de canya (o de canyes): es pot triar a la parada.",
+    "correcte": false,
+    "nota": "a hauria de ser de",
+    "id_corpus": "40e3bc9c8f2f8108"
+  },
+  {
+    "id": 28,
+    "doc_type": "butlleti",
+    "val": "gazià, gaziana, o el nom que reben els jugadors o seguidors del Vila-real Club de Futbol:",
+    "cat": "gazià, gaziana, o el nom que reben els jugadors o seguidors del Vila-reial Club de Futbol:",
+    "correcte": false,
+    "nota": "Reial hauria de ser real perque es un nom propi, Vila-real",
+    "id_corpus": "351d79d6096845a8"
+  },
+  {
+    "id": 29,
+    "doc_type": "butlleti",
+    "val": "Un centenar de neologismes Pel que fa al Portal Terminològic Valencià, ha incorporat un centenar de neologismes durant este període, de camps tan diversos com la tecnologia de la ceràmica, la psicologia i la informàtica.",
+    "cat": "Un centenar de neologismes Pel que fa al Portal Terminològic Valencià, ha incorporat un centenar de neologismes durant aquest període, de camps tan diversos com la tecnologia de la ceràmica, la psicologia i la informàtica.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "0fccdfb355b84068"
+  },
+  {
+    "id": 30,
+    "doc_type": "butlleti",
+    "val": "solastàlgia (‘sentiment d’angoixa o tristor causat per la consciència de la degradació progressiva de l’entorn natural més pròxim d’una persona a causa de canvis ambientals’).",
+    "cat": "solastàlgia ('sentiment d'angoixa o tristor causat per la consciència de la degradació progressiva de l'entorn natural més pròxim d'una persona a causa de canvis ambientals')",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "8712f1dd846dd0d0"
+  },
+  {
+    "id": 31,
+    "doc_type": "butlleti",
+    "val": "Un altre àmbit que es veurà afectat per la tisorada del pressupost és el de les publicacions temàtiques o especialitzades.",
+    "cat": "Un altre àmbit que es veurà afectat per la tissorada del pressupost és el de les publicacions temàtiques o especialitzades.",
+    "correcte": false,
+    "nota": "Tissorada hauria de ser tisorada",
+    "id_corpus": "9b033168b3d8d278"
+  },
+  {
+    "id": 32,
+    "doc_type": "butlleti",
+    "val": "Així mateix demanem que les qüestions estrictament gramaticals (ortografia inclosa) es debaten en els escenaris acadèmics pertinents (AVL, les universitats, etc.) i que queden fora de l’àmbit de l’opinió pública i de les xarxes socials, com passa en qualsevol altra llengua.",
+    "cat": "Així mateix demanem que les qüestions estrictament gramaticals (ortografia inclosa) es debaten en els escenaris acadèmics pertinents (AVL, les universitats, etc.) i que queden fora de l'àmbit de l'opinió pública i de les xarxes socials, com passa en qualsevulla altra llengua.",
+    "correcte": false,
+    "nota": "qualsevulla es el mateix que qualsevol, pero si està escrit qualsevol, hauría de ser qualsevol al traduir-ho",
+    "id_corpus": "9028c1ca47f22228"
+  },
+  {
+    "id": 33,
+    "doc_type": "butlleti",
+    "val": "t Laura Talens Albors, Toni Teruel i Barberà, Lourdes Toledo, Joan Tomás, Daniel Tormo, Imma Tormo Lluch, Jordi Tormo Santonja, M. Carme Tormo, Ferran Torrent, Vicent Torrent, Antoni Torreño, Bàrbara Torres, Joan Torró Soriano, Sergi Torró,",
+    "cat": "t Laura Talens Albors, Toni Teruel i Barberà, Lourdes Toledo, Joan Tomás, Daniel Tormo, Imma Tormo Lluch, Jordi Tormo Santonja, M. Carme Tormo, Ferran Torrent, Vicent Torrent, Antoni Torreño, Bàrbara Torres, Joan Torró Soriano, Sergi Torró,",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "c37b31e5ec625ab8"
+  },
+  {
+    "id": 34,
+    "doc_type": "butlleti",
+    "val": "• l’AVAEET Associació Valenciana d’Escriptores i Escriptors de Teatre",
+    "cat": "l'AVAEET Associació Valenciana d'Escriptors i Escriptores de Teatre",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "01c45f806e1a18d8"
+  },
+  {
+    "id": 35,
+    "doc_type": "butlleti",
+    "val": "Autors de les Illes Balears: Miquel Àngel Adrover (Campos, 1994), Guillem Benejam (Ciutadella, 1990), Pere Joan Martorell (Lloseta, 1972), Miquel Mas Fiol (Sa Casa Blanca, 1996) i Maite Salord (Ciutadella, 1965).",
+    "cat": "Autors de les Illes Balears: Miquel Àngel Adrover (Campos, 1994), Guillem Benejam (Ciutadella, 1990), Pere Joan Martorell (Lloseta, 1972), Miquel Mas Fiol (Sa Casa Blanca, 1996) i Maite Salord (Ciutadella, 1965).",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "c19dcea769b38480"
+  },
+  {
+    "id": 36,
+    "doc_type": "butlleti",
+    "val": "De fet, tindre un bon domini de l’idioma requerix conéixer-ne els registres i saber adequar-los a les circumstàncies concretes en què es produïx l’intercanvi lingüístic.",
+    "cat": "De fet, tenir un bon domini de l'idioma requerix conéixer-ne els registres i saber adequar-los a les circumstàncies concretes en què es produïx l'intercanvi lingüístic.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "e48f17cbedd14c48"
+  },
+  {
+    "id": 37,
+    "doc_type": "butlleti",
+    "val": "El diccionari ha d’ajudar els parlants a discernir les formes pròpies d’un registre de les altres i ha d’intentar reflectir, per tant, la varietat que presenta una llengua.",
+    "cat": "El diccionari ha d'ajudar els parlants a destriar les formes pròpies d'un registre de les altres i ha d'intentar reflectir, per tant, la varietat que presenta una llengua.",
+    "correcte": false,
+    "nota": "Destriar está malament, hauria de ser discernir",
+    "id_corpus": "dc00bf6140fbac38"
+  },
+  {
+    "id": 38,
+    "doc_type": "butlleti",
+    "val": "Així, amb la marca col·loq.",
+    "cat": "Així, amb la marca col·loq.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "50079fc260fed2c0"
+  },
+  {
+    "id": 39,
+    "doc_type": "butlleti",
+    "val": "De la mateixa manera que la marca",
+    "cat": "De la mateixa manera que la marca",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "fb64f7f813b59168"
+  },
+  {
+    "id": 40,
+    "doc_type": "butlleti",
+    "val": "( vulgar) s’aplica a paraules, com merda (excrement) o",
+    "cat": "(F vulgar) s'aplica a paraules, com merda (excrement) o",
+    "correcte": false,
+    "nota": "",
+    "id_corpus": "3ad8237911aa4ff0"
+  },
+  {
+    "id": 41,
+    "doc_type": "butlleti",
+    "val": "informal es referix a la forma lingüística o el registre que es caracteritza per ser poc acurat i resultar adequat per a situacions en què predomina la proximitat comunicativa entre els interlocutors.",
+    "cat": "informal es refereix a la forma lingüística o el registre que es caracteritza per ser poc acurat i resultar adequat per a situacions en què predomina la proximitat comunicativa entre els interlocutors.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "334bea99ff2ef9b8"
+  },
+  {
+    "id": 42,
+    "doc_type": "butlleti",
+    "val": "Precisament moltes de les locucions incorporades durant l’últim quadrimestre són pròpies d’este registre relaxat en què preval la força expressiva de les paraules: quan estem de mal humor podem dir que",
+    "cat": "Precisament moltes de les locucions incorporades durant l'últim quadrimestre són pròpies d'aquest registre relaxat en què preval la força expressiva de les paraules: quan estem de mal humor podem dir que",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "95e388e8cd191af8"
+  },
+  {
+    "id": 43,
+    "doc_type": "butlleti",
+    "val": "pareix un enterro planet, i si ho hem perdut tot, direm que",
+    "cat": "pareix un enterrament, i si ho hem perdut tot, direm que",
+    "correcte": false,
+    "nota": "",
+    "id_corpus": "58370c4030548d78"
+  },
+  {
+    "id": 44,
+    "doc_type": "butlleti",
+    "val": "mare de dia (‘persona que oferix, habitualment en el domicili propi, un servici professional i personalitzat d’atenció i cura a xiquets en edat preescolar, generalment menors de tres anys, en grups molt reduïts i en un ambient familiar’),",
+    "cat": "mare de dia ('persona que ofereix, habitualment en el domicili propi, un servei professional i personalitzat d'atenció i cura a nens en edat preescolar, generalment menors de tres anys, en grups molt reduïts i en un ambient familiar'),",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "dbac4f70cd977788"
+  },
+  {
+    "id": 45,
+    "doc_type": "butlleti",
+    "val": "telerehabilitació (‘telemedicina aplicada a la rehabilitació en què el pacient pot ser avaluat clínicament o pot seguir un programa terapèutic a distància’).",
+    "cat": "telerehabilitació ('telemedicina aplicada a la rehabilitació en què el pacient pot ser avaluat clínicament o pot seguir un programa terapèutic a distància')",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "f20797ee832df160"
+  },
+  {
+    "id": 46,
+    "doc_type": "butlleti",
+    "val": "El joc també ajuda a transmetre la cultura i les tradicions populars.",
+    "cat": "El joc també ajuda a transmetre la cultura i les tradicions populars.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "817b7603a1b5b908"
+  },
+  {
+    "id": 47,
+    "doc_type": "butlleti",
+    "val": "Si mirem arrere, en molts pobles i ciutats no hi havia plaça en què no se sentiren xiquets i xiquetes jugant en valencià.",
+    "cat": "Si miram enrere, en molts pobles i ciutats no hi havia plaça en què no se sentin nenes i nens jugant en valencià.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "1fe410de272cc120"
+  },
+  {
+    "id": 48,
+    "doc_type": "butlleti",
+    "val": "Este projecte, que va nàixer el 2012, torna enguany a envair 32 pobles arreu de les comarques valencianes, al matí i a la vesprada.",
+    "cat": "Aquest projecte, que va néixer el 2012, torna en aquest any a visitar 32 poble arreu de les comarques valencianes, d'hora i tarda.",
+    "correcte": false,
+    "nota": "",
+    "id_corpus": "ff434dc7a6cd0518"
+  },
+  {
+    "id": 49,
+    "doc_type": "butlleti",
+    "val": "Però les aules són també un espai de futur, i qui sap si Maria Beneyto serà també per a algú un espill lingüístic, literari o cívic».",
+    "cat": "Però les aules són també una estona de futur, i qui sap si Maria Beneyto serà també per a algú un mirall lingüístic, literari o cívic».",
+    "correcte": false,
+    "nota": "Estona no es el mateix que espai",
+    "id_corpus": "26362ef0c4a9df88"
+  },
+  {
+    "id": 50,
+    "doc_type": "butlleti",
+    "val": "Amb guió de Raquel Ricart i dibuixos de Daniel Olmo Boronat, el còmic",
+    "cat": "Amb guió de Raquel Ricart i dibuixos de Daniel Olmo Boronat, el còmic",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "e51469865d884e58"
+  },
+  {
+    "id": 51,
+    "doc_type": "butlleti",
+    "val": "La dona forta (1967), el llibre ara reeditat per Edicions Bromera amb la col·laboració de l’AVL.",
+    "cat": "La dona forta (1967), el llibre ara reeditat per Edicions Bromera amb la col·laboració de l'AVL.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "968d3203060bb800"
+  },
+  {
+    "id": 52,
+    "doc_type": "butlleti",
+    "val": "Una novel·la coral en què es traça un mosaic de vides diverses que reflectix la complexitat de l’experiència femenina i la seua lluita per l’emancipació en plena època franquista.",
+    "cat": "Una novel·la coral en què es treça un mosaic de vides diverses que reflecteix la complexitat de l'experiència femenina i la seva lluita per l'emancipació en plena època franquista.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "2804be65a5179310"
+  },
+  {
+    "id": 53,
+    "doc_type": "butlleti",
+    "val": "La segona edició del Vocabulari de noms de persona",
+    "cat": "La segona edició del Vocabulari de noms de persona",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "2d54d0d218febbe8"
+  },
+  {
+    "id": 54,
+    "doc_type": "butlleti",
+    "val": "recull 3.000 entrades de noms valencians, 700 més que en el treball anterior de 2006, amb l’equivalència en castellà.",
+    "cat": "recull 3.000 entrades de noms valencians, 700 més que en el treball anterior de 2006, amb l'equivalència en castellà.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "93e4ca73e7dab1f8"
+  },
+  {
+    "id": 55,
+    "doc_type": "butlleti",
+    "val": "més borda que la canyota o més borda que el pa de panís.",
+    "cat": "més borda que la canyota o més borda que el pa de pa",
+    "correcte": false,
+    "nota": "La traducció està mal escrita, hauria de ser 'més borda que la canyota o més borda que el pa de panís'.",
+    "id_corpus": "82e1a7f310800a10"
+  },
+  {
+    "id": 56,
+    "doc_type": "butlleti",
+    "val": "llei òmnibus (‘llei que pot modificar o també derogar múltiples lleis i normes d’una mateixa matèria o sector o bé també de diferents matèries o sectors’),",
+    "cat": "llei òmnibus ('llei que pot modificar o també derogar múltiples lleis i normes d'una mateixa matèria o sector o bé també de diferents matèries o sectors'),",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "b7356450b7dd8438"
+  },
+  {
+    "id": 57,
+    "doc_type": "butlleti",
+    "val": "sistema de verificació d’edat (‘sistema tecnològic de protecció usat per a restringir l’accés a contingut digital a les persones que no tenen l’edat requerida’)",
+    "cat": "sistema de verificació d'edat ('sistema tecnològic de protecció usat per a restringir l'accés a contingut digital a les persones que no tenen la edat requerida')",
+    "correcte": false,
+    "nota": "La edat és incorrecte, hauria de ser l'edat.",
+    "id_corpus": "87534458a1341c68"
+  },
+  {
+    "id": 58,
+    "doc_type": "butlleti",
+    "val": "petricor (‘olor agradable i fresca que genera la pluja quan cau en un sòl sec’).",
+    "cat": "petricor ('olor agradable i fresc que genera la pluja quan cau en un sòl sec')",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "a8776f0e36b5e7d0"
+  },
+  {
+    "id": 59,
+    "doc_type": "butlleti",
+    "val": "Hi ha una interrelació entre les parles de frontera d’una forma permeable i entrellaçada.",
+    "cat": "Hi ha una interrelació entre les parles de fatxada d'una forma permeable i entrellaçada.",
+    "correcte": false,
+    "nota": "Fatxada no es el mateix que frontera, es refereix a la part exterior d'un edifici.",
+    "id_corpus": "b7db2479f3234250"
+  },
+  {
+    "id": 60,
+    "doc_type": "butlleti",
+    "val": "El contingut del lèxic enguerí del vocabulari consta de vocables en què s’incorporen cites extretes de diversos autors.",
+    "cat": "El contingut del lèxic enguerí del vocabulari consta de vocables en què s'incorporen cites extretes de diversos autors.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "8276a1c47cb95f78"
+  },
+  {
+    "id": 61,
+    "doc_type": "butlleti",
+    "val": "Vocabulario de Enguera y de la Canal de Navarrés» (2014).",
+    "cat": "Vocabulari d'Enguera i de la Canal de Navarrés» (2014).",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "8e0e89c8a9eda800"
+  },
+  {
+    "id": 62,
+    "doc_type": "butlleti",
+    "val": "xurro Speech of Upper Mijares» (1970).",
+    "cat": "xurro Speech of Upper Mijares» (1970).",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "b81753405d97dfa8"
+  },
+  {
+    "id": 63,
+    "doc_type": "butlleti",
+    "val": "Considere de gran importància la consulta dels atles lingüístics amb l’enriquiment que això comporta.",
+    "cat": "Considere de gran importància la consulta dels atles lingüístics amb l'enriquiment que això comporta.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "87d5250fca8f7228"
+  },
+  {
+    "id": 64,
+    "doc_type": "butlleti",
+    "val": "O també l’eliminació de la -d-, com a tret corrent.",
+    "cat": "O també l'eliminació de la -d-, com a tret corrent.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "676d1b1502a8b3b8"
+  },
+  {
+    "id": 65,
+    "doc_type": "butlleti",
+    "val": "Els parlars d’Énguera, Anna, Xella, Bolbait, Navarrés, Quesa i Bicorb.",
+    "cat": "Els parlars d'Enguera, Anna, Xella, Bolbait, Navarrés, Quesa i Bicorb.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "fcf33e0fb7a55eb8"
+  },
+  {
+    "id": 66,
+    "doc_type": "butlleti",
+    "val": "L’Acadèmia Valenciana de la Llengua ha reconegut Joseph Gulsoy amb la publicació d’este llibre que, es mire per on es mire, és de qualitat extraordinària.",
+    "cat": "L'Acadèmia Valenciana de la Llengua ha reconegut Joseph Gulsoy amb la publicació d'aquest llibre que, es miri per on es miri, és de qualitat extraordinària.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "e7b34e01a7e64ee0"
+  },
+  {
+    "id": 67,
+    "doc_type": "butlleti",
+    "val": "«La dolçaina és un instrument amb gran presència en la música popular valenciana, i no deixa de ser una icona o un emblema musical dels valencians.",
+    "cat": "«La dolçaina és un instrument amb gran presència en la música popular valenciana, i no deixa de ser una icona o un emblema musical dels valencians.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "ec955c4eb64fa8c8"
+  },
+  {
+    "id": 68,
+    "doc_type": "butlleti",
+    "val": "Actualment, això no passa». En este sentit, la historieta destaca que en aquella època la dolçaina es passava de pares a fills i, si un matrimoni tenia només filles, la tradició es tallava.",
+    "cat": "Actualment, això no passa». En aquest sentit, la historieta destaca que en aquella època la dolçaina es passava de pares a fills i, si un matrimoni tenia només filles, la tradició es tallava.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "78968e6e5c3cf540"
+  },
+  {
+    "id": 69,
+    "doc_type": "butlleti",
+    "val": "L’Acadèmia Valenciana de la Llengua, en col·laboració amb l’Institut Cartogràfic Valencià i els ajuntaments respectius, acaba de publicar sis números nous (del 278 al 283) del fullets de la sèrie Toponímia dels Pobles Valencians.",
+    "cat": "L'Acadèmia Valenciana de la Llengua, en col·laboració amb l'Institut Cartogràfic Valencià i els ajuntaments respectius, acaba de publicar sis números nous (del 278 al 283) dels fullets de la sèrie Toponímia dels Pobles Valencians.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "6f5f8241be43b430"
+  },
+  {
+    "id": 70,
+    "doc_type": "butlleti",
+    "val": "Losa del Obispo, amb autoria de Vicent Sebastián Fabuel, i",
+    "cat": "Llosa del Obispe, amb autoria de Vicent Sebastià Fabuel, i",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "805020f849b591c0"
+  },
+  {
+    "id": 71,
+    "doc_type": "butlleti",
+    "val": "I, per últim, divulgar la toponímia en diferents sectors locals, com ara l’excursionisme, els centres educatius, les associacions culturals, etc.",
+    "cat": "I, per últim, divulgar la toponímia en diferents sectors locals, com ara l'excursionisme, els centres educatius, les associacions culturals, etc.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "2dbf5ac282825728"
+  },
+  {
+    "id": 72,
+    "doc_type": "butlleti",
+    "val": "Però no som més que una simple amalgama de cèl·lules.",
+    "cat": "Però no som més que una simple amalgama de cèl·lules.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "7d6fd03297dfaa90"
+  },
+  {
+    "id": 73,
+    "doc_type": "butlleti",
+    "val": "bellesa i la lletjor, la joventut i la",
+    "cat": "belleza i la alegria, la joventut i la",
+    "correcte": false,
+    "nota": "Alegria hauria de ser lletjor",
+    "id_corpus": "6a45e3ea1d8a04e0"
+  },
+  {
+    "id": 74,
+    "doc_type": "butlleti",
+    "val": "Tot depén de la perspectiva amb què contemplem les coses.",
+    "cat": "Tot depén de la perspectiva amb què contemplem les coses.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "03a67831b8f7fbd0"
+  },
+  {
+    "id": 75,
+    "doc_type": "butlleti",
+    "val": "qui no s’arrisca no pisca;",
+    "cat": "qui no s'arrisca no pica;",
+    "correcte": false,
+    "nota": "Error de redacció: 'pica' hauria de ser 'pisca'",
+    "id_corpus": "e9b20b700d56a2d8"
+  },
+  {
+    "id": 76,
+    "doc_type": "butlleti",
+    "val": "que pega un esclafit, usada per a ressaltar la magnificència d’alguna cosa.",
+    "cat": "que pugui un esclafit, usada per a ressaltar la magnificència d'alguna cosa.",
+    "correcte": false,
+    "nota": "Error de redacció: 'pugui' hauria de ser 'pega'",
+    "id_corpus": "dbecf67e6ffbca10"
+  },
+  {
+    "id": 77,
+    "doc_type": "butlleti",
+    "val": "I, si importants són les locucions per a captar en tota la seua amplitud l’esperit d’un poble, importants són també algunes variants formals que, per la seua singularitat, és difícil poder dir-les d’una altra manera més que com es diuen realment, si més no en certs àmbits d’ús.",
+    "cat": "I, si importants són les locucions per a captar en tota la seva amplitud l'esperit d'un poble, importants són també algunes variants formals que, per la seva singularitat, és difícil poder dir-les d'una altra manera més que com es diuen realment, si més no en certs àmbits d'ús.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "58248a38092e5bd0"
+  },
+  {
+    "id": 78,
+    "doc_type": "butlleti",
+    "val": "És cert que no tot el que es diu transcendix a l’escriptura.",
+    "cat": "És cert que no tot el que es diu transcendé a l'escriptura.",
+    "correcte": false,
+    "nota": "",
+    "id_corpus": "a03987be194bb5c8"
+  },
+  {
+    "id": 79,
+    "doc_type": "butlleti",
+    "val": "Tot, no; però algunes coses, sí.",
+    "cat": "Tot, no; però algunes coses, sí.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "454509721414ba78"
+  },
+  {
+    "id": 80,
+    "doc_type": "butlleti",
+    "val": "I a vegades la realitat trenca els esquemes preconcebuts.",
+    "cat": "I a vegades la realitat trenca els esquemes preconcebuts.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "7166a3dc1dfd3db0"
+  },
+  {
+    "id": 81,
+    "doc_type": "butlleti",
+    "val": "i molt especialment quan s’usen en referència a la",
+    "cat": "i molt especialment quan s'usen en referència a la",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "af07e93f1e73a3b0"
+  },
+  {
+    "id": 82,
+    "doc_type": "butlleti",
+    "val": "biocapacitat (‘capacitat d’un ecosistema per a generar un abastiment regular de recursos renovables i per a absorbir els residus generats pels éssers humans, com ara el diòxid de carboni, que s’utilitza com a indicador de sostenibilitat’),",
+    "cat": "biocapacitat ('capacitat d'un ecosistema per a generar un abastament regular de recursos renovables i per a absorbir els residus generats pels éssers humans, com ara el diòxid de carboni, que s'utilitza com a indicador de sostenibilitat'),",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "f8a02e32ca6ca910"
+  },
+  {
+    "id": 83,
+    "doc_type": "butlleti",
+    "val": "hibristofília (‘atracció sexual cap a persones que han comés un crim’).",
+    "cat": "hibristofília ('atracció sexual cap a persones que han comès un crim')",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "f3bd6c2644a0e980"
+  },
+  {
+    "id": 84,
+    "doc_type": "butlleti",
+    "val": "Això vol dir que totes les variants de la nostra llengua han de quedar enregistrades per a fer possible que tots els usuaris tinguen els mateixos drets i no hagen de fer renúncies lingüístiques en cap projecte d’intel·ligència artificial.",
+    "cat": "Això vol dir que totes les variants de la nostra llengua han de quedar enregistrades per a fer possible que tots els usuaris tinguin els mateixos drets i no hagin de fer renúncies lingüístiques en cap projecte d'intel·ligència artificial.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "875565c6d8b27940"
+  },
+  {
+    "id": 85,
+    "doc_type": "butlleti",
+    "val": "A més, totes les varietats enriquixen i potencien l’ús de la llengua.",
+    "cat": "A més, totes les varietats enriquixen i potencien l'ús de la llengua.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "46e8a50091a5c498"
+  },
+  {
+    "id": 86,
+    "doc_type": "butlleti",
+    "val": "Facilitar l’aplicació de la IA en els sectors públic i privat fomentant la innovació i la ciberseguretat (de la qual s’encarrega l’Agència Espanyola de Supervisió i IA, AESIA.",
+    "cat": "Facilitar l'aplicació de la IA en els sectors públic i privat fomentant la innovació i la ciberseguretat (de la qual s'encarrega l'Agència Espanyola de Supervisió i IA, AESIA.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "4cac39e665c01798"
+  },
+  {
+    "id": 87,
+    "doc_type": "butlleti",
+    "val": "Fomentar una IA transparent, responsable i oberta, amb gran pes de dades tant en castellà com en la resta de llengües oficials.",
+    "cat": "Fomentar una IA transparent, responsable i oberta, amb gran pes de dades tant en castellà com en la resta de llengües oficials.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "5dd9b857b2c90260"
+  },
+  {
+    "id": 88,
+    "doc_type": "butlleti",
+    "val": "ALIA pretén augmentar el nombre de models, i superar en més del 20 per cent el pes de les llengües parlades en l’estat espanyol.",
+    "cat": "ALIA pretén augmentar el nombre de models, i superar en més del 20 per cent el pes de les llengües parlades en l'estat espanyol.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "2fbd9fdab73ac570"
+  },
+  {
+    "id": 89,
+    "doc_type": "butlleti",
+    "val": "En alguns espais de comunicació, a l’hora d’exposar un missatge o formular una queixa, hi ha fins i tot una estricta limitació del nombre de caràcters que és possible utilitzar.",
+    "cat": "En alguns espais de comunicació, a l'hora d'exposar un missatge o formular una queixa, hi ha fins i tot una estricta limitació del nombre de caràcters que és possible utilitzar.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "7eb29dfdb3a27638"
+  },
+  {
+    "id": 90,
+    "doc_type": "butlleti",
+    "val": "En el fons, són qüestions que queden dins del camp de l’ortografia.",
+    "cat": "En el fons, són qüestions que queden dins del camp de l'ortografia.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "2f2f65304c149e20"
+  },
+  {
+    "id": 91,
+    "doc_type": "butlleti",
+    "val": "Amb este objectiu, per a entendre el tractament que se’n fa en les obres normatives, cal tindre en compte que convencionalment es distingixen tres tipus d’abreviacions.",
+    "cat": "Amb aquest objectiu, per a entendre el tractament que se'n fa en les obres normatives, cal tenir en compte que convencionalment es distinguen tres tipus d'abreviacions.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "2f0debc7dbb03158"
+  },
+  {
+    "id": 92,
+    "doc_type": "butlleti",
+    "val": "km o kg s’escriuen, per exemple, en minúscula, hi ha altres símbols que s’escriuen amb majúscula inicial, com és ara el cas de",
+    "cat": "km o kg s'escriuen, per exemple, en minúscula, hi ha altres símbols que s'escriuen amb majúscula inicial, com és ara el cas de",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "fcf0415afb3c0e68"
+  },
+  {
+    "id": 93,
+    "doc_type": "butlleti",
+    "val": "ONU, RENFE o LGTBI), però també per a la representació d’alguns conceptes científics (com",
+    "cat": "ONU, RENFE o LGTBI), però també per a la representació d'alguns conceptes científics (com",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "b49a285ff4911c60"
+  },
+  {
+    "id": 94,
+    "doc_type": "butlleti",
+    "val": "il·lustre o excel·lentíssim) i moltes altres.",
+    "cat": "il·lustre o excel·lentíssim) i moltes altres.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "6f92fa65fb84c7e0"
+  },
+  {
+    "id": 95,
+    "doc_type": "butlleti",
+    "val": "S’ha suprimit, per exemple, l’etiqueta “col·loquial” a paraules com",
+    "cat": "S'ha suprimit, per exemple, l'etiqueta “col·loquial” a paraules com",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "e2cb8955c55080f0"
+  },
+  {
+    "id": 96,
+    "doc_type": "butlleti",
+    "val": "alcaldessa o capitana, en les accepcions corresponents a la muller del càrrec corresponent, s’ha reemplaçat la marca “col·loq.”, abreviatura de",
+    "cat": "alcaldesa o capità, en les accepcions corresponents a la dona del càrrec corresponent, s'ha reemplaçat la marca “col·loq.”, abreviatura de",
+    "correcte": false,
+    "nota": "alcaldesa hauria de ser alcaldessa i capità hauria de ser capitana",
+    "id_corpus": "60cebad879b4d568"
+  },
+  {
+    "id": 97,
+    "doc_type": "butlleti",
+    "val": "Pel que fa als gentilicis, a partir de la petició de l’Ajuntament, s’ha canviat la forma principal de designar els habitants de Teulada, que, seguint la tradició més consolidada, són",
+    "cat": "Pel que fa als gentilicis, a partir de la petició de l'Ajuntament, s'ha canviat la forma principal de designar els habitants de Teulada, que, seguint la tradició més consolidada, són",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "5607128ab88c8538"
+  },
+  {
+    "id": 98,
+    "doc_type": "butlleti",
+    "val": "I també molts termes provinents del camp de la diplomàcia, tan útils en estos temps de conflictes interminables.",
+    "cat": "I també molts termes provinents del camp de la diplomàcia, tan útils en aquests moments de conflictes interminables.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "3198a4f8068574a8"
+  },
+  {
+    "id": 99,
+    "doc_type": "butlleti",
+    "val": "Amb este treball, l’AVL pretén conéixer la situació del valencià en una comarca d’alta minorització de la llengua pròpia dels valencians, però amb un pes demogràfic i econòmic molt significatiu i determinant en la Comunitat Valenciana.",
+    "cat": "Amb aquest treball, l'AVL pretén conèixer la situació del valencià en una comarca d'alta minorització de la llengua pròpia dels valencians, però amb un pes demogràfic i econòmic molt significatiu i determinant en la Comunitat Valenciana.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "9a233e29f5122910"
+  },
+  {
+    "id": 100,
+    "doc_type": "butlleti",
+    "val": "Tot i això, esta actitud no és tan positiva com la que mostren la majoria dels enquestats cap al castellà.",
+    "cat": "Tot i això, aquesta actitud no és tan positiva com la que mostren la majoria dels enquestats cap al castellà.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "c901f46927539c48"
+  },
+  {
+    "id": 101,
+    "doc_type": "butlleti",
+    "val": "Així, pel que fa a la base social sobre la qual se sustenta la llengua, al Baix Vinalopó declaren el valencià com a llengua inicial el 15,5 % de la població, a més del 12,6 % que es declara bilingüe inicial.",
+    "cat": "Així, pel que fa a la base social sobre la qual se sustenta la llengua, sota Vinalopó declaren el valencià com a llengua inicial el 15,5 % de la població, a més del 12,6 % que es declara bilingüe inicial.",
+    "correcte": false,
+    "nota": "Sota Vinalopó hauria de ser Baix Vinalopó",
+    "id_corpus": "961372028000f2e8"
+  },
+  {
+    "id": 102,
+    "doc_type": "butlleti",
+    "val": "A més, els fills de les parelles mixtes majoritàriament s’expressen en castellà.",
+    "cat": "A més, els fills de les parelles mixtes majoritàriament s'expressen en castellà.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "eb1b5f3a81f0a190"
+  },
+  {
+    "id": 103,
+    "doc_type": "butlleti",
+    "val": "«Per tant, emocionalment, afecta més parlar la llengua que no saber parlar-la», s’indica en les conclusions de l’enquesta.",
+    "cat": "«Per tant, emocionalment, afecta més parlar la llengua que no saber parlar-la», s'indica en les conclusions de l'enquesta.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "48b008de875c29b8"
+  },
+  {
+    "id": 104,
+    "doc_type": "butlleti",
+    "val": "Pràcticament, tothom al Baix Vinalopó se sent còmode o molt còmode quan sent parlar castellà, i una majoria més ajustada (58 %) se senten còmodes o molt còmodes quan senten parlar en valencià.",
+    "cat": "Pràcticament, tothom a sota Vinalopó se sent còmode o molt còmode quan sent parlar castellà, i una majoria més ajustada (58 %) se senten còmodes o molt còmodes quan senten parlar en valencià.",
+    "correcte": false,
+    "nota": "Sota Vinalopó hauria de ser Baix Vinalopó",
+    "id_corpus": "21b5b5e2bd5d3ac8"
+  },
+  {
+    "id": 105,
+    "doc_type": "butlleti",
+    "val": "Atles en quatre volums, cadascun dels quals està dedicat a unes 150 preguntes del qüestionari reduït.",
+    "cat": "Atles en quatre volums, cadascun dels quals està dedicat a uns 150 preguntes del qüestionari reduït.",
+    "correcte": false,
+    "nota": "Uns hauria de ser unes",
+    "id_corpus": "cdf6f52779cd02c8"
+  },
+  {
+    "id": 106,
+    "doc_type": "butlleti",
+    "val": "Este primer volum, dedicat a l’agricultura, el món rural, la meteorologia i la fitonímia domèstica, arreplega i estudia més de dos mil paraules, entre formes principals i variants formals.",
+    "cat": "Aquest primer volum, dedicat a l'agricultura, el món rural, la meteorologia i la fitonímia domèstica, arreplega i estudia més de dos mil paraules, entre formes principals i variants formals.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "663abde9cfb78d30"
+  },
+  {
+    "id": 107,
+    "doc_type": "butlleti",
+    "val": "Participació en cursos i jornades Verònica Cantó, presidenta de l’AVL, inaugura el III Congrés",
+    "cat": "Participació en cursos i jornades Verònica Cantó, presidenta de l'AVL, inaugura el III Congrés",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "f276aa35352f7c10"
+  },
+  {
+    "id": 108,
+    "doc_type": "butlleti",
+    "val": "Toponomasticon Hispaniae, celebrat en la Facultat de Filologia de la Universitat de València els dies 9, 10, 11 i 12 d’abril.",
+    "cat": "Toponomasticon Hispaniae, celebrat a la Facultat de Filologia de la Universitat de València els dies 9, 10, 11 i 12 d'abril.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "a2a9c33f69dfaff0"
+  },
+  {
+    "id": 109,
+    "doc_type": "butlleti",
+    "val": "En este congrés, Josep Martines i Maite Mollà presenten les ponències «Toponímia i història del lèxic.",
+    "cat": "En aquest congrés, Josep Martines i Maite Mollà presenten les ponències «Toponímia i història del lèxic.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "b1fc1c77a0c0b7f0"
+  },
+  {
+    "id": 110,
+    "doc_type": "butlleti",
+    "val": "segartí, segartina per als habitants del poble de Segart.",
+    "cat": "segartí, segartina per als habitants del poble de Segart",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "b2db5df0a4da1708"
+  },
+  {
+    "id": 111,
+    "doc_type": "butlleti",
+    "val": "estrela, que, tot i que tradicionalment s’ha usat com a substantiu, ha passat finalment a assimilar un valor adjectival.",
+    "cat": "estela, que, tot i que tradicionalment s'ha usat com a substantiu, ha passat finalment a assimilar un valor adjectival.",
+    "correcte": false,
+    "nota": "Estela hauria de ser estrella",
+    "id_corpus": "86e0553540be9c90"
+  },
+  {
+    "id": 112,
+    "doc_type": "butlleti",
+    "val": "segardí es diguera segartí, tal com ho diuen habitualment els veïns del poble, i així és, efectivament, com s’ha aprovat per l’Acadèmia Valenciana de la Llengua, si bé s’ha optat per no suprimir la forma",
+    "cat": "segardí es diguéssin segartí, tal com ho diuen habitualment els veïns del poble, i així és, efectivament, com s'ha aprovat per l'Acadèmia Valenciana de la Llengua, si bé s'ha optat per no suprimir la forma",
+    "correcte": false,
+    "nota": "diguéssin hauria de ser digués, ja que el subjecte és singular (segardí).",
+    "id_corpus": "1bceee3f0538dd90"
+  },
+  {
+    "id": 113,
+    "doc_type": "butlleti",
+    "val": "segardí, perquè té també una important tradició d’ús, i sempre és útil que, si algú troba en algun text esta forma, sàpia que es tracta d’una variant que s’ha usat històricament per a referir-se als naturals d’este municipi del Camp de Morvedre.",
+    "cat": "segardí, perquè té també una important tradició d'ús, i sempre és útil que, si algú troba en algun text aquesta forma, sàpiga que es tracta d'una variant que s'ha usat històricament per a referir-se als naturals d'aquest municipi del Camp de Morvedre.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "0dc16e315bb39e48"
+  },
+  {
+    "id": 114,
+    "doc_type": "butlleti",
+    "val": "Si les voleu veure totes, les teniu disponibles a un toc de",
+    "cat": "Si les voleu veure totes, les teniu disponibles a un toc de",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "84b2d4d3cb26e008"
+  },
+  {
+    "id": 115,
+    "doc_type": "butlleti",
+    "val": "De les visites rebudes, 1.866 eren estudiants de Secundària, 290 de Batxiller i 142 adults.",
+    "cat": "De les visites rebudes, 1.866 eren estudiants de segonària, 290 de batxiller i 142 adults.",
+    "correcte": false,
+    "nota": "Segonaria i batxiller s'escriuen amb minúscula inicial. A més segonaria es Secundária",
+    "id_corpus": "85134b3f58c8a568"
+  },
+  {
+    "id": 116,
+    "doc_type": "butlleti",
+    "val": "No canviar de llengua en cap moment durant 7 dies.",
+    "cat": "No canviar de llengua en cap moment durant 7 dies.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "528f951631598c98"
+  },
+  {
+    "id": 117,
+    "doc_type": "butlleti",
+    "val": "Al llarg del temps es van eixamplant o contraient, depenent de la vitalitat de cada llengua, i sobretot de les necessitats dels parlants.",
+    "cat": "Al llarg de l'estona es van desenvolupant o contractant, depenent de la vitalitat de cada llengua, i sobretot de les necessitats dels parlants.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "e3931581075ee320"
+  },
+  {
+    "id": 118,
+    "doc_type": "butlleti",
+    "val": "Cada individu, al cap i a la fi, adapta el codi lingüístic a les seues necessitats específiques i preferències personals, i el transforma —no sempre conscientment— en cada acte de parla.",
+    "cat": "Cada individu, al cap i a la fi, adapta el codi lingüístic a les seves necessitats específiques i preferències personals, i el transforma —no sempre conscientment— en cada acte de parla.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "d9df09db14462270"
+  },
+  {
+    "id": 119,
+    "doc_type": "butlleti",
+    "val": "I també, és clar, a la interacció amb altres llengües.",
+    "cat": "I també, és clar, a la interacció amb altres llengües.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "d1a3639596aea110"
+  },
+  {
+    "id": 120,
+    "doc_type": "butlleti",
+    "val": "Altres vegades la renovació del diccionari és parcial.",
+    "cat": "Altres vegades la renovació del diccionari és parcial.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "32c95744f8abce80"
+  },
+  {
+    "id": 121,
+    "doc_type": "butlleti",
+    "val": "Fan que la carcassa lèxica s’adapte als nous temps.",
+    "cat": "Fan que la carcassa lèxica s'adapte als nous estones.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "a17d99576165e180"
+  },
+  {
+    "id": 122,
+    "doc_type": "butlleti",
+    "val": "Es limiten a un canvi de la categoria gramatical.",
+    "cat": "Es limiten a un canvi de la categoria gramatical.",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "44cb7ba598406220"
+  },
+  {
+    "id": 123,
+    "doc_type": "biografia",
+    "val": "The technical storage or access is necessary for the legitimate purpose of storing preferences that are not requested by the subscriber or user.",
+    "cat": "El tractament o l'emmagatzematge tècnic és necessari per a l'final legítim de guardar preferències que no s'han sol·licitat al subscriptor o usuari.",
+    "correcte": false,
+    "nota": "Es anglés, no valencià",
+    "id_corpus": "637f2f644a230db8"
+  },
+  {
+    "id": 124,
+    "doc_type": "biografia",
+    "val": "L'emmagatzematge o accés tècnic que s'utilitza exclusivament amb finalitats estadístiques anònimes.",
+    "cat": "L'emmagatzematge o accés tècnic que s'utilitza exclusivament amb finalitats estadístiques anònimes.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "ef6eba3e973b00c8"
+  },
+  {
+    "id": 125,
+    "doc_type": "biografia",
+    "val": "Sense un requeriment, el compliment voluntari per part del proveïdor de servicis d'internet, o els registres addicionals d'un tercer, la informació emmagatzemada o recuperada només per a este propòsit no es pot utilitzar per a identificar l'usuari.",
+    "cat": "Sense un requeriment, el compliment voluntari per part del proveïdor de serveis d'internet, o els registres addicionals d'un tercer, la informació emmagatzemada o recuperada només per a aquest propòsit no es pot utilitzar per a identificar l'usuari.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "c276432600872ea0"
+  },
+  {
+    "id": 126,
+    "doc_type": "glossari",
+    "val": "Este fenomen natural és possible perquè, vistos des de la Terra, els discos del Sol i la Lluna són quasi iguals.",
+    "cat": "Aquest fenomen natural és possible perquè, vistos des de la Terra, els discos del Sol i la Lluna són gairebé iguals.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "45d9f9f495258200"
+  },
+  {
+    "id": 127,
+    "doc_type": "glossari",
+    "val": "Però també podem comprar —o preparar-nos— un",
+    "cat": "Però també podem comprar —o preparar-nos— un",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "ca84d040e84568e0"
+  },
+  {
+    "id": 128,
+    "doc_type": "glossari",
+    "val": "Les discrepàncies en la història arriben també al motiu pel qual l’aristòcrata va demanar un plat que li permetera menjar sense haver d’alçar-se de la taula.",
+    "cat": "Les discrepàncies en la història arriben també al motiu pel qual l'aristòcrata ha sol·licitat un plat que li permetrà menjar sense haver de desar-se de la taula.",
+    "correcte": false,
+    "nota": "",
+    "id_corpus": "89e21d5ddaaa6cb0"
+  },
+  {
+    "id": 129,
+    "doc_type": "glossari",
+    "val": "ronsejar, que, tal com arreplega el Diccionari Normatiu Valencià, significa ‘anar diferint l’execució d’una cosa que es fa de mala gana’.",
+    "cat": "ronsejar, que, tal com arreplega el Diccionari Normatiu Valencià, significa 'anar diferent l'execució d'una cosa que es fa de mala gana'.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "df916cb1e3a06de0"
+  },
+  {
+    "id": 130,
+    "doc_type": "glossari",
+    "val": "Després l’alentien, fent-se els ronses, fins que calia un altre toc d’atenció», escriu Francesc Gisbert en",
+    "cat": "Després l'alentien, fent-se els ronsos, fins que calia un altre toc d'atenció», escriu Francesc Gisbert en",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "f9bd222271b725c0"
+  },
+  {
+    "id": 131,
+    "doc_type": "glossari",
+    "val": "La llegenda del corsari (2009). A més, hi ha la locució verbal",
+    "cat": "La llegenda del corsari (2009). A més, hi ha la locució verbal",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "981b842e86cd5af0"
+  },
+  {
+    "id": 132,
+    "doc_type": "glossari",
+    "val": "arrunsar: «E entrant la dita Magdalena per la porta de la sala, lo dit phariseu mirant-la conegué-la tantost ab tot vingués molt desfreçada e no en l’ayre acostumat.",
+    "cat": "arronsar: «E entrant la dita Magdalena per la porta de la sala, el dit fariseu mirant-la conegué-la tantost amb tot vingués molt despeinada i no en l'aire acostumat.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "5e455cd377c149e8"
+  },
+  {
+    "id": 133,
+    "doc_type": "glossari",
+    "val": "furry, un adjectiu (derivat del substantiu fur, que vol dir ‘pell, pelatge, pèl’), que en esta llengua significa ‘pelut, cobert de pèl’ i que també s’aplica als joguets de peluix.",
+    "cat": "furry, un adjectiu (derivat del substantiu fur, que vol dir 'pell, pelatge, pèl'), que en aquesta llengua significa 'pelut, cobert de pèl' i que també s'aplica als joguets de peluix.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "5986404cc146dd58"
+  },
+  {
+    "id": 134,
+    "doc_type": "glossari",
+    "val": "underground i fou a partir dels noranta quan va guanyar visibilitat pública, de primer en",
+    "cat": "underground i fou a partir dels vuitanta quan va guanyar visibilitat pública, de primer en",
+    "correcte": false,
+    "nota": "vuitanta → noranta",
+    "id_corpus": "d1dc5ee7c577cc38"
+  },
+  {
+    "id": 135,
+    "doc_type": "glossari",
+    "val": "toponímia, una paraula que, tal com la definix el",
+    "cat": "toponímia, una paraula que, tal com la defineix el",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "a120c2b1ee400508"
+  },
+  {
+    "id": 136,
+    "doc_type": "glossari",
+    "val": "Per una altra banda, segons el nom a partir del qual s’han originat els topònims, podem parlar d’un",
+    "cat": "Per una altra banda, segons el nom a partir del qual s'han originat els topònims, podem parlar d'un",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "07abdbe386be9b50"
+  },
+  {
+    "id": 137,
+    "doc_type": "glossari",
+    "val": "antropònim (un ‘nom propi de persona’). No cal pensar en llocs llunyans geogràficament com",
+    "cat": "antropònim (un 'nom propi de persona'). No cal pensar en llocs llunyans geogràficament com",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "0f76b6da2008b3a0"
+  },
+  {
+    "id": 138,
+    "doc_type": "glossari",
+    "val": "tautologia, és a dir, una repetició d’elements que volen dir la mateixa cosa.",
+    "cat": "tautologia, és a dir, una repetició d'elements que volen dir la mateixa cosa.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "9f0a5fd0e114e508"
+  },
+  {
+    "id": 139,
+    "doc_type": "glossari",
+    "val": "cova de la Balma (Sorita), perquè cova i balma",
+    "cat": "cova de la Balma (Sorita), perquè cova i balma",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "491943716bd50878"
+  },
+  {
+    "id": 140,
+    "doc_type": "glossari",
+    "val": "Procedent de l’àrab andalusí rakún o rukún (i este, de l’àrab clàssic",
+    "cat": "Procedent de l'àrab andalusí rakún o rukún (i aquest, de l'àrab clàssic)",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "71671bffafb5fcf8"
+  },
+  {
+    "id": 141,
+    "doc_type": "glossari",
+    "val": "El revers de la paranoia el trobem en la pronoia, un neologisme encunyat l’any 1982 pel sociòleg Fred H. Goldner en",
+    "cat": "El revers de la paranoia el trobem en la pronoia, un neologisme encunyat l'any 1982 pel sociòleg Fred H. Goldner en",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "55e75fe1720d82d8"
+  },
+  {
+    "id": 142,
+    "doc_type": "glossari",
+    "val": "En el text, l’expert del Queens College presentava la pronoia com un trastorn basat en la il·lusió que els altres tenen una bona opinió d’un mateix, en la creença que les accions i els fruits de l’esforç personal són ben rebuts i elogiats.",
+    "cat": "En el text, l'expert del Queens College presentava la pronoia com un trastorn basat en la il·lusió que els altres tenen una bona opinió d'un mateix, en la creença que les accions i els fruits de l'esforç personal són ben rebuts i elogiats.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "6bbeeb2e100d0888"
+  },
+  {
+    "id": 143,
+    "doc_type": "glossari",
+    "val": "El sociòleg apuntava que les persones que patixen de pronoia poden arribar a desenrotllar un estat d’irrealitat mental, amb una interpretació distorsionada de la realitat que els envolta.",
+    "cat": "El sociòleg apuntava que les persones que patixen de pronoia poden arribar a desenrotllar un estat d'irrealitat mental, amb una interpretació distorsionada de la realitat que els envolta.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "459502703e85a228"
+  },
+  {
+    "id": 144,
+    "doc_type": "glossari",
+    "val": "En grec, la paraula, que tenia un significat de ‘previsió’, estava formada a partir de dos components:",
+    "cat": "En grec, la paraula, que tenia un significat de 'previsió', estava formada a partir de dos components:",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "04262aa56b9489d8"
+  },
+  {
+    "id": 145,
+    "doc_type": "glossari",
+    "val": "pro (en grec, ‘abans’) i nous (‘ment’).",
+    "cat": "pro (en grec, 'abans') i nous ('ment')",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "a29d1add74d5bbe8"
+  },
+  {
+    "id": 146,
+    "doc_type": "glossari",
+    "val": "D’estos últims parlarem en esta entrega.",
+    "cat": "D'aquests últims parlarem en aquesta lliurament.",
+    "correcte": false,
+    "nota": "lliurament hauria de ser entrega",
+    "id_corpus": "0b0555b9157b9978"
+  },
+  {
+    "id": 147,
+    "doc_type": "glossari",
+    "val": "Originalment, cirialot era el nom que rebien els ciris de grans dimensions que portaven cadascuna de les persones que participaven en la processó del Corpus de València representant els ancians que, segons l’",
+    "cat": "Originalment, cirialot era el nom que rebien els ciris de grans dimensions que portaven cadascuna de les persones que participaven en la processó del Corpus de València representant els antics que, segons l'",
+    "correcte": false,
+    "nota": "antics hauria de ser ancians",
+    "id_corpus": "8c29f700319b1e30"
+  },
+  {
+    "id": 148,
+    "doc_type": "glossari",
+    "val": "La imatge del cirialot com un ciri gran, plantat i estirat, ha donat lloc a l’expressió",
+    "cat": "La imatge del cirialot com un ciri gran, plantat i estirat, ha donat lloc a l'expressió",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "e805d3d4b69db600"
+  },
+  {
+    "id": 149,
+    "doc_type": "glossari",
+    "val": "Teniu tota la llibertat en lo festeig i encara sou egoistes.",
+    "cat": "Teniu tota la llibertat en la festa i encara sou egoistes.",
+    "correcte": false,
+    "nota": "Festa hauria de ser festeig",
+    "id_corpus": "ec5b6a863f7217f8"
+  },
+  {
+    "id": 150,
+    "doc_type": "glossari",
+    "val": "Corpus Informatitzat del Valencià permet trobar-ne alguns exemples.",
+    "cat": "Corpus Informatitzat del Valencià permet trobar-ne alguns exemples.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "be5a6606ca8273c8"
+  },
+  {
+    "id": 151,
+    "doc_type": "glossari",
+    "val": "Butlletí de la Societat Castellonenca de Cultura",
+    "cat": "Butlletí de la Societat Castellonenca de Cultura",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "fe479c7ed1a95888"
+  },
+  {
+    "id": 152,
+    "doc_type": "glossari",
+    "val": "Dia Internacional de les Famílies, en plural, per a reflectir que el concepte de família s’ha transformat en les últimes dècades d’acord amb els canvis en els comportaments de parella o la diversitat de les relacions socials.",
+    "cat": "Dia Internacional de les Famílies, en plural, per a reflectir que el concepte de família s'ha transformat en les últimes dècades d'acord amb els canvis en els comportaments de parella o la diversitat de les relacions socials.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "8df8fc154cc311a8"
+  },
+  {
+    "id": 153,
+    "doc_type": "glossari",
+    "val": "Per a això, podem recórrer a un adjectiu i així, seguint el",
+    "cat": "Per a això, podem recórrer a un adjectiu i així, seguint el",
+    "correcte": null,
+    "nota": "",
+    "id_corpus": "84b6cf17d05a81d8"
+  },
+  {
+    "id": 154,
+    "doc_type": "glossari",
+    "val": "parental, que, amb el significat de ‘relatiu o pertanyent als pares’, deriva de",
+    "cat": "parental, que, amb el significat de 'relatiu o pertanyent als pares', deriva de",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "a3a56588c32a32b0"
+  },
+  {
+    "id": 155,
+    "doc_type": "glossari",
+    "val": "progenitors, sobretot en plural ( parents). En el",
+    "cat": "pares, sobretot en plural (parents). En el",
+    "correcte": false,
+    "nota": "Pares hauria de ser progenitors",
+    "id_corpus": "a1881770c154f810"
+  },
+  {
+    "id": 156,
+    "doc_type": "glossari",
+    "val": "En alguns contextos, per a parlar d’una família en què el progenitor únic és la mare, és a dir que es tracta d’una família constituïda per una mare i un o més fills, ha aparegut la forma",
+    "cat": "En alguns contextos, per a parlar d'una família en què el progenitor únic és la mare, és a dir que es tracta d'una família constituïda per una mare i un o més fills, ha aparegut la forma",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "7692f7da9c271b48"
+  },
+  {
+    "id": 157,
+    "doc_type": "glossari",
+    "val": "parental un significat més restringit del que té, ja que, com hem vist adés, no deriva de",
+    "cat": "[parental un significat més restringit del que té, ja que, com hem vist abans, no deriva de]",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "e8283974ca5459b0"
+  },
+  {
+    "id": 158,
+    "doc_type": "glossari",
+    "val": "femenina i masculina, per a especificar, quan siga el cas, si la responsabilitat de la família recau sobre una mare o bé sobre un pare.",
+    "cat": "femenina i masculina, per a especificar, quan sigui el cas, si la responsabilitat de la família recau sobre una mare o bé sobre un pare.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "4d20bf257a1d1580"
+  },
+  {
+    "id": 159,
+    "doc_type": "glossari",
+    "val": "En el seu lèxic patrimonial, el valencià té una quantitat important de paraules procedents del grec.",
+    "cat": "En el seu lèxic patrimonial, el valencià té una quantitat important de paraules procedents del grec.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "93f532a0469a5850"
+  },
+  {
+    "id": 160,
+    "doc_type": "glossari",
+    "val": "i el mot orexe, que significa ‘desig, apetit’).",
+    "cat": "i el mot orexe, que significa 'deseig, apetit')",
+    "correcte": false,
+    "nota": "deseig hauria de ser desig",
+    "id_corpus": "854404c17e5effa0"
+  },
+  {
+    "id": 161,
+    "doc_type": "glossari",
+    "val": "ortorèxia, que designa el ‘trastorn de la conducta alimentària consistent en l’obsessió patològica de menjar només aliments que la persona afectada considera saludables’.",
+    "cat": "ortorèxia, que designa el 'trastorn de la conducta alimentària consistent en l'obsessió patològica de menjar només aliments que la persona afectada considera saludables'.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "3bf965d0b634d7f8"
+  },
+  {
+    "id": 162,
+    "doc_type": "glossari",
+    "val": "drunk significa ‘begut’) per a referir-se a un mateix trastorn, consistent en una alteració de la conducta alimentària que restringix el consum d’aliments amb la intenció de beure alcohol i així poder compensar-ne l’elevat contingut calòric.",
+    "cat": "drunk significa 'begut') per a referir-se a un mateix trastorn, consistent en una alteració de la conducta alimentària que restringeix el consum d'aliments amb la intenció de beure alcohol i així poder compensar-ne l'elevat contingut calòric.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "5fc1dfa020a2f160"
+  },
+  {
+    "id": 163,
+    "doc_type": "glossari",
+    "val": "Per això, històricament el café licor rebia el nom de",
+    "cat": "Per això, històricament el cafè licor rebia el nom de",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "d2296f2eb0db3c78"
+  },
+  {
+    "id": 164,
+    "doc_type": "glossari",
+    "val": "sense alcohol), el xinet (amb batut de vainilla), el",
+    "cat": "sense alcohol), el xinet (amb batut de vanillà), el",
+    "correcte": false,
+    "nota": "vanillà hauria de ser vainilla",
+    "id_corpus": "7c927a88119393c0"
+  },
+  {
+    "id": 165,
+    "doc_type": "glossari",
+    "val": "Un exemple ben viu d’este origen és la paraula",
+    "cat": "Un exemple ben viu d'aquest origen és la paraula",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "31a8ababd03390a0"
+  },
+  {
+    "id": 166,
+    "doc_type": "glossari",
+    "val": "paripé, que, derivada de paruipén (‘canvi, permuta’), ha desplegat el significat de ‘fingiment, simulació o acte hipòcrita’ i que s’utilitza en tota classe de contextos, també literaris o periodístics.",
+    "cat": "paripé, que, derivada de paruipén ('canvi, permuta'), ha desplegat el significat de 'fingiment, simulació o acte hipòcrita' i que s'utilitza en tota classe de contextes, també literaris o periodístics.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "a95e1b716ecac9e0"
+  },
+  {
+    "id": 167,
+    "doc_type": "glossari",
+    "val": "Feliç Dia Internacional del Poble Gitano!",
+    "cat": "Feliç Dia Internacional del Poble Gitano!",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "24d45224d762f4c0"
+  },
+  {
+    "id": 168,
+    "doc_type": "glossari",
+    "val": "Són moltes les localitats que estos dies viuen amb intensitat la celebració de la Setmana Santa.",
+    "cat": "Són moltes les localitats que aquests dies viuen amb intensitat la cel·lebració de la Setmana Santa.",
+    "correcte": false,
+    "nota": "cel·lebració hauria de ser celebració",
+    "id_corpus": "adeb190812fadfb0"
+  },
+  {
+    "id": 169,
+    "doc_type": "glossari",
+    "val": "Este llegat té reflex, també, en el llenguatge.",
+    "cat": "Aquest llegat té reflex, també, en el llenguatge.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "fe685aaf1e394908"
+  },
+  {
+    "id": 170,
+    "doc_type": "glossari",
+    "val": "Una altra expressió llatina incorporada al llenguatge habitual és",
+    "cat": "Una altra expressió llatina incorporada al llenguatge habitual és",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "b207cbda081c8210"
+  },
+  {
+    "id": 171,
+    "doc_type": "glossari",
+    "val": "«El feren pujar al balcó del Comitè, emmanillat, la cara plena de blaüres… fet un eccehomo com el de l’ermita!» escrivia Enric Valor en la seua novel·la",
+    "cat": "«El van fer pujar al balcó del Comitè, emmanillat, la cara plena de blaus… fet un eccehomo com el de l'ermita!» escriu Enric Valor en la seva novel·la",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "810fd78ef4124958"
+  },
+  {
+    "id": 172,
+    "doc_type": "glossari",
+    "val": "I acabem amb la paraula inri, que actualment té el significat d’‘escarni’ i que està formada a partir de les inicials de «Iesus Nazarenus Rex Iudaeorum» (‘Jesús de Natzaret, el rei dels jueus’), llegenda posada per Pilat en la creu de Jesucrist.",
+    "cat": "I acabem amb la paraula inri, que actualment té el significat d'escarni i que està formada a partir de les inicials de «Iesus Nazarenus Rex Iudaeorum» ('Jesús de Natzaret, el rei dels jueus'), llegenda posada per Pilat en la creu de Jesucrist.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "5fa3c1fa6690fe20"
+  },
+  {
+    "id": 173,
+    "doc_type": "glossari",
+    "val": "Vocabulario valenciano-castellano de Josep Maria Cabrera, de 1868, obres que, en canvi, en l’apartat valencià, no arreplegaven la forma",
+    "cat": "Vocabulari valenciano-castellà de Josep Maria Cabrera, de 1868, obres que, en canvi, en l'apartat valencià, no arreplegaven la forma",
+    "correcte": false,
+    "nota": "hauria de posar valencià-castellà",
+    "id_corpus": "25810764b29351a0"
+  },
+  {
+    "id": 174,
+    "doc_type": "glossari",
+    "val": "Actualment, cocot és un mot d’ús habitual en comarques com l’Alcoià i el Comtat o en algunes zones de la Marina, però, com hem dit, temps abans tingué una extensió major.",
+    "cat": "Actualment, cocot és un mot d'ús habitual en comarques com l'Alcoià i el Comtat o en algunes zones de la Marina, però, com hem dit, estona abans tingué una extensió major.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "ddd6868498b11f58"
+  },
+  {
+    "id": 175,
+    "doc_type": "glossari",
+    "val": "És este un significat conegut en el valencià meridional, però també",
+    "cat": "És aquest un significat conegut en el valencià meridional, però també",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "907c8113d91111b8"
+  },
+  {
+    "id": 176,
+    "doc_type": "glossari",
+    "val": "Tipos, modismes y còses rares y curioses de la tèrra del Gè",
+    "cat": "Tipus, modismes i còses rares i curioses de la terra del Gè",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "c5ef5b4d9d8e5d38"
+  },
+  {
+    "id": 177,
+    "doc_type": "glossari",
+    "val": "Es tracta d’una situació que rep el nom d’",
+    "cat": "Es tracta d'una situació que rep el nom d'",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "dbeaaaccc80271e0"
+  },
+  {
+    "id": 178,
+    "doc_type": "glossari",
+    "val": "Per la seua part, en castellà, el nom d’esta situació econòmica s’ha adaptat en la forma",
+    "cat": "Per la seva part, en castellà, el nom d'aquesta situació econòmica s'ha adaptat en la forma",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "3b3fbfbfb5d7cbb8"
+  },
+  {
+    "id": 179,
+    "doc_type": "glossari",
+    "val": "Esta és una extensió del significat originari que tenia la paraula",
+    "cat": "Aquesta és una extensió del significat originari que tenia la paraula",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "fed8edd153f8f878"
+  },
+  {
+    "id": 180,
+    "doc_type": "glossari",
+    "val": "stagnare (‘estancar-se’), paraula que en valencià, al costat d’esta forma culta, va donar lloc també a una forma patrimonial adaptada fonèticament:",
+    "cat": "stagnare ('estancar-se'), paraula que en valencià, al costat d'aquesta forma culta, va donar lloc també a una forma patrimonial adaptada fonèticament:",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "4a953578aa8b4ab8"
+  },
+  {
+    "id": 181,
+    "doc_type": "glossari",
+    "val": "buche, que es relacionaria amb el pap o amb les galtes unflades de qui tocava este instrument de vent.",
+    "cat": "boca, que es relacionaria amb el pap o amb les galtes ungides de qui tocava aquest instrument de vent.",
+    "correcte": false,
+    "nota": "",
+    "id_corpus": "7855efb17b5798d8"
+  },
+  {
+    "id": 182,
+    "doc_type": "glossari",
+    "val": "bunyols, dels quals ja hem parlat en alguna altra ocasió.",
+    "cat": "bunyols, dels quals ja hem parlat en alguna altra ocasió.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "e24a14dc7d88aeb8"
+  },
+  {
+    "id": 183,
+    "doc_type": "glossari",
+    "val": "Diccionari Normatiu Valencià definix el verb nyaufar",
+    "cat": "Diccionari Normatiu Valencià defineix el verb nyaufar",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "8970401285a5e9b8"
+  },
+  {
+    "id": 184,
+    "doc_type": "glossari",
+    "val": "podcast es va utilitzar per primera volta l’any 2004, en un article del periodista Ben Hammersly publicat en el diari britànic",
+    "cat": "podcast es va utilitzar per primera volta l'any 2004, en un article del periodista Ben Hammersly publicat en el diari britànic",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "061fec5f14fc7cb8"
+  },
+  {
+    "id": 185,
+    "doc_type": "glossari",
+    "val": "pòdcast, amb un accent obert sobre la vocal o, que respon a la pronunciació segons els patrons fonètics del valencià.",
+    "cat": "pòdcast, amb un accent obert sobre la vocal o, que respon a la pronunciació segons els patrons fonètics del valencià.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "9b6943890a78cfd0"
+  },
+  {
+    "id": 186,
+    "doc_type": "glossari",
+    "val": "Aquella preocupació inicial s’ha ampliat a altres esferes de la vida quotidiana: desplaçaments, transports i, sobretot, un creixent temps d’oci i de festa.",
+    "cat": "Aquella preocupació inicial s'ha ampliat a altres esferes de la vida quotidiana: desplaçaments, transports i, sobretot, un creixent estona d'oci i de festa.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "3c1623b5d41f6ca8"
+  },
+  {
+    "id": 187,
+    "doc_type": "glossari",
+    "val": "instagrameable, si se’ns permet el neologisme, que darrerament s’ha divulgat en els mitjans a través de la forma castellana",
+    "cat": "instagrameable, si se's permet el neologisme, que darrerament s'ha divulgat en els mitjans a través de la forma castellana",
+    "correcte": false,
+    "nota": "se ha menjat el feble 'ns",
+    "id_corpus": "a11e83966c71cd98"
+  },
+  {
+    "id": 188,
+    "doc_type": "glossari",
+    "val": "candilazo, derivada de la paraula candil (‘cresol’), per analogia amb la llum càlida que genera este utensili.",
+    "cat": "candilazo, derivada de la paraula candil ('llum d'oli'), per analogia amb la llum càlida que genera aquesta eina.",
+    "correcte": false,
+    "nota": "Cresol no s'hauria de traduir, i eina i utensili no son sinónims. ",
+    "id_corpus": "3d51b84223bf89d0"
+  },
+  {
+    "id": 189,
+    "doc_type": "glossari",
+    "val": "Tresor del valencià meridional, un recull de lèxic i fraseologia, juntament amb",
+    "cat": "Tresor del valencià meridional, un recull de lèxic i fraseologia, juntament amb",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "161c70b09e480440"
+  },
+  {
+    "id": 190,
+    "doc_type": "glossari",
+    "val": "Les representacions gràfiques d’un lloc o d’una construcció sobre una superfície plana són antiquíssimes.",
+    "cat": "Les representacions gràfiques d'un lloc o d'una construcció sobre una superfície plana són antiquíssimes.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "790d7c732c2d1890"
+  },
+  {
+    "id": 191,
+    "doc_type": "glossari",
+    "val": "Però, possiblement per la necessitat de mantindre la dualitat que s’havia establit en castellà, que diferenciava entre el vocable patrimonial",
+    "cat": "Però, possiblement per la necessitat de mantindre la dualitat que s'havia establirt en castellà, que diferenciava entre el vocable patrimonial",
+    "correcte": false,
+    "nota": "establirt es incorrecte, el correcte és establit.",
+    "id_corpus": "7235ed518aab5620"
+  },
+  {
+    "id": 192,
+    "doc_type": "glossari",
+    "val": "Joan Coromines considerava que la forma",
+    "cat": "Joan Coromines considerava que la forma",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "ec2e3d716fc317f0"
+  },
+  {
+    "id": 193,
+    "doc_type": "glossari",
+    "val": "Tricholoma equestre, i, finalment, la quinta accepció es referix a una antiga moneda, coneguda també com a",
+    "cat": "Tricholoma equestre, i, finalment, la quinta acceptació es refereix a una antiga moneda, coneguda també com a",
+    "correcte": false,
+    "nota": "La palabra acceptació no es correcta en este contexto, el término correcto es accepció.",
+    "id_corpus": "a913ef0f0df373c8"
+  },
+  {
+    "id": 194,
+    "doc_type": "glossari",
+    "val": "En este cas s’ha produït una associació dels colors de l’equipatge als mateixos jugadors.",
+    "cat": "En aquest cas s'ha produït una associació dels colors de l'equipament als mateixos jugadors.",
+    "correcte": false,
+    "nota": "Equipament és un castellanisme, el correcte és equipatge.",
+    "id_corpus": "0a4986e0686f7ae0"
+  },
+  {
+    "id": 195,
+    "doc_type": "glossari",
+    "val": "és un diminutiu de groc.",
+    "cat": "és un diminutiu de groc.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "6902193932638770"
+  },
+  {
+    "id": 196,
+    "doc_type": "glossari",
+    "val": "groguets, referida a ells, està usada amb una forta càrrega afectiva.",
+    "cat": "groguets, referida a ells, està usada amb una forta càrrega afectiva.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "1b3d4b98c9659300"
+  },
+  {
+    "id": 197,
+    "doc_type": "glossari",
+    "val": "groc per a designar el color que ocupa el tercer lloc en l’escala cromàtica.",
+    "cat": "groc per a designar el color que ocupa el tercer lloc en l'escala cromàtica.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "435f9778e9d961a8"
+  },
+  {
+    "id": 198,
+    "doc_type": "glossari",
+    "val": "en francés, giallo en italià, yellow en anglés…",
+    "cat": "en francès, giallo en italià, yellow en anglès…",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "4558c2d132a63c60"
+  },
+  {
+    "id": 199,
+    "doc_type": "glossari",
+    "val": "Cada paraula té la seua història, amb una infinitat de peculiaritats.",
+    "cat": "Cada paraula té la seva història, amb una infinitat de peculiaritats.",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "db105c665d4c5f38"
+  },
+  {
+    "id": 200,
+    "doc_type": "glossari",
+    "val": "Ara sí que tenien ja tots els ingredients per a convertir-se en els",
+    "cat": "Ara sí que tenien ja tots els ingredients per a convertir-se en els",
+    "correcte": true,
+    "nota": "",
+    "id_corpus": "1e507c5bbd8c4a78"
+  }
+]

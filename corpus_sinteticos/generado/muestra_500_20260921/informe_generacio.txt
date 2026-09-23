@@ -1,0 +1,29 @@
+======================================================================
+INFORME — CORPUS SINTÈTIC PARAL·LEL VALENCIÀ → CATALÀ
+Data: 2026-09-21 10:25
+Model: qwen2.5:14b
+======================================================================
+
+Total de parelles generades: 2000
+  Netes:      1970
+  Sospitoses: 30
+Errors de traducció en aquesta execució: 0
+Temps d'aquesta execució: 0.0 min
+
+Parelles per tipus de document:
+  glossari                     678
+  publicacions                 639
+  acord-normatiu               259
+  gramatica_normativa          185
+  pagina                        76
+  legislacio                    69
+  nota-de-premsa                57
+  butlleti                      35
+  biografia                      1
+  post                           1
+
+Motius de sospita:
+  longitud_anormal              13
+  instruccio_filtrada            8
+  possible_explicacio            6
+  sigla_introduida               3
