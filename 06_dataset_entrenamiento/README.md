@@ -47,15 +47,49 @@ Otros argumentos:
 Es determinista: relanzarlo con los mismos ficheros de entrada y el mismo
 `--seed` reproduce exactamente el mismo split.
 
+## Estado actual del split (última ejecución)
+
+Corpus sintético: **28.576 frases, 100% traducidas con gemma4:12b**
+(confirmado contando el campo `model` de cada registro — no es una mezcla
+de modelos). 341 sospechosas descartadas → 28.235 frases limpias.
+
+| Fichero | Frases |
+|---|---|
+| `train.jsonl` | 25.407 |
+| `dev.jsonl` | 1.414 |
+| `test.jsonl` | 1.414 |
+| `boe_eval.jsonl` | 199.575 |
+
 ## Qué genera, y para qué sirve cada fichero
 
 ```
-dataset/
+data/dataset_entrenamiento/
 ├── train.jsonl       # entrenar el modelo — SOLO corpus sintético
 ├── dev.jsonl         # validar durante el entrenamiento (early stopping, elegir checkpoint) — SOLO sintético
 ├── test.jsonl        # evaluación final dentro del mismo dominio (AVL) — SOLO sintético
 └── boe_eval.jsonl    # evaluación de generalización FUERA de dominio (legal/BOE) — nunca se entrena con esto
 ```
+
+### Nomenclatura: por qué `dev` y no `val`
+
+`dev` (development set) y `val`/`validation set` son sinónimos exactos en
+ML — el conjunto que se usa **durante** el entrenamiento para vigilar
+sobreajuste y elegir el mejor checkpoint (nunca para entrenar directamente,
+ni para el número final que se reporta — eso es `test.jsonl`). Aquí se usa
+deliberadamente **`dev`, nunca `val`**, porque `val` ya significa algo muy
+concreto en todo este proyecto: el campo con el texto en **valencià** en
+cada registro (`{"val": "...", "cat": "..."}`). Un fichero llamado
+`val.jsonl` cuyas líneas tienen un campo también llamado `val` —pero con un
+significado totalmente distinto— sería una fuente de confusión real, no
+solo teórica. Resumen para no perderse:
+
+| Palabra | Significado en este proyecto |
+|---|---|
+| `val` (campo dentro de un JSON) | Texto en **valencià** |
+| `cat` (campo dentro de un JSON) | Texto en **català** |
+| `dev` (nombre de fichero/split) | Conjunto de **validación** durante el entrenamiento |
+| `test` (nombre de fichero/split) | Conjunto de evaluación final, mismo dominio que `train` |
+| `boe_eval` (nombre de fichero/split) | Evaluación de generalización fuera de dominio |
 
 Cada línea es un JSON con el mismo esquema en los cuatro ficheros:
 

@@ -1,0 +1,28 @@
+======================================================================
+INFORME — CORPUS SINTÈTIC PARAL·LEL VALENCIÀ → CATALÀ
+Data: 2026-09-24 09:55
+Model: gemma4:12b
+======================================================================
+
+Total de parelles generades: 28576
+  Netes:      28235
+  Sospitoses: 341
+Errors de traducció en aquesta execució: 0
+Temps d'aquesta execució: 20.5 min
+
+Parelles per tipus de document:
+  glossari                   11147
+  publicacions                7328
+  gramatica_normativa         4154
+  acord-normatiu              2236
+  nota-de-premsa              1482
+  pagina                      1044
+  butlleti                     719
+  legislacio                   450
+  biografia                      8
+  post                           8
+
+Motius de sospita:
+  longitud_anormal             252
+  possible_explicacio           85
+  no_traduit                     5
