@@ -1,5 +1,5 @@
 #!/bin/bash
-# relanza_benchmark.sh — Relanza el benchmark de 60 frases sobre 5 modelos de
+# relanza_benchmark.sh — Relanza el benchmark de 150 frases sobre 5 modelos de
 # Ollama en paralelo (uno por GPU): los 3 ya conocidos + los 2 candidatos
 # nuevos de la familia Qwen3.
 #
@@ -135,7 +135,7 @@ fi
 echo "Descargas terminadas."
 
 cd "$EVALUA_DIR"
-echo "Lanzando los 5 benchmarks (60 frases cada uno, prompt ya corregido)..."
+echo "Lanzando los 5 benchmarks (150 frases cada uno, prompt ya corregido)..."
 
 python3 evalua_models.py --model ollama --ollama-model "$QWEN" \
     --ollama-url "http://127.0.0.1:11434" --ollama-timeout 300 \

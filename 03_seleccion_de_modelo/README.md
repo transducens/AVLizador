@@ -2,13 +2,13 @@
 
 Con las reglas dialectales ya definidas (etapa 2), esta etapa decide **qué
 modelo** traduce el corpus, comparando varias opciones sobre un benchmark
-de 60 frases con referencia humana (`03_seleccion_de_modelo/benchmark_corpus.json`,
+de 150 frases con referencia humana (`03_seleccion_de_modelo/benchmark_corpus.json`,
 sacado del mismo corpus limpio de la etapa 1).
 
 ## Herramienta
 
 `03_seleccion_de_modelo/evalua_models.py` — benchmarquea el modelo que le indiques
-contra las 60 frases, calculando BLEU/chrF/chrF++ y % de traducciones
+contra las 150 frases, calculando BLEU/chrF/chrF++ y % de traducciones
 exactas. Uso:
 
 ```bash

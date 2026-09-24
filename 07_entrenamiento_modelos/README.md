@@ -25,10 +25,20 @@ nuevo.
 
 | Fichero | Qué prueba |
 |---|---|
-| `baseline_qwen_zeroshot.yaml` | qwen2.5:14b sin finetuning, con el prompt de reglas actual — la referencia a batir (BLEU 93,11 en el benchmark de 60 frases, ver `documentacion/metodologia_y_resultados.md` sección 10) |
+| `baseline_qwen_zeroshot.yaml` | qwen2.5:14b sin finetuning, con el prompt de reglas actual — la referencia a batir (BLEU 93,11, pero **ojo**: se calculó contra el benchmark viejo de 60 frases, ver nota abajo) |
 | `baseline_gemma4_zeroshot.yaml` | gemma4:12b sin finetuning, mismo prompt |
 | `nllb_600m_finetune.yaml` | Finetuning de NLLB-200-distilled-600M sobre `train.jsonl`/`dev.jsonl` |
 | `salamandraTA_lora.yaml` | LoRA sobre SalamandraTA-7b-instruct — el candidato con más recorrido esperado, ya especializado en variantes catalanas |
+
+**El BLEU 93,11 de qwen2.5:14b (`documentacion/metodologia_y_resultados.md`
+sección 10) está desactualizado como referencia**: se calculó contra el
+benchmark de 60 frases, que desde entonces se amplió a 150 (90 frases
+nuevas, deliberadamente elegidas para cubrir reglas dialectales que las 60
+originales no cubrían bien — ver `03_seleccion_de_modelo/genera_candidatos_benchmark.py`).
+Antes de fijar "la referencia a batir" de verdad, hay que recalcular el
+zero-shot de qwen2.5:14b contra las 150 frases actuales — es de esperar que
+el número baje algo, ya que las nuevas se eligieron precisamente por ser
+más exigentes (varias reglas dialectales a la vez), no al azar.
 
 Añadir un experimento nuevo es copiar un config y cambiar los parámetros —
 nunca duplicar `scripts/train.py`.
@@ -53,7 +63,7 @@ reimplementarla.
   entrenamiento. Mide generalización — si un modelo solo rinde bien en
   `test.jsonl` pero se hunde aquí, está sobreajustado al registro
   institucional de la AVL.
-- **`03_seleccion_de_modelo/benchmark_corpus.json`** — las 60 frases con
+- **`03_seleccion_de_modelo/benchmark_corpus.json`** — las 150 frases con
   traducción de referencia humana. El único test genuinamente humano, nunca
   se usa para entrenar ni ajustar nada.
 

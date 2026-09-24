@@ -12,7 +12,7 @@ listos.
 |---|---|---|
 | `data/sintetico/corpus_sintetic_val_cat.jsonl` | `04_corpus_sintetico/genera_corpus_sintetico.py` (ver `04_corpus_sintetico/README.md`) | El corpus sintético **con metadatos** (`doc_id`, `motius_sospita`...) — **NO** uses `parallel_val_cat.jsonl` para esto, ese export ya no tiene `doc_id` y no se puede agrupar por documento. |
 | `data/boe/corpus_entrenamiento.jsonl` | `boe/exportar_entrenamiento.py` (ver `boe/README.md`) | El corpus real del BOE ya filtrado (268.735 pares en la versión actual). |
-| `03_seleccion_de_modelo/benchmark_corpus.json` | Ya existe, no se toca | Las 60 frases con traducción de referencia humana — el test final "de verdad", fuera de todo lo de aquí. |
+| `03_seleccion_de_modelo/benchmark_corpus.json` | Ya existe, no se toca | Las 150 frases con traducción de referencia humana — el test final "de verdad", fuera de todo lo de aquí. |
 
 Si alguno de los dos primeros no existe todavía, genera antes ese corpus —
 este script no descarga ni traduce nada, solo reorganiza lo que ya está

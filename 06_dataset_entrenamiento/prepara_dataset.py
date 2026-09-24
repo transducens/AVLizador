@@ -9,7 +9,7 @@ El split del sintetico se agrupa por documento (doc_id), nunca por frase
 suelta, para que ninguna frase de un mismo documento acabe a la vez en
 train y en dev/test (fuga de datos).
 
-El benchmark_corpus.json (60 frases con referencia humana) NO se toca
+El benchmark_corpus.json (150 frases con referencia humana) NO se toca
 aqui -- queda reservado aparte como test final "de verdad".
 
 Uso:
