@@ -1,0 +1,21 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.vscode/
+
+# Datos crudos de scraping (AVL y BOE): demasiado grandes para GitHub y
+# regenerables con los scripts documentados en cada README. boe_eval.jsonl
+# se deriva del BOE, así que corre la misma suerte.
+data/avl/
+data/boe/
+data/dataset_entrenamiento/boe_eval.jsonl
+# Muestras de trabajo intermedias (comparaciones de modelos en bruto, con logs)
+data/sintetico/muestra_comparativa_20260922_1254/
+
+# 07_entrenamiento_modelos/: pesos de modelos y logs de ejecucion, nunca a git
+# (los .gitkeep mantienen la carpeta en el repo aunque este vacia)
+07_entrenamiento_modelos/checkpoints/*
+!07_entrenamiento_modelos/checkpoints/.gitkeep
+07_entrenamiento_modelos/runs/*
+!07_entrenamiento_modelos/runs/.gitkeep

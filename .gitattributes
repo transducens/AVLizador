@@ -1,0 +1,8 @@
+# Los scripts que se ejecutan tal cual en el servidor remoto (SLURM en
+# abaco) necesitan saltos de linea Unix (LF) SIEMPRE, sin importar el
+# core.autocrlf de quien clona/hace pull en Windows -- sbatch rechaza un
+# script con \r\n de forma explicita ("Batch script contains DOS line
+# breaks"), y bash es fragil con CRLF en heredocs/comparaciones aunque a
+# veces "funcione por suerte".
+*.sh text eol=lf
+*.py text eol=lf

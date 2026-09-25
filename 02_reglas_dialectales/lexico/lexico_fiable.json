@@ -1,0 +1,2285 @@
+{
+  "total_entradas": 194,
+  "descripcion": "Lexico fiable, revisado a mano, que sustituye a palabras_traducidas.json en el pipeline de generacion del corpus. Cada entrada indica su origen ('apertium' = confirmado en el diccionario Apertium; 'paula_guerrero' = fuente externa curada). Anadir palabras nuevas editando este JSON directamente.",
+  "entradas": [
+    {
+      "valenciano": [
+        "abellir"
+      ],
+      "catalan": [
+        "plaure"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "absorbixen"
+      ],
+      "catalan": [
+        "absorbeixen"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Verbal stems & inchoative endings"
+    },
+    {
+      "valenciano": [
+        "acatxar"
+      ],
+      "catalan": [
+        "ajupir"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "acurtar"
+      ],
+      "catalan": [
+        "escurçar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "ací"
+      ],
+      "catalan": [
+        "aquí"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "alfàbega"
+      ],
+      "catalan": [
+        "alfàbrega"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "algeps"
+      ],
+      "catalan": [
+        "guix"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "algepsaire"
+      ],
+      "catalan": [
+        "guixaire"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "amerar"
+      ],
+      "catalan": [
+        "xopar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "ametla",
+        "ametles"
+      ],
+      "catalan": [
+        "ametlla",
+        "ametlles"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "ametler",
+        "ametlers"
+      ],
+      "catalan": [
+        "ametller",
+        "ametllers"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "amprar"
+      ],
+      "catalan": [
+        "manllevar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "anou",
+        "anous"
+      ],
+      "catalan": [
+        "nou",
+        "nous"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "antevespra"
+      ],
+      "catalan": [
+        "antevigília"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "aparéixer"
+      ],
+      "catalan": [
+        "aparèixer"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "argilaga"
+      ],
+      "catalan": [
+        "argelaga"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "arrancada"
+      ],
+      "catalan": [
+        "arrencada"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "arrancament"
+      ],
+      "catalan": [
+        "arrencament"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "arrancar"
+      ],
+      "catalan": [
+        "arrencar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "arrere"
+      ],
+      "catalan": [
+        "enrere"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "atés"
+      ],
+      "catalan": [
+        "atès"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "avant"
+      ],
+      "catalan": [
+        "endavant"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "batle",
+        "batles"
+      ],
+      "catalan": [
+        "batlle",
+        "batlles"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "bellota",
+        "bellotes"
+      ],
+      "catalan": [
+        "gla",
+        "gles"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "bes",
+        "besos"
+      ],
+      "catalan": [
+        "petó",
+        "petons"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "besada",
+        "besades"
+      ],
+      "catalan": [
+        "petó",
+        "petons"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "beset",
+        "besets"
+      ],
+      "catalan": [
+        "petonet",
+        "petonets"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "bigot",
+        "bigots"
+      ],
+      "catalan": [
+        "bigoti",
+        "bigotis"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "bitla",
+        "bitles"
+      ],
+      "catalan": [
+        "bitlla",
+        "bitlles"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "bla",
+        "bles"
+      ],
+      "catalan": [
+        "tou",
+        "toves"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "bresquilla",
+        "bresquilles"
+      ],
+      "catalan": [
+        "préssec",
+        "préssecs"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "bresquillera",
+        "bresquilleres"
+      ],
+      "catalan": [
+        "presseguer",
+        "presseguers"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "buscar"
+      ],
+      "catalan": [
+        "cercar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "butla",
+        "butles"
+      ],
+      "catalan": [
+        "butlla",
+        "butlles"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "calfament"
+      ],
+      "catalan": [
+        "escalfament"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "calfaplats"
+      ],
+      "catalan": [
+        "escalfaplats"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "calfar"
+      ],
+      "catalan": [
+        "escalfar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "camallada",
+        "camallades"
+      ],
+      "catalan": [
+        "gambada",
+        "gambades"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "clòtxina",
+        "clòtxines"
+      ],
+      "catalan": [
+        "musclo",
+        "musclos"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "colp"
+      ],
+      "catalan": [
+        "cop"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Lexical alternates"
+    },
+    {
+      "valenciano": [
+        "colpet",
+        "colpets"
+      ],
+      "catalan": [
+        "copet",
+        "copets"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "colps"
+      ],
+      "catalan": [
+        "cops"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Lexical alternates"
+    },
+    {
+      "valenciano": [
+        "comité"
+      ],
+      "catalan": [
+        "comitè"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "comités"
+      ],
+      "catalan": [
+        "comitès"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "comparéixer"
+      ],
+      "catalan": [
+        "comparèixer"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "constituïxen"
+      ],
+      "catalan": [
+        "constitueixen"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Verbal stems & inchoative endings"
+    },
+    {
+      "valenciano": [
+        "contramotlura"
+      ],
+      "catalan": [
+        "contramotllura"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "convéncer"
+      ],
+      "catalan": [
+        "convèncer"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "conéixer"
+      ],
+      "catalan": [
+        "conèixer"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "corder",
+        "corders"
+      ],
+      "catalan": [
+        "xai",
+        "be",
+        "anyell"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "cosquerelles"
+      ],
+      "catalan": [
+        "pessigolles"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "creïlla",
+        "creïlles"
+      ],
+      "catalan": [
+        "patata",
+        "patates"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "cércol"
+      ],
+      "catalan": [
+        "cèrcol"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "dacsa"
+      ],
+      "catalan": [
+        "blat de moro"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "depòsit",
+        "depòsits"
+      ],
+      "catalan": [
+        "dipòsit",
+        "dipòsits"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "desaparéixer"
+      ],
+      "catalan": [
+        "desaparèixer"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "desconéixer"
+      ],
+      "catalan": [
+        "desconèixer"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "desembossar"
+      ],
+      "catalan": [
+        "desembussar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "desentés"
+      ],
+      "catalan": [
+        "desentès"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "despús-ahir"
+      ],
+      "catalan": [
+        "abans-d'ahir"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "despús-anit"
+      ],
+      "catalan": [
+        "fa dues nits"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "despús-demà"
+      ],
+      "catalan": [
+        "demà passat"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "desunflar"
+      ],
+      "catalan": [
+        "desinflar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "desvetlar"
+      ],
+      "catalan": [
+        "desvetllar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "dividix"
+      ],
+      "catalan": [
+        "divideix"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Verbal stems & inchoative endings"
+    },
+    {
+      "valenciano": [
+        "dènou"
+      ],
+      "catalan": [
+        "dinou"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "dèsset"
+      ],
+      "catalan": [
+        "disset"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "díhuit"
+      ],
+      "catalan": [
+        "divuit"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "eixida",
+        "eixides"
+      ],
+      "catalan": [
+        "sortida",
+        "sortides"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "embossar"
+      ],
+      "catalan": [
+        "embutxacar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "embós"
+      ],
+      "catalan": [
+        "embús"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "emmotlar"
+      ],
+      "catalan": [
+        "emmotllar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "emmotlurar"
+      ],
+      "catalan": [
+        "emmotllurar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "emotlament"
+      ],
+      "catalan": [
+        "emmotllament"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "empenyiment"
+      ],
+      "catalan": [
+        "embranzida"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "entropessar"
+      ],
+      "catalan": [
+        "ensopegar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "envernissador"
+      ],
+      "catalan": [
+        "vernissador"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "envernissar"
+      ],
+      "catalan": [
+        "vernissar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "escaló",
+        "escalons"
+      ],
+      "catalan": [
+        "graó",
+        "graons"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "esguitar"
+      ],
+      "catalan": [
+        "esquitxar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "espatla",
+        "espatles"
+      ],
+      "catalan": [
+        "espatlla",
+        "espatlles"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "espatlar"
+      ],
+      "catalan": [
+        "espatllar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "espatlera"
+      ],
+      "catalan": [
+        "espatllera"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "espatleta"
+      ],
+      "catalan": [
+        "espatlleta"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "espentar"
+      ],
+      "catalan": [
+        "empènyer"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "espill"
+      ],
+      "catalan": [
+        "mirall"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Lexical alternates"
+    },
+    {
+      "valenciano": [
+        "espuma"
+      ],
+      "catalan": [
+        "escuma"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "espumadora"
+      ],
+      "catalan": [
+        "escumadora"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "espumejar"
+      ],
+      "catalan": [
+        "escumejar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "esta"
+      ],
+      "catalan": [
+        "aquesta"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Determiners & possessives"
+    },
+    {
+      "valenciano": [
+        "este"
+      ],
+      "catalan": [
+        "aquest"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Determiners & possessives"
+    },
+    {
+      "valenciano": [
+        "estes"
+      ],
+      "catalan": [
+        "aquestes"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Determiners & possessives"
+    },
+    {
+      "valenciano": [
+        "estos"
+      ],
+      "catalan": [
+        "aquests"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Determiners & possessives"
+    },
+    {
+      "valenciano": [
+        "estrela",
+        "estreles"
+      ],
+      "catalan": [
+        "estrella",
+        "estrelles"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "faena"
+      ],
+      "catalan": [
+        "feina"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Lexical alternates"
+    },
+    {
+      "valenciano": [
+        "faenes"
+      ],
+      "catalan": [
+        "feines"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Lexical alternates"
+    },
+    {
+      "valenciano": [
+        "fardatxo",
+        "fardatxos"
+      ],
+      "catalan": [
+        "llangardaix",
+        "llangardaixos"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "fenoll"
+      ],
+      "catalan": [
+        "fonoll"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "fesol",
+        "fesols"
+      ],
+      "catalan": [
+        "mongeta",
+        "mongetes"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "granera",
+        "graneres"
+      ],
+      "catalan": [
+        "escombra",
+        "escombres"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "guardaespatles"
+      ],
+      "catalan": [
+        "guardaespatlles"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "guatla",
+        "guatles"
+      ],
+      "catalan": [
+        "guatlla",
+        "guatlles"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "huit"
+      ],
+      "catalan": [
+        "vuit"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "huitanta"
+      ],
+      "catalan": [
+        "vuitanta"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "huitantè"
+      ],
+      "catalan": [
+        "vuitantè"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "huitcentista"
+      ],
+      "catalan": [
+        "vuitcentista"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "joguet",
+        "joguets"
+      ],
+      "catalan": [
+        "joguina",
+        "joguines"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "jupetí",
+        "jupetins"
+      ],
+      "catalan": [
+        "armilla",
+        "armilles"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "llavable"
+      ],
+      "catalan": [
+        "rentable"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "llavadora",
+        "llavadores"
+      ],
+      "catalan": [
+        "rentadora",
+        "rentadores"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "llavamans"
+      ],
+      "catalan": [
+        "rentamans"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "llavaplats"
+      ],
+      "catalan": [
+        "rentaplats"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "llavar"
+      ],
+      "catalan": [
+        "rentar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "llentilla",
+        "llentilles"
+      ],
+      "catalan": [
+        "llentia",
+        "llenties"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "manganés"
+      ],
+      "catalan": [
+        "manganès"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "misto",
+        "mistos"
+      ],
+      "catalan": [
+        "llumí",
+        "llumins"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "motle",
+        "motles"
+      ],
+      "catalan": [
+        "motlle",
+        "motlles"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "motlura"
+      ],
+      "catalan": [
+        "motllura"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "motlurar"
+      ],
+      "catalan": [
+        "motllurar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "nadador",
+        "nadadora"
+      ],
+      "catalan": [
+        "nedador",
+        "nedadora"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "nadar"
+      ],
+      "catalan": [
+        "nedar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "obtindre"
+      ],
+      "catalan": [
+        "obtenir"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Verbal stems & inchoative endings"
+    },
+    {
+      "valenciano": [
+        "oroneta",
+        "orenetes"
+      ],
+      "catalan": [
+        "oreneta",
+        "orenetes"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "pallola"
+      ],
+      "catalan": [
+        "xarampió"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "paracolps"
+      ],
+      "catalan": [
+        "paracops"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "parèixer"
+      ],
+      "catalan": [
+        "semblar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "paréixer"
+      ],
+      "catalan": [
+        "parèixer"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "patués"
+      ],
+      "catalan": [
+        "patuès"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "pellorfa",
+        "pellorfes"
+      ],
+      "catalan": [
+        "pellofa",
+        "pellofes"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "pescateria",
+        "pescateries"
+      ],
+      "catalan": [
+        "peixateria",
+        "peixateries"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "pesebre",
+        "pesebres"
+      ],
+      "catalan": [
+        "pessebre",
+        "pessebres"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "pimentó",
+        "pimentons"
+      ],
+      "catalan": [
+        "pebrot",
+        "pebrots"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "pitxer",
+        "pitxers"
+      ],
+      "catalan": [
+        "gerra",
+        "gerres"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "precalfament"
+      ],
+      "catalan": [
+        "preescalfament"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "prompte"
+      ],
+      "catalan": [
+        "aviat"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "punyada",
+        "punyades"
+      ],
+      "catalan": [
+        "cop de puny",
+        "cops de puny"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "pésol"
+      ],
+      "catalan": [
+        "pèsol"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "rabosa",
+        "raboses"
+      ],
+      "catalan": [
+        "guineu",
+        "guineus"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "rascar"
+      ],
+      "catalan": [
+        "gratar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "reaparéixer"
+      ],
+      "catalan": [
+        "reaparèixer"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "recalfar"
+      ],
+      "catalan": [
+        "reescalfar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "reconéixer"
+      ],
+      "catalan": [
+        "reconèixer"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "redonesa"
+      ],
+      "catalan": [
+        "rodonia"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "reembossable"
+      ],
+      "catalan": [
+        "reemborsable"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "reembossament"
+      ],
+      "catalan": [
+        "reemborsament"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "reembossar"
+      ],
+      "catalan": [
+        "reemborsar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "renyonera",
+        "renyoneres"
+      ],
+      "catalan": [
+        "ronyonera",
+        "ronyoneres"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "requerix"
+      ],
+      "catalan": [
+        "requereix"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Verbal stems & inchoative endings"
+    },
+    {
+      "valenciano": [
+        "respatler",
+        "respatlers"
+      ],
+      "catalan": [
+        "respatller",
+        "respatllers"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "revetla",
+        "revetles"
+      ],
+      "catalan": [
+        "revetlla",
+        "revetlles"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "romer"
+      ],
+      "catalan": [
+        "romaní"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "seguix"
+      ],
+      "catalan": [
+        "segueix"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Verbal stems & inchoative endings"
+    },
+    {
+      "valenciano": [
+        "seguixen"
+      ],
+      "catalan": [
+        "segueixen"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Verbal stems & inchoative endings"
+    },
+    {
+      "valenciano": [
+        "servici"
+      ],
+      "catalan": [
+        "servei"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Lexical alternates"
+    },
+    {
+      "valenciano": [
+        "servicis"
+      ],
+      "catalan": [
+        "serveis"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Lexical alternates"
+    },
+    {
+      "valenciano": [
+        "seua"
+      ],
+      "catalan": [
+        "seva"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Determiners & possessives"
+    },
+    {
+      "valenciano": [
+        "seues"
+      ],
+      "catalan": [
+        "seves"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Determiners & possessives"
+    },
+    {
+      "valenciano": [
+        "sobrecalfament"
+      ],
+      "catalan": [
+        "sobreescalfament"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "sobrecalfar"
+      ],
+      "catalan": [
+        "sobreescalfar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "sàndwitx",
+        "sàndwitxs"
+      ],
+      "catalan": [
+        "sandvitx",
+        "sandvitxs"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "ségol"
+      ],
+      "catalan": [
+        "sègol"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "sémola"
+      ],
+      "catalan": [
+        "sèmola"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "tenir fam"
+      ],
+      "catalan": [
+        "tenir gana"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "terratrémol"
+      ],
+      "catalan": [
+        "terratrèmol"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "tindre"
+      ],
+      "catalan": [
+        "tenir"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Verbal stems & inchoative endings"
+    },
+    {
+      "valenciano": [
+        "tomaca"
+      ],
+      "catalan": [
+        "tomàquet"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Lexical alternates"
+    },
+    {
+      "valenciano": [
+        "tomaques"
+      ],
+      "catalan": [
+        "tomàquets"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Lexical alternates"
+    },
+    {
+      "valenciano": [
+        "trévol"
+      ],
+      "catalan": [
+        "trèvol"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "térbol"
+      ],
+      "catalan": [
+        "tèrbol"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "vetla",
+        "vetles"
+      ],
+      "catalan": [
+        "vetlla",
+        "vetlles"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "vetlada",
+        "vetlades"
+      ],
+      "catalan": [
+        "vetllada",
+        "vetllades"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "vetlar"
+      ],
+      "catalan": [
+        "vetllar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "vore"
+      ],
+      "catalan": [
+        "veure"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Verbal stems & inchoative endings"
+    },
+    {
+      "valenciano": [
+        "vosté"
+      ],
+      "catalan": [
+        "vostè"
+      ],
+      "castellano": [
+        "usted"
+      ],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "vostés"
+      ],
+      "catalan": [
+        "vostès"
+      ],
+      "castellano": [
+        "ustedes"
+      ],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "véncer"
+      ],
+      "catalan": [
+        "vèncer"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "apertium"
+    },
+    {
+      "valenciano": [
+        "xafable"
+      ],
+      "catalan": [
+        "trepitjable"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "xarrada",
+        "xarrades"
+      ],
+      "catalan": [
+        "xerrada",
+        "xerrades"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "xarrar"
+      ],
+      "catalan": [
+        "xerrar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "xic",
+        "xics"
+      ],
+      "catalan": [
+        "noi",
+        "nois"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "xicotet"
+      ],
+      "catalan": [
+        "petit"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Lexical alternates"
+    },
+    {
+      "valenciano": [
+        "xicoteta"
+      ],
+      "catalan": [
+        "petita"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Lexical alternates"
+    },
+    {
+      "valenciano": [
+        "xicotets"
+      ],
+      "catalan": [
+        "petits"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Lexical alternates"
+    },
+    {
+      "valenciano": [
+        "ximenera",
+        "ximeneres"
+      ],
+      "catalan": [
+        "xemeneia",
+        "xemeneies"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "xiquet"
+      ],
+      "catalan": [
+        "nen"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Lexical alternates"
+    },
+    {
+      "valenciano": [
+        "xiqueta"
+      ],
+      "catalan": [
+        "nena"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Lexical alternates"
+    },
+    {
+      "valenciano": [
+        "xiquetes"
+      ],
+      "catalan": [
+        "nenes"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Lexical alternates"
+    },
+    {
+      "valenciano": [
+        "xiquets"
+      ],
+      "catalan": [
+        "nens"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Lexical alternates"
+    },
+    {
+      "valenciano": [
+        "xocolate"
+      ],
+      "catalan": [
+        "xocolata"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "xuplar"
+      ],
+      "catalan": [
+        "xuclar"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "òbila",
+        "òbiles"
+      ],
+      "catalan": [
+        "òliba",
+        "òlibes"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paralelos_txt"
+    },
+    {
+      "valenciano": [
+        "últim"
+      ],
+      "catalan": [
+        "darrer"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Determiners & possessives"
+    },
+    {
+      "valenciano": [
+        "última"
+      ],
+      "catalan": [
+        "darrera"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Determiners & possessives"
+    },
+    {
+      "valenciano": [
+        "últims"
+      ],
+      "catalan": [
+        "darrers"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "paula_guerrero",
+      "grupo": "Determiners & possessives"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+# ============================================================
+# fonts_pdf.txt — URLs de PDFs per al corpus de l'AVL
+# ============================================================
+
+
+# doc_type: publicacions
+https://www.avl.gva.es/documents/31987/58581/MANUALS_02
+https://www.avl.gva.es/documents/31987/58581/MANUALS_01_AVL_5a-ed.pdf
+https://www.avl.gva.es/documents/31987/99521/Recerca_09.pdf
+https://www.avl.gva.es/documents/31987/99521/Recerca_02.pdf
+https://www.avl.gva.es/documents/31987/58581/MANUALS_03.pdf
+https://www.avl.gva.es/documents/31987/97442/Documents_05.pdf
+https://www.avl.gva.es/documents/31987/54305/PLURILING%C3%9CISME

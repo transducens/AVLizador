@@ -1,0 +1,65 @@
+https://www.avl.gva.es/gnv/buscador.jsp?gramatica=GNV&index=GNV
+
+PAra el buscador
+
+Clickar en -> document.querySelector("#fileDisplayArea > p:nth-child(2) > a")  Para cada punto y leer la letra //*[@id="fileDisplayArea"] o document.querySelector("#fileDisplayArea")
+
+
+Y ahí tenemos todos los datos de lanormativa de letras para 38 puntos.
+
+
+La Biblia:
+
+
+https://www.avl.gva.es/continguts-de-textos-religiosos/
+
+
+#####################################
+###   URLS IMPORTANTES   SCRAPING ###
+#####################################
+
+https://www.avl.gva.es/salutacio-institucional/
+
+Tiene un texto con 7 párrafos cortos. Puedde estar bien ya que es un texto escrito de presentación y tendrá otro tono.
+
+https://www.avl.gva.es/category/notes-de-premsa/
+
+Las notas de prensa son una página con muchas, se le tiene que dar click a la nota para luego poder acceder a ellas y una vez accedidas, tenemos el titulo y la nota. Además en la página principal está paginada en 28 páginas con aproximadamente 10 artículos por ccada una, por lo que pienso que puede haber bastante texto interesante.
+
+
+
+
+https://www.avl.gva.es/seu/
+
+En esta tenemos una linea temporal donde explican los detalles de autores que pueden estar interesantes. Puede haber bastante texto.
+
+
+https://www.avl.gva.es/escriptors/
+
+Parecido al de la seu, párrafos de textos con descripciones de distintos autores.
+
+
+https://www.avl.gva.es/acostat-a-lavi/
+
+Esta es un párrafo concreto en el cual explica la campaña.
+
+
+
+
+#####################################
+###   URLS IMPORTANTES   PDF ###
+#####################################
+
+https://www.avl.gva.es/legislacio/
+
+En este tenemos una gran cantidad de texto ya que tenemos las leyes, además se muestran por cada lei un preámbulo que nos puede servir así como para descargar el documento de la lei en pdF.
+
+
+https://www.avl.gva.es/continguts-de-textos-religiosos/
+
+Textos religiosos con todo tipo de documentos sobre la religión que se pueden intentar bajar de alguna forma.
+
+
+https://www.avl.gva.es/acords/
+
+Con todos los acuerdos normativos y no normativos.
