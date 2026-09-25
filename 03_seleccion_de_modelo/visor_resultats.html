@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visor de resultats de benchmark</title>
+<style>
+  :root {
+    --bg: #f7f7f8;
+    --panel: #ffffff;
+    --border: #e2e2e6;
+    --text: #1c1c1f;
+    --text-dim: #6b6b74;
+    --accent: #4f46e5;
+    --accent-bg: #eef0ff;
+    --good: #1a9850;
+    --mid: #d6a300;
+    --bad: #d1372f;
+    --ins: #d7f3d9;
+    --ins-text: #16652b;
+    --del: #fbdcdc;
+    --del-text: #9c1c14;
+    --code-bg: #f1f1f4;
+    --shadow: 0 1px 2px rgba(0,0,0,.04), 0 1px 8px rgba(0,0,0,.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17181c;
+      --panel: #202128;
+      --border: #33343c;
+      --text: #eceef2;
+      --text-dim: #9a9ba5;
+      --accent: #8b85ff;
+      --accent-bg: #2a2960;
+      --good: #4cbb6c;
+      --mid: #e0b93a;
+      --bad: #f0665e;
+      --ins: #163a22;
+      --ins-text: #7fe39a;
+      --del: #3d1d1c;
+      --del-text: #ff9d96;
+      --code-bg: #2a2b33;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 1px 8px rgba(0,0,0,.3);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    padding: 24px 28px 60px;
+  }
+  h1 { font-size: 1.4rem; margin: 0 0 4px; }
+  h2 { font-size: 1.05rem; margin: 0 0 10px; }
+  .subt { color: var(--text-dim); font-size: .88rem; margin: 0 0 20px; }
+
+  #dropzone {
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    background: var(--panel);
+    padding: 20px;
+    text-align: center;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+    margin-bottom: 22px;
+  }
+  #dropzone.hover { border-color: var(--accent); background: var(--accent-bg); }
+  #dropzone strong { color: var(--text); }
+  #fileInput { display: none; }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+
+  table { border-collapse: collapse; width: 100%; font-size: .87rem; }
+  th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--text-dim); font-weight: 600; user-select: none; white-space: nowrap; }
+  th.sortable { cursor: pointer; }
+  th.sortable:hover { color: var(--text); }
+  th .arrow { opacity: .5; font-size: .75em; margin-left: 3px; }
+  tr:last-child td { border-bottom: none; }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .tab {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--panel); border: 1px solid var(--border); border-radius: 999px;
+    padding: 6px 8px 6px 14px; font-size: .85rem; cursor: pointer;
+  }
+  .tab.active { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); font-weight: 600; }
+  .tab .close { border: none; background: transparent; color: var(--text-dim); cursor: pointer; font-size: 1rem; line-height: 1; padding: 2px 4px; border-radius: 50%; }
+  .tab .close:hover { background: var(--del); color: var(--del-text); }
+
+  .cards { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 18px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+    padding: 12px 18px; min-width: 120px; box-shadow: var(--shadow);
+  }
+  .card .label { color: var(--text-dim); font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+  .card .value { font-size: 1.5rem; font-weight: 700; }
+
+  .score { font-variant-numeric: tabular-nums; font-weight: 600; }
+  .pill {
+    display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: .78rem; font-weight: 600;
+  }
+  .pill.ok { background: var(--ins); color: var(--ins-text); }
+  .pill.no { background: var(--del); color: var(--del-text); }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
+  .controls input[type=search] {
+    flex: 1; min-width: 200px; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text); font-size: .88rem;
+  }
+  .controls select {
+    padding: 7px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: .85rem;
+  }
+  .controls label { font-size: .85rem; color: var(--text-dim); display: flex; align-items: center; gap: 5px; }
+  .count-badge { font-size: .8rem; color: var(--text-dim); }
+
+  .diff-del { background: var(--del); color: var(--del-text); text-decoration: line-through; padding: 0 1px; border-radius: 2px; }
+  .diff-ins { background: var(--ins); color: var(--ins-text); padding: 0 1px; border-radius: 2px; }
+  .txt-src { color: var(--text-dim); font-style: italic; }
+  .mono { font-family: ui-monospace, Consolas, monospace; font-size: .82rem; }
+
+  .empty { text-align: center; color: var(--text-dim); padding: 40px 20px; }
+  .rowcat { background: var(--code-bg); font-weight: 600; }
+  footer { color: var(--text-dim); font-size: .78rem; margin-top: 30px; text-align: center; }
+</style>
+</head>
+<body>
+
+  <h1>Visor de resultats de benchmark</h1>
+  <p class="subt">Carrega un o més fitxers JSON generats pel teu script d'avaluació per explorar-los i comparar-los.</p>
+
+  <div id="dropzone">
+    <div><strong>Arrossega aquí els fitxers .json</strong> o fes clic per seleccionar-ne</div>
+    <div style="font-size:.8rem;margin-top:4px;">Pots carregar-ne diversos alhora per comparar-los</div>
+    <input id="fileInput" type="file" accept=".json,application/json" multiple>
+  </div>
+
+  <div id="tabsWrap"></div>
+  <div id="comparativa"></div>
+  <div id="detall"></div>
+
+  <footer>Tot el processament passa localment al navegador; els fitxers no s'envien enlloc.</footer>
+
+<script>
+(function () {
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const tabsWrap = document.getElementById('tabsWrap');
+  const comparativaEl = document.getElementById('comparativa');
+  const detallEl = document.getElementById('detall');
+
+  /** @type {{nombre:string, data:object}[]} */
+  let modelos = [];
+  let activo = -1;
+
+  // --- Carga de ficheros ---------------------------------------------------
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('hover'); });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('hover'));
+  dropzone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropzone.classList.remove('hover');
+    cargarFicheros(e.dataTransfer.files);
+  });
+  fileInput.addEventListener('change', () => {
+    cargarFicheros(fileInput.files);
+    fileInput.value = '';
+  });
+
+  function cargarFicheros(fileList) {
+    const ficheros = Array.from(fileList).filter(f => f.name.toLowerCase().endsWith('.json'));
+    if (!ficheros.length) return;
+    ficheros.forEach(f => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const data = JSON.parse(reader.result);
+          modelos.push({ nombre: f.name, data });
+          activo = modelos.length - 1;
+          render();
+        } catch (err) {
+          alert(`No s'ha pogut llegir "${f.name}" com a JSON vàlid:\n${err.message}`);
+        }
+      };
+      reader.readAsText(f, 'utf-8');
+    });
+  }
+
+  function quitar(idx, ev) {
+    ev.stopPropagation();
+    modelos.splice(idx, 1);
+    if (activo === idx) activo = modelos.length ? Math.max(0, idx - 1) : -1;
+    else if (activo > idx) activo -= 1;
+    render();
+  }
+
+  // --- Utilidades ------------------------------------------------------------
+
+  function fmt(n, dec = 1) {
+    if (n === null || n === undefined || Number.isNaN(n)) return '—';
+    return Number(n).toFixed(dec);
+  }
+
+  function colorScore(v) {
+    if (v === null || v === undefined || Number.isNaN(v)) return 'var(--text-dim)';
+    if (v >= 85) return 'var(--good)';
+    if (v >= 60) return 'var(--mid)';
+    return 'var(--bad)';
+  }
+
+  function etiquetaModelo(m) {
+    const d = m.data;
+    return (d.model || m.nombre) + (d.timestamp ? ` · ${d.timestamp.replace('T', ' ').slice(0, 16)}` : '');
+  }
+
+  function escapeHtml(s) {
+    return String(s ?? '').replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+
+  // Diff simple por palabras (LCS) entre referencia e hipótesis
+  function diffPalabras(a, b) {
+    const ta = (a || '').split(/(\s+)/);
+    const tb = (b || '').split(/(\s+)/);
+    const n = ta.length, m = tb.length;
+    const dp = Array.from({ length: n + 1 }, () => new Uint16Array(m + 1));
+    for (let i = n - 1; i >= 0; i--) {
+      for (let j = m - 1; j >= 0; j--) {
+        dp[i][j] = ta[i] === tb[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+      }
+    }
+    let i = 0, j = 0;
+    const outRef = [], outHyp = [];
+    while (i < n && j < m) {
+      if (ta[i] === tb[j]) { outRef.push(esc(ta[i])); outHyp.push(esc(tb[j])); i++; j++; }
+      else if (dp[i + 1][j] >= dp[i][j + 1]) { outRef.push(`<span class="diff-del">${esc(ta[i])}</span>`); i++; }
+      else { outHyp.push(`<span class="diff-ins">${esc(tb[j])}</span>`); j++; }
+    }
+    while (i < n) { outRef.push(`<span class="diff-del">${esc(ta[i])}</span>`); i++; }
+    while (j < m) { outHyp.push(`<span class="diff-ins">${esc(tb[j])}</span>`); j++; }
+    return { ref: outRef.join(''), hyp: outHyp.join('') };
+    function esc(s) { return escapeHtml(s); }
+  }
+
+  // --- Render: pestañas --------------------------------------------------
+
+  function renderTabs() {
+    if (!modelos.length) { tabsWrap.innerHTML = ''; return; }
+    tabsWrap.innerHTML = `<div class="tabs">${modelos.map((m, idx) => `
+      <div class="tab ${idx === activo ? 'active' : ''}" data-idx="${idx}">
+        <span>${escapeHtml(etiquetaModelo(m))}</span>
+        <button class="close" data-idx="${idx}" title="Descarregar">×</button>
+      </div>`).join('')}</div>`;
+
+    tabsWrap.querySelectorAll('.tab').forEach(el => {
+      el.addEventListener('click', () => { activo = Number(el.dataset.idx); render(); });
+    });
+    tabsWrap.querySelectorAll('.close').forEach(el => {
+      el.addEventListener('click', ev => quitar(Number(el.dataset.idx), ev));
+    });
+  }
+
+  // --- Render: comparativa -------------------------------------------------
+
+  function renderComparativa() {
+    if (modelos.length < 2) { comparativaEl.innerHTML = ''; return; }
+
+    const metricas = [
+      { key: 'n_frases', label: 'Frases', dec: 0, mejorAlta: null },
+      { key: 'errors', label: 'Errors', dec: 0, mejorAlta: false },
+      { key: 'bleu_mitja', label: 'BLEU', dec: 2, mejorAlta: true },
+      { key: 'chrf_mitja', label: 'chrF', dec: 2, mejorAlta: true },
+      { key: 'chrf_pp_mitja', label: 'chrF++', dec: 2, mejorAlta: true },
+      { key: 'comet_mitja', label: 'COMET', dec: 3, mejorAlta: true },
+      { key: 'exactes_pct', label: '% exactes', dec: 1, mejorAlta: true },
+    ];
+
+    const mejores = {};
+    metricas.forEach(met => {
+      if (met.mejorAlta === null) return;
+      const vals = modelos.map(m => m.data[met.key]).filter(v => v !== null && v !== undefined);
+      if (!vals.length) return;
+      mejores[met.key] = met.mejorAlta ? Math.max(...vals) : Math.min(...vals);
+    });
+
+    comparativaEl.innerHTML = `
+      <div class="panel">
+        <h2>Comparativa (${modelos.length} models)</h2>
+        <div style="overflow-x:auto">
+        <table>
+          <thead><tr>
+            <th>Model</th>
+            ${metricas.map(m => `<th>${m.label}</th>`).join('')}
+          </tr></thead>
+          <tbody>
+            ${modelos.map(m => `
+              <tr>
+                <td>${escapeHtml(etiquetaModelo(m))}</td>
+                ${metricas.map(met => {
+                  const v = m.data[met.key];
+                  const esMejor = mejores[met.key] !== undefined && v === mejores[met.key];
+                  const val = met.dec === 0 ? (v ?? '—') : fmt(v, met.dec);
+                  return `<td class="score" style="color:${met.mejorAlta === null ? 'inherit' : colorScore(met.key.includes('pct') || met.key.includes('bleu') || met.key.includes('chrf') || met.key.includes('comet') ? v : (met.mejorAlta ? v : 100 - (v || 0)))}${esMejor ? ';font-weight:800' : ''}">${val}${esMejor ? ' ★' : ''}</td>`;
+                }).join('')}
+              </tr>`).join('')}
+          </tbody>
+        </table>
+        </div>
+      </div>`;
+  }
+
+  // --- Render: detalle de un modelo ----------------------------------------
+
+  let filtro = { texto: '', tipo: 'todos', orden: { col: 'id', dir: 1 } };
+
+  function renderDetalle() {
+    if (activo < 0 || !modelos[activo]) { detallEl.innerHTML = modelos.length ? '' : `<div class="empty">Encara no has carregat cap fitxer.</div>`; return; }
+    const d = modelos[activo].data;
+
+    const cards = [
+      { label: 'Frases', value: d.n_frases ?? '—' },
+      { label: 'Errors', value: d.errors ?? 0 },
+      { label: 'BLEU', value: fmt(d.bleu_mitja, 2), color: colorScore(d.bleu_mitja) },
+      { label: 'chrF', value: fmt(d.chrf_mitja, 2), color: colorScore(d.chrf_mitja) },
+      { label: 'chrF++', value: fmt(d.chrf_pp_mitja, 2), color: colorScore(d.chrf_pp_mitja) },
+      { label: 'COMET', value: d.comet_mitja == null ? '—' : fmt(d.comet_mitja, 3) },
+      { label: '% exactes', value: `${fmt(d.exactes_pct, 1)}%`, color: colorScore(d.exactes_pct), sub: `${d.exactes ?? 0}/${d.n_frases ?? 0}` },
+    ];
+
+    const categorias = groupTables(d.per_categoria, 'Categoria');
+    const dificultats = groupTables(d.per_dificultat, 'Dificultat');
+
+    detallEl.innerHTML = `
+      <div class="cards">
+        ${cards.map(c => `
+          <div class="card">
+            <div class="label">${c.label}</div>
+            <div class="value" style="color:${c.color || 'inherit'}">${c.value}</div>
+            ${c.sub ? `<div class="label" style="margin-top:2px">${c.sub}</div>` : ''}
+          </div>`).join('')}
+      </div>
+
+      ${(categorias || dificultats) ? `
+      <div class="panel" style="display:flex;gap:30px;flex-wrap:wrap">
+        ${categorias ? `<div style="flex:1;min-width:260px"><h2>Per categoria</h2>${categorias}</div>` : ''}
+        ${dificultats ? `<div style="flex:1;min-width:260px"><h2>Per dificultat</h2>${dificultats}</div>` : ''}
+      </div>` : ''}
+
+      <div class="panel">
+        <h2>Frase a frase</h2>
+        <div class="controls">
+          <input type="search" id="cercaInput" placeholder="Cerca per id, text origen, referència o hipòtesi…" value="${escapeHtml(filtro.texto)}">
+          <select id="filtreTipo">
+            <option value="todos">Totes</option>
+            <option value="exactes">Només exactes</option>
+            <option value="noexactes">Només no exactes</option>
+            <option value="baixes">chrF &lt; 60</option>
+          </select>
+          <span class="count-badge" id="countBadge"></span>
+        </div>
+        <div style="overflow-x:auto">
+          <table id="tablaFrases"></table>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('filtreTipo').value = filtro.tipo;
+
+    document.getElementById('cercaInput').addEventListener('input', e => { filtro.texto = e.target.value; renderTablaFrases(d); });
+    document.getElementById('filtreTipo').addEventListener('change', e => { filtro.tipo = e.target.value; renderTablaFrases(d); });
+
+    renderTablaFrases(d);
+  }
+
+  function groupTables(obj, _label) {
+    if (!obj) return null;
+    const keys = Object.keys(obj);
+    if (!keys.length) return null;
+    return `<table><thead><tr><th>Grup</th><th>N</th><th>BLEU</th><th>chrF</th><th>Exactes</th></tr></thead><tbody>
+      ${keys.map(k => {
+        const v = obj[k];
+        return `<tr><td>${escapeHtml(k)}</td><td>${v.n ?? '—'}</td><td class="score" style="color:${colorScore(v.bleu)}">${fmt(v.bleu, 2)}</td><td class="score" style="color:${colorScore(v.chrf)}">${fmt(v.chrf, 2)}</td><td>${v.exactes ?? '—'}</td></tr>`;
+      }).join('')}
+    </tbody></table>`;
+  }
+
+  function renderTablaFrases(d) {
+    const tabla = document.getElementById('tablaFrases');
+    const badge = document.getElementById('countBadge');
+    if (!tabla) return;
+
+    let filas = (d.resultats || []).slice();
+
+    const q = filtro.texto.trim().toLowerCase();
+    if (q) {
+      filas = filas.filter(r =>
+        (r.id || '').toLowerCase().includes(q) ||
+        (r.occidental || '').toLowerCase().includes(q) ||
+        (r.referencia || '').toLowerCase().includes(q) ||
+        (r.hipotesi || '').toLowerCase().includes(q)
+      );
+    }
+    if (filtro.tipo === 'exactes') filas = filas.filter(r => r.exacte);
+    else if (filtro.tipo === 'noexactes') filas = filas.filter(r => !r.exacte);
+    else if (filtro.tipo === 'baixes') filas = filas.filter(r => (r.chrf ?? 0) < 60);
+
+    const { col, dir } = filtro.orden;
+    filas.sort((a, b) => {
+      let va = a[col], vb = b[col];
+      if (typeof va === 'string') { va = va.toLowerCase(); vb = (vb || '').toLowerCase(); }
+      if (va === undefined || va === null) va = -Infinity;
+      if (vb === undefined || vb === null) vb = -Infinity;
+      if (va < vb) return -1 * dir;
+      if (va > vb) return 1 * dir;
+      return 0;
+    });
+
+    badge.textContent = `${filas.length} / ${(d.resultats || []).length} frases`;
+
+    const columnas = [
+      { key: 'id', label: 'ID' },
+      { key: 'occidental', label: 'Origen (occidental)' },
+      { key: 'diff', label: 'Referència → Hipòtesi' },
+      { key: 'bleu', label: 'BLEU' },
+      { key: 'chrf', label: 'chrF' },
+      { key: 'exacte', label: 'Exacte' },
+    ];
+
+    tabla.innerHTML = `
+      <thead><tr>
+        ${columnas.map(c => `<th class="${c.key !== 'diff' ? 'sortable' : ''}" data-col="${c.key}">${c.label}${c.key === col ? `<span class="arrow">${dir === 1 ? '▲' : '▼'}</span>` : ''}</th>`).join('')}
+      </tr></thead>
+      <tbody>
+        ${filas.map(r => {
+          const diff = diffPalabras(r.referencia, r.hipotesi);
+          return `<tr>
+            <td class="mono">${escapeHtml(r.id)}</td>
+            <td class="txt-src">${escapeHtml(r.occidental)}</td>
+            <td>
+              <div>${(r.referencia || '').trim() ? diff.ref : '<span class="txt-src">(sense referència)</span>'}</div>
+              <div style="margin-top:4px">${diff.hyp}</div>
+            </td>
+            <td class="score" style="color:${colorScore(r.bleu)}">${fmt(r.bleu, 2)}</td>
+            <td class="score" style="color:${colorScore(r.chrf)}">${fmt(r.chrf, 2)}</td>
+            <td><span class="pill ${r.exacte ? 'ok' : 'no'}">${r.exacte ? 'Sí' : 'No'}</span></td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    `;
+
+    tabla.querySelectorAll('th.sortable').forEach(th => {
+      th.addEventListener('click', () => {
+        const k = th.dataset.col;
+        if (filtro.orden.col === k) filtro.orden.dir *= -1;
+        else filtro.orden = { col: k, dir: 1 };
+        renderTablaFrases(d);
+      });
+    });
+  }
+
+  function render() {
+    renderTabs();
+    renderComparativa();
+    renderDetalle();
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+======================================================================
+INFORME COMPARATIU DE MODELS — BENCHMARK OCCIDENTAL↔ORIENTAL
+Data: 2026-09-24 14:22
+======================================================================
+
+Model                         BLEU     chrF   chrF++    Exactes
+-----------------------------------------------------------------
+Ollama_gemma4:12b            89.95    95.87    95.35   56/150 (37.3%)
+Ollama_qwen3:14b             90.05    95.82    95.34   58/150 (38.7%)
+Ollama_qwen2.5:14b           88.49    95.24    94.61   50/150 (33.3%)
+Ollama_qwen3:8b              86.95    94.38    93.75   42/150 (28.0%)
+Ollama_gemma3:12b            86.54    94.22    93.59   42/150 (28.0%)
+
+
+--- Ollama_gemma3:12b per categoria ---
+  sense_categoria                n=150  BLEU= 86.5  chrF= 94.2  exactes=42
+
+--- Ollama_gemma4:12b per categoria ---
+  sense_categoria                n=150  BLEU= 90.0  chrF= 95.9  exactes=56
+
+--- Ollama_qwen2.5:14b per categoria ---
+  sense_categoria                n=150  BLEU= 88.5  chrF= 95.2  exactes=50
+
+--- Ollama_qwen3:14b per categoria ---
+  sense_categoria                n=150  BLEU= 90.0  chrF= 95.8  exactes=58
+
+--- Ollama_qwen3:8b per categoria ---
+  sense_categoria                n=150  BLEU= 87.0  chrF= 94.4  exactes=42
+
+--- ERRORS MÉS COMUNS ---
+
+Ollama_qwen3:8b:
+  [RC119] chrF=61.0
+    OCC: Valencià […] per a que'ls naturals, que gustaren de dependre, y no entengueren la explicació Castellana, puguen satisfer son gust en este breu y compendiós estil.
+    REF: Valencià […] perquè'ls naturals, que van assaborir de dependre, i no van entendre l'explicació Castellana, puguin satisfer el seu gust en aquest breu i compendiós estil.
+    HIP: Valencià […] per a que'ls naturals, que gustaren de dependre, y no entengueren la explicació castellana, puguen satisfer son gust en este breu y compendiós estil.
+  [RC081] chrF=65.4
+    OCC: Es gestà en francés, a on ja es documenta l'any 1550, i des d'este idioma es difongué a la resta de llengües de cultura.
+    REF: Es va gestar en francès, on ja es documenta en 1550, i des d'aquest idioma es va difondre a la resta de llengües de cultura.
+    HIP: Es gestà en francés, a on ja es documenta l'any 1550, i des d'este idioma es difongué a la resta de llengües de cultura.

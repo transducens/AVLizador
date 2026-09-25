@@ -1,0 +1,2 @@
+pymupdf
+git+https://github.com/rsennrich/Bleualign.git

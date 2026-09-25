@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Comparador de models — mostra comparativa</title>
+<style>
+:root{
+  --bg:#eef0ee; --surface:#fcfcfb; --surface-2:#e6e9e4; --line:#d7dbd4;
+  --ink:#15171a; --ink-2:#42474b; --ink-mut:#6d7378;
+  --accent:#256abf; --accent-ink:#ffffff; --accent-tint:#e2ebf7;
+  --good:#0ca30c; --warn-fg:#8a5a00; --warn-bg:#fab219; --bad:#d03b3b;
+  --good-tint:#e4f5e1; --warn-tint:#fdf1d6; --bad-tint:#fbe4e2;
+  --diff-bg:#fbe4e2; --diff-fg:#8c2a23;
+  --font-display:'Piazzolla',Georgia,'Times New Roman',serif;
+  --font-body:'Source Sans 3',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'IBM Plex Mono','Cascadia Code',Consolas,monospace;
+  color-scheme: light;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17191b; --surface:#202325; --surface-2:#292d30; --line:#383d40;
+    --ink:#eceeec; --ink-2:#c3c8c6; --ink-mut:#93999a;
+    --accent:#6da7ec; --accent-ink:#0d1620; --accent-tint:#1c2a38;
+    --good:#5fd15f; --warn-fg:#f3c568; --warn-bg:#c98500; --bad:#f08a8a;
+    --good-tint:#173318; --warn-tint:#3a2c0f; --bad-tint:#3a1c1c;
+    --diff-bg:#3a1c1c; --diff-fg:#f2a89f;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17191b; --surface:#202325; --surface-2:#292d30; --line:#383d40;
+  --ink:#eceeec; --ink-2:#c3c8c6; --ink-mut:#93999a;
+  --accent:#6da7ec; --accent-ink:#0d1620; --accent-tint:#1c2a38;
+  --good:#5fd15f; --warn-fg:#f3c568; --warn-bg:#c98500; --bad:#f08a8a;
+  --good-tint:#173318; --warn-tint:#3a2c0f; --bad-tint:#3a1c1c;
+  --diff-bg:#3a1c1c; --diff-fg:#f2a89f;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);line-height:1.55;margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px 96px}
+h1,h2,h3{font-family:var(--font-display);font-weight:600;text-wrap:balance;color:var(--ink)}
+code{font-family:var(--font-mono);font-size:0.92em;background:var(--surface-2);border-radius:4px;padding:0.1em 0.4em}
+button{font-family:inherit}
+::selection{background:var(--accent);color:var(--accent-ink)}
+
+/* ---------- Capçalera ---------- */
+.hero{padding:48px 0 32px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--font-mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+.hero h1{font-size:clamp(24px,3.2vw,34px);margin:0 0 12px;max-width:34ch}
+.hero p.lede{font-size:16px;color:var(--ink-2);max-width:68ch;margin:0}
+
+/* ---------- Tiles resum ---------- */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:28px 0 8px;border-radius:10px;overflow:hidden}
+.tile{background:var(--surface);padding:18px 20px}
+.tile .num{font-family:var(--font-display);font-size:30px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
+.tile .num.good{color:var(--good)}
+.tile .num.warn{color:var(--warn-fg)}
+.tile .lbl{font-size:12.5px;color:var(--ink-mut);margin-top:6px}
+
+section{padding:36px 0}
+section.loader{border-bottom:1px solid var(--line)}
+.section-head{max-width:74ch;margin-bottom:20px}
+.section-head .kicker{font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mut);margin:0 0 8px}
+.section-head h2{font-size:22px;margin:0 0 8px}
+.section-head p{color:var(--ink-2);margin:0;font-size:14.5px}
+
+/* ---------- Zona de càrrega ---------- */
+.dropzone{
+  border:1.5px dashed var(--line); border-radius:12px; background:var(--surface);
+  padding:22px; text-align:center; cursor:pointer; transition:border-color .15s, background .15s;
+}
+.dropzone:hover, .dropzone.drag{ border-color:var(--accent); background:var(--accent-tint); }
+.dropzone strong{ display:block; font-size:15px; margin-bottom:4px; }
+.dropzone span{ font-size:13px; color:var(--ink-mut); }
+.dropzone input{ display:none; }
+
+.fitxers-carregats{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.fitxer-xip{
+  display:flex; align-items:center; gap:8px; background:var(--surface); border:1px solid var(--line);
+  border-radius:8px; padding:8px 12px; font-size:13px;
+}
+.fitxer-xip .punt{width:9px;height:9px;border-radius:50%;flex:none}
+.fitxer-xip b{font-weight:600}
+.fitxer-xip .n{color:var(--ink-mut);font-family:var(--font-mono);font-size:11.5px}
+.fitxer-xip button{
+  border:none;background:none;color:var(--ink-mut);cursor:pointer;font-size:15px;line-height:1;padding:0 2px;
+}
+.fitxer-xip button:hover{color:var(--bad)}
+
+/* ---------- Filtre / mostra ---------- */
+.filtre{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.filtre input[type="search"]{font-family:var(--font-body);font-size:14px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);flex:1;min-width:220px}
+.filtre label.chk{display:flex;align-items:center;gap:6px;font-size:13.5px;color:var(--ink-2);white-space:nowrap}
+.comptador{font-size:13px;color:var(--ink-mut);margin-bottom:14px}
+
+.mostra-llista{display:flex;flex-direction:column;gap:14px}
+.empty{padding:56px 24px;text-align:center;color:var(--ink-mut);border:1px dashed var(--line);border-radius:12px;background:var(--surface)}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.card.discrepa{border-left:4px solid var(--warn-bg)}
+.card.tots-igual{border-left:4px solid var(--good)}
+.card-cap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px;font-family:var(--font-mono);font-size:11px;color:var(--ink-mut)}
+.card-cap .tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{border-radius:5px;padding:2px 8px;font-size:10.5px;text-transform:uppercase;letter-spacing:.03em;background:var(--surface-2);color:var(--ink-mut)}
+.tag.sospita{background:var(--warn-tint);color:var(--warn-fg)}
+
+.fila{display:grid;grid-template-columns:118px 1fr;gap:4px 14px;padding:6px 0}
+.fila + .fila{border-top:1px solid var(--line)}
+.fila .lbl{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.03em;color:var(--ink-mut);padding-top:3px;display:flex;align-items:center;gap:6px}
+.fila .lbl .punt{width:8px;height:8px;border-radius:50%;flex:none}
+.fila.original .lbl{color:var(--ink-2)}
+.fila .txt{font-size:15px;line-height:1.5}
+.fila .txt del{text-decoration:none;background:var(--diff-bg);color:var(--diff-fg);border-radius:3px;padding:0 2px}
+.fila .txt.buida{color:var(--ink-mut);font-style:italic}
+
+footer{padding:32px 0 8px;color:var(--ink-mut);font-size:12.5px}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Piazzolla:ital,wght@0,500;0,600;0,700;1,500&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="hero">
+    <p class="eyebrow">Corpus sintètic &middot; comparativa de models</p>
+    <h1>Qwen vs. Gemma3 vs. Salamandra — mateixa mostra, costat a costat</h1>
+    <p class="lede">Carrega els fitxers <code>corpus_qwen.jsonl</code>, <code>corpus_gemma.jsonl</code> i <code>corpus_salamandra.jsonl</code> generats amb <code>generar_muestra_comparativa.sh</code> (mateix <code>--seed</code>, mateixes frases als 3) per a veure l'original i les traduccions de cada model juntes, amb les diferències respecte a l'original ressaltades.</p>
+    <div id="statsTiles" class="tiles" style="display:none"></div>
+  </div>
+
+  <section class="loader">
+    <div class="section-head">
+      <p class="kicker">01 &middot; Carregar fitxers</p>
+      <h2>Arrossega els .jsonl ací</h2>
+      <p>Detecta el model automàticament (camp <code>model</code> de cada línia) — no cal que coincidisquen amb els noms dels fitxers. Pots carregar-ne 2, 3 o més; tots els que comparteixen el mateix <code>id</code> es mostraran junts.</p>
+    </div>
+    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Carregar fitxers JSONL">
+      <strong>Arrossega ací els .jsonl, o fes clic per a triar-los</strong>
+      <span>corpus_qwen.jsonl &middot; corpus_gemma.jsonl &middot; corpus_salamandra.jsonl (o els que tingues)</span>
+      <input type="file" id="fileInput" accept=".jsonl,.json,.txt" multiple>
+    </div>
+    <div class="fitxers-carregats" id="fitxersCarregats"></div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <p class="kicker">02 &middot; Comparativa frase a frase</p>
+      <h2>Original i traduccions de cada model</h2>
+      <p>El ressaltat marca les paraules de cada traducció que <b>no</b> apareixen (en eixa forma) a la frase original — així es veu d'un colp d'ull què ha canviat cada model, sense haver de llegir paraula per paraula.</p>
+    </div>
+
+    <div class="filtre">
+      <input type="search" id="cerca" placeholder="busca per text, id o motiu de sospita…">
+      <label class="chk"><input type="checkbox" id="nomesDiscrepancies"> Només on els models no coincideixen</label>
+      <label class="chk"><input type="checkbox" id="nomesSospitoses"> Només amb marca de sospita</label>
+    </div>
+    <div class="comptador" id="comptador"></div>
+    <div class="mostra-llista" id="llista"></div>
+  </section>
+
+  <footer>Tot el processament passa al navegador — els fitxers no s'envien enlloc.</footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+const COLORS = ["#256abf", "#0ca30c", "#d0791f", "#8a3fd0", "#c23b8f", "#1f9e9e"];
+const state = {
+  fitxers: [],      // {nom, model, color, registres: Map(id -> registre)}
+  cerca: "",
+  nomesDiscrepancies: false,
+  nomesSospitoses: false,
+};
+
+const $ = (sel) => document.querySelector(sel);
+
+/* ---------- diff de paraules (LCS), igual criteri que comparador_corpus.html ---------- */
+// El corpus font i cada model poden fer servir un caràcter distint per a
+// l'apòstrof (' recte, ' tipogràfic dreta, ' esquerra, ´ accent agut usat
+// per error com a apòstrof, ʼ modificador...) -- sense normalitzar-ho, dos
+// paraules IDÈNTIQUES ("l'home" amb ' i "l'home" amb ') es tractaven com a
+// diferents i eixien ressaltades com si el model haguera canviat la
+// paraula, quan només canviava el caràcter de l'apòstrof. Mateixa
+// normalització que ja fa evalua_models.py::normalitza_apostrofa() -- es
+// manté només per a la COMPARACIÓ (la clau `nom`), mai per al text que es
+// mostra (`esc(t)` seguix usant el token original, sense normalitzar), per
+// a poder vore quin apòstrof ha fet servir de veritat cada model.
+function normalitzaApostrof(s){
+  return String(s)
+    .replace(/´/g, "'")   // ´ accent agut
+    .replace(/‘/g, "'")   // ' cometa tipogràfica esquerra
+    .replace(/’/g, "'")   // ' cometa tipogràfica dreta
+    .replace(/ʼ/g, "'")   // ʼ modificador carta apòstrof
+    .replace(/`/g, "'");  // ` accent greu
+}
+
+function tokenize(s){ return (s || "").match(/[0-9A-Za-zÀ-ÿ·'’‘´ʼ`-]+|[^\s]|\s+/g) || []; }
+
+function paraulesUniques(text){
+  return new Set(tokenize(text).map(t => normalitzaApostrof(t.toLowerCase())).filter(t => /[a-zà-ÿ]/i.test(t)));
+}
+
+function ressaltaDiferencies(traduccio, original){
+  const paraulesOriginal = paraulesUniques(original);
+  const tokens = tokenize(traduccio);
+  return tokens.map(t => {
+    const nom = normalitzaApostrof(t.toLowerCase());
+    if (/[a-zà-ÿ]/i.test(t) && !paraulesOriginal.has(nom)) {
+      return `<del>${esc(t)}</del>`;
+    }
+    return esc(t);
+  }).join("");
+}
+
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+/* ---------- parsing ---------- */
+function parseJsonl(text){
+  const files = [];
+  text.split(/\r?\n/).forEach(line => {
+    const t = line.trim();
+    if (!t) return;
+    try { files.push(JSON.parse(t)); } catch(e) { /* salta línies mal formades */ }
+  });
+  return files;
+}
+
+function nomModel(registres, nomFitxer){
+  for (const r of registres) {
+    if (r.model) return r.model;
+  }
+  return nomFitxer.replace(/\.jsonl?$/i, "");
+}
+
+function handleFiles(fileList){
+  const files = Array.from(fileList);
+  let pendents = files.length;
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const registres = parseJsonl(String(e.target.result));
+      const mapa = new Map();
+      registres.forEach(r => { if (r.id) mapa.set(r.id, r); });
+      const color = COLORS[state.fitxers.length % COLORS.length];
+      state.fitxers.push({
+        nom: file.name,
+        model: nomModel(registres, file.name),
+        color,
+        registres: mapa,
+      });
+      pendents -= 1;
+      if (pendents === 0) { renderFitxers(); render(); }
+    };
+    reader.readAsText(file, "utf-8");
+  });
+}
+
+function trauFitxer(index){
+  state.fitxers.splice(index, 1);
+  renderFitxers();
+  render();
+}
+
+function renderFitxers(){
+  const cont = $("#fitxersCarregats");
+  cont.innerHTML = state.fitxers.map((f, i) => `
+    <div class="fitxer-xip">
+      <span class="punt" style="background:${f.color}"></span>
+      <b>${esc(f.model)}</b>
+      <span class="n">${f.registres.size} frases</span>
+      <button type="button" data-idx="${i}" title="Traure este fitxer">✕</button>
+    </div>
+  `).join("");
+  cont.querySelectorAll("button[data-idx]").forEach(b => {
+    b.addEventListener("click", () => trauFitxer(Number(b.getAttribute("data-idx"))));
+  });
+}
+
+/* ---------- unió per id ---------- */
+function idsUnits(){
+  const ordre = [];
+  const vistos = new Set();
+  state.fitxers.forEach(f => {
+    f.registres.forEach((_, id) => {
+      if (!vistos.has(id)) { vistos.add(id); ordre.push(id); }
+    });
+  });
+  return ordre;
+}
+
+function fraseOriginal(id){
+  for (const f of state.fitxers) {
+    const r = f.registres.get(id);
+    if (r && r.frase_val) return r.frase_val;
+  }
+  return "";
+}
+
+/* ---------- render ---------- */
+function renderStats(){
+  const tiles = $("#statsTiles");
+  if (!state.fitxers.length) { tiles.style.display = "none"; return; }
+  const ids = idsUnits();
+  let totsIgual = 0, discrepen = 0, ambSospita = 0;
+  ids.forEach(id => {
+    const traduccions = state.fitxers
+      .map(f => f.registres.get(id))
+      .filter(Boolean);
+    const formes = new Set(traduccions.map(r => (r.frase_cat || "").trim().toLowerCase()));
+    if (traduccions.length === state.fitxers.length && formes.size === 1) totsIgual += 1;
+    else discrepen += 1;
+    if (traduccions.some(r => (r.motius_sospita || []).length)) ambSospita += 1;
+  });
+  tiles.style.display = "";
+  tiles.innerHTML = `
+    <div class="tile"><div class="num">${ids.length}</div><div class="lbl">frases comparades</div></div>
+    <div class="tile"><div class="num good">${totsIgual}</div><div class="lbl">tots els models coincidixen exactament</div></div>
+    <div class="tile"><div class="num warn">${discrepen}</div><div class="lbl">algun model discrepa</div></div>
+    <div class="tile"><div class="num">${ambSospita}</div><div class="lbl">amb alguna marca de sospita</div></div>
+  `;
+}
+
+function coincideixFiltre(id){
+  const original = fraseOriginal(id);
+  const traduccions = state.fitxers.map(f => f.registres.get(id)).filter(Boolean);
+
+  if (state.nomesSospitoses && !traduccions.some(r => (r.motius_sospita || []).length)) return false;
+
+  if (state.nomesDiscrepancies) {
+    const formes = new Set(traduccions.map(r => (r.frase_cat || "").trim().toLowerCase()));
+    if (traduccions.length === state.fitxers.length && formes.size === 1) return false;
+  }
+
+  if (state.cerca) {
+    const q = state.cerca.toLowerCase();
+    const hay = [original, id, ...traduccions.flatMap(r => [r.frase_cat, ...(r.motius_sospita || [])])]
+      .join(" ").toLowerCase();
+    if (!hay.includes(q)) return false;
+  }
+  return true;
+}
+
+function cardHtml(id){
+  const original = fraseOriginal(id);
+  const traduccions = state.fitxers.map(f => ({ f, r: f.registres.get(id) }));
+  const formes = new Set(traduccions.filter(t => t.r).map(t => (t.r.frase_cat || "").trim().toLowerCase()));
+  const totsIgual = traduccions.every(t => t.r) && formes.size === 1;
+  const doc = traduccions.find(t => t.r && t.r.doc_type)?.r;
+
+  const filesModels = traduccions.map(({ f, r }) => {
+    if (!r) {
+      return `<div class="fila">
+        <div class="lbl"><span class="punt" style="background:${f.color}"></span>${esc(f.model)}</div>
+        <div class="txt buida">— sense traducció en este fitxer —</div>
+      </div>`;
+    }
+    const sospita = (r.motius_sospita || []);
+    const tagsSospita = sospita.map(m => `<span class="tag sospita">⚠ ${esc(m)}</span>`).join("");
+    return `<div class="fila">
+      <div class="lbl"><span class="punt" style="background:${f.color}"></span>${esc(f.model)}</div>
+      <div class="txt">${ressaltaDiferencies(r.frase_cat || "", original)} ${tagsSospita}</div>
+    </div>`;
+  }).join("");
+
+  return `
+    <article class="card ${totsIgual ? 'tots-igual' : 'discrepa'}">
+      <div class="card-cap">
+        <span>#${esc(id)}</span>
+        <div class="tags">
+          ${doc ? `<span class="tag">${esc(doc.doc_type || "")}</span>` : ""}
+          ${totsIgual ? `<span class="tag" style="background:var(--good-tint);color:var(--good)">coincidixen</span>` : `<span class="tag" style="background:var(--warn-tint);color:var(--warn-fg)">discrepen</span>`}
+        </div>
+      </div>
+      <div class="fila original">
+        <div class="lbl">Original</div>
+        <div class="txt">${esc(original)}</div>
+      </div>
+      ${filesModels}
+    </article>
+  `;
+}
+
+function render(){
+  renderStats();
+  const llista = $("#llista");
+  if (!state.fitxers.length) {
+    llista.innerHTML = `<div class="empty">Carrega almenys un fitxer .jsonl de dalt per a començar.</div>`;
+    $("#comptador").textContent = "";
+    return;
+  }
+  const ids = idsUnits().filter(coincideixFiltre);
+  $("#comptador").textContent = `${ids.length} de ${idsUnits().length} frases`;
+  llista.innerHTML = ids.length
+    ? ids.map(cardHtml).join("")
+    : `<div class="empty">Cap frase coincidix amb els filtres actuals.</div>`;
+}
+
+/* ---------- events ---------- */
+const dz = $("#dropzone"), fileInput = $("#fileInput");
+dz.addEventListener("click", () => fileInput.click());
+dz.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") fileInput.click(); });
+fileInput.addEventListener("change", () => { if (fileInput.files.length) handleFiles(fileInput.files); fileInput.value = ""; });
+["dragenter", "dragover"].forEach(ev => dz.addEventListener(ev, (e) => { e.preventDefault(); dz.classList.add("drag"); }));
+["dragleave", "drop"].forEach(ev => dz.addEventListener(ev, (e) => { e.preventDefault(); dz.classList.remove("drag"); }));
+dz.addEventListener("drop", (e) => { if (e.dataTransfer.files.length) handleFiles(e.dataTransfer.files); });
+
+$("#cerca").addEventListener("input", (e) => { state.cerca = e.target.value; render(); });
+$("#nomesDiscrepancies").addEventListener("change", (e) => { state.nomesDiscrepancies = e.target.checked; render(); });
+$("#nomesSospitoses").addEventListener("change", (e) => { state.nomesSospitoses = e.target.checked; render(); });
+
+render();
+})();
+</script>
+</body>
+</html>

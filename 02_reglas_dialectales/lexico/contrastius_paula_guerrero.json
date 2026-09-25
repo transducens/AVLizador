@@ -1,0 +1,179 @@
+{
+  "dvs_contrastive_pairs": [
+    {
+      "category": "Determiners & possessives",
+      "ca": "aquesta",
+      "vlca": "esta"
+    },
+    {
+      "category": "Determiners & possessives",
+      "ca": "aquest",
+      "vlca": "este"
+    },
+    {
+      "category": "Determiners & possessives",
+      "ca": "aquestes",
+      "vlca": "estes"
+    },
+    {
+      "category": "Determiners & possessives",
+      "ca": "aquests",
+      "vlca": "estos"
+    },
+    {
+      "category": "Determiners & possessives",
+      "ca": "seva",
+      "vlca": "seua"
+    },
+    {
+      "category": "Determiners & possessives",
+      "ca": "seves",
+      "vlca": "seues"
+    },
+    {
+      "category": "Determiners & possessives",
+      "ca": "darrer",
+      "vlca": "últim"
+    },
+    {
+      "category": "Determiners & possessives",
+      "ca": "darrers",
+      "vlca": "últims"
+    },
+    {
+      "category": "Determiners & possessives",
+      "ca": "darrera",
+      "vlca": "última"
+    },
+    {
+      "category": "Verbal stems & inchoative endings",
+      "ca": "tenir",
+      "vlca": "tindre"
+    },
+    {
+      "category": "Verbal stems & inchoative endings",
+      "ca": "obtenir",
+      "vlca": "obtindre"
+    },
+    {
+      "category": "Verbal stems & inchoative endings",
+      "ca": "veure",
+      "vlca": "vore"
+    },
+    {
+      "category": "Verbal stems & inchoative endings",
+      "ca": "segueix",
+      "vlca": "seguix"
+    },
+    {
+      "category": "Verbal stems & inchoative endings",
+      "ca": "segueixen",
+      "vlca": "seguixen"
+    },
+    {
+      "category": "Verbal stems & inchoative endings",
+      "ca": "requereix",
+      "vlca": "requerix"
+    },
+    {
+      "category": "Verbal stems & inchoative endings",
+      "ca": "divideix",
+      "vlca": "dividix"
+    },
+    {
+      "category": "Verbal stems & inchoative endings",
+      "ca": "constitueixen",
+      "vlca": "constituïxen"
+    },
+    {
+      "category": "Verbal stems & inchoative endings",
+      "ca": "absorbeixen",
+      "vlca": "absorbixen"
+    },
+    {
+      "category": "Lexical alternates",
+      "ca": "nens",
+      "vlca": "xiquets"
+    },
+    {
+      "category": "Lexical alternates",
+      "ca": "nen",
+      "vlca": "xiquet"
+    },
+    {
+      "category": "Lexical alternates",
+      "ca": "nena",
+      "vlca": "xiqueta"
+    },
+    {
+      "category": "Lexical alternates",
+      "ca": "nenes",
+      "vlca": "xiquetes"
+    },
+    {
+      "category": "Lexical alternates",
+      "ca": "petit",
+      "vlca": "xicotet"
+    },
+    {
+      "category": "Lexical alternates",
+      "ca": "petits",
+      "vlca": "xicotets"
+    },
+    {
+      "category": "Lexical alternates",
+      "ca": "petita",
+      "vlca": "xicoteta"
+    },
+    {
+      "category": "Lexical alternates",
+      "ca": "feina",
+      "vlca": "faena"
+    },
+    {
+      "category": "Lexical alternates",
+      "ca": "feines",
+      "vlca": "faenes"
+    },
+    {
+      "category": "Lexical alternates",
+      "ca": "cop",
+      "vlca": "colp"
+    },
+    {
+      "category": "Lexical alternates",
+      "ca": "cops",
+      "vlca": "colps"
+    },
+    {
+      "category": "Lexical alternates",
+      "ca": "avui",
+      "vlca": "hui"
+    },
+    {
+      "category": "Lexical alternates",
+      "ca": "servei",
+      "vlca": "servici"
+    },
+    {
+      "category": "Lexical alternates",
+      "ca": "serveis",
+      "vlca": "servicis"
+    },
+    {
+      "category": "Lexical alternates",
+      "ca": "mirall",
+      "vlca": "espill"
+    },
+    {
+      "category": "Lexical alternates",
+      "ca": "tomàquet",
+      "vlca": "tomaca"
+    },
+    {
+      "category": "Lexical alternates",
+      "ca": "tomàquets",
+      "vlca": "tomaques"
+    }
+  ]
+}

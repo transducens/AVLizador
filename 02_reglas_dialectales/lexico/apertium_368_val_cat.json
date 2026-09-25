@@ -1,0 +1,561 @@
+{
+  "total_apertium_val_gva": 368,
+  "exclusives_val_gva": 72,
+  "confirmades_llistat_extern": 33,
+  "confirmades_contrapart_interna": 32,
+  "sense_parell": 6,
+  "parells": [
+    {
+      "occidental": "huitcentista",
+      "oriental": [
+        "vuitcentista"
+      ],
+      "categoria": "adjetivo",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "térbol",
+      "oriental": [
+        "tèrbol"
+      ],
+      "categoria": "adjetivo",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "huitanta-dosè",
+      "oriental": [
+        "vuitanta-dosè"
+      ],
+      "categoria": "adjetivo",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "huitanta-quatrè",
+      "oriental": [
+        "vuitanta-quatrè"
+      ],
+      "categoria": "adjetivo",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "huitanta-cinquè",
+      "oriental": [
+        "vuitanta-cinquè"
+      ],
+      "categoria": "adjetivo",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "huitanta-novè",
+      "oriental": [
+        "vuitanta-novè"
+      ],
+      "categoria": "adjetivo",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "cércol",
+      "oriental": [
+        "cèrcol"
+      ],
+      "categoria": "sustantivo",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "manganés",
+      "oriental": [
+        "manganès"
+      ],
+      "categoria": "sustantivo",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "pésol",
+      "oriental": [
+        "pèsol"
+      ],
+      "categoria": "sustantivo",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "ségol",
+      "oriental": [
+        "sègol"
+      ],
+      "categoria": "sustantivo",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "sémola",
+      "oriental": [
+        "sèmola"
+      ],
+      "categoria": "sustantivo",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "terratrémol",
+      "oriental": [
+        "terratrèmol"
+      ],
+      "categoria": "sustantivo",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "trévol",
+      "oriental": [
+        "trèvol"
+      ],
+      "categoria": "sustantivo",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "a les huit",
+      "oriental": [
+        "a les vuit"
+      ],
+      "categoria": "adverbio",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "fins hui",
+      "oriental": [
+        "fins avui"
+      ],
+      "categoria": "adverbio",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "en data de hui",
+      "oriental": [
+        "en data d'avui"
+      ],
+      "categoria": "adverbio",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "hui",
+      "oriental": [
+        "Avui"
+      ],
+      "categoria": "adverbio",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "cinquanta-huit",
+      "oriental": [
+        "cinquanta-vuit"
+      ],
+      "categoria": "numeral",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "dènou",
+      "oriental": [
+        "dinou"
+      ],
+      "categoria": "numeral",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "díhuit",
+      "oriental": [
+        "divuit"
+      ],
+      "categoria": "numeral",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "quaranta-huit",
+      "oriental": [
+        "quaranta-vuit"
+      ],
+      "categoria": "numeral",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "seixanta-huit",
+      "oriental": [
+        "seixanta-vuit"
+      ],
+      "categoria": "numeral",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "setanta-huit",
+      "oriental": [
+        "setanta-vuit"
+      ],
+      "categoria": "numeral",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "trenta-huit",
+      "oriental": [
+        "trenta-vuit"
+      ],
+      "categoria": "numeral",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "vint-i-huit",
+      "oriental": [
+        "vint-i-vuit"
+      ],
+      "categoria": "numeral",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "huit",
+      "oriental": [
+        "Vuit"
+      ],
+      "categoria": "numeral",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "huitanta",
+      "oriental": [
+        "Vuitanta"
+      ],
+      "categoria": "numeral",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "huitanta-cinc",
+      "oriental": [
+        "vuitanta-cinc"
+      ],
+      "categoria": "numeral",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "huitanta-dos",
+      "oriental": [
+        "vuitanta-dos"
+      ],
+      "categoria": "numeral",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "huitanta-nou",
+      "oriental": [
+        "vuitanta-nou"
+      ],
+      "categoria": "numeral",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "huitanta-quatre",
+      "oriental": [
+        "vuitanta-quatre"
+      ],
+      "categoria": "numeral",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "huitanta-u",
+      "oriental": [
+        "vuitanta-u"
+      ],
+      "categoria": "numeral",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "huitavt",
+      "oriental": [
+        "vuitavat"
+      ],
+      "categoria": "adjetivo",
+      "origen": "llista/dix (pares_valenciano_catalan.json)"
+    },
+    {
+      "occidental": "huitantè",
+      "oriental": [
+        "vuitantè"
+      ],
+      "categoria": "adjetivo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "huit-centè",
+      "oriental": [
+        "vuit-centè"
+      ],
+      "categoria": "adjetivo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "huitanta-unè",
+      "oriental": [
+        "vuitanta-unè"
+      ],
+      "categoria": "adjetivo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "huitanta-tresè",
+      "oriental": [
+        "vuitanta-tresè"
+      ],
+      "categoria": "adjetivo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "huitanta-sisè",
+      "oriental": [
+        "vuitanta-sisè"
+      ],
+      "categoria": "adjetivo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "huitanta-setè",
+      "oriental": [
+        "vuitanta-setè"
+      ],
+      "categoria": "adjetivo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "huitanta-huitè",
+      "oriental": [
+        "vuitanta-vuitè"
+      ],
+      "categoria": "adjetivo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "comité de direcció",
+      "oriental": [
+        "comitè de direcció"
+      ],
+      "categoria": "sustantivo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "comité executiu",
+      "oriental": [
+        "comitè executiu"
+      ],
+      "categoria": "sustantivo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "comités executius",
+      "oriental": [
+        "comitès executius"
+      ],
+      "categoria": "sustantivo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "huitanta-un",
+      "oriental": [
+        "vuitanta-un"
+      ],
+      "categoria": "determinante",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "noranta-huit",
+      "oriental": [
+        "noranta-vuit"
+      ],
+      "categoria": "numeral",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "huit-cents",
+      "oriental": [
+        "vuit-cents"
+      ],
+      "categoria": "numeral",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "huitanta-set",
+      "oriental": [
+        "vuitanta-set"
+      ],
+      "categoria": "numeral",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "huitanta-sis",
+      "oriental": [
+        "vuitanta-sis"
+      ],
+      "categoria": "numeral",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "huitanta-tres",
+      "oriental": [
+        "vuitanta-tres"
+      ],
+      "categoria": "numeral",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "huitanta-huit",
+      "oriental": [
+        "vuitanta-vuit"
+      ],
+      "categoria": "numeral",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "aparéixer",
+      "oriental": [
+        "aparèixer"
+      ],
+      "categoria": "verbo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "atés",
+      "oriental": [
+        "atès"
+      ],
+      "categoria": "verbo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "comparéixer",
+      "oriental": [
+        "comparèixer"
+      ],
+      "categoria": "verbo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "conéixer el marro",
+      "oriental": [
+        "conèixer el marro"
+      ],
+      "categoria": "verbo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "conéixer",
+      "oriental": [
+        "conèixer"
+      ],
+      "categoria": "verbo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "convéncer",
+      "oriental": [
+        "convèncer"
+      ],
+      "categoria": "verbo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "desaparéixer",
+      "oriental": [
+        "desaparèixer"
+      ],
+      "categoria": "verbo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "desconéixer",
+      "oriental": [
+        "desconèixer"
+      ],
+      "categoria": "verbo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "fer el desentés",
+      "oriental": [
+        "fer el desentès"
+      ],
+      "categoria": "verbo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "reaparéixer",
+      "oriental": [
+        "reaparèixer"
+      ],
+      "categoria": "verbo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "reconéixer",
+      "oriental": [
+        "reconèixer"
+      ],
+      "categoria": "verbo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "no reconéixer",
+      "oriental": [
+        "no reconèixer"
+      ],
+      "categoria": "verbo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "véncer",
+      "oriental": [
+        "vèncer"
+      ],
+      "categoria": "verbo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "paréixer",
+      "oriental": [
+        "parèixer"
+      ],
+      "categoria": "verbo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    },
+    {
+      "occidental": "parlant de patués",
+      "oriental": [
+        "parlant de patuès"
+      ],
+      "categoria": "sustantivo",
+      "origen": "apertium (forma ['val_uni'] confirmada al mateix fitxer)"
+    }
+  ],
+  "pendents": [
+    {
+      "occidental": "noranta-huitè",
+      "categoria": "adjetivo",
+      "paradigma": "cinqu/è__adj"
+    },
+    {
+      "occidental": "hui dia",
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv"
+    },
+    {
+      "occidental": "hui en dia",
+      "categoria": "adverbio",
+      "paradigma": "ahir__adv"
+    },
+    {
+      "occidental": "dèsset",
+      "categoria": "numeral",
+      "paradigma": "sis__num"
+    },
+    {
+      "occidental": "buscar",
+      "categoria": "verbo",
+      "paradigma": "abo/car__vblex"
+    },
+    {
+      "occidental": "recollir",
+      "categoria": "verbo",
+      "paradigma": "ac/ollir__vblex"
+    }
+  ]
+}
