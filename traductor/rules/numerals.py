@@ -39,6 +39,28 @@ compostos ordinals amb guionet fora dels que ja dona explícitament la
 taula de la secció 6.1 (p.ex. "vint-i-uné", "trenta-dosé" -- la font els
 esmenta com a exemple del patró general però no els llista un a un).
 
+  4. Arrels "dinou"/"disset" -> "dinou"/"disset" oriental amb accent
+     obert ("dènou" -> "dinou", "dèsset" -> "disset"), i els seus derivats
+     en "-ena"/"-é" ("denovena" -> "dinovena", "dessetè" -> "dissetè").
+     Font: `numerales_limpio.json` de Mauricio (equip AVLizador,
+     29/09/2026), contrastat contra Apertium. A diferència de "huit"/
+     "vuit", estes arrels NO comparteixen cap subcadena comuna entre els
+     dos dialectes, així que no poden generalitzar-se amb una substitució
+     de subcadena com `_substitueix_huit` -- són una llista tancada de 10
+     formes (2 arrels + 4 derivats cada una). La resta del fitxer de
+     Mauricio (compostos de la família huit/vuit, p.ex. "huitantena" ->
+     "vuitantena") ja queda coberta correctament per la substitució de
+     subcadena existent -- comprovat una a una, no calia afegir cap
+     entrada nova per a eixa família.
+     # AMBIGÚ: el fitxer font també conté 4 entrades per a "vuitavat"
+     ("huitavdes"/"huitavda"/"huitavts"/"huitavt", totes mapejades al
+     mateix catalan "vuitavat") que semblen una extracció trencada
+     (probablement havien de ser les 4 formes de gènere/nombre
+     "vuitavat/vuitavada/vuitavats/vuitavades" i es va perdre
+     l'alineació) -- no s'han incorporat ací; de totes formes ja contenen
+     "huit" com a subcadena, així que la substitució genèrica ja les
+     tractaria raonablement bé encara que no estiguen en cap llista.
+
   3. Concordança de gènere de "dos": NO és una substitució de text fixa
      (vore secció 6.3 de la font, "Advertència d'aplicació" explícita).
      L'occidental fa servir "dos" per als dos gèneres; l'oriental exigix
@@ -47,11 +69,25 @@ esmenta com a exemple del patró general però no els llista un a un).
      si acaba en "-a" o "-es" (marca típica -però no infal·lible- de
      femení), tracta "dos" com a femení i el canvia a "dues".
      # AMBIGÚ: esta heurística falla amb substantius femenins que no
-     # acaben en -a/-es (p.ex. "dos mans" hauria de ser "dues mans", però
-     # "mans" no dispara l'heurística -- es queda "dos" per error). És un
-     # fals negatiu conegut, no arreglat: preferible a un fals positiu
-     # (canviar "dos" a "dues" davant d'un substantiu masculí seria un
-     # error més visible i estrany).
+     # acaben en -a/-es/-ió/-ions (p.ex. "dos mans" hauria de ser "dues
+     # mans", però "mans" no dispara l'heurística -- es queda "dos" per
+     # error). És un fals negatiu conegut, no arreglat: preferible a un
+     # fals positiu (canviar "dos" a "dues" davant d'un substantiu
+     # masculí seria un error més visible i estrany).
+
+     Ampliació (29/09/2026, RC062): quan darrere de "dos" NO ve cap
+     paraula (típicament puntuació, com en "...en dos: establir..."),
+     "dos" pot referir-se ANAFÒRICAMENT a un nom ja dit abans a la mateixa
+     frase ("les seues funcions... en dos:"). En eixe cas concret, la
+     regla mira cap arrere (`_paraula_anterior_plural_femenina`) buscant
+     la paraula més pròxima que semble femenina, aturant-se en un final
+     de frase real. Només s'activa quan la cerca cap avant no ha trobat
+     CAP paraula (mai quan sí n'ha trobat una i simplement no pareix
+     femenina, com "dos xics" -- eixe cas es queda intacte igual que
+     abans). De pas s'ha ampliat `_sembla_femeni` per a reconéixer també
+     "-ió"/"-ions" ("funcions"), un sufix fiable (pràcticament cap nom
+     acabat així és masculí en català), a diferència de generalitzar més
+     el "-a"/"-es" existent.
 """
 
 from __future__ import annotations
@@ -107,9 +143,45 @@ _ORDINALS = {
     "cinquanté": "cinquantè",
 }
 
+# ─── 4. Arrels "dinou"/"disset" (i derivats), vore mecanisme 4 del docstring ─
+
+_DINOU_DISSET = {
+    "dènou": "dinou",
+    "denovena": "dinovena",
+    "denovens": "dinovens",
+    "denovenes": "dinovenes",
+    "denové": "dinovè",
+    "dèsset": "disset",
+    "dessetena": "dissetena",
+    "dessetens": "dissetens",
+    "dessetenes": "dissetenes",
+    "desseté": "dissetè",
+}
+
 # ─── 3. Concordança "dos" / "dues" ──────────────────────────────────────────
 
-_FEMENI_FEBLE_RE = re.compile(r"(a|es)$", re.IGNORECASE)
+# "-ió"/"-ions" s'afig a la banda del "-a"/"-es" general perquè és un cas
+# fiable, no una generalització arriscada: en català pràcticament cap nom
+# acabat en "-ió" és masculí (funció, informació, nació...), a diferència
+# de "-a"/"-es", on sí hi ha excepcions conegudes (vore mòdul gentilicis).
+# Trobat auditant el benchmark real (RC062, 29/09/2026): "les seues
+# funcions" mai disparava l'heurística perquè "funcions" no acaba en
+# "-a"/"-es".
+_FEMENI_FEBLE_RE = re.compile(r"(a|es|ions?)$", re.IGNORECASE)
+
+# Puntuació que talla la recerca cap arrere de l'antecedent de "dos"
+# (vore _paraula_anterior_plural_femenina): més enllà d'un final de frase
+# real, l'antecedent ja no és fiable.
+_FI_CLAUSULA = {".", "!", "?"}
+
+# Paraules funcionals curtes que casualment acaben en "-a"/"-es" sense ser
+# mai el nom que done gènere a "dos" (article, pronom feble...) -- sense
+# esta exclusió, "es" (pronom reflexiu) donaria un fals positiu trivial en
+# QUALSEVOL frase reflexiva ("es poden agrupar en dos: ..."), ja que la
+# paraula sencera "es" casa amb el sufix "-es" per pura coincidència de
+# longitud. Trobat provant `_paraula_anterior_plural_femenina` amb un
+# exemple negatiu sintètic ("dos" masculí després de puntuació).
+_PARAULES_FUNCIONALS = {"es", "se", "la", "les", "el", "els", "un", "uns", "una", "unes"}
 
 
 def _seguent_paraula(tokens: list[Token], index: int) -> Token | None:
@@ -125,6 +197,48 @@ def _seguent_paraula(tokens: list[Token], index: int) -> Token | None:
     return None
 
 
+def _paraula_anterior_plural_femenina(tokens: list[Token], index: int) -> bool:
+    """Fallback quan `_seguent_paraula` no troba cap paraula darrere de
+    "dos" (típicament perquè ve seguit de puntuació, com en "...en dos:
+    establir..."): mira cap arrere buscant la paraula més pròxima que
+    semble femenina (`_sembla_femeni`), aturant-se en trobar un final de
+    frase real o l'inici del text.
+
+    Cas real (RC062, 29/09/2026): "Les seues funcions es poden
+    sintetitzar en dos: establir..." -- "dos" ací es referix
+    anafòricament a "funcions" (dit abans a la mateixa frase), no a cap
+    paraula que vinga darrere (que és puntuació, ":"). No fa falta cap
+    llista de paraules buides ("es", "poden", "sintetitzar", "en"): cap
+    d'elles casa amb `_sembla_femeni`, així que la recerca les travessa
+    soles fins arribar a "funcions".
+
+    >>> from . import tokenize, marca_noms_propis
+    >>> toks = tokenize("Les funcions es poden sintetitzar en dos: fer.")
+    >>> marca_noms_propis(toks)
+    >>> idx = [t.surface for t in toks].index("dos")
+    >>> _paraula_anterior_plural_femenina(toks, idx)
+    True
+
+    >>> toks = tokenize("Els xics es poden agrupar en dos: alts i baixos.")
+    >>> marca_noms_propis(toks)
+    >>> idx = [t.surface for t in toks].index("dos")
+    >>> _paraula_anterior_plural_femenina(toks, idx)
+    False
+    """
+    for tok in reversed(tokens[:index]):
+        if tok.surface.isspace():
+            continue
+        if tok.surface in _FI_CLAUSULA:
+            return False
+        if not tok.surface[:1].isalpha():
+            continue
+        if tok.surface.lower() in _PARAULES_FUNCIONALS:
+            continue
+        if _sembla_femeni(tok.surface):
+            return True
+    return False
+
+
 def _sembla_femeni(paraula: str) -> bool:
     """Heurística feble de gènere sense spaCy -- vore AMBIGÚ al docstring
     del mòdul per les seues limitacions conegudes.
@@ -132,6 +246,8 @@ def _sembla_femeni(paraula: str) -> bool:
     >>> _sembla_femeni("xiques")
     True
     >>> _sembla_femeni("cadira")
+    True
+    >>> _sembla_femeni("funcions")
     True
     >>> _sembla_femeni("xics")
     False
@@ -156,6 +272,24 @@ class NumeralsRule:
     >>> toks = NumeralsRule().apply(toks)
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
     [('Dos', 'Dues')]
+
+    Arrels "dinou"/"disset" i derivats (mecanisme 4, vore docstring):
+
+    >>> toks = tokenize("Tenia dènou anys i vivia al pis denové.")
+    >>> marca_noms_propis(toks)
+    >>> toks = NumeralsRule().apply(toks)
+    >>> [(t.surface, t.translated) for t in toks if t.is_translated]
+    [('dènou', 'dinou'), ('denové', 'dinovè')]
+
+    "dos" que es referix a un nom dit ABANS a la mateixa frase, quan
+    darrere no ve cap paraula (puntuació) -- fallback amb
+    `_paraula_anterior_plural_femenina`, cas real RC062:
+
+    >>> toks = tokenize("Les seues funcions es poden sintetitzar en dos: fer normes.")
+    >>> marca_noms_propis(toks)
+    >>> toks = NumeralsRule().apply(toks)
+    >>> [(t.surface, t.translated) for t in toks if t.is_translated]
+    [('dos', 'dues')]
     """
 
     def apply(self, tokens: list[Token]) -> list[Token]:
@@ -166,7 +300,11 @@ class NumeralsRule:
 
             if minuscules == "dos":
                 seguent = _seguent_paraula(tokens, i)
-                if seguent is not None and _sembla_femeni(seguent.surface):
+                if seguent is not None:
+                    if _sembla_femeni(seguent.surface):
+                        tok.translated = preserva_majuscula(tok.surface, "dues")
+                        tok.is_translated = True
+                elif _paraula_anterior_plural_femenina(tokens, i):
                     tok.translated = preserva_majuscula(tok.surface, "dues")
                     tok.is_translated = True
                 continue
@@ -180,5 +318,11 @@ class NumeralsRule:
             ordinal = _ORDINALS.get(minuscules)
             if ordinal is not None:
                 tok.translated = preserva_majuscula(tok.surface, ordinal)
+                tok.is_translated = True
+                continue
+
+            dinou_disset = _DINOU_DISSET.get(minuscules)
+            if dinou_disset is not None:
+                tok.translated = preserva_majuscula(tok.surface, dinou_disset)
                 tok.is_translated = True
         return tokens

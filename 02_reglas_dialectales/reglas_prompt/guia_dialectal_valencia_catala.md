@@ -35,11 +35,20 @@ occidental o oriental.
 | Occidental | Oriental |
 |---|---|
 | este / esta / estos / estes | aquest / aquesta / aquests / aquestes |
-| eixe / eixa / eixos / eixes | aqueix / aqueixa / aqueixos / aqueixes |
+| eixe / eixa / eixos / eixes | aquest / aquesta / aquests / aquestes |
 
 L'AVL també admet *aquest/aquesta* com a forma normativa pròpia — per això
 esta alternança és coneixement general de la variació dialectal, no una
 equivalència mecànica derivada directament d'un diccionari.
+
+**Nota (28/09/2026)**: el sistema de 3 graus este/eixe/aquell →
+aquest/aqueix/aquell és el que admeten totes dos normatives sobre el
+paper, però l'ús oriental contemporani ha col·lapsat pràcticament del tot
+el 2n grau cap al 1r — "aqueix" es percep com a forma arcaica/literària,
+rara fora de registre molt formal. Per això ací "eixe" → "aquest", igual
+que "este". "aqueix" seguix sent normatiu i pot aparéixer (rar) en textos
+orientals formals; en sentit invers (oriental → occidental), "aqueix"
+torna cap a "eixe", no cap a "este".
 
 ## 2. Possessius
 
@@ -239,17 +248,39 @@ calc del castellà.
 **Advertència d'aplicació**: a diferència de la resta de regles d'esta
 secció, esta no es pot aplicar com una simple substitució de text — cal
 identificar el gènere real del nom que acompanya "dos" en cada frase
-concreta abans de decidir si canvia o no.
+concreta abans de decidir si canvia o no. Precisament per això, "dos" no
+és un bon marcador per a detectar automàticament si un text és occidental
+o oriental: apareix legítimament als dos costats.
 
 ## 7. Adverbis, locucions i temps
 
 | Occidental | Oriental |
 |---|---|
-| a on | on |
 | hui | avui |
 | hui dia | avui dia |
 | vesprada / de vesprada | tarda / a la tarda |
 | ha sigut / han sigut / havia sigut | ha estat / han estat / havia estat |
+| cap a on | cap on |
+| dalt de | a dalt de |
+| baix de | a baix de (o "sota", més idiomàtic però no substituïble mecànicament) |
+
+### 7.1 "per a" davant d'infinitiu — proposta retirada
+
+Es va proposar que "per a" es reduïra a "per" davant d'infinitiu (*per a
+aprovar* → *per aprovar*), però l'auditoria del benchmark real (28/09/2026)
+ho contradiu: de 17 aparicions de "per a + infinitiu", cap la redueix a
+"per" — sempre es manté "per a". No s'aplica.
+
+### 7.2 Pendent de confirmar
+
+- **"a on" (sempre en occidental) → "on" (ubicació estàtica) / "a on" es
+  manté (direcció)**: l'oriental distingix "on és?" (estàtic) de "a on
+  vas?" (direccional); l'occidental col·lapsa els dos usos en "a on"
+  sempre. Encara sense prou evidència per a fixar quan aplica cada cas.
+- **"en" (occidental) → "a" (oriental) en construccions locatives**: p. ex.
+  possiblement "en Xàtiva" → "a Xàtiva" amb topònims, però NO en usos més
+  generals ("en la costa" es queda "en la costa"). Pendent de confirmar
+  l'abast exacte.
 
 ## 8. Formes morfològiques addicionals
 
@@ -397,6 +428,13 @@ transformar*).
 **Fiabilitat: 4/4** — són els únics 4 casos de pretèrit simple que
 apareixen en el benchmark de 60 frases, i les 4 referències ho converteixen
 a perifràstic sense excepció.
+
+**Nota important**: la forma perifràstica ("va + infinitiu") NO és
+exclusivament oriental — l'AVL també l'admet com a alternativa a la forma
+simple en valencià. Per això esta regla es tradueix sempre cap a
+perifràstic (és la direcció de conversió correcta), però la forma
+perifràstica en si mateixa no servix per a distingir si un text és
+occidental o oriental, perquè apareix als dos costats.
 
 ### 11.2 Elisió després d'aplicar una altra regla
 

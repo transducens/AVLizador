@@ -146,6 +146,50 @@ def preserva_majuscula(original: str, nova: str) -> str:
     return nova
 
 
+# Prefixos elidits reals de valencià/català: preposicions/articles (d'/l')
+# i pronoms febles (s'/m'/t'/n'), sempre una sola consonant + apòstrof.
+# "qu'" (de "que") s'exclou a propòsit: no és un cas real d'este projecte
+# (el corpus real no l'ha mostrat mai) i afegiria un fals positiu segur
+# amb "qu'" seguit d'una paraula que casualment estiga al diccionari.
+_PREFIX_ELIDIT_RE = re.compile(r"^([dlsmtn])['’](.+)$", re.IGNORECASE)
+
+
+def separa_prefix_elidit(surface: str) -> tuple[str, str] | None:
+    """Si `surface` és un prefix elidit ("d'", "l'", "s'", "m'", "t'",
+    "n'") enganxat a una paraula, torna `(prefix_amb_apostrof, resta)`; si
+    no, torna `None`.
+
+    Existix perquè el tokenitzador tracta l'apòstrof com a part de la
+    paraula (`tokenize()` mai talla "d'este" en dos tokens, vore la
+    decisió de disseny explicada dalt), així que un token com eixe MAI
+    casa amb una entrada de diccionari que espera la paraula solta
+    ("este"). Les regles de lookup exacte (`lexic.py`,
+    `conjugacions_dict.py`, `demostratius.py`, `numerals.py`,
+    `morfologia_verbal.py`) l'usen com a segon intent quan la cerca
+    directa amb `tok.surface.lower()` no troba res -- cerquen `resta` en
+    el seu diccionari i, si hi és, reconstruïxen el token com
+    `prefix_amb_apostrof + forma_traduïda`.
+
+    `gentilicis.py` i `perfet.py` no necessiten este helper: en compte
+    d'un lookup exacte per paraula sencera, apliquen un sufix/patró sobre
+    tot el `surface` (regex `.sub()` al final de la cadena), que ja
+    travessa qualsevol prefix sense necessitat de separar-lo primer.
+
+    >>> separa_prefix_elidit("d'este")
+    ("d'", 'este')
+    >>> separa_prefix_elidit("l’avui")
+    ('l’', 'avui')
+    >>> separa_prefix_elidit("este") is None
+    True
+    >>> separa_prefix_elidit("qu'este") is None
+    True
+    """
+    m = _PREFIX_ELIDIT_RE.match(surface)
+    if m is None:
+        return None
+    return surface[: m.end(1) + 1], m.group(2)
+
+
 def marca_noms_propis(tokens: list[Token]) -> None:
     """Marca com a possible nom propi (`is_proper_noun = True`) tot token
     que és una paraula, comença en majúscula, i NO és la primera paraula

@@ -35,11 +35,25 @@ occidental o oriental.
 | Occidental | Oriental |
 |---|---|
 | este / esta / estos / estes | aquest / aquesta / aquests / aquestes |
-| eixe / eixa / eixos / eixes | aqueix / aqueixa / aqueixos / aqueixes |
+| eixe / eixa / eixos / eixes | aquest / aquesta / aquests / aquestes |
 
 L'AVL també admet *aquest/aquesta* com a forma normativa pròpia — per això
 esta alternança és coneixement general de la variació dialectal, no una
 equivalència mecànica derivada directament d'un diccionari.
+
+**Decisió revisada (28/09/2026): "eixe" → "aquest", no "aqueix".** El
+sistema de 3 graus este/eixe/aquell → aquest/aqueix/aquell és el que
+admeten totes dos normatives sobre el paper, i és el que este projecte va
+implementar primer. Però en analitzar el benchmark real de qwen3:14b (el
+millor model provat) i el corpus sintètic generat, es va confirmar que
+l'ús oriental contemporani ha col·lapsat pràcticament del tot el 2n grau
+cap al 1r: "aqueix" es percep com a forma arcaica/literària, rara fora de
+registre molt formal; "aquest" cobrix en la pràctica els dos usos
+(proximitat al parlant I a l'oient). "aqueix" no desapareix del tot —
+seguix sent la forma normativa i encara pot aparéixer en textos orientals
+formals/literaris; si algun dia es fa traducció en sentit invers
+(oriental → occidental), "aqueix" ha de tornar cap a "eixe", no cap a
+"este".
 
 ## 2. Possessius
 
@@ -59,6 +73,8 @@ canvien.
 |---|---|
 | vos | us |
 
+Implementat a `traductor/data/lexico_fiable.json` (29/09/2026).
+
 ## 4. Infinitius irregulars
 
 | Occidental | Oriental |
@@ -72,6 +88,12 @@ canvien.
 
 Estos verbs deriven en formes conjugades pel mateix patró (p. ex. *tinga*
 ve de *tindre*) — veure secció 5.
+
+Implementat (29/09/2026): `traure→treure` via
+`traductor/rules/conjugacions_dict.py` (ve del diccionari de conjugacions
+de Mauricio, que ja el confirmava); la resta (`tindre`, `vindre`, `vore`,
+`eixir`, `valdre`) a `traductor/data/lexico_fiable.json`, com a parells
+solts (mateix criteri que `vosté/vostés`, vore A.2).
 
 ## 5. Morfologia verbal
 
@@ -103,6 +125,31 @@ manté *-go*/*-co* (*jugo*). No és una excepció al patró, és ortografia.
 |---|---|---|
 | jo | puga, tinga, vinga, vaja, siga, haja | pugui, tingui, vingui, vagi, sigui, hagi |
 | ells/elles | puguen, tinguen, vinguen, vagen, siguen, hagen | puguin, tinguin, vinguin, vagin, siguin, hagin |
+
+Ja implementat com a regla determinista (`traductor/rules/morfologia_verbal.py`,
+fase 2, llista tancada per al mateix motiu que 5.1). Confirmat com a error
+real en analitzar el benchmark de qwen3:14b (28/09/2026): fins i tot el
+millor model provat no aplicava esta conversió de manera fiable — este
+mòdul ara la cobrix de forma determinista, independentment del que faça
+qualsevol LLM.
+
+**Excepció trobada auditant el mateix benchmark**: "o siga" (locució fixa,
+equivalent a "és a dir") NO és el verb "ser" en subjuntiu — el gold
+reference del benchmark el deixa invariable als dos dialectes (RC067).
+`traductor/rules/morfologia_verbal.py` ho detecta mirant la paraula
+anterior i no toca "siga" quan ve just darrere de "o".
+
+**Troballa pendent de confirmar (29/09/2026, auditoria de
+`resultados_29_09_1236`)**: a RC110, "recupere" (present de subjuntiu de
+"recuperar", verb REGULAR de 1a conjugació) hauria de donar "recuperi" en
+oriental, patró que sembla el mateix "-e final → -i final" que la taula
+de dalt però aplicat a qualsevol verb regular, no només als 6 verbs
+irregulars llistats. El diccionari de conjugacions de Mauricio (secció
+A.4) NO inclou "recuperar" perquè només cobrix verbs amb alguna
+irregularitat — no confirma ni descarta la generalització. NO
+implementat: cal contrastar-ho contra Apertium abans de generalitzar per
+sufix (mateix risc que fase 1: moltíssimes paraules catalanes acaben en
+"-e" sense ser eixa forma verbal concreta).
 
 ### 5.3 Imperfet de subjuntiu
 
@@ -147,6 +194,10 @@ cobertura: l'accent tancat (é) de l'occidental correspon a l'accent obert
 |---|---|
 | sigut | estat |
 
+Implementat (29/09/2026) via `traductor/rules/conjugacions_dict.py` — ve
+del diccionari de conjugacions de Mauricio, que ja el confirmava dins de
+les formes del verb "ser".
+
 ### 5.6 Verbs incoatius (-ix / -eix)
 
 | Occidental | Oriental |
@@ -156,6 +207,23 @@ cobertura: l'accent tancat (é) de l'occidental correspon a l'accent obert
 
 Patró general: la 3a persona del present d'indicatiu dels verbs incoatius
 acaba en *-ix* en occidental i en *-eix* en oriental.
+
+Ja implementat com a regla determinista (`traductor/rules/morfologia_verbal.py`,
+fase 6), com a regla de SUFIX (no llista tancada, a diferència de 5.1/5.2)
+perquè la font ho documenta com a patró general. Confirmat com a error
+real en analitzar el benchmark de qwen3:14b (28/09/2026): el model no
+aplicava esta conversió de manera fiable.
+
+Dos proteccions afegides, totes dos trobades auditant el mateix benchmark
+(no per teoria): (1) mai toca paraules que ja acaben en "-eix" —
+`aparéixer`/`desaparéixer` ja porten l'infix incoatiu dins del propi
+infinitiu (a diferència d'`establir`), així que la seua 3a persona
+(`apareix`, `desapareix`) és idèntica als dos dialectes; sense esta
+exclusió la regla trencaria també `mateix` i `tanmateix`, que no són
+verbs. (2) llista negra de paraules catalanes reals acabades en consonant
++ "-ix" que NO són verbs incoatius (`baix`, `calaix`, `dibuix`, `guix`,
+`fix`, `prefix`, `sufix`) — sense esta protecció, "el calaix" es
+convertiria incorrectament en "el calaeix".
 
 ## 6. Numerals i altres patrons d'accent -é/-è
 
@@ -180,6 +248,25 @@ ordinals...):
 `díhuit` (18) és l'única excepció que **no** es deriva d'esta arrel: és una
 paraula pròpia, no un compost amb guionet, així que cal una entrada a part
 en lloc de dependre del patró huit→vuit.
+
+**Ampliació (29/09/2026, diccionari de numerals de Mauricio, vore A.4)**:
+les arrels "dinou"/"disset" segueixen el mateix fenomen dialectal (accent
+tancat en occidental, obert en oriental) però **no comparteixen cap
+subcadena** amb la seua forma oriental, així que no poden generalitzar-se
+amb una substitució com huit→vuit:
+
+| Occidental | Oriental |
+|---|---|
+| dènou | dinou |
+| dèsset | disset |
+| denovena, denovens, denovenes, denové | dinovena, dinovens, dinovenes, dinovè |
+| dessetena, dessetens, dessetenes, desseté | dissetena, dissetens, dissetenes, dissetè |
+
+Implementat a `traductor/rules/numerals.py` com a taula tancada de 10
+formes (mecanisme 4 del mòdul). La resta del diccionari de Mauricio per a
+numerals (166 entrades, tota la família huit/vuit) ja quedava coberta
+correctament per la substitució de subcadena existent, comprovat una a
+una — no calia cap canvi ahí.
 
 ### 6.1 Ordinals (-é → -è)
 
@@ -220,6 +307,14 @@ dialectes. No formen part d'este patró perquè no són gentilicis ni noms:
 són paraules gramaticals curtes que casualment acaben en la mateixa
 seqüència de lletres.
 
+Ja implementat com a regla determinista 100% fiable (`traductor/rules/gentilicis.py`).
+Nota: en analitzar el benchmark de qwen3:14b (28/09/2026) es va confirmar
+que, encara sent el patró millor documentat de tot este document (300+
+lemes), el model no l'aplicava de manera consistent — és un problema de
+compliment de l'LLM, no una mancança de la regla en si; reforçat al system
+prompt (`evalua_models.py`) amb una crida explícita a revisar totes les
+aparicions.
+
 ### 6.3 Numeral "dos" — concordança de gènere
 
 A diferència dels patrons anteriors, este no és un canvi de forma d'una
@@ -241,15 +336,79 @@ secció, esta no es pot aplicar com una simple substitució de text — cal
 identificar el gènere real del nom que acompanya "dos" en cada frase
 concreta abans de decidir si canvia o no.
 
+Ja implementat com a regla determinista (`traductor/rules/numerals.py`,
+concordança de gènere). Nota important: precisament perquè "dos" és vàlid
+per als dos gèneres en occidental, esta regla **no** es fa servir com a
+marcador dialectal en l'Índex de Puresa Dialectal (vore
+`metrica_puresa_dialectal.md`) — "dos" apareix legítimament en textos
+orientals per a masculí, així que comptar-lo com a senyal de contaminació
+donaria molts falsos positius.
+
+**Ampliació (29/09/2026, RC062)**: quan "dos" es referix ANAFÒRICAMENT a
+un nom ja dit abans a la mateixa frase, en compte del nom que ve darrere
+("*Les seues funcions es poden sintetitzar en dos:* establir les normes
+..."), la cerca cap avant no troba res (ve puntuació, ":") i la regla es
+rendia sense tocar "dos". Corregit amb un mecanisme addicional: quan no hi
+ha paraula darrere, la regla mira cap arrere buscant la paraula més
+pròxima que semble femenina, aturant-se en un final de frase real.
+Aprofitat per a ampliar també l'heurística de gènere amb el sufix
+"-ió"/"-ions" (*funcions*), fiable perquè pràcticament cap nom acabat així
+és masculí en català — a diferència de generalitzar més el "-a"/"-es" ja
+existent, que sí té excepcions conegudes.
+
 ## 7. Adverbis, locucions i temps
 
 | Occidental | Oriental |
 |---|---|
-| a on | on |
 | hui | avui |
 | hui dia | avui dia |
 | vesprada / de vesprada | tarda / a la tarda |
 | ha sigut / han sigut / havia sigut | ha estat / han estat / havia estat |
+| cap a on | cap on |
+| dalt de | a dalt de |
+| baix de | a baix de |
+
+Ja implementades com a regla determinista (`traductor/rules/locucions.py`):
+"cap a on"→"cap on" i "dalt de"/"baix de"→"a dalt de"/"a baix de" són
+substitucions literals sense ambigüitat. Nota: "baix de" també es pot dir
+"sota" en oriental (alternativa més idiomàtica), però no s'implementa eixa
+opció perquè no hi ha manera mecànica de triar entre les dos sense mirar
+el registre de la frase.
+
+### 7.1 "per a" davant d'infinitiu — proposta RETIRADA
+
+Es va proposar inicialment que "per a" es reduïra a "per" davant
+d'infinitiu (patró que sí existix en certes tradicions prescriptives del
+català: *per a aprovar* → *per aprovar*). **Retirada després d'auditar el
+benchmark real (28/09/2026)**: de les 17 aparicions de "per a + infinitiu"
+en les 150 frases, **cap ni una** la referència oriental la reduïx a
+"per" — sempre es manté "per a" (p.ex. "per a traure'n" → "per a
+treure'n", mai "per treure'n"). El registre institucional/normatiu
+d'este corpus no aplica eixa reducció. NO implementada a
+`traductor/rules/locucions.py` per este motiu.
+
+### 7.2 Pendent de confirmar: "a on" i "en" → "a"
+
+Dos patrons detectats en analitzar el benchmark de qwen3:14b, documentats
+ací com a candidats però **no implementats encara** com a regla:
+
+- **"a on" (occidental sempre) → "on" (ubicació estàtica) / "a on" (direcció,
+  es manté)**: l'occidental col·lapsa ubicació i direcció en "a on" sempre;
+  l'oriental distingix "on és?" (estàtic) de "a on vas?" (direccional).
+  Decidir automàticament si una frase és estàtica o direccional exigiria
+  detectar un verb de moviment en la clàusula — una heurística molt més
+  fràgil que les de la secció 7.1, i encara no hi ha evidència suficient de
+  com de sovint fallaria. No implementat a `traductor/rules/` per este
+  motiu; el system prompt de l'LLM (`evalua_models.py`) sí manté
+  provisionalment la conversió simple "a on" → "on" en qualsevol cas,
+  sabent que és incorrecta per als casos direccionals.
+- **"en" (occidental, sempre) → "a" (oriental, en construccions locatives)**:
+  detectat en analitzar el corpus, però **contradiu directament** una
+  protecció ja existent al system prompt (`evalua_models.py`), afegida
+  després de trobar un error real: un model canviava "en la costa" per "a
+  la costa" incorrectament. Pendent de confirmar l'abast exacte abans de
+  tocar cap regla — probablement només aplica a topònims concrets (p.ex.
+  "en Xàtiva" → "a Xàtiva"), no a qualsevol ús locatiu de "en".
 
 ## 8. Formes morfològiques addicionals
 
@@ -398,6 +557,18 @@ transformar*).
 apareixen en el benchmark de 60 frases, i les 4 referències ho converteixen
 a perifràstic sense excepció.
 
+**Nota important sobre la forma perifràstica en occidental**: la forma
+"va + infinitiu" NO és exclusivament oriental — també és acceptada i
+d'ús comú en valencià (l'AVL l'admet com a alternativa a la forma simple).
+Per això esta regla es tradueix sempre cap a perifràstic quan es detecta
+la forma simple (és la direcció de conversió correcta), però la forma
+perifràstica en si mateixa **no és un marcador dialectal fiable**: no
+serveix per a detectar si un text és occidental o oriental, perquè
+apareix als dos costats. Per este motiu l'Índex de Puresa Dialectal (vore
+`metrica_puresa_dialectal.md`) NOMÉS usa el costat occidental d'esta
+regla (les terminacions -à/-aren/-àrem/-àreu) com a marcador, mai
+"va"/"van"/"vam"/"vau".
+
 ### 11.2 Elisió després d'aplicar una altra regla
 
 Quan una substitució (lèxica o morfològica) produeix una paraula que
@@ -407,6 +578,31 @@ immediatament anterior: *de* → *d'*, *la*/*el* → *l'*. Per exemple,
 escalfar-nos". No és una regla dialectal en si mateixa — és ortografia
 catalana general que cal aplicar cada vegada que una altra regla la
 dispara.
+
+**Excepció confirmada (29/09/2026)**: "la" (mai "el" ni "de") no elideix
+davant de cap paraula que comença per la lletra "i" o "u", siga quina siga
+la síl·laba tònica: *la intenció, la idea, la universitat* (mai
+*l'intenció/l'idea/l'universitat*), mentre que "el"/"de" sí elidixen amb
+normalitat davant les mateixes paraules (*l'univers, d'idea*). No és un
+fenomen fonètic sinó una convenció ortogràfica per a no perdre la
+distinció de gènere en la lectura: si "la" també elidira, "l'univers"
+seria ambigu entre masculí i femení. Implementat a
+`traductor/rules/elisio.py`.
+
+### 11.2.1 Prefixos elidits i lookup exacte
+
+Bug transversal trobat el 29/09/2026: el tokenitzador tracta l'apòstrof
+com a part de la paraula (`d'este`, `s'oferisca`, `n'hagen` arriben com UN
+sol token), així que qualsevol regla que faça lookup EXACTE contra un
+diccionari (demostratius, lèxic, conjugacions, ordinals/numerals, fases
+1/2 de morfologia verbal) no trobava mai "este" dins de "d'este" — el
+token sencer mai coincidix amb l'entrada del diccionari. Corregit amb un
+helper compartit (`separa_prefix_elidit` a `traductor/rules/__init__.py`)
+que cada regla de lookup exacte usa com a segon intent quan la cerca
+directa falla. Les regles basades en sufix (`gentilicis.py`, `perfet.py`)
+no tenien este problema perquè ja operaven sobre tot el token amb `.sub()`
+al final de la cadena, travessant qualsevol prefix sense necessitat de
+separar-lo.
 
 ### 11.3 Pendent de confirmar: "a/al + infinitiu" → "en + infinitiu"
 
@@ -470,8 +666,8 @@ i masculí plural (2/4, 2/6).
 
 ### A.3 Lèxic diferencial: com s'ha construït
 
-`lexico_fiable.json` (194 parelles, fitxer d'esta mateixa carpeta) ve de
-tres fonts, totes confirmades, cap inventada:
+`lexico_fiable.json` (347 parelles, fitxer d'esta mateixa carpeta) ve de
+quatre fonts, totes confirmades, cap inventada:
 
 - 31 parelles de les 368 formes que Apertium marca explícitament com a
   valencianes (`v="val_gva"` exclusiu), amb la seua forma catalana
@@ -481,6 +677,40 @@ tres fonts, totes confirmades, cap inventada:
   originals, dels quals 73 ja coincidien als dos dialectes i uns altres es
   van descartar per estar ja coberts per una regla general — numerals,
   possessius, "vesprada"... — o per reduir-se a una paraula ja inclosa).
+- 150 parelles del diccionari de Mauricio (29/09/2026, vore A.4), més 3
+  parells solts que ja estaven documentats a les seccions 3/4 d'este
+  document però encara no implementats (`vos→us`, `tindre→tenir`,
+  `vindre→venir`, `vore→veure`, `eixir→sortir`, `valdre→valer`).
 
 Vore `../documentacion/metodologia_y_resultados.md` per al detall complet del procés i dels
 bugs trobats en auditar el corpus generat amb este lèxic.
+
+### A.4 Diccionari de Mauricio (equip AVLizador, 29/09/2026)
+
+Mauricio (company d'equip) va compartir un diccionari català-valencià en
+4 fitxers, basat majoritàriament en l'apertium bilingüe català-castellà,
+guardats a `lexico/font_mauricio/` (vore el README d'eixa carpeta per al
+detall exacte de què es va incorporar i què no, fitxer per fitxer). Resum:
+
+- **Conjugacions** (969 formes, 111 verbs): la font més valuosa —
+  lookup exacte de formes verbals que `morfologia_verbal.py` no podia
+  generalitzar per sufix sense arriscar-se a falsos positius (secció 5).
+  Implementat quasi sencer a `traductor/rules/conjugacions_dict.py`
+  (vore eixe mòdul). 65 formes marcades "problematica" (mateixa
+  forma en valencià per a indicatiu i subjuntiu, p. ex. "abalance")
+  s'exclouen del lookup automàtic per manca d'un mecanisme de
+  desambiguació sense pos-tagging.
+- **Lèxic general** (611 entrades): 150 incorporades a `lexico_fiable.json`
+  (vore A.3). 73 són topònims (`v:top_gva`) que el motor NO pot aplicar
+  mai perquè protegix tots els noms propis — pendent una decisió de
+  disseny separada sobre si els topònims s'han de traduir en absolut.
+  151 marcades `_PENDENT` (sense verificar) es van excloure sistemàticament.
+- **Accentuació** (694 entrades, patró -és/-è i similars): no calia
+  incorporar-la com a dades noves, es va usar per VALIDAR que les
+  excepcions ja trobades empíricament a `gentilicis.py` (secció 6.2:
+  "només", "procés", "congrés", "accés", "progrés", "través") són
+  correctes — cap d'elles apareix en esta llista de 694 paraules que sí
+  segueixen el patró.
+- **Numerals** (180 entrades): només 10 eren noves (arrels
+  "dinou"/"disset", vore secció 6); la resta ja quedava coberta per la
+  substitució de subcadena huit→vuit existent.

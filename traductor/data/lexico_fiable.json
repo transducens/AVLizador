@@ -1,6 +1,6 @@
 {
-  "total_entradas": 194,
-  "descripcion": "Lexico fiable, revisado a mano, que sustituye a palabras_traducidas.json en el pipeline de generacion del corpus. Cada entrada indica su origen ('apertium' = confirmado en el diccionario Apertium; 'paula_guerrero' = fuente externa curada). Anadir palabras nuevas editando este JSON directamente.",
+  "total_entradas": 347,
+  "descripcion": "Lexico fiable, revisado a mano, que sustituye a palabras_traducidas.json en el pipeline de generacion del corpus. Cada entrada indica su origen ('apertium' = confirmado en el diccionario Apertium; 'paula_guerrero' = fuente externa curada; 'mauricio_apertium' = diccionario catalan-valenciano de Mauricio, equipo AVLizador, tambien basado en Apertium, 29/09/2026 -- filtrado para excluir entradas '_PENDENT' sin verificar, topónimos (necesitan una decision de diseño aparte porque el motor protege los nombres propios de traduccion), y casos donde ya existia una entrada manual previa, que siempre tiene prioridad). Anadir palabras nuevas editando este JSON directamente.",
   "entradas": [
     {
       "valenciano": [
@@ -2280,6 +2280,1935 @@
       "categoria": "palabra",
       "origen": "paula_guerrero",
       "grupo": "Determiners & possessives"
+    },
+    {
+      "valenciano": [
+        "abraç"
+      ],
+      "catalan": [
+        "abraçada"
+      ],
+      "castellano": [
+        "abrazo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "abreviació"
+      ],
+      "catalan": [
+        "abreujament"
+      ],
+      "castellano": [
+        "abreviamiento"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "agranament"
+      ],
+      "catalan": [
+        "escombratge"
+      ],
+      "castellano": [
+        "barrido"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "albergina"
+      ],
+      "catalan": [
+        "albergínia"
+      ],
+      "castellano": [
+        "berenjena"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "algepser"
+      ],
+      "catalan": [
+        "guixaire"
+      ],
+      "castellano": [
+        "escayolista"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "alçar"
+      ],
+      "catalan": [
+        "aixecar"
+      ],
+      "castellano": [
+        "levantar"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "ametlat"
+      ],
+      "catalan": [
+        "ametllat"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "anouer"
+      ],
+      "catalan": [
+        "noguera"
+      ],
+      "castellano": [
+        "nogal"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "arena"
+      ],
+      "catalan": [
+        "sorra"
+      ],
+      "castellano": [
+        "arena"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "arenera"
+      ],
+      "catalan": [
+        "sorral"
+      ],
+      "castellano": [
+        "arenero"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "arredoniment"
+      ],
+      "catalan": [
+        "arrodoniment"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "arreplegar"
+      ],
+      "catalan": [
+        "recollir"
+      ],
+      "castellano": [
+        "recoger"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "autoservici"
+      ],
+      "catalan": [
+        "autoservei"
+      ],
+      "castellano": [
+        "autoservicio"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "avitarda"
+      ],
+      "catalan": [
+        "pioc salvatge"
+      ],
+      "castellano": [
+        "avutarda"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "banyar"
+      ],
+      "catalan": [
+        "mullar"
+      ],
+      "castellano": [
+        "mojar"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "baralla"
+      ],
+      "catalan": [
+        "renyina"
+      ],
+      "castellano": [
+        "riña"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "batlessa"
+      ],
+      "catalan": [
+        "batllessa"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "blanca"
+      ],
+      "catalan": [
+        "garsa"
+      ],
+      "castellano": [
+        "urraca"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "bollir"
+      ],
+      "catalan": [
+        "bullir"
+      ],
+      "castellano": [
+        "hervir"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "bou"
+      ],
+      "catalan": [
+        "toro"
+      ],
+      "castellano": [
+        "toro"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "bragues"
+      ],
+      "catalan": [
+        "calces"
+      ],
+      "castellano": [
+        "bragas"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "buc"
+      ],
+      "catalan": [
+        "rusc"
+      ],
+      "castellano": [
+        "colmena"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "bullici"
+      ],
+      "catalan": [
+        "renou"
+      ],
+      "castellano": [
+        "bullicio"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "busca"
+      ],
+      "catalan": [
+        "cerca"
+      ],
+      "castellano": [
+        "búsqueda"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "calfador"
+      ],
+      "catalan": [
+        "escalfador"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "caparra"
+      ],
+      "catalan": [
+        "paparra"
+      ],
+      "castellano": [
+        "garrapata"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "capsot"
+      ],
+      "catalan": [
+        "capsigrany"
+      ],
+      "castellano": [
+        "alcaudón"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "carinyo"
+      ],
+      "catalan": [
+        "afecte"
+      ],
+      "castellano": [
+        "cariño"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "carència"
+      ],
+      "catalan": [
+        "manca"
+      ],
+      "castellano": [
+        "carencia"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "castic"
+      ],
+      "catalan": [
+        "càstig"
+      ],
+      "castellano": [
+        "castigo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "cercar"
+      ],
+      "catalan": [
+        "buscar"
+      ],
+      "castellano": [
+        "buscar"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "clivella"
+      ],
+      "catalan": [
+        "esquerda"
+      ],
+      "castellano": [
+        "grieta"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "clivellar"
+      ],
+      "catalan": [
+        "esquerdar"
+      ],
+      "castellano": [
+        "agrietar"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "codesenrotllament"
+      ],
+      "catalan": [
+        "codesenvolupament"
+      ],
+      "castellano": [
+        "codesarrollo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "condol"
+      ],
+      "catalan": [
+        "condolença"
+      ],
+      "castellano": [
+        "condolencia"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "construcció"
+      ],
+      "catalan": [
+        "obra de paleta"
+      ],
+      "castellano": [
+        "albañilería"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "contraorde"
+      ],
+      "catalan": [
+        "contraordre"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "cotiledó"
+      ],
+      "catalan": [
+        "cotilèdon"
+      ],
+      "castellano": [
+        "cotiledón"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "crebalòs"
+      ],
+      "catalan": [
+        "trencalòs"
+      ],
+      "castellano": [
+        "quebrantahuesos"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "cullerot"
+      ],
+      "catalan": [
+        "capgròs"
+      ],
+      "castellano": [
+        "renacuajo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "debilitar"
+      ],
+      "catalan": [
+        "afeblir"
+      ],
+      "castellano": [
+        "debilitar"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "defendre"
+      ],
+      "catalan": [
+        "defensar"
+      ],
+      "castellano": [
+        "defender"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "desbrossar"
+      ],
+      "catalan": [
+        "esbrossar"
+      ],
+      "castellano": [
+        "desbrozar"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "desemmotlatge"
+      ],
+      "catalan": [
+        "desemmotllatge"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "desenrotllador"
+      ],
+      "catalan": [
+        "desenvolupador"
+      ],
+      "castellano": [
+        "desarrollador"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "desenrotllament"
+      ],
+      "catalan": [
+        "desenvolupament"
+      ],
+      "castellano": [
+        "desarrollo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "desenrotllar"
+      ],
+      "catalan": [
+        "desenvolupar"
+      ],
+      "castellano": [
+        "desarrollar"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "desorde"
+      ],
+      "catalan": [
+        "desordre"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "desvetlament"
+      ],
+      "catalan": [
+        "desvetllament"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "dosificar"
+      ],
+      "catalan": [
+        "dosar"
+      ],
+      "castellano": [
+        "dosificar"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "eixir"
+      ],
+      "catalan": [
+        "sortir"
+      ],
+      "castellano": [
+        "salir"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "embossament"
+      ],
+      "catalan": [
+        "embussament"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "encollir"
+      ],
+      "catalan": [
+        "encongir"
+      ],
+      "castellano": [
+        "encoger"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "engolir"
+      ],
+      "catalan": [
+        "empassar"
+      ],
+      "castellano": [
+        "tragar"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "enllandar"
+      ],
+      "catalan": [
+        "enllaunar"
+      ],
+      "castellano": [
+        "enlatar"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "ensenyança"
+      ],
+      "catalan": [
+        "ensenyament"
+      ],
+      "castellano": [
+        "enseñanza"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "entregar"
+      ],
+      "catalan": [
+        "lliurar"
+      ],
+      "castellano": [
+        "entregar"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "envernissadora"
+      ],
+      "catalan": [
+        "vernissadora"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "esbargiment"
+      ],
+      "catalan": [
+        "esbarjo"
+      ],
+      "castellano": [
+        "recreo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "esvarar"
+      ],
+      "catalan": [
+        "lliscar"
+      ],
+      "castellano": [
+        "deslizar"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "euroorde"
+      ],
+      "catalan": [
+        "euroordre"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "exbatle"
+      ],
+      "catalan": [
+        "exbatlle"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "exbatlessa"
+      ],
+      "catalan": [
+        "exbatllessa"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "exitós"
+      ],
+      "catalan": [
+        "reeixit"
+      ],
+      "castellano": [
+        "exitoso"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "falcia"
+      ],
+      "catalan": [
+        "falciot"
+      ],
+      "castellano": [
+        "vencejo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "febra"
+      ],
+      "catalan": [
+        "febre"
+      ],
+      "castellano": [
+        "fiebre"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "ferramenta"
+      ],
+      "catalan": [
+        "eina"
+      ],
+      "castellano": [
+        "herramienta"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "firma"
+      ],
+      "catalan": [
+        "signatura"
+      ],
+      "castellano": [
+        "firma"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "firmant"
+      ],
+      "catalan": [
+        "signant"
+      ],
+      "castellano": [
+        "firmante"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "firmar"
+      ],
+      "catalan": [
+        "signar"
+      ],
+      "castellano": [
+        "firmar"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "firmat"
+      ],
+      "catalan": [
+        "signat"
+      ],
+      "castellano": [
+        "fdo."
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "floricol"
+      ],
+      "catalan": [
+        "coliflor"
+      ],
+      "castellano": [
+        "coliflor"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "gasto"
+      ],
+      "catalan": [
+        "despesa"
+      ],
+      "castellano": [
+        "gasto"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "graníssol"
+      ],
+      "catalan": [
+        "calamarsa"
+      ],
+      "castellano": [
+        "granizo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "hamaca"
+      ],
+      "catalan": [
+        "gandula"
+      ],
+      "castellano": [
+        "tumbona"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "helidepòsit"
+      ],
+      "catalan": [
+        "helidipòsit"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "hereua"
+      ],
+      "catalan": [
+        "hereu"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "huitantena"
+      ],
+      "catalan": [
+        "vuitantena"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "i+d"
+      ],
+      "catalan": [
+        "R+D"
+      ],
+      "castellano": [
+        "I+D"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "i+d+i"
+      ],
+      "catalan": [
+        "R+D+I"
+      ],
+      "castellano": [
+        "I+D+i"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "interservici"
+      ],
+      "catalan": [
+        "interservei"
+      ],
+      "castellano": [
+        "interservicio"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "invadir"
+      ],
+      "catalan": [
+        "envair"
+      ],
+      "castellano": [
+        "invadir"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "juí"
+      ],
+      "catalan": [
+        "judici"
+      ],
+      "castellano": [
+        "juicio"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "llima"
+      ],
+      "catalan": [
+        "llimona"
+      ],
+      "castellano": [
+        "limón"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "llimó"
+      ],
+      "catalan": [
+        "llimona"
+      ],
+      "castellano": [
+        "limón"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "medició"
+      ],
+      "catalan": [
+        "amidament"
+      ],
+      "castellano": [
+        "medición"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "mentres"
+      ],
+      "catalan": [
+        "mentre"
+      ],
+      "castellano": [
+        "en tanto en cuanto"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "mesclar"
+      ],
+      "catalan": [
+        "barrejar"
+      ],
+      "castellano": [
+        "mezclar"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "mitat"
+      ],
+      "catalan": [
+        "meitat"
+      ],
+      "castellano": [
+        "mitad"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "mànega"
+      ],
+      "catalan": [
+        "màniga"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "navaixa"
+      ],
+      "catalan": [
+        "navalla"
+      ],
+      "castellano": [
+        "navaja"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "neurodesenrotllament"
+      ],
+      "catalan": [
+        "neurodesenvolupament"
+      ],
+      "castellano": [
+        "neurodesarrollo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "octau"
+      ],
+      "catalan": [
+        "vuitè"
+      ],
+      "castellano": [
+        "octavo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "orde"
+      ],
+      "catalan": [
+        "ordre"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "parada"
+      ],
+      "catalan": [
+        "aturada"
+      ],
+      "castellano": [
+        "parón"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "patir"
+      ],
+      "catalan": [
+        "sofrir"
+      ],
+      "castellano": [
+        "sufrir"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "perjuí"
+      ],
+      "catalan": [
+        "perjudici"
+      ],
+      "castellano": [
+        "perjuicio"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "petit"
+      ],
+      "catalan": [
+        "menut"
+      ],
+      "castellano": [
+        "pequeño"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "plurianual"
+      ],
+      "catalan": [
+        "pluriennal"
+      ],
+      "castellano": [
+        "plurianual"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "poal"
+      ],
+      "catalan": [
+        "galleda"
+      ],
+      "castellano": [
+        "cubo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "polit"
+      ],
+      "catalan": [
+        "gall dindi"
+      ],
+      "castellano": [
+        "pavo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "polsar"
+      ],
+      "catalan": [
+        "prémer"
+      ],
+      "castellano": [
+        "pulsar"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "portada"
+      ],
+      "catalan": [
+        "cop de porta"
+      ],
+      "castellano": [
+        "portazo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "postservici"
+      ],
+      "catalan": [
+        "postservei"
+      ],
+      "castellano": [
+        "postservicio"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "postvacacions"
+      ],
+      "catalan": [
+        "postvacances"
+      ],
+      "castellano": [
+        "posvacacional"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "prejuí"
+      ],
+      "catalan": [
+        "prejudici"
+      ],
+      "castellano": [
+        "prejuicio"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "quint"
+      ],
+      "catalan": [
+        "cinquè"
+      ],
+      "castellano": [
+        "quinto"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "rajola"
+      ],
+      "catalan": [
+        "maó"
+      ],
+      "castellano": [
+        "ladrillo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "recalfament"
+      ],
+      "catalan": [
+        "reescalfament"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "recalfat"
+      ],
+      "catalan": [
+        "reescalfat"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "redolament"
+      ],
+      "catalan": [
+        "rodolament"
+      ],
+      "castellano": [
+        "rodadura"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "renyó"
+      ],
+      "catalan": [
+        "ronyó"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "rogenc"
+      ],
+      "catalan": [
+        "vermellós"
+      ],
+      "castellano": [
+        "rojizo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "sext"
+      ],
+      "catalan": [
+        "sisè"
+      ],
+      "castellano": [
+        "sexto"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "sinagües"
+      ],
+      "catalan": [
+        "enagos"
+      ],
+      "castellano": [
+        "refajo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "sobrecalfador"
+      ],
+      "catalan": [
+        "sobreescalfador"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "sobreeixir"
+      ],
+      "catalan": [
+        "sobresortir"
+      ],
+      "castellano": [
+        "sobresalir"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "soja"
+      ],
+      "catalan": [
+        "soia"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "solejar"
+      ],
+      "catalan": [
+        "assolellar"
+      ],
+      "castellano": [
+        "asolear"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "solejat"
+      ],
+      "catalan": [
+        "assolellat"
+      ],
+      "castellano": [
+        "soleado"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "solsida"
+      ],
+      "catalan": [
+        "ensorrament"
+      ],
+      "castellano": [
+        "derrumbe"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "subdesenrotlladament"
+      ],
+      "catalan": [
+        "subdesenvolupadament"
+      ],
+      "castellano": [
+        "subdesarrolladamente"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "subdesenrotllament"
+      ],
+      "catalan": [
+        "subdesenvolupament"
+      ],
+      "castellano": [
+        "subdesarrollo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "subdesenrotllar"
+      ],
+      "catalan": [
+        "subdesenvolupar"
+      ],
+      "castellano": [
+        "subdesarrollar"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "subdesenrotllat"
+      ],
+      "catalan": [
+        "subdesenvolupat"
+      ],
+      "castellano": [
+        "subdesarrollado"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "suborde"
+      ],
+      "catalan": [
+        "subordre"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "subsecretari"
+      ],
+      "catalan": [
+        "sotssecretari"
+      ],
+      "castellano": [
+        "subsecretario"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "subsecretaria"
+      ],
+      "catalan": [
+        "sotssecretaria"
+      ],
+      "castellano": [
+        "subsecretaría"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "superorde"
+      ],
+      "catalan": [
+        "superordre"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "sèptim"
+      ],
+      "catalan": [
+        "setè"
+      ],
+      "castellano": [
+        "séptimo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "tancat"
+      ],
+      "catalan": [
+        "clos"
+      ],
+      "castellano": [
+        "vallado"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "tardar"
+      ],
+      "catalan": [
+        "trigar"
+      ],
+      "castellano": [
+        "tardar"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "telefonar"
+      ],
+      "catalan": [
+        "trucar per telèfon"
+      ],
+      "castellano": [
+        "llamar por teléfono"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "teleservici"
+      ],
+      "catalan": [
+        "teleservei"
+      ],
+      "castellano": [
+        "teleservicio"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "terrerola"
+      ],
+      "catalan": [
+        "alosa"
+      ],
+      "castellano": [
+        "alondra"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "teuladí"
+      ],
+      "catalan": [
+        "pardal"
+      ],
+      "castellano": [
+        "gorrión"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "timó"
+      ],
+      "catalan": [
+        "farigola"
+      ],
+      "castellano": [
+        "tomillo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "torrentada"
+      ],
+      "catalan": [
+        "rierada"
+      ],
+      "castellano": [
+        "arroyada"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "trellat"
+      ],
+      "catalan": [
+        "seny"
+      ],
+      "castellano": [
+        "cordura"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "vacacions"
+      ],
+      "catalan": [
+        "vacances"
+      ],
+      "castellano": [
+        "vacaciones"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "verdader"
+      ],
+      "catalan": [
+        "veritable"
+      ],
+      "castellano": [
+        "verdadero"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "verdaderament"
+      ],
+      "catalan": [
+        "veritablement"
+      ],
+      "castellano": [
+        "verdaderamente"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "vesprada"
+      ],
+      "catalan": [
+        "tard"
+      ],
+      "castellano": [
+        "tarde"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "viudo"
+      ],
+      "catalan": [
+        "vidu"
+      ],
+      "castellano": [
+        "viudo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "vivenda"
+      ],
+      "catalan": [
+        "habitatge"
+      ],
+      "castellano": [
+        "vivienda"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "vora"
+      ],
+      "catalan": [
+        "riba"
+      ],
+      "castellano": [
+        "orilla"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "xafada"
+      ],
+      "catalan": [
+        "calcigament"
+      ],
+      "castellano": [
+        "pisoteo"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "xafar"
+      ],
+      "catalan": [
+        "trepitjar"
+      ],
+      "castellano": [
+        "pisar"
+      ],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "xarradissa"
+      ],
+      "catalan": [
+        "xerradissa"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "xarrera"
+      ],
+      "catalan": [
+        "xerrera"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "mauricio_apertium"
+    },
+    {
+      "valenciano": [
+        "vindre"
+      ],
+      "catalan": [
+        "venir"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "reglas_dialectales_con_evidencia_S4"
+    },
+    {
+      "valenciano": [
+        "valdre"
+      ],
+      "catalan": [
+        "valer"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "reglas_dialectales_con_evidencia_S4"
+    },
+    {
+      "valenciano": [
+        "vos"
+      ],
+      "catalan": [
+        "us"
+      ],
+      "castellano": [],
+      "categoria": "palabra",
+      "origen": "reglas_dialectales_con_evidencia_S3"
     }
   ]
 }

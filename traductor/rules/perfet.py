@@ -41,9 +41,34 @@ com a estratègia general -- eixe camí no acaba mai (sempre apareixerà una
 altra paraula catalana acabada en -à que no siga verb); tallar la
 terminació sencera quan les dades mostren 0% de precisió és la resposta
 correcta, no apedaçar cas a cas.
+
+BUG GREU trobat en auditar el benchmark de 150 frases (28/09/2026): la
+terminació "-à" també casa amb el FUTUR de qualsevol verb de 1a conjugació
+("celebrarà", futur, casava igual que "celebrà", pretèrit simple), perquè
+el futur s'assumix afegint "à" a l'INFINITIU sencer (celebrar+à), mentre
+el pretèrit simple l'afig a l'arrel (celebr+à). El resultat era un doble
+sufix absurd: "celebrarà" -> "va celebrarar". Corregit exigint que la
+terminació "-à" NO estiga precedida de "ar" (eixe patró és exclusiu del
+futur: infinitiu(-ar) + à). Coneguda limitació d'esta correcció: un verb
+rar el radical del qual ja acabara en "ar" abans de llevar la terminació
+d'infinitiu (p.ex. "declarar" -> arrel "declar", pretèrit "declarà") es
+quedaria sense convertir -- fals negatiu acceptat davant l'alternativa
+(el fals positiu, molt més freqüent: 7 casos trobats en 150 frases només
+amb verbs regulars en futur).
+
+PENDENT, NO RESOLT: verbs IRREGULARS en futur (radical futur no derivat de
+l'infinitiu sencer) seguixen col·lidint, perquè no acaben en "-arà" sinó
+en "-rà" a soles: "tindrà" (tindre), "podrà" (poder), "veurà" (veure),
+"resoldrà" (resoldre), "entendrà" (entendre), "caldrà" (caldre), "permetrà"
+(permetre) -- tots trobats produint garbage ("va tindrar", "va podrar"...)
+en auditar el benchmark de 150 frases. No s'ha construït encara una llista
+negra d'arrels irregulars de futur (calen ~15-20 verbs catalans d'ús molt
+freqüent); queda com a treball pendent, documentat ací per a no oblidar-ho.
 """
 
 from __future__ import annotations
+
+import re
 
 from . import Token
 
@@ -54,14 +79,26 @@ _TERMINACIONS_PERFET = [
     ("à", "va"),
 ]
 
+# El futur d'1a conjugació s'afig sobre l'INFINITIU sencer (celebrar+à ->
+# "celebrarà"), mentre el pretèrit simple s'afig sobre l'arrel (celebr+à
+# -> "celebrà") -- per això, si la terminació "-à" ve precedida de "ar",
+# és futur, no pretèrit, i no s'ha de tocar (vore BUG GREU al docstring).
+_FUTUR_RE = re.compile(r"arà$", re.IGNORECASE)
+
 # Falsos positius CONFIRMATS de la terminació "-à" (vore taula de dades
 # dalt): "està" (present d'indicatiu d'"estar", irregular -- no pretèrit
 # simple; produïa l'incorrecte "va estar", canviant el TEMPS de la frase),
-# "valencià"/"castellà" (gentilicis, no verbs; produïen "va valenciar"/
-# "va castellar"), "català" (mateix patró, exclòs per analogia encara que
-# no haja eixit al benchmark). `is_proper_noun` no cobrix estos casos --
-# només protegix noms propis, no gentilicis ni verbs irregulars.
-_FALSOS_POSITIUS_CONEGUTS = {"està", "valencià", "català", "castellà"}
+# "valencià"/"castellà"/"català"/"italià"/"romà" (gentilicis/adjectius, no
+# verbs; produïen "va valenciar"/"va castellar"/"va italiar"/"va romar"),
+# "mitjà" (substantiu "mitjà de comunicació", no verb; "va mitjar"),
+# "endemà" (substantiu "l'endemà", no verb; "va endemar"), "enllà" (adverbi
+# "més enllà", no verb; "va enllar"). `is_proper_noun` no cobrix estos
+# casos -- només protegix noms propis, no gentilicis, adjectius,
+# substantius o verbs irregulars.
+_FALSOS_POSITIUS_CONEGUTS = {
+    "està", "valencià", "català", "castellà", "italià", "romà",
+    "mitjà", "endemà", "enllà",
+}
 
 
 def _reconstrueix_perifrastic(paraula: str) -> str | None:
@@ -97,9 +134,49 @@ def _reconstrueix_perifrastic(paraula: str) -> str | None:
     True
     >>> _reconstrueix_perifrastic("cantares") is None
     True
+
+    El futur ("celebrarà", "reservarà"...) mai es confon amb el pretèrit
+    simple ("celebrà"), encara que abans d'esta correcció "celebrarà"
+    produïa l'absurd "va celebrarar" (vore BUG GREU al docstring del mòdul):
+
+    >>> _reconstrueix_perifrastic("celebrarà") is None
+    True
+    >>> _reconstrueix_perifrastic("celebrà")
+    'va celebrar'
+
+    Adjectius/substantius que casualment acaben en "-à" sense ser verbs,
+    trobats auditant el benchmark de 150 frases:
+
+    >>> _reconstrueix_perifrastic("italià") is None
+    True
+    >>> _reconstrueix_perifrastic("romà") is None
+    True
+    >>> _reconstrueix_perifrastic("mitjà") is None
+    True
+    >>> _reconstrueix_perifrastic("endemà") is None
+    True
+
+    La llista negra protegix igual si la paraula arriba amb un prefix
+    elidit enganxat (mateix problema ja trobat a gentilicis.py):
+
+    >>> _reconstrueix_perifrastic("l'endemà") is None
+    True
+
+    ...i igual amb l'apòstrof tipogràfic (’), el que fa servir de veres el
+    corpus real:
+
+    >>> _reconstrueix_perifrastic("l’endemà") is None
+    True
     """
     minuscules = paraula.lower()
-    if minuscules in _FALSOS_POSITIUS_CONEGUTS:
+    # "l'endemà"/"s'assemblà" arriben com un sol token (l'apòstrof és part
+    # de la paraula, vore rules/__init__.py) -- la llista negra ha de
+    # comprovar-se sobre la part real de la paraula, no sobre el token
+    # sencer amb el prefix elidit davant (mateix problema ja trobat i
+    # arreglat a gentilicis.py). El tokenitzador accepta tant l'apòstrof
+    # recte (') com el tipogràfic (’, el que fa servir de veres el corpus).
+    paraula_real = re.split(r"['’]", minuscules)[-1]
+    if paraula_real in _FALSOS_POSITIUS_CONEGUTS or _FUTUR_RE.search(paraula_real):
         return None
     for sufix, pronom in _TERMINACIONS_PERFET:
         if minuscules.endswith(sufix) and len(minuscules) > len(sufix):

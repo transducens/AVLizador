@@ -40,8 +40,8 @@ de texto sobre la frase entera:
 ```
 texto ──tokenize()──▶ [Token, Token, ...] ──marca_noms_propis()──▶
     ──▶ LexicRule ──▶ DemostratiusRule ──▶ PossessiusRule ──▶ NumeralsRule
-    ──▶ GentilicisRule ──▶ MorfologiaVerbalRule ──▶ PerfetRule ──▶ ElisioRule
-    ──▶ detokenize() ──▶ texto convertido
+    ──▶ GentilicisRule ──▶ MorfologiaVerbalRule ──▶ LocucionsRule
+    ──▶ PerfetRule ──▶ ElisioRule ──▶ detokenize() ──▶ texto convertido
 ```
 
 ### `Token` (`rules/__init__.py`)
@@ -83,6 +83,19 @@ que buscar la subcadena `"huit"` **dentro** del token en vez de hacer un
 lookup de palabra completa, porque compuestos como `cinquanta-huit`
 llegan como un único token.
 
+**Consecuencia que costó encontrar (29/09/2026)**: esa misma decisión hace
+que un token como `d'este` nunca coincida con la entrada `"este"` de un
+diccionario — el lookup exacto de `demostratius.py`, `lexic.py`,
+`conjugacions_dict.py`, las tablas de `morfologia_verbal.py` y los
+diccionarios de `numerals.py` se quedaban sin traducir cualquier palabra
+pegada a un prefijo elidido (`d'este`, `s'oferisca`, `n'hagen`...).
+`separa_prefix_elidit()` (`rules/__init__.py`) es el arreglo compartido:
+cada regla de lookup exacto lo usa como segundo intento cuando la
+búsqueda directa falla, separando el prefijo y buscando solo la parte
+real de la palabra. Las reglas basadas en sufijo (`gentilicis.py`,
+`perfet.py`) no lo necesitan: ya operaban con `.sub()` sobre todo el
+token, que atraviesa cualquier prefijo sin tener que separarlo.
+
 ### Protección de nombres propios (`marca_noms_propis`)
 
 Se ejecuta una sola vez, antes de la primera regla: marca `is_proper_noun`
@@ -100,13 +113,15 @@ detecta.
 | # | Regla | Por qué en esta posición |
 |---|---|---|
 | 1 | `lexic` | Lookup directo, la más "seca" — conviene que corra antes de que cualquier regla morfológica toque la misma palabra por otro motivo |
-| 2 | `demostratius` | Patrón cerrado y sin ambigüedad, no interactúa con nada más |
-| 3 | `possessius` | Ídem |
-| 4 | `numerals` | Ídem (incluye la concordancia "dos/dues") |
-| 5 | `gentilicis` | Regla de sufijo general, pero acotada por las excepciones "és"/"més" |
-| 6 | `morfologia_verbal` | Solo fase 1 (presente indicativo); lista cerrada, sin riesgo de interacción |
-| 7 | `perfet` | Genera una **frase** ("va passar"), no una palabra — mejor después de que todo lo demás ya esté resuelto palabra por palabra |
-| 8 | `elisio` | **Deliberadamente la última**: opera sobre el resultado ya transformado (`tok.translated`, no `tok.surface`) de la palabra siguiente. Si fuera antes, una regla posterior podría cambiar esa palabra y dejar la elisión apuntando a una vocal/consonante que ya no está — es exactamente lo que dice la fuente (`../02_reglas_dialectales/reglas_dialectales_con_evidencia.md`, §11.2): "cal aplicar l'elisió cada vegada que una altra regla la dispara" |
+| 2 | `conjugacions_dict` | Ídem, pero de formas verbales (fuente Mauricio/Apertium, 29/09/2026) — misma naturaleza que `lexic`, por eso va justo después |
+| 3 | `demostratius` | Patrón cerrado y sin ambigüedad, no interactúa con nada más |
+| 4 | `possessius` | Ídem |
+| 5 | `numerals` | Ídem (incluye la concordancia "dos/dues") |
+| 6 | `gentilicis` | Regla de sufijo general, pero acotada por las excepciones "és"/"més" |
+| 7 | `morfologia_verbal` | Fases 1, 2 y 6 (presente indicativo, presente subjuntivo, incoativos); lista cerrada para 1/2, sufijo con excepciones para 6 |
+| 8 | `locucions` | Sustituciones de frase fija (`cap a on`, `dalt/baix de`) — no interactúa con nada anterior |
+| 9 | `perfet` | Genera una **frase** ("va passar"), no una palabra — mejor después de que todo lo demás ya esté resuelto palabra por palabra |
+| 10 | `elisio` | **Deliberadamente la última**: opera sobre el resultado ya transformado (`tok.translated`, no `tok.surface`) de la palabra siguiente. Si fuera antes, una regla posterior podría cambiar esa palabra y dejar la elisión apuntando a una vocal/consonante que ya no está — es exactamente lo que dice la fuente (`../02_reglas_dialectales/reglas_dialectales_con_evidencia.md`, §11.2): "cal aplicar l'elisió cada vegada que una altra regla la dispara" |
 
 **Bug real encontrado al verificar este orden** (no solo revisado a ojo,
 con doctest de regresión en `elisio.py`): la primera implementación de
@@ -121,37 +136,82 @@ parece elidir) y producía `"d'vuitanta"`, incorrecto. Arreglado mirando
 
 - **`lexic.py`** — sustitución directa vía `traductor/data/lexico_fiable.json`
   (copia de trabajo de `02_reglas_dialectales/lexico/lexico_fiable.json`,
-  194 entradas; **provisional**, a la espera del léxico completo). El JSON
-  usa arrays paralelos singular/plural (`["ametla","ametles"] → ["ametlla","ametlles"]`),
-  no "una palabra, varias alternativas" — solo hay una excepción real de
-  longitudes distintas (`corder/corders → xai/be/anyell`), resuelta
-  cogiendo siempre el primer sinónimo (documentado, no arreglado del
-  todo: da `corders→xai` en singular en vez de plural).
-- **`demostratius.py`** — este/esta/estos/estes→aquest...; eixe/eixa/eixos/eixes→aqueix...
-  Tabla copiada literal de `../02_reglas_dialectales/reglas_dialectales_con_evidencia.md` §1.
+  347 entradas). El JSON usa arrays paralelos singular/plural
+  (`["ametla","ametles"] → ["ametlla","ametlles"]`), no "una palabra,
+  varias alternativas" — solo hay una excepción real de longitudes
+  distintas (`corder/corders → xai/be/anyell`), resuelta cogiendo siempre
+  el primer sinónimo (documentado, no arreglado del todo: da
+  `corders→xai` en singular en vez de plural). El 29/09/2026 se
+  incorporaron 150 entradas nuevas de un diccionario catalán-valenciano
+  aportado por Mauricio (equipo AVLizador, basado en el apertium
+  bilingüe), más los 3 pares sueltos que ya estaban documentados en la
+  fuente pero aún no implementados (`vindre→venir`, `valdre→valer` §4,
+  `vos→us` §3) — ver `02_reglas_dialectales/lexico/font_mauricio/` para
+  los datos en bruto y el criterio de filtrado exacto (excluyendo
+  entradas `_PENDENT` sin verificar y conflictos con entradas ya
+  revisadas a mano, que siempre ganan).
+- **`demostratius.py`** — este/esta/estos/estes→aquest...; eixe/eixa/eixos/eixes→aquest...
+  (desde el 28/09/2026 "eixe" se fusiona con "este" hacia la misma forma
+  oriental — el oriental real ha colapsado el sistema de 3 grados a 2; ver
+  `../02_reglas_dialectales/reglas_dialectales_con_evidencia.md` §1 para
+  el razonamiento completo).
 - **`possessius.py`** — meua/teua/seua (+ plurales) → meva/teva/seva. Solo
   formas átonas femeninas; masculinas y tónicas no cambian (§2).
-- **`numerals.py`** — tres mecanismos independientes: raíz `huit→vuit`
+- **`conjugacions_dict.py`** — lookup exacto de 904 formas verbales (111
+  verbos) del diccionario de Mauricio (equipo AVLizador, apertium
+  bilingüe, 29/09/2026): cubre alternancias irregulares que
+  `morfologia_verbal.py` no puede generalizar por sufijo
+  (`oferisca→ofereixi`, `traure→treure`...). Excluye deliberadamente las
+  65 formas marcadas `problematica` en la fuente (el valenciano usa la
+  misma forma para indicativo y subjuntivo en esos casos, y sin
+  pos-tagging no hay forma fiable de elegir cuál toca) — ver docstring
+  del módulo.
+- **`numerals.py`** — cuatro mecanismos independientes: raíz `huit→vuit`
   (búsqueda de subcadena, con `díhuit→divuit` como excepción real
   resuelta aparte), ordinales `-é→-è` (tabla cerrada, **no** regla de
   sufijo genérica — hay palabras como préstamos acabados en -é que no son
-  ordinales), y concordancia `dos/dues` (heurística débil: mira si la
-  palabra siguiente acaba en "-a"/"-es"; falso negativo conocido con
-  femeninos que no acaban así, p.ej. "dos mans").
+  ordinales), concordancia `dos/dues` (heurística débil: mira si la
+  palabra siguiente acaba en "-a"/"-es"/"-ió"/"-ions" — este último sufijo
+  añadido 29/09/2026, fiable porque casi ningún nombre acabado en "-ió" es
+  masculino; falso negativo conocido con femeninos que no acaban en
+  ninguno de estos, p.ej. "dos mans"), y raíces `dinou/disset` + sus
+  derivados en `-ena`/`-é` (tabla cerrada de 10 formas, añadida
+  29/09/2026 con datos de Mauricio — no comparten subcadena con el
+  oriental como sí hace `huit/vuit`). La concordancia `dos/dues` también
+  mira hacia ATRÁS (29/09/2026, caso real RC062) cuando no hay ninguna
+  palabra detrás de "dos" (típicamente puntuación: `"...en dos:
+  establir..."`) — "dos" ahí se refiere anafóricamente a un nombre ya
+  dicho antes en la misma frase.
 - **`gentilicis.py`** — sufijo `-és→-ès`, sí como regla general (300+
   lemas confirmados según la fuente), con las dos excepciones explícitas
   de la fuente (`és` verbo, `més` cantidad) que nunca cambian, más una
   tercera encontrada empíricamente al correr el benchmark completo:
   `"després"` (adverbio) se rompía en `"desprès"` — la fuente solo daba 2
   excepciones, no es una lista exhaustiva.
-- **`morfologia_verbal.py`** — **solo fase 1** (presente indicativo, 1ª
-  persona, 1ª conjugación: parle→parlo...), a propósito como lista
-  cerrada y no regla de sufijo `-e→-o`: demasiadas palabras catalanas
-  acaban en "-e" sin ser verbos en primera persona. Fases 2-6 (subjuntivo
-  presente/imperfecto, imperfecto de indicativo, participio de "ser",
-  incoativos) documentadas como TODO explícito dentro del propio fichero,
-  con la razón de por qué cada una necesita más cuidado antes de
-  implementarse.
+- **`morfologia_verbal.py`** — **fase 1** (presente indicativo, 1ª
+  persona, 1ª conjugación: parle→parlo...) y **fase 2** (presente
+  subjuntivo, "jo"/"ells": puga→pugui, tinguen→tinguin...), las dos como
+  lista cerrada y no regla de sufijo genérica: demasiadas palabras
+  catalanas acaban en "-e"/"-a"/"-en" sin ser esas formas verbales
+  concretas. **Fase 6** (incoativos -ix→-eix: establix→estableix) sí es
+  regla de sufijo, porque la fuente lo documenta como patrón general —
+  lleva lista negra (`baix`, `calaix`, `dibuix`, `guix`) para no tocar
+  palabras reales que acaban igual sin ser verbos. Fases 3-5 (imperfecto
+  de subjuntivo, imperfecto de indicativo, participio de "ser")
+  documentadas como TODO explícito dentro del propio fichero, con la
+  razón de por qué cada una necesita más cuidado antes de implementarse.
+- **`locucions.py`** — dos patrones: `cap a on→cap on` (sustitución
+  literal) y `dalt de/baix de→a dalt de/a baix de` (prefijo, con mayúscula
+  gestionada a mano como en `perfet.py`). "per a→per" delante de
+  infinitivo se probó y se **retiró**: la auditoría del benchmark real
+  (28/09/2026) encontró que de 17 apariciones de "per a + infinitivo",
+  ninguna lo reduce a "per" — siempre se mantiene "per a" (ver
+  `../02_reglas_dialectales/reglas_dialectales_con_evidencia.md` §7.1).
+  Pendientes, documentados pero NO implementados aquí (§7.2 de la
+  fuente): "a on"/"on" según ubicación estática o dirección, y "en"→"a"
+  en construcciones locativas (esta última, además, contradice una
+  protección ya existente en el system prompt del LLM — pendiente de
+  confirmar el alcance exacto antes de tocarla).
 - **`perfet.py`** — pretérito perfecto simple → perifrástico, solo 1ª
   conjugación (`-ar`). Reconstruye el infinitivo quitando la terminación
   y añadiendo "-ar". Alcance recortado con datos reales, no solo teoría:
@@ -164,9 +224,13 @@ parece elidir) y producía `"d'vuitanta"`, incorrecto. Arreglado mirando
 - **`elisio.py`** — `de/la/el → d'/l'` ante vocal real o *h* muda. Nunca
   duplica una elisión que ya viniera hecha en el original (esas llegan
   como un único token desde `tokenize()`, nunca casan con "de"/"la"/"el"
-  sueltos). Limitación conocida y documentada, no arreglada: no distingue
-  diptongos semiconsonánticos (`la iaia`, no `l'iaia` — este motor sí
-  elidiría mal ahí).
+  sueltos). Excepción confirmada (29/09/2026): `la` (nunca `el`/`de`) no
+  elide nunca ante palabra que empieza por `i`/`u` (`la intenció`, `la
+  universitat`, nunca `l'intenció`/`l'universitat`) — convención
+  ortográfica para no perder la distinción de género en la lectura, no un
+  fenómeno fonético; de paso resuelve como efecto lateral el caso `la
+  iaia` que antes se documentaba aquí como diptongo semiconsonántico sin
+  arreglar.
 
 ## Qué falta (gaps conocidos, no una promesa de qué se hará)
 
@@ -175,12 +239,20 @@ Reglas que **sí están documentadas** en `../02_reglas_dialectales/reglas_diale
 
 | Sección de la fuente | Contenido | Dónde encajaría |
 |---|---|---|
-| §3 Pronombres personales | `vos→us` | Es un único par, no un patrón productivo — mejor como entrada de `lexico_fiable.json` (mismo criterio que `vosté/vostés`, §8 de la fuente) que como regla nueva |
-| §4 Infinitivos irregulares | `traure→treure`, `tindre→tenir`, `vindre→venir`, `vore→veure`, `eixir→sortir`, `valdre→valer` | Ídem — son 6 pares sueltos, no un sufijo generalizable |
-| §5.2-§5.6 | Resto de morfología verbal | Documentado fase a fase dentro de `morfologia_verbal.py`, ver el fichero |
-| §5.5 | `sigut→estat` (participio de "ser") | Aunque la fuente lo clasifica como morfología verbal, es un único par irregular — candidato a `lexico_fiable.json` igual que §3/§4 |
-| §7 Adverbios/locuciones | `a on→on`, `hui→avui`, `vesprada→tarda`... | Pares sueltos, mismo criterio |
+| §5.3-§5.5 | Imperfecto de subjuntivo, imperfecto de indicativo, participio de "ser" | Documentado fase a fase dentro de `morfologia_verbal.py`, ver el fichero (fases 1/2/6 ya implementadas) |
+| §7.2 | `hui→avui`, `vesprada→tarda`... (pares léxicos sueltos, no los de `locucions.py`) | Candidatos a `lexico_fiable.json`, mismo criterio que §3/§4 (ya resueltos, ver abajo) |
+| §7.1 | `per a`→`per` delante de infinitivo | **Probado y retirado**: contradicho por 17/17 casos del benchmark real, siempre se mantiene "per a" |
+| §7.2 | `a on`→`on`/`a on` (estático/dirección), `en`→`a` (locativo) | Pendientes de confirmar — ver `locucions.py`, ya cubre el resto de patrones de esta sección |
 | §11.3 | `al + infinitiu → en + infinitiu` | La propia fuente lo marca como "pendiente de confirmar" (2/2 pero muestra insuficiente) — no implementar sin más evidencia |
+| — | Topónimos (`Ademuz→Ademús`, `Alcublas→les Alcubles`...) | 73 pares en el diccionario de Mauricio (`tipo: "v:top_gva"`), NO incorporados: el motor protege todos los nombres propios de traducción (`is_proper_noun`, ver §"Protección de nombres propios" arriba), así que aunque se añadieran a `lexico_fiable.json` nunca se aplicarían. Hay que decidir primero si los topónimos deben traducirse en absoluto y, si sí, cómo distinguirlos de otros nombres propios que nunca deben tocarse — ver los datos en bruto en `02_reglas_dialectales/lexico/font_mauricio/lexico_general_limpio.json` |
+
+**Resuelto el 29/09/2026** (documentado aquí antes, ya implementado): §3
+Pronombres personales (`vos→us`) y §4 Infinitivos irregulares
+(`traure→treure` y `sigut→estat` §5.5 vienen del diccionario de
+conjugaciones de Mauricio, vía `conjugacions_dict.py`; `tindre→tenir`,
+`vindre→venir`, `vore→veure`, `eixir→sortir`, `valdre→valer` y `vos→us`
+están en `lexico_fiable.json`) — todos eran pares sueltos, no patrones
+productivos, tal como ya preveía este mismo README.
 
 Patrón general: cualquier cosa que sea "un par de palabras concreto" (no
 un sufijo o patrón productivo) encaja mejor en el léxico que en una regla
@@ -267,10 +339,10 @@ paquete de una vez:
 python -c "
 import doctest, importlib
 modulos = [
-    'traductor.rules', 'traductor.rules.lexic', 'traductor.rules.demostratius',
-    'traductor.rules.possessius', 'traductor.rules.numerals', 'traductor.rules.gentilicis',
-    'traductor.rules.morfologia_verbal', 'traductor.rules.perfet', 'traductor.rules.elisio',
-    'traductor.rules.engine', 'traductor.translate',
+    'traductor.rules', 'traductor.rules.lexic', 'traductor.rules.conjugacions_dict',
+    'traductor.rules.demostratius', 'traductor.rules.possessius', 'traductor.rules.numerals',
+    'traductor.rules.gentilicis', 'traductor.rules.morfologia_verbal', 'traductor.rules.locucions',
+    'traductor.rules.perfet', 'traductor.rules.elisio', 'traductor.rules.engine', 'traductor.translate',
 ]
 for nom in modulos:
     m = importlib.import_module(nom)

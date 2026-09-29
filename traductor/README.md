@@ -40,8 +40,8 @@ de text sobre la frase sencera:
 ```
 text ──tokenize()──▶ [Token, Token, ...] ──marca_noms_propis()──▶
     ──▶ LexicRule ──▶ DemostratiusRule ──▶ PossessiusRule ──▶ NumeralsRule
-    ──▶ GentilicisRule ──▶ MorfologiaVerbalRule ──▶ PerfetRule ──▶ ElisioRule
-    ──▶ detokenize() ──▶ text convertit
+    ──▶ GentilicisRule ──▶ MorfologiaVerbalRule ──▶ LocucionsRule
+    ──▶ PerfetRule ──▶ ElisioRule ──▶ detokenize() ──▶ text convertit
 ```
 
 ### `Token` (`rules/__init__.py`)
@@ -83,6 +83,19 @@ buscar la subcadena `"huit"` **dins** del token en lloc de fer un lookup
 de paraula completa, perquè compostos com `cinquanta-huit` arriben com un
 únic token.
 
+**Conseqüència que va costar trobar (29/09/2026)**: eixa mateixa decisió
+fa que un token com `d'este` mai coincidisca amb l'entrada `"este"` d'un
+diccionari — el lookup exacte de `demostratius.py`, `lexic.py`,
+`conjugacions_dict.py`, les taules de `morfologia_verbal.py` i els
+diccionaris de `numerals.py` es quedaven sense traduir qualsevol paraula
+enganxada a un prefix elidit (`d'este`, `s'oferisca`, `n'hagen`...).
+`separa_prefix_elidit()` (`rules/__init__.py`) és el fix compartit: cada
+regla de lookup exacte l'usa com a segon intent quan la cerca directa
+falla, separant el prefix i buscant només la part real de la paraula.
+Les regles basades en sufix (`gentilicis.py`, `perfet.py`) no el
+necessiten: ja operaven amb `.sub()` sobre tot el token, que travessa
+qualsevol prefix sense haver de separar-lo.
+
 ### Protecció de noms propis (`marca_noms_propis`)
 
 S'executa una sola vegada, abans de la primera regla: marca
@@ -100,13 +113,15 @@ paraula del text mai es detecta.
 | # | Regla | Per què en esta posició |
 |---|---|---|
 | 1 | `lexic` | Lookup directe, la més "seca" — convé que corra abans que qualsevol regla morfològica toque la mateixa paraula per un altre motiu |
-| 2 | `demostratius` | Patró tancat i sense ambigüitat, no interactua amb res més |
-| 3 | `possessius` | Ídem |
-| 4 | `numerals` | Ídem (inclou la concordança "dos/dues") |
-| 5 | `gentilicis` | Regla de sufix general, però acotada per les excepcions "és"/"més" |
-| 6 | `morfologia_verbal` | Només fase 1 (present indicatiu); llista tancada, sense risc d'interacció |
-| 7 | `perfet` | Genera una **frase** ("va passar"), no una paraula — millor després que tota la resta ja estiga resolta paraula per paraula |
-| 8 | `elisio` | **Deliberadament l'última**: opera sobre el resultat ja transformat (`tok.translated`, no `tok.surface`) de la paraula següent. Si fóra abans, una regla posterior podria canviar eixa paraula i deixar l'elisió apuntant a una vocal/consonant que ja no hi és — és exactament el que diu la font (`../02_reglas_dialectales/reglas_dialectales_con_evidencia.md`, §11.2): "cal aplicar l'elisió cada vegada que una altra regla la dispara" |
+| 2 | `conjugacions_dict` | Ídem, però de formes verbals (font Mauricio/Apertium, 29/09/2026) — mateixa naturalesa que `lexic`, per això va justa després |
+| 3 | `demostratius` | Patró tancat i sense ambigüitat, no interactua amb res més |
+| 4 | `possessius` | Ídem |
+| 5 | `numerals` | Ídem (inclou la concordança "dos/dues") |
+| 6 | `gentilicis` | Regla de sufix general, però acotada per les excepcions "és"/"més" |
+| 7 | `morfologia_verbal` | Fases 1, 2 i 6 (present indicatiu, present subjuntiu, incoatius); llista tancada per a 1/2, sufix amb excepcions per a 6 |
+| 8 | `locucions` | Substitucions de frase fixa (`cap a on`, `dalt/baix de`) — no interactua amb res anterior |
+| 9 | `perfet` | Genera una **frase** ("va passar"), no una paraula — millor després que tota la resta ja estiga resolta paraula per paraula |
+| 10 | `elisio` | **Deliberadament l'última**: opera sobre el resultat ja transformat (`tok.translated`, no `tok.surface`) de la paraula següent. Si fóra abans, una regla posterior podria canviar eixa paraula i deixar l'elisió apuntant a una vocal/consonant que ja no hi és — és exactament el que diu la font (`../02_reglas_dialectales/reglas_dialectales_con_evidencia.md`, §11.2): "cal aplicar l'elisió cada vegada que una altra regla la dispara" |
 
 **Bug real trobat en verificar este orde** (no només revisat a ull, amb
 doctest de regressió en `elisio.py`): la primera implementació
@@ -121,36 +136,80 @@ pareix elidir) i produïa `"d'vuitanta"`, incorrecte. Arreglat mirant
 
 - **`lexic.py`** — substitució directa via `traductor/data/lexico_fiable.json`
   (còpia de treball de `02_reglas_dialectales/lexico/lexico_fiable.json`,
-  194 entrades; **provisional**, a l'espera del lèxic complet). El JSON
-  usa arrays paral·lels singular/plural (`["ametla","ametles"] → ["ametlla","ametlles"]`),
-  no "una paraula, diverses alternatives" — només hi ha una excepció real
-  de longituds distintes (`corder/corders → xai/be/anyell`), resolta
-  agafant sempre el primer sinònim (documentat, no arreglat del tot: dona
-  `corders→xai` en singular en lloc de plural).
-- **`demostratius.py`** — este/esta/estos/estes→aquest...; eixe/eixa/eixos/eixes→aqueix...
-  Taula copiada literal de `../02_reglas_dialectales/reglas_dialectales_con_evidencia.md` §1.
+  347 entrades). El JSON usa arrays paral·lels singular/plural
+  (`["ametla","ametles"] → ["ametlla","ametlles"]`), no "una paraula,
+  diverses alternatives" — només hi ha una excepció real de longituds
+  distintes (`corder/corders → xai/be/anyell`), resolta agafant sempre el
+  primer sinònim (documentat, no arreglat del tot: dona `corders→xai` en
+  singular en lloc de plural). El 29/09/2026 es van incorporar 150
+  entrades noves d'un diccionari català-valencià aportat per Mauricio
+  (equip AVLizador, basat en l'apertium bilingüe), més els 3 parells
+  solts que ja estaven documentats a la font però encara no implementats
+  (`vindre→venir`, `valdre→valer` §4, `vos→us` §3) — vore
+  `02_reglas_dialectales/lexico/font_mauricio/` per a les dades brutes i
+  el criteri de filtratge exacte (excloent entrades `_PENDENT` sense
+  verificar i conflictes amb entrades ja revisades a mà, que sempre
+  guanyen).
+- **`demostratius.py`** — este/esta/estos/estes→aquest...; eixe/eixa/eixos/eixes→aquest...
+  (des del 28/09/2026 "eixe" es fusiona amb "este" cap a la mateixa forma
+  oriental — l'oriental real ha col·lapsat el sistema de 3 graus a 2; vore
+  `../02_reglas_dialectales/reglas_dialectales_con_evidencia.md` §1 per al
+  raonament complet).
 - **`possessius.py`** — meua/teua/seua (+ plurals) → meva/teva/seva. Només
   formes àtones femenines; masculines i tòniques no canvien (§2).
-- **`numerals.py`** — tres mecanismes independents: arrel `huit→vuit`
+- **`conjugacions_dict.py`** — lookup exacte de 904 formes verbals (111
+  verbs) del diccionari de Mauricio (equip AVLizador, apertium bilingüe,
+  29/09/2026): cobrix alternances irregulars que `morfologia_verbal.py`
+  no pot generalitzar per sufix (`oferisca→ofereixi`, `traure→treure`...).
+  Exclou deliberadament les 65 formes marcades `problematica` a la font
+  (valencià usa la mateixa forma per a indicatiu i subjuntiu en eixos
+  casos, i sense pos-tagging no hi ha manera fiable de triar quina toca)
+  — vore docstring del mòdul.
+- **`numerals.py`** — quatre mecanismes independents: arrel `huit→vuit`
   (cerca de subcadena, amb `díhuit→divuit` com a excepció real resolta a
   banda), ordinals `-é→-è` (taula tancada, **no** regla de sufix
   genèrica — hi ha paraules com a préstecs acabats en -é que no són
-  ordinals), i concordança `dos/dues` (heurística feble: mira si la
-  paraula següent acaba en "-a"/"-es"; fals negatiu conegut amb femenins
-  que no acaben així, p.ex. "dos mans").
+  ordinals), concordança `dos/dues` (heurística feble: mira si la
+  paraula següent acaba en "-a"/"-es"/"-ió"/"-ions" — este últim sufix
+  afegit 29/09/2026, fiable perquè quasi cap nom acabat en "-ió" és
+  masculí; fals negatiu conegut amb femenins que no acaben en cap d'estos,
+  p.ex. "dos mans"), i arrels `dinou/disset` + els seus derivats en
+  `-ena`/`-é` (taula tancada de 10 formes, afegida 29/09/2026 amb dades de
+  Mauricio — no comparteixen subcadena amb l'oriental com sí fa
+  `huit/vuit`). La concordança `dos/dues` també mira cap ARRERE
+  (29/09/2026, cas real RC062) quan no hi ha cap paraula darrere de "dos"
+  (típicament puntuació: `"...en dos: establir..."`) — "dos" ahí es
+  referix anafòricament a un nom ja dit abans a la mateixa frase.
 - **`gentilicis.py`** — sufix `-és→-ès`, sí com a regla general (300+
   lemes confirmats segons la font), amb les dos excepcions explícites de
   la font (`és` verb, `més` quantitat) que mai canvien, més una tercera
   trobada empíricament en córrer el benchmark complet: `"després"`
   (adverbi) es trencava en `"desprès"` — la font només donava 2
   excepcions, no és una llista exhaustiva.
-- **`morfologia_verbal.py`** — **només fase 1** (present indicatiu, 1a
-  persona, 1a conjugació: parle→parlo...), a propòsit com a llista
-  tancada i no regla de sufix `-e→-o`: massa paraules catalanes acaben en
-  "-e" sense ser verbs en primera persona. Fases 2-6 (subjuntiu
-  present/imperfet, imperfet d'indicatiu, participi de "ser",
-  incoatius) documentades com a TODO explícit dins del propi fitxer, amb
-  la raó de per què cada una necessita més cura abans d'implementar-se.
+- **`morfologia_verbal.py`** — **fase 1** (present indicatiu, 1a persona,
+  1a conjugació: parle→parlo...) i **fase 2** (present subjuntiu, "jo"/
+  "ells": puga→pugui, tinguen→tinguin...), totes dos com a llista tancada
+  i no regla de sufix genèrica: massa paraules catalanes acaben en "-e"/
+  "-a"/"-en" sense ser eixes formes verbals concretes. **Fase 6**
+  (incoatius -ix→-eix: establix→estableix) sí és regla de sufix, perquè
+  la font ho documenta com a patró general — porta llista negra
+  (`baix`, `calaix`, `dibuix`, `guix`) per a no tocar paraules reals que
+  acaben igual sense ser verbs. Fases 3-5 (imperfet de subjuntiu,
+  imperfet d'indicatiu, participi de "ser") documentades com a TODO
+  explícit dins del propi fitxer, amb la raó de per què cada una
+  necessita més cura abans d'implementar-se.
+- **`locucions.py`** — dos patrons: `cap a on→cap on` (substitució
+  literal) i `dalt de/baix de→a dalt de/a baix de` (prefix, amb majúscula
+  gestionada a mà com a `perfet.py`). "per a→per" davant d'infinitiu es va
+  provar i **retirar**: l'auditoria del benchmark real (28/09/2026) va
+  trobar que de 17 aparicions de "per a + infinitiu", cap la reduïx a
+  "per" — sempre es manté "per a" (vore
+  `../02_reglas_dialectales/reglas_dialectales_con_evidencia.md` §7.1).
+  Pendents, documentats però NO implementats ací (§7.2 de la font): "a
+  on"/"on" segons ubicació estàtica o direcció, i "en"→"a" en
+  construccions locatives (este últim, a més, contradiu una protecció ja
+  existent al system prompt de l'LLM — pendent de confirmar l'abast exacte
+  abans de tocar-lo).
 - **`perfet.py`** — pretèrit perfet simple → perifràstic, només 1a
   conjugació (`-ar`). Reconstruïx l'infinitiu llevant la terminació i
   afegint "-ar". Abast retallat amb dades reals, no només teoria: en
@@ -163,9 +222,13 @@ pareix elidir) i produïa `"d'vuitanta"`, incorrecte. Arreglat mirant
 - **`elisio.py`** — `de/la/el → d'/l'` davant de vocal real o *h* muda.
   Mai duplica una elisió que ja vinguera feta en l'original (eixes
   arriben com un únic token des de `tokenize()`, mai coincidixen amb
-  "de"/"la"/"el" solts). Limitació coneguda i documentada, no arreglada:
-  no distingix diftongs semiconsonàntics (`la iaia`, no `l'iaia` — este
-  motor sí elidiria malament ahí).
+  "de"/"la"/"el" solts). Excepció confirmada (29/09/2026): `la` (mai
+  `el`/`de`) no elideix mai davant de paraula que comença per `i`/`u`
+  (`la intenció`, `la universitat`, mai `l'intenció`/`l'universitat`) —
+  convenció ortogràfica per a no perdre la distinció de gènere en la
+  lectura, no un fenomen fonètic; de pas resol com a efecte lateral el
+  cas `la iaia` que abans es documentava ací com a diftong semiconsonàntic
+  sense arreglar.
 
 ## Què falta (buits coneguts, no una promesa del que es farà)
 
@@ -174,12 +237,20 @@ Regles que **sí estan documentades** en `../02_reglas_dialectales/reglas_dialec
 
 | Secció de la font | Contingut | On encaixaria |
 |---|---|---|
-| §3 Pronoms personals | `vos→us` | És un únic parell, no un patró productiu — millor com a entrada de `lexico_fiable.json` (mateix criteri que `vosté/vostés`, §8 de la font) que com a regla nova |
-| §4 Infinitius irregulars | `traure→treure`, `tindre→tenir`, `vindre→venir`, `vore→veure`, `eixir→sortir`, `valdre→valer` | Ídem — són 6 parells solts, no un sufix generalitzable |
-| §5.2-§5.6 | Resta de morfologia verbal | Documentat fase a fase dins de `morfologia_verbal.py`, vore el fitxer |
-| §5.5 | `sigut→estat` (participi de "ser") | Encara que la font ho classifica com a morfologia verbal, és un únic parell irregular — candidat a `lexico_fiable.json` igual que §3/§4 |
-| §7 Adverbis/locucions | `a on→on`, `hui→avui`, `vesprada→tarda`... | Parells solts, mateix criteri |
+| §5.3-§5.5 | Imperfet de subjuntiu, imperfet d'indicatiu, participi de "ser" | Documentat fase a fase dins de `morfologia_verbal.py`, vore el fitxer (fases 1/2/6 ja implementades) |
+| §7.2 | `hui→avui`, `vesprada→tarda`... (parells lèxics solts, no els de `locucions.py`) | Candidats a `lexico_fiable.json`, mateix criteri que §3/§4 (ja resolts, vore baix) |
+| §7.1 | `per a`→`per` davant d'infinitiu | **Provat i retirat**: contradit per 17/17 casos del benchmark real, sempre es manté "per a" |
+| §7.2 | `a on`→`on`/`a on` (estàtic/direcció), `en`→`a` (locatiu) | Pendents de confirmar — vore `locucions.py`, ja cobrix la resta de patrons d'esta secció |
 | §11.3 | `al + infinitiu → en + infinitiu` | La pròpia font ho marca com a "pendent de confirmar" (2/2 però mostra insuficient) — no implementar sense més evidència |
+| — | Topònims (`Ademuz→Ademús`, `Alcublas→les Alcubles`...) | 73 parells al diccionari de Mauricio (`tipo: "v:top_gva"`), NO incorporats: el motor protegix tots els noms propis de traducció (`is_proper_noun`, vore §"Protecció de noms propis" dalt), així que encara que s'afigueren a `lexico_fiable.json` mai s'aplicarien. Cal decidir primer si els topònims han de traduir-se en absolut i, si sí, com distingir-los d'altres noms propis que mai s'han de tocar — vore les dades brutes a `02_reglas_dialectales/lexico/font_mauricio/lexico_general_limpio.json` |
+
+**Resolt el 29/09/2026** (documentat ací abans, ara ja implementat): §3
+Pronoms personals (`vos→us`) i §4 Infinitius irregulars (`traure→treure`
+i `sigut→estat` §5.5 venen del diccionari de conjugacions de Mauricio,
+via `conjugacions_dict.py`; `tindre→tenir`, `vindre→venir`, `vore→veure`,
+`eixir→sortir`, `valdre→valer` i `vos→us` són a `lexico_fiable.json`) —
+tots eren parells solts, no patrons productius, tal com ja preveia este
+mateix README.
 
 Patró general: qualsevol cosa que siga "un parell de paraules concret"
 (no un sufix o patró productiu) encaixa millor en el lèxic que en una
@@ -266,10 +337,10 @@ els de tot el paquet d'una vegada:
 python -c "
 import doctest, importlib
 modulos = [
-    'traductor.rules', 'traductor.rules.lexic', 'traductor.rules.demostratius',
-    'traductor.rules.possessius', 'traductor.rules.numerals', 'traductor.rules.gentilicis',
-    'traductor.rules.morfologia_verbal', 'traductor.rules.perfet', 'traductor.rules.elisio',
-    'traductor.rules.engine', 'traductor.translate',
+    'traductor.rules', 'traductor.rules.lexic', 'traductor.rules.conjugacions_dict',
+    'traductor.rules.demostratius', 'traductor.rules.possessius', 'traductor.rules.numerals',
+    'traductor.rules.gentilicis', 'traductor.rules.morfologia_verbal', 'traductor.rules.locucions',
+    'traductor.rules.perfet', 'traductor.rules.elisio', 'traductor.rules.engine', 'traductor.translate',
 ]
 for nom in modulos:
     m = importlib.import_module(nom)

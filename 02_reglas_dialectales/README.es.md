@@ -101,3 +101,12 @@ se ejecute el pipeline, ya la usa.
 Revisa `reglas_prompt/guia_dialectal_valencia_catala.md` (secciones 1-8).
 Si hay que cambiar el prompt que usa el modelo, dímelo y lo aplico en
 `03_seleccion_de_modelo/evalua_models.py` (`SYSTEM_PROMPT_BASE`).
+
+## Métrica de pureza dialectal (propuesta, aún no implementada)
+
+`metrica_puresa_dialectal.md` (en catalán) especifica el Índex de Puresa
+Dialectal (IPD) — un score bidireccional para detectar contaminación
+occidental↔oriental en cualquier texto, reutilizando las tablas de
+`traductor/rules/` como diccionario de marcadores. Pensado para aplicarse
+sobre el corpus AVL, el BOE y el corpus sintético para medir la
+calidad/pureza de cada fuente.
