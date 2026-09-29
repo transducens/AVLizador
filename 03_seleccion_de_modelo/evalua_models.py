@@ -373,14 +373,21 @@ REGLES (aplica en aquest ordre):
 1. LOCUCIONS FIXES
    a on → on | hui dia → avui dia
    ha sigut → ha estat | han sigut → han estat | havia sigut → havia estat
+   cap a on → cap on
+   dalt de → a dalt de | baix de → a baix de
+   "per a" MAI es redueix a "per", encara que vaja davant d'infinitiu
+   (per a aprovar es queda per a aprovar, NO "per aprovar") — no canvies
+   açò encara que et semble més natural en oriental.
+   NO canvies mai "en" per "a" (en la costa es queda en la costa, NO a la
+   costa) — no hi ha cap regla d'ací que ho demane.
 
 2. DEMOSTRATIUS
    este → aquest | esta → aquesta | estos → aquests | estes → aquestes
-   eixe → aqueix | eixa → aqueixa | eixos → aqueixos | eixes → aqueixes
-   ("eixe" és el demostratiu de SEGON grau (prop de qui escolta) — mai el
-   confons amb "este" (primer grau), encara que en valencià col·loquial es
-   difuminen: cada un té el seu equivalent oriental propi, no comparteixen
-   forma)
+   eixe → aquest | eixa → aquesta | eixos → aquests | eixes → aquestes
+   ("eixe" i "este" es fusionen en la MATEIXA forma oriental "aquest" —
+   l'oriental contemporani ha col·lapsat el sistema de 3 graus a 2, i
+   "aqueix" és una forma arcaica que pràcticament no s'usa fora de registre
+   molt formal/literari)
    (revisa TOTES les aparicions dins de la frase, no només la primera —
    si la frase és llarga o té diverses clàusules, és fàcil deixar-ne una
    sense convertir)
@@ -394,6 +401,8 @@ REGLES (aplica en aquest ordre):
 5. MORFOLOGIA VERBAL
    Pres. subj. sg:    puga→pugui, tinga→tingui, vinga→vingui, vaja→vagi, siga→sigui, haja→hagi
    Pres. subj. pl:    puguen→puguin, tinguen→tinguin, siguen→siguin, hagen→hagin
+   ATENCIÓ: "o siga" (locució fixa, "és a dir") NO és el verb "ser" en
+   subjuntiu — mai el canvies a "o sigui".
    Imperf. subj. — regla general de sufixos, aplica a QUALSEVOL verb, no només als exemples:
      -era → -és      (haguera→hagués, poguera→pogués, tinguera→tingués, fora→fos)
      -eres → -essis
@@ -406,7 +415,16 @@ REGLES (aplica en aquest ordre):
      -éiem → -èiem   (déiem→dèiem, quéiem→quèiem)
      -éieu → -èieu   (quéieu→quèieu)
    Participi ser:     sigut → estat
-   Incoatius -ix:     establix→estableix, servix→serveix
+   Incoatius -ix → -eix (regla general, aplica a QUALSEVOL verb incoatiu,
+   no només als exemples): establix→estableix, servix→serveix.
+   ATENCIÓ: NO ho apliques a paraules que acaben en -ix però NO són verbs:
+   baix, calaix, dibuix, guix, fix, prefix, sufix es queden EXACTAMENT
+   igual. Tampoc a paraules que ja acaben en -eix (mateix, tanmateix,
+   apareix, desapareix) — no són una alternança dialectal, ja s'escriuen
+   igual en els dos dialectes.
+   (revisa TOTES les formes verbals de la frase — puga/tinga/vinga/
+   puguen/tinguen i establix/servix són dels errors més freqüents
+   detectats en el benchmark, encara que estiguen ací dalt)
 
 6. NUMERALS
    huit → vuit — és una arrel, no només una paraula solta: aplica-la també
@@ -439,6 +457,8 @@ REGLES (aplica en aquest ordre):
    imprés→imprès, entremés→entremès, malentés→malentès, sobrepés→sobrepès.
    ATENCIÓ: NO ho apliques a "és" (verb ser, 3a sg) ni a "més" (quantitat)
    — estes dos paraules es queden EXACTAMENT igual en els dos dialectes.
+   (revisa TOTES les paraules acabades en -és de la frase, no només la
+   primera que trobes — és un dels errors més freqüents detectats)
 
 9. PRETÈRIT PERFET SIMPLE → PERIFRÀSTIC
    El valencià fa servir sovint la forma simple del pretèrit (verb+à/-aren

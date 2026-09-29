@@ -1,0 +1,4912 @@
+[
+  {
+    "verbo": "abalançar",
+    "catalan": "abalancessin",
+    "valenciano": "abalançaren"
+  },
+  {
+    "verbo": "abalançar",
+    "catalan": "abalancessis",
+    "valenciano": "abalançares"
+  },
+  {
+    "verbo": "abalançar",
+    "catalan": "abalanci",
+    "valenciano": "abalance",
+    "problematica": true
+  },
+  {
+    "verbo": "abalançar",
+    "catalan": "abalancin",
+    "valenciano": "abalancen"
+  },
+  {
+    "verbo": "abalançar",
+    "catalan": "abalancis",
+    "valenciano": "abalances"
+  },
+  {
+    "verbo": "abalançar",
+    "catalan": "abalancés",
+    "valenciano": "abalançara"
+  },
+  {
+    "verbo": "abalançar",
+    "catalan": "abalancéssim",
+    "valenciano": "abalançàrem"
+  },
+  {
+    "verbo": "abalançar",
+    "catalan": "abalancéssiu",
+    "valenciano": "abalançàreu"
+  },
+  {
+    "verbo": "abalançar",
+    "catalan": "abalanço",
+    "valenciano": "abalance",
+    "problematica": true
+  },
+  {
+    "verbo": "abanderar",
+    "catalan": "abanderessin",
+    "valenciano": "abanderaren"
+  },
+  {
+    "verbo": "abanderar",
+    "catalan": "abanderessis",
+    "valenciano": "abanderares"
+  },
+  {
+    "verbo": "abanderar",
+    "catalan": "abanderi",
+    "valenciano": "abandere",
+    "problematica": true
+  },
+  {
+    "verbo": "abanderar",
+    "catalan": "abanderin",
+    "valenciano": "abanderen"
+  },
+  {
+    "verbo": "abanderar",
+    "catalan": "abanderis",
+    "valenciano": "abanderes"
+  },
+  {
+    "verbo": "abanderar",
+    "catalan": "abandero",
+    "valenciano": "abandere",
+    "problematica": true
+  },
+  {
+    "verbo": "abanderar",
+    "catalan": "abanderés",
+    "valenciano": "abanderara"
+  },
+  {
+    "verbo": "abanderar",
+    "catalan": "abanderéssim",
+    "valenciano": "abanderàrem"
+  },
+  {
+    "verbo": "abanderar",
+    "catalan": "abanderéssiu",
+    "valenciano": "abanderàreu"
+  },
+  {
+    "verbo": "abaratir",
+    "catalan": "abarateixi",
+    "valenciano": "abaratisca"
+  },
+  {
+    "verbo": "abaratir",
+    "catalan": "abarateixin",
+    "valenciano": "abaratisquen"
+  },
+  {
+    "verbo": "abaratir",
+    "catalan": "abarateixis",
+    "valenciano": "abaratisques"
+  },
+  {
+    "verbo": "abaratir",
+    "catalan": "abarateixo",
+    "valenciano": "abaratisc"
+  },
+  {
+    "verbo": "abaratir",
+    "catalan": "abaratissin",
+    "valenciano": "abaratiren"
+  },
+  {
+    "verbo": "abaratir",
+    "catalan": "abaratissis",
+    "valenciano": "abaratires"
+  },
+  {
+    "verbo": "abaratir",
+    "catalan": "abaratís",
+    "valenciano": "abaratira"
+  },
+  {
+    "verbo": "abaratir",
+    "catalan": "abaratíssim",
+    "valenciano": "abaratírem"
+  },
+  {
+    "verbo": "abaratir",
+    "catalan": "abaratíssiu",
+    "valenciano": "abaratíreu"
+  },
+  {
+    "verbo": "abatre",
+    "catalan": "abatessin",
+    "valenciano": "abateren"
+  },
+  {
+    "verbo": "abatre",
+    "catalan": "abatessis",
+    "valenciano": "abateres"
+  },
+  {
+    "verbo": "abatre",
+    "catalan": "abati",
+    "valenciano": "abata"
+  },
+  {
+    "verbo": "abatre",
+    "catalan": "abatin",
+    "valenciano": "abaten"
+  },
+  {
+    "verbo": "abatre",
+    "catalan": "abatis",
+    "valenciano": "abates"
+  },
+  {
+    "verbo": "abatre",
+    "catalan": "abatés",
+    "valenciano": "abatera"
+  },
+  {
+    "verbo": "abatre",
+    "catalan": "abatéssim",
+    "valenciano": "abatérem"
+  },
+  {
+    "verbo": "abatre",
+    "catalan": "abatéssiu",
+    "valenciano": "abatéreu"
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboco",
+    "valenciano": "aboque",
+    "problematica": true
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboquessin",
+    "valenciano": "abocaren"
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboquessis",
+    "valenciano": "abocares"
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboqueu",
+    "valenciano": "abocau"
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboqui",
+    "valenciano": "aboque",
+    "problematica": true
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboquin",
+    "valenciano": "aboquen"
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboquis",
+    "valenciano": "aboques"
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboqués",
+    "valenciano": "abocara"
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboquéssim",
+    "valenciano": "abocàrem"
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboquéssiu",
+    "valenciano": "abocàreu"
+  },
+  {
+    "verbo": "aboiar",
+    "catalan": "aboiessin",
+    "valenciano": "aboiaren"
+  },
+  {
+    "verbo": "aboiar",
+    "catalan": "aboiessis",
+    "valenciano": "aboiares"
+  },
+  {
+    "verbo": "aboiar",
+    "catalan": "aboio",
+    "valenciano": "aboie",
+    "problematica": true
+  },
+  {
+    "verbo": "aboiar",
+    "catalan": "aboiés",
+    "valenciano": "aboiara"
+  },
+  {
+    "verbo": "aboiar",
+    "catalan": "aboiéssim",
+    "valenciano": "aboiàrem"
+  },
+  {
+    "verbo": "aboiar",
+    "catalan": "aboiéssiu",
+    "valenciano": "aboiàreu"
+  },
+  {
+    "verbo": "aboiar",
+    "catalan": "aboï",
+    "valenciano": "aboie",
+    "problematica": true
+  },
+  {
+    "verbo": "aboiar",
+    "catalan": "aboïn",
+    "valenciano": "aboien"
+  },
+  {
+    "verbo": "aboiar",
+    "catalan": "aboïs",
+    "valenciano": "aboies"
+  },
+  {
+    "verbo": "abolir",
+    "catalan": "abolissin",
+    "valenciano": "aboliren"
+  },
+  {
+    "verbo": "abolir",
+    "catalan": "abolissis",
+    "valenciano": "abolires"
+  },
+  {
+    "verbo": "abolir",
+    "catalan": "abolís",
+    "valenciano": "abolira"
+  },
+  {
+    "verbo": "abolir",
+    "catalan": "abolíssim",
+    "valenciano": "abolírem"
+  },
+  {
+    "verbo": "abolir",
+    "catalan": "abolíssiu",
+    "valenciano": "abolíreu"
+  },
+  {
+    "verbo": "absoldre",
+    "catalan": "absolguessin",
+    "valenciano": "absolgueren"
+  },
+  {
+    "verbo": "absoldre",
+    "catalan": "absolguessis",
+    "valenciano": "absolgueres"
+  },
+  {
+    "verbo": "absoldre",
+    "catalan": "absolgui",
+    "valenciano": "absolga"
+  },
+  {
+    "verbo": "absoldre",
+    "catalan": "absolguin",
+    "valenciano": "absolguen"
+  },
+  {
+    "verbo": "absoldre",
+    "catalan": "absolguis",
+    "valenciano": "absolgues"
+  },
+  {
+    "verbo": "absoldre",
+    "catalan": "absolgués",
+    "valenciano": "absolguera"
+  },
+  {
+    "verbo": "absoldre",
+    "catalan": "absolguéssim",
+    "valenciano": "absolguérem"
+  },
+  {
+    "verbo": "absoldre",
+    "catalan": "absolguéssiu",
+    "valenciano": "absolguéreu"
+  },
+  {
+    "verbo": "abstenir",
+    "catalan": "abstinguessin",
+    "valenciano": "abstingueren"
+  },
+  {
+    "verbo": "abstenir",
+    "catalan": "abstinguessis",
+    "valenciano": "abstingueres"
+  },
+  {
+    "verbo": "abstenir",
+    "catalan": "abstingui",
+    "valenciano": "abstinga"
+  },
+  {
+    "verbo": "abstenir",
+    "catalan": "abstinguin",
+    "valenciano": "abstinguen"
+  },
+  {
+    "verbo": "abstenir",
+    "catalan": "abstinguis",
+    "valenciano": "abstingues"
+  },
+  {
+    "verbo": "abstenir",
+    "catalan": "abstingués",
+    "valenciano": "abstinguera"
+  },
+  {
+    "verbo": "abstenir",
+    "catalan": "abstinguéssim",
+    "valenciano": "abstinguérem"
+  },
+  {
+    "verbo": "abstenir",
+    "catalan": "abstinguéssiu",
+    "valenciano": "abstinguéreu"
+  },
+  {
+    "verbo": "acariciar",
+    "catalan": "acariciessin",
+    "valenciano": "acariciaren"
+  },
+  {
+    "verbo": "acariciar",
+    "catalan": "acariciessis",
+    "valenciano": "acariciares"
+  },
+  {
+    "verbo": "acariciar",
+    "catalan": "acaricio",
+    "valenciano": "acaricie",
+    "problematica": true
+  },
+  {
+    "verbo": "acariciar",
+    "catalan": "acariciés",
+    "valenciano": "acariciara"
+  },
+  {
+    "verbo": "acariciar",
+    "catalan": "acariciéssim",
+    "valenciano": "acariciàrem"
+  },
+  {
+    "verbo": "acariciar",
+    "catalan": "acariciéssiu",
+    "valenciano": "acariciàreu"
+  },
+  {
+    "verbo": "acariciar",
+    "catalan": "acariciï",
+    "valenciano": "acaricie",
+    "problematica": true
+  },
+  {
+    "verbo": "acariciar",
+    "catalan": "acariciïn",
+    "valenciano": "acaricien"
+  },
+  {
+    "verbo": "acariciar",
+    "catalan": "acariciïs",
+    "valenciano": "acaricies"
+  },
+  {
+    "verbo": "acollir",
+    "catalan": "acollissin",
+    "valenciano": "acolliren"
+  },
+  {
+    "verbo": "acollir",
+    "catalan": "acollissis",
+    "valenciano": "acollires"
+  },
+  {
+    "verbo": "acollir",
+    "catalan": "acollís",
+    "valenciano": "acollira"
+  },
+  {
+    "verbo": "acollir",
+    "catalan": "acollíssim",
+    "valenciano": "acollírem"
+  },
+  {
+    "verbo": "acollir",
+    "catalan": "acollíssiu",
+    "valenciano": "acollíreu"
+  },
+  {
+    "verbo": "acollir",
+    "catalan": "aculli",
+    "valenciano": "aculla"
+  },
+  {
+    "verbo": "acollir",
+    "catalan": "acullin",
+    "valenciano": "acullen"
+  },
+  {
+    "verbo": "acollir",
+    "catalan": "acullis",
+    "valenciano": "aculles"
+  },
+  {
+    "verbo": "acollir",
+    "catalan": "acullo",
+    "valenciano": "acull"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acompleixi",
+    "valenciano": "acomplisca"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acompleixin",
+    "valenciano": "acomplisquen"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acompleixis",
+    "valenciano": "acomplisques"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acompleixo",
+    "valenciano": "acomplisc"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acomplert",
+    "valenciano": "acomplit"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acomplerta",
+    "valenciano": "acomplida"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acomplertes",
+    "valenciano": "acomplides"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acomplerts",
+    "valenciano": "acomplits"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acomplissin",
+    "valenciano": "acompliren"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acomplissis",
+    "valenciano": "acomplires"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acomplís",
+    "valenciano": "acomplira"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acomplíssim",
+    "valenciano": "acomplírem"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acomplíssiu",
+    "valenciano": "acomplíreu"
+  },
+  {
+    "verbo": "acreixer",
+    "catalan": "acreixem",
+    "valenciano": "acresquem"
+  },
+  {
+    "verbo": "acreixer",
+    "catalan": "acreixeren",
+    "valenciano": "acresqueren",
+    "problematica": true
+  },
+  {
+    "verbo": "acreixer",
+    "catalan": "acreixeres",
+    "valenciano": "acresqueres",
+    "problematica": true
+  },
+  {
+    "verbo": "acreixer",
+    "catalan": "acreixessin",
+    "valenciano": "acresqueren",
+    "problematica": true
+  },
+  {
+    "verbo": "acreixer",
+    "catalan": "acreixessis",
+    "valenciano": "acresqueres",
+    "problematica": true
+  },
+  {
+    "verbo": "acreixer",
+    "catalan": "acreixeu",
+    "valenciano": "acresqueu"
+  },
+  {
+    "verbo": "acreixer",
+    "catalan": "acreixi",
+    "valenciano": "acresca"
+  },
+  {
+    "verbo": "acreixer",
+    "catalan": "acreixin",
+    "valenciano": "acresquen"
+  },
+  {
+    "verbo": "acreixer",
+    "catalan": "acreixis",
+    "valenciano": "acresques"
+  },
+  {
+    "verbo": "acreixer",
+    "catalan": "acreixo",
+    "valenciano": "acresc"
+  },
+  {
+    "verbo": "acreixer",
+    "catalan": "acreixé",
+    "valenciano": "acresqué"
+  },
+  {
+    "verbo": "acreixer",
+    "catalan": "acreixérem",
+    "valenciano": "acresquérem",
+    "problematica": true
+  },
+  {
+    "verbo": "acreixer",
+    "catalan": "acreixéreu",
+    "valenciano": "acresquéreu",
+    "problematica": true
+  },
+  {
+    "verbo": "acreixer",
+    "catalan": "acreixés",
+    "valenciano": "acresquera"
+  },
+  {
+    "verbo": "acreixer",
+    "catalan": "acreixéssim",
+    "valenciano": "acresquérem",
+    "problematica": true
+  },
+  {
+    "verbo": "acreixer",
+    "catalan": "acreixéssiu",
+    "valenciano": "acresquéreu",
+    "problematica": true
+  },
+  {
+    "verbo": "acreixer",
+    "catalan": "acreixí",
+    "valenciano": "acresquí"
+  },
+  {
+    "verbo": "adduir",
+    "catalan": "addueixi",
+    "valenciano": "adduïsca"
+  },
+  {
+    "verbo": "adduir",
+    "catalan": "addueixin",
+    "valenciano": "adduïsquen"
+  },
+  {
+    "verbo": "adduir",
+    "catalan": "addueixis",
+    "valenciano": "adduïsques"
+  },
+  {
+    "verbo": "adduir",
+    "catalan": "addueixo",
+    "valenciano": "adduïsc"
+  },
+  {
+    "verbo": "adduir",
+    "catalan": "adduís",
+    "valenciano": "adduïra"
+  },
+  {
+    "verbo": "adduir",
+    "catalan": "adduíssim",
+    "valenciano": "adduïrem"
+  },
+  {
+    "verbo": "adduir",
+    "catalan": "adduíssiu",
+    "valenciano": "adduïreu"
+  },
+  {
+    "verbo": "adduir",
+    "catalan": "adduïssin",
+    "valenciano": "adduïren"
+  },
+  {
+    "verbo": "adduir",
+    "catalan": "adduïssis",
+    "valenciano": "adduïres"
+  },
+  {
+    "verbo": "adeqüar",
+    "catalan": "adeqüessin",
+    "valenciano": "adeqüaren"
+  },
+  {
+    "verbo": "adeqüar",
+    "catalan": "adeqüessis",
+    "valenciano": "adeqüares"
+  },
+  {
+    "verbo": "adeqüar",
+    "catalan": "adeqüi",
+    "valenciano": "adeqüe"
+  },
+  {
+    "verbo": "adeqüar",
+    "catalan": "adeqüin",
+    "valenciano": "adeqüen"
+  },
+  {
+    "verbo": "adeqüar",
+    "catalan": "adeqüis",
+    "valenciano": "adeqües"
+  },
+  {
+    "verbo": "adeqüar",
+    "catalan": "adeqüés",
+    "valenciano": "adeqüara"
+  },
+  {
+    "verbo": "adeqüar",
+    "catalan": "adeqüéssim",
+    "valenciano": "adeqüàrem"
+  },
+  {
+    "verbo": "adeqüar",
+    "catalan": "adeqüéssiu",
+    "valenciano": "adeqüàreu"
+  },
+  {
+    "verbo": "admetre",
+    "catalan": "admetessin",
+    "valenciano": "admeteren"
+  },
+  {
+    "verbo": "admetre",
+    "catalan": "admetessis",
+    "valenciano": "admeteres"
+  },
+  {
+    "verbo": "admetre",
+    "catalan": "admeti",
+    "valenciano": "admeta"
+  },
+  {
+    "verbo": "admetre",
+    "catalan": "admetin",
+    "valenciano": "admeten"
+  },
+  {
+    "verbo": "admetre",
+    "catalan": "admetis",
+    "valenciano": "admetes"
+  },
+  {
+    "verbo": "admetre",
+    "catalan": "admeto",
+    "valenciano": "admet"
+  },
+  {
+    "verbo": "admetre",
+    "catalan": "admetés",
+    "valenciano": "admetera"
+  },
+  {
+    "verbo": "admetre",
+    "catalan": "admetéssim",
+    "valenciano": "admetérem"
+  },
+  {
+    "verbo": "admetre",
+    "catalan": "admetéssiu",
+    "valenciano": "admetéreu"
+  },
+  {
+    "verbo": "adscriure",
+    "catalan": "adscrigui",
+    "valenciano": "adscriga"
+  },
+  {
+    "verbo": "adscriure",
+    "catalan": "adscriguin",
+    "valenciano": "adscriguen"
+  },
+  {
+    "verbo": "adscriure",
+    "catalan": "adscriguis",
+    "valenciano": "adscrigues"
+  },
+  {
+    "verbo": "adscriure",
+    "catalan": "adscrivissin",
+    "valenciano": "adscrigueren"
+  },
+  {
+    "verbo": "adscriure",
+    "catalan": "adscrivissis",
+    "valenciano": "adscrigueres"
+  },
+  {
+    "verbo": "adscriure",
+    "catalan": "adscrivís",
+    "valenciano": "adscriguera"
+  },
+  {
+    "verbo": "adscriure",
+    "catalan": "adscrivíssim",
+    "valenciano": "adscriguérem"
+  },
+  {
+    "verbo": "adscriure",
+    "catalan": "adscrivíssiu",
+    "valenciano": "adscriguéreu"
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalago",
+    "valenciano": "afalague",
+    "problematica": true
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalaguessin",
+    "valenciano": "afalagaren"
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalaguessis",
+    "valenciano": "afalagares"
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalagueu",
+    "valenciano": "afalagau"
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalagui",
+    "valenciano": "afalague",
+    "problematica": true
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalaguin",
+    "valenciano": "afalaguen"
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalaguis",
+    "valenciano": "afalagues"
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalagués",
+    "valenciano": "afalagara"
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalaguéssim",
+    "valenciano": "afalagàrem"
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalaguéssiu",
+    "valenciano": "afalagàreu"
+  },
+  {
+    "verbo": "agreujar",
+    "catalan": "agreugessin",
+    "valenciano": "agreujaren"
+  },
+  {
+    "verbo": "agreujar",
+    "catalan": "agreugessis",
+    "valenciano": "agreujares"
+  },
+  {
+    "verbo": "agreujar",
+    "catalan": "agreugi",
+    "valenciano": "agreuge",
+    "problematica": true
+  },
+  {
+    "verbo": "agreujar",
+    "catalan": "agreugin",
+    "valenciano": "agreugen"
+  },
+  {
+    "verbo": "agreujar",
+    "catalan": "agreugis",
+    "valenciano": "agreuges"
+  },
+  {
+    "verbo": "agreujar",
+    "catalan": "agreugés",
+    "valenciano": "agreujara"
+  },
+  {
+    "verbo": "agreujar",
+    "catalan": "agreugéssim",
+    "valenciano": "agreujàrem"
+  },
+  {
+    "verbo": "agreujar",
+    "catalan": "agreugéssiu",
+    "valenciano": "agreujàreu"
+  },
+  {
+    "verbo": "agreujar",
+    "catalan": "agreujo",
+    "valenciano": "agreuge",
+    "problematica": true
+  },
+  {
+    "verbo": "ajupir",
+    "catalan": "ajupi",
+    "valenciano": "ajupa"
+  },
+  {
+    "verbo": "ajupir",
+    "catalan": "ajupin",
+    "valenciano": "ajupen"
+  },
+  {
+    "verbo": "ajupir",
+    "catalan": "ajupis",
+    "valenciano": "ajupes"
+  },
+  {
+    "verbo": "ajupir",
+    "catalan": "ajupissin",
+    "valenciano": "ajupiren"
+  },
+  {
+    "verbo": "ajupir",
+    "catalan": "ajupissis",
+    "valenciano": "ajupires"
+  },
+  {
+    "verbo": "ajupir",
+    "catalan": "ajupís",
+    "valenciano": "ajupira"
+  },
+  {
+    "verbo": "ajupir",
+    "catalan": "ajupíssim",
+    "valenciano": "ajupírem"
+  },
+  {
+    "verbo": "ajupir",
+    "catalan": "ajupíssiu",
+    "valenciano": "ajupíreu"
+  },
+  {
+    "verbo": "anar",
+    "catalan": "anessin",
+    "valenciano": "anaren"
+  },
+  {
+    "verbo": "anar",
+    "catalan": "anessis",
+    "valenciano": "anares"
+  },
+  {
+    "verbo": "anar",
+    "catalan": "anés",
+    "valenciano": "anara"
+  },
+  {
+    "verbo": "anar",
+    "catalan": "anéssim",
+    "valenciano": "anàrem"
+  },
+  {
+    "verbo": "anar",
+    "catalan": "anéssiu",
+    "valenciano": "anàreu"
+  },
+  {
+    "verbo": "anar",
+    "catalan": "vagi",
+    "valenciano": "vaja"
+  },
+  {
+    "verbo": "anar",
+    "catalan": "vagin",
+    "valenciano": "vagen"
+  },
+  {
+    "verbo": "anar",
+    "catalan": "vagis",
+    "valenciano": "vages"
+  },
+  {
+    "verbo": "apareixer",
+    "catalan": "apareguessin",
+    "valenciano": "aparegueren"
+  },
+  {
+    "verbo": "apareixer",
+    "catalan": "apareguessis",
+    "valenciano": "aparegueres"
+  },
+  {
+    "verbo": "apareixer",
+    "catalan": "aparegui",
+    "valenciano": "aparega"
+  },
+  {
+    "verbo": "apareixer",
+    "catalan": "apareguin",
+    "valenciano": "apareguen"
+  },
+  {
+    "verbo": "apareixer",
+    "catalan": "apareguis",
+    "valenciano": "aparegues"
+  },
+  {
+    "verbo": "apareixer",
+    "catalan": "aparegués",
+    "valenciano": "apareguera"
+  },
+  {
+    "verbo": "apareixer",
+    "catalan": "apareguéssim",
+    "valenciano": "apareguérem"
+  },
+  {
+    "verbo": "apareixer",
+    "catalan": "apareguéssiu",
+    "valenciano": "apareguéreu"
+  },
+  {
+    "verbo": "argüir",
+    "catalan": "arguïssin",
+    "valenciano": "arguïren"
+  },
+  {
+    "verbo": "argüir",
+    "catalan": "arguïssis",
+    "valenciano": "arguïres"
+  },
+  {
+    "verbo": "argüir",
+    "catalan": "argüeixi",
+    "valenciano": "arguïsca"
+  },
+  {
+    "verbo": "argüir",
+    "catalan": "argüeixin",
+    "valenciano": "arguïsquen"
+  },
+  {
+    "verbo": "argüir",
+    "catalan": "argüeixis",
+    "valenciano": "arguïsques"
+  },
+  {
+    "verbo": "argüir",
+    "catalan": "argüeixo",
+    "valenciano": "arguïsc"
+  },
+  {
+    "verbo": "argüir",
+    "catalan": "argüís",
+    "valenciano": "arguïra"
+  },
+  {
+    "verbo": "argüir",
+    "catalan": "argüíssim",
+    "valenciano": "arguïrem"
+  },
+  {
+    "verbo": "argüir",
+    "catalan": "argüíssiu",
+    "valenciano": "arguïreu"
+  },
+  {
+    "verbo": "asseure",
+    "catalan": "asseguessin",
+    "valenciano": "assegueren"
+  },
+  {
+    "verbo": "asseure",
+    "catalan": "asseguessis",
+    "valenciano": "assegueres"
+  },
+  {
+    "verbo": "asseure",
+    "catalan": "assegui",
+    "valenciano": "assega"
+  },
+  {
+    "verbo": "asseure",
+    "catalan": "asseguin",
+    "valenciano": "asseguen"
+  },
+  {
+    "verbo": "asseure",
+    "catalan": "asseguis",
+    "valenciano": "assegues"
+  },
+  {
+    "verbo": "asseure",
+    "catalan": "assegués",
+    "valenciano": "asseguera"
+  },
+  {
+    "verbo": "asseure",
+    "catalan": "asseguéssim",
+    "valenciano": "asseguérem"
+  },
+  {
+    "verbo": "asseure",
+    "catalan": "asseguéssiu",
+    "valenciano": "asseguéreu"
+  },
+  {
+    "verbo": "atendre",
+    "catalan": "atenguessin",
+    "valenciano": "atengueren"
+  },
+  {
+    "verbo": "atendre",
+    "catalan": "atenguessis",
+    "valenciano": "atengueres"
+  },
+  {
+    "verbo": "atendre",
+    "catalan": "atengui",
+    "valenciano": "atenga"
+  },
+  {
+    "verbo": "atendre",
+    "catalan": "atenguin",
+    "valenciano": "atenguen"
+  },
+  {
+    "verbo": "atendre",
+    "catalan": "atenguis",
+    "valenciano": "atengues"
+  },
+  {
+    "verbo": "atendre",
+    "catalan": "atengués",
+    "valenciano": "atenguera"
+  },
+  {
+    "verbo": "atendre",
+    "catalan": "atenguéssim",
+    "valenciano": "atenguérem"
+  },
+  {
+    "verbo": "atendre",
+    "catalan": "atenguéssiu",
+    "valenciano": "atenguéreu"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atraguessin",
+    "valenciano": "atragueren"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atraguessis",
+    "valenciano": "atragueres"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atragués",
+    "valenciano": "atraguera"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atraguéssim",
+    "valenciano": "atraguérem"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atraguéssiu",
+    "valenciano": "atraguéreu"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atrec",
+    "valenciano": "atrac"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atregui",
+    "valenciano": "atraga"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atreguin",
+    "valenciano": "atraguen"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atreguis",
+    "valenciano": "atragues"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atreu",
+    "valenciano": "atrau"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atreuen",
+    "valenciano": "atrauen"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atreure",
+    "valenciano": "atraure"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atreus",
+    "valenciano": "atraus"
+  },
+  {
+    "verbo": "beure",
+    "catalan": "beguessin",
+    "valenciano": "begueren"
+  },
+  {
+    "verbo": "beure",
+    "catalan": "beguessis",
+    "valenciano": "begueres"
+  },
+  {
+    "verbo": "beure",
+    "catalan": "begui",
+    "valenciano": "bega"
+  },
+  {
+    "verbo": "beure",
+    "catalan": "beguin",
+    "valenciano": "beguen"
+  },
+  {
+    "verbo": "beure",
+    "catalan": "beguis",
+    "valenciano": "begues"
+  },
+  {
+    "verbo": "beure",
+    "catalan": "begués",
+    "valenciano": "beguera"
+  },
+  {
+    "verbo": "beure",
+    "catalan": "beguéssim",
+    "valenciano": "beguérem"
+  },
+  {
+    "verbo": "beure",
+    "catalan": "beguéssiu",
+    "valenciano": "beguéreu"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "cabessin",
+    "valenciano": "caberen"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "cabessis",
+    "valenciano": "caberes"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "cabés",
+    "valenciano": "cabera"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "cabéssim",
+    "valenciano": "cabérem"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "cabéssiu",
+    "valenciano": "cabéreu"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "capiguem",
+    "valenciano": "capiem"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "capigueu",
+    "valenciano": "capieu"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "càpiga",
+    "valenciano": "càpia"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "càpiguen",
+    "valenciano": "càpien"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "càpigues",
+    "valenciano": "càpies"
+  },
+  {
+    "verbo": "caldre",
+    "catalan": "calguessin",
+    "valenciano": "calgueren"
+  },
+  {
+    "verbo": "caldre",
+    "catalan": "calgui",
+    "valenciano": "calga"
+  },
+  {
+    "verbo": "caldre",
+    "catalan": "calgués",
+    "valenciano": "calguera"
+  },
+  {
+    "verbo": "callar",
+    "catalan": "callessin",
+    "valenciano": "callaren"
+  },
+  {
+    "verbo": "callar",
+    "catalan": "callessis",
+    "valenciano": "callares"
+  },
+  {
+    "verbo": "callar",
+    "catalan": "calli",
+    "valenciano": "calle",
+    "problematica": true
+  },
+  {
+    "verbo": "callar",
+    "catalan": "callin",
+    "valenciano": "callen"
+  },
+  {
+    "verbo": "callar",
+    "catalan": "callis",
+    "valenciano": "calles"
+  },
+  {
+    "verbo": "callar",
+    "catalan": "callo",
+    "valenciano": "calle",
+    "problematica": true
+  },
+  {
+    "verbo": "callar",
+    "catalan": "callés",
+    "valenciano": "callara"
+  },
+  {
+    "verbo": "callar",
+    "catalan": "calléssim",
+    "valenciano": "callàrem"
+  },
+  {
+    "verbo": "callar",
+    "catalan": "calléssiu",
+    "valenciano": "callàreu"
+  },
+  {
+    "verbo": "caure",
+    "catalan": "caiguessin",
+    "valenciano": "caigueren"
+  },
+  {
+    "verbo": "caure",
+    "catalan": "caiguessis",
+    "valenciano": "caigueres"
+  },
+  {
+    "verbo": "caure",
+    "catalan": "caigui",
+    "valenciano": "caiga"
+  },
+  {
+    "verbo": "caure",
+    "catalan": "caiguin",
+    "valenciano": "caiguen"
+  },
+  {
+    "verbo": "caure",
+    "catalan": "caiguis",
+    "valenciano": "caigues"
+  },
+  {
+    "verbo": "caure",
+    "catalan": "caigués",
+    "valenciano": "caiguera"
+  },
+  {
+    "verbo": "caure",
+    "catalan": "caiguéssim",
+    "valenciano": "caiguérem"
+  },
+  {
+    "verbo": "caure",
+    "catalan": "caiguéssiu",
+    "valenciano": "caiguéreu"
+  },
+  {
+    "verbo": "cerndre",
+    "catalan": "cernguessin",
+    "valenciano": "cerngueren"
+  },
+  {
+    "verbo": "cerndre",
+    "catalan": "cernguessis",
+    "valenciano": "cerngueres"
+  },
+  {
+    "verbo": "cerndre",
+    "catalan": "cerngui",
+    "valenciano": "cernga"
+  },
+  {
+    "verbo": "cerndre",
+    "catalan": "cernguin",
+    "valenciano": "cernguen"
+  },
+  {
+    "verbo": "cerndre",
+    "catalan": "cernguis",
+    "valenciano": "cerngues"
+  },
+  {
+    "verbo": "cerndre",
+    "catalan": "cerngués",
+    "valenciano": "cernguera"
+  },
+  {
+    "verbo": "cerndre",
+    "catalan": "cernguéssim",
+    "valenciano": "cernguérem"
+  },
+  {
+    "verbo": "cerndre",
+    "catalan": "cernguéssiu",
+    "valenciano": "cernguéreu"
+  },
+  {
+    "verbo": "cloure",
+    "catalan": "cloguessin",
+    "valenciano": "clogueren"
+  },
+  {
+    "verbo": "cloure",
+    "catalan": "cloguessis",
+    "valenciano": "clogueres"
+  },
+  {
+    "verbo": "cloure",
+    "catalan": "clogui",
+    "valenciano": "cloga"
+  },
+  {
+    "verbo": "cloure",
+    "catalan": "cloguin",
+    "valenciano": "cloguen"
+  },
+  {
+    "verbo": "cloure",
+    "catalan": "cloguis",
+    "valenciano": "clogues"
+  },
+  {
+    "verbo": "cloure",
+    "catalan": "clogués",
+    "valenciano": "cloguera"
+  },
+  {
+    "verbo": "cloure",
+    "catalan": "cloguéssim",
+    "valenciano": "cloguérem"
+  },
+  {
+    "verbo": "cloure",
+    "catalan": "cloguéssiu",
+    "valenciano": "cloguéreu"
+  },
+  {
+    "verbo": "cobrir",
+    "catalan": "cobreixi",
+    "valenciano": "cobrisca"
+  },
+  {
+    "verbo": "cobrir",
+    "catalan": "cobreixin",
+    "valenciano": "cobrisquen"
+  },
+  {
+    "verbo": "cobrir",
+    "catalan": "cobreixis",
+    "valenciano": "cobrisques"
+  },
+  {
+    "verbo": "cobrir",
+    "catalan": "cobreixo",
+    "valenciano": "cobrisc"
+  },
+  {
+    "verbo": "cobrir",
+    "catalan": "cobrissin",
+    "valenciano": "cobriren"
+  },
+  {
+    "verbo": "cobrir",
+    "catalan": "cobrissis",
+    "valenciano": "cobrires"
+  },
+  {
+    "verbo": "cobrir",
+    "catalan": "cobrís",
+    "valenciano": "cobrira"
+  },
+  {
+    "verbo": "cobrir",
+    "catalan": "cobríssim",
+    "valenciano": "cobrírem"
+  },
+  {
+    "verbo": "cobrir",
+    "catalan": "cobríssiu",
+    "valenciano": "cobríreu"
+  },
+  {
+    "verbo": "complaure",
+    "catalan": "complaguessin",
+    "valenciano": "complagueren"
+  },
+  {
+    "verbo": "complaure",
+    "catalan": "complaguessis",
+    "valenciano": "complagueres"
+  },
+  {
+    "verbo": "complaure",
+    "catalan": "complagui",
+    "valenciano": "complaga"
+  },
+  {
+    "verbo": "complaure",
+    "catalan": "complaguin",
+    "valenciano": "complaguen"
+  },
+  {
+    "verbo": "complaure",
+    "catalan": "complaguis",
+    "valenciano": "complagues"
+  },
+  {
+    "verbo": "complaure",
+    "catalan": "complagués",
+    "valenciano": "complaguera"
+  },
+  {
+    "verbo": "complaure",
+    "catalan": "complaguéssim",
+    "valenciano": "complaguérem"
+  },
+  {
+    "verbo": "complaure",
+    "catalan": "complaguéssiu",
+    "valenciano": "complaguéreu"
+  },
+  {
+    "verbo": "compondre",
+    "catalan": "componguessin",
+    "valenciano": "compongueren"
+  },
+  {
+    "verbo": "compondre",
+    "catalan": "componguessis",
+    "valenciano": "compongueres"
+  },
+  {
+    "verbo": "compondre",
+    "catalan": "compongui",
+    "valenciano": "componga"
+  },
+  {
+    "verbo": "compondre",
+    "catalan": "componguin",
+    "valenciano": "componguen"
+  },
+  {
+    "verbo": "compondre",
+    "catalan": "componguis",
+    "valenciano": "compongues"
+  },
+  {
+    "verbo": "compondre",
+    "catalan": "compongués",
+    "valenciano": "componguera"
+  },
+  {
+    "verbo": "compondre",
+    "catalan": "componguéssim",
+    "valenciano": "componguérem"
+  },
+  {
+    "verbo": "compondre",
+    "catalan": "componguéssiu",
+    "valenciano": "componguéreu"
+  },
+  {
+    "verbo": "compondre",
+    "catalan": "composts",
+    "valenciano": "compostos"
+  },
+  {
+    "verbo": "concloure",
+    "catalan": "concloguessin",
+    "valenciano": "conclogueren"
+  },
+  {
+    "verbo": "concloure",
+    "catalan": "concloguessis",
+    "valenciano": "conclogueres"
+  },
+  {
+    "verbo": "concloure",
+    "catalan": "conclogui",
+    "valenciano": "concloga"
+  },
+  {
+    "verbo": "concloure",
+    "catalan": "concloguin",
+    "valenciano": "concloguen"
+  },
+  {
+    "verbo": "concloure",
+    "catalan": "concloguis",
+    "valenciano": "conclogues"
+  },
+  {
+    "verbo": "concloure",
+    "catalan": "conclogués",
+    "valenciano": "concloguera"
+  },
+  {
+    "verbo": "concloure",
+    "catalan": "concloguéssim",
+    "valenciano": "concloguérem"
+  },
+  {
+    "verbo": "concloure",
+    "catalan": "concloguéssiu",
+    "valenciano": "concloguéreu"
+  },
+  {
+    "verbo": "concorrer",
+    "catalan": "concorreguessin",
+    "valenciano": "concorregueren"
+  },
+  {
+    "verbo": "concorrer",
+    "catalan": "concorreguessis",
+    "valenciano": "concorregueres"
+  },
+  {
+    "verbo": "concorrer",
+    "catalan": "concorregués",
+    "valenciano": "concorreguera"
+  },
+  {
+    "verbo": "concorrer",
+    "catalan": "concorreguéssim",
+    "valenciano": "concorreguérem"
+  },
+  {
+    "verbo": "concorrer",
+    "catalan": "concorreguéssiu",
+    "valenciano": "concorreguéreu"
+  },
+  {
+    "verbo": "concorrer",
+    "catalan": "concorrem",
+    "valenciano": "concorreguem"
+  },
+  {
+    "verbo": "concorrer",
+    "catalan": "concorreu",
+    "valenciano": "concorregueu"
+  },
+  {
+    "verbo": "confondre",
+    "catalan": "confonguessin",
+    "valenciano": "confongueren"
+  },
+  {
+    "verbo": "confondre",
+    "catalan": "confonguessis",
+    "valenciano": "confongueres"
+  },
+  {
+    "verbo": "confondre",
+    "catalan": "confongui",
+    "valenciano": "confonga"
+  },
+  {
+    "verbo": "confondre",
+    "catalan": "confonguin",
+    "valenciano": "confonguen"
+  },
+  {
+    "verbo": "confondre",
+    "catalan": "confonguis",
+    "valenciano": "confongues"
+  },
+  {
+    "verbo": "confondre",
+    "catalan": "confongués",
+    "valenciano": "confonguera"
+  },
+  {
+    "verbo": "confondre",
+    "catalan": "confonguéssim",
+    "valenciano": "confonguérem"
+  },
+  {
+    "verbo": "confondre",
+    "catalan": "confonguéssiu",
+    "valenciano": "confonguéreu"
+  },
+  {
+    "verbo": "constrènyer",
+    "catalan": "constrenyessin",
+    "valenciano": "constrenyeren"
+  },
+  {
+    "verbo": "constrènyer",
+    "catalan": "constrenyessis",
+    "valenciano": "constrenyeres"
+  },
+  {
+    "verbo": "constrènyer",
+    "catalan": "constrenyi",
+    "valenciano": "constrenya"
+  },
+  {
+    "verbo": "constrènyer",
+    "catalan": "constrenyin",
+    "valenciano": "constrenyen"
+  },
+  {
+    "verbo": "constrènyer",
+    "catalan": "constrenyis",
+    "valenciano": "constrenyes"
+  },
+  {
+    "verbo": "constrènyer",
+    "catalan": "constrenyo",
+    "valenciano": "constreny"
+  },
+  {
+    "verbo": "constrènyer",
+    "catalan": "constrenyés",
+    "valenciano": "constrenyera"
+  },
+  {
+    "verbo": "constrènyer",
+    "catalan": "constrenyéssim",
+    "valenciano": "constrenyérem"
+  },
+  {
+    "verbo": "constrènyer",
+    "catalan": "constrenyéssiu",
+    "valenciano": "constrenyéreu"
+  },
+  {
+    "verbo": "contradir",
+    "catalan": "contradigues",
+    "valenciano": "contradis",
+    "problematica": true
+  },
+  {
+    "verbo": "contradir",
+    "catalan": "contradiguessin",
+    "valenciano": "contradigueren"
+  },
+  {
+    "verbo": "contradir",
+    "catalan": "contradiguessis",
+    "valenciano": "contradigueres"
+  },
+  {
+    "verbo": "contradir",
+    "catalan": "contradigui",
+    "valenciano": "contradiga"
+  },
+  {
+    "verbo": "contradir",
+    "catalan": "contradiguin",
+    "valenciano": "contradiguen"
+  },
+  {
+    "verbo": "contradir",
+    "catalan": "contradiguis",
+    "valenciano": "contradigues",
+    "problematica": true
+  },
+  {
+    "verbo": "contradir",
+    "catalan": "contradigués",
+    "valenciano": "contradiguera"
+  },
+  {
+    "verbo": "contradir",
+    "catalan": "contradiguéssim",
+    "valenciano": "contradiguérem"
+  },
+  {
+    "verbo": "contradir",
+    "catalan": "contradiguéssiu",
+    "valenciano": "contradiguéreu"
+  },
+  {
+    "verbo": "convencer",
+    "catalan": "convencessin",
+    "valenciano": "convenceren"
+  },
+  {
+    "verbo": "convencer",
+    "catalan": "convencessis",
+    "valenciano": "convenceres"
+  },
+  {
+    "verbo": "convencer",
+    "catalan": "convenci",
+    "valenciano": "convença"
+  },
+  {
+    "verbo": "convencer",
+    "catalan": "convencin",
+    "valenciano": "convencen"
+  },
+  {
+    "verbo": "convencer",
+    "catalan": "convencis",
+    "valenciano": "convences"
+  },
+  {
+    "verbo": "convencer",
+    "catalan": "convencés",
+    "valenciano": "convencera"
+  },
+  {
+    "verbo": "convencer",
+    "catalan": "convencéssim",
+    "valenciano": "convencérem"
+  },
+  {
+    "verbo": "convencer",
+    "catalan": "convencéssiu",
+    "valenciano": "convencéreu"
+  },
+  {
+    "verbo": "convencer",
+    "catalan": "convenço",
+    "valenciano": "convenç"
+  },
+  {
+    "verbo": "convenir",
+    "catalan": "convinguessin",
+    "valenciano": "convingueren"
+  },
+  {
+    "verbo": "convenir",
+    "catalan": "convinguessis",
+    "valenciano": "convingueres"
+  },
+  {
+    "verbo": "convenir",
+    "catalan": "convingui",
+    "valenciano": "convinga"
+  },
+  {
+    "verbo": "convenir",
+    "catalan": "convinguin",
+    "valenciano": "convinguen"
+  },
+  {
+    "verbo": "convenir",
+    "catalan": "convinguis",
+    "valenciano": "convingues"
+  },
+  {
+    "verbo": "convenir",
+    "catalan": "convingués",
+    "valenciano": "convinguera"
+  },
+  {
+    "verbo": "convenir",
+    "catalan": "convinguéssim",
+    "valenciano": "convinguérem"
+  },
+  {
+    "verbo": "convenir",
+    "catalan": "convinguéssiu",
+    "valenciano": "convinguéreu"
+  },
+  {
+    "verbo": "conviure",
+    "catalan": "convisquessin",
+    "valenciano": "convisqueren"
+  },
+  {
+    "verbo": "conviure",
+    "catalan": "convisquessis",
+    "valenciano": "convisqueres"
+  },
+  {
+    "verbo": "conviure",
+    "catalan": "convisqui",
+    "valenciano": "convisca"
+  },
+  {
+    "verbo": "conviure",
+    "catalan": "convisquin",
+    "valenciano": "convisquen"
+  },
+  {
+    "verbo": "conviure",
+    "catalan": "convisquis",
+    "valenciano": "convisques"
+  },
+  {
+    "verbo": "conviure",
+    "catalan": "convisqués",
+    "valenciano": "convisquera"
+  },
+  {
+    "verbo": "conviure",
+    "catalan": "convisquéssim",
+    "valenciano": "convisquérem"
+  },
+  {
+    "verbo": "conviure",
+    "catalan": "convisquéssiu",
+    "valenciano": "convisquéreu"
+  },
+  {
+    "verbo": "cosir",
+    "catalan": "cosissin",
+    "valenciano": "cosiren"
+  },
+  {
+    "verbo": "cosir",
+    "catalan": "cosissis",
+    "valenciano": "cosires"
+  },
+  {
+    "verbo": "cosir",
+    "catalan": "cosís",
+    "valenciano": "cosira"
+  },
+  {
+    "verbo": "cosir",
+    "catalan": "cosíssim",
+    "valenciano": "cosírem"
+  },
+  {
+    "verbo": "cosir",
+    "catalan": "cosíssiu",
+    "valenciano": "cosíreu"
+  },
+  {
+    "verbo": "cosir",
+    "catalan": "cusi",
+    "valenciano": "cusa"
+  },
+  {
+    "verbo": "cosir",
+    "catalan": "cusin",
+    "valenciano": "cusen"
+  },
+  {
+    "verbo": "cosir",
+    "catalan": "cusis",
+    "valenciano": "cuses"
+  },
+  {
+    "verbo": "cosir",
+    "catalan": "cuso",
+    "valenciano": "cus"
+  },
+  {
+    "verbo": "coure",
+    "catalan": "coguessin",
+    "valenciano": "cogueren"
+  },
+  {
+    "verbo": "coure",
+    "catalan": "coguessis",
+    "valenciano": "cogueres"
+  },
+  {
+    "verbo": "coure",
+    "catalan": "cogui",
+    "valenciano": "coga"
+  },
+  {
+    "verbo": "coure",
+    "catalan": "coguin",
+    "valenciano": "coguen"
+  },
+  {
+    "verbo": "coure",
+    "catalan": "coguis",
+    "valenciano": "cogues"
+  },
+  {
+    "verbo": "coure",
+    "catalan": "cogués",
+    "valenciano": "coguera"
+  },
+  {
+    "verbo": "coure",
+    "catalan": "coguéssim",
+    "valenciano": "coguérem"
+  },
+  {
+    "verbo": "coure",
+    "catalan": "coguéssiu",
+    "valenciano": "coguéreu"
+  },
+  {
+    "verbo": "dependre",
+    "catalan": "depenguessin",
+    "valenciano": "depengueren"
+  },
+  {
+    "verbo": "dependre",
+    "catalan": "depenguessis",
+    "valenciano": "depengueres"
+  },
+  {
+    "verbo": "dependre",
+    "catalan": "depengui",
+    "valenciano": "depenga"
+  },
+  {
+    "verbo": "dependre",
+    "catalan": "depenguin",
+    "valenciano": "depenguen"
+  },
+  {
+    "verbo": "dependre",
+    "catalan": "depenguis",
+    "valenciano": "depengues"
+  },
+  {
+    "verbo": "dependre",
+    "catalan": "depengués",
+    "valenciano": "depenguera"
+  },
+  {
+    "verbo": "dependre",
+    "catalan": "depenguéssim",
+    "valenciano": "depenguérem"
+  },
+  {
+    "verbo": "dependre",
+    "catalan": "depenguéssiu",
+    "valenciano": "depenguéreu"
+  },
+  {
+    "verbo": "desfer",
+    "catalan": "desfaci",
+    "valenciano": "desfaça"
+  },
+  {
+    "verbo": "desfer",
+    "catalan": "desfacin",
+    "valenciano": "desfacen"
+  },
+  {
+    "verbo": "desfer",
+    "catalan": "desfacis",
+    "valenciano": "desfaces"
+  },
+  {
+    "verbo": "desfer",
+    "catalan": "desfessin",
+    "valenciano": "desferen"
+  },
+  {
+    "verbo": "desfer",
+    "catalan": "desfessis",
+    "valenciano": "desferes"
+  },
+  {
+    "verbo": "desfer",
+    "catalan": "desfés",
+    "valenciano": "desfera"
+  },
+  {
+    "verbo": "desfer",
+    "catalan": "desféssim",
+    "valenciano": "desférem"
+  },
+  {
+    "verbo": "desfer",
+    "catalan": "desféssiu",
+    "valenciano": "desféreu"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixem",
+    "valenciano": "desmeresquem"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixessin",
+    "valenciano": "desmeresqueren"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixessis",
+    "valenciano": "desmeresqueres"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixeu",
+    "valenciano": "desmeresqueu"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixi",
+    "valenciano": "desmeresca"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixin",
+    "valenciano": "desmeresquen"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixis",
+    "valenciano": "desmeresques"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixo",
+    "valenciano": "desmeresc"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixés",
+    "valenciano": "desmeresquera"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixéssim",
+    "valenciano": "desmeresquérem"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixéssiu",
+    "valenciano": "desmeresquéreu"
+  },
+  {
+    "verbo": "desoir",
+    "catalan": "desoeixi",
+    "valenciano": "desoïsca"
+  },
+  {
+    "verbo": "desoir",
+    "catalan": "desoeixin",
+    "valenciano": "desoïsquen"
+  },
+  {
+    "verbo": "desoir",
+    "catalan": "desoeixis",
+    "valenciano": "desoïsques"
+  },
+  {
+    "verbo": "desoir",
+    "catalan": "desoeixo",
+    "valenciano": "desoïsc"
+  },
+  {
+    "verbo": "desoir",
+    "catalan": "desoís",
+    "valenciano": "desoïra"
+  },
+  {
+    "verbo": "desoir",
+    "catalan": "desoíssim",
+    "valenciano": "desoírem"
+  },
+  {
+    "verbo": "desoir",
+    "catalan": "desoíssiu",
+    "valenciano": "desoïreu"
+  },
+  {
+    "verbo": "desoir",
+    "catalan": "desoïssin",
+    "valenciano": "desoïren"
+  },
+  {
+    "verbo": "desoir",
+    "catalan": "desoïssis",
+    "valenciano": "desoïres"
+  },
+  {
+    "verbo": "deure",
+    "catalan": "deguessin",
+    "valenciano": "degueren"
+  },
+  {
+    "verbo": "deure",
+    "catalan": "deguessis",
+    "valenciano": "degueres"
+  },
+  {
+    "verbo": "deure",
+    "catalan": "degui",
+    "valenciano": "dega"
+  },
+  {
+    "verbo": "deure",
+    "catalan": "deguin",
+    "valenciano": "deguen"
+  },
+  {
+    "verbo": "deure",
+    "catalan": "deguis",
+    "valenciano": "degues"
+  },
+  {
+    "verbo": "deure",
+    "catalan": "degués",
+    "valenciano": "deguera"
+  },
+  {
+    "verbo": "deure",
+    "catalan": "deguéssim",
+    "valenciano": "deguérem"
+  },
+  {
+    "verbo": "deure",
+    "catalan": "deguéssiu",
+    "valenciano": "deguéreu"
+  },
+  {
+    "verbo": "dir",
+    "catalan": "digues",
+    "valenciano": "dis",
+    "problematica": true
+  },
+  {
+    "verbo": "dir",
+    "catalan": "diguessin",
+    "valenciano": "digueren"
+  },
+  {
+    "verbo": "dir",
+    "catalan": "diguessis",
+    "valenciano": "digueres"
+  },
+  {
+    "verbo": "dir",
+    "catalan": "digui",
+    "valenciano": "diga"
+  },
+  {
+    "verbo": "dir",
+    "catalan": "diguin",
+    "valenciano": "diguen"
+  },
+  {
+    "verbo": "dir",
+    "catalan": "diguis",
+    "valenciano": "digues",
+    "problematica": true
+  },
+  {
+    "verbo": "dir",
+    "catalan": "digués",
+    "valenciano": "diguera"
+  },
+  {
+    "verbo": "dir",
+    "catalan": "diguéssim",
+    "valenciano": "diguérem"
+  },
+  {
+    "verbo": "dir",
+    "catalan": "diguéssiu",
+    "valenciano": "diguéreu"
+  },
+  {
+    "verbo": "doldre",
+    "catalan": "dolguessin",
+    "valenciano": "dolgueren"
+  },
+  {
+    "verbo": "doldre",
+    "catalan": "dolguessis",
+    "valenciano": "dolgueres"
+  },
+  {
+    "verbo": "doldre",
+    "catalan": "dolgui",
+    "valenciano": "dolga"
+  },
+  {
+    "verbo": "doldre",
+    "catalan": "dolguin",
+    "valenciano": "dolguen"
+  },
+  {
+    "verbo": "doldre",
+    "catalan": "dolguis",
+    "valenciano": "dolgues"
+  },
+  {
+    "verbo": "doldre",
+    "catalan": "dolgués",
+    "valenciano": "dolguera"
+  },
+  {
+    "verbo": "doldre",
+    "catalan": "dolguéssim",
+    "valenciano": "dolguérem"
+  },
+  {
+    "verbo": "doldre",
+    "catalan": "dolguéssiu",
+    "valenciano": "dolguéreu"
+  },
+  {
+    "verbo": "donar",
+    "catalan": "donessin",
+    "valenciano": "donaren"
+  },
+  {
+    "verbo": "donar",
+    "catalan": "donessis",
+    "valenciano": "donares"
+  },
+  {
+    "verbo": "donar",
+    "catalan": "doni",
+    "valenciano": "done",
+    "problematica": true
+  },
+  {
+    "verbo": "donar",
+    "catalan": "donin",
+    "valenciano": "donen"
+  },
+  {
+    "verbo": "donar",
+    "catalan": "donis",
+    "valenciano": "dones",
+    "problematica": true
+  },
+  {
+    "verbo": "donar",
+    "catalan": "donis",
+    "valenciano": "ónes",
+    "problematica": true
+  },
+  {
+    "verbo": "donar",
+    "catalan": "dono",
+    "valenciano": "done",
+    "problematica": true
+  },
+  {
+    "verbo": "donar",
+    "catalan": "donés",
+    "valenciano": "donara"
+  },
+  {
+    "verbo": "donar",
+    "catalan": "donéssim",
+    "valenciano": "donàrem"
+  },
+  {
+    "verbo": "donar",
+    "catalan": "donéssiu",
+    "valenciano": "donàreu"
+  },
+  {
+    "verbo": "dur",
+    "catalan": "duguessin",
+    "valenciano": "dugueren"
+  },
+  {
+    "verbo": "dur",
+    "catalan": "duguessis",
+    "valenciano": "dugueres"
+  },
+  {
+    "verbo": "dur",
+    "catalan": "dugui",
+    "valenciano": "duga"
+  },
+  {
+    "verbo": "dur",
+    "catalan": "duguin",
+    "valenciano": "duguen"
+  },
+  {
+    "verbo": "dur",
+    "catalan": "duguis",
+    "valenciano": "dugues"
+  },
+  {
+    "verbo": "dur",
+    "catalan": "dugués",
+    "valenciano": "duguera"
+  },
+  {
+    "verbo": "dur",
+    "catalan": "duguéssim",
+    "valenciano": "duguérem"
+  },
+  {
+    "verbo": "dur",
+    "catalan": "duguéssiu",
+    "valenciano": "duguéreu"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "eixim",
+    "valenciano": "isquem"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "eixissin",
+    "valenciano": "isqueren"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "eixissis",
+    "valenciano": "isqueres"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "eixiu",
+    "valenciano": "isqueu"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "eixís",
+    "valenciano": "isquera"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "eixíssim",
+    "valenciano": "isquérem"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "eixíssiu",
+    "valenciano": "isquéreu"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "ixi",
+    "valenciano": "isca"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "ixin",
+    "valenciano": "isquen"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "ixis",
+    "valenciano": "isques"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "ixo",
+    "valenciano": "isc"
+  },
+  {
+    "verbo": "empènyer",
+    "catalan": "empenyessin",
+    "valenciano": "empenyeren"
+  },
+  {
+    "verbo": "empènyer",
+    "catalan": "empenyessis",
+    "valenciano": "empenyeres"
+  },
+  {
+    "verbo": "empènyer",
+    "catalan": "empenyi",
+    "valenciano": "empenya"
+  },
+  {
+    "verbo": "empènyer",
+    "catalan": "empenyin",
+    "valenciano": "empenyen"
+  },
+  {
+    "verbo": "empènyer",
+    "catalan": "empenyis",
+    "valenciano": "empenyes"
+  },
+  {
+    "verbo": "empènyer",
+    "catalan": "empenyo",
+    "valenciano": "empeny"
+  },
+  {
+    "verbo": "empènyer",
+    "catalan": "empenyés",
+    "valenciano": "empenyera"
+  },
+  {
+    "verbo": "empènyer",
+    "catalan": "empenyéssim",
+    "valenciano": "empenyérem"
+  },
+  {
+    "verbo": "empènyer",
+    "catalan": "empenyéssiu",
+    "valenciano": "empenyéreu"
+  },
+  {
+    "verbo": "endur",
+    "catalan": "enduguessin",
+    "valenciano": "endugueren"
+  },
+  {
+    "verbo": "endur",
+    "catalan": "enduguessis",
+    "valenciano": "endugueres"
+  },
+  {
+    "verbo": "endur",
+    "catalan": "endugui",
+    "valenciano": "enduga"
+  },
+  {
+    "verbo": "endur",
+    "catalan": "enduguin",
+    "valenciano": "enduguen"
+  },
+  {
+    "verbo": "endur",
+    "catalan": "enduguis",
+    "valenciano": "endugues"
+  },
+  {
+    "verbo": "endur",
+    "catalan": "endugués",
+    "valenciano": "enduguera"
+  },
+  {
+    "verbo": "endur",
+    "catalan": "enduguéssim",
+    "valenciano": "enduguérem"
+  },
+  {
+    "verbo": "endur",
+    "catalan": "enduguéssiu",
+    "valenciano": "enduguéreu"
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engoleix",
+    "valenciano": "engul",
+    "problematica": true
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engoleixen",
+    "valenciano": "engulen",
+    "problematica": true
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engoleixes",
+    "valenciano": "enguls"
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engoleixi",
+    "valenciano": "engula"
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engoleixin",
+    "valenciano": "engulen",
+    "problematica": true
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engoleixis",
+    "valenciano": "engules"
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engoleixo",
+    "valenciano": "engul",
+    "problematica": true
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engolissin",
+    "valenciano": "engoliren"
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engolissis",
+    "valenciano": "engolires"
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engolís",
+    "valenciano": "engolira"
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engolíssim",
+    "valenciano": "engolírem"
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engolíssiu",
+    "valenciano": "engolíreu"
+  },
+  {
+    "verbo": "entreveure",
+    "catalan": "entrevegi",
+    "valenciano": "entreveja"
+  },
+  {
+    "verbo": "entreveure",
+    "catalan": "entrevegin",
+    "valenciano": "entrevegen"
+  },
+  {
+    "verbo": "entreveure",
+    "catalan": "entrevegis",
+    "valenciano": "entreveges"
+  },
+  {
+    "verbo": "entreveure",
+    "catalan": "entreveiessin",
+    "valenciano": "entreveren"
+  },
+  {
+    "verbo": "entreveure",
+    "catalan": "entreveiessis",
+    "valenciano": "entreveres"
+  },
+  {
+    "verbo": "entreveure",
+    "catalan": "entreveiés",
+    "valenciano": "entrevera"
+  },
+  {
+    "verbo": "entreveure",
+    "catalan": "entreveiéssim",
+    "valenciano": "entrevérem"
+  },
+  {
+    "verbo": "entreveure",
+    "catalan": "entreveiéssiu",
+    "valenciano": "entrevéreu"
+  },
+  {
+    "verbo": "entreveure",
+    "catalan": "entrevists",
+    "valenciano": "entrevistos"
+  },
+  {
+    "verbo": "equivaler",
+    "catalan": "equivaler",
+    "valenciano": "equivaldre"
+  },
+  {
+    "verbo": "equivaler",
+    "catalan": "equivalguessin",
+    "valenciano": "equivalgueren"
+  },
+  {
+    "verbo": "equivaler",
+    "catalan": "equivalguessis",
+    "valenciano": "equivalgueres"
+  },
+  {
+    "verbo": "equivaler",
+    "catalan": "equivalgui",
+    "valenciano": "equivalga"
+  },
+  {
+    "verbo": "equivaler",
+    "catalan": "equivalguin",
+    "valenciano": "equivalguen"
+  },
+  {
+    "verbo": "equivaler",
+    "catalan": "equivalguis",
+    "valenciano": "equivalgues"
+  },
+  {
+    "verbo": "equivaler",
+    "catalan": "equivalgués",
+    "valenciano": "equivalguera"
+  },
+  {
+    "verbo": "equivaler",
+    "catalan": "equivalguéssim",
+    "valenciano": "equivalguérem"
+  },
+  {
+    "verbo": "equivaler",
+    "catalan": "equivalguéssiu",
+    "valenciano": "equivalguéreu"
+  },
+  {
+    "verbo": "escopir",
+    "catalan": "escopissin",
+    "valenciano": "escopiren"
+  },
+  {
+    "verbo": "escopir",
+    "catalan": "escopissis",
+    "valenciano": "escopires"
+  },
+  {
+    "verbo": "escopir",
+    "catalan": "escopís",
+    "valenciano": "escopira"
+  },
+  {
+    "verbo": "escopir",
+    "catalan": "escopíssim",
+    "valenciano": "escopírem"
+  },
+  {
+    "verbo": "escopir",
+    "catalan": "escopíssiu",
+    "valenciano": "escopíreu"
+  },
+  {
+    "verbo": "escopir",
+    "catalan": "escupi",
+    "valenciano": "escupa"
+  },
+  {
+    "verbo": "escopir",
+    "catalan": "escupin",
+    "valenciano": "escupen"
+  },
+  {
+    "verbo": "escopir",
+    "catalan": "escupis",
+    "valenciano": "escupes"
+  },
+  {
+    "verbo": "escopir",
+    "catalan": "escupo",
+    "valenciano": "escup"
+  },
+  {
+    "verbo": "estar",
+    "catalan": "estiguessin",
+    "valenciano": "estigueren"
+  },
+  {
+    "verbo": "estar",
+    "catalan": "estiguessis",
+    "valenciano": "estigueres"
+  },
+  {
+    "verbo": "estar",
+    "catalan": "estigui",
+    "valenciano": "estiga"
+  },
+  {
+    "verbo": "estar",
+    "catalan": "estiguin",
+    "valenciano": "estiguen"
+  },
+  {
+    "verbo": "estar",
+    "catalan": "estiguis",
+    "valenciano": "estigues"
+  },
+  {
+    "verbo": "estar",
+    "catalan": "estigués",
+    "valenciano": "estiguera"
+  },
+  {
+    "verbo": "estar",
+    "catalan": "estiguéssim",
+    "valenciano": "estiguérem"
+  },
+  {
+    "verbo": "estar",
+    "catalan": "estiguéssiu",
+    "valenciano": "estiguéreu"
+  },
+  {
+    "verbo": "fer",
+    "catalan": "faci",
+    "valenciano": "faça"
+  },
+  {
+    "verbo": "fer",
+    "catalan": "facin",
+    "valenciano": "facen"
+  },
+  {
+    "verbo": "fer",
+    "catalan": "facis",
+    "valenciano": "faces"
+  },
+  {
+    "verbo": "fer",
+    "catalan": "fes",
+    "valenciano": "fera"
+  },
+  {
+    "verbo": "fer",
+    "catalan": "fessin",
+    "valenciano": "feren"
+  },
+  {
+    "verbo": "fer",
+    "catalan": "fessis",
+    "valenciano": "feres"
+  },
+  {
+    "verbo": "fer",
+    "catalan": "féssim",
+    "valenciano": "férem"
+  },
+  {
+    "verbo": "fer",
+    "catalan": "féssiu",
+    "valenciano": "féreu"
+  },
+  {
+    "verbo": "fondre",
+    "catalan": "fonguessin",
+    "valenciano": "fongueren"
+  },
+  {
+    "verbo": "fondre",
+    "catalan": "fonguessis",
+    "valenciano": "fongueres"
+  },
+  {
+    "verbo": "fondre",
+    "catalan": "fongui",
+    "valenciano": "fonga"
+  },
+  {
+    "verbo": "fondre",
+    "catalan": "fonguin",
+    "valenciano": "fonguen"
+  },
+  {
+    "verbo": "fondre",
+    "catalan": "fonguis",
+    "valenciano": "fongues"
+  },
+  {
+    "verbo": "fondre",
+    "catalan": "fongués",
+    "valenciano": "fonguera"
+  },
+  {
+    "verbo": "fondre",
+    "catalan": "fonguéssim",
+    "valenciano": "fonguérem"
+  },
+  {
+    "verbo": "fondre",
+    "catalan": "fonguéssiu",
+    "valenciano": "fonguéreu"
+  },
+  {
+    "verbo": "fugir",
+    "catalan": "fugi",
+    "valenciano": "fuja"
+  },
+  {
+    "verbo": "fugir",
+    "catalan": "fugin",
+    "valenciano": "fugen"
+  },
+  {
+    "verbo": "fugir",
+    "catalan": "fugis",
+    "valenciano": "fuges"
+  },
+  {
+    "verbo": "fugir",
+    "catalan": "fugissin",
+    "valenciano": "fugiren"
+  },
+  {
+    "verbo": "fugir",
+    "catalan": "fugissis",
+    "valenciano": "fugires"
+  },
+  {
+    "verbo": "fugir",
+    "catalan": "fugís",
+    "valenciano": "fugira"
+  },
+  {
+    "verbo": "fugir",
+    "catalan": "fugíssim",
+    "valenciano": "fugírem"
+  },
+  {
+    "verbo": "fugir",
+    "catalan": "fugíssiu",
+    "valenciano": "fugíreu"
+  },
+  {
+    "verbo": "fugir",
+    "catalan": "fujo",
+    "valenciano": "fuig"
+  },
+  {
+    "verbo": "haver",
+    "catalan": "hagi",
+    "valenciano": "haja",
+    "problematica": true
+  },
+  {
+    "verbo": "haver",
+    "catalan": "hagin",
+    "valenciano": "hagen",
+    "problematica": true
+  },
+  {
+    "verbo": "haver",
+    "catalan": "hagis",
+    "valenciano": "hages",
+    "problematica": true
+  },
+  {
+    "verbo": "haver",
+    "catalan": "haguessin",
+    "valenciano": "hagueren",
+    "problematica": true
+  },
+  {
+    "verbo": "haver",
+    "catalan": "haguessis",
+    "valenciano": "hagueres",
+    "problematica": true
+  },
+  {
+    "verbo": "haver",
+    "catalan": "hagués",
+    "valenciano": "haguera",
+    "problematica": true
+  },
+  {
+    "verbo": "haver",
+    "catalan": "haguéssim",
+    "valenciano": "haguérem",
+    "problematica": true
+  },
+  {
+    "verbo": "haver",
+    "catalan": "haguéssiu",
+    "valenciano": "haguéreu",
+    "problematica": true
+  },
+  {
+    "verbo": "haver",
+    "catalan": "haig",
+    "valenciano": "he"
+  },
+  {
+    "verbo": "haver",
+    "catalan": "hàgim",
+    "valenciano": "hàgem",
+    "problematica": true
+  },
+  {
+    "verbo": "haver",
+    "catalan": "hàgiu",
+    "valenciano": "hàgeu",
+    "problematica": true
+  },
+  {
+    "verbo": "imprimir",
+    "catalan": "imprimeixi",
+    "valenciano": "imprimisca"
+  },
+  {
+    "verbo": "imprimir",
+    "catalan": "imprimeixin",
+    "valenciano": "imprimisquen"
+  },
+  {
+    "verbo": "imprimir",
+    "catalan": "imprimeixis",
+    "valenciano": "imprimisques"
+  },
+  {
+    "verbo": "imprimir",
+    "catalan": "imprimeixo",
+    "valenciano": "imprimisc"
+  },
+  {
+    "verbo": "imprimir",
+    "catalan": "imprimissin",
+    "valenciano": "imprimiren"
+  },
+  {
+    "verbo": "imprimir",
+    "catalan": "imprimissis",
+    "valenciano": "imprimires"
+  },
+  {
+    "verbo": "imprimir",
+    "catalan": "imprimís",
+    "valenciano": "imprimira"
+  },
+  {
+    "verbo": "imprimir",
+    "catalan": "imprimíssim",
+    "valenciano": "imprimírem"
+  },
+  {
+    "verbo": "imprimir",
+    "catalan": "imprimíssiu",
+    "valenciano": "imprimíreu"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jaguessin",
+    "valenciano": "jagueren"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jaguessis",
+    "valenciano": "jagueres"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jagués",
+    "valenciano": "jaguera"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jaguéssim",
+    "valenciano": "jaguérem"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jaguéssiu",
+    "valenciano": "jaguéreu"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jec",
+    "valenciano": "jac"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jegui",
+    "valenciano": "jaga"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jeguin",
+    "valenciano": "jaguen"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jeguis",
+    "valenciano": "jagues"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jeu",
+    "valenciano": "jau"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jeuen",
+    "valenciano": "jauen"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jeure",
+    "valenciano": "jaure"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jeus",
+    "valenciano": "jaus"
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegeix",
+    "valenciano": "llig",
+    "problematica": true
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegeixen",
+    "valenciano": "lligen",
+    "problematica": true
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegeixes",
+    "valenciano": "lliges",
+    "problematica": true
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegeixi",
+    "valenciano": "llija"
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegeixin",
+    "valenciano": "lligen",
+    "problematica": true
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegeixis",
+    "valenciano": "lliges",
+    "problematica": true
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegeixo",
+    "valenciano": "llig",
+    "problematica": true
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegissin",
+    "valenciano": "llegiren"
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegissis",
+    "valenciano": "llegires"
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegís",
+    "valenciano": "llegira"
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegíssim",
+    "valenciano": "llegírem"
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegíssiu",
+    "valenciano": "llegíreu"
+  },
+  {
+    "verbo": "lluir",
+    "catalan": "llueixi",
+    "valenciano": "lluïsca"
+  },
+  {
+    "verbo": "lluir",
+    "catalan": "llueixin",
+    "valenciano": "lluïsquen"
+  },
+  {
+    "verbo": "lluir",
+    "catalan": "llueixis",
+    "valenciano": "lluïsques"
+  },
+  {
+    "verbo": "lluir",
+    "catalan": "llueixo",
+    "valenciano": "lluïsc"
+  },
+  {
+    "verbo": "lluir",
+    "catalan": "lluís",
+    "valenciano": "lluïra"
+  },
+  {
+    "verbo": "lluir",
+    "catalan": "lluíssim",
+    "valenciano": "lluírem"
+  },
+  {
+    "verbo": "lluir",
+    "catalan": "lluíssiu",
+    "valenciano": "lluíreu"
+  },
+  {
+    "verbo": "lluir",
+    "catalan": "lluïssin",
+    "valenciano": "lluïren"
+  },
+  {
+    "verbo": "lluir",
+    "catalan": "lluïssis",
+    "valenciano": "lluïres"
+  },
+  {
+    "verbo": "malvendre",
+    "catalan": "malvenguessin",
+    "valenciano": "malvengueren"
+  },
+  {
+    "verbo": "malvendre",
+    "catalan": "malvenguessis",
+    "valenciano": "malvengueres"
+  },
+  {
+    "verbo": "malvendre",
+    "catalan": "malvengui",
+    "valenciano": "malvenga"
+  },
+  {
+    "verbo": "malvendre",
+    "catalan": "malvenguin",
+    "valenciano": "malvenguen"
+  },
+  {
+    "verbo": "malvendre",
+    "catalan": "malvenguis",
+    "valenciano": "malvengues"
+  },
+  {
+    "verbo": "malvendre",
+    "catalan": "malvengués",
+    "valenciano": "malvenguera"
+  },
+  {
+    "verbo": "malvendre",
+    "catalan": "malvenguéssim",
+    "valenciano": "malvenguérem"
+  },
+  {
+    "verbo": "malvendre",
+    "catalan": "malvenguéssiu",
+    "valenciano": "malvenguéreu"
+  },
+  {
+    "verbo": "moldre",
+    "catalan": "molguessin",
+    "valenciano": "molgueren"
+  },
+  {
+    "verbo": "moldre",
+    "catalan": "molguessis",
+    "valenciano": "molgueres"
+  },
+  {
+    "verbo": "moldre",
+    "catalan": "molgui",
+    "valenciano": "molga"
+  },
+  {
+    "verbo": "moldre",
+    "catalan": "molguin",
+    "valenciano": "molguen"
+  },
+  {
+    "verbo": "moldre",
+    "catalan": "molguis",
+    "valenciano": "molgues"
+  },
+  {
+    "verbo": "moldre",
+    "catalan": "molgués",
+    "valenciano": "molguera"
+  },
+  {
+    "verbo": "moldre",
+    "catalan": "molguéssim",
+    "valenciano": "molguérem"
+  },
+  {
+    "verbo": "moldre",
+    "catalan": "molguéssiu",
+    "valenciano": "molguéreu"
+  },
+  {
+    "verbo": "morir",
+    "catalan": "mori",
+    "valenciano": "muira"
+  },
+  {
+    "verbo": "morir",
+    "catalan": "morin",
+    "valenciano": "moren",
+    "problematica": true
+  },
+  {
+    "verbo": "morir",
+    "catalan": "morin",
+    "valenciano": "muiren",
+    "problematica": true
+  },
+  {
+    "verbo": "morir",
+    "catalan": "moris",
+    "valenciano": "muires"
+  },
+  {
+    "verbo": "morir",
+    "catalan": "morissin",
+    "valenciano": "moriren"
+  },
+  {
+    "verbo": "morir",
+    "catalan": "morissis",
+    "valenciano": "morires"
+  },
+  {
+    "verbo": "morir",
+    "catalan": "moro",
+    "valenciano": "muir"
+  },
+  {
+    "verbo": "morir",
+    "catalan": "morís",
+    "valenciano": "morira"
+  },
+  {
+    "verbo": "morir",
+    "catalan": "moríssim",
+    "valenciano": "morírem"
+  },
+  {
+    "verbo": "morir",
+    "catalan": "moríssiu",
+    "valenciano": "moríreu"
+  },
+  {
+    "verbo": "nevar",
+    "catalan": "nevi",
+    "valenciano": "neve"
+  },
+  {
+    "verbo": "nevar",
+    "catalan": "nevés",
+    "valenciano": "nevara"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "naixem",
+    "valenciano": "nasquem"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "naixessin",
+    "valenciano": "nasqueren"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "naixessis",
+    "valenciano": "nasqueres"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "naixeu",
+    "valenciano": "nasqueu"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "naixés",
+    "valenciano": "nasquera"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "naixéssim",
+    "valenciano": "nasquérem"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "naixéssiu",
+    "valenciano": "nasquéreu"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "neix",
+    "valenciano": "naix"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "neixen",
+    "valenciano": "naixen"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "neixes",
+    "valenciano": "naixes"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "neixi",
+    "valenciano": "nasca"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "neixin",
+    "valenciano": "nasquen"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "neixis",
+    "valenciano": "nasques"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "neixo",
+    "valenciano": "nasc"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "néixer",
+    "valenciano": "nàixer"
+  },
+  {
+    "verbo": "obrar",
+    "catalan": "obressin",
+    "valenciano": "obraren"
+  },
+  {
+    "verbo": "obrar",
+    "catalan": "obressis",
+    "valenciano": "obrares"
+  },
+  {
+    "verbo": "obrar",
+    "catalan": "obri",
+    "valenciano": "obre",
+    "problematica": true
+  },
+  {
+    "verbo": "obrar",
+    "catalan": "obrin",
+    "valenciano": "obren",
+    "problematica": true
+  },
+  {
+    "verbo": "obrar",
+    "catalan": "obris",
+    "valenciano": "obres",
+    "problematica": true
+  },
+  {
+    "verbo": "obrar",
+    "catalan": "obro",
+    "valenciano": "obre",
+    "problematica": true
+  },
+  {
+    "verbo": "obrar",
+    "catalan": "obrés",
+    "valenciano": "obrara"
+  },
+  {
+    "verbo": "obrar",
+    "catalan": "obréssim",
+    "valenciano": "obràrem"
+  },
+  {
+    "verbo": "obrar",
+    "catalan": "obréssiu",
+    "valenciano": "obràreu"
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obre",
+    "valenciano": "obri",
+    "problematica": true
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obren",
+    "valenciano": "obrin",
+    "problematica": true
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obres",
+    "valenciano": "obris",
+    "problematica": true
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obrim",
+    "valenciano": "obriguem"
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obrissin",
+    "valenciano": "obriren"
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obrissis",
+    "valenciano": "obrires"
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obriu",
+    "valenciano": "obrigueu"
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obrís",
+    "valenciano": "obrira"
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obríssim",
+    "valenciano": "obrírem"
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obríssiu",
+    "valenciano": "obríreu"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "ofereixi",
+    "valenciano": "oferisca"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "ofereixin",
+    "valenciano": "oferisquen"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "ofereixis",
+    "valenciano": "oferisques"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "ofereixo",
+    "valenciano": "oferisc"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "oferissin",
+    "valenciano": "oferiren"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "oferissis",
+    "valenciano": "oferires"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "ofert",
+    "valenciano": "oferit"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "oferta",
+    "valenciano": "oferida"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "ofertes",
+    "valenciano": "oferides"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "oferts",
+    "valenciano": "oferits"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "oferís",
+    "valenciano": "oferira"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "oferíssim",
+    "valenciano": "oferírem"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "oferíssiu",
+    "valenciano": "oferíreu"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omple",
+    "valenciano": "ompli"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplen",
+    "valenciano": "omplin"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplert",
+    "valenciano": "omplit"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplerta",
+    "valenciano": "omplida"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplertes",
+    "valenciano": "omplides"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplerts",
+    "valenciano": "omplits"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omples",
+    "valenciano": "omplis"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplim",
+    "valenciano": "ompliguem"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplissin",
+    "valenciano": "ompliren"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplissis",
+    "valenciano": "omplires"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "ompliu",
+    "valenciano": "ompligueu"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplís",
+    "valenciano": "omplira"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplíssim",
+    "valenciano": "omplírem"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplíssiu",
+    "valenciano": "omplíreu"
+  },
+  {
+    "verbo": "pertanyer",
+    "catalan": "pertanyessin",
+    "valenciano": "pertangueren"
+  },
+  {
+    "verbo": "pertanyer",
+    "catalan": "pertanyessis",
+    "valenciano": "pertangueres"
+  },
+  {
+    "verbo": "pertanyer",
+    "catalan": "pertanyeu",
+    "valenciano": "pertangueu"
+  },
+  {
+    "verbo": "pertanyer",
+    "catalan": "pertanyi",
+    "valenciano": "pertanga"
+  },
+  {
+    "verbo": "pertanyer",
+    "catalan": "pertanyin",
+    "valenciano": "pertanguen"
+  },
+  {
+    "verbo": "pertanyer",
+    "catalan": "pertanyis",
+    "valenciano": "pertangues"
+  },
+  {
+    "verbo": "pertanyer",
+    "catalan": "pertanyo",
+    "valenciano": "pertany"
+  },
+  {
+    "verbo": "pertanyer",
+    "catalan": "pertanyés",
+    "valenciano": "pertanguera"
+  },
+  {
+    "verbo": "pertanyer",
+    "catalan": "pertanyéssim",
+    "valenciano": "pertanguérem"
+  },
+  {
+    "verbo": "pertanyer",
+    "catalan": "pertanyéssiu",
+    "valenciano": "pertanguéreu"
+  },
+  {
+    "verbo": "ploure",
+    "catalan": "plogui",
+    "valenciano": "ploga"
+  },
+  {
+    "verbo": "ploure",
+    "catalan": "plogués",
+    "valenciano": "ploguera"
+  },
+  {
+    "verbo": "poder",
+    "catalan": "poguessin",
+    "valenciano": "pogueren"
+  },
+  {
+    "verbo": "poder",
+    "catalan": "poguessis",
+    "valenciano": "pogueres"
+  },
+  {
+    "verbo": "poder",
+    "catalan": "pogués",
+    "valenciano": "poguera"
+  },
+  {
+    "verbo": "poder",
+    "catalan": "poguéssim",
+    "valenciano": "poguérem"
+  },
+  {
+    "verbo": "poder",
+    "catalan": "poguéssiu",
+    "valenciano": "poguéreu"
+  },
+  {
+    "verbo": "poder",
+    "catalan": "pugui",
+    "valenciano": "puga"
+  },
+  {
+    "verbo": "poder",
+    "catalan": "puguin",
+    "valenciano": "puguen"
+  },
+  {
+    "verbo": "poder",
+    "catalan": "puguis",
+    "valenciano": "pugues"
+  },
+  {
+    "verbo": "premer",
+    "catalan": "premessin",
+    "valenciano": "premeren"
+  },
+  {
+    "verbo": "premer",
+    "catalan": "premessis",
+    "valenciano": "premeres"
+  },
+  {
+    "verbo": "premer",
+    "catalan": "premi",
+    "valenciano": "prema"
+  },
+  {
+    "verbo": "premer",
+    "catalan": "premin",
+    "valenciano": "premen"
+  },
+  {
+    "verbo": "premer",
+    "catalan": "premis",
+    "valenciano": "premes"
+  },
+  {
+    "verbo": "premer",
+    "catalan": "premés",
+    "valenciano": "premera"
+  },
+  {
+    "verbo": "premer",
+    "catalan": "preméssim",
+    "valenciano": "premérem"
+  },
+  {
+    "verbo": "premer",
+    "catalan": "preméssiu",
+    "valenciano": "preméreu"
+  },
+  {
+    "verbo": "prendre",
+    "catalan": "prenguessin",
+    "valenciano": "prengueren"
+  },
+  {
+    "verbo": "prendre",
+    "catalan": "prenguessis",
+    "valenciano": "prengueres"
+  },
+  {
+    "verbo": "prendre",
+    "catalan": "prengui",
+    "valenciano": "prenga"
+  },
+  {
+    "verbo": "prendre",
+    "catalan": "prenguin",
+    "valenciano": "prenguen"
+  },
+  {
+    "verbo": "prendre",
+    "catalan": "prenguis",
+    "valenciano": "prengues"
+  },
+  {
+    "verbo": "prendre",
+    "catalan": "prengués",
+    "valenciano": "prenguera"
+  },
+  {
+    "verbo": "prendre",
+    "catalan": "prenguéssim",
+    "valenciano": "prenguérem"
+  },
+  {
+    "verbo": "prendre",
+    "catalan": "prenguéssiu",
+    "valenciano": "prenguéreu"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudi",
+    "valenciano": "puda"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudim",
+    "valenciano": "pudiguem"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudin",
+    "valenciano": "puden"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudis",
+    "valenciano": "pudes"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudissin",
+    "valenciano": "pudiren"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudissis",
+    "valenciano": "pudires"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudiu",
+    "valenciano": "pudigueu"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudo",
+    "valenciano": "put"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudís",
+    "valenciano": "pudira"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudíssim",
+    "valenciano": "pudírem"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudíssiu",
+    "valenciano": "pudíreu"
+  },
+  {
+    "verbo": "raure",
+    "catalan": "raguessin",
+    "valenciano": "ragueren"
+  },
+  {
+    "verbo": "raure",
+    "catalan": "raguessis",
+    "valenciano": "ragueres"
+  },
+  {
+    "verbo": "raure",
+    "catalan": "ragui",
+    "valenciano": "raga"
+  },
+  {
+    "verbo": "raure",
+    "catalan": "raguin",
+    "valenciano": "raguen"
+  },
+  {
+    "verbo": "raure",
+    "catalan": "raguis",
+    "valenciano": "ragues"
+  },
+  {
+    "verbo": "raure",
+    "catalan": "ragués",
+    "valenciano": "raguera"
+  },
+  {
+    "verbo": "raure",
+    "catalan": "raguéssim",
+    "valenciano": "raguérem"
+  },
+  {
+    "verbo": "raure",
+    "catalan": "raguéssiu",
+    "valenciano": "raguéreu"
+  },
+  {
+    "verbo": "rebre",
+    "catalan": "rebessin",
+    "valenciano": "reberen"
+  },
+  {
+    "verbo": "rebre",
+    "catalan": "rebessis",
+    "valenciano": "reberes"
+  },
+  {
+    "verbo": "rebre",
+    "catalan": "rebi",
+    "valenciano": "reba"
+  },
+  {
+    "verbo": "rebre",
+    "catalan": "rebin",
+    "valenciano": "reben"
+  },
+  {
+    "verbo": "rebre",
+    "catalan": "rebis",
+    "valenciano": "rebes"
+  },
+  {
+    "verbo": "rebre",
+    "catalan": "rebés",
+    "valenciano": "rebera"
+  },
+  {
+    "verbo": "rebre",
+    "catalan": "rebéssim",
+    "valenciano": "rebérem"
+  },
+  {
+    "verbo": "rebre",
+    "catalan": "rebéssiu",
+    "valenciano": "rebéreu"
+  },
+  {
+    "verbo": "recaure",
+    "catalan": "recaiguessin",
+    "valenciano": "recaigueren"
+  },
+  {
+    "verbo": "recaure",
+    "catalan": "recaiguessis",
+    "valenciano": "recaigueres"
+  },
+  {
+    "verbo": "recaure",
+    "catalan": "recaigui",
+    "valenciano": "recaiga"
+  },
+  {
+    "verbo": "recaure",
+    "catalan": "recaiguin",
+    "valenciano": "recaiguen"
+  },
+  {
+    "verbo": "recaure",
+    "catalan": "recaiguis",
+    "valenciano": "recaigues"
+  },
+  {
+    "verbo": "recaure",
+    "catalan": "recaigués",
+    "valenciano": "recaiguera"
+  },
+  {
+    "verbo": "recaure",
+    "catalan": "recaiguéssim",
+    "valenciano": "recaiguérem"
+  },
+  {
+    "verbo": "recaure",
+    "catalan": "recaiguéssiu",
+    "valenciano": "recaiguéreu"
+  },
+  {
+    "verbo": "reprendre",
+    "catalan": "reprenguessin",
+    "valenciano": "reprengueren"
+  },
+  {
+    "verbo": "reprendre",
+    "catalan": "reprenguessis",
+    "valenciano": "reprengueres"
+  },
+  {
+    "verbo": "reprendre",
+    "catalan": "reprengui",
+    "valenciano": "reprenga"
+  },
+  {
+    "verbo": "reprendre",
+    "catalan": "reprenguin",
+    "valenciano": "reprenguen"
+  },
+  {
+    "verbo": "reprendre",
+    "catalan": "reprenguis",
+    "valenciano": "reprengues"
+  },
+  {
+    "verbo": "reprendre",
+    "catalan": "reprengués",
+    "valenciano": "reprenguera"
+  },
+  {
+    "verbo": "reprendre",
+    "catalan": "reprenguéssim",
+    "valenciano": "reprenguérem"
+  },
+  {
+    "verbo": "reprendre",
+    "catalan": "reprenguéssiu",
+    "valenciano": "reprenguéreu"
+  },
+  {
+    "verbo": "revenir",
+    "catalan": "revinguessin",
+    "valenciano": "revingueren"
+  },
+  {
+    "verbo": "revenir",
+    "catalan": "revinguessis",
+    "valenciano": "revingueres"
+  },
+  {
+    "verbo": "revenir",
+    "catalan": "revingui",
+    "valenciano": "revinga"
+  },
+  {
+    "verbo": "revenir",
+    "catalan": "revinguin",
+    "valenciano": "revinguen"
+  },
+  {
+    "verbo": "revenir",
+    "catalan": "revinguis",
+    "valenciano": "revingues"
+  },
+  {
+    "verbo": "revenir",
+    "catalan": "revingués",
+    "valenciano": "revinguera"
+  },
+  {
+    "verbo": "revenir",
+    "catalan": "revinguéssim",
+    "valenciano": "revinguérem"
+  },
+  {
+    "verbo": "revenir",
+    "catalan": "revinguéssiu",
+    "valenciano": "revinguéreu"
+  },
+  {
+    "verbo": "romandre",
+    "catalan": "romanguessin",
+    "valenciano": "romangueren"
+  },
+  {
+    "verbo": "romandre",
+    "catalan": "romanguessis",
+    "valenciano": "romangueres"
+  },
+  {
+    "verbo": "romandre",
+    "catalan": "romangui",
+    "valenciano": "romanga"
+  },
+  {
+    "verbo": "romandre",
+    "catalan": "romanguin",
+    "valenciano": "romanguen"
+  },
+  {
+    "verbo": "romandre",
+    "catalan": "romanguis",
+    "valenciano": "romangues"
+  },
+  {
+    "verbo": "romandre",
+    "catalan": "romangués",
+    "valenciano": "romanguera"
+  },
+  {
+    "verbo": "romandre",
+    "catalan": "romanguéssim",
+    "valenciano": "romanguérem"
+  },
+  {
+    "verbo": "romandre",
+    "catalan": "romanguéssiu",
+    "valenciano": "romanguéreu"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sabessin",
+    "valenciano": "saberen"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sabessis",
+    "valenciano": "saberes"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sabés",
+    "valenciano": "sabera"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sabéssim",
+    "valenciano": "sabérem"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sabéssiu",
+    "valenciano": "sabéreu"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sapiguem",
+    "valenciano": "sapiem"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sapigueu",
+    "valenciano": "sapieu"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sàpiga",
+    "valenciano": "sàpia"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sàpiguen",
+    "valenciano": "sàpien"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sàpigues",
+    "valenciano": "sàpies"
+  },
+  {
+    "verbo": "ser",
+    "catalan": "estat",
+    "valenciano": "sigut"
+  },
+  {
+    "verbo": "ser",
+    "catalan": "ets",
+    "valenciano": "eres"
+  },
+  {
+    "verbo": "ser",
+    "catalan": "fos",
+    "valenciano": "fora",
+    "problematica": true
+  },
+  {
+    "verbo": "ser",
+    "catalan": "fos",
+    "valenciano": "fóra",
+    "problematica": true
+  },
+  {
+    "verbo": "ser",
+    "catalan": "fossin",
+    "valenciano": "foren"
+  },
+  {
+    "verbo": "ser",
+    "catalan": "fossis",
+    "valenciano": "fores"
+  },
+  {
+    "verbo": "ser",
+    "catalan": "fóssim",
+    "valenciano": "fórem"
+  },
+  {
+    "verbo": "ser",
+    "catalan": "fóssiu",
+    "valenciano": "fóreu"
+  },
+  {
+    "verbo": "ser",
+    "catalan": "sigui",
+    "valenciano": "siga"
+  },
+  {
+    "verbo": "ser",
+    "catalan": "siguin",
+    "valenciano": "siguen"
+  },
+  {
+    "verbo": "ser",
+    "catalan": "siguis",
+    "valenciano": "sigues"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreeixim",
+    "valenciano": "sobreisquem"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreeixissin",
+    "valenciano": "sobreisqueren"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreeixissis",
+    "valenciano": "sobreisqueres"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreeixiu",
+    "valenciano": "sobreisqueu"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreeixís",
+    "valenciano": "sobreisquera"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreeixíssim",
+    "valenciano": "sobreisquérem"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreeixíssiu",
+    "valenciano": "sobreisquéreu"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreïxi",
+    "valenciano": "sobreisca"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreïxin",
+    "valenciano": "sobreisquen"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreïxis",
+    "valenciano": "sobreisques"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreïxo",
+    "valenciano": "sobreisc"
+  },
+  {
+    "verbo": "sobresortir",
+    "catalan": "sobresortissin",
+    "valenciano": "sobresortiren"
+  },
+  {
+    "verbo": "sobresortir",
+    "catalan": "sobresortissis",
+    "valenciano": "sobresortires"
+  },
+  {
+    "verbo": "sobresortir",
+    "catalan": "sobresortís",
+    "valenciano": "sobresortira"
+  },
+  {
+    "verbo": "sobresortir",
+    "catalan": "sobresortíssim",
+    "valenciano": "sobresortírem"
+  },
+  {
+    "verbo": "sobresortir",
+    "catalan": "sobresortíssiu",
+    "valenciano": "sobresortíreu"
+  },
+  {
+    "verbo": "sobresortir",
+    "catalan": "sobresurti",
+    "valenciano": "sobresurta"
+  },
+  {
+    "verbo": "sobresortir",
+    "catalan": "sobresurtin",
+    "valenciano": "sobresurten"
+  },
+  {
+    "verbo": "sobresortir",
+    "catalan": "sobresurtis",
+    "valenciano": "sobresurtes"
+  },
+  {
+    "verbo": "sobresortir",
+    "catalan": "sobresurto",
+    "valenciano": "sobresurt"
+  },
+  {
+    "verbo": "sofrir",
+    "catalan": "sofert",
+    "valenciano": "sofrit"
+  },
+  {
+    "verbo": "sofrir",
+    "catalan": "soferta",
+    "valenciano": "sofrida"
+  },
+  {
+    "verbo": "sofrir",
+    "catalan": "sofertes",
+    "valenciano": "sofrides"
+  },
+  {
+    "verbo": "sofrir",
+    "catalan": "soferts",
+    "valenciano": "sofrits"
+  },
+  {
+    "verbo": "sofrir",
+    "catalan": "sofreixi",
+    "valenciano": "sofrisca"
+  },
+  {
+    "verbo": "sofrir",
+    "catalan": "sofreixin",
+    "valenciano": "sofrisquen"
+  },
+  {
+    "verbo": "sofrir",
+    "catalan": "sofreixis",
+    "valenciano": "sofrisques"
+  },
+  {
+    "verbo": "sofrir",
+    "catalan": "sofreixo",
+    "valenciano": "sofrisc"
+  },
+  {
+    "verbo": "soler",
+    "catalan": "solguessin",
+    "valenciano": "solgueren"
+  },
+  {
+    "verbo": "soler",
+    "catalan": "solguessis",
+    "valenciano": "solgueres"
+  },
+  {
+    "verbo": "soler",
+    "catalan": "solgui",
+    "valenciano": "solga"
+  },
+  {
+    "verbo": "soler",
+    "catalan": "solguin",
+    "valenciano": "solguen"
+  },
+  {
+    "verbo": "soler",
+    "catalan": "solguis",
+    "valenciano": "solgues"
+  },
+  {
+    "verbo": "soler",
+    "catalan": "solgués",
+    "valenciano": "solguera"
+  },
+  {
+    "verbo": "soler",
+    "catalan": "solguéssim",
+    "valenciano": "solguérem"
+  },
+  {
+    "verbo": "soler",
+    "catalan": "solguéssiu",
+    "valenciano": "solguéreu"
+  },
+  {
+    "verbo": "somriure",
+    "catalan": "somriguessin",
+    "valenciano": "somrigueren"
+  },
+  {
+    "verbo": "somriure",
+    "catalan": "somriguessis",
+    "valenciano": "somrigueres"
+  },
+  {
+    "verbo": "somriure",
+    "catalan": "somrigui",
+    "valenciano": "somriga"
+  },
+  {
+    "verbo": "somriure",
+    "catalan": "somriguin",
+    "valenciano": "somriguen"
+  },
+  {
+    "verbo": "somriure",
+    "catalan": "somriguis",
+    "valenciano": "somrigues"
+  },
+  {
+    "verbo": "somriure",
+    "catalan": "somrigués",
+    "valenciano": "somriguera"
+  },
+  {
+    "verbo": "somriure",
+    "catalan": "somriguéssim",
+    "valenciano": "somriguérem"
+  },
+  {
+    "verbo": "somriure",
+    "catalan": "somriguéssiu",
+    "valenciano": "somriguéreu"
+  },
+  {
+    "verbo": "succeir",
+    "catalan": "succeeixi",
+    "valenciano": "succeïsca"
+  },
+  {
+    "verbo": "succeir",
+    "catalan": "succeeixin",
+    "valenciano": "succeïsquen"
+  },
+  {
+    "verbo": "succeir",
+    "catalan": "succeís",
+    "valenciano": "succeïra"
+  },
+  {
+    "verbo": "succeir",
+    "catalan": "succeïssin",
+    "valenciano": "succeïren"
+  },
+  {
+    "verbo": "teixir",
+    "catalan": "teixissin",
+    "valenciano": "teixiren"
+  },
+  {
+    "verbo": "teixir",
+    "catalan": "teixissis",
+    "valenciano": "teixires"
+  },
+  {
+    "verbo": "teixir",
+    "catalan": "teixís",
+    "valenciano": "teixira"
+  },
+  {
+    "verbo": "teixir",
+    "catalan": "teixíssim",
+    "valenciano": "teixírem"
+  },
+  {
+    "verbo": "teixir",
+    "catalan": "teixíssiu",
+    "valenciano": "teixíreu"
+  },
+  {
+    "verbo": "tenir",
+    "catalan": "tinguessin",
+    "valenciano": "tingueren"
+  },
+  {
+    "verbo": "tenir",
+    "catalan": "tinguessis",
+    "valenciano": "tingueres"
+  },
+  {
+    "verbo": "tenir",
+    "catalan": "tingui",
+    "valenciano": "tinga"
+  },
+  {
+    "verbo": "tenir",
+    "catalan": "tinguin",
+    "valenciano": "tinguen"
+  },
+  {
+    "verbo": "tenir",
+    "catalan": "tinguis",
+    "valenciano": "tingues"
+  },
+  {
+    "verbo": "tenir",
+    "catalan": "tingués",
+    "valenciano": "tinguera"
+  },
+  {
+    "verbo": "tenir",
+    "catalan": "tinguéssim",
+    "valenciano": "tinguérem"
+  },
+  {
+    "verbo": "tenir",
+    "catalan": "tinguéssiu",
+    "valenciano": "tinguéreu"
+  },
+  {
+    "verbo": "tenyir",
+    "catalan": "tenyissin",
+    "valenciano": "tenyiren"
+  },
+  {
+    "verbo": "tenyir",
+    "catalan": "tenyissis",
+    "valenciano": "tenyires"
+  },
+  {
+    "verbo": "tenyir",
+    "catalan": "tenyís",
+    "valenciano": "tenyira"
+  },
+  {
+    "verbo": "tenyir",
+    "catalan": "tenyíssim",
+    "valenciano": "tenyírem"
+  },
+  {
+    "verbo": "tenyir",
+    "catalan": "tenyíssiu",
+    "valenciano": "tenyíreu"
+  },
+  {
+    "verbo": "torcer",
+    "catalan": "torcessin",
+    "valenciano": "torceren"
+  },
+  {
+    "verbo": "torcer",
+    "catalan": "torcessis",
+    "valenciano": "torceres"
+  },
+  {
+    "verbo": "torcer",
+    "catalan": "torci",
+    "valenciano": "torça"
+  },
+  {
+    "verbo": "torcer",
+    "catalan": "torcin",
+    "valenciano": "torcen"
+  },
+  {
+    "verbo": "torcer",
+    "catalan": "torcés",
+    "valenciano": "torcera"
+  },
+  {
+    "verbo": "torcer",
+    "catalan": "torcéssim",
+    "valenciano": "torcérem"
+  },
+  {
+    "verbo": "torcer",
+    "catalan": "torcéssiu",
+    "valenciano": "torcéreu"
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tossissin",
+    "valenciano": "tossiren"
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tossissis",
+    "valenciano": "tossires"
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tossís",
+    "valenciano": "tossira"
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tossíssim",
+    "valenciano": "tossírem"
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tossíssiu",
+    "valenciano": "tossíreu"
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tusi",
+    "valenciano": "tusa"
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tusin",
+    "valenciano": "tussen",
+    "problematica": true
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tusis",
+    "valenciano": "tusses"
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tussi",
+    "valenciano": "tussa"
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tussin",
+    "valenciano": "tussen",
+    "problematica": true
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tusso",
+    "valenciano": "tus"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "traguessin",
+    "valenciano": "tragueren"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "traguessis",
+    "valenciano": "tragueres"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "tragués",
+    "valenciano": "traguera"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "traguéssim",
+    "valenciano": "traguérem"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "traguéssiu",
+    "valenciano": "traguéreu"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "trec",
+    "valenciano": "trac"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "tregui",
+    "valenciano": "traga"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "treguin",
+    "valenciano": "traguen"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "treguis",
+    "valenciano": "tragues"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "treu",
+    "valenciano": "trau"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "treuen",
+    "valenciano": "trauen"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "treure",
+    "valenciano": "traure"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "treus",
+    "valenciano": "traus"
+  },
+  {
+    "verbo": "vendre",
+    "catalan": "venguessin",
+    "valenciano": "vengueren"
+  },
+  {
+    "verbo": "vendre",
+    "catalan": "venguessis",
+    "valenciano": "vengueres"
+  },
+  {
+    "verbo": "vendre",
+    "catalan": "vengui",
+    "valenciano": "venga"
+  },
+  {
+    "verbo": "vendre",
+    "catalan": "venguin",
+    "valenciano": "venguen"
+  },
+  {
+    "verbo": "vendre",
+    "catalan": "venguis",
+    "valenciano": "vengues"
+  },
+  {
+    "verbo": "vendre",
+    "catalan": "vengués",
+    "valenciano": "venguera"
+  },
+  {
+    "verbo": "vendre",
+    "catalan": "venguéssim",
+    "valenciano": "venguérem"
+  },
+  {
+    "verbo": "vendre",
+    "catalan": "venguéssiu",
+    "valenciano": "venguéreu"
+  },
+  {
+    "verbo": "venir",
+    "catalan": "vinguessin",
+    "valenciano": "vingueren"
+  },
+  {
+    "verbo": "venir",
+    "catalan": "vinguessis",
+    "valenciano": "vingueres"
+  },
+  {
+    "verbo": "venir",
+    "catalan": "vingui",
+    "valenciano": "vinga"
+  },
+  {
+    "verbo": "venir",
+    "catalan": "vinguin",
+    "valenciano": "vinguen"
+  },
+  {
+    "verbo": "venir",
+    "catalan": "vinguis",
+    "valenciano": "vingues"
+  },
+  {
+    "verbo": "venir",
+    "catalan": "vingués",
+    "valenciano": "vinguera"
+  },
+  {
+    "verbo": "venir",
+    "catalan": "vinguéssim",
+    "valenciano": "vinguérem"
+  },
+  {
+    "verbo": "venir",
+    "catalan": "vinguéssiu",
+    "valenciano": "vinguéreu"
+  },
+  {
+    "verbo": "vesprejar",
+    "catalan": "vespregessin",
+    "valenciano": "vesprejaren"
+  },
+  {
+    "verbo": "vesprejar",
+    "catalan": "vespregi",
+    "valenciano": "vesprege"
+  },
+  {
+    "verbo": "vesprejar",
+    "catalan": "vespregin",
+    "valenciano": "vespregen"
+  },
+  {
+    "verbo": "vesprejar",
+    "catalan": "vespregés",
+    "valenciano": "vesprejara"
+  },
+  {
+    "verbo": "vestir",
+    "catalan": "vestissin",
+    "valenciano": "vestiren"
+  },
+  {
+    "verbo": "vestir",
+    "catalan": "vestissis",
+    "valenciano": "vestires"
+  },
+  {
+    "verbo": "vestir",
+    "catalan": "vestís",
+    "valenciano": "vestira"
+  },
+  {
+    "verbo": "vestir",
+    "catalan": "vestíssim",
+    "valenciano": "vestírem"
+  },
+  {
+    "verbo": "vestir",
+    "catalan": "vestíssiu",
+    "valenciano": "vestíreu"
+  },
+  {
+    "verbo": "voler",
+    "catalan": "volguessin",
+    "valenciano": "volgueren"
+  },
+  {
+    "verbo": "voler",
+    "catalan": "volguessis",
+    "valenciano": "volgueres"
+  },
+  {
+    "verbo": "voler",
+    "catalan": "volgués",
+    "valenciano": "volguera"
+  },
+  {
+    "verbo": "voler",
+    "catalan": "volguéssim",
+    "valenciano": "volguérem"
+  },
+  {
+    "verbo": "voler",
+    "catalan": "volguéssiu",
+    "valenciano": "volguéreu"
+  },
+  {
+    "verbo": "voler",
+    "catalan": "vulgui",
+    "valenciano": "vulga"
+  },
+  {
+    "verbo": "voler",
+    "catalan": "vulguin",
+    "valenciano": "vulguen"
+  },
+  {
+    "verbo": "voler",
+    "catalan": "vulguis",
+    "valenciano": "vulgues"
+  }
+]

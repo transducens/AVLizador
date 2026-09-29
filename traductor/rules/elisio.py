@@ -21,16 +21,29 @@ mirar el token SEGÜENT per a decidir, no només `tok` a soles -- per això
 itera per índex en compte de per valor, encara que la firma pública
 (`apply(tokens) -> tokens`) siga idèntica a la de totes les altres.
 
+EXCEPCIÓ real (29/09/2026, no teoria): "la" (mai "el" ni "de") NO elideix
+davant de cap paraula que comença per la LLETRA "i" o "u" (tònica o
+àtona, s'escriga com s'escriga la síl·laba) -- "la intenció", "la idea",
+"la universitat", mai "l'intenció"/"l'idea"/"l'universitat". No és un
+fenomen fonètic (no depén de si eixa i/u sona com a vocal plena o com a
+semiconsonant, a diferència del que es pensava abans -- vore baix), és
+una convenció ortogràfica per a no perdre la distinció de gènere en la
+lectura: si "la" també elidira, "l'univers" seria ambigu entre masculí i
+femení; en no elidir mai "la" ahí, qualsevol "l'" + i/u es llig sense
+ambigüitat com a masculí, i "la" + i/u sense elidir es llig sense
+ambigüitat com a femení. "el"/"de" seguixen elidint amb normalitat davant
+eixes mateixes paraules ("l'univers", "d'idea").
+
+Este mateix mecanisme resol, com a efecte lateral, el cas "la iaia" que
+abans es documentava ací com a AMBIGÚ sense arreglar (paraules que
+comencen per "i"/"u" que sonen com a semiconsonant, p.ex. "iaia"): ara
+"iaia" també cau dins de la regla general (comença per "i"), sense
+necessitat de saber si eixa "i" sona com a vocal o com a consonant.
+
 AMBIGÚ (documentat, no arreglat):
   - "h" muda: "home"/"hivern" SÍ eliden ("l'home", no "el home") perquè la
     h és muda en català/valencià -- este mòdul ho detecta (mira si comença
     per vocal O per h+vocal).
-  - Diftongs semiconsonàntics: paraules que comencen per "i"/"u" escrita
-    però es pronuncien com a consonant (p.ex. "iaia") NO haurien d'elidir
-    ("la iaia", no "l'iaia"), però esta regla no ho detecta -- faria
-    l'elisió igualment. No hi ha manera de distingir-ho sense un
-    diccionari de pronúncia, que este paquet no té. Fals positiu conegut,
-    documentat ací a propòsit en lloc d'ignorar-lo en silenci.
   - Dos elidibles seguits ("de" + "el"/"la"): en català/valencià real això
     mai apareix escrit així (seria una contracció, "del", ja una sola
     paraula) -- però si algun dia arribara un text amb eixa seqüència
@@ -48,11 +61,14 @@ from . import Token, preserva_majuscula
 
 _ELIDIBLES = {"de": "d'", "la": "l'", "el": "l'"}
 
-# Vocal real, o "h" muda seguida de vocal (home, hivern...). Vore el límit
-# conegut sobre diftongs semiconsonàntics (iaia) al docstring del mòdul.
+# Vocal real, o "h" muda seguida de vocal (home, hivern...).
 _COMENCA_EN_VOCAL_RE = re.compile(
     r"^(?:[aeiouàèéíòóúAEIOUÀÈÉÍÒÓÚ]|[hH][aeiouàèéíòóúAEIOUÀÈÉÍÒÓÚ])"
 )
+
+# Només per a "la" (vore docstring del mòdul): mai elideix davant de
+# paraula que comence per la lletra i/u, en qualsevol accentuació.
+_COMENCA_EN_I_U_RE = re.compile(r"^[iuíúIUÍÚ]")
 
 
 def _seguent_token_no_buit(tokens: list[Token], index: int) -> int | None:
@@ -106,17 +122,41 @@ class ElisioRule:
     >>> toks = NumeralsRule().apply(toks)
     >>> detokenize(ElisioRule().apply(toks))
     'Parlem de vuitanta persones.'
+
+    "la" mai elideix davant de "i"/"u" (vore docstring del mòdul), encara
+    que "el"/"de" sí ho facen amb normalitat davant les mateixes paraules:
+
+    >>> toks = tokenize("La intenció, la idea i la universitat.")
+    >>> marca_noms_propis(toks)
+    >>> detokenize(ElisioRule().apply(toks))
+    'La intenció, la idea i la universitat.'
+
+    >>> toks = tokenize("Parle de idees i el univers.")
+    >>> marca_noms_propis(toks)
+    >>> detokenize(ElisioRule().apply(toks))
+    "Parle d'idees i l'univers."
+
+    Efecte lateral: "la iaia" tampoc elideix, encara que ahí "i" sone com
+    a semiconsonant (abans documentat com a AMBIGÚ sense arreglar):
+
+    >>> toks = tokenize("La iaia ha vingut.")
+    >>> marca_noms_propis(toks)
+    >>> detokenize(ElisioRule().apply(toks))
+    'La iaia ha vingut.'
     """
 
     def apply(self, tokens: list[Token]) -> list[Token]:
         for i, tok in enumerate(tokens):
             if tok.is_translated or tok.is_proper_noun:
                 continue
-            forma_elidida = _ELIDIBLES.get(tok.surface.lower())
+            minuscules = tok.surface.lower()
+            forma_elidida = _ELIDIBLES.get(minuscules)
             if forma_elidida is None:
                 continue
             j = _seguent_token_no_buit(tokens, i)
             if j is None or not _COMENCA_EN_VOCAL_RE.match(tokens[j].translated):
+                continue
+            if minuscules == "la" and _COMENCA_EN_I_U_RE.match(tokens[j].translated):
                 continue
             tok.translated = preserva_majuscula(tok.surface, forma_elidida)
             tok.is_translated = True

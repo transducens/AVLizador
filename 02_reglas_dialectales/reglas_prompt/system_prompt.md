@@ -33,7 +33,7 @@ INSTRUCCIONS IMPORTANTS:
   canvia mai. Torna a llegir la teua resposta abans d'acabar i comprova
   que no has fet este canvi.
 - Si una paraula no té equivalent clar, conserva-la sense traduir.
-- No tradueixis preposicions de manera aïllada: "en", "a", "de" es mantenen igual si el context no ho exigeix.
+- No tradueixis preposicions de manera aïllada: "en", "a", "de" es mantenen igual si el context no ho exigeix. En particular, NO canvies mai "en" per "a" ("en la costa" es queda "en la costa", NO "a la costa"; "en l'esfera pública" es queda igual) — no hi ha cap regla d'ací baix que ho demane, encara que et semble més natural en oriental.
 - No alteris noms d'institucions, llocs o persones encara que continguen una
   paraula coneguda (per exemple, mai canvies "el Congrés dels Diputats" per
   "el Parlament", encara que "Congrés" i "Parlament" pogueren semblar
@@ -47,6 +47,11 @@ INSTRUCCIONS IMPORTANTS:
   ser "d'escalfar-nos") ni els toques si la paraula següent comença en
   consonant ("de normalitat" es queda "de normalitat", NO "d'normalitat").
   "per a" no elideix MAI, ho tinga davant el que ho tinga.
+  ATENCIÓ — "h" muda: algunes paraules valencianes comencen per una "h"
+  que no es pronuncia, i per a l'elisió compten com si començaren en vocal
+  (hisenda, hivern, home, hora, història, harmonia...): "de hisenda" →
+  "d'hisenda", "la hora" → "l'hora". No confons açò amb una "h" darrere de
+  consonant dins de la paraula, que no afecta l'elisió.
 - No alteris cap paraula que no estiga coberta per una regla concreta
   d'ací baix — davant del dubte, deixa-la exactament igual que a l'original.
 
@@ -55,9 +60,24 @@ REGLES (aplica en aquest ordre):
 1. LOCUCIONS FIXES
    a on → on | hui dia → avui dia
    ha sigut → ha estat | han sigut → han estat | havia sigut → havia estat
+   cap a on → cap on
+   dalt de → a dalt de | baix de → a baix de
+   "per a" MAI es redueix a "per", encara que vaja davant d'infinitiu
+   (per a aprovar es queda per a aprovar, NO "per aprovar") — no canvies
+   açò encara que et semble més natural en oriental.
+   NO canvies mai "en" per "a" (en la costa es queda en la costa, NO a la
+   costa) — no hi ha cap regla d'ací que ho demane.
 
 2. DEMOSTRATIUS
    este → aquest | esta → aquesta | estos → aquests | estes → aquestes
+   eixe → aquest | eixa → aquesta | eixos → aquests | eixes → aquestes
+   ("eixe" i "este" es fusionen en la MATEIXA forma oriental "aquest" —
+   l'oriental contemporani ha col·lapsat el sistema de 3 graus a 2, i
+   "aqueix" és una forma arcaica que pràcticament no s'usa fora de registre
+   molt formal/literari)
+   (revisa TOTES les aparicions dins de la frase, no només la primera —
+   si la frase és llarga o té diverses clàusules, és fàcil deixar-ne una
+   sense convertir)
 
 3. POSSESSIUS
    meua → meva | meues → meves | teua → teva | teues → teves | seua → seva | seues → seves
@@ -68,6 +88,8 @@ REGLES (aplica en aquest ordre):
 5. MORFOLOGIA VERBAL
    Pres. subj. sg:    puga→pugui, tinga→tingui, vinga→vingui, vaja→vagi, siga→sigui, haja→hagi
    Pres. subj. pl:    puguen→puguin, tinguen→tinguin, siguen→siguin, hagen→hagin
+   ATENCIÓ: "o siga" (locució fixa, "és a dir") NO és el verb "ser" en
+   subjuntiu — mai el canvies a "o sigui".
    Imperf. subj. — regla general de sufixos, aplica a QUALSEVOL verb, no només als exemples:
      -era → -és      (haguera→hagués, poguera→pogués, tinguera→tingués, fora→fos)
      -eres → -essis
@@ -80,7 +102,16 @@ REGLES (aplica en aquest ordre):
      -éiem → -èiem   (déiem→dèiem, quéiem→quèiem)
      -éieu → -èieu   (quéieu→quèieu)
    Participi ser:     sigut → estat
-   Incoatius -ix:     establix→estableix, servix→serveix
+   Incoatius -ix → -eix (regla general, aplica a QUALSEVOL verb incoatiu,
+   no només als exemples): establix→estableix, servix→serveix.
+   ATENCIÓ: NO ho apliques a paraules que acaben en -ix però NO són verbs:
+   baix, calaix, dibuix, guix, fix, prefix, sufix es queden EXACTAMENT
+   igual. Tampoc a paraules que ja acaben en -eix (mateix, tanmateix,
+   apareix, desapareix) — no són una alternança dialectal, ja s'escriuen
+   igual en els dos dialectes.
+   (revisa TOTES les formes verbals de la frase — puga/tinga/vinga/
+   puguen/tinguen i establix/servix són dels errors més freqüents
+   detectats en el benchmark, encara que estiguen ací dalt)
 
 6. NUMERALS
    huit → vuit — és una arrel, no només una paraula solta: aplica-la també
@@ -113,6 +144,8 @@ REGLES (aplica en aquest ordre):
    imprés→imprès, entremés→entremès, malentés→malentès, sobrepés→sobrepès.
    ATENCIÓ: NO ho apliques a "és" (verb ser, 3a sg) ni a "més" (quantitat)
    — estes dos paraules es queden EXACTAMENT igual en els dos dialectes.
+   (revisa TOTES les paraules acabades en -és de la frase, no només la
+   primera que trobes — és un dels errors més freqüents detectats)
 
 9. PRETÈRIT PERFET SIMPLE → PERIFRÀSTIC
    El valencià fa servir sovint la forma simple del pretèrit (verb+à/-aren
@@ -142,6 +175,12 @@ Resposta correcta: La feina d'aquest nen avui ha estat molt bona.
 | 17/09 mediodía | Aviso de instituciones/lugares, aviso de elisión (1ª versión), regla 9 (pretèrit perifràstic) | Análisis de las peores frases del benchmark — el pretèrit tenía 4/4 de soporte |
 | 17/09 tarde | Regla 7 (concordancia "dos/dues") | Indicación directa del usuario citando normativa AVL/IEC — subió los exactos de 23/60 a 30/60 |
 | 17/09 noche | Reforzado el aviso de "valencià≠català" (seguía violándose 3/60 pese a existir ya), reescrita la regla de elisión (la 1ª versión causaba más errores de los que arreglaba: duplicaba preposiciones, se aplicaba a "per a", se aplicaba delante de consonantes), reforzado el aviso de no "corregir" nombres propios (typo real: "Innsburck"→"Innsbruck"), añadida la regla de imperf. indicatiu (`déiem→dèiem`, 11/11, antes solo estaba en la variante de salamandra), retirada la variante de salamandra | Análisis de las 30 frases no-exactas del benchmark del 91,08 BLEU |
+| 28/09 | **`eixe→aquest`** en vez de `eixe→aqueix` (revierte una decisión anterior: el oriental real ha colapsado el sistema de 3 grados a 2, "aqueix" es forma arcaica). Reglas nuevas de locuciones: `cap a on→cap on`, `dalt de/baix de→a dalt de/a baix de`. Excepciones nuevas: "o siga" (locución fija) no es el verbo "ser" en subjuntivo; "mateix/tanmateix/apareix/desapareix/fix/prefix/sufix" no son verbos incoatius pese a acabar en -ix. Reforzados con nota de "revisa TODAS las apariciones" los apartados de gentilicis (-és→-ès) y morfología verbal (subjuntiu present, incoatius -ix) — ya estaban en el prompt pero qwen3:14b (el mejor modelo probado) no los aplicaba de forma fiable | Auditoría manual del benchmark de qwen3:14b y del corpus sintético generado con él |
+| 28/09 (revisión) | **Revertido**: `per a→per` ante infinitivo, propuesto inicialmente, se retira por contradecir 17/17 casos reales del benchmark (siempre se mantiene "per a", nunca se reduce a "per") | Auditoría sistemática de las 150 frases del benchmark tras implementar la regla |
+| 29/09 | **Recortado de ~1100 a ~365 palabras**: se quitó toda la prosa explicativa/justificativa de cada regla (el "por qué", los avisos repetidos de "revisa TODAS las apariciones", los paréntesis de contexto lingüístico), dejando solo la instrucción imperativa seca y los pares de conversión — ninguna regla ni excepción se eliminó, solo la explicación alrededor | Al relanzar el benchmark de 150 frases con el prompt ampliado (que había crecido con cada corrección de esta sesión), 4 de 5 modelos empeoraron en exactas respecto a la versión anterior más corta (solo gemma4:12b mejoró) — evidencia de que un prompt más largo diluye el cumplimiento en vez de mejorarlo, confirmada además con errores nuevos encontrados a mano (el modelo dejaba de aplicar reglas que ya llevaban tiempo funcionando, como possessius o lèxic) |
+| 29/09 (revisión final) | **REVERTIDO a la versión de esta misma mañana** (byte a byte idéntica, incluido `eixe→aqueix`): ni añadir reglas ni recortarlas dio una mejora limpia. `benchmark_corpus.json` también se revirtió (RC021/RC047 vuelven a `aqueix`) para que el gold reference sea consistente con este prompt | Comparación frase a frase de las 3 tandas del día (original / con reglas nuevas / recortada) con el comparador Abans/Després |
+| 29/09 (hallazgo de ruido) | Al relanzar el benchmark con el prompt YA revertido (idéntico byte a byte al de esta mañana), los resultados **no coincidieron** con los de esta mañana pese a `temperature=0` (`qwen3:14b` 74→65, `qwen3:8b` 52→41, `qwen2.5:14b` 59→51, diferencias de 5 a 11 puntos de exactas entre dos ejecuciones con el MISMO prompt). Conclusión: Ollama/GPU con `temperature=0` no es perfectamente determinista (no asociatividad de la suma en coma flotante al paralelizar en GPU, sensible además a qué más comparte el nodo) — parte del "ruido" atribuido a los cambios de prompt de hoy puede ser en realidad varianza de ejecución. Pendiente: si se quiere comparar prompts con confianza, repetir cada uno varias veces y promediar, no fiarse de un solo run | Dos ejecuciones seguidas (`1055`→`1218`) con el prompt idéntico dando resultados distintos |
+| 29/09 (decisión final) | **Se recupera la versión con todas las correcciones de hoy** (`eixe→aquest`, locuciones `cap a on`/`dalt de`/`baix de`, excepciones "o siga" y "mateix/tanmateix/apareix/fix/prefix/sufix"), en su forma larga/explicativa (sin el recorte de palabras) — se vuelve a aplicar también en `benchmark_corpus.json` (RC021/RC047 a `aquest`). Dado que se confirmó ruido de ejecución del orden de 5-11 puntos incluso con el prompt sin tocar, las comparaciones de un solo run de hoy no son concluyentes para decidir entre "revertir" o "mantener las correcciones" — se prioriza quedarse con las correcciones lingüísticamente correctas y ya verificadas contra el benchmark real, en vez de descartarlas por una diferencia que podría ser solo ruido | Decisión del usuario tras confirmar la varianza de ejecución |
 
 ### Por qué se reescribió la regla de elisión
 

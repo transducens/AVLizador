@@ -36,7 +36,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from . import Token, preserva_majuscula
+from . import Token, preserva_majuscula, separa_prefix_elidit
 
 DEFAULT_LEXIC_PATH = Path(__file__).resolve().parent.parent / "data" / "lexico_fiable.json"
 
@@ -103,6 +103,17 @@ class LexicRule:
     >>> toks = LexicRule().apply(toks)
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
     []
+
+    Paraula enganxada a un prefix elidit ("d'", "l'", "s'"...): el
+    tokenitzador la dona com un sol token (vore `separa_prefix_elidit` a
+    rules/__init__.py), així que cal separar el prefix per a poder-la
+    trobar al diccionari, i tornar-lo a enganxar al resultat:
+
+    >>> toks = tokenize("Vinc d'ametla i vull abellir-me.")
+    >>> marca_noms_propis(toks)
+    >>> toks = LexicRule().apply(toks)
+    >>> [(t.surface, t.translated) for t in toks if t.is_translated]
+    [("d'ametla", "d'ametlla")]
     """
 
     def __init__(self, lexic_path: Path = DEFAULT_LEXIC_PATH) -> None:
@@ -113,8 +124,16 @@ class LexicRule:
             if tok.is_translated or tok.is_proper_noun:
                 continue
             forma = self._lookup.get(tok.surface.lower())
-            if forma is None:
+            if forma is not None:
+                tok.translated = preserva_majuscula(tok.surface, forma)
+                tok.is_translated = True
                 continue
-            tok.translated = preserva_majuscula(tok.surface, forma)
-            tok.is_translated = True
+            prefix_resta = separa_prefix_elidit(tok.surface)
+            if prefix_resta is None:
+                continue
+            prefix, resta = prefix_resta
+            forma = self._lookup.get(resta.lower())
+            if forma is not None:
+                tok.translated = prefix + preserva_majuscula(resta, forma)
+                tok.is_translated = True
         return tokens
