@@ -1,11 +1,12 @@
 """
 lexic.py -- Capa 1 del pipeline: substitució directa per lèxic diferencial.
-Fusiona 2 fonts, totes dos còpies de fitxers de
-`02_reglas_dialectales/lexico/font_mauricio/` (equip AVLizador), per orde
-de prioritat quan es contradiuen (la primera que definix una paraula
-guanya):
+Fusiona 3 fonts, per orde de prioritat quan es contradiuen (la primera que
+definix una paraula guanya):
 
-    1. lexic_mauricio.json            -- lèxic general (còpia de
+    1. flexio_genere_avl.json         -- derivació de gènere/nombre per a
+       un grapat de paraules CURADES A MÀ (no cap fitxer de Mauricio),
+       vore docstring de `_carrega_flexio_genere`.
+    2. lexic_mauricio.json            -- lèxic general (còpia de
        `lexico_general_limpio.json`), filtrat: descarta entrades
        "_PENDENT" (sense verificar), topònims (`tipo: "v:top_gva"`, el
        motor mai els aplicaria -- protegix noms propis), entrades on
@@ -14,28 +15,43 @@ guanya):
        mateixa paraula té més d'una traducció possible, prioritza la
        marcada `canonica: true`; si cap ho és o n'hi ha més d'una, es
        queda la primera trobada.
-    2. lexic_acentuacio_mauricio.json -- patrons d'accentuació (còpia de
+    3. lexic_acentuacio_mauricio.json -- patrons d'accentuació (còpia de
        `acentuacion_limpio.json`), 695 parelles.
 
-DECISIÓ (30/09/2026): esta capa ara és NOMÉS diccionari de Mauricio --
+DECISIÓ (30/09/2026): esta capa és sobretot diccionari de Mauricio --
 s'han llevat les fonts Apertium-368, Paula Guerrero i els parells AVL-only
-(`vos/vindre/valdre`, `tindre/obtindre/vore`, `últim/darrer`...), junt amb
-totes les regles morfològiques/de sufix (`demostratius.py`,
-`gentilicis.py`, `morfologia_verbal.py`, `perfet.py`, `locucions.py`,
-`elisio.py`) i els seus fitxers AVL-only associats. El traductor complet
-ara és pur lookup de diccionari (`lexic.py` + `conjugacions_dict.py` +
-`numerals.py` + `possessius.py`) més la separació de prefixos elidits
-(`separa_prefix_elidit`) -- res de generalització per sufix ni de
-reconstrucció algorítmica. Vore `traductor/README.md` per l'abast i les
-pèrdues de cobertura que això implica.
+originals (`vos/vindre/valdre`, `tindre/obtindre/vore`, `últim/darrer`...),
+junt amb totes les regles morfològiques/de sufix generalitzades
+(`gentilicis.py`, `morfologia_verbal.py`, `perfet.py`, `locucions.py`,
+`elisio.py`, encara retirades). `demostratius.py` es va recrear el mateix
+dia (vore eixe mòdul), i `flexio_genere_avl.json` (vore baix) és la segona
+peça no-Mauricio que torna, per la mateixa raó: un diccionari diferencial
+mai llista totes les formes de gènere/nombre d'una paraula, només la que
+algú va confirmar.
 
-Regressió coneguda i acceptada (30/09/2026): "xiquet" tenia dos entrades a
-Mauricio amb `canonica: false` totes dos ("chiquillo"->"noi",
-"nene"->"nen") -- abans guanyava "nen" perquè `lexic_paula_guerrero.json`
-(font ara retirada) el confirmava sense ambigüitat. Ara `_resol_mauricio`
-es queda amb la primera del fitxer ("noi") sense cap manera de triar
-millor només amb dades de Mauricio. Acceptat a propòsit com a conseqüència
-de fer esta capa pur-Mauricio; no s'ha afegit cap override extern.
+Gènere i nombre (`flexio_genere_avl.json`, afegit 30/09/2026): es va
+provar ESCANEJAR tot `lexic_mauricio.json` buscant paraules acabades en
+consonant "segura" (t/l/m/n/r) per a derivar automàticament fem/plural, i
+la majoria eren GARBAGE -- la immensa majoria del lèxic són verbs
+infinitius o adverbis sense gènere ("cercar"->"buscar" hauria donat
+"cercara"->"buscara", sense sentit; "verdaderament" hauria donat
+"verdaderamenta"). Per això esta NO és una regla automàtica sobre tot el
+lèxic, és una llista CURADA a mà de parells base confirmats un a un
+(sustantius de persona/animal amb variació real de gènere), amb dos
+categories:
+  - `regulars`: es deriva fem (+a), plural masculí (+s) i plural femení
+    (+es sobre l'arrel) automàticament -- només per a paraules on este
+    patró és segur als dos costats (p.ex. "xiquet"->"nen").
+  - `irregulars`: formes exactes a mà, per a quan el patró regular NO val
+    -- el cas més comú és "-ut" participial ("menut"->"menuda", com
+    "vengut"->"venguda"), que mai es pot generalitzar amb seguretat
+    perquè paraules com "petit" acaben igual (vocal+t) però SÍ són
+    regulars ("petita", no "petida").
+
+De pas, esta font resol la regressió que s'havia documentat ahí baix
+sobre "xiquet" (abans guanyava "noi" per ambigüitat a Mauricio): ara
+"xiquet"->"nen" ve explícitament confirmat en esta llista, amb prioritat
+màxima.
 
 Excepció mantinguda (bug de dades, no regla dialectal): "després" ve
 llistat a `acentuacion_limpio.json` com si seguira el patró d'accentuació
@@ -67,10 +83,43 @@ from . import Token, aplica_amb_prefix_elidit, preserva_majuscula, separa_prefix
 _DATA = Path(__file__).resolve().parent.parent / "data"
 MAURICIO_PATH = _DATA / "lexic_mauricio.json"
 ACENTUACIO_MAURICIO_PATH = _DATA / "lexic_acentuacio_mauricio.json"
+FLEXIO_GENERE_PATH = _DATA / "flexio_genere_avl.json"
 
 # Bug de dades conegut al fitxer font (vore docstring del mòdul): "després"
 # no és una excepció dialectal, és un error de transcripció confirmat.
 _BUG_DADES_CONEGUTS = {"després"}
+
+
+def _deriva_genere_nombre(masc_val: str, masc_cat: str) -> dict[str, str]:
+    """Deriva fem singular (+a), plural masculí (+s) i plural femení (+es
+    sobre l'arrel, mai "+as") a partir d'un parell masculí singular. Només
+    seria correcte per a paraules on el patró "+a" no xoca amb cap
+    irregularitat -- per això `_carrega_flexio_genere` només l'invoca
+    sobre la llista curada `regulars`, mai sobre tot el lèxic.
+
+    >>> _deriva_genere_nombre("xiquet", "nen")
+    {'xiqueta': 'nena', 'xiquets': 'nens', 'xiquetes': 'nenes'}
+    """
+    return {
+        masc_val + "a": masc_cat + "a",
+        masc_val + "s": masc_cat + "s",
+        masc_val + "es": masc_cat + "es",
+    }
+
+
+def _carrega_flexio_genere(path: Path) -> dict[str, str]:
+    dades = json.loads(path.read_text(encoding="utf-8"))
+    lookup: dict[str, str] = {}
+    for masc_val, masc_cat in dades["regulars"].items():
+        if masc_val == "descripcio":
+            continue
+        lookup[masc_val] = masc_cat
+        lookup.update(_deriva_genere_nombre(masc_val, masc_cat))
+    for val, cat in dades["irregulars"].items():
+        if val == "descripcio":
+            continue
+        lookup[val] = cat
+    return lookup
 
 
 def _resol_mauricio(entries: list[dict]) -> str:
@@ -119,13 +168,18 @@ def _carrega_acentuacio_mauricio(path: Path) -> dict[str, str]:
 def carrega_lexic(
     mauricio_path: Path = MAURICIO_PATH,
     acentuacio_path: Path = ACENTUACIO_MAURICIO_PATH,
+    flexio_genere_path: Path = FLEXIO_GENERE_PATH,
 ) -> dict[str, str]:
-    """Fusiona les 2 fonts documentades al mòdul, per orde de prioritat
-    (la primera font que definix una paraula guanya sobre la segona).
+    """Fusiona les 3 fonts documentades al mòdul, per orde de prioritat
+    (la primera font que definix una paraula guanya sobre les següents).
 
     >>> lookup = carrega_lexic()
     >>> lookup["xiquet"]
-    'noi'
+    'nen'
+    >>> lookup["xiqueta"], lookup["xiquets"], lookup["xiquetes"]
+    ('nena', 'nens', 'nenes')
+    >>> lookup["xicoteta"]
+    'menuda'
     >>> lookup["firmant"]
     'signant'
     >>> lookup["acetilé"]
@@ -135,6 +189,7 @@ def carrega_lexic(
     """
     lookup: dict[str, str] = {}
     for carregador, path in (
+        (_carrega_flexio_genere, flexio_genere_path),
         (_carrega_mauricio_lexic, mauricio_path),
         (_carrega_acentuacio_mauricio, acentuacio_path),
     ):
@@ -193,8 +248,9 @@ class LexicRule:
         self,
         mauricio_path: Path = MAURICIO_PATH,
         acentuacio_path: Path = ACENTUACIO_MAURICIO_PATH,
+        flexio_genere_path: Path = FLEXIO_GENERE_PATH,
     ) -> None:
-        self._lookup = carrega_lexic(mauricio_path, acentuacio_path)
+        self._lookup = carrega_lexic(mauricio_path, acentuacio_path, flexio_genere_path)
 
     def apply(self, tokens: list[Token]) -> list[Token]:
         for i, tok in enumerate(tokens):

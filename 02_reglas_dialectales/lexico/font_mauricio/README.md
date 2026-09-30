@@ -72,8 +72,6 @@ Al retirar Apertium-368, Paula Guerrero i la majoria de les regles de
 sufix, esta cobertura es va perdre (documentada ací perquè no quede
 oblidada, no perquè s'haja d'arreglar sense que algú ho demane):
 
-- `este/esta/estos/estes` i `eixe/eixa/eixos/eixes` (abans
-  `demostratius.py`) -- ninguna font a `font_mauricio/` els llista.
 - Present d'indicatiu 1a conjugació (`parle→parlo`...), i pretèrit perfet
   simple → perifràstic (`celebrà→va celebrar`) (abans
   `morfologia_verbal.py`/`perfet.py`).
@@ -86,5 +84,23 @@ oblidada, no perquè s'haja d'arreglar sense que algú ho demane):
 `acentuacion_limpio.json`) i els incoatius `-ix→-eix` per a QUALSEVOL
 verb (no només els enumerats a les conjugacions) van tornar com a regles
 de sufix a `traductor/rules/accentuacio.py`/`incoatius.py` -- un pur
-diccionari mai pot cobrir un patró obert i productiu. Vore
-`traductor/README.md`, secció "DECISIÓ D'ARQUITECTURA".
+diccionari mai pot cobrir un patró obert i productiu.
+
+**Recuperat el mateix dia, encara més tard**: `este/esta/estos/estes`,
+`eixe/eixa/eixos/eixes`, `aqueix/aqueixa/aqueixos/aqueixes` (tots cap a
+`aquest`) i el neutre `açò→això` van tornar a `traductor/rules/demostratius.py`,
+sourced de `demostratius_avl.json` -- cap fitxer de `font_mauricio/` els
+llista (són un paradigma gramatical tancat, no lèxic obert), però
+retirar-los havia sigut un error: eren el patró MÉS FREQÜENT del corpus,
+i el benchmark ho va confirmar de seguida (28/150 → 83/150 exactes en
+recuperar-los).
+
+**Afegit el mateix dia, més tard encara**: `flexio_genere_avl.json`
+(dins de `lexic.py`) deriva gènere/nombre per a un grapat CURAT de
+paraules amb variació real (`xiquet→nen` dona també `xiqueta→nena`,
+`xiquets→nens`, `xiquetes→nenes`), més formes irregulars a mà
+(`menut→menuda`, no "menuta" -- irregularitat participial). No és un
+escaneig automàtic de `lexic_mauricio.json`: es va provar i la majoria
+del lèxic són verbs/adverbis sense gènere, que haurien donat formes
+absurdes. Benchmark: 83/150 → 92/150. Vore `traductor/README.md`, secció
+"DECISIÓ D'ARQUITECTURA", per la cronologia completa de tota la sessió.

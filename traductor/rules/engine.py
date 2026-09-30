@@ -10,12 +10,15 @@ per l'abast complet i el raonament del canvi):
     2. conjugacions_dict   (lookup directe de formes verbals, font_mauricio)
     3. possessius          (lookup directe de possessius, font_mauricio)
     4. numerals            (lookup directe de numerals, font_mauricio)
-    5. accentuacio         (sufix -és->-ès i -éixer->-èixer, patró
+    5. demostratius        (lookup directe de demostratius, AVL-only --
+                            recreada 30/09/2026, cap fitxer de Mauricio
+                            llista un paradigma gramatical tancat com est)
+    6. accentuacio         (sufix -és->-ès i -éixer->-èixer, patró
                             productiu, afegida 30/09/2026)
-    6. incoatius           (sufix -ix->-eix, patró productiu, afegida
+    7. incoatius           (sufix -ix->-eix, patró productiu, afegida
                             30/09/2026)
 
-Les capes 1-4 són lookups exactes; 5-6 són regles de SUFIX (patró
+Les capes 1-5 són lookups exactes; 6-7 són regles de SUFIX (patró
 productiu, no llista tancada) -- per això van DESPRÉS de les de
 diccionari: si una forma ja es coneix amb exactitud (p.ex. "francés" ja
 és a `lexic_acentuacio_mauricio.json`), no té sentit deixar que una regla
@@ -33,6 +36,7 @@ from __future__ import annotations
 from . import Token, detokenize, marca_noms_propis, tokenize
 from .accentuacio import AccentuacioRule
 from .conjugacions_dict import ConjugacionsDictRule
+from .demostratius import DemostratiusRule
 from .incoatius import IncoatiusRule
 from .lexic import LexicRule
 from .numerals import NumeralsRule
@@ -51,7 +55,9 @@ class RuleEngine:
     >>> engine.translate("La meua casa i la seua obra.")
     'La meva casa i la seva obra.'
     >>> engine.translate("Vull conéixer qui establix esta norma.")
-    'Vull conèixer qui estableix esta norma.'
+    'Vull conèixer qui estableix aquesta norma.'
+    >>> engine.translate("Este xiquet i eixa dona i aquella casa.")
+    'Aquest nen i aquesta dona i aquella casa.'
     """
 
     def __init__(self) -> None:
@@ -60,6 +66,7 @@ class RuleEngine:
             ConjugacionsDictRule(),
             PossessiusRule(),
             NumeralsRule(),
+            DemostratiusRule(),
             AccentuacioRule(),
             IncoatiusRule(),
         ]

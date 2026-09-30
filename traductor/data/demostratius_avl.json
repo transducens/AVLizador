@@ -1,0 +1,40 @@
+{
+  "descripcio": "Paradigma complet dels demostratius valencians (adjectius/pronoms i el neutre), sourced de reglas_dialectales_con_evidencia.md §1 + coneixement dialectologic general (no hi ha cap fitxer de Mauricio que llisti estes formes, son paraules gramaticals tancades, no lexic obert). Recreat 30/09/2026 despres d'una eliminacio anterior de tot el modul.",
+  "graus": {
+    "proximitat_al_parlant": {
+      "occidental": ["este", "esta", "estos", "estes"],
+      "oriental_normatiu": ["aquest", "aquesta", "aquests", "aquestes"]
+    },
+    "proximitat_al_oient": {
+      "occidental": ["eixe", "eixa", "eixos", "eixes"],
+      "oriental_normatiu": ["aqueix", "aqueixa", "aqueixos", "aqueixes"],
+      "oriental_real_colloquial": ["aquest", "aquesta", "aquests", "aquestes"]
+    },
+    "llunyania_dels_dos": {
+      "occidental": ["aquell", "aquella", "aquells", "aquelles"],
+      "oriental": ["aquell", "aquella", "aquells", "aquelles"],
+      "nota": "identic als dos dialectes, no cal cap regla"
+    }
+  },
+  "neutre": {
+    "proximitat_al_parlant": {"occidental": "açò", "oriental_real_colloquial": "això"},
+    "proximitat_al_oient": {"occidental": "això", "oriental_real_colloquial": "això"},
+    "llunyania_dels_dos": {"occidental": "allò", "oriental": "allò", "nota": "identic"}
+  },
+  "entrades_actives_occidental_a_oriental": {
+    "este": "aquest", "esta": "aquesta", "estos": "aquests", "estes": "aquestes",
+    "eixe": "aquest", "eixa": "aquesta", "eixos": "aquests", "eixes": "aquestes",
+    "aqueix": "aquest", "aqueixa": "aquesta", "aqueixos": "aquests", "aqueixes": "aquestes",
+    "açò": "això"
+  },
+  "nota_aqueix": "Encara que 'aqueix' es formalment la forma NORMATIVA del 2n grau oriental, l'us real col·loquial oriental l'ha col·lapsat cap a 'aquest' -- mateix fenomen ja confirmat per a 'eixe' (vore reglas_dialectales_con_evidencia.md, decisio revisada). Per coherencia, si 'aqueix' apareix en un text occidental (l'AVL tambe l'admet com a forma culta), es tradueix igual cap a 'aquest'.",
+  "invers_pendent_no_implementat": {
+    "descripcio": "Este motor NOMES tradueix occidental->oriental. Si mai es construeix un traductor en sentit invers (oriental->occidental), esta es la taula que caldria -- 'aquest' es ambigu (podria vindre d'este O d'eixe), pero 'aqueix' trobat en un text oriental real NOMES pot tornar cap a 'eixe', mai cap a 'este'.",
+    "aqueix": "eixe", "aqueixa": "eixa", "aqueixos": "eixos", "aqueixes": "eixes",
+    "aixo_neutre": "depen del context, ambigu entre 'açò' i 'això'"
+  },
+  "candidat_no_confirmat": {
+    "descripcio": "Adverbis demostratius de lloc (aci/aqui/alla), mateix fenomen de collapse de 3 graus a 2 -- PENDENT DE CONFIRMAR amb evidencia real (benchmark) abans d'activar-lo, no s'ha fet encara.",
+    "aci": "aqui (candidat, sense confirmar)"
+  }
+}
