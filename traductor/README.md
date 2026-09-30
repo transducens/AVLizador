@@ -54,12 +54,29 @@ diccionari només conté paraules que algú ja hi ha ficat. Es van tornar a
 afegir 2 regles de sufix (no llistes tancades) per als 3 patrons més
 productius i millor evidenciats: `accentuacio.py` (`-és→-ès`,
 `-éixer→-èixer`) i `incoatius.py` (`-ix→-eix`). No es va tornar arrere en
-la resta (demostratius, pretèrit perfet, locucions, elisió automàtica
-general) -- estos seguixen sense cap mòdul, vore "Coses que ja no es
-cobrixen" a `font_mauricio/README.md`. Amb això el benchmark va pujar a
-**28/150 (18,7%)** -- una millora xicoteta perquè la majoria dels casos
-d'estos 2 patrons ja estaven coberts pel diccionari d'accentuació; el
-valor real d'estes regles és cobrir paraules NO enumerades a cap fitxer.
+la resta encara (pretèrit perfet, locucions, elisió automàtica general)
+-- vore "Coses que ja no es cobrixen" a `font_mauricio/README.md`. Amb
+això el benchmark va pujar a **28/150 (18,7%)** -- una millora xicoteta
+perquè la majoria dels casos d'estos 2 patrons ja estaven coberts pel
+diccionari d'accentuació.
+
+**Recreat el mateix dia, encara més tard**: `demostratius.py`
+(`este/eixe/aqueix→aquest`, `açò→això`) -- l'eliminació del 30/09/2026
+havia sigut un error, no un patró que "no calia" com els altres: és el
+paradigma gramatical MÉS FREQÜENT del corpus, i cap diccionari de
+Mauricio el llista (és una llista tancada, no lèxic obert). Amb això el
+benchmark va pujar de cop a **83/150 (55,3%)** -- el salt més gran de tots
+els canvis d'esta sessió, confirmant que els demostratius eren la peça
+que més faltava.
+
+**Ampliació final del mateix dia**: `flexio_genere_avl.json` (dins de
+`lexic.py`) afig derivació de gènere/nombre per a un grapat curat de
+paraules amb variació real (`xiquet/xiqueta/xiquets/xiquetes→nen/nena/nens/nenes`).
+Provat també l'enfocament "escanejar tot el lèxic per patró de sufix" --
+descartat de seguida: la majoria de paraules acabades en consonant
+"segura" són verbs/adverbis sense gènere, donant formes absurdes
+("cercar"→"cercara"). Amb la llista curada, el benchmark va pujar a
+**92/150 (61,3%)**.
 
 Esta xifra es deixa ací a propòsit, sense suavitzar-la: és la
 conseqüència directa i coneguda de la decisió, no un bug.
@@ -72,7 +89,7 @@ de text sobre la frase sencera:
 ```
 text ──tokenize()──▶ [Token, Token, ...] ──marca_noms_propis()──▶
     ──▶ LexicRule ──▶ ConjugacionsDictRule ──▶ PossessiusRule ──▶ NumeralsRule
-    ──▶ AccentuacioRule ──▶ IncoatiusRule ──▶ detokenize() ──▶ text convertit
+    ──▶ DemostratiusRule ──▶ AccentuacioRule ──▶ IncoatiusRule ──▶ detokenize() ──▶ text convertit
 ```
 
 ### `Token` (`rules/__init__.py`)
@@ -134,18 +151,27 @@ allí després d'un incident real amb `blanca`/`Blanca` i `roig`/`Roig`
 conegut, heretat sense arreglar: un nom propi que és la **primera**
 paraula del text mai es detecta.
 
-## Les 6 capes
+## Les 7 capes
 
-- **`lexic.py`** — lookup de lèxic general + accentuació. Fusiona
+- **`lexic.py`** — lookup de lèxic general + accentuació + gènere/nombre.
+  Fusiona `flexio_genere_avl.json` (prioritat màxima, vore baix),
   `lexic_mauricio.json` (còpia de `lexico_general_limpio.json`, filtrat:
   exclou `_PENDENT`, topònims, multi-paraula, resol `canonica`) i
   `lexic_acentuacio_mauricio.json` (còpia de `acentuacion_limpio.json`,
   695 parelles). Exclou a mà "després" (bug de dades confirmat al fitxer
   font: el llista com si seguira el patró d'accentuació, però no canvia
-  mai en cap dels dos dialectes). Regressió coneguda: "xiquet" té dos
-  entrades ambigües a Mauricio (`canonica: false` totes dos, "noi" i
-  "nen") -- ara guanya "noi" (primera del fitxer) perquè ja no hi ha cap
-  font externa que ho desempate cap a "nen".
+  mai en cap dels dos dialectes).
+  **Gènere/nombre (`flexio_genere_avl.json`, afegit 30/09/2026)**: llista
+  CURADA a mà (no escaneig automàtic de tot el lèxic -- es va provar i la
+  majoria de paraules acabades en consonant "segura" eren verbs/adverbis
+  sense gènere, donant formes absurdes com "cercara"). Dos categories:
+  `regulars` (deriva fem/plural automàticament: `xiquet→nen` dona també
+  `xiqueta→nena`, `xiquets→nens`, `xiquetes→nenes`) i `irregulars`
+  (formes exactes per a quan el patró "+a" no val, com `menut→menuda` --
+  irregularitat participial que no es pot generalizar amb seguretat, ja
+  que "petit" acaba igual però és regular: "petita", no "petida"). De pas
+  resol la regressió que hi havia amb "xiquet" (abans guanyava "noi" per
+  ambigüitat a Mauricio sense font externa que ho desempatara).
 - **`conjugacions_dict.py`** — lookup de formes verbals. Fusiona
   `conjugaciones_limpio.json` (969 formes, 111 verbs) i
   `verbos_no_ambiguos.json` (261 formes més, 45 verbs, afegit 30/09/2026,
@@ -160,6 +186,17 @@ paraula del text mai es detecta.
   `possessius_mauricio.json` (còpia de `posesivos_cat_val.json`), un
   producte cartesià sense filtrar del qual només es queden els 6 parells
   on el número (singular/plural) casa als dos costats.
+- **`demostratius.py`** — lookup de demostratius: `este/eixe/aqueix`
+  (tots tres col·lapsen cap a `aquest`, mateixa família + plurals) i el
+  neutre `açò→això`. **Recreat 30/09/2026** (s'havia llevat del tot en
+  passar a "pur diccionari de Mauricio" i era un error: cap diccionari
+  pot cobrir un paradigma gramatical tancat que Mauricio no llista).
+  Font: `demostratius_avl.json` (paradigma sourced de
+  `reglas_dialectales_con_evidencia.md` §1). `aquell`/`allò` són idèntics
+  als dos dialectes i no tenen entrada. La taula INVERSA (`aqueix→eixe`,
+  per a un hipotètic traductor oriental→occidental) es queda documentada
+  al mateix fitxer sense implementar-se -- este motor només tradueix en
+  un sentit.
 - **`numerals.py`** — lookup exacte contra `numerals_mauricio.json` (còpia
   de `numerales_limpio.json`, 180 files): tota la família huit/vuit,
   "dinou"/"disset" + derivats, i "díhuit"→"divuit" sense cap cas especial
@@ -275,8 +312,8 @@ python -c "
 import doctest, importlib
 modulos = [
     'traductor.rules', 'traductor.rules.lexic', 'traductor.rules.conjugacions_dict',
-    'traductor.rules.possessius', 'traductor.rules.numerals', 'traductor.rules.accentuacio',
-    'traductor.rules.incoatius', 'traductor.rules.engine', 'traductor.translate',
+    'traductor.rules.possessius', 'traductor.rules.numerals', 'traductor.rules.demostratius',
+    'traductor.rules.accentuacio', 'traductor.rules.incoatius', 'traductor.rules.engine', 'traductor.translate',
 ]
 for nom in modulos:
     m = importlib.import_module(nom)

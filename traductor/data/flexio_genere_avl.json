@@ -1,0 +1,14 @@
+{
+  "descripcio": "Derivacio de genere/nombre per a paraules del lexic general que son sustantius/adjectius amb variacio real de genere (com xiquet/xiqueta). NO es una llista automatica generada escanejant tot lexic_mauricio.json -- es va provar aixo (30/09/2026) i la majoria d'entrades acabades en consonant 'segura' (t/l/m/n/r) son verbs infinitius o adverbis sense genere ('cercar', 'verdaderament'...), que haurien donat formes absurdes ('cercara', 'verdaderamenta'). Per aixo esta es una llista CURADA a ma, no un escaneig cec.",
+  "regulars": {
+    "descripcio": "Parells base (masculi singular) on el patro '+a' (femeni) / '+s' (plural masculi) / '+es' (plural femeni, sobre el femeni ja derivat) es aplica sense risc conegut als dos costats -- confirmats un a un, no per regex sobre tot el lexic.",
+    "xiquet": "nen",
+    "xic": "noi",
+    "corder": "anyell"
+  },
+  "irregulars": {
+    "descripcio": "Formes explicites a ma per a parells on el patro regular NO val -- el cas mes comu es '-ut' participial (menut->menuda, com vengut->venguda), que mai es pot generalitzar amb seguretat perque paraules com 'petit' acaben igual (vocal+t) pero SI son regulars (petita, no petida).",
+    "xicoteta": "menuda", "xicotets": "menuts", "xicotetes": "menudes",
+    "petita": "menuda", "petits": "menuts", "petites": "menudes"
+  }
+}
