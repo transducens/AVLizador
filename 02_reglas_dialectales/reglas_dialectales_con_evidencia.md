@@ -6,6 +6,18 @@ per a la conversió automàtica d'un dialecte a l'altre. Pensat per a ser
 revisat per algú amb coneixement de les dos normes, per a confirmar que
 cada regla està ben formulada.
 
+> **Nota d'arquitectura (30/09/2026)**: este document descriu regles
+> morfològiques i de sufix (demostratius, gentilicis, incoatius, pretèrit
+> perfet, locucions, elisió) que YA NO estan implementades a
+> `traductor/rules/` -- eixe paquet es va reduir a pur lookup de
+> diccionari de Mauricio (`lexic.py`, `conjugacions_dict.py`,
+> `possessius.py`, `numerals.py`), sense regles de sufix ni reconstrucció
+> algorítmica. Este document seguix sent vàlid com a EVIDÈNCIA LINGÜÍSTICA
+> (les regles ací descrites són correctes), però moltes ja no tenen cap
+> mòdul `.py` que les aplique. Vore `../traductor/README.md`, secció
+> "DECISIÓ D'ARQUITECTURA", per l'estat real del motor i l'impacte
+> mesurat en el benchmark (89/150 → 27/150).
+
 ---
 
 ## 0. Marc general

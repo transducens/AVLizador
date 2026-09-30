@@ -58,10 +58,11 @@ en resumen:
 
 | Fichero | Qué es |
 |---|---|
-| `lexico_fiable.json` | **⭐ El que usa de verdad el pipeline ahora mismo.** 194 pares (31 de Apertium + 34 de Paula Guerrero + 129 de `fuentes/paralelos.txt`) revisados y en los que confías. `evalua_models.py` ya no lee `palabras_traducidas.json` — lee este fichero directamente. Los numerales compuestos con guionet (huitanta-cinc, noranta-huit...) están colapsados en sus formas base (`huit`, `huitanta`) porque el glosario dinámico tokeniza por guionet — ver `guia_dialectal_valencia_catala.md` sección 6. Para añadir palabras nuevas, edita este JSON directamente. |
-| `apertium_368_val_cat.json` | Las 368 formas que Apertium marca como valencianas, separadas en confirmadas (68) y pendientes (3, sin pareja encontrada, sin inventar nada). De aquí salen las 30 entradas de origen "apertium" de `lexico_fiable.json` (68 confirmadas por Apertium, reducidas a formas base tras quitar numerales compuestos redundantes). |
-| `contrastius_paula_guerrero.json` | 35 pares valenciano-catalán categorizados (determinantes, verbos incoativos, léxico...), de una fuente externa curada aparte. 34 de los 35 ya están volcados en `lexico_fiable.json`. |
-| `palabras_traducidas.json` | Copia de trabajo del léxico **antiguo** (el original vive en `03_seleccion_de_modelo/palabras_traducidas.json`, ya no usado por el pipeline). Sigue siendo útil como cantera: si al revisarlo encuentras una palabra de la que estás completamente seguro, añádela a `lexico_fiable.json` editándolo directamente. |
+| `lexico_fiable.json` | **Usado por `evalua_models.py --model regles` y `genera_corpus_sintetico.py` (sistema antiguo de regex, no el motor `traductor/`).** 347 pares (194 originales: 31 de Apertium + 34 de Paula Guerrero + 129 de `fuentes/paralelos.txt`; +150 de Mauricio y +3 de la evidencia AVL añadidos 29/09/2026). **Retirado de `traductor/rules/lexic.py` el 30/09/2026** (junto con `apertium_368_val_cat.json` y `contrastius_paula_guerrero.json`, ver abajo): ese paquete ahora es puro lookup de diccionario de Mauricio, sin ninguna fuente externa -- ver `traductor/README.es.md`, sección "DECISIÓN DE ARQUITECTURA". Este fichero se queda como copia de seguridad y como la fuente que siguen usando los otros dos scripts. |
+| `apertium_368_val_cat.json` | Las 368 formas que Apertium marca como valencianas, separadas en confirmadas (65 con pareja, 6 sin) y pendientes. Se usó en `traductor/rules/lexic.py` desde la mañana del 30/09/2026 hasta que esa misma tarde se retiró al reducir el traductor a puro Mauricio -- ya no lo usa ningún script activo. |
+| `contrastius_paula_guerrero.json` | 35 pares valenciano-catalán categorizados (determinantes, verbos incoativos, léxico...), de una fuente externa curada aparte, con un campo `category` real. Mismo caso que el anterior: se usó un tiempo en `lexic.py`/`demostratius.py`/`possessius.py`, retirado el 30/09/2026 al pasar el traductor a puro Mauricio. |
+| `posesivos_cat_val.json` (dentro de `font_mauricio/`) | 12 filas de Mauricio (30/09/2026), un producto cartesiano sin filtrar de los posesivos débiles. `traductor/rules/possessius.py` se queda solo con los 6 pares donde el número casa. |
+| `palabras_traducidas.json` | Copia de trabajo del léxico **antiguo** (el original vive en `03_seleccion_de_modelo/palabras_traducidas.json`, ya no usado por el pipeline). |
 
 ### `fuentes/` — material bruto de origen
 
@@ -78,12 +79,17 @@ guía.
 
 ## Cómo añadir una palabra nueva al léxico fiable
 
+**Nota (30/09/2026)**: esto solo afecta a `evalua_models.py --model
+regles` y `genera_corpus_sintetico.py` (sistema antiguo de regex). El
+motor `traductor/` (opción `--model traductor`) ya no lee
+`lexico_fiable.json` -- para añadirle palabras, edita el fichero fuente
+de la categoría correspondiente en `traductor/data/` (ver
+`traductor/README.es.md`, sección "Cómo añadir una regla nueva").
+
 Edita `lexico/lexico_fiable.json` directamente, añadiendo una entrada
 nueva al array `entradas` con el mismo esquema que las demás (`valenciano`,
-`catalan`, `castellano`, `categoria`, `origen`). Es el fichero que usa
-`evalua_models.py` (y por tanto también `genera_corpus_sintetico.py`, que lo
-reutiliza). No hace falta tocar ni reiniciar nada más — la próxima vez que
-se ejecute el pipeline, ya la usa.
+`catalan`, `castellano`, `categoria`, `origen`). No hace falta tocar ni
+reiniciar nada más — la próxima vez que se ejecute el pipeline, ya la usa.
 
 ## Flujo de trabajo para revisar el léxico antiguo
 

@@ -3,8 +3,9 @@ translate.py -- Punt d'entrada públic del traductor: `translate(text) -> str`.
 
 Orquestra el pipeline complet delegant en RuleEngine (rules/engine.py), amb
 un únic RuleEngine reutilitzat entre crides (`_ENGINE`, carregat de manera
-peresosa la primera vegada que cal). Això evita rellegir i re-indexar
-lexico_fiable.json en cada crida a translate() -- important si s'usa este
+peresosa la primera vegada que cal). Això evita rellegir i re-indexar tots
+els fitxers de dades de `traductor/data/` (lèxics, conjugacions,
+excepcions...) en cada crida a translate() -- important si s'usa este
 mòdul per a traduir moltes frases seguides (p.ex. des de l'adaptador
 d'evalua_models.py o des de cli.py amb un fitxer sencer).
 
@@ -24,8 +25,8 @@ _ENGINE: RuleEngine | None = None
 def translate(text: str) -> str:
     """Convertix `text` de valencià occidental a català oriental.
 
-    >>> translate("Este xiquet mira la meua obra.")
-    'Aquest nen mira la meva obra.'
+    >>> translate("Tinc huitanta anys i la meua obra és francesa.")
+    'Tinc vuitanta anys i la meva obra és francesa.'
     """
     global _ENGINE
     if _ENGINE is None:
