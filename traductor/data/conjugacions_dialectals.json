@@ -1,7 +1,7019 @@
 {
-  "total_entradas": 969,
+  "total_entradas": 1229,
   "descripcio": "Formes verbals valencia/catala que difereixen entre dialectes, extretes de l'apertium bilingue catala-castella per Mauricio (equip AVLizador, 29/09/2026). Cobrix 111 verbs on almenys una conjugacio difereix. El camp 'problematica' marca formes on el valencia usa la mateixa paraula per al present d'indicatiu i el de subjuntiu (p.ex. abalance = jo abalanco / que jo abalanci), cosa que fa la conversio ambigua sense analisi gramatical (pos-tagging); conjugacions_dict.py exclou estes entrades del lookup automatic i les deixa documentades aci per si en el futur es pot afegir un mecanisme de desambiguacio.",
   "entradas": [
+    {
+      "catalan": "apetiria",
+      "valenciano": "abelliria",
+      "infinitiu_cat": "apetir",
+      "infinitiu_val": "abellir",
+      "repetida": true,
+      "id": "REP_001",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "apetim",
+      "valenciano": "abellim",
+      "infinitiu_cat": "apetir",
+      "infinitiu_val": "abellir",
+      "repetida": true,
+      "id": "REP_009",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "apetiu",
+      "valenciano": "abelliu",
+      "infinitiu_cat": "apetir",
+      "infinitiu_val": "abellir",
+      "repetida": true,
+      "id": "REP_011",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "apeteix",
+      "valenciano": "abelleix",
+      "infinitiu_cat": "apetir",
+      "infinitiu_val": "abellir",
+      "repetida": true,
+      "id": "REP_013",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "apeteixin",
+      "valenciano": "abellisquen",
+      "infinitiu_cat": "apetir",
+      "infinitiu_val": "abellir",
+      "repetida": true,
+      "id": "REP_015",
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "pl"
+        ],
+        [
+          "prs",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "apeteixi",
+      "valenciano": "abellisca",
+      "infinitiu_cat": "apetir",
+      "infinitiu_val": "abellir",
+      "repetida": true,
+      "id": "REP_017",
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "sg"
+        ],
+        [
+          "prs",
+          "p1",
+          "sg"
+        ],
+        [
+          "prs",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "apetia",
+      "valenciano": "abellia",
+      "infinitiu_cat": "apetir",
+      "infinitiu_val": "abellir",
+      "repetida": true,
+      "id": "REP_019",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "aixafaria",
+      "valenciano": "esclafaria",
+      "infinitiu_cat": "aixafar",
+      "infinitiu_val": "esclafar",
+      "repetida": true,
+      "id": "REP_022",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "aixafem",
+      "valenciano": "esclafem",
+      "infinitiu_cat": "aixafar",
+      "infinitiu_val": "esclafar",
+      "repetida": true,
+      "id": "REP_030",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "aixafeu",
+      "valenciano": "esclafeu",
+      "infinitiu_cat": "aixafar",
+      "infinitiu_val": "esclafar",
+      "repetida": true,
+      "id": "REP_032",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "aixafa",
+      "valenciano": "esclafa",
+      "infinitiu_cat": "aixafar",
+      "infinitiu_val": "esclafar",
+      "repetida": true,
+      "id": "REP_034",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "aixafava",
+      "valenciano": "esclafava",
+      "infinitiu_cat": "aixafar",
+      "infinitiu_val": "esclafar",
+      "repetida": true,
+      "id": "REP_040",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "buscaria",
+      "valenciano": "cercaria",
+      "infinitiu_cat": "buscar",
+      "infinitiu_val": "cercar",
+      "repetida": true,
+      "id": "REP_044",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "busquem",
+      "valenciano": "cerquem",
+      "infinitiu_cat": "buscar",
+      "infinitiu_val": "cercar",
+      "repetida": true,
+      "id": "REP_052",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "busca",
+      "valenciano": "cerca",
+      "infinitiu_cat": "buscar",
+      "infinitiu_val": "cercar",
+      "repetida": true,
+      "id": "REP_056",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "buscava",
+      "valenciano": "cercava",
+      "infinitiu_cat": "buscar",
+      "infinitiu_val": "cercar",
+      "repetida": true,
+      "id": "REP_062",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "conrearia",
+      "valenciano": "cultivaria",
+      "infinitiu_cat": "conrear",
+      "infinitiu_val": "cultivar",
+      "repetida": true,
+      "id": "REP_066",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "conreem",
+      "valenciano": "cultivem",
+      "infinitiu_cat": "conrear",
+      "infinitiu_val": "cultivar",
+      "repetida": true,
+      "id": "REP_074",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "conreeu",
+      "valenciano": "cultiveu",
+      "infinitiu_cat": "conrear",
+      "infinitiu_val": "cultivar",
+      "repetida": true,
+      "id": "REP_076",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "conrea",
+      "valenciano": "cultiva",
+      "infinitiu_cat": "conrear",
+      "infinitiu_val": "cultivar",
+      "repetida": true,
+      "id": "REP_078",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "conreava",
+      "valenciano": "cultivava",
+      "infinitiu_cat": "conrear",
+      "infinitiu_val": "cultivar",
+      "repetida": true,
+      "id": "REP_084",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "defensaria",
+      "valenciano": "defendria",
+      "infinitiu_cat": "defensar",
+      "infinitiu_val": "defendre",
+      "repetida": true,
+      "id": "REP_088",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "defensin",
+      "valenciano": "defenguen",
+      "infinitiu_cat": "defensar",
+      "infinitiu_val": "defendre",
+      "repetida": true,
+      "id": "REP_101",
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "pl"
+        ],
+        [
+          "prs",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "defensi",
+      "valenciano": "defenga",
+      "infinitiu_cat": "defensar",
+      "infinitiu_val": "defendre",
+      "repetida": true,
+      "id": "REP_103",
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "sg"
+        ],
+        [
+          "prs",
+          "p1",
+          "sg"
+        ],
+        [
+          "prs",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "defensava",
+      "valenciano": "defenia",
+      "infinitiu_cat": "defensar",
+      "infinitiu_val": "defendre",
+      "repetida": true,
+      "id": "REP_105",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "dipositaria",
+      "valenciano": "depositaria",
+      "infinitiu_cat": "dipositar",
+      "infinitiu_val": "depositar",
+      "repetida": true,
+      "id": "REP_108",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "dipositem",
+      "valenciano": "depositem",
+      "infinitiu_cat": "dipositar",
+      "infinitiu_val": "depositar",
+      "repetida": true,
+      "id": "REP_116",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "dipositeu",
+      "valenciano": "depositeu",
+      "infinitiu_cat": "dipositar",
+      "infinitiu_val": "depositar",
+      "repetida": true,
+      "id": "REP_118",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "diposita",
+      "valenciano": "deposita",
+      "infinitiu_cat": "dipositar",
+      "infinitiu_val": "depositar",
+      "repetida": true,
+      "id": "REP_120",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "dipositava",
+      "valenciano": "depositava",
+      "infinitiu_cat": "dipositar",
+      "infinitiu_val": "depositar",
+      "repetida": true,
+      "id": "REP_126",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "desenvoluparia",
+      "valenciano": "desenrotllaria",
+      "infinitiu_cat": "desenvolupar",
+      "infinitiu_val": "desenrotllar",
+      "repetida": true,
+      "id": "REP_130",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "desenvolupem",
+      "valenciano": "desenrotllem",
+      "infinitiu_cat": "desenvolupar",
+      "infinitiu_val": "desenrotllar",
+      "repetida": true,
+      "id": "REP_138",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "desenvolupeu",
+      "valenciano": "desenrotlleu",
+      "infinitiu_cat": "desenvolupar",
+      "infinitiu_val": "desenrotllar",
+      "repetida": true,
+      "id": "REP_140",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "desenvolupa",
+      "valenciano": "desenrotlla",
+      "infinitiu_cat": "desenvolupar",
+      "infinitiu_val": "desenrotllar",
+      "repetida": true,
+      "id": "REP_142",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "desenvolupava",
+      "valenciano": "desenrotllava",
+      "infinitiu_cat": "desenvolupar",
+      "infinitiu_val": "desenrotllar",
+      "repetida": true,
+      "id": "REP_148",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "empentaria",
+      "valenciano": "espentaria",
+      "infinitiu_cat": "empentar",
+      "infinitiu_val": "espentar",
+      "repetida": true,
+      "id": "REP_202",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "empentem",
+      "valenciano": "espentem",
+      "infinitiu_cat": "empentar",
+      "infinitiu_val": "espentar",
+      "repetida": true,
+      "id": "REP_210",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "empenteu",
+      "valenciano": "espenteu",
+      "infinitiu_cat": "empentar",
+      "infinitiu_val": "espentar",
+      "repetida": true,
+      "id": "REP_212",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "empenta",
+      "valenciano": "espenta",
+      "infinitiu_cat": "empentar",
+      "infinitiu_val": "espentar",
+      "repetida": true,
+      "id": "REP_214",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "empentava",
+      "valenciano": "espentava",
+      "infinitiu_cat": "empentar",
+      "infinitiu_val": "espentar",
+      "repetida": true,
+      "id": "REP_220",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "lliuraria",
+      "valenciano": "entregaria",
+      "infinitiu_cat": "lliurar",
+      "infinitiu_val": "entregar",
+      "repetida": true,
+      "id": "REP_224",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "lliurem",
+      "valenciano": "entreguem",
+      "infinitiu_cat": "lliurar",
+      "infinitiu_val": "entregar",
+      "repetida": true,
+      "id": "REP_232",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "lliura",
+      "valenciano": "entrega",
+      "infinitiu_cat": "lliurar",
+      "infinitiu_val": "entregar",
+      "repetida": true,
+      "id": "REP_236",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "lliurava",
+      "valenciano": "entregava",
+      "infinitiu_cat": "lliurar",
+      "infinitiu_val": "entregar",
+      "repetida": true,
+      "id": "REP_242",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "signaria",
+      "valenciano": "firmaria",
+      "infinitiu_cat": "signar",
+      "infinitiu_val": "firmar",
+      "repetida": true,
+      "id": "REP_246",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "signem",
+      "valenciano": "firmem",
+      "infinitiu_cat": "signar",
+      "infinitiu_val": "firmar",
+      "repetida": true,
+      "id": "REP_254",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "signeu",
+      "valenciano": "firmeu",
+      "infinitiu_cat": "signar",
+      "infinitiu_val": "firmar",
+      "repetida": true,
+      "id": "REP_256",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "signa",
+      "valenciano": "firma",
+      "infinitiu_cat": "signar",
+      "infinitiu_val": "firmar",
+      "repetida": true,
+      "id": "REP_258",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "signava",
+      "valenciano": "firmava",
+      "infinitiu_cat": "signar",
+      "infinitiu_val": "firmar",
+      "repetida": true,
+      "id": "REP_264",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "enfonsaria",
+      "valenciano": "afonaria",
+      "infinitiu_cat": "enfonsar",
+      "infinitiu_val": "afonar",
+      "repetida": true,
+      "id": "REP_268",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "enfonsem",
+      "valenciano": "afonem",
+      "infinitiu_cat": "enfonsar",
+      "infinitiu_val": "afonar",
+      "repetida": true,
+      "id": "REP_276",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "enfonseu",
+      "valenciano": "afoneu",
+      "infinitiu_cat": "enfonsar",
+      "infinitiu_val": "afonar",
+      "repetida": true,
+      "id": "REP_278",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "enfonsa",
+      "valenciano": "afona",
+      "infinitiu_cat": "enfonsar",
+      "infinitiu_val": "afonar",
+      "repetida": true,
+      "id": "REP_280",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "enfonsava",
+      "valenciano": "afonava",
+      "infinitiu_cat": "enfonsar",
+      "infinitiu_val": "afonar",
+      "repetida": true,
+      "id": "REP_286",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "rentaria",
+      "valenciano": "llavaria",
+      "infinitiu_cat": "rentar",
+      "infinitiu_val": "llavar",
+      "repetida": true,
+      "id": "REP_290",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "rentem",
+      "valenciano": "llavem",
+      "infinitiu_cat": "rentar",
+      "infinitiu_val": "llavar",
+      "repetida": true,
+      "id": "REP_298",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "renteu",
+      "valenciano": "llaveu",
+      "infinitiu_cat": "rentar",
+      "infinitiu_val": "llavar",
+      "repetida": true,
+      "id": "REP_300",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "renta",
+      "valenciano": "llava",
+      "infinitiu_cat": "rentar",
+      "infinitiu_val": "llavar",
+      "repetida": true,
+      "id": "REP_302",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "rentava",
+      "valenciano": "llavava",
+      "infinitiu_cat": "rentar",
+      "infinitiu_val": "llavar",
+      "repetida": true,
+      "id": "REP_308",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "aixecaria",
+      "valenciano": "alçaria",
+      "infinitiu_cat": "aixecar",
+      "infinitiu_val": "alçar",
+      "repetida": true,
+      "id": "REP_312",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "aixequem",
+      "valenciano": "alcem",
+      "infinitiu_cat": "aixecar",
+      "infinitiu_val": "alçar",
+      "repetida": true,
+      "id": "REP_320",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "aixequeu",
+      "valenciano": "alceu",
+      "infinitiu_cat": "aixecar",
+      "infinitiu_val": "alçar",
+      "repetida": true,
+      "id": "REP_322",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "aixeca",
+      "valenciano": "alça",
+      "infinitiu_cat": "aixecar",
+      "infinitiu_val": "alçar",
+      "repetida": true,
+      "id": "REP_324",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "aixecava",
+      "valenciano": "alçava",
+      "infinitiu_cat": "aixecar",
+      "infinitiu_val": "alçar",
+      "repetida": true,
+      "id": "REP_330",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "barrejaria",
+      "valenciano": "mesclaria",
+      "infinitiu_cat": "barrejar",
+      "infinitiu_val": "mesclar",
+      "repetida": true,
+      "id": "REP_334",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "barregem",
+      "valenciano": "mesclem",
+      "infinitiu_cat": "barrejar",
+      "infinitiu_val": "mesclar",
+      "repetida": true,
+      "id": "REP_342",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "barregeu",
+      "valenciano": "mescleu",
+      "infinitiu_cat": "barrejar",
+      "infinitiu_val": "mesclar",
+      "repetida": true,
+      "id": "REP_344",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "barreja",
+      "valenciano": "mescla",
+      "infinitiu_cat": "barrejar",
+      "infinitiu_val": "mesclar",
+      "repetida": true,
+      "id": "REP_346",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "barrejava",
+      "valenciano": "mesclava",
+      "infinitiu_cat": "barrejar",
+      "infinitiu_val": "mesclar",
+      "repetida": true,
+      "id": "REP_352",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "mullaria",
+      "valenciano": "banyaria",
+      "infinitiu_cat": "mullar",
+      "infinitiu_val": "banyar",
+      "repetida": true,
+      "id": "REP_356",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "mullem",
+      "valenciano": "banyem",
+      "infinitiu_cat": "mullar",
+      "infinitiu_val": "banyar",
+      "repetida": true,
+      "id": "REP_364",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "mulleu",
+      "valenciano": "banyeu",
+      "infinitiu_cat": "mullar",
+      "infinitiu_val": "banyar",
+      "repetida": true,
+      "id": "REP_366",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "mulla",
+      "valenciano": "banya",
+      "infinitiu_cat": "mullar",
+      "infinitiu_val": "banyar",
+      "repetida": true,
+      "id": "REP_368",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "mullava",
+      "valenciano": "banyava",
+      "infinitiu_cat": "mullar",
+      "infinitiu_val": "banyar",
+      "repetida": true,
+      "id": "REP_374",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "recolliria",
+      "valenciano": "arreplegaria",
+      "infinitiu_cat": "recollir",
+      "infinitiu_val": "arreplegar",
+      "repetida": true,
+      "id": "REP_428",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "recollim",
+      "valenciano": "arrepleguem",
+      "infinitiu_cat": "recollir",
+      "infinitiu_val": "arreplegar",
+      "repetida": true,
+      "id": "REP_436",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "recull",
+      "valenciano": "arreplega",
+      "infinitiu_cat": "recollir",
+      "infinitiu_val": "arreplegar",
+      "repetida": true,
+      "id": "REP_440",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "recollia",
+      "valenciano": "arreplegava",
+      "infinitiu_cat": "recollir",
+      "infinitiu_val": "arreplegar",
+      "repetida": true,
+      "id": "REP_446",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortiríem",
+      "valenciano": "eixiríem",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_462",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "pl"
+        ],
+        [
+          "cni",
+          "p1",
+          "pl"
+        ],
+        [
+          "cni",
+          "p1",
+          "pl"
+        ],
+        [
+          "cni",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortiria",
+      "valenciano": "eixiria",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_464",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ],
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ],
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ],
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortiríeu",
+      "valenciano": "eixiríeu",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_466",
+      "morfologies": [
+        [
+          "cni",
+          "p2",
+          "pl"
+        ],
+        [
+          "cni",
+          "p2",
+          "pl"
+        ],
+        [
+          "cni",
+          "p2",
+          "pl"
+        ],
+        [
+          "cni",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortiries",
+      "valenciano": "eixiries",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_468",
+      "morfologies": [
+        [
+          "cni",
+          "p2",
+          "sg"
+        ],
+        [
+          "cni",
+          "p2",
+          "sg"
+        ],
+        [
+          "cni",
+          "p2",
+          "sg"
+        ],
+        [
+          "cni",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortirien",
+      "valenciano": "eixirien",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_470",
+      "morfologies": [
+        [
+          "cni",
+          "p3",
+          "pl"
+        ],
+        [
+          "cni",
+          "p3",
+          "pl"
+        ],
+        [
+          "cni",
+          "p3",
+          "pl"
+        ],
+        [
+          "cni",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortirem",
+      "valenciano": "eixirem",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_472",
+      "morfologies": [
+        [
+          "fti",
+          "p1",
+          "pl"
+        ],
+        [
+          "fti",
+          "p1",
+          "pl"
+        ],
+        [
+          "fti",
+          "p1",
+          "pl"
+        ],
+        [
+          "fti",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortiré",
+      "valenciano": "eixiré",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_474",
+      "morfologies": [
+        [
+          "fti",
+          "p1",
+          "sg"
+        ],
+        [
+          "fti",
+          "p1",
+          "sg"
+        ],
+        [
+          "fti",
+          "p1",
+          "sg"
+        ],
+        [
+          "fti",
+          "p1",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortireu",
+      "valenciano": "eixireu",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_476",
+      "morfologies": [
+        [
+          "fti",
+          "p2",
+          "pl"
+        ],
+        [
+          "fti",
+          "p2",
+          "pl"
+        ],
+        [
+          "fti",
+          "p2",
+          "pl"
+        ],
+        [
+          "fti",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortiràs",
+      "valenciano": "eixiràs",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_478",
+      "morfologies": [
+        [
+          "fti",
+          "p2",
+          "sg"
+        ],
+        [
+          "fti",
+          "p2",
+          "sg"
+        ],
+        [
+          "fti",
+          "p2",
+          "sg"
+        ],
+        [
+          "fti",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortiran",
+      "valenciano": "eixiran",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_480",
+      "morfologies": [
+        [
+          "fti",
+          "p3",
+          "pl"
+        ],
+        [
+          "fti",
+          "p3",
+          "pl"
+        ],
+        [
+          "fti",
+          "p3",
+          "pl"
+        ],
+        [
+          "fti",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortirà",
+      "valenciano": "eixirà",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_482",
+      "morfologies": [
+        [
+          "fti",
+          "p3",
+          "sg"
+        ],
+        [
+          "fti",
+          "p3",
+          "sg"
+        ],
+        [
+          "fti",
+          "p3",
+          "sg"
+        ],
+        [
+          "fti",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortíssim",
+      "valenciano": "isquérem",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_484",
+      "morfologies": [
+        [
+          "fts",
+          "p1",
+          "pl"
+        ],
+        [
+          "pis",
+          "p1",
+          "pl"
+        ],
+        [
+          "fts",
+          "p1",
+          "pl"
+        ],
+        [
+          "pis",
+          "p1",
+          "pl"
+        ],
+        [
+          "fts",
+          "p1",
+          "pl"
+        ],
+        [
+          "pis",
+          "p1",
+          "pl"
+        ],
+        [
+          "fts",
+          "p1",
+          "pl"
+        ],
+        [
+          "pis",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortís",
+      "valenciano": "isquera",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_486",
+      "morfologies": [
+        [
+          "fts",
+          "p1",
+          "sg"
+        ],
+        [
+          "fts",
+          "p3",
+          "sg"
+        ],
+        [
+          "pis",
+          "p1",
+          "sg"
+        ],
+        [
+          "pis",
+          "p3",
+          "sg"
+        ],
+        [
+          "fts",
+          "p1",
+          "sg"
+        ],
+        [
+          "fts",
+          "p3",
+          "sg"
+        ],
+        [
+          "pis",
+          "p1",
+          "sg"
+        ],
+        [
+          "pis",
+          "p3",
+          "sg"
+        ],
+        [
+          "fts",
+          "p1",
+          "sg"
+        ],
+        [
+          "fts",
+          "p3",
+          "sg"
+        ],
+        [
+          "pis",
+          "p1",
+          "sg"
+        ],
+        [
+          "pis",
+          "p3",
+          "sg"
+        ],
+        [
+          "fts",
+          "p1",
+          "sg"
+        ],
+        [
+          "fts",
+          "p3",
+          "sg"
+        ],
+        [
+          "pis",
+          "p1",
+          "sg"
+        ],
+        [
+          "pis",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortíssiu",
+      "valenciano": "isquéreu",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_488",
+      "morfologies": [
+        [
+          "fts",
+          "p2",
+          "pl"
+        ],
+        [
+          "pis",
+          "p2",
+          "pl"
+        ],
+        [
+          "fts",
+          "p2",
+          "pl"
+        ],
+        [
+          "pis",
+          "p2",
+          "pl"
+        ],
+        [
+          "fts",
+          "p2",
+          "pl"
+        ],
+        [
+          "pis",
+          "p2",
+          "pl"
+        ],
+        [
+          "fts",
+          "p2",
+          "pl"
+        ],
+        [
+          "pis",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortissis",
+      "valenciano": "isqueres",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_490",
+      "morfologies": [
+        [
+          "fts",
+          "p2",
+          "sg"
+        ],
+        [
+          "pis",
+          "p2",
+          "sg"
+        ],
+        [
+          "fts",
+          "p2",
+          "sg"
+        ],
+        [
+          "pis",
+          "p2",
+          "sg"
+        ],
+        [
+          "fts",
+          "p2",
+          "sg"
+        ],
+        [
+          "pis",
+          "p2",
+          "sg"
+        ],
+        [
+          "fts",
+          "p2",
+          "sg"
+        ],
+        [
+          "pis",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortissin",
+      "valenciano": "isqueren",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_492",
+      "morfologies": [
+        [
+          "fts",
+          "p3",
+          "pl"
+        ],
+        [
+          "pis",
+          "p3",
+          "pl"
+        ],
+        [
+          "fts",
+          "p3",
+          "pl"
+        ],
+        [
+          "pis",
+          "p3",
+          "pl"
+        ],
+        [
+          "fts",
+          "p3",
+          "pl"
+        ],
+        [
+          "pis",
+          "p3",
+          "pl"
+        ],
+        [
+          "fts",
+          "p3",
+          "pl"
+        ],
+        [
+          "pis",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortint",
+      "valenciano": "eixint",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_494",
+      "morfologies": [
+        [
+          "ger"
+        ],
+        [
+          "ger"
+        ],
+        [
+          "ger"
+        ],
+        [
+          "ger"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "surt",
+      "valenciano": "ix",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_500",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ],
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ],
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ],
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "surtin",
+      "valenciano": "isquen",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_502",
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "pl"
+        ],
+        [
+          "prs",
+          "p3",
+          "pl"
+        ],
+        [
+          "imp",
+          "p3",
+          "pl"
+        ],
+        [
+          "prs",
+          "p3",
+          "pl"
+        ],
+        [
+          "imp",
+          "p3",
+          "pl"
+        ],
+        [
+          "prs",
+          "p3",
+          "pl"
+        ],
+        [
+          "imp",
+          "p3",
+          "pl"
+        ],
+        [
+          "prs",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "surti",
+      "valenciano": "isca",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_504",
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "sg"
+        ],
+        [
+          "prs",
+          "p1",
+          "sg"
+        ],
+        [
+          "prs",
+          "p3",
+          "sg"
+        ],
+        [
+          "imp",
+          "p3",
+          "sg"
+        ],
+        [
+          "prs",
+          "p1",
+          "sg"
+        ],
+        [
+          "prs",
+          "p3",
+          "sg"
+        ],
+        [
+          "imp",
+          "p3",
+          "sg"
+        ],
+        [
+          "prs",
+          "p1",
+          "sg"
+        ],
+        [
+          "prs",
+          "p3",
+          "sg"
+        ],
+        [
+          "imp",
+          "p3",
+          "sg"
+        ],
+        [
+          "prs",
+          "p1",
+          "sg"
+        ],
+        [
+          "prs",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortir",
+      "valenciano": "eixir",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_506",
+      "morfologies": [
+        [
+          "inf"
+        ],
+        [
+          "inf"
+        ],
+        [
+          "inf"
+        ],
+        [
+          "inf"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortíem",
+      "valenciano": "eixíem",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_508",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "pl"
+        ],
+        [
+          "pii",
+          "p1",
+          "pl"
+        ],
+        [
+          "pii",
+          "p1",
+          "pl"
+        ],
+        [
+          "pii",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortia",
+      "valenciano": "eixia",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_510",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ],
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ],
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ],
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortíeu",
+      "valenciano": "eixíeu",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_512",
+      "morfologies": [
+        [
+          "pii",
+          "p2",
+          "pl"
+        ],
+        [
+          "pii",
+          "p2",
+          "pl"
+        ],
+        [
+          "pii",
+          "p2",
+          "pl"
+        ],
+        [
+          "pii",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sorties",
+      "valenciano": "eixies",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_514",
+      "morfologies": [
+        [
+          "pii",
+          "p2",
+          "sg"
+        ],
+        [
+          "pii",
+          "p2",
+          "sg"
+        ],
+        [
+          "pii",
+          "p2",
+          "sg"
+        ],
+        [
+          "pii",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortien",
+      "valenciano": "eixien",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_516",
+      "morfologies": [
+        [
+          "pii",
+          "p3",
+          "pl"
+        ],
+        [
+          "pii",
+          "p3",
+          "pl"
+        ],
+        [
+          "pii",
+          "p3",
+          "pl"
+        ],
+        [
+          "pii",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortides",
+      "valenciano": "eixides",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_518",
+      "morfologies": [
+        [
+          "pp",
+          "pl",
+          "f"
+        ],
+        [
+          "pp",
+          "pl",
+          "f"
+        ],
+        [
+          "pp",
+          "pl",
+          "f"
+        ],
+        [
+          "pp",
+          "pl",
+          "f"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortits",
+      "valenciano": "eixits",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_520",
+      "morfologies": [
+        [
+          "pp",
+          "pl",
+          "m"
+        ],
+        [
+          "pp",
+          "pl",
+          "m"
+        ],
+        [
+          "pp",
+          "pl",
+          "m"
+        ],
+        [
+          "pp",
+          "pl",
+          "m"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortida",
+      "valenciano": "eixida",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_522",
+      "morfologies": [
+        [
+          "pp",
+          "sg",
+          "f"
+        ],
+        [
+          "pp",
+          "sg",
+          "f"
+        ],
+        [
+          "pp",
+          "sg",
+          "f"
+        ],
+        [
+          "pp",
+          "sg",
+          "f"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sortit",
+      "valenciano": "eixit",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_524",
+      "morfologies": [
+        [
+          "pp",
+          "sg",
+          "m"
+        ],
+        [
+          "pp",
+          "sg",
+          "m"
+        ],
+        [
+          "pp",
+          "sg",
+          "m"
+        ],
+        [
+          "pp",
+          "sg",
+          "m"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "surto",
+      "valenciano": "isc",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_526",
+      "morfologies": [
+        [
+          "pri",
+          "p1",
+          "sg"
+        ],
+        [
+          "pri",
+          "p1",
+          "sg"
+        ],
+        [
+          "pri",
+          "p1",
+          "sg"
+        ],
+        [
+          "pri",
+          "p1",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "surts",
+      "valenciano": "ixes",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_528",
+      "morfologies": [
+        [
+          "pri",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "surten",
+      "valenciano": "ixen",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_530",
+      "morfologies": [
+        [
+          "pri",
+          "p3",
+          "pl"
+        ],
+        [
+          "pri",
+          "p3",
+          "pl"
+        ],
+        [
+          "pri",
+          "p3",
+          "pl"
+        ],
+        [
+          "pri",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "surtis",
+      "valenciano": "isques",
+      "infinitiu_cat": "sortir",
+      "infinitiu_val": "eixir",
+      "repetida": true,
+      "id": "REP_534",
+      "morfologies": [
+        [
+          "prs",
+          "p2",
+          "sg"
+        ],
+        [
+          "prs",
+          "p2",
+          "sg"
+        ],
+        [
+          "prs",
+          "p2",
+          "sg"
+        ],
+        [
+          "prs",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esquitxaria",
+      "valenciano": "esguitaria",
+      "infinitiu_cat": "esquitxar",
+      "infinitiu_val": "esguitar",
+      "repetida": true,
+      "id": "REP_536",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esquitxem",
+      "valenciano": "esguitem",
+      "infinitiu_cat": "esquitxar",
+      "infinitiu_val": "esguitar",
+      "repetida": true,
+      "id": "REP_544",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esquitxeu",
+      "valenciano": "esguiteu",
+      "infinitiu_cat": "esquitxar",
+      "infinitiu_val": "esguitar",
+      "repetida": true,
+      "id": "REP_546",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esquitxa",
+      "valenciano": "esguita",
+      "infinitiu_cat": "esquitxar",
+      "infinitiu_val": "esguitar",
+      "repetida": true,
+      "id": "REP_548",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esquitxava",
+      "valenciano": "esguitava",
+      "infinitiu_cat": "esquitxar",
+      "infinitiu_val": "esguitar",
+      "repetida": true,
+      "id": "REP_554",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sofriria",
+      "valenciano": "patiria",
+      "infinitiu_cat": "sofrir",
+      "infinitiu_val": "patir",
+      "repetida": true,
+      "id": "REP_558",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sofrim",
+      "valenciano": "patim",
+      "infinitiu_cat": "sofrir",
+      "infinitiu_val": "patir",
+      "repetida": true,
+      "id": "REP_566",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sofriu",
+      "valenciano": "patiu",
+      "infinitiu_cat": "sofrir",
+      "infinitiu_val": "patir",
+      "repetida": true,
+      "id": "REP_568",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sofreix",
+      "valenciano": "pateix",
+      "infinitiu_cat": "sofrir",
+      "infinitiu_val": "patir",
+      "repetida": true,
+      "id": "REP_570",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sofreixin",
+      "valenciano": "patisquen",
+      "infinitiu_cat": "sofrir",
+      "infinitiu_val": "patir",
+      "repetida": true,
+      "id": "REP_572",
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "pl"
+        ],
+        [
+          "prs",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sofreixi",
+      "valenciano": "patisca",
+      "infinitiu_cat": "sofrir",
+      "infinitiu_val": "patir",
+      "repetida": true,
+      "id": "REP_574",
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "sg"
+        ],
+        [
+          "prs",
+          "p1",
+          "sg"
+        ],
+        [
+          "prs",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sofria",
+      "valenciano": "patia",
+      "infinitiu_cat": "sofrir",
+      "infinitiu_val": "patir",
+      "repetida": true,
+      "id": "REP_576",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "trigaria",
+      "valenciano": "tardaria",
+      "infinitiu_cat": "trigar",
+      "infinitiu_val": "tardar",
+      "repetida": true,
+      "id": "REP_579",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "triguem",
+      "valenciano": "tardem",
+      "infinitiu_cat": "trigar",
+      "infinitiu_val": "tardar",
+      "repetida": true,
+      "id": "REP_587",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "trigueu",
+      "valenciano": "tardeu",
+      "infinitiu_cat": "trigar",
+      "infinitiu_val": "tardar",
+      "repetida": true,
+      "id": "REP_589",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "triga",
+      "valenciano": "tarda",
+      "infinitiu_cat": "trigar",
+      "infinitiu_val": "tardar",
+      "repetida": true,
+      "id": "REP_591",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "trigava",
+      "valenciano": "tardava",
+      "infinitiu_cat": "trigar",
+      "infinitiu_val": "tardar",
+      "repetida": true,
+      "id": "REP_597",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "empassaria",
+      "valenciano": "engoliria",
+      "infinitiu_cat": "empassar",
+      "infinitiu_val": "engolir",
+      "repetida": true,
+      "id": "REP_601",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "empassem",
+      "valenciano": "engolim",
+      "infinitiu_cat": "empassar",
+      "infinitiu_val": "engolir",
+      "repetida": true,
+      "id": "REP_609",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "empasseu",
+      "valenciano": "engoliu",
+      "infinitiu_cat": "empassar",
+      "infinitiu_val": "engolir",
+      "repetida": true,
+      "id": "REP_611",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "empassa",
+      "valenciano": "engoleix",
+      "infinitiu_cat": "empassar",
+      "infinitiu_val": "engolir",
+      "repetida": true,
+      "id": "REP_613",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "empassin",
+      "valenciano": "engolisquen",
+      "infinitiu_cat": "empassar",
+      "infinitiu_val": "engolir",
+      "repetida": true,
+      "id": "REP_615",
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "pl"
+        ],
+        [
+          "prs",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "empassi",
+      "valenciano": "engolisca",
+      "infinitiu_cat": "empassar",
+      "infinitiu_val": "engolir",
+      "repetida": true,
+      "id": "REP_617",
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "sg"
+        ],
+        [
+          "prs",
+          "p1",
+          "sg"
+        ],
+        [
+          "prs",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "empassava",
+      "valenciano": "engolia",
+      "infinitiu_cat": "empassar",
+      "infinitiu_val": "engolir",
+      "repetida": true,
+      "id": "REP_619",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escurçaria",
+      "valenciano": "acurtaria",
+      "infinitiu_cat": "escurçar",
+      "infinitiu_val": "acurtar",
+      "repetida": true,
+      "id": "REP_634",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escurcem",
+      "valenciano": "acurtem",
+      "infinitiu_cat": "escurçar",
+      "infinitiu_val": "acurtar",
+      "repetida": true,
+      "id": "REP_642",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escurceu",
+      "valenciano": "acurteu",
+      "infinitiu_cat": "escurçar",
+      "infinitiu_val": "acurtar",
+      "repetida": true,
+      "id": "REP_644",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escurça",
+      "valenciano": "acurta",
+      "infinitiu_cat": "escurçar",
+      "infinitiu_val": "acurtar",
+      "repetida": true,
+      "id": "REP_646",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escurçava",
+      "valenciano": "acurtava",
+      "infinitiu_cat": "escurçar",
+      "infinitiu_val": "acurtar",
+      "repetida": true,
+      "id": "REP_652",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "espatllaria",
+      "valenciano": "desbarataria",
+      "infinitiu_cat": "espatllar",
+      "infinitiu_val": "desbaratar",
+      "repetida": true,
+      "id": "REP_656",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "espatllem",
+      "valenciano": "desbaratem",
+      "infinitiu_cat": "espatllar",
+      "infinitiu_val": "desbaratar",
+      "repetida": true,
+      "id": "REP_664",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "espatlleu",
+      "valenciano": "desbarateu",
+      "infinitiu_cat": "espatllar",
+      "infinitiu_val": "desbaratar",
+      "repetida": true,
+      "id": "REP_666",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "espatlla",
+      "valenciano": "desbarata",
+      "infinitiu_cat": "espatllar",
+      "infinitiu_val": "desbaratar",
+      "repetida": true,
+      "id": "REP_668",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "espatllava",
+      "valenciano": "desbaratava",
+      "infinitiu_cat": "espatllar",
+      "infinitiu_val": "desbaratar",
+      "repetida": true,
+      "id": "REP_674",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esquerdaria",
+      "valenciano": "clivellaria",
+      "infinitiu_cat": "esquerdar",
+      "infinitiu_val": "clivellar",
+      "repetida": true,
+      "id": "REP_678",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esquerdem",
+      "valenciano": "clivellem",
+      "infinitiu_cat": "esquerdar",
+      "infinitiu_val": "clivellar",
+      "repetida": true,
+      "id": "REP_686",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esquerdeu",
+      "valenciano": "clivelleu",
+      "infinitiu_cat": "esquerdar",
+      "infinitiu_val": "clivellar",
+      "repetida": true,
+      "id": "REP_688",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esquerda",
+      "valenciano": "clivella",
+      "infinitiu_cat": "esquerdar",
+      "infinitiu_val": "clivellar",
+      "repetida": true,
+      "id": "REP_690",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esquerdava",
+      "valenciano": "clivellava",
+      "infinitiu_cat": "esquerdar",
+      "infinitiu_val": "clivellar",
+      "repetida": true,
+      "id": "REP_696",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "grataria",
+      "valenciano": "rascaria",
+      "infinitiu_cat": "gratar",
+      "infinitiu_val": "rascar",
+      "repetida": true,
+      "id": "REP_700",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "gratem",
+      "valenciano": "rasquem",
+      "infinitiu_cat": "gratar",
+      "infinitiu_val": "rascar",
+      "repetida": true,
+      "id": "REP_708",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "grata",
+      "valenciano": "rasca",
+      "infinitiu_cat": "gratar",
+      "infinitiu_val": "rascar",
+      "repetida": true,
+      "id": "REP_712",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "gratava",
+      "valenciano": "rascava",
+      "infinitiu_cat": "gratar",
+      "infinitiu_val": "rascar",
+      "repetida": true,
+      "id": "REP_718",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "premeria",
+      "valenciano": "polsaria",
+      "infinitiu_cat": "prémer",
+      "infinitiu_val": "polsar",
+      "repetida": true,
+      "id": "REP_722",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "premem",
+      "valenciano": "polsem",
+      "infinitiu_cat": "prémer",
+      "infinitiu_val": "polsar",
+      "repetida": true,
+      "id": "REP_730",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "premeu",
+      "valenciano": "polseu",
+      "infinitiu_cat": "prémer",
+      "infinitiu_val": "polsar",
+      "repetida": true,
+      "id": "REP_732",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "prem",
+      "valenciano": "polsa",
+      "infinitiu_cat": "prémer",
+      "infinitiu_val": "polsar",
+      "repetida": true,
+      "id": "REP_734",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "premia",
+      "valenciano": "polsava",
+      "infinitiu_cat": "prémer",
+      "infinitiu_val": "polsar",
+      "repetida": true,
+      "id": "REP_740",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "reportaria",
+      "valenciano": "generaria",
+      "infinitiu_cat": "reportar",
+      "infinitiu_val": "generar",
+      "repetida": true,
+      "id": "REP_744",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "reportem",
+      "valenciano": "generem",
+      "infinitiu_cat": "reportar",
+      "infinitiu_val": "generar",
+      "repetida": true,
+      "id": "REP_752",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "reporteu",
+      "valenciano": "genereu",
+      "infinitiu_cat": "reportar",
+      "infinitiu_val": "generar",
+      "repetida": true,
+      "id": "REP_754",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "reporta",
+      "valenciano": "genera",
+      "infinitiu_cat": "reportar",
+      "infinitiu_val": "generar",
+      "repetida": true,
+      "id": "REP_756",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "reportava",
+      "valenciano": "generava",
+      "infinitiu_cat": "reportar",
+      "infinitiu_val": "generar",
+      "repetida": true,
+      "id": "REP_762",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sadollaria",
+      "valenciano": "assaciaria",
+      "infinitiu_cat": "sadollar",
+      "infinitiu_val": "assaciar",
+      "repetida": true,
+      "id": "REP_766",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sadollem",
+      "valenciano": "assaciem",
+      "infinitiu_cat": "sadollar",
+      "infinitiu_val": "assaciar",
+      "repetida": true,
+      "id": "REP_774",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sadolleu",
+      "valenciano": "assacieu",
+      "infinitiu_cat": "sadollar",
+      "infinitiu_val": "assaciar",
+      "repetida": true,
+      "id": "REP_776",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sadolla",
+      "valenciano": "assacia",
+      "infinitiu_cat": "sadollar",
+      "infinitiu_val": "assaciar",
+      "repetida": true,
+      "id": "REP_778",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sadollava",
+      "valenciano": "assaciava",
+      "infinitiu_cat": "sadollar",
+      "infinitiu_val": "assaciar",
+      "repetida": true,
+      "id": "REP_784",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sobresortiria",
+      "valenciano": "sobreeixiria",
+      "infinitiu_cat": "sobresortir",
+      "infinitiu_val": "sobreeixir",
+      "repetida": true,
+      "id": "REP_788",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sobresortíssim",
+      "valenciano": "sobreisquérem",
+      "infinitiu_cat": "sobresortir",
+      "infinitiu_val": "sobreeixir",
+      "repetida": true,
+      "id": "REP_790",
+      "morfologies": [
+        [
+          "fts",
+          "p1",
+          "pl"
+        ],
+        [
+          "pis",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sobresortís",
+      "valenciano": "sobreisquera",
+      "infinitiu_cat": "sobresortir",
+      "infinitiu_val": "sobreeixir",
+      "repetida": true,
+      "id": "REP_792",
+      "morfologies": [
+        [
+          "fts",
+          "p1",
+          "sg"
+        ],
+        [
+          "fts",
+          "p3",
+          "sg"
+        ],
+        [
+          "pis",
+          "p1",
+          "sg"
+        ],
+        [
+          "pis",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sobresortíssiu",
+      "valenciano": "sobreisquéreu",
+      "infinitiu_cat": "sobresortir",
+      "infinitiu_val": "sobreeixir",
+      "repetida": true,
+      "id": "REP_794",
+      "morfologies": [
+        [
+          "fts",
+          "p2",
+          "pl"
+        ],
+        [
+          "pis",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sobresortissis",
+      "valenciano": "sobreisqueres",
+      "infinitiu_cat": "sobresortir",
+      "infinitiu_val": "sobreeixir",
+      "repetida": true,
+      "id": "REP_796",
+      "morfologies": [
+        [
+          "fts",
+          "p2",
+          "sg"
+        ],
+        [
+          "pis",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sobresortissin",
+      "valenciano": "sobreisqueren",
+      "infinitiu_cat": "sobresortir",
+      "infinitiu_val": "sobreeixir",
+      "repetida": true,
+      "id": "REP_798",
+      "morfologies": [
+        [
+          "fts",
+          "p3",
+          "pl"
+        ],
+        [
+          "pis",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sobresurt",
+      "valenciano": "sobreïx",
+      "infinitiu_cat": "sobresortir",
+      "infinitiu_val": "sobreeixir",
+      "repetida": true,
+      "id": "REP_804",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sobresurtin",
+      "valenciano": "sobreisquen",
+      "infinitiu_cat": "sobresortir",
+      "infinitiu_val": "sobreeixir",
+      "repetida": true,
+      "id": "REP_806",
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "pl"
+        ],
+        [
+          "prs",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sobresurti",
+      "valenciano": "sobreisca",
+      "infinitiu_cat": "sobresortir",
+      "infinitiu_val": "sobreeixir",
+      "repetida": true,
+      "id": "REP_808",
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "sg"
+        ],
+        [
+          "prs",
+          "p1",
+          "sg"
+        ],
+        [
+          "prs",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "sobresortia",
+      "valenciano": "sobreeixia",
+      "infinitiu_cat": "sobresortir",
+      "infinitiu_val": "sobreeixir",
+      "repetida": true,
+      "id": "REP_810",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "afebliria",
+      "valenciano": "debilitaria",
+      "infinitiu_cat": "afeblir",
+      "infinitiu_val": "debilitar",
+      "repetida": true,
+      "id": "REP_812",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "afeblim",
+      "valenciano": "debilitem",
+      "infinitiu_cat": "afeblir",
+      "infinitiu_val": "debilitar",
+      "repetida": true,
+      "id": "REP_820",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "afebliu",
+      "valenciano": "debiliteu",
+      "infinitiu_cat": "afeblir",
+      "infinitiu_val": "debilitar",
+      "repetida": true,
+      "id": "REP_822",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "afebleix",
+      "valenciano": "debilita",
+      "infinitiu_cat": "afeblir",
+      "infinitiu_val": "debilitar",
+      "repetida": true,
+      "id": "REP_824",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "afeblia",
+      "valenciano": "debilitava",
+      "infinitiu_cat": "afeblir",
+      "infinitiu_val": "debilitar",
+      "repetida": true,
+      "id": "REP_830",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esgarraparia",
+      "valenciano": "arraparia",
+      "infinitiu_cat": "esgarrapar",
+      "infinitiu_val": "arrapar",
+      "repetida": true,
+      "id": "REP_834",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esgarrapem",
+      "valenciano": "arrapem",
+      "infinitiu_cat": "esgarrapar",
+      "infinitiu_val": "arrapar",
+      "repetida": true,
+      "id": "REP_842",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esgarrapeu",
+      "valenciano": "arrapeu",
+      "infinitiu_cat": "esgarrapar",
+      "infinitiu_val": "arrapar",
+      "repetida": true,
+      "id": "REP_844",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esgarrapa",
+      "valenciano": "arrapa",
+      "infinitiu_cat": "esgarrapar",
+      "infinitiu_val": "arrapar",
+      "repetida": true,
+      "id": "REP_846",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esgarrapava",
+      "valenciano": "arrapava",
+      "infinitiu_cat": "esgarrapar",
+      "infinitiu_val": "arrapar",
+      "repetida": true,
+      "id": "REP_852",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "amollaria",
+      "valenciano": "soltaria",
+      "infinitiu_cat": "amollar",
+      "infinitiu_val": "soltar",
+      "repetida": true,
+      "id": "REP_856",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "amollem",
+      "valenciano": "soltem",
+      "infinitiu_cat": "amollar",
+      "infinitiu_val": "soltar",
+      "repetida": true,
+      "id": "REP_864",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "amolleu",
+      "valenciano": "solteu",
+      "infinitiu_cat": "amollar",
+      "infinitiu_val": "soltar",
+      "repetida": true,
+      "id": "REP_866",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "amolla",
+      "valenciano": "solta",
+      "infinitiu_cat": "amollar",
+      "infinitiu_val": "soltar",
+      "repetida": true,
+      "id": "REP_868",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "amollava",
+      "valenciano": "soltava",
+      "infinitiu_cat": "amollar",
+      "infinitiu_val": "soltar",
+      "repetida": true,
+      "id": "REP_874",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "estovaria",
+      "valenciano": "ablaniria",
+      "infinitiu_cat": "estovar",
+      "infinitiu_val": "ablanir",
+      "repetida": true,
+      "id": "REP_878",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "estovem",
+      "valenciano": "ablanim",
+      "infinitiu_cat": "estovar",
+      "infinitiu_val": "ablanir",
+      "repetida": true,
+      "id": "REP_886",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "estoveu",
+      "valenciano": "ablaniu",
+      "infinitiu_cat": "estovar",
+      "infinitiu_val": "ablanir",
+      "repetida": true,
+      "id": "REP_888",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "estova",
+      "valenciano": "ablaneix",
+      "infinitiu_cat": "estovar",
+      "infinitiu_val": "ablanir",
+      "repetida": true,
+      "id": "REP_890",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "estovin",
+      "valenciano": "ablanisquen",
+      "infinitiu_cat": "estovar",
+      "infinitiu_val": "ablanir",
+      "repetida": true,
+      "id": "REP_892",
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "pl"
+        ],
+        [
+          "prs",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "estovi",
+      "valenciano": "ablanisca",
+      "infinitiu_cat": "estovar",
+      "infinitiu_val": "ablanir",
+      "repetida": true,
+      "id": "REP_894",
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "sg"
+        ],
+        [
+          "prs",
+          "p1",
+          "sg"
+        ],
+        [
+          "prs",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "estovava",
+      "valenciano": "ablania",
+      "infinitiu_cat": "estovar",
+      "infinitiu_val": "ablanir",
+      "repetida": true,
+      "id": "REP_896",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esbrossaria",
+      "valenciano": "desbrossaria",
+      "infinitiu_cat": "esbrossar",
+      "infinitiu_val": "desbrossar",
+      "repetida": true,
+      "id": "REP_988",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esbrossem",
+      "valenciano": "desbrossem",
+      "infinitiu_cat": "esbrossar",
+      "infinitiu_val": "desbrossar",
+      "repetida": true,
+      "id": "REP_996",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esbrosseu",
+      "valenciano": "desbrosseu",
+      "infinitiu_cat": "esbrossar",
+      "infinitiu_val": "desbrossar",
+      "repetida": true,
+      "id": "REP_998",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esbrossa",
+      "valenciano": "desbrossa",
+      "infinitiu_cat": "esbrossar",
+      "infinitiu_val": "desbrossar",
+      "repetida": true,
+      "id": "REP_1000",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "esbrossava",
+      "valenciano": "desbrossava",
+      "infinitiu_cat": "esbrossar",
+      "infinitiu_val": "desbrossar",
+      "repetida": true,
+      "id": "REP_1006",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "dosaria",
+      "valenciano": "dosificaria",
+      "infinitiu_cat": "dosar",
+      "infinitiu_val": "dosificar",
+      "repetida": true,
+      "id": "REP_1010",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "dosem",
+      "valenciano": "dosifiquem",
+      "infinitiu_cat": "dosar",
+      "infinitiu_val": "dosificar",
+      "repetida": true,
+      "id": "REP_1018",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "dosa",
+      "valenciano": "dosifica",
+      "infinitiu_cat": "dosar",
+      "infinitiu_val": "dosificar",
+      "repetida": true,
+      "id": "REP_1022",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "dosava",
+      "valenciano": "dosificava",
+      "infinitiu_cat": "dosar",
+      "infinitiu_val": "dosificar",
+      "repetida": true,
+      "id": "REP_1028",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "pararia",
+      "valenciano": "pararia",
+      "infinitiu_cat": "parar esment",
+      "infinitiu_val": "parar atenció",
+      "repetida": true,
+      "id": "REP_1032",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "parem",
+      "valenciano": "parem",
+      "infinitiu_cat": "parar esment",
+      "infinitiu_val": "parar atenció",
+      "repetida": true,
+      "id": "REP_1038",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "pareu",
+      "valenciano": "pareu",
+      "infinitiu_cat": "parar esment",
+      "infinitiu_val": "parar atenció",
+      "repetida": true,
+      "id": "REP_1039",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "para",
+      "valenciano": "para",
+      "infinitiu_cat": "parar esment",
+      "infinitiu_val": "parar atenció",
+      "repetida": true,
+      "id": "REP_1040",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "parava",
+      "valenciano": "parava",
+      "infinitiu_cat": "parar esment",
+      "infinitiu_val": "parar atenció",
+      "repetida": true,
+      "id": "REP_1045",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "gronxaria",
+      "valenciano": "engrunsaria",
+      "infinitiu_cat": "gronxar",
+      "infinitiu_val": "engrunsar",
+      "repetida": true,
+      "id": "REP_1048",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "gronxem",
+      "valenciano": "engrunsem",
+      "infinitiu_cat": "gronxar",
+      "infinitiu_val": "engrunsar",
+      "repetida": true,
+      "id": "REP_1056",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "gronxeu",
+      "valenciano": "engrunseu",
+      "infinitiu_cat": "gronxar",
+      "infinitiu_val": "engrunsar",
+      "repetida": true,
+      "id": "REP_1058",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "gronxa",
+      "valenciano": "engrunsa",
+      "infinitiu_cat": "gronxar",
+      "infinitiu_val": "engrunsar",
+      "repetida": true,
+      "id": "REP_1060",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "gronxava",
+      "valenciano": "engrunsava",
+      "infinitiu_cat": "gronxar",
+      "infinitiu_val": "engrunsar",
+      "repetida": true,
+      "id": "REP_1066",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "panteixaria",
+      "valenciano": "pantaixaria",
+      "infinitiu_cat": "panteixar",
+      "infinitiu_val": "pantaixar",
+      "repetida": true,
+      "id": "REP_1070",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "panteixem",
+      "valenciano": "pantaixem",
+      "infinitiu_cat": "panteixar",
+      "infinitiu_val": "pantaixar",
+      "repetida": true,
+      "id": "REP_1078",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "panteixeu",
+      "valenciano": "pantaixeu",
+      "infinitiu_cat": "panteixar",
+      "infinitiu_val": "pantaixar",
+      "repetida": true,
+      "id": "REP_1080",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "panteixa",
+      "valenciano": "pantaixa",
+      "infinitiu_cat": "panteixar",
+      "infinitiu_val": "pantaixar",
+      "repetida": true,
+      "id": "REP_1082",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "panteixava",
+      "valenciano": "pantaixava",
+      "infinitiu_cat": "panteixar",
+      "infinitiu_val": "pantaixar",
+      "repetida": true,
+      "id": "REP_1088",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "trucaria",
+      "valenciano": "telefonaria",
+      "infinitiu_cat": "trucar per telèfon",
+      "infinitiu_val": "telefonar",
+      "repetida": true,
+      "id": "REP_1092",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "truquem",
+      "valenciano": "telefonem",
+      "infinitiu_cat": "trucar per telèfon",
+      "infinitiu_val": "telefonar",
+      "repetida": true,
+      "id": "REP_1100",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "truqueu",
+      "valenciano": "telefoneu",
+      "infinitiu_cat": "trucar per telèfon",
+      "infinitiu_val": "telefonar",
+      "repetida": true,
+      "id": "REP_1102",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "truca",
+      "valenciano": "telefona",
+      "infinitiu_cat": "trucar per telèfon",
+      "infinitiu_val": "telefonar",
+      "repetida": true,
+      "id": "REP_1104",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "trucava",
+      "valenciano": "telefonava",
+      "infinitiu_cat": "trucar per telèfon",
+      "infinitiu_val": "telefonar",
+      "repetida": true,
+      "id": "REP_1110",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "ajupiria",
+      "valenciano": "acatxaria",
+      "infinitiu_cat": "ajupir",
+      "infinitiu_val": "acatxar",
+      "repetida": true,
+      "id": "REP_1114",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "ajupim",
+      "valenciano": "acatxem",
+      "infinitiu_cat": "ajupir",
+      "infinitiu_val": "acatxar",
+      "repetida": true,
+      "id": "REP_1122",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "ajupiu",
+      "valenciano": "acatxeu",
+      "infinitiu_cat": "ajupir",
+      "infinitiu_val": "acatxar",
+      "repetida": true,
+      "id": "REP_1124",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "ajup",
+      "valenciano": "acatxa",
+      "infinitiu_cat": "ajupir",
+      "infinitiu_val": "acatxar",
+      "repetida": true,
+      "id": "REP_1126",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "ajupia",
+      "valenciano": "acatxava",
+      "infinitiu_cat": "ajupir",
+      "infinitiu_val": "acatxar",
+      "repetida": true,
+      "id": "REP_1132",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escombraria",
+      "valenciano": "agranaria",
+      "infinitiu_cat": "escombrar",
+      "infinitiu_val": "agranar",
+      "repetida": true,
+      "id": "REP_1136",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escombrem",
+      "valenciano": "agranem",
+      "infinitiu_cat": "escombrar",
+      "infinitiu_val": "agranar",
+      "repetida": true,
+      "id": "REP_1144",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escombreu",
+      "valenciano": "agraneu",
+      "infinitiu_cat": "escombrar",
+      "infinitiu_val": "agranar",
+      "repetida": true,
+      "id": "REP_1146",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escombra",
+      "valenciano": "agrana",
+      "infinitiu_cat": "escombrar",
+      "infinitiu_val": "agranar",
+      "repetida": true,
+      "id": "REP_1148",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escombrava",
+      "valenciano": "agranava",
+      "infinitiu_cat": "escombrar",
+      "infinitiu_val": "agranar",
+      "repetida": true,
+      "id": "REP_1154",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "ensopegaria",
+      "valenciano": "entropessaria",
+      "infinitiu_cat": "ensopegar",
+      "infinitiu_val": "entropessar",
+      "repetida": true,
+      "id": "REP_1158",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "ensopeguem",
+      "valenciano": "entropessem",
+      "infinitiu_cat": "ensopegar",
+      "infinitiu_val": "entropessar",
+      "repetida": true,
+      "id": "REP_1166",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "ensopegueu",
+      "valenciano": "entropesseu",
+      "infinitiu_cat": "ensopegar",
+      "infinitiu_val": "entropessar",
+      "repetida": true,
+      "id": "REP_1168",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "ensopega",
+      "valenciano": "entropessa",
+      "infinitiu_cat": "ensopegar",
+      "infinitiu_val": "entropessar",
+      "repetida": true,
+      "id": "REP_1170",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "ensopegava",
+      "valenciano": "entropessava",
+      "infinitiu_cat": "ensopegar",
+      "infinitiu_val": "entropessar",
+      "repetida": true,
+      "id": "REP_1176",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "clavaria",
+      "valenciano": "pegaria",
+      "infinitiu_cat": "clavar una patacada",
+      "infinitiu_val": "pegar un bac",
+      "repetida": true,
+      "id": "REP_1180",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "clavem",
+      "valenciano": "peguem",
+      "infinitiu_cat": "clavar una patacada",
+      "infinitiu_val": "pegar un bac",
+      "repetida": true,
+      "id": "REP_1188",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "clava",
+      "valenciano": "pega",
+      "infinitiu_cat": "clavar una patacada",
+      "infinitiu_val": "pegar un bac",
+      "repetida": true,
+      "id": "REP_1192",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "clavava",
+      "valenciano": "pegava",
+      "infinitiu_cat": "clavar una patacada",
+      "infinitiu_val": "pegar un bac",
+      "repetida": true,
+      "id": "REP_1198",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "armaria",
+      "valenciano": "armaria",
+      "infinitiu_cat": "armar un sidral",
+      "infinitiu_val": "armar un canyaret",
+      "repetida": true,
+      "id": "REP_1202",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "armem",
+      "valenciano": "armem",
+      "infinitiu_cat": "armar un sidral",
+      "infinitiu_val": "armar un canyaret",
+      "repetida": true,
+      "id": "REP_1208",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "armeu",
+      "valenciano": "armeu",
+      "infinitiu_cat": "armar un sidral",
+      "infinitiu_val": "armar un canyaret",
+      "repetida": true,
+      "id": "REP_1209",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "arma",
+      "valenciano": "arma",
+      "infinitiu_cat": "armar un sidral",
+      "infinitiu_val": "armar un canyaret",
+      "repetida": true,
+      "id": "REP_1210",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "armava",
+      "valenciano": "armava",
+      "infinitiu_cat": "armar un sidral",
+      "infinitiu_val": "armar un canyaret",
+      "repetida": true,
+      "id": "REP_1215",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "cauria",
+      "valenciano": "cauria",
+      "infinitiu_cat": "caure com un cop de puny al ventre",
+      "infinitiu_val": "caure com una punyada al ventre",
+      "repetida": true,
+      "id": "REP_1218",
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "caiguem",
+      "valenciano": "caiguem",
+      "infinitiu_cat": "caure com un cop de puny al ventre",
+      "infinitiu_val": "caure com una punyada al ventre",
+      "repetida": true,
+      "id": "REP_1224",
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "cau",
+      "valenciano": "cau",
+      "infinitiu_cat": "caure com un cop de puny al ventre",
+      "infinitiu_val": "caure com una punyada al ventre",
+      "repetida": true,
+      "id": "REP_1226",
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "caiguin",
+      "valenciano": "caiguen",
+      "infinitiu_cat": "caure com un cop de puny al ventre",
+      "infinitiu_val": "caure com una punyada al ventre",
+      "repetida": true,
+      "id": "REP_1227",
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "pl"
+        ],
+        [
+          "prs",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "caigui",
+      "valenciano": "caiga",
+      "infinitiu_cat": "caure com un cop de puny al ventre",
+      "infinitiu_val": "caure com una punyada al ventre",
+      "repetida": true,
+      "id": "REP_1229",
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "sg"
+        ],
+        [
+          "prs",
+          "p1",
+          "sg"
+        ],
+        [
+          "prs",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "queia",
+      "valenciano": "queia",
+      "infinitiu_cat": "caure com un cop de puny al ventre",
+      "infinitiu_val": "caure com una punyada al ventre",
+      "repetida": true,
+      "id": "REP_1231",
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
     {
       "verbo": "abalançar",
       "catalan": "abalancessin",
@@ -1612,11 +8624,6 @@
       "valenciano": "componguéreu"
     },
     {
-      "verbo": "compondre",
-      "catalan": "composts",
-      "valenciano": "compostos"
-    },
-    {
       "verbo": "concloure",
       "catalan": "concloguessin",
       "valenciano": "conclogueren"
@@ -2942,49 +9949,49 @@
       "verbo": "haver",
       "catalan": "hagi",
       "valenciano": "haja",
-      "problematica": true
+      "problematica": false
     },
     {
       "verbo": "haver",
       "catalan": "hagin",
       "valenciano": "hagen",
-      "problematica": true
+      "problematica": false
     },
     {
       "verbo": "haver",
       "catalan": "hagis",
       "valenciano": "hages",
-      "problematica": true
+      "problematica": false
     },
     {
       "verbo": "haver",
       "catalan": "haguessin",
       "valenciano": "hagueren",
-      "problematica": true
+      "problematica": false
     },
     {
       "verbo": "haver",
       "catalan": "haguessis",
       "valenciano": "hagueres",
-      "problematica": true
+      "problematica": false
     },
     {
       "verbo": "haver",
       "catalan": "hagués",
       "valenciano": "haguera",
-      "problematica": true
+      "problematica": false
     },
     {
       "verbo": "haver",
       "catalan": "haguéssim",
       "valenciano": "haguérem",
-      "problematica": true
+      "problematica": false
     },
     {
       "verbo": "haver",
       "catalan": "haguéssiu",
       "valenciano": "haguéreu",
-      "problematica": true
+      "problematica": false
     },
     {
       "verbo": "haver",
@@ -2995,13 +10002,13 @@
       "verbo": "haver",
       "catalan": "hàgim",
       "valenciano": "hàgem",
-      "problematica": true
+      "problematica": false
     },
     {
       "verbo": "haver",
       "catalan": "hàgiu",
       "valenciano": "hàgeu",
-      "problematica": true
+      "problematica": false
     },
     {
       "verbo": "imprimir",

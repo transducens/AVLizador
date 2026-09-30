@@ -1,6 +1,6 @@
 *[Llegeix-ho en castellà](README.es.md)*
 
-# Motor de regles determinista — etapa 5
+# Motor de diccionari determinista — etapa 5
 
 Este paquet (`traductor/`) viu a l'arrel del repositori, sense el prefix
 numèric de les altres etapes (`01_...` a `04_...`), perquè és un paquet
@@ -18,19 +18,51 @@ comprovacions automàtiques — la majoria, al·lucinacions del model sense
 relació amb cap regla dialectal (vore `../documentacion/metodologia_y_resultados.md`,
 seccions 6 i 9).
 
-La conversió occidental→oriental és, en la seua major part, un problema
-**morfològic i lèxic determinista** (demostratius, possessius,
-numerals...), no de traducció lliure. Un motor de regles no pot
-al·lucinar: si una paraula no està en cap taula, senzillament no la toca.
-Este paquet no substituïx el LLM (encara no cobrix ni de lluny totes les
-regles documentades — vore "Què falta" més avall), però és una base
-determinista, auditable i sense dependències, pensada per a:
-- comparar directament contra el LLM en el mateix benchmark (`--model
-  traductor` en `03_seleccion_de_modelo/evalua_models.py`, junt al `--model
-  regles` ja existent — vore "Relació amb el sistema de regles antic"),
-- servir de capa de post-processament/verificació sobre l'eixida del LLM,
-- o, a mesura que crixca, substituir el LLM en els casos que ja cobrix amb
-  garanties, deixant el LLM només per al genuïnament ambigu.
+Un motor de diccionari no pot al·lucinar: si una paraula no està en cap
+taula, senzillament no la toca. Este paquet no substituïx el LLM, però és
+una base determinista, auditable i sense dependències.
+
+## DECISIÓ D'ARQUITECTURA (30/09/2026): pur lookup de diccionari + 2 sufixos productius
+
+Fins al 29/09/2026 este paquet tenia 10 capes: lookup de diccionari
+(lèxic, conjugacions) + regles morfològiques i de sufix generalitzades
+(demostratius, gentilicis, incoatius, pretèrit perfet, locucions, elisió).
+Eixes regles cobrien més casos, però barrejaven dades de diverses fonts
+(Apertium, Paula Guerrero, taules escrites a mà) amb la font de Mauricio.
+
+El mateix dia 30/09/2026, a la vesprada, es va reduir el traductor a
+**NOMÉS lookup exacte de diccionari, i NOMÉS amb dades de
+`02_reglas_dialectales/lexico/font_mauricio/`** (equip AVLizador) — cap
+regla de sufix, patró morfològic ni reconstrucció algorítmica, i cap font
+que no siga Mauricio.
+
+**Conseqüència, mesurada, no assumida**: el benchmark de 150 frases va
+passar de **89/150 (59,3%)** amb l'arquitectura de 10 capes a **27/150
+(18,0%)** amb l'arquitectura pura de diccionari. La pèrdua venia sobretot
+de: demostratius (`este/eixe→aquest`, la conversió més freqüent del
+corpus, sense font a Mauricio), possessius masculins/tònics (mai van
+tindre regla, no canvien), el patró general de gentilicis `-és→-ès`
+(només cobria les 695 paraules literals d'accentuació, no qualsevol
+gentilici),
+els incoatius `-ix→-eix` (només els verbs concrets que ja estaven a
+`conjugacions_dialectals.json`), i el pretèrit perfet simple → perifràstic
+(`celebrà→va celebrar`, cap diccionari dona formes perifràstiques).
+
+**Ampliació (mateix dia, més tard)**: es va confirmar que un pur
+diccionari mai pot cobrir un patró OBERT i PRODUCTIU -- per definició, un
+diccionari només conté paraules que algú ja hi ha ficat. Es van tornar a
+afegir 2 regles de sufix (no llistes tancades) per als 3 patrons més
+productius i millor evidenciats: `accentuacio.py` (`-és→-ès`,
+`-éixer→-èixer`) i `incoatius.py` (`-ix→-eix`). No es va tornar arrere en
+la resta (demostratius, pretèrit perfet, locucions, elisió automàtica
+general) -- estos seguixen sense cap mòdul, vore "Coses que ja no es
+cobrixen" a `font_mauricio/README.md`. Amb això el benchmark va pujar a
+**28/150 (18,7%)** -- una millora xicoteta perquè la majoria dels casos
+d'estos 2 patrons ja estaven coberts pel diccionari d'accentuació; el
+valor real d'estes regles és cobrir paraules NO enumerades a cap fitxer.
+
+Esta xifra es deixa ací a propòsit, sense suavitzar-la: és la
+conseqüència directa i coneguda de la decisió, no un bug.
 
 ## Arquitectura
 
@@ -39,9 +71,8 @@ de text sobre la frase sencera:
 
 ```
 text ──tokenize()──▶ [Token, Token, ...] ──marca_noms_propis()──▶
-    ──▶ LexicRule ──▶ DemostratiusRule ──▶ PossessiusRule ──▶ NumeralsRule
-    ──▶ GentilicisRule ──▶ MorfologiaVerbalRule ──▶ LocucionsRule
-    ──▶ PerfetRule ──▶ ElisioRule ──▶ detokenize() ──▶ text convertit
+    ──▶ LexicRule ──▶ ConjugacionsDictRule ──▶ PossessiusRule ──▶ NumeralsRule
+    ──▶ AccentuacioRule ──▶ IncoatiusRule ──▶ detokenize() ──▶ text convertit
 ```
 
 ### `Token` (`rules/__init__.py`)
@@ -66,35 +97,30 @@ reconstruïx exacte sense lògica de reinserció d'espais.
 
 Cada capa marca `is_translated = True` en el moment que toca un token, i
 totes les capes posteriors respecten eixe flag (`if tok.is_translated:
-continue`). Sense açò, dos regles independents podrien trepitjar-se sense
-que ningú se n'adonara — p.ex. la regla de possessius "arreglant" per
-accident una paraula que ja havia tocat el lèxic. Amb un flag explícit,
-l'orde de les capes queda documentat i cada una sap exactament què li
-toca encara.
+continue`). Amb 6 capes independents, açò evita que dos fonts es
+trepitgen sense que ningú se n'adone — la primera capa que reconeix una
+paraula es queda el mèrit, la resta la salta.
 
 ### Decisió de disseny: apòstrofs i guionets són part de la paraula
 
 `tokenize()` tracta `d'escola`, `l'AVL` o `dir-li` com **un sol token**
-cada un, no com a paraula+frontera. Separar-los al tokenitzador obligaria
-a decidir el tall sense conéixer encara la regla gramatical que ho
-justifica — eixa decisió es deixa a `elisio.py`, que és qui de veres sap
-si `d'` s'ha de desfer o no. Com a contrapartida, `numerals.py` ha de
-buscar la subcadena `"huit"` **dins** del token en lloc de fer un lookup
-de paraula completa, perquè compostos com `cinquanta-huit` arriben com un
-únic token.
+cada un, no com a paraula+frontera. Conseqüència: un token com `d'este`
+mai coincidix amb l'entrada `"este"` d'un diccionari.
+`separa_prefix_elidit()` (`rules/__init__.py`) és el fix -- `lexic.py` i
+`conjugacions_dict.py` (les úniques 2 capes on el prefix pot canviar de
+sentit segons la paraula trobada) l'usen com a segon intent quan la cerca
+directa falla: separa el prefix elidit (`d'`, `l'`, `s'`, `m'`, `t'`,
+`n'`) i torna a buscar només la part real de la paraula.
 
-**Conseqüència que va costar trobar (29/09/2026)**: eixa mateixa decisió
-fa que un token com `d'este` mai coincidisca amb l'entrada `"este"` d'un
-diccionari — el lookup exacte de `demostratius.py`, `lexic.py`,
-`conjugacions_dict.py`, les taules de `morfologia_verbal.py` i els
-diccionaris de `numerals.py` es quedaven sense traduir qualsevol paraula
-enganxada a un prefix elidit (`d'este`, `s'oferisca`, `n'hagen`...).
-`separa_prefix_elidit()` (`rules/__init__.py`) és el fix compartit: cada
-regla de lookup exacte l'usa com a segon intent quan la cerca directa
-falla, separant el prefix i buscant només la part real de la paraula.
-Les regles basades en sufix (`gentilicis.py`, `perfet.py`) no el
-necessiten: ja operaven amb `.sub()` sobre tot el token, que travessa
-qualsevol prefix sense haver de separar-lo.
+**Bug real trobat i arreglat (30/09/2026)**: reconstruir sempre
+`prefix + forma_trobada` no basta -- si la paraula trobada canvia de
+vocal inicial a consonant inicial (p.ex. "eixir"→"sortir"), l'elisió
+original ja no té sentit: "a l'eixir" donava l'incorrecte "a l'sortir" en
+compte de "al sortir". `aplica_amb_prefix_elidit()` (`rules/__init__.py`)
+ho gestiona: si la forma trobada ja no comença en vocal/h muda, DESFÀ
+l'elisió (torna el prefix a la seua forma completa: "l'"→"el", "d'"→"de"...)
+i, si el resultat és "el" i el token anterior és la preposició "a"/"de",
+els contrau ("a"+"el"→"al", "de"+"el"→"del") en compte de deixar "a el".
 
 ### Protecció de noms propis (`marca_noms_propis`)
 
@@ -108,191 +134,102 @@ allí després d'un incident real amb `blanca`/`Blanca` i `roig`/`Roig`
 conegut, heretat sense arreglar: un nom propi que és la **primera**
 paraula del text mai es detecta.
 
-## Orde de les regles, i per què
+## Les 6 capes
 
-| # | Regla | Per què en esta posició |
-|---|---|---|
-| 1 | `lexic` | Lookup directe, la més "seca" — convé que corra abans que qualsevol regla morfològica toque la mateixa paraula per un altre motiu |
-| 2 | `conjugacions_dict` | Ídem, però de formes verbals (font Mauricio/Apertium, 29/09/2026) — mateixa naturalesa que `lexic`, per això va justa després |
-| 3 | `demostratius` | Patró tancat i sense ambigüitat, no interactua amb res més |
-| 4 | `possessius` | Ídem |
-| 5 | `numerals` | Ídem (inclou la concordança "dos/dues") |
-| 6 | `gentilicis` | Regla de sufix general, però acotada per les excepcions "és"/"més" |
-| 7 | `morfologia_verbal` | Fases 1, 2 i 6 (present indicatiu, present subjuntiu, incoatius); llista tancada per a 1/2, sufix amb excepcions per a 6 |
-| 8 | `locucions` | Substitucions de frase fixa (`cap a on`, `dalt/baix de`) — no interactua amb res anterior |
-| 9 | `perfet` | Genera una **frase** ("va passar"), no una paraula — millor després que tota la resta ja estiga resolta paraula per paraula |
-| 10 | `elisio` | **Deliberadament l'última**: opera sobre el resultat ja transformat (`tok.translated`, no `tok.surface`) de la paraula següent. Si fóra abans, una regla posterior podria canviar eixa paraula i deixar l'elisió apuntant a una vocal/consonant que ja no hi és — és exactament el que diu la font (`../02_reglas_dialectales/reglas_dialectales_con_evidencia.md`, §11.2): "cal aplicar l'elisió cada vegada que una altra regla la dispara" |
+- **`lexic.py`** — lookup de lèxic general + accentuació. Fusiona
+  `lexic_mauricio.json` (còpia de `lexico_general_limpio.json`, filtrat:
+  exclou `_PENDENT`, topònims, multi-paraula, resol `canonica`) i
+  `lexic_acentuacio_mauricio.json` (còpia de `acentuacion_limpio.json`,
+  695 parelles). Exclou a mà "després" (bug de dades confirmat al fitxer
+  font: el llista com si seguira el patró d'accentuació, però no canvia
+  mai en cap dels dos dialectes). Regressió coneguda: "xiquet" té dos
+  entrades ambigües a Mauricio (`canonica: false` totes dos, "noi" i
+  "nen") -- ara guanya "noi" (primera del fitxer) perquè ja no hi ha cap
+  font externa que ho desempate cap a "nen".
+- **`conjugacions_dict.py`** — lookup de formes verbals. Fusiona
+  `conjugaciones_limpio.json` (969 formes, 111 verbs) i
+  `verbos_no_ambiguos.json` (261 formes més, 45 verbs, afegit 30/09/2026,
+  totes marcades `ambigu: false`) a `conjugacions_dialectals.json`.
+  Exclou les formes `problematica: true` (ambigües indicatiu/subjuntiu
+  sense pos-tagging) -- només "haja"/"hagen" es queden sense traduir per
+  això (tota la conjugació de "haver" és `problematica`). Protegix "o
+  siga" (locució fixa "és a dir") perquè no es confonga amb el verb "ser"
+  en subjuntiu.
+- **`possessius.py`** — lookup de possessius febles femenins
+  (`meua/teua/seua` + plurals → `meva/teva/seva`). Font:
+  `possessius_mauricio.json` (còpia de `posesivos_cat_val.json`), un
+  producte cartesià sense filtrar del qual només es queden els 6 parells
+  on el número (singular/plural) casa als dos costats.
+- **`numerals.py`** — lookup exacte contra `numerals_mauricio.json` (còpia
+  de `numerales_limpio.json`, 180 files): tota la família huit/vuit,
+  "dinou"/"disset" + derivats, i "díhuit"→"divuit" sense cap cas especial
+  (és lookup exacte, no substitució de subcadena). Exclou 4 files de
+  "vuitavat" que semblen una extracció trencada al fitxer font (mateix
+  català repetit per a 4 valencians diferents).
+- **`accentuacio.py`** — 2 regles de SUFIX productives (afegides
+  30/09/2026, vesprada, vore "DECISIÓ D'ARQUITECTURA"): `-és→-ès`
+  (`francés→francès`, mateix patró que 695 paraules literals de
+  `lexic_acentuacio_mauricio.json` però ara generalitzat a QUALSEVOL
+  paraula) i `-éixer→-èixer` (`conéixer→conèixer`). Excepcions del primer
+  patró (`és`/`més`, i 7 més trobades empíricament: `només`, `després`,
+  `procés`, `congrés`, `accés`, `progrés`, `través`): set de Python, no
+  fitxer -- cap diccionari diferencial pot confirmar que una paraula NO
+  canvia.
+- **`incoatius.py`** — regla de SUFIX productiva `-ix→-eix`
+  (`establix→estableix`, afegida 30/09/2026), amb dos proteccions: mai
+  toca paraules que ja acaben en "-eix" (`aparéixer`, `mateix`...) i
+  llista negra de paraules reals acabades en consonant+ix que no són
+  verbs (`baix`, `calaix`, `dibuix`, `guix`, `fix`, `prefix`, `sufix`).
 
-**Bug real trobat en verificar este orde** (no només revisat a ull, amb
-doctest de regressió en `elisio.py`): la primera implementació
-d'`ElisioRule` mirava `tok.surface` de la paraula següent en lloc de
-`tok.translated`. Amb `"de huitanta"`, `numerals.py` ja havia convertit
-`huitanta→vuitanta` (comença per consonant, no elideix), però `elisio.py`
-mirava la forma original `huitanta` (comença per h muda + vocal, sí
-pareix elidir) i produïa `"d'vuitanta"`, incorrecte. Arreglat mirant
-`tok.translated`; el cas queda com a test de regressió permanent.
+## Mantindre `traductor/data/` sincronitzat amb les fonts
 
-## Cada regla, en una frase
+`traductor/rules/*.py` mai llig `02_reglas_dialectales/lexico/` en temps
+d'execució -- només llig còpies pròpies dins de `traductor/data/` (perquè
+el paquet funcione de manera autònoma). Si edites un fitxer font de
+`font_mauricio/` directament, eixe canvi no arriba al motor fins que
+sincronitzes:
 
-- **`lexic.py`** — substitució directa via `traductor/data/lexico_fiable.json`
-  (còpia de treball de `02_reglas_dialectales/lexico/lexico_fiable.json`,
-  347 entrades). El JSON usa arrays paral·lels singular/plural
-  (`["ametla","ametles"] → ["ametlla","ametlles"]`), no "una paraula,
-  diverses alternatives" — només hi ha una excepció real de longituds
-  distintes (`corder/corders → xai/be/anyell`), resolta agafant sempre el
-  primer sinònim (documentat, no arreglat del tot: dona `corders→xai` en
-  singular en lloc de plural). El 29/09/2026 es van incorporar 150
-  entrades noves d'un diccionari català-valencià aportat per Mauricio
-  (equip AVLizador, basat en l'apertium bilingüe), més els 3 parells
-  solts que ja estaven documentats a la font però encara no implementats
-  (`vindre→venir`, `valdre→valer` §4, `vos→us` §3) — vore
-  `02_reglas_dialectales/lexico/font_mauricio/` per a les dades brutes i
-  el criteri de filtratge exacte (excloent entrades `_PENDENT` sense
-  verificar i conflictes amb entrades ja revisades a mà, que sempre
-  guanyen).
-- **`demostratius.py`** — este/esta/estos/estes→aquest...; eixe/eixa/eixos/eixes→aquest...
-  (des del 28/09/2026 "eixe" es fusiona amb "este" cap a la mateixa forma
-  oriental — l'oriental real ha col·lapsat el sistema de 3 graus a 2; vore
-  `../02_reglas_dialectales/reglas_dialectales_con_evidencia.md` §1 per al
-  raonament complet).
-- **`possessius.py`** — meua/teua/seua (+ plurals) → meva/teva/seva. Només
-  formes àtones femenines; masculines i tòniques no canvien (§2).
-- **`conjugacions_dict.py`** — lookup exacte de 904 formes verbals (111
-  verbs) del diccionari de Mauricio (equip AVLizador, apertium bilingüe,
-  29/09/2026): cobrix alternances irregulars que `morfologia_verbal.py`
-  no pot generalitzar per sufix (`oferisca→ofereixi`, `traure→treure`...).
-  Exclou deliberadament les 65 formes marcades `problematica` a la font
-  (valencià usa la mateixa forma per a indicatiu i subjuntiu en eixos
-  casos, i sense pos-tagging no hi ha manera fiable de triar quina toca)
-  — vore docstring del mòdul.
-- **`numerals.py`** — quatre mecanismes independents: arrel `huit→vuit`
-  (cerca de subcadena, amb `díhuit→divuit` com a excepció real resolta a
-  banda), ordinals `-é→-è` (taula tancada, **no** regla de sufix
-  genèrica — hi ha paraules com a préstecs acabats en -é que no són
-  ordinals), concordança `dos/dues` (heurística feble: mira si la
-  paraula següent acaba en "-a"/"-es"/"-ió"/"-ions" — este últim sufix
-  afegit 29/09/2026, fiable perquè quasi cap nom acabat en "-ió" és
-  masculí; fals negatiu conegut amb femenins que no acaben en cap d'estos,
-  p.ex. "dos mans"), i arrels `dinou/disset` + els seus derivats en
-  `-ena`/`-é` (taula tancada de 10 formes, afegida 29/09/2026 amb dades de
-  Mauricio — no comparteixen subcadena amb l'oriental com sí fa
-  `huit/vuit`). La concordança `dos/dues` també mira cap ARRERE
-  (29/09/2026, cas real RC062) quan no hi ha cap paraula darrere de "dos"
-  (típicament puntuació: `"...en dos: establir..."`) — "dos" ahí es
-  referix anafòricament a un nom ja dit abans a la mateixa frase.
-- **`gentilicis.py`** — sufix `-és→-ès`, sí com a regla general (300+
-  lemes confirmats segons la font), amb les dos excepcions explícites de
-  la font (`és` verb, `més` quantitat) que mai canvien, més una tercera
-  trobada empíricament en córrer el benchmark complet: `"després"`
-  (adverbi) es trencava en `"desprès"` — la font només donava 2
-  excepcions, no és una llista exhaustiva.
-- **`morfologia_verbal.py`** — **fase 1** (present indicatiu, 1a persona,
-  1a conjugació: parle→parlo...) i **fase 2** (present subjuntiu, "jo"/
-  "ells": puga→pugui, tinguen→tinguin...), totes dos com a llista tancada
-  i no regla de sufix genèrica: massa paraules catalanes acaben en "-e"/
-  "-a"/"-en" sense ser eixes formes verbals concretes. **Fase 6**
-  (incoatius -ix→-eix: establix→estableix) sí és regla de sufix, perquè
-  la font ho documenta com a patró general — porta llista negra
-  (`baix`, `calaix`, `dibuix`, `guix`) per a no tocar paraules reals que
-  acaben igual sense ser verbs. Fases 3-5 (imperfet de subjuntiu,
-  imperfet d'indicatiu, participi de "ser") documentades com a TODO
-  explícit dins del propi fitxer, amb la raó de per què cada una
-  necessita més cura abans d'implementar-se.
-- **`locucions.py`** — dos patrons: `cap a on→cap on` (substitució
-  literal) i `dalt de/baix de→a dalt de/a baix de` (prefix, amb majúscula
-  gestionada a mà com a `perfet.py`). "per a→per" davant d'infinitiu es va
-  provar i **retirar**: l'auditoria del benchmark real (28/09/2026) va
-  trobar que de 17 aparicions de "per a + infinitiu", cap la reduïx a
-  "per" — sempre es manté "per a" (vore
-  `../02_reglas_dialectales/reglas_dialectales_con_evidencia.md` §7.1).
-  Pendents, documentats però NO implementats ací (§7.2 de la font): "a
-  on"/"on" segons ubicació estàtica o direcció, i "en"→"a" en
-  construccions locatives (este últim, a més, contradiu una protecció ja
-  existent al system prompt de l'LLM — pendent de confirmar l'abast exacte
-  abans de tocar-lo).
-- **`perfet.py`** — pretèrit perfet simple → perifràstic, només 1a
-  conjugació (`-ar`). Reconstruïx l'infinitiu llevant la terminació i
-  afegint "-ar". Abast retallat amb dades reals, no només teoria: en
-  córrer el benchmark complet, les terminacions curtes `-í` i `-ares` van
-  donar **0 encerts i 7 falsos positius** (`llatí`, `així`, `pares`,
-  `clares`...) — es van llevar del tot. `-à` i `-aren` sí tenen encerts
-  reals confirmats (`celebrà`, `passà`, `quedaren`) i es queden, amb una
-  llista negra per als seus propis falsos positius confirmats (`està`,
-  `valencià`, `castellà`, `català`).
-- **`elisio.py`** — `de/la/el → d'/l'` davant de vocal real o *h* muda.
-  Mai duplica una elisió que ja vinguera feta en l'original (eixes
-  arriben com un únic token des de `tokenize()`, mai coincidixen amb
-  "de"/"la"/"el" solts). Excepció confirmada (29/09/2026): `la` (mai
-  `el`/`de`) no elideix mai davant de paraula que comença per `i`/`u`
-  (`la intenció`, `la universitat`, mai `l'intenció`/`l'universitat`) —
-  convenció ortogràfica per a no perdre la distinció de gènere en la
-  lectura, no un fenomen fonètic; de pas resol com a efecte lateral el
-  cas `la iaia` que abans es documentava ací com a diftong semiconsonàntic
-  sense arreglar.
+```bash
+python -m traductor.sync_data --check   # només mostra què ha canviat, no escriu res
+python -m traductor.sync_data           # sincronitza de veres i mostra el mateix resum
+```
 
-## Què falta (buits coneguts, no una promesa del que es farà)
+El resum diu exactament quines entrades s'han afegit/llevat per fitxer
+(no sobreescriu en silenci). Els filtres de negoci (descartar `_PENDENT`,
+topònims, l'excepció de "després"...) NO viuen ací -- viuen als loaders
+de cada regla (`lexic.py`, `numerals.py`...) i s'apliquen soles la pròxima
+vegada que s'instancie `RuleEngine`, així que després de sincronitzar
+només cal tornar a córrer el benchmark (secció següent) per a confirmar
+que no hi ha regressió.
 
-Regles que **sí estan documentades** en `../02_reglas_dialectales/reglas_dialectales_con_evidencia.md` però que
-**cap** fitxer de `traductor/` cobrix encara:
+## Com afegir dades noves
 
-| Secció de la font | Contingut | On encaixaria |
-|---|---|---|
-| §5.3-§5.5 | Imperfet de subjuntiu, imperfet d'indicatiu, participi de "ser" | Documentat fase a fase dins de `morfologia_verbal.py`, vore el fitxer (fases 1/2/6 ja implementades) |
-| §7.2 | `hui→avui`, `vesprada→tarda`... (parells lèxics solts, no els de `locucions.py`) | Candidats a `lexico_fiable.json`, mateix criteri que §3/§4 (ja resolts, vore baix) |
-| §7.1 | `per a`→`per` davant d'infinitiu | **Provat i retirat**: contradit per 17/17 casos del benchmark real, sempre es manté "per a" |
-| §7.2 | `a on`→`on`/`a on` (estàtic/direcció), `en`→`a` (locatiu) | Pendents de confirmar — vore `locucions.py`, ja cobrix la resta de patrons d'esta secció |
-| §11.3 | `al + infinitiu → en + infinitiu` | La pròpia font ho marca com a "pendent de confirmar" (2/2 però mostra insuficient) — no implementar sense més evidència |
-| — | Topònims (`Ademuz→Ademús`, `Alcublas→les Alcubles`...) | 73 parells al diccionari de Mauricio (`tipo: "v:top_gva"`), NO incorporats: el motor protegix tots els noms propis de traducció (`is_proper_noun`, vore §"Protecció de noms propis" dalt), així que encara que s'afigueren a `lexico_fiable.json` mai s'aplicarien. Cal decidir primer si els topònims han de traduir-se en absolut i, si sí, com distingir-los d'altres noms propis que mai s'han de tocar — vore les dades brutes a `02_reglas_dialectales/lexico/font_mauricio/lexico_general_limpio.json` |
+**Cas 1 -- una paraula o forma concreta (la majoria dels casos)**: no cal
+tocar cap `.py`, és lookup de diccionari.
 
-**Resolt el 29/09/2026** (documentat ací abans, ara ja implementat): §3
-Pronoms personals (`vos→us`) i §4 Infinitius irregulars (`traure→treure`
-i `sigut→estat` §5.5 venen del diccionari de conjugacions de Mauricio,
-via `conjugacions_dict.py`; `tindre→tenir`, `vindre→venir`, `vore→veure`,
-`eixir→sortir`, `valdre→valer` i `vos→us` són a `lexico_fiable.json`) —
-tots eren parells solts, no patrons productius, tal com ja preveia este
-mateix README.
+1. Edita el fitxer font que toque (`lexico_general_limpio.json`,
+   `conjugaciones_limpio.json`, `verbos_no_ambiguos.json`,
+   `numerales_limpio.json`, `acentuacion_limpio.json`,
+   `posesivos_cat_val.json`) directament a `font_mauricio/`.
+2. Corre `python -m traductor.sync_data` (vore dalt).
+3. Corre el benchmark (secció següent) per a confirmar que no hi ha
+   regressió.
+4. Si una paraula concreta resulta ser un error del fitxer font (com
+   "després", vore `lexic.py`), documenta l'exclusió al loader
+   corresponent amb un comentari clar -- no la "arregles" editant el
+   fitxer font a mà sense deixar rastre.
 
-Patró general: qualsevol cosa que siga "un parell de paraules concret"
-(no un sufix o patró productiu) encaixa millor en el lèxic que en una
-regla nova — és el mateix criteri que ja va usar la font per a
-`vosté/vostés`.
-
-## Com afegir una regla nova
-
-1. Confirma la taula/patró en `../02_reglas_dialectales/reglas_dialectales_con_evidencia.md`
-   — **mai la inventes**; si la font no la confirma amb evidència, no
-   s'implementa (vore com es van documentar els buits de dalt).
-2. Decidix: és un patró productiu (sufix/regla general) o un grapat de
-   parells solts? Els parells solts van a `lexico_fiable.json`, no a un
-   fitxer nou.
-3. Si és un patró nou, crea `traductor/rules/nombre_regla.py` amb la
-   mateixa interfície que totes les altres:
-   ```python
-   class NombreReglaRule:
-       def apply(self, tokens: list[Token]) -> list[Token]:
-           for tok in tokens:
-               if tok.is_translated or tok.is_proper_noun:
-                   continue
-               # lògica ací
-           return tokens
-   ```
-4. Si la regla necessita mirar tokens veïns (com `elisio.py` o la
-   concordança de `numerals.py`), itera per índex, no per valor — però
-   la firma pública seguix sent `apply(tokens) -> tokens`.
-5. Afig doctests reals en el docstring (no només descripció) — és
-   l'única suite de tests d'este paquet. Executa:
-   ```bash
-   python -c "import doctest, traductor.rules.nombre_regla as m; print(doctest.testmod(m))"
-   ```
-   (`python -m doctest fichero.py` **no** funciona ací pels imports
-   relatius del paquet — usa l'import de dalt.)
-6. Registra-la en `RuleEngine.__init__` (`traductor/rules/engine.py`), en
-   el punt de l'orde que li corresponga, i documenta el perquè en la
-   taula d'"Orde de les regles" d'este README.
-7. Si alguna cosa és lingüísticament ambigua (és esta forma valenciana o
-   ja oriental? aplica sempre o depén d'un context que no podem vore
-   sense spaCy?), comenta-ho amb `# AMBIGÚ:` explicant el perquè — no ho
-   resolgues endevinant.
+**Cas 2 -- un patró de sufix genuïnament PRODUCTIU** (com `accentuacio.py`/
+`incoatius.py`, vore "DECISIÓ D'ARQUITECTURA"): açò sí és una regla nova,
+no una entrada de diccionari -- però només quan un diccionari no pot
+cobrir-ho per definició (el patró aplica a paraules que MAI estaran totes
+enumerades). Confirma primer amb evidència real (benchmark, no teoria)
+quines excepcions calen, i crea `traductor/rules/nombre_regla.py` amb la
+mateixa interfície que la resta (`apply(tokens) -> tokens`, saltant
+`is_translated`/`is_proper_noun`). Registra-la en `RuleEngine.__init__`
+DESPRÉS de les 4 capes de diccionari (vore `engine.py`), perquè una forma
+ja coneguda amb exactitud no ha de deixar-se reprocessar per una regla més
+feble.
 
 ## Relació amb el sistema de regles antic
 
@@ -317,8 +254,8 @@ Python no troba ahí un paquet que viu en la carpeta del costat.
 ## Ús directe
 
 ```bash
-python -m traductor.cli "Este xiquet mira la meua obra i vaig ser el cinqué de huitanta."
-# -> Aquest nen mira la meva obra i vaig ser el cinquè de vuitanta.
+python -m traductor.cli "Tinc huitanta anys i el meu amic francés parla."
+# -> Tinc vuitanta anys i el meu amic francès parla.
 ```
 
 ```python
@@ -338,9 +275,8 @@ python -c "
 import doctest, importlib
 modulos = [
     'traductor.rules', 'traductor.rules.lexic', 'traductor.rules.conjugacions_dict',
-    'traductor.rules.demostratius', 'traductor.rules.possessius', 'traductor.rules.numerals',
-    'traductor.rules.gentilicis', 'traductor.rules.morfologia_verbal', 'traductor.rules.locucions',
-    'traductor.rules.perfet', 'traductor.rules.elisio', 'traductor.rules.engine', 'traductor.translate',
+    'traductor.rules.possessius', 'traductor.rules.numerals', 'traductor.rules.accentuacio',
+    'traductor.rules.incoatius', 'traductor.rules.engine', 'traductor.translate',
 ]
 for nom in modulos:
     m = importlib.import_module(nom)

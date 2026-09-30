@@ -1,0 +1,869 @@
+[
+  {
+    "catalan": "divuitenes",
+    "valenciano": "dihuitenes",
+    "revision": true
+  },
+  {
+    "catalan": "divuitena",
+    "valenciano": "dihuitena",
+    "revision": true
+  },
+  {
+    "catalan": "divuitens",
+    "valenciano": "dihuitens",
+    "revision": true
+  },
+  {
+    "catalan": "divuitè",
+    "valenciano": "dihuitè",
+    "revision": true
+  },
+  {
+    "catalan": "vuitcentista",
+    "valenciano": "huitcentista",
+    "revision": true
+  },
+  {
+    "catalan": "vuitcentistes",
+    "valenciano": "huitcentistes",
+    "revision": true
+  },
+  {
+    "catalan": "vuitenes",
+    "valenciano": "huitenes",
+    "revision": true
+  },
+  {
+    "catalan": "vuitena",
+    "valenciano": "huitena",
+    "revision": true
+  },
+  {
+    "catalan": "vuitens",
+    "valenciano": "huitens",
+    "revision": true
+  },
+  {
+    "catalan": "vuitè",
+    "valenciano": "huitè",
+    "revision": true
+  },
+  {
+    "catalan": "vint-i-vuitenes",
+    "valenciano": "vint-i-huitenes",
+    "revision": true
+  },
+  {
+    "catalan": "vint-i-vuitena",
+    "valenciano": "vint-i-huitena",
+    "revision": true
+  },
+  {
+    "catalan": "vint-i-vuitens",
+    "valenciano": "vint-i-huitens",
+    "revision": true
+  },
+  {
+    "catalan": "vint-i-vuitè",
+    "valenciano": "vint-i-huitè",
+    "revision": true
+  },
+  {
+    "catalan": "trenta-vuitenes",
+    "valenciano": "trenta-huitenes",
+    "revision": true
+  },
+  {
+    "catalan": "trenta-vuitena",
+    "valenciano": "trenta-huitena",
+    "revision": true
+  },
+  {
+    "catalan": "trenta-vuitens",
+    "valenciano": "trenta-huitens",
+    "revision": true
+  },
+  {
+    "catalan": "trenta-vuitè",
+    "valenciano": "trenta-huitè",
+    "revision": true
+  },
+  {
+    "catalan": "quaranta-vuitenes",
+    "valenciano": "quaranta-huitenes",
+    "revision": true
+  },
+  {
+    "catalan": "quaranta-vuitena",
+    "valenciano": "quaranta-huitena",
+    "revision": true
+  },
+  {
+    "catalan": "quaranta-vuitens",
+    "valenciano": "quaranta-huitens",
+    "revision": true
+  },
+  {
+    "catalan": "quaranta-vuitè",
+    "valenciano": "quaranta-huitè",
+    "revision": true
+  },
+  {
+    "catalan": "cinquanta-vuitenes",
+    "valenciano": "cinquanta-huitenes",
+    "revision": true
+  },
+  {
+    "catalan": "cinquanta-vuitena",
+    "valenciano": "cinquanta-huitena",
+    "revision": true
+  },
+  {
+    "catalan": "cinquanta-vuitens",
+    "valenciano": "cinquanta-huitens",
+    "revision": true
+  },
+  {
+    "catalan": "cinquanta-vuitè",
+    "valenciano": "cinquanta-huitè",
+    "revision": true
+  },
+  {
+    "catalan": "seixanta-vuitenes",
+    "valenciano": "seixanta-huitenes",
+    "revision": true
+  },
+  {
+    "catalan": "seixanta-vuitena",
+    "valenciano": "seixanta-huitena",
+    "revision": true
+  },
+  {
+    "catalan": "seixanta-vuitens",
+    "valenciano": "seixanta-huitens",
+    "revision": true
+  },
+  {
+    "catalan": "seixanta-vuitè",
+    "valenciano": "seixanta-huitè",
+    "revision": true
+  },
+  {
+    "catalan": "setanta-vuitenes",
+    "valenciano": "setanta-huitenes",
+    "revision": true
+  },
+  {
+    "catalan": "setanta-vuitena",
+    "valenciano": "setanta-huitena",
+    "revision": true
+  },
+  {
+    "catalan": "setanta-vuitens",
+    "valenciano": "setanta-huitens",
+    "revision": true
+  },
+  {
+    "catalan": "setanta-vuitè",
+    "valenciano": "setanta-huitè",
+    "revision": true
+  },
+  {
+    "catalan": "noranta-vuitenes",
+    "valenciano": "noranta-huitenes",
+    "revision": true
+  },
+  {
+    "catalan": "noranta-vuitena",
+    "valenciano": "noranta-huitena",
+    "revision": true
+  },
+  {
+    "catalan": "noranta-vuitens",
+    "valenciano": "noranta-huitens",
+    "revision": true
+  },
+  {
+    "catalan": "noranta-vuitè",
+    "valenciano": "noranta-huitè",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-unenes",
+    "valenciano": "huitanta-unenes",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-unena",
+    "valenciano": "huitanta-unena",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-unens",
+    "valenciano": "huitanta-unens",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-unè",
+    "valenciano": "huitanta-unè",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-dosenes",
+    "valenciano": "huitanta-dosenes",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-dosena",
+    "valenciano": "huitanta-dosena",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-dosens",
+    "valenciano": "huitanta-dosens",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-dosè",
+    "valenciano": "huitanta-dosè",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-tresenes",
+    "valenciano": "huitanta-tresenes",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-tresena",
+    "valenciano": "huitanta-tresena",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-tresens",
+    "valenciano": "huitanta-tresens",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-tresè",
+    "valenciano": "huitanta-tresè",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-quatrenes",
+    "valenciano": "huitanta-quatrenes",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-quatrena",
+    "valenciano": "huitanta-quatrena",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-quatrens",
+    "valenciano": "huitanta-quatrens",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-quatrè",
+    "valenciano": "huitanta-quatrè",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-cinquenes",
+    "valenciano": "huitanta-cinquenes",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-cinquena",
+    "valenciano": "huitanta-cinquena",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-cinquens",
+    "valenciano": "huitanta-cinquens",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-cinquè",
+    "valenciano": "huitanta-cinquè",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-sisenes",
+    "valenciano": "huitanta-sisenes",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-sisena",
+    "valenciano": "huitanta-sisena",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-sisens",
+    "valenciano": "huitanta-sisens",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-sisè",
+    "valenciano": "huitanta-sisè",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-setenes",
+    "valenciano": "huitanta-setenes",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-setena",
+    "valenciano": "huitanta-setena",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-setens",
+    "valenciano": "huitanta-setens",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-setè",
+    "valenciano": "huitanta-setè",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-vuitenes",
+    "valenciano": "huitanta-huitenes",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-vuitena",
+    "valenciano": "huitanta-huitena",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-vuitens",
+    "valenciano": "huitanta-huitens",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-vuitè",
+    "valenciano": "huitanta-huitè",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-novenes",
+    "valenciano": "huitanta-novenes",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-novena",
+    "valenciano": "huitanta-novena",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-novens",
+    "valenciano": "huitanta-novens",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-novè",
+    "valenciano": "huitanta-novè",
+    "revision": true
+  },
+  {
+    "catalan": "vuitantenes",
+    "valenciano": "huitantenes",
+    "revision": true
+  },
+  {
+    "catalan": "cinquanta-vuit",
+    "valenciano": "cinquanta-huit"
+  },
+  {
+    "catalan": "cinquanta-vuit mil",
+    "valenciano": "cinquanta-huit mil"
+  },
+  {
+    "catalan": "dinou",
+    "valenciano": "dènou"
+  },
+  {
+    "catalan": "disset",
+    "valenciano": "dèsset"
+  },
+  {
+    "catalan": "divuit",
+    "valenciano": "díhuit"
+  },
+  {
+    "catalan": "noranta-vuit",
+    "valenciano": "noranta-huit"
+  },
+  {
+    "catalan": "quaranta-vuit",
+    "valenciano": "quaranta-huit"
+  },
+  {
+    "catalan": "seixanta-vuit",
+    "valenciano": "seixanta-huit"
+  },
+  {
+    "catalan": "setanta-vuit",
+    "valenciano": "setanta-huit"
+  },
+  {
+    "catalan": "setanta-vuit mil",
+    "valenciano": "setanta-huit mil"
+  },
+  {
+    "catalan": "trenta-vuit",
+    "valenciano": "trenta-huit"
+  },
+  {
+    "catalan": "trenta-vuit mil",
+    "valenciano": "trenta-huit mil"
+  },
+  {
+    "catalan": "vint-i-vuit",
+    "valenciano": "vint-i-huit"
+  },
+  {
+    "catalan": "vint-i-vuit mil",
+    "valenciano": "vint-i-huit mil"
+  },
+  {
+    "catalan": "vuit",
+    "valenciano": "huit"
+  },
+  {
+    "catalan": "vuit mil",
+    "valenciano": "huit mil"
+  },
+  {
+    "catalan": "vuit-cents",
+    "valenciano": "huit-cents",
+    "revision": true
+  },
+  {
+    "catalan": "vuit-centes",
+    "valenciano": "huit-centes",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta",
+    "valenciano": "huitanta"
+  },
+  {
+    "catalan": "vuitanta mil",
+    "valenciano": "huitanta mil"
+  },
+  {
+    "catalan": "vuitanta-cinc",
+    "valenciano": "huitanta-cinc"
+  },
+  {
+    "catalan": "vuitanta-cinc mil",
+    "valenciano": "huitanta-cinc mil"
+  },
+  {
+    "catalan": "vuitanta-dues",
+    "valenciano": "huitanta-dues",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-dos",
+    "valenciano": "huitanta-dos",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-dos mil",
+    "valenciano": "huitanta-dos mil",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-dues mil",
+    "valenciano": "huitanta-dues mil",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-nou",
+    "valenciano": "huitanta-nou"
+  },
+  {
+    "catalan": "vuitanta-nou mil",
+    "valenciano": "huitanta-nou mil"
+  },
+  {
+    "catalan": "vuitanta-quatre",
+    "valenciano": "huitanta-quatre"
+  },
+  {
+    "catalan": "vuitanta-quatre mil",
+    "valenciano": "huitanta-quatre mil"
+  },
+  {
+    "catalan": "vuitanta-set",
+    "valenciano": "huitanta-set"
+  },
+  {
+    "catalan": "vuitanta-set mil",
+    "valenciano": "huitanta-set mil"
+  },
+  {
+    "catalan": "vuitanta-sis",
+    "valenciano": "huitanta-sis"
+  },
+  {
+    "catalan": "vuitanta-sis mil",
+    "valenciano": "huitanta-sis mil"
+  },
+  {
+    "catalan": "vuitanta-tres",
+    "valenciano": "huitanta-tres"
+  },
+  {
+    "catalan": "vuitanta-tres mil",
+    "valenciano": "huitanta-tres mil"
+  },
+  {
+    "catalan": "vuitanta-un mil",
+    "valenciano": "huitanta-un mil",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-u",
+    "valenciano": "huitanta-u",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-un",
+    "valenciano": "huitanta-un",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-una",
+    "valenciano": "huitanta-una",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-una mil",
+    "valenciano": "huitanta-una mil",
+    "revision": true
+  },
+  {
+    "catalan": "vuitanta-vuit",
+    "valenciano": "huitanta-huit"
+  },
+  {
+    "catalan": "vuitanta-vuit mil",
+    "valenciano": "huitanta-huit mil"
+  },
+  {
+    "catalan": "mil vuit-cents",
+    "valenciano": "mil huit-cents",
+    "revision": true
+  },
+  {
+    "catalan": "mil vuit-centes",
+    "valenciano": "mil huit-centes",
+    "revision": true
+  },
+  {
+    "catalan": "dos mil vuit-cents",
+    "valenciano": "dos mil huit-cents",
+    "revision": true
+  },
+  {
+    "catalan": "dos mil vuit-centes",
+    "valenciano": "dues mil huit-centes",
+    "revision": true
+  },
+  {
+    "catalan": "tres mil vuit-cents",
+    "valenciano": "tres mil huit-cents",
+    "revision": true
+  },
+  {
+    "catalan": "tres mil vuit-centes",
+    "valenciano": "tres mil huit-centes",
+    "revision": true
+  },
+  {
+    "catalan": "quatre mil vuit-cents",
+    "valenciano": "quatre mil huit-cents",
+    "revision": true
+  },
+  {
+    "catalan": "quatre mil vuit-centes",
+    "valenciano": "quatre mil huit-centes",
+    "revision": true
+  },
+  {
+    "catalan": "cinc mil vuit-cents",
+    "valenciano": "cinc mil huit-cents",
+    "revision": true
+  },
+  {
+    "catalan": "cinc mil vuit-centes",
+    "valenciano": "cinc mil huit-centes",
+    "revision": true
+  },
+  {
+    "catalan": "sis mil vuit-cents",
+    "valenciano": "sis mil huit-cents",
+    "revision": true
+  },
+  {
+    "catalan": "sis mil vuit-centes",
+    "valenciano": "sis mil huit-centes",
+    "revision": true
+  },
+  {
+    "catalan": "set mil vuit-cents",
+    "valenciano": "set mil huit-cents",
+    "revision": true
+  },
+  {
+    "catalan": "set mil vuit-centes",
+    "valenciano": "set mil huit-centes",
+    "revision": true
+  },
+  {
+    "catalan": "vuit mil cent",
+    "valenciano": "huit mil cent"
+  },
+  {
+    "catalan": "vuit mil dos-cents",
+    "valenciano": "huit mil dos-cents",
+    "revision": true
+  },
+  {
+    "catalan": "vuit mil dos-centes",
+    "valenciano": "huit mil dues-centes",
+    "revision": true
+  },
+  {
+    "catalan": "vuit mil tres-cents",
+    "valenciano": "huit mil tres-cents",
+    "revision": true
+  },
+  {
+    "catalan": "vuit mil tres-centes",
+    "valenciano": "huit mil tres-centes",
+    "revision": true
+  },
+  {
+    "catalan": "vuit mil quatre-cents",
+    "valenciano": "huit mil quatre-cents",
+    "revision": true
+  },
+  {
+    "catalan": "vuit mil quatre-centes",
+    "valenciano": "huit mil quatre-centes",
+    "revision": true
+  },
+  {
+    "catalan": "vuit mil cinc-cents",
+    "valenciano": "huit mil cinc-cents",
+    "revision": true
+  },
+  {
+    "catalan": "vuit mil cinc-centes",
+    "valenciano": "huit mil cinc-centes",
+    "revision": true
+  },
+  {
+    "catalan": "vuit mil sis-cents",
+    "valenciano": "huit mil sis-cents",
+    "revision": true
+  },
+  {
+    "catalan": "vuit mil sis-centes",
+    "valenciano": "huit mil sis-centes",
+    "revision": true
+  },
+  {
+    "catalan": "vuit mil set-cents",
+    "valenciano": "huit mil set-cents",
+    "revision": true
+  },
+  {
+    "catalan": "vuit mil set-centes",
+    "valenciano": "huit mil set-centes",
+    "revision": true
+  },
+  {
+    "catalan": "vuit mil vuit-cents",
+    "valenciano": "huit mil huit-cents",
+    "revision": true
+  },
+  {
+    "catalan": "vuit mil vuit-centes",
+    "valenciano": "huit mil huit-centes",
+    "revision": true
+  },
+  {
+    "catalan": "vuit mil nou-cents",
+    "valenciano": "huit mil nou-cents",
+    "revision": true
+  },
+  {
+    "catalan": "vuit mil nou-centes",
+    "valenciano": "huit mil nou-centes",
+    "revision": true
+  },
+  {
+    "catalan": "nou mil vuit-cents",
+    "valenciano": "nou mil huit-cents",
+    "revision": true
+  },
+  {
+    "catalan": "nou mil vuit-centes",
+    "valenciano": "nou mil huit-centes",
+    "revision": true
+  },
+  {
+    "catalan": "deu mil vuit-cents",
+    "valenciano": "deu mil huit-cents",
+    "revision": true
+  },
+  {
+    "catalan": "deu mil vuit-centes",
+    "valenciano": "deu mil huit-centes",
+    "revision": true
+  },
+  {
+    "catalan": "vuit-centenes",
+    "valenciano": "huit-centenes",
+    "revision": true
+  },
+  {
+    "catalan": "vuit-centena",
+    "valenciano": "huit-centena",
+    "revision": true
+  },
+  {
+    "catalan": "vuit-centens",
+    "valenciano": "huit-centens",
+    "revision": true
+  },
+  {
+    "catalan": "vuit-centè",
+    "valenciano": "huit-centè",
+    "revision": true
+  },
+  {
+    "catalan": "vuitantena",
+    "valenciano": "huitantena",
+    "revision": true
+  },
+  {
+    "catalan": "vuitantens",
+    "valenciano": "huitantens",
+    "revision": true
+  },
+  {
+    "catalan": "vuitantè",
+    "valenciano": "huitantè",
+    "revision": true
+  },
+  {
+    "catalan": "vuitantines",
+    "valenciano": "huitantines",
+    "revision": true
+  },
+  {
+    "catalan": "vuitantina",
+    "valenciano": "huitantina",
+    "revision": true
+  },
+  {
+    "catalan": "vuitantins",
+    "valenciano": "huitantins",
+    "revision": true
+  },
+  {
+    "catalan": "vuitantí",
+    "valenciano": "huitantí",
+    "revision": true
+  },
+  {
+    "catalan": "vuitmesones",
+    "valenciano": "huitmesones",
+    "revision": true
+  },
+  {
+    "catalan": "vuitmesona",
+    "valenciano": "huitmesona",
+    "revision": true
+  },
+  {
+    "catalan": "vuitmesons",
+    "valenciano": "huitmesons",
+    "revision": true
+  },
+  {
+    "catalan": "vuitmesó",
+    "valenciano": "huitmesó",
+    "revision": true
+  },
+  {
+    "catalan": "vuitavat",
+    "valenciano": "huitavdes",
+    "revision": true
+  },
+  {
+    "catalan": "vuitavat",
+    "valenciano": "huitavda",
+    "revision": true
+  },
+  {
+    "catalan": "vuitavat",
+    "valenciano": "huitavts",
+    "revision": true
+  },
+  {
+    "catalan": "vuitavat",
+    "valenciano": "huitavt",
+    "revision": true
+  },
+  {
+    "catalan": "dinovenes",
+    "valenciano": "denovenes",
+    "revision": true
+  },
+  {
+    "catalan": "dinovena",
+    "valenciano": "denovena",
+    "revision": true
+  },
+  {
+    "catalan": "dinovens",
+    "valenciano": "denovens",
+    "revision": true
+  },
+  {
+    "catalan": "dinovè",
+    "valenciano": "denovè",
+    "revision": true
+  },
+  {
+    "catalan": "dissetenes",
+    "valenciano": "dessetenes",
+    "revision": true
+  },
+  {
+    "catalan": "dissetena",
+    "valenciano": "dessetena",
+    "revision": true
+  },
+  {
+    "catalan": "dissetens",
+    "valenciano": "dessetens",
+    "revision": true
+  },
+  {
+    "catalan": "dissetè",
+    "valenciano": "dessetè",
+    "revision": true
+  }
+]

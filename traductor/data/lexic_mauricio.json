@@ -1,0 +1,3528 @@
+[
+  {
+    "espanol": "blando",
+    "catalan": "tou",
+    "valenciano": "bla",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "depositador",
+    "catalan": "dipositador",
+    "valenciano": "depositador",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "depositario",
+    "catalan": "dipositari",
+    "valenciano": "depositari",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "descabellado",
+    "catalan": "desgavellat",
+    "valenciano": "desficaciat",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "exitoso",
+    "catalan": "reeixit",
+    "valenciano": "exitós",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "fdo.",
+    "catalan": "signat",
+    "valenciano": "firmat",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "firmante",
+    "catalan": "signant",
+    "valenciano": "firmant",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "guapo",
+    "catalan": "guapo",
+    "valenciano": "bonic",
+    "tipo": "v:lexic_val_PENDENT",
+    "canonica": false
+  },
+  {
+    "espanol": "lavable",
+    "catalan": "rentable",
+    "valenciano": "llavable",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "majo",
+    "catalan": "maco",
+    "valenciano": "guapo",
+    "tipo": "v:lexic_val_PENDENT",
+    "canonica": false
+  },
+  {
+    "espanol": "mejillonero",
+    "catalan": "musclaire",
+    "valenciano": "clotxiner",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "mono",
+    "catalan": "bufó",
+    "valenciano": "bonic",
+    "tipo": "v:lexic_val_PENDENT",
+    "canonica": false
+  },
+  {
+    "espanol": "octavo",
+    "catalan": "vuitè",
+    "valenciano": "octau",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "pelotillero",
+    "catalan": "llepaire",
+    "valenciano": "llepó",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "pequeñito",
+    "catalan": "petitet",
+    "valenciano": "xicotet",
+    "tipo": "v:lexic_val",
+    "canonica": false
+  },
+  {
+    "espanol": "pequeño",
+    "catalan": "menut",
+    "valenciano": "xicotet",
+    "tipo": "v:lexic_val",
+    "canonica": true
+  },
+  {
+    "espanol": "pequeño",
+    "catalan": "menut",
+    "valenciano": "petit",
+    "tipo": "v:lexic_val",
+    "canonica": true
+  },
+  {
+    "espanol": "perezoso",
+    "catalan": "mandrós",
+    "valenciano": "peresós",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "plurianual",
+    "catalan": "pluriennal",
+    "valenciano": "plurianual",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "posvacacional",
+    "catalan": "postvacances",
+    "valenciano": "postvacacions",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "pronto",
+    "catalan": "ràpid",
+    "valenciano": "prompte",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "quinto",
+    "catalan": "cinquè",
+    "valenciano": "quint",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "reluciente",
+    "catalan": "lluent",
+    "valenciano": "lluent",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "resbaladizo",
+    "catalan": "relliscós",
+    "valenciano": "esvarós",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "rojizo",
+    "catalan": "vermellós",
+    "valenciano": "rogenc",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "recreo",
+    "catalan": "esbarjo",
+    "valenciano": "esbargiment",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "rojo",
+    "catalan": "vermell",
+    "valenciano": "roig",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "séptimo",
+    "catalan": "setè",
+    "valenciano": "sèptim",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "sexto",
+    "catalan": "sisè",
+    "valenciano": "sext",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "soleado",
+    "catalan": "assolellat",
+    "valenciano": "solejat",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "soso",
+    "catalan": "sonso",
+    "valenciano": "dessaborit",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "subdesarrollado",
+    "catalan": "subdesenvolupat",
+    "valenciano": "subdesenrotllat",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "tomatero",
+    "catalan": "de tomàquets",
+    "valenciano": "de tomaques",
+    "tipo": "v:lexic_val",
+    "canonica": false
+  },
+  {
+    "espanol": "verdadero",
+    "catalan": "veritable",
+    "valenciano": "verdader",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "ambos",
+    "catalan": "ambdós",
+    "valenciano": "els dos",
+    "tipo": "v:lexic_val_gva",
+    "canonica": false
+  },
+  {
+    "espanol": "hasta pronto",
+    "catalan": "fins aviat",
+    "valenciano": "fins prompte",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "por favor",
+    "catalan": "si et plau",
+    "valenciano": "per favor",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "debajo de",
+    "catalan": "sota",
+    "valenciano": "davall de",
+    "tipo": "v:lexic_val_PENDENT",
+    "canonica": true,
+    "problematica": true
+  },
+  {
+    "espanol": "por encima de",
+    "catalan": "per sobre de",
+    "valenciano": "per damunt de",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "ambas",
+    "catalan": "ambdues",
+    "valenciano": "els dos",
+    "tipo": "v:lexic_val_gva",
+    "canonica": false
+  },
+  {
+    "espanol": "cada cual",
+    "catalan": "cadascú",
+    "valenciano": "cada u",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "cada uno",
+    "catalan": "cadascun",
+    "valenciano": "cada un",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "os",
+    "catalan": "us",
+    "valenciano": "vos",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "anteayer",
+    "catalan": "dellà-ahir",
+    "valenciano": "despús-ahir",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "a no ser que",
+    "catalan": "tret que",
+    "valenciano": "llevat que",
+    "tipo": "v:lexic_val_PENDENT",
+    "canonica": true
+  },
+  {
+    "espanol": "en tanto en cuanto",
+    "catalan": "mentre",
+    "valenciano": "mentres",
+    "tipo": "v:lexic_val_gva",
+    "canonica": true
+  },
+  {
+    "espanol": "por cuanto",
+    "catalan": "puix que",
+    "valenciano": "ja que",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "buenas tardes",
+    "catalan": "bona tarda",
+    "valenciano": "bona vesprada",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "abrazo",
+    "catalan": "abraçada",
+    "valenciano": "abraç",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "arena",
+    "catalan": "sorra",
+    "valenciano": "arena",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "arroyada",
+    "catalan": "rierada",
+    "valenciano": "torrentada",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "ave",
+    "catalan": "au",
+    "valenciano": "au",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "basura",
+    "catalan": "escombraries",
+    "valenciano": "brossa",
+    "tipo": "v:lexic_val_PENDENT",
+    "canonica": false
+  },
+  {
+    "espanol": "basura",
+    "catalan": "escombraries",
+    "valenciano": "fem",
+    "tipo": "v:lexic_val_PENDENT",
+    "canonica": true
+  },
+  {
+    "espanol": "beso",
+    "catalan": "petó",
+    "valenciano": "bes",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "besito",
+    "catalan": "petonet",
+    "valenciano": "beset",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "bigote",
+    "catalan": "bigoti",
+    "valenciano": "bigot",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "boda",
+    "catalan": "noces",
+    "valenciano": "boda",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "botella",
+    "catalan": "ampolla",
+    "valenciano": "botella",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "investigación",
+    "catalan": "recerca",
+    "valenciano": "investigació",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "búsqueda",
+    "catalan": "cerca",
+    "valenciano": "busca",
+    "tipo": "v:lexic_val_gva",
+    "canonica": true
+  },
+  {
+    "espanol": "investigación y desarrollo",
+    "catalan": "recerca i desenvolupament",
+    "valenciano": "investigació i desenrotllament",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "calcetín",
+    "catalan": "mitjó",
+    "valenciano": "calcetí",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "campesino",
+    "catalan": "camperol",
+    "valenciano": "llaurador",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "carencia",
+    "catalan": "manca",
+    "valenciano": "carència",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "cariño",
+    "catalan": "afecte",
+    "valenciano": "carinyo",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "castigo",
+    "catalan": "càstig",
+    "valenciano": "castic",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "cementerio",
+    "catalan": "cementiri",
+    "valenciano": "cementeri",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "chico",
+    "catalan": "noi",
+    "valenciano": "xic",
+    "tipo": "v:lexic_val",
+    "canonica": true
+  },
+  {
+    "espanol": "chiquillo",
+    "catalan": "noi",
+    "valenciano": "xiquet",
+    "tipo": "v:lexic_val",
+    "canonica": false
+  },
+  {
+    "espanol": "chocolate",
+    "catalan": "xocolata",
+    "valenciano": "xocolate",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "cordero",
+    "catalan": "anyell",
+    "valenciano": "corder",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "cubo",
+    "catalan": "galleda",
+    "valenciano": "poal",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "debilidad",
+    "catalan": "debilitat",
+    "valenciano": "debilitat",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "desarrollo",
+    "catalan": "desenvolupament",
+    "valenciano": "desenrotllament",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "duración",
+    "catalan": "durada",
+    "valenciano": "duració",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "enseñanza",
+    "catalan": "ensenyament",
+    "valenciano": "ensenyança",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "escalón",
+    "catalan": "graó",
+    "valenciano": "escaló",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "espejo",
+    "catalan": "mirall",
+    "valenciano": "espill",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "fiebre",
+    "catalan": "febre",
+    "valenciano": "febra",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "firma",
+    "catalan": "signatura",
+    "valenciano": "firma",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "hoja de servicio",
+    "catalan": "full de servei",
+    "valenciano": "full de servici",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "hoja de servicios",
+    "catalan": "full de serveis",
+    "valenciano": "full de servicis",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "hoja de servicios expedida",
+    "catalan": "full de serveis expedit",
+    "valenciano": "full de servicis expedit",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "hombro",
+    "catalan": "espatlla",
+    "valenciano": "muscle",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "juicio",
+    "catalan": "judici",
+    "valenciano": "juí",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "lata",
+    "catalan": "llauna",
+    "valenciano": "llanda",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "limón",
+    "catalan": "llimona",
+    "valenciano": "llima",
+    "tipo": "v:lexic_llima",
+    "canonica": true
+  },
+  {
+    "espanol": "limón",
+    "catalan": "llimona",
+    "valenciano": "llimó",
+    "tipo": "v:lexic_llimo",
+    "canonica": false
+  },
+  {
+    "espanol": "mitad",
+    "catalan": "meitat",
+    "valenciano": "mitat",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "muchacho",
+    "catalan": "al·lot",
+    "valenciano": "xic",
+    "tipo": "v:lexic_val",
+    "canonica": false
+  },
+  {
+    "espanol": "nene",
+    "catalan": "nen",
+    "valenciano": "xiquet",
+    "tipo": "v:lexic_val",
+    "canonica": false
+  },
+  {
+    "espanol": "orilla",
+    "catalan": "riba",
+    "valenciano": "vora",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "pasillo",
+    "catalan": "passadís",
+    "valenciano": "corredor",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "patata",
+    "catalan": "patata",
+    "valenciano": "creïlla",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "perro guía",
+    "catalan": "gos pigall",
+    "valenciano": "gos guia",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "salida",
+    "catalan": "sortida",
+    "valenciano": "eixida",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "servicio",
+    "catalan": "servei",
+    "valenciano": "servici",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "soledad",
+    "catalan": "solitud",
+    "valenciano": "soledat",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "tarde",
+    "catalan": "tard",
+    "valenciano": "vesprada",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "toro",
+    "catalan": "toro",
+    "valenciano": "bou",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "vacaciones",
+    "catalan": "vacances",
+    "valenciano": "vacacions",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "vela_cirio",
+    "catalan": "espelma",
+    "valenciano": "ciri",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "vivienda",
+    "catalan": "habitatge",
+    "valenciano": "vivenda",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "un poco",
+    "catalan": "una mica",
+    "valenciano": "un poc",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "casi",
+    "catalan": "gairebé",
+    "valenciano": "quasi",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "apetecer",
+    "catalan": "apetir",
+    "valenciano": "abellir",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "aplastar",
+    "catalan": "aixafar",
+    "valenciano": "esclafar",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "buscar",
+    "catalan": "buscar",
+    "valenciano": "cercar",
+    "tipo": "v:lexic_cercar"
+  },
+  {
+    "espanol": "cultivar",
+    "catalan": "conrear",
+    "valenciano": "cultivar",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "defender",
+    "catalan": "defensar",
+    "valenciano": "defendre",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "depositar",
+    "catalan": "dipositar",
+    "valenciano": "depositar",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "desarrollar",
+    "catalan": "desenvolupar",
+    "valenciano": "desenrotllar",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "deslizar",
+    "catalan": "lliscar",
+    "valenciano": "esvarar",
+    "tipo": "v:lexic_val",
+    "canonica": true
+  },
+  {
+    "espanol": "empujar",
+    "catalan": "empentar",
+    "valenciano": "espentar",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "encoger",
+    "catalan": "encongir",
+    "valenciano": "encollir",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "entregar",
+    "catalan": "lliurar",
+    "valenciano": "entregar",
+    "tipo": "v:lexic_entregar"
+  },
+  {
+    "espanol": "firmar",
+    "catalan": "signar",
+    "valenciano": "firmar",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "hundir",
+    "catalan": "enfonsar",
+    "valenciano": "afonar",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "lavar",
+    "catalan": "rentar",
+    "valenciano": "llavar",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "levantar",
+    "catalan": "aixecar",
+    "valenciano": "alçar",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "mezclar",
+    "catalan": "barrejar",
+    "valenciano": "mesclar",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "mojar",
+    "catalan": "mullar",
+    "valenciano": "banyar",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "pisar",
+    "catalan": "trepitjar",
+    "valenciano": "xafar",
+    "tipo": "v:lexic_val",
+    "canonica": true
+  },
+  {
+    "espanol": "recoger",
+    "catalan": "recollir",
+    "valenciano": "arreplegar",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "resbalar",
+    "catalan": "relliscar",
+    "valenciano": "esvarar",
+    "tipo": "v:lexic_val",
+    "canonica": false
+  },
+  {
+    "espanol": "salir",
+    "catalan": "sortir",
+    "valenciano": "eixir",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "salpicar",
+    "catalan": "esquitxar",
+    "valenciano": "esguitar",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "sufrir",
+    "catalan": "sofrir",
+    "valenciano": "patir",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "tardar",
+    "catalan": "trigar",
+    "valenciano": "tardar",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "tragar",
+    "catalan": "empassar",
+    "valenciano": "engolir",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "levantamiento",
+    "catalan": "aixecament",
+    "valenciano": "alçament",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "berenjena",
+    "catalan": "albergínia",
+    "valenciano": "albergina",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "ensalada",
+    "catalan": "amanida",
+    "valenciano": "ensalada",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "chaleco",
+    "catalan": "armilla",
+    "valenciano": "jupetí",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "caldo",
+    "catalan": "brou",
+    "valenciano": "caldo",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "bofetada",
+    "catalan": "bufetada",
+    "valenciano": "galtada",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "colilla",
+    "catalan": "burilla",
+    "valenciano": "punta de cigarret",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "pinchazo",
+    "catalan": "burxada",
+    "valenciano": "punxada",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "granizo",
+    "catalan": "calamarsa",
+    "valenciano": "graníssol",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "pisotear",
+    "catalan": "calcigar",
+    "valenciano": "xafar",
+    "tipo": "v:lexic_val",
+    "canonica": false
+  },
+  {
+    "espanol": "calabacín",
+    "catalan": "carabassó",
+    "valenciano": "carabasseta",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "chuleta",
+    "catalan": "costella",
+    "valenciano": "xulla",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "palomita",
+    "catalan": "crispeta",
+    "valenciano": "rosa",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "herramienta",
+    "catalan": "eina",
+    "valenciano": "ferramenta",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "lechuga",
+    "catalan": "enciam",
+    "valenciano": "encisam",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "tabique",
+    "catalan": "envà",
+    "valenciano": "barandat",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "escoba",
+    "catalan": "escombra",
+    "valenciano": "granera",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "acortar",
+    "catalan": "escurçar",
+    "valenciano": "acurtar",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "estropear",
+    "catalan": "espatllar",
+    "valenciano": "desbaratar",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "espesor",
+    "catalan": "gruix",
+    "valenciano": "grossària",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "grieta",
+    "catalan": "esquerda",
+    "valenciano": "clivella",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "agrietar",
+    "catalan": "esquerdar",
+    "valenciano": "clivellar",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "habichuela",
+    "catalan": "mongeta",
+    "valenciano": "fesol",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "garrapata",
+    "catalan": "paparra",
+    "valenciano": "caparra",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "jarro",
+    "catalan": "gerro",
+    "valenciano": "pitxer",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "rascar",
+    "catalan": "gratar",
+    "valenciano": "rascar",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "zorro",
+    "catalan": "guineu",
+    "valenciano": "rabosa",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "juguete",
+    "catalan": "joguina",
+    "valenciano": "joguet",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "golosina",
+    "catalan": "llaminadura",
+    "valenciano": "llepolia",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "pereza",
+    "catalan": "mandra",
+    "valenciano": "peresa",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "navaja",
+    "catalan": "navalla",
+    "valenciano": "navaixa",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "albañil",
+    "catalan": "paleta",
+    "valenciano": "obrer",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "zanahoria",
+    "catalan": "pastanaga",
+    "valenciano": "carlota",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "pimiento",
+    "catalan": "pebrot",
+    "valenciano": "pimentó",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "cáscara",
+    "catalan": "pela",
+    "valenciano": "corfa",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "prejuicio",
+    "catalan": "prejudici",
+    "valenciano": "prejuí",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "pulsar",
+    "catalan": "prémer",
+    "valenciano": "polsar",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "ladrillo",
+    "catalan": "maó",
+    "valenciano": "rajola",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "lavadora",
+    "catalan": "rentadora",
+    "valenciano": "llavadora",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "devengar",
+    "catalan": "reportar",
+    "valenciano": "generar",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "saciar",
+    "catalan": "sadollar",
+    "valenciano": "assaciar",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "cordura",
+    "catalan": "seny",
+    "valenciano": "trellat",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "sobresalir",
+    "catalan": "sobresortir",
+    "valenciano": "sobreeixir",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "debajo",
+    "catalan": "sota",
+    "valenciano": "davall",
+    "tipo": "v:lexic_val_PENDENT",
+    "canonica": true
+  },
+  {
+    "espanol": "por debajo",
+    "catalan": "per sota",
+    "valenciano": "per davall",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "suficientemente",
+    "catalan": "suficientment",
+    "valenciano": "suficientment",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "tenis",
+    "catalan": "tennis",
+    "valenciano": "tenis",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "tomate",
+    "catalan": "tomàquet",
+    "valenciano": "tomaca",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "verdaderamente",
+    "catalan": "veritablement",
+    "valenciano": "verdaderament",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "viudo",
+    "catalan": "vidu",
+    "valenciano": "viudo",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "por la tarde",
+    "catalan": "a la tarda",
+    "valenciano": "a la vesprada",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "por las tardes",
+    "catalan": "a les tardes",
+    "valenciano": "a les vesprades",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "autoservicio",
+    "catalan": "autoservei",
+    "valenciano": "autoservici",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "mención",
+    "catalan": "esment",
+    "valenciano": "menció",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "mejillón",
+    "catalan": "musclo",
+    "valenciano": "clòtxina",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "condolencia",
+    "catalan": "condolença",
+    "valenciano": "condol",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "crisol",
+    "catalan": "gresol",
+    "valenciano": "cresol",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "debilitar",
+    "catalan": "afeblir",
+    "valenciano": "debilitar",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "lagarto",
+    "catalan": "llangardaix",
+    "valenciano": "fardatxo",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "noria",
+    "catalan": "sínia",
+    "valenciano": "sénia",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "pistacho",
+    "catalan": "festuc",
+    "valenciano": "pistatxo",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "purga",
+    "catalan": "purga",
+    "valenciano": "porga",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "burlete",
+    "catalan": "rivet",
+    "valenciano": "borlet",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "sandía",
+    "catalan": "síndria",
+    "valenciano": "meló d'Alger",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "subsecretaría",
+    "catalan": "sotssecretaria",
+    "valenciano": "subsecretaria",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "subsecretario",
+    "catalan": "sotssecretari",
+    "valenciano": "subsecretari",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "varadero",
+    "catalan": "escar",
+    "valenciano": "varador",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "dosificación",
+    "catalan": "dosatge",
+    "valenciano": "dosificació",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "parón",
+    "catalan": "aturada",
+    "valenciano": "parada",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "rastrojo",
+    "catalan": "rostoll",
+    "valenciano": "restoll",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "recibimiento",
+    "catalan": "rebuda",
+    "valenciano": "recepció",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "más bien",
+    "catalan": "ans",
+    "valenciano": "més prompte",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "tan pronto",
+    "catalan": "tan aviat",
+    "valenciano": "tan prompte",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "hace bastante tiempo",
+    "catalan": "fa força temps",
+    "valenciano": "fa molt de temps",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "aquí abajo",
+    "catalan": "aquí sota",
+    "valenciano": "aquí baix",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "arañar",
+    "catalan": "esgarrapar",
+    "valenciano": "arrapar",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "renacuajo",
+    "catalan": "capgròs",
+    "valenciano": "cullerot",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "romería",
+    "catalan": "romiatge",
+    "valenciano": "romeria",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "falda",
+    "catalan": "faldilla",
+    "valenciano": "falda",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "tenedor",
+    "catalan": "tenidor",
+    "valenciano": "forqueta",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "zancada",
+    "catalan": "gambada",
+    "valenciano": "camallada",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "guijarro",
+    "catalan": "còdol",
+    "valenciano": "cudol",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "lebrillo",
+    "catalan": "gibrell",
+    "valenciano": "llibrell",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "yeso",
+    "catalan": "guix",
+    "valenciano": "algeps",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "gorrión",
+    "catalan": "pardal",
+    "valenciano": "teuladí",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "melocotonero",
+    "catalan": "presseguer",
+    "valenciano": "bresquillera",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "ha lugar",
+    "catalan": "escau",
+    "valenciano": "és procedent",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "desarrollador",
+    "catalan": "desenvolupador",
+    "valenciano": "desenrotllador",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "dolor de garganta",
+    "catalan": "mal de coll",
+    "valenciano": "mal de gola",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "I+D",
+    "catalan": "R+D",
+    "valenciano": "I+D",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "I+D+i",
+    "catalan": "R+D+I",
+    "valenciano": "I+D+i",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "subdesarrollo",
+    "catalan": "subdesenvolupament",
+    "valenciano": "subdesenrotllament",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "abreviamiento",
+    "catalan": "abreujament",
+    "valenciano": "abreviació",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "regaliz",
+    "catalan": "regalèssia",
+    "valenciano": "regalíssia",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "chopo",
+    "catalan": "pollancre",
+    "valenciano": "xop",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "malta",
+    "catalan": "malt",
+    "valenciano": "malta",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "carcoma",
+    "catalan": "corcadura",
+    "valenciano": "corcó",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "hélice",
+    "catalan": "hèlix",
+    "valenciano": "hèlice",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "manguito",
+    "catalan": "maniguet",
+    "valenciano": "maneguet",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "barrido",
+    "catalan": "escombratge",
+    "valenciano": "agranament",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "maíz",
+    "catalan": "blat de moro",
+    "valenciano": "dacsa",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "tomillo",
+    "catalan": "farigola",
+    "valenciano": "timó",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "helecho",
+    "catalan": "falguera",
+    "valenciano": "falaguera",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "bellota",
+    "catalan": "gla",
+    "valenciano": "bellota",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "vistazo",
+    "catalan": "cop d'ull",
+    "valenciano": "ullada",
+    "tipo": "v:lexic_val_PENDENT",
+    "canonica": false
+  },
+  {
+    "espanol": "ojeada",
+    "catalan": "ullada",
+    "valenciano": "ullada",
+    "tipo": "v:lexic_val_PENDENT",
+    "canonica": true
+  },
+  {
+    "espanol": "níspero",
+    "catalan": "nespra",
+    "valenciano": "nispro",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "hurón",
+    "catalan": "fura",
+    "valenciano": "furó",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "pomelo",
+    "catalan": "aranja",
+    "valenciano": "pomelo",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "tartamudez",
+    "catalan": "quequesa",
+    "valenciano": "tartamudesa",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "a la caída de la tarde",
+    "catalan": "al caient de la tarda",
+    "valenciano": "al caient de la vesprada",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "a media tarde",
+    "catalan": "a mitjan tarda",
+    "valenciano": "a mitjan vesprada",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "a sabiendas",
+    "catalan": "a gratcient",
+    "valenciano": "amb coneixença",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "como muy tarde",
+    "catalan": "a tot tardar",
+    "valenciano": "com a molt tard",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "como una lapa",
+    "catalan": "com una paparra",
+    "valenciano": "com una caparra",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "con tino",
+    "catalan": "amb seny",
+    "valenciano": "amb trellat",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "cuando proceda",
+    "catalan": "quan escaigui",
+    "valenciano": "quan sigui procedent",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "de un plumazo",
+    "catalan": "d'un cop de ploma",
+    "valenciano": "d'una plomada",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "dentro de poco",
+    "catalan": "abans de gaire",
+    "valenciano": "d'aquí a poc",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "el día siguiente a pasado mañana",
+    "catalan": "demà passat l'altre",
+    "valenciano": "despús-demà l'altre",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "golosamente",
+    "catalan": "llaminerament",
+    "valenciano": "llépolament",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "mañana, tarde y noche",
+    "catalan": "matí, tarda i nit",
+    "valenciano": "matí, vesprada i nit",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "mañana y tarde",
+    "catalan": "matí i tarda",
+    "valenciano": "matí i vesprada",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "subdesarrolladamente",
+    "catalan": "subdesenvolupadament",
+    "valenciano": "subdesenrotlladament",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "tarde o temprano",
+    "catalan": "tard o d'hora",
+    "valenciano": "prompte o tard",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "de golpe y porrazo",
+    "catalan": "de cop i volta",
+    "valenciano": "de sobte",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "a la mayor brevedad posible",
+    "catalan": "com més aviat millor",
+    "valenciano": "com més prompte millor",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "hace tres días",
+    "catalan": "abans-d'ahir l'altre",
+    "valenciano": "despús-ahir l'altre",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "en tiempo y forma",
+    "catalan": "dins del termini i en la forma escaient",
+    "valenciano": "dins del termini i en la forma corresponent",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "lo más pronto",
+    "catalan": "al més aviat",
+    "valenciano": "al més prompte",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "pasado mañana",
+    "catalan": "demà passat",
+    "valenciano": "despús-demà",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "soltar",
+    "catalan": "amollar",
+    "valenciano": "soltar",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "ablandar",
+    "catalan": "estovar",
+    "valenciano": "ablanir",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "dar un beso",
+    "catalan": "fer un petó",
+    "valenciano": "fer una besada",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "dar un vistazo",
+    "catalan": "donar un cop d'ull",
+    "valenciano": "donar una ullada",
+    "tipo": "v:lexic_val_PENDENT",
+    "canonica": true
+  },
+  {
+    "espanol": "dar un vistazo",
+    "catalan": "donar un cop d'ull",
+    "valenciano": "fer una ullada",
+    "tipo": "v:lexic_val_PENDENT",
+    "canonica": false
+  },
+  {
+    "espanol": "desbrozar",
+    "catalan": "esbrossar",
+    "valenciano": "desbrossar",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "dosificar",
+    "catalan": "dosar",
+    "valenciano": "dosificar",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "enlatar",
+    "catalan": "enllaunar",
+    "valenciano": "enllandar",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "fregar los platos",
+    "catalan": "rentar els plats",
+    "valenciano": "llavar els plats",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "prestar atención",
+    "catalan": "parar esment",
+    "valenciano": "parar atenció",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "sacar de quicio",
+    "catalan": "fer sortir de polleguera",
+    "valenciano": "fer eixir de polleguera",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "columpiar",
+    "catalan": "gronxar",
+    "valenciano": "engrunsar",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "hervir",
+    "catalan": "bullir",
+    "valenciano": "bollir",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "jadear",
+    "catalan": "panteixar",
+    "valenciano": "pantaixar",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "llamar por teléfono",
+    "catalan": "trucar per telèfon",
+    "valenciano": "telefonar",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "salir de apuros",
+    "catalan": "sortir d'un mal pas",
+    "valenciano": "eixir d'un mal pas",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "agachar",
+    "catalan": "ajupir",
+    "valenciano": "acatxar",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "barrer",
+    "catalan": "escombrar",
+    "valenciano": "agranar",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "coliflor",
+    "catalan": "coliflor",
+    "valenciano": "floricol",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "albahaca",
+    "catalan": "alfàbrega",
+    "valenciano": "alfàbega",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "albañilería",
+    "catalan": "obra de paleta",
+    "valenciano": "construcció",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "avena",
+    "catalan": "civada",
+    "valenciano": "avena",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "bajío de arena",
+    "catalan": "baix de sorra",
+    "valenciano": "baix d'arena",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "bullicio",
+    "catalan": "renou",
+    "valenciano": "bullici",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "cerilla",
+    "catalan": "llumí",
+    "valenciano": "misto",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "chupete",
+    "catalan": "xumet",
+    "valenciano": "xupló",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "colmena",
+    "catalan": "rusc",
+    "valenciano": "buc",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "cosquillas",
+    "catalan": "pessigolles",
+    "valenciano": "cosquerelles",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "cotiledón",
+    "catalan": "cotilèdon",
+    "valenciano": "cotiledó",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "empuje",
+    "catalan": "embranzida",
+    "valenciano": "empenyiment",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "enfado",
+    "catalan": "empipament",
+    "valenciano": "enuig",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "fontanería",
+    "catalan": "lampisteria",
+    "valenciano": "fontaneria",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "goloso",
+    "catalan": "llaminer",
+    "valenciano": "llépol",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "jazmín",
+    "catalan": "gessamí",
+    "valenciano": "gesmiler",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "limonero",
+    "catalan": "llimoner",
+    "valenciano": "llimera",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "manantial",
+    "catalan": "deu",
+    "valenciano": "brollador",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "nogal",
+    "catalan": "noguera",
+    "valenciano": "anouer",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "pavo",
+    "catalan": "gall dindi",
+    "valenciano": "polit",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "pierna de cordero",
+    "catalan": "cuixa de xai",
+    "valenciano": "cuixa de corder",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "pisoteo",
+    "catalan": "calcigament",
+    "valenciano": "xafada",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "riña",
+    "catalan": "renyina",
+    "valenciano": "baralla",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "servicio de metro",
+    "catalan": "servei de metro",
+    "valenciano": "servici de metro",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "servicio del metro",
+    "catalan": "servei del metro",
+    "valenciano": "servici del metro",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "trabajo de investigación",
+    "catalan": "treball de recerca",
+    "valenciano": "treball d'investigació",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "vallado",
+    "catalan": "clos",
+    "valenciano": "tancat",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "redondel",
+    "catalan": "cercle",
+    "valenciano": "redolí",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "saltamontes",
+    "catalan": "llagosta",
+    "valenciano": "saltamartí",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "burbuja",
+    "catalan": "bombolla",
+    "valenciano": "bambolla",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "cántaro",
+    "catalan": "càntir",
+    "valenciano": "cànter",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "chufa",
+    "catalan": "xufla",
+    "valenciano": "xufa",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "cometa",
+    "catalan": "estel",
+    "valenciano": "milotxa",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "derrumbe",
+    "catalan": "ensorrament",
+    "valenciano": "solsida",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "empujón",
+    "catalan": "empenta",
+    "valenciano": "espenta",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "jadeo",
+    "catalan": "panteix",
+    "valenciano": "pantaix",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "manzanilla",
+    "catalan": "camamilla",
+    "valenciano": "camamil·la",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "melocotón",
+    "catalan": "préssec",
+    "valenciano": "bresquilla",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "perjuicio",
+    "catalan": "perjudici",
+    "valenciano": "perjuí",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "requesón",
+    "catalan": "recuit",
+    "valenciano": "brull",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "sarampión",
+    "catalan": "xarampió",
+    "valenciano": "pallola",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "vaina",
+    "catalan": "tavella",
+    "valenciano": "baina",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "viruela",
+    "catalan": "verola",
+    "valenciano": "pigota",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "bragas",
+    "catalan": "calces",
+    "valenciano": "bragues",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "portazo",
+    "catalan": "cop de porta",
+    "valenciano": "portada",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "puñetazo",
+    "catalan": "cop de puny",
+    "valenciano": "punyada",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "pistoletazo de salida",
+    "catalan": "tret de sortida",
+    "valenciano": "tret d'eixida",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "vacaciones de Navidad",
+    "catalan": "vacances de Nadal",
+    "valenciano": "vacacions de Nadal",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "radián",
+    "catalan": "radian",
+    "valenciano": "radian",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "chocolate blanco",
+    "catalan": "xocolata blanca",
+    "valenciano": "xocolate blanc",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "encomienda de gestión",
+    "catalan": "encomanda de gestió",
+    "valenciano": "comanda de gestió",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "tropezar",
+    "catalan": "ensopegar",
+    "valenciano": "entropessar",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "empanadilla",
+    "catalan": "cresta",
+    "valenciano": "pastisset",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "romero",
+    "catalan": "romer",
+    "valenciano": "romer",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "catering",
+    "catalan": "servei d'àpats",
+    "valenciano": "servici d'àpats",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "postservicio",
+    "catalan": "postservei",
+    "valenciano": "postservici",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "abrelatas",
+    "catalan": "obrellaunes",
+    "valenciano": "obrillandes",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "juguetería",
+    "catalan": "botiga de joguines",
+    "valenciano": "botiga de joguets",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "decoro",
+    "catalan": "decòrum",
+    "valenciano": "decor",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "late check-out",
+    "catalan": "sortida retardada",
+    "valenciano": "eixida retardada",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "muergo",
+    "catalan": "navalla recta",
+    "valenciano": "navaixa recta",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "tamarillo",
+    "catalan": "tomàquet d'arbre",
+    "valenciano": "tomaca d'arbre",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "teleservicio",
+    "catalan": "teleservei",
+    "valenciano": "teleservici",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "tomate cherry",
+    "catalan": "cirerol",
+    "valenciano": "tomaca cherry",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "Ademuz",
+    "catalan": "Ademús",
+    "valenciano": "Ademuz",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Algar de Palancia",
+    "catalan": "Algar de Palància",
+    "valenciano": "Algar de Palancia",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Ayódar",
+    "catalan": "Aiòder",
+    "valenciano": "Ayódar",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Ayora",
+    "catalan": "Aiora",
+    "valenciano": "Ayora",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Albuixech",
+    "catalan": "Albuixec",
+    "valenciano": "Albuixech",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Alcocer de Planes",
+    "catalan": "Alcosser de Planes",
+    "valenciano": "Alcocer de Planes",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Alborache",
+    "catalan": "Alboraig",
+    "valenciano": "Alborache",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Alcublas",
+    "catalan": "les Alcubles",
+    "valenciano": "Alcublas",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Alcudia de Veo",
+    "catalan": "l'Alcúdia de Veo",
+    "valenciano": "Alcudia de Veo",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Algimia de Almonacid",
+    "catalan": "Algímia d'Almonesir",
+    "valenciano": "Algimia de Almonacid",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Algueña",
+    "catalan": "l'Alguenya",
+    "valenciano": "Algueña",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Almedíjar",
+    "catalan": "Almedíxer",
+    "valenciano": "Almedíjar",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Alpuente",
+    "catalan": "Alpont",
+    "valenciano": "Alpuente",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Arañuel",
+    "catalan": "Aranyel",
+    "valenciano": "Arañuel",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Argelita",
+    "catalan": "Argeleta",
+    "valenciano": "Argelita",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Aspe",
+    "catalan": "Asp",
+    "valenciano": "Aspe",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Azuébar",
+    "catalan": "Assuévar",
+    "valenciano": "Azuébar",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Barracas",
+    "catalan": "Barraques",
+    "valenciano": "Barracas",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Bejís",
+    "catalan": "Begís",
+    "valenciano": "Bejís",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Benagéber",
+    "catalan": "Benaixeve",
+    "valenciano": "Benagéber",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Benejúzar",
+    "catalan": "Benejússer",
+    "valenciano": "Benejúzar",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Beniflá",
+    "catalan": "Beniflà",
+    "valenciano": "Beniflá",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Benijófar",
+    "catalan": "Benijòfer",
+    "valenciano": "Benijófar",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Bicorp",
+    "catalan": "Bicorb",
+    "valenciano": "Bicorp",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Bigastro",
+    "catalan": "Bigastre",
+    "valenciano": "Bigastro",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Bolbaite",
+    "catalan": "Bolbait",
+    "valenciano": "Bolbaite",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Buñol",
+    "catalan": "Bunyol",
+    "valenciano": "Buñol",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Cañada",
+    "catalan": "la Canyada",
+    "valenciano": "Cañada",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Casas Altas",
+    "catalan": "Cases Altes",
+    "valenciano": "Casas Altas",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Casas Bajas",
+    "catalan": "Cases Baixes",
+    "valenciano": "Casas Bajas",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Castillo de Villamalefa",
+    "catalan": "el Castell de Vilamalefa",
+    "valenciano": "Castillo de Villamalefa",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Castellnovo",
+    "catalan": "Castellnou",
+    "valenciano": "Castellnovo",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Cervera del Maestre",
+    "catalan": "Cervera del Maestrat",
+    "valenciano": "Cervera del Maestre",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Cofrentes",
+    "catalan": "Cofrents",
+    "valenciano": "Cofrentes",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Cox",
+    "catalan": "Coix",
+    "valenciano": "Cox",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Cortes de Arenoso",
+    "catalan": "Cortes d'Arenós",
+    "valenciano": "Cortes de Arenoso",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Cortes de Pallás",
+    "catalan": "Cortes de Pallars",
+    "valenciano": "Cortes de Pallás",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Daya Nueva",
+    "catalan": "Daia Nova",
+    "valenciano": "Daya Nueva",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Daya Vieja",
+    "catalan": "Daia Vella",
+    "valenciano": "Daya Vieja",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Domeño",
+    "catalan": "Domenyo",
+    "valenciano": "Domeño",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Dos Aguas",
+    "catalan": "Dosaigües",
+    "valenciano": "Dos Aguas",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Enguera",
+    "catalan": "Énguera",
+    "valenciano": "Enguera",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Espadilla",
+    "catalan": "Espadella",
+    "valenciano": "Espadilla",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Facheca",
+    "catalan": "Fageca",
+    "valenciano": "Facheca",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Fuente la Reina",
+    "catalan": "la Font de la Reina",
+    "valenciano": "Fuente la Reina",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Gátova",
+    "catalan": "Gàtova",
+    "valenciano": "Gátova",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Higueras",
+    "catalan": "Figueres",
+    "valenciano": "Higueras",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Higueruelas",
+    "catalan": "Figueroles de Domenyo",
+    "valenciano": "Higueruelas",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Hondón de los Frailes",
+    "catalan": "el Fondó dels Frares",
+    "valenciano": "Hondón de los Frailes",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Fuentes de Ayódar",
+    "catalan": "les Fonts d'Aiòder",
+    "valenciano": "Fuentes de Ayódar",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Forcall",
+    "catalan": "el Forcall",
+    "valenciano": "Forcall",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Granja de Rocamora",
+    "catalan": "la Granja de Rocamora",
+    "valenciano": "Granja de Rocamora",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Herbés",
+    "catalan": "Herbers",
+    "valenciano": "Herbés",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Yátova",
+    "catalan": "Iàtova",
+    "valenciano": "Yátova",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "La Yesa",
+    "catalan": "la Iessa",
+    "valenciano": "La Yesa",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Losa del Obispo",
+    "catalan": "la Llosa del Bisbe",
+    "valenciano": "Losa del Obispo",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Ludiente",
+    "catalan": "Lludient",
+    "valenciano": "Ludiente",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Millares",
+    "catalan": "Millars",
+    "valenciano": "Millares",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Montán",
+    "catalan": "Montant",
+    "valenciano": "Montán",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Moncada",
+    "catalan": "Montcada",
+    "valenciano": "Moncada",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Monforte del Cid",
+    "catalan": "Montfort",
+    "valenciano": "Monforte del Cid",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Muro de Alcoy",
+    "catalan": "Muro d'Alcoi",
+    "valenciano": "Muro de Alcoy",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Navajas",
+    "catalan": "Navaixes",
+    "valenciano": "Navajas",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Olocau del Rey",
+    "catalan": "Olocau del Rei",
+    "valenciano": "Olocau del Rey",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Orihuela",
+    "catalan": "Orihuela",
+    "valenciano": "Orihuela",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Palma de Gandía",
+    "catalan": "Palma de Gandia",
+    "valenciano": "Palma de Gandía",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Pavías",
+    "catalan": "Pavies",
+    "valenciano": "Pavías",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Pilar de la Horadada",
+    "catalan": "el Pilar de la Foradada",
+    "valenciano": "Pilar de la Horadada",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Pina de Montalgrao",
+    "catalan": "Pina",
+    "valenciano": "Pina de Montalgrao",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Puebla de Arenoso",
+    "catalan": "la Pobla d'Arenós",
+    "valenciano": "Puebla de Arenoso",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Puebla de San Miguel",
+    "catalan": "la Pobla de Sant Miquel",
+    "valenciano": "Puebla de San Miguel",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Ráfol de Salem",
+    "catalan": "el Ràfol de Salem",
+    "valenciano": "Ráfol de Salem",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Redován",
+    "catalan": "Redovà",
+    "valenciano": "Redován",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Rojales",
+    "catalan": "Rojals",
+    "valenciano": "Rojales",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Rótova",
+    "catalan": "Ròtova",
+    "valenciano": "Rótova",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Sacañet",
+    "catalan": "Sacanyet",
+    "valenciano": "Sacañet",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Sax",
+    "catalan": "Saix",
+    "valenciano": "Sax",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Salinas",
+    "catalan": "Salines",
+    "valenciano": "Salinas",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Sanet y Negrals",
+    "catalan": "Sanet i els Negrals",
+    "valenciano": "Sanet y Negrals",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "San Antonio de Benagéber",
+    "catalan": "Sant Antoni de Benaixeve",
+    "valenciano": "San Antonio de Benagéber",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "San Fulgencio",
+    "catalan": "Sant Fulgenci",
+    "valenciano": "San Fulgencio",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "San Isidro",
+    "catalan": "Sant Isidre",
+    "valenciano": "San Isidro",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "San Miguel de Salinas",
+    "catalan": "Sant Miquel de les Salines",
+    "valenciano": "San Miguel de Salinas",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "San Rafael del Río",
+    "catalan": "Sant Rafel del Riu",
+    "valenciano": "San Rafael del Río",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Santa Magdalena de Pulpis",
+    "catalan": "Santa Magdalena de Polpís",
+    "valenciano": "Santa Magdalena de Pulpis",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Sierra Engarcerán",
+    "catalan": "la Serra d'en Galceran",
+    "valenciano": "Sierra Engarcerán",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Siete Aguas",
+    "catalan": "Setaigües",
+    "valenciano": "Siete Aguas",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Sinarcas",
+    "catalan": "Sinarques",
+    "valenciano": "Sinarcas",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Segorbe",
+    "catalan": "Sogorb",
+    "valenciano": "Segorbe",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Zorita del Maestrazgo",
+    "catalan": "Sorita",
+    "valenciano": "Zorita del Maestrazgo",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Sot de Chera",
+    "catalan": "Sot de Xera",
+    "valenciano": "Sot de Chera",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Zucaina",
+    "catalan": "Sucaina",
+    "valenciano": "Zucaina",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Teresa de Cofrentes",
+    "catalan": "Teresa de Cofrents",
+    "valenciano": "Teresa de Cofrentes",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Titaguas",
+    "catalan": "Titaigües",
+    "valenciano": "Titaguas",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Todolella",
+    "catalan": "la Todolella",
+    "valenciano": "Todolella",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Tuéjar",
+    "catalan": "Toixa",
+    "valenciano": "Tuéjar",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Torás",
+    "catalan": "Toràs",
+    "valenciano": "Torás",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Turís",
+    "catalan": "Torís",
+    "valenciano": "Turís",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Torralba del Pinar",
+    "catalan": "Torralba",
+    "valenciano": "Torralba del Pinar",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Torrebaja",
+    "catalan": "Torrebaixa",
+    "valenciano": "Torrebaja",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Torrevieja",
+    "catalan": "Torrevella",
+    "valenciano": "Torrevieja",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Torrechiva",
+    "catalan": "Torre-xiva",
+    "valenciano": "Torrechiva",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Vall d'Alba",
+    "catalan": "la Vall d'Alba",
+    "valenciano": "Vall d'Alba",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Vall de Almonacid",
+    "catalan": "la Vall d'Almonesir",
+    "valenciano": "Vall de Almonacid",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Vall de Gallinera",
+    "catalan": "la Vall de Gallinera",
+    "valenciano": "Vall de Gallinera",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Villahermosa del Río",
+    "catalan": "Vilafermosa",
+    "valenciano": "Villahermosa del Río",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Villamalur",
+    "catalan": "Vilamalur",
+    "valenciano": "Villamalur",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Villanueva de Castellón",
+    "catalan": "Vilanova de Castelló",
+    "valenciano": "Villanueva de Castellón",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Villanueva de Viver",
+    "catalan": "Vilanova de la Reina",
+    "valenciano": "Villanueva de Viver",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Villar del Arzobispo",
+    "catalan": "el Villar",
+    "valenciano": "Villar del Arzobispo",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Jacarilla",
+    "catalan": "Xacarella",
+    "valenciano": "Jacarilla",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Jalance",
+    "catalan": "Xalans",
+    "valenciano": "Jalance",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Jarafuel",
+    "catalan": "Xarafull",
+    "valenciano": "Jarafuel",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Chella",
+    "catalan": "Xella",
+    "valenciano": "Chella",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Chelva",
+    "catalan": "Xelva",
+    "valenciano": "Chelva",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Chera",
+    "catalan": "Xera",
+    "valenciano": "Chera",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Jérica",
+    "catalan": "Xèrica",
+    "valenciano": "Jérica",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Cheste",
+    "catalan": "Xest",
+    "valenciano": "Cheste",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Gestalgar",
+    "catalan": "Xestalgar",
+    "valenciano": "Gestalgar",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Chiva",
+    "catalan": "Xiva",
+    "valenciano": "Chiva",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Chóvar",
+    "catalan": "Xóvar",
+    "valenciano": "Chóvar",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "Chulilla",
+    "catalan": "Xulilla",
+    "valenciano": "Chulilla",
+    "tipo": "v:top_gva"
+  },
+  {
+    "espanol": "arenero",
+    "catalan": "sorral",
+    "valenciano": "arenera",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "cada palo que aguante su vela",
+    "catalan": "cadascú que carregui el mort",
+    "valenciano": "cada u que carregue el mort",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "tarea del hogar",
+    "catalan": "feina de casa",
+    "valenciano": "faena de casa",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "huevo frito",
+    "catalan": "ou ferrat",
+    "valenciano": "ou caigut",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "refajo",
+    "catalan": "enagos",
+    "valenciano": "sinagües",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "lavar el pelo",
+    "catalan": "rentar els cabells",
+    "valenciano": "llavar els cabells",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "asolear",
+    "catalan": "assolellar",
+    "valenciano": "solejar",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "flaco favor",
+    "catalan": "mal servei",
+    "valenciano": "mal servici",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "pegar un porrazo",
+    "catalan": "clavar una patacada",
+    "valenciano": "pegar un bac",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "neurodesarrollo",
+    "catalan": "neurodesenvolupament",
+    "valenciano": "neurodesenrotllament",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "empujoncito",
+    "catalan": "empenteta",
+    "valenciano": "espenteta",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "tumbona",
+    "catalan": "gandula",
+    "valenciano": "hamaca",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "salir rana",
+    "catalan": "sortir carabassa",
+    "valenciano": "eixir carabassa",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "escobazo",
+    "catalan": "cop d'escombra",
+    "valenciano": "cop de granera",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "salir del cascarón",
+    "catalan": "sortir de l'ou",
+    "valenciano": "eixir de l'ou",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "cabezazo",
+    "catalan": "cop de cap",
+    "valenciano": "cabotada",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "chaparral",
+    "catalan": "garriga",
+    "valenciano": "coscollar",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "corrillo",
+    "catalan": "rotlle",
+    "valenciano": "rogle",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "tomar prestados",
+    "catalan": "manllevar",
+    "valenciano": "amprar",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "abrebotellas",
+    "catalan": "obridor",
+    "valenciano": "obribotelles",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "montar un pollo",
+    "catalan": "armar un sidral",
+    "valenciano": "armar un canyaret",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "tomatero",
+    "catalan": "de tomàquets",
+    "valenciano": "venedor de tomaques",
+    "tipo": "v:lexic_val",
+    "canonica": false
+  },
+  {
+    "espanol": "novatada",
+    "catalan": "quintada",
+    "valenciano": "novatada",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "sentar como una pedrada",
+    "catalan": "caure com un cop de puny al ventre",
+    "valenciano": "caure com una punyada al ventre",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "interservicio",
+    "catalan": "interservei",
+    "valenciano": "interservici",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "mazorca",
+    "catalan": "panotxa",
+    "valenciano": "panolla",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "lavamanos",
+    "catalan": "rentamans",
+    "valenciano": "llavamans",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "codesarrollo",
+    "catalan": "codesenvolupament",
+    "valenciano": "codesenrotllament",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "escombrera",
+    "catalan": "runam",
+    "valenciano": "runar",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "chipirón",
+    "catalan": "calamarsó",
+    "valenciano": "calamaró",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "atracón",
+    "catalan": "fartanera",
+    "valenciano": "fartada",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "algarrobo",
+    "catalan": "garrofer",
+    "valenciano": "garrofera",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "antevíspera",
+    "catalan": "antevigília",
+    "valenciano": "antevespra",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "escayolista",
+    "catalan": "guixaire",
+    "valenciano": "algepsaire",
+    "tipo": "v:lexic_val",
+    "canonica": false
+  },
+  {
+    "espanol": "escayolista",
+    "catalan": "guixaire",
+    "valenciano": "algepser",
+    "tipo": "v:lexic_val",
+    "canonica": true
+  },
+  {
+    "espanol": "lavaplatos",
+    "catalan": "rentaplats",
+    "valenciano": "llavaplats",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "repollo",
+    "catalan": "cabdell",
+    "valenciano": "col copada",
+    "tipo": "v:lexic_val_PENDENT"
+  },
+  {
+    "espanol": "gasto",
+    "catalan": "despesa",
+    "valenciano": "gasto",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "hoja de salida",
+    "catalan": "full de sortida",
+    "valenciano": "full d'eixida",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "águila perdicera",
+    "catalan": "àguila cuabarrada",
+    "valenciano": "àguila de panxa blanca",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "aguilucho cenizo",
+    "catalan": "esparver cendrós",
+    "valenciano": "arpellot cendrós",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "alcaudón",
+    "catalan": "capsigrany",
+    "valenciano": "capsot",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "alondra",
+    "catalan": "alosa",
+    "valenciano": "terrerola",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "avutarda",
+    "catalan": "pioc salvatge",
+    "valenciano": "avitarda",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "cernícalo primilla",
+    "catalan": "xoriguer petit",
+    "valenciano": "falconet de campanar",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "charrán",
+    "catalan": "xatrac",
+    "valenciano": "tisoreta d'albufera",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "escribano palustre",
+    "catalan": "repicatalons",
+    "valenciano": "teuladí de canyar",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "quebrantahuesos",
+    "catalan": "trencalòs",
+    "valenciano": "crebalòs",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "urraca",
+    "catalan": "garsa",
+    "valenciano": "blanca",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "vencejo",
+    "catalan": "falciot",
+    "valenciano": "falcia",
+    "tipo": "v:lexic_val"
+  },
+  {
+    "espanol": "Boletín Oficial del Estado",
+    "catalan": "Butlletí Oficial de l'Estat",
+    "valenciano": "Boletín Oficial del Estado",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "subdesarrollar",
+    "catalan": "subdesenvolupar",
+    "valenciano": "subdesenrotllar",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "si procede",
+    "catalan": "si escau",
+    "valenciano": "si és procedent",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "invadir",
+    "catalan": "envair",
+    "valenciano": "invadir",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "medición",
+    "catalan": "amidament",
+    "valenciano": "medició",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "rodadura",
+    "catalan": "rodolament",
+    "valenciano": "redolament",
+    "tipo": "v:lexic_val_gva"
+  },
+  {
+    "espanol": "a la",
+    "catalan": "a la",
+    "valenciano": "a la",
+    "tipo": "v:hores_rellotge"
+  },
+  {
+    "espanol": "a las",
+    "catalan": "a les",
+    "valenciano": "a les",
+    "tipo": "v:hores_rellotge"
+  },
+  {
+    "catalan": "a cop calent",
+    "valenciano": "a colp calent"
+  },
+  {
+    "catalan": "ametlla",
+    "valenciano": "ametla"
+  },
+  {
+    "catalan": "ametlla marcona",
+    "valenciano": "ametla marcona"
+  },
+  {
+    "catalan": "ametllat",
+    "valenciano": "ametlat"
+  },
+  {
+    "catalan": "ametller",
+    "valenciano": "ametler"
+  },
+  {
+    "catalan": "argelaga",
+    "valenciano": "argilaga"
+  },
+  {
+    "catalan": "arrencada",
+    "valenciano": "arrancada"
+  },
+  {
+    "catalan": "arrencament",
+    "valenciano": "arrancament"
+  },
+  {
+    "catalan": "arrodoniment",
+    "valenciano": "arredoniment"
+  },
+  {
+    "catalan": "batlle",
+    "valenciano": "batle"
+  },
+  {
+    "catalan": "bitlla",
+    "valenciano": "bitla"
+  },
+  {
+    "catalan": "butlla",
+    "valenciano": "butla"
+  },
+  {
+    "catalan": "contramotllura",
+    "valenciano": "contramotlura"
+  },
+  {
+    "catalan": "contraordre",
+    "valenciano": "contraorde"
+  },
+  {
+    "catalan": "cop",
+    "valenciano": "colp"
+  },
+  {
+    "catalan": "copet",
+    "valenciano": "colpet"
+  },
+  {
+    "catalan": "cua",
+    "valenciano": "cua d'oroneta"
+  },
+  {
+    "catalan": "desemmotllatge",
+    "valenciano": "desemmotlatge"
+  },
+  {
+    "catalan": "desordre",
+    "valenciano": "desorde"
+  },
+  {
+    "catalan": "desvetllament",
+    "valenciano": "desvetlament"
+  },
+  {
+    "catalan": "dipòsit",
+    "valenciano": "depòsit"
+  },
+  {
+    "catalan": "dipòsit funerari",
+    "valenciano": "depòsit funerari"
+  },
+  {
+    "catalan": "el que no escaigui",
+    "valenciano": "~el que no escaiga"
+  },
+  {
+    "catalan": "el que s'estableix",
+    "valenciano": "~el que s'establix"
+  },
+  {
+    "catalan": "embussament",
+    "valenciano": "embossament"
+  },
+  {
+    "catalan": "embús",
+    "valenciano": "embós"
+  },
+  {
+    "catalan": "emmotllament",
+    "valenciano": "emotlament"
+  },
+  {
+    "catalan": "escalfador",
+    "valenciano": "calfador"
+  },
+  {
+    "catalan": "escalfament",
+    "valenciano": "calfament"
+  },
+  {
+    "catalan": "escuma",
+    "valenciano": "espuma"
+  },
+  {
+    "catalan": "escumadora",
+    "valenciano": "espumadora"
+  },
+  {
+    "catalan": "espatllera",
+    "valenciano": "espatlera"
+  },
+  {
+    "catalan": "espatlleta",
+    "valenciano": "espatleta"
+  },
+  {
+    "catalan": "estrella",
+    "valenciano": "estrela"
+  },
+  {
+    "catalan": "euroordre",
+    "valenciano": "euroorde"
+  },
+  {
+    "catalan": "exbatlle",
+    "valenciano": "exbatle"
+  },
+  {
+    "catalan": "feina",
+    "valenciano": "faena"
+  },
+  {
+    "catalan": "fonoll",
+    "valenciano": "fenoll"
+  },
+  {
+    "catalan": "gestor",
+    "valenciano": "gestor d'arrancada"
+  },
+  {
+    "catalan": "guatlla",
+    "valenciano": "guatla"
+  },
+  {
+    "catalan": "helidipòsit",
+    "valenciano": "helidepòsit"
+  },
+  {
+    "catalan": "hereu",
+    "valenciano": "hereua"
+  },
+  {
+    "catalan": "la feina de casa",
+    "valenciano": "la feina de casa"
+  },
+  {
+    "catalan": "llentia",
+    "valenciano": "llentilla"
+  },
+  {
+    "catalan": "marxa enrere",
+    "valenciano": "marxa arrere"
+  },
+  {
+    "catalan": "motlle",
+    "valenciano": "motle"
+  },
+  {
+    "catalan": "motllura",
+    "valenciano": "motlura"
+  },
+  {
+    "catalan": "màniga",
+    "valenciano": "mànega"
+  },
+  {
+    "catalan": "nou",
+    "valenciano": "anou"
+  },
+  {
+    "catalan": "ordre",
+    "valenciano": "orde"
+  },
+  {
+    "catalan": "oreneta",
+    "valenciano": "oroneta"
+  },
+  {
+    "catalan": "pas",
+    "valenciano": "pas arrere"
+  },
+  {
+    "catalan": "pedra",
+    "valenciano": "pedra en el renyó"
+  },
+  {
+    "catalan": "peixateria",
+    "valenciano": "pescateria"
+  },
+  {
+    "catalan": "pellofa",
+    "valenciano": "pellorfa"
+  },
+  {
+    "catalan": "pertorbació",
+    "valenciano": "pertorbació de l'orde"
+  },
+  {
+    "catalan": "pessebre",
+    "valenciano": "pesebre"
+  },
+  {
+    "catalan": "pista",
+    "valenciano": "pista de bitles"
+  },
+  {
+    "catalan": "preescalfament",
+    "valenciano": "precalfament"
+  },
+  {
+    "catalan": "prima",
+    "valenciano": "prima de depòsit"
+  },
+  {
+    "catalan": "reescalfament",
+    "valenciano": "recalfament"
+  },
+  {
+    "catalan": "reescalfat",
+    "valenciano": "recalfat"
+  },
+  {
+    "catalan": "reial ordre",
+    "valenciano": "reial orde"
+  },
+  {
+    "catalan": "respatller",
+    "valenciano": "respatler"
+  },
+  {
+    "catalan": "revetlla",
+    "valenciano": "revetla"
+  },
+  {
+    "catalan": "rodonesa",
+    "valenciano": "redonesa"
+  },
+  {
+    "catalan": "ronyonera",
+    "valenciano": "renyonera"
+  },
+  {
+    "catalan": "ronyó",
+    "valenciano": "renyó"
+  },
+  {
+    "catalan": "sandvitx",
+    "valenciano": "sàndwitx"
+  },
+  {
+    "catalan": "sobreescalfador",
+    "valenciano": "sobrecalfador"
+  },
+  {
+    "catalan": "sobreescalfament",
+    "valenciano": "sobrecalfament"
+  },
+  {
+    "catalan": "soia",
+    "valenciano": "soja"
+  },
+  {
+    "catalan": "subordre",
+    "valenciano": "suborde"
+  },
+  {
+    "catalan": "superordre",
+    "valenciano": "superorde"
+  },
+  {
+    "catalan": "vernissador",
+    "valenciano": "envernissador"
+  },
+  {
+    "catalan": "vetlla",
+    "valenciano": "vetla"
+  },
+  {
+    "catalan": "vetllada",
+    "valenciano": "vetlada"
+  },
+  {
+    "catalan": "vuitantena",
+    "valenciano": "huitantena"
+  },
+  {
+    "catalan": "xarxet marbrenc",
+    "valenciano": "sarcet marbrenc"
+  },
+  {
+    "catalan": "xemeneia",
+    "valenciano": "ximenera"
+  },
+  {
+    "catalan": "xerrada",
+    "valenciano": "xarrada"
+  },
+  {
+    "catalan": "xerradissa",
+    "valenciano": "xarradissa"
+  },
+  {
+    "catalan": "xerrera",
+    "valenciano": "xarrera"
+  },
+  {
+    "catalan": "òliba",
+    "valenciano": "òbila"
+  },
+  {
+    "catalan": "batllessa",
+    "valenciano": "batlessa"
+  },
+  {
+    "catalan": "exbatllessa",
+    "valenciano": "exbatlessa"
+  },
+  {
+    "catalan": "vernissadora",
+    "valenciano": "envernissadora"
+  }
+]

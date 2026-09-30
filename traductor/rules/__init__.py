@@ -190,6 +190,118 @@ def separa_prefix_elidit(surface: str) -> tuple[str, str] | None:
     return surface[: m.end(1) + 1], m.group(2)
 
 
+# Forma completa de cada prefix elidit, per a poder DESFER l'elisió quan
+# la paraula trobada al diccionari ja no comença en vocal (vore
+# `aplica_amb_prefix_elidit`). "l'" és ambigu entre "el"/"la", però l'ÚNIC
+# ús real trobat fins ara ("l'eixir" -> infinitiu nominalitzat) sempre és
+# masculí, així que es tria "el" per defecte -- documentat, no una regla
+# general de gènere.
+_PREFIX_COMPLET = {"d": "de", "l": "el", "s": "es", "m": "em", "t": "et", "n": "en"}
+
+# Preposicions que es contrauen amb l'article "el" quan l'elisió es desfà
+# just darrere ("a" + "el" -> "al", "de" + "el" -> "del").
+_PREPOSICIONS_CONTRAIBLES = {"a": "al", "de": "del"}
+
+_COMENCA_EN_VOCAL_O_H_MUDA_RE = re.compile(
+    r"^(?:[aeiouàèéíòóúïüAEIOUÀÈÉÍÒÓÚÏÜ]|[hH][aeiouàèéíòóúïüAEIOUÀÈÉÍÒÓÚÏÜ])"
+)
+
+
+def _token_anterior_real(tokens: list[Token], index: int) -> Token | None:
+    for tok in reversed(tokens[:index]):
+        if tok.surface.isspace():
+            continue
+        return tok
+    return None
+
+
+def aplica_amb_prefix_elidit(tokens: list[Token], index: int, prefix: str, resta: str, forma: str) -> None:
+    """Aplica `forma` (ja trobada al diccionari per a `resta`) al token
+    `tokens[index]`, que originalment portava el prefix elidit `prefix`
+    (p.ex. "l'" a "l'eixir"). Encapsula el cas normal (`forma` seguix
+    començant en vocal, es manté l'elisió) i el cas que calia arreglar.
+
+    Bug real trobat (30/09/2026): "a l'eixir" -> "a l'sortir" en compte de
+    "al sortir". Com "eixir" (vocal inicial) es traduïx a "sortir"
+    (consonant inicial), l'elisió original ja no té sentit -- cal DESFER-
+    la, tornant el prefix a la seua forma completa ("l'" -> "el"), i si el
+    resultat és "el" i el token anterior és "a"/"de", contraure-ho
+    ("a"+"el" -> "al", "de"+"el" -> "del") en compte de deixar "a el".
+
+    >>> from . import tokenize
+    >>> toks = tokenize("Vinc d'ametla.")
+    >>> aplica_amb_prefix_elidit(toks, 2, "d'", "ametla", "ametlla")
+    >>> toks[2].translated
+    "d'ametlla"
+
+    >>> toks = tokenize("A l'eixir.")
+    >>> aplica_amb_prefix_elidit(toks, 2, "l'", "eixir", "sortir")
+    >>> detokenize(toks)
+    'Al sortir.'
+
+    >>> toks = tokenize("Ho vaig fer de l'eixir cap ací.")
+    >>> idx = [t.surface for t in toks].index("l'eixir")
+    >>> aplica_amb_prefix_elidit(toks, idx, "l'", "eixir", "sortir")
+    >>> detokenize(toks)
+    'Ho vaig fer del sortir cap ací.'
+
+    Sense preposició contraïble davant, es desfà l'elisió amb un espai
+    solt ("el sortir", no "al sortir"):
+
+    >>> toks = tokenize("Vaig vore l'eixir de la lluna.")
+    >>> idx = [t.surface for t in toks].index("l'eixir")
+    >>> aplica_amb_prefix_elidit(toks, idx, "l'", "eixir", "sortir")
+    >>> detokenize(toks)
+    'Vaig vore el sortir de la lluna.'
+    """
+    tok = tokens[index]
+    forma_cap = preserva_majuscula(resta, forma)
+    if _COMENCA_EN_VOCAL_O_H_MUDA_RE.match(forma):
+        tok.translated = prefix + forma_cap
+        return
+
+    lletra = prefix[0].lower()
+    complet = _PREFIX_COMPLET.get(lletra, prefix)
+
+    if complet == "el":
+        anterior = _token_anterior_real(tokens, index)
+        if anterior is not None:
+            contraccio = _PREPOSICIONS_CONTRAIBLES.get(anterior.translated.lower())
+            if contraccio is not None:
+                anterior.translated = preserva_majuscula(anterior.surface, contraccio)
+                anterior.is_translated = True
+                tok.translated = forma_cap
+                return
+
+    tok.translated = preserva_majuscula(prefix, complet) + " " + forma_cap
+
+
+def paraula_anterior_es(tokens: list[Token], index: int, paraula: str) -> bool:
+    """Torna `True` si la paraula real immediatament anterior a `index`
+    (saltant espais en blanc) és exactament `paraula` (comparació en
+    minúscules). Torna `False` si no n'hi ha cap abans.
+
+    Usat per protegir locucions fixes homògrafes amb una forma verbal
+    real -- p.ex. "o siga" (="és a dir") no és el verb "ser" en subjuntiu,
+    encara que "siga" sola sí ho siga (vore `conjugacions_dict.py` i
+    `morfologia_verbal.py`).
+
+    >>> toks = tokenize("El recompte acaba hui, o siga, el 29 de febrer.")
+    >>> idx = [t.surface for t in toks].index("siga")
+    >>> paraula_anterior_es(toks, idx, "o")
+    True
+    >>> toks = tokenize("Vull que siga possible.")
+    >>> idx = [t.surface for t in toks].index("siga")
+    >>> paraula_anterior_es(toks, idx, "o")
+    False
+    """
+    for tok in reversed(tokens[:index]):
+        if tok.surface.isspace():
+            continue
+        return tok.surface.lower() == paraula
+    return False
+
+
 def marca_noms_propis(tokens: list[Token]) -> None:
     """Marca com a possible nom propi (`is_proper_noun = True`) tot token
     que és una paraula, comença en majúscula, i NO és la primera paraula

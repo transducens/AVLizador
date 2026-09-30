@@ -1609,11 +1609,6 @@
     "valenciano": "componguéreu"
   },
   {
-    "verbo": "compondre",
-    "catalan": "composts",
-    "valenciano": "compostos"
-  },
-  {
     "verbo": "concloure",
     "catalan": "concloguessin",
     "valenciano": "conclogueren"
@@ -2939,49 +2934,49 @@
     "verbo": "haver",
     "catalan": "hagi",
     "valenciano": "haja",
-    "problematica": true
+    "problematica": false
   },
   {
     "verbo": "haver",
     "catalan": "hagin",
     "valenciano": "hagen",
-    "problematica": true
+    "problematica": false
   },
   {
     "verbo": "haver",
     "catalan": "hagis",
     "valenciano": "hages",
-    "problematica": true
+    "problematica": false
   },
   {
     "verbo": "haver",
     "catalan": "haguessin",
     "valenciano": "hagueren",
-    "problematica": true
+    "problematica": false
   },
   {
     "verbo": "haver",
     "catalan": "haguessis",
     "valenciano": "hagueres",
-    "problematica": true
+    "problematica": false
   },
   {
     "verbo": "haver",
     "catalan": "hagués",
     "valenciano": "haguera",
-    "problematica": true
+    "problematica": false
   },
   {
     "verbo": "haver",
     "catalan": "haguéssim",
     "valenciano": "haguérem",
-    "problematica": true
+    "problematica": false
   },
   {
     "verbo": "haver",
     "catalan": "haguéssiu",
     "valenciano": "haguéreu",
-    "problematica": true
+    "problematica": false
   },
   {
     "verbo": "haver",
@@ -2992,13 +2987,13 @@
     "verbo": "haver",
     "catalan": "hàgim",
     "valenciano": "hàgem",
-    "problematica": true
+    "problematica": false
   },
   {
     "verbo": "haver",
     "catalan": "hàgiu",
     "valenciano": "hàgeu",
-    "problematica": true
+    "problematica": false
   },
   {
     "verbo": "imprimir",

@@ -58,10 +58,11 @@ en resum:
 
 | Fitxer | Què és |
 |---|---|
-| `lexico_fiable.json` | **⭐ El que usa de veres el pipeline ara mateix.** 194 parells (31 d'Apertium + 34 de Paula Guerrero + 129 de `fuentes/paralelos.txt`) revisats i en els quals confies. `evalua_models.py` ja no llig `palabras_traducidas.json` — llig este fitxer directament. Els numerals compostos amb guionet (huitanta-cinc, noranta-huit...) estan col·lapsats en les seues formes base (`huit`, `huitanta`) perquè el glossari dinàmic tokenitza per guionet — vore `guia_dialectal_valencia_catala.md` secció 6. Per a afegir paraules noves, edita este JSON directament. |
-| `apertium_368_val_cat.json` | Les 368 formes que Apertium marca com a valencianes, separades en confirmades (68) i pendents (3, sense parella trobada, sense inventar res). D'ací ixen les 30 entrades d'origen "apertium" de `lexico_fiable.json` (68 confirmades per Apertium, reduïdes a formes base després de llevar numerals compostos redundants). |
-| `contrastius_paula_guerrero.json` | 35 parells valencià-català categoritzats (determinants, verbs incoatius, lèxic...), d'una font externa curada a banda. 34 dels 35 ja estan bolcats en `lexico_fiable.json`. |
-| `palabras_traducidas.json` | Còpia de treball del lèxic **antic** (l'original viu en `03_seleccion_de_modelo/palabras_traducidas.json`, ja no usat pel pipeline). Seguix sent útil com a pedrera: si en revisar-lo trobes una paraula de la qual estàs completament segur, afig-la a `lexico_fiable.json` editant-lo directament. |
+| `lexico_fiable.json` | **Usat per `evalua_models.py --model regles` i `genera_corpus_sintetico.py` (sistema antic de regex, no el motor `traductor/`).** 347 parells (194 originals: 31 d'Apertium + 34 de Paula Guerrero + 129 de `fuentes/paralelos.txt`; +150 de Mauricio i +3 de l'evidència AVL afegits 29/09/2026). **Retirat de `traductor/rules/lexic.py` el 30/09/2026** (junt amb `apertium_368_val_cat.json` i `contrastius_paula_guerrero.json`, vore baix): eixe paquet ara és pur lookup de diccionari de Mauricio, sense cap font externa -- vore `traductor/README.md`, secció "DECISIÓ D'ARQUITECTURA". Este fitxer es queda com a còpia de seguretat i com la font que seguixen usant els altres dos scripts. |
+| `apertium_368_val_cat.json` | Les 368 formes que Apertium marca com a valencianes, separades en confirmades (65 amb parella, 6 sense) i pendents. Es va fer servir a `traductor/rules/lexic.py` del 30/09/2026 (matí) fins que eixa vesprada es va retirar en reduir el traductor a pur Mauricio -- ja no l'usa cap script actiu. |
+| `contrastius_paula_guerrero.json` | 35 parells valencià-català categoritzats (determinants, verbs incoatius, lèxic...), d'una font externa curada a banda, amb un camp `category` real. Mateix cas que l'anterior: es va fer servir un temps a `lexic.py`/`demostratius.py`/`possessius.py`, retirat el 30/09/2026 en passar el traductor a pur Mauricio. |
+| `posesivos_cat_val.json` (dins de `font_mauricio/`) | 12 files de Mauricio (30/09/2026), un producte cartesià sense filtrar dels possessius febles. `traductor/rules/possessius.py` es queda només amb els 6 parells on el número casa. |
+| `palabras_traducidas.json` | Còpia de treball del lèxic **antic** (l'original viu en `03_seleccion_de_modelo/palabras_traducidas.json`, ja no usat pel pipeline). |
 
 ### `fuentes/` — material brut d'origen
 
@@ -78,12 +79,17 @@ guia.
 
 ## Com afegir una paraula nova al lèxic fiable
 
+**Nota (30/09/2026)**: açò només afecta `evalua_models.py --model regles`
+i `genera_corpus_sintetico.py` (sistema antic de regex). El motor
+`traductor/` (opció `--model traductor`) ja no llig `lexico_fiable.json`
+-- per a afegir-li paraules, edita el fitxer font de la categoria
+corresponent a `traductor/data/` (vore `traductor/README.md`, secció
+"Com afegir una regla nova").
+
 Edita `lexico/lexico_fiable.json` directament, afegint una entrada nova a
 l'array `entradas` amb el mateix esquema que les altres (`valenciano`,
-`catalan`, `castellano`, `categoria`, `origen`). És el fitxer que usa
-`evalua_models.py` (i per tant també `genera_corpus_sintetico.py`, que el
-reutilitza). No fa falta tocar ni reiniciar res més — la pròxima vegada que
-s'execute el pipeline, ja la usa.
+`catalan`, `castellano`, `categoria`, `origen`). No fa falta tocar ni
+reiniciar res més — la pròxima vegada que s'execute el pipeline, ja la usa.
 
 ## Flux de treball per a revisar el lèxic antic
 
