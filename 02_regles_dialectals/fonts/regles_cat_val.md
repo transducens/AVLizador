@@ -20,10 +20,10 @@ seua fiabilitat:
 Este document és la base bruta amb les xifres de suport de cada regla; el
 document pensat per a llegir com un tema d'estudi, ja net i sense taules
 d'evidència, és
-[`guia_dialectal_valencia_catala.md`](../reglas_prompt/guia_dialectal_valencia_catala.md).
+[`guia_dialectal_valencia_catala.md`](../regles_prompt/guia_dialectal_valencia_catala.md).
 Les regles que ja estan integrades en el prompt real del model es poden
 consultar literalment a
-[`system_prompt.md`](../reglas_prompt/system_prompt.md).
+[`system_prompt.md`](../regles_prompt/system_prompt.md).
 
 ---
 
@@ -159,7 +159,7 @@ promoure'l a regla.
 
 **En verificació** — esta secció ja no usa el lèxic combinat antic
 (`palabras_traducidas.txt` + `apertium-cat.cat.dix`, 1.601 paraules). De
-moment reflecteix únicament `fuentes/paralelos.txt` (358 parells en total),
+moment reflecteix únicament `fonts/paralelos.txt` (358 parells en total),
 que és el fitxer que s'està revisant i confirmant a mà ara mateix. D'eixos,
 **285** tenen forma distinta entre valencià i català (taula d'ací baix) i
 **73** ja coincidixen en els dos dialectes (s'inclouen a `paralelos.txt`

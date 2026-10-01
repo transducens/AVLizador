@@ -130,4 +130,4 @@ estava en català oriental o en registre mixt, generant parelles on
 l'"original" ja no era realment valencià — hauria corromput el corpus
 sintètic abans de començar.
 
-Vore `../documentacio/metodologia_y_resultados.md` secció 1 per a més context.
+Vore `../documentacio/metodologia_i_resultats.md` secció 1 per a més context.

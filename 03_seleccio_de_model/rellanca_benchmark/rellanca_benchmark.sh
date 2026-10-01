@@ -1,5 +1,5 @@
 #!/bin/bash
-# relanza_benchmark.sh — Relanza el benchmark de 150 frases sobre 5 modelos de
+# rellanca_benchmark.sh — Relanza el benchmark de 150 frases sobre 5 modelos de
 # Ollama en paralelo (uno por GPU): los 3 ya conocidos + los 2 candidatos
 # nuevos de la familia Qwen3.
 #
@@ -28,8 +28,8 @@
 # respeta CUDA_VISIBLE_DEVICES).
 #
 # Lanzarlo:
-#   cd 03_seleccio_de_model/relanza_benchmark
-#   sbatch relanza_benchmark.sh
+#   cd 03_seleccio_de_model/rellanca_benchmark
+#   sbatch rellanca_benchmark.sh
 
 #SBATCH --job-name=relanza-benchmark
 #SBATCH --output=%j_relanza.out

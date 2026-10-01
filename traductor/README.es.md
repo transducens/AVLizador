@@ -16,7 +16,7 @@ razonablemente bien (BLEU ~93 en el benchmark de 60 frases), pero la
 revisión manual encontró un ~20% de errores reales frente al ~1,5% que
 detectan las comprobaciones automáticas — la mayoría, alucinaciones del
 modelo sin relación con ninguna regla dialectal (ver
-`../documentacio/metodologia_y_resultados.md`, secciones 6 y 9).
+`../documentacio/metodologia_i_resultats.md`, secciones 6 y 9).
 
 Un motor de diccionario no puede alucinar: si una palabra no está en
 ninguna tabla, sencillamente no la toca. Este paquete no sustituye al
@@ -32,7 +32,7 @@ fuentes (Apertium, Paula Guerrero, tablas escritas a mano) con la fuente
 de Mauricio.
 
 Ese mismo día, por la tarde, se redujo el traductor a **SOLO lookup exacto
-de diccionario, y SOLO con datos de `02_regles_dialectals/lexico/font_mauricio/`**
+de diccionario, y SOLO con datos de `02_regles_dialectals/lexic/font_mauricio/`**
 (equipo AVLizador) — ninguna regla de sufijo, patrón morfológico ni
 reconstrucción algorítmica, y ninguna fuente que no sea Mauricio.
 
@@ -149,7 +149,7 @@ del texto (la primera letra de una frase siempre va en mayúscula, sea o
 no nombre propio). Es la misma heurística ya probada en
 `03_seleccio_de_model/evalua_models.py::glossari_per_frase()`, añadida
 allí tras un incidente real con `blanca`/`Blanca` y `roig`/`Roig` (ver
-`../documentacio/metodologia_y_resultados.md`, sección 6). Límite
+`../documentacio/metodologia_i_resultats.md`, sección 6). Límite
 conocido, heredado sin arreglar: un nombre propio que es la **primera**
 palabra del texto nunca se detecta.
 
@@ -194,7 +194,7 @@ palabra del texto nunca se detecta.
   al pasar a "puro diccionario de Mauricio" y fue un error: ningún
   diccionario puede cubrir un paradigma gramatical cerrado que Mauricio
   no lista). Fuente: `demostratius_avl.json` (paradigma sourced de
-  `reglas_dialectales_con_evidencia.md` §1). `aquell`/`allò` son
+  `regles_dialectals_amb_evidencia.md` §1). `aquell`/`allò` son
   idénticos en ambos dialectos y no tienen entrada. La tabla INVERSA
   (`aqueix→eixe`, para un hipotético traductor oriental→occidental) se
   queda documentada en el mismo fichero sin implementarse -- este motor
@@ -222,7 +222,7 @@ palabra del texto nunca se detecta.
 
 ## Mantener `traductor/data/` sincronizado con las fuentes
 
-`traductor/rules/*.py` nunca lee `02_regles_dialectals/lexico/` en
+`traductor/rules/*.py` nunca lee `02_regles_dialectals/lexic/` en
 tiempo de ejecución -- solo lee copias propias dentro de `traductor/data/`
 (para que el paquete funcione de forma autónoma). Si editas un fichero
 fuente de `font_mauricio/` directamente, ese cambio no llega al motor

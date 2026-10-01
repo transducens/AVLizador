@@ -80,14 +80,14 @@ def cargar_bleualign() -> list[dict] | None:
 
 
 def _leer_json_materiales(nombre: str) -> dict:
-    # 02_regles_dialectals/ se reorganizó en subcarpetas: lexico/ (JSON de
-    # pares de palabras) y fuentes/ (material bruto, incl. reglas_cat_val.md).
+    # 02_regles_dialectals/ se reorganizó en subcarpetas: lexic/ (JSON de
+    # pares de palabras) y fonts/ (material bruto, incl. regles_cat_val.md).
     # Busca primero en la raíz por compatibilidad, luego en esas subcarpetas.
-    candidatos = [MATERIALES_DIR / nombre, MATERIALES_DIR / "lexico" / nombre, MATERIALES_DIR / "fuentes" / nombre]
+    candidatos = [MATERIALES_DIR / nombre, MATERIALES_DIR / "lexic" / nombre, MATERIALES_DIR / "fonts" / nombre]
     for ruta in candidatos:
         if ruta.exists():
             return json.loads(ruta.read_text(encoding="utf-8"))
-    raise SystemExit(f"No existe {nombre} en {MATERIALES_DIR} ni en lexico/ o fuentes/.")
+    raise SystemExit(f"No existe {nombre} en {MATERIALES_DIR} ni en lexic/ o fonts/.")
 
 
 def _extraer_tablas_md(texto_md: str) -> dict[str, list[list[str]]]:
@@ -148,7 +148,7 @@ def _limpiar_entradas_vocabulario(entradas: list[dict]) -> list[dict]:
 def cargar_materiales() -> dict:
     datos_vocab = _leer_json_materiales("palabras_traducidas.json")
     datos_val = _leer_json_materiales("palabras_val.json")
-    texto_md = (MATERIALES_DIR / "fuentes" / "reglas_cat_val.md").read_text(encoding="utf-8")
+    texto_md = (MATERIALES_DIR / "fonts" / "regles_cat_val.md").read_text(encoding="utf-8")
     tablas = _extraer_tablas_md(texto_md)
 
     morfologia = [
@@ -1585,7 +1585,7 @@ def generar_html(
 <section class="pestana" id="pestana-morfo">
   <h2>Morfologia verbal y de pronombres/adjectius</h2>
   <p class="explicacion">108 reglas de terminacion derivadas de los paradigmas de flexion del diccionario
-     Apertium (<code>reglas_cat_val.md</code>, seccion 1). Aqui se comprueba, palabra a palabra del corpus,
+     Apertium (<code>regles_cat_val.md</code>, seccion 1). Aqui se comprueba, palabra a palabra del corpus,
      cuantas terminan en la forma catalana o valenciana de cada regla.</p>
   {tabla_morfo}
 </section>
@@ -1609,7 +1609,7 @@ def generar_html(
 <section class="pestana" id="pestana-loc">
   <h2>Locucions</h2>
   <p class="explicacion">Locuciones sueltas (fuera del sistema de marcas <code>v=</code> del diccionario),
-     <code>reglas_cat_val.md</code> seccion 4.</p>
+     <code>regles_cat_val.md</code> seccion 4.</p>
   {tabla_loc}
 </section>
 

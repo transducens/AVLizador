@@ -15,7 +15,7 @@ glossari dinàmic per a generar el corpus sintètic. Funciona raonablement
 bé (BLEU ~93 en el benchmark de 60 frases), però la revisió manual va
 trobar un ~20% d'errors reals enfront del ~1,5% que detecten les
 comprovacions automàtiques — la majoria, al·lucinacions del model sense
-relació amb cap regla dialectal (vore `../documentacio/metodologia_y_resultados.md`,
+relació amb cap regla dialectal (vore `../documentacio/metodologia_i_resultats.md`,
 seccions 6 i 9).
 
 Un motor de diccionari no pot al·lucinar: si una paraula no està en cap
@@ -32,7 +32,7 @@ Eixes regles cobrien més casos, però barrejaven dades de diverses fonts
 
 El mateix dia 30/09/2026, a la vesprada, es va reduir el traductor a
 **NOMÉS lookup exacte de diccionari, i NOMÉS amb dades de
-`02_regles_dialectals/lexico/font_mauricio/`** (equip AVLizador) — cap
+`02_regles_dialectals/lexic/font_mauricio/`** (equip AVLizador) — cap
 regla de sufix, patró morfològic ni reconstrucció algorítmica, i cap font
 que no siga Mauricio.
 
@@ -147,7 +147,7 @@ del text (la primera lletra d'una frase sempre va en majúscula, siga o no
 nom propi). És la mateixa heurística ja provada en
 `03_seleccio_de_model/evalua_models.py::glossari_per_frase()`, afegida
 allí després d'un incident real amb `blanca`/`Blanca` i `roig`/`Roig`
-(vore `../documentacio/metodologia_y_resultados.md`, secció 6). Límit
+(vore `../documentacio/metodologia_i_resultats.md`, secció 6). Límit
 conegut, heretat sense arreglar: un nom propi que és la **primera**
 paraula del text mai es detecta.
 
@@ -192,7 +192,7 @@ paraula del text mai es detecta.
   passar a "pur diccionari de Mauricio" i era un error: cap diccionari
   pot cobrir un paradigma gramatical tancat que Mauricio no llista).
   Font: `demostratius_avl.json` (paradigma sourced de
-  `reglas_dialectales_con_evidencia.md` §1). `aquell`/`allò` són idèntics
+  `regles_dialectals_amb_evidencia.md` §1). `aquell`/`allò` són idèntics
   als dos dialectes i no tenen entrada. La taula INVERSA (`aqueix→eixe`,
   per a un hipotètic traductor oriental→occidental) es queda documentada
   al mateix fitxer sense implementar-se -- este motor només tradueix en
@@ -220,7 +220,7 @@ paraula del text mai es detecta.
 
 ## Mantindre `traductor/data/` sincronitzat amb les fonts
 
-`traductor/rules/*.py` mai llig `02_regles_dialectals/lexico/` en temps
+`traductor/rules/*.py` mai llig `02_regles_dialectals/lexic/` en temps
 d'execució -- només llig còpies pròpies dins de `traductor/data/` (perquè
 el paquet funcione de manera autònoma). Si edites un fitxer font de
 `font_mauricio/` directament, eixe canvi no arriba al motor fins que

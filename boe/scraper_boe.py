@@ -28,10 +28,10 @@ CORPUS_DIR = Path(__file__).resolve().parent.parent / "dades" / "boe"
 PROGRESS_PATH = CORPUS_DIR / "progreso.json"
 LOG_PATH = CORPUS_DIR / "scraper.log"
 
-# lang_key -> (código usado en boe.es, sufijo del PDF traducido)
+# lang_key -> (código usado en boe.es, sufijo del PDF traducido, carpeta en disco)
 IDIOMAS = {
-    "catalan": {"codigo": "c", "sufijo": "-C"},
-    "valenciano": {"codigo": "v", "sufijo": "-V"},
+    "catalan": {"codigo": "c", "sufijo": "-C", "dir": "catala"},
+    "valenciano": {"codigo": "v", "sufijo": "-V", "dir": "valencia"},
 }
 
 USER_AGENTS = [
@@ -316,8 +316,8 @@ def reconciliar_anio(anio: int, progreso: Progreso) -> None:
     contra valencià, resultan huérfanos. Se compara lo que hay en disco, nunca
     se asume nada por progreso.json.
     """
-    dir_c = CORPUS_DIR / "catalan" / str(anio)
-    dir_v = CORPUS_DIR / "valenciano" / str(anio)
+    dir_c = CORPUS_DIR / IDIOMAS["catalan"]["dir"] / str(anio)
+    dir_v = CORPUS_DIR / IDIOMAS["valenciano"]["dir"] / str(anio)
     ids_c = {p.stem[:-2]: p for p in dir_c.glob("*-C.pdf")} if dir_c.exists() else {}
     ids_v = {p.stem[:-2]: p for p in dir_v.glob("*-V.pdf")} if dir_v.exists() else {}
 
@@ -408,7 +408,7 @@ def procesar_pares(sesion, robots, progreso: Progreso, anio_desde: int, anio_has
                     logger.info(f"{fecha}: {doc_v.id} sin pareja en català, se descarta")
                     continue
 
-                for doc, idioma_dir, referer in ((doc_v, "valenciano", url_v), (doc_c, "catalan", url_c)):
+                for doc, idioma_dir, referer in ((doc_v, cfg_v["dir"], url_v), (doc_c, cfg_c["dir"], url_c)):
                     if max_documentos is not None and contador["total"] >= max_documentos:
                         dia_incompleto = True
                         break

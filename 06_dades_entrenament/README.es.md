@@ -12,7 +12,7 @@ listos.
 
 | Fichero | De dónde sale | Qué es |
 |---|---|---|
-| `dades/sintetico/corpus_sintetic_val_cat.jsonl` | `04_corpus_sintetic/genera_corpus_sintetico.py` (ver `04_corpus_sintetic/README.md`) | El corpus sintético **con metadatos** (`doc_id`, `motius_sospita`...) — **NO** uses `parallel_val_cat.jsonl` para esto, ese export ya no tiene `doc_id` y no se puede agrupar por documento. |
+| `dades/sintetic/corpus_sintetic_val_cat.jsonl` | `04_corpus_sintetic/genera_corpus_sintetico.py` (ver `04_corpus_sintetic/README.md`) | El corpus sintético **con metadatos** (`doc_id`, `motius_sospita`...) — **NO** uses `parallel_val_cat.jsonl` para esto, ese export ya no tiene `doc_id` y no se puede agrupar por documento. |
 | `dades/boe/corpus_entrenamiento.jsonl` | `boe/exportar_entrenamiento.py` (ver `boe/README.md`) | El corpus real del BOE ya filtrado (268.735 pares en la versión actual). |
 | `03_seleccio_de_model/benchmark_corpus.json` | Ya existe, no se toca | Las 150 frases con traducción de referencia humana — el test final "de verdad", fuera de todo lo de aquí. |
 
@@ -32,7 +32,7 @@ del repositorio). Para usar otro fichero (p. ej. cuando termine la
 regeneración v2 del corpus sintético, o si tiene otro nombre):
 
 ```bash
-python prepara_dataset.py --sintetic ../dades/sintetico/corpus_sintetic_val_cat_v2.jsonl
+python prepara_dataset.py --sintetic ../dades/sintetic/corpus_sintetic_val_cat_v2.jsonl
 ```
 
 Otros argumentos:
@@ -40,8 +40,8 @@ Otros argumentos:
 | Argumento | Por defecto | Qué controla |
 |---|---|---|
 | `--boe` | `dades/boe/corpus_entrenamiento.jsonl` | Ruta al corpus BOE |
-| `--sintetic` | `dades/sintetico/corpus_sintetic_val_cat.jsonl` | Ruta al corpus sintético (con metadatos) |
-| `--output-dir` | `dades/dataset_entrenamiento/` | Dónde se escriben los ficheros de salida |
+| `--sintetic` | `dades/sintetic/corpus_sintetic_val_cat.jsonl` | Ruta al corpus sintético (con metadatos) |
+| `--output-dir` | `dades/dataset_entrenament/` | Dónde se escriben los ficheros de salida |
 | `--seed` | `42` | Semilla del barajado — mismo seed, mismo split siempre (reproducible) |
 | `--prop-dev` | `0.05` (5%) | Proporción aproximada de frases del sintético para `dev.jsonl` |
 | `--prop-test` | `0.05` (5%) | Proporción aproximada de frases del sintético para `test.jsonl` |
@@ -65,7 +65,7 @@ de modelos). 341 sospechosas descartadas → 28.235 frases limpias.
 ## Qué genera, y para qué sirve cada fichero
 
 ```
-dades/dataset_entrenamiento/
+dades/dataset_entrenament/
 ├── train.jsonl       # entrenar el modelo — SOLO corpus sintético
 ├── dev.jsonl         # validar durante el entrenamiento (early stopping, elegir checkpoint) — SOLO sintético
 ├── test.jsonl        # evaluación final dentro del mismo dominio (AVL) — SOLO sintético

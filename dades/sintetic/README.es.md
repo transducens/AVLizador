@@ -81,7 +81,7 @@ no perder esa validación):
 - Un system prompt con las reglas morfológicas documentadas (demostrativos,
   posesivos, infinitivos irregulares, subjuntivo presente/imperfecto,
   numerales, léxico base) — el mismo conjunto que hay explicado como guía de
-  estudio en `02_regles_dialectals/reglas_prompt/guia_dialectal_valencia_catala.md`.
+  estudio en `02_regles_dialectals/regles_prompt/guia_dialectal_valencia_catala.md`.
 - Un glosario dinámico por frase: antes de llamar al modelo se buscan en
   `palabras_traducidas.json` (1.604 formas) las palabras valencianas
   presentes en esa frase concreta, y se le pasan como pista
@@ -102,7 +102,7 @@ frase para traducir con varias GPUs a la vez (ver `04_corpus_sintetic/slurm/`).
 ## 4. Auditoría de calidad
 
 Antes de dar el corpus por bueno se hizo una auditoría completa
-(`dades/sintetico/analisi_corpus.html`, generada a partir de este mismo
+(`dades/sintetic/analisi_corpus.html`, generada a partir de este mismo
 corpus), contrastando **cada una de las reglas dialectales documentadas**
 contra lo que el modelo hizo de verdad, no solo confiando en que un LLM con
 buen BLEU en 60 frases se comportaría igual en 46.315 frases reales de todo
@@ -174,7 +174,7 @@ otro (conversación, prensa informal, literatura).
 ## 7. Qué fichero usar
 
 ```
-dades/sintetico/
+dades/sintetic/
 ├── corpus_sintetic_val_cat.jsonl            ← el corpus completo, con metadatos
 ├── corpus_sintetic_val_cat.abans_de_reparar.jsonl  ← copia de seguridad pre-reparación
 ├── parallel_val_cat.jsonl                   ← ⭐ EL BUENO para entrenar/usar

@@ -19,7 +19,7 @@ per a entrenar o afinar un model de traducció occidental↔oriental.
   el lèxic de 194 entrades i les regles de pretèrit perifràstic/institucions/
   elisió ja afegides) — la millor configuració provada fins ara. Comparat
   també amb salamandra-7b-instruct (BSC) — vore
-  `../documentacio/metodologia_y_resultados.md` secció 5 per a la comparativa completa.
+  `../documentacio/metodologia_i_resultats.md` secció 5 per a la comparativa completa.
 - **Diferència respecte al benchmark**: el benchmark tradueix frases soltes
   sense noms d'institucions. En aplicar-ho a text real de l'AVL es va
   detectar que el model "traduïa" sigles (`AVL` → `IEC`), un error factual,
@@ -92,7 +92,7 @@ corre en un altre lloc. Ja hi ha un script preparat:
 ## Sortida
 
 ```
-dades/sintetico/
+dades/sintetic/
 ├── corpus_sintetic_val_cat.jsonl   # Fitxer principal: totes les parelles + metadades + qualitat
 ├── parallel_val_cat.jsonl          # Exportació neta {"val", "cat"} (sense sospitoses)
 ├── parallel.val / parallel.cat     # El mateix, en 2 fitxers alineats línia a línia (format Moses/OPUS)
@@ -103,12 +103,12 @@ dades/sintetico/
 ## Estat del corpus generat
 
 - **v1** (lèxic i prompt anteriors a esta ronda de millores): 46.315
-  frases, auditada per complet — vore `dades/sintetico/` i
-  `../documentacio/metodologia_y_resultados.md` secció 6 per als bugs
+  frases, auditada per complet — vore `dades/sintetic/` i
+  `../documentacio/metodologia_i_resultats.md` secció 6 per als bugs
   trobats i corregits.
 - **v2**: regeneració amb el lèxic de 194 entrades i totes les regles
   madures — és la versió que cal usar una vegada estiga llesta. Fitxer
-  final: `dades/sintetico/parallel_val_cat.jsonl` (format
+  final: `dades/sintetic/parallel_val_cat.jsonl` (format
   `{"val": "...", "cat": "..."}`, una parella per línia, llest per a
   entrenar).
 

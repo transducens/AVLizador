@@ -3,7 +3,7 @@
 # Etapa 7 — Finetuning, baselines i comparació de models
 
 Última etapa: amb el dataset ja preparat (etapa 6:
-`dades/dataset_entrenamiento/{train,dev,test,boe_eval}.jsonl`), esta carpeta
+`dades/dataset_entrenament/{train,dev,test,boe_eval}.jsonl`), esta carpeta
 entrena i avalua distints candidats a model de traducció dialectal, i
 deixa constància comparable dels resultats de cada un.
 
@@ -31,7 +31,7 @@ perquè cada experiment nou siga un fitxer de config, no un script nou.
 | `nllb_600m_finetune.yaml` | Finetuning de NLLB-200-distilled-600M sobre `train.jsonl`/`dev.jsonl` |
 | `salamandraTA_lora.yaml` | LoRA sobre SalamandraTA-7b-instruct — el candidat amb més recorregut esperat, ja especialitzat en variants catalanes |
 
-**El BLEU 93,11 de qwen2.5:14b (`../documentacio/metodologia_y_resultados.md`
+**El BLEU 93,11 de qwen2.5:14b (`../documentacio/metodologia_i_resultats.md`
 secció 10) està desactualitzat com a referència**: es va calcular contra el
 benchmark de 60 frases, que des de llavors es va ampliar a 150 (90 frases
 noves, deliberadament triades per a cobrir regles dialectals que les 60

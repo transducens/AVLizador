@@ -19,7 +19,7 @@ para entrenar o afinar un modelo de traducción occidental↔oriental.
   el léxico de 194 entradas y las reglas de pretérito perifrástico/instituciones/
   elisión ya añadidas) — la mejor configuración probada hasta ahora. Comparado
   también con salamandra-7b-instruct (BSC) — ver
-  `../documentacio/metodologia_y_resultados.md` sección 5 para la comparativa completa.
+  `../documentacio/metodologia_i_resultats.md` sección 5 para la comparativa completa.
 - **Diferencia respecto al benchmark**: el benchmark traduce frases sueltas
   sin nombres de instituciones. Al aplicarlo a texto real de la AVL se
   detectó que el modelo "traducía" siglas (`AVL` → `IEC`), un error factual,
@@ -92,7 +92,7 @@ que corre en otro sitio. Ya hay un script preparado:
 ## Salida
 
 ```
-dades/sintetico/
+dades/sintetic/
 ├── corpus_sintetic_val_cat.jsonl   # Fichero principal: todos los pares + metadatos + calidad
 ├── parallel_val_cat.jsonl          # Exportación limpia {"val", "cat"} (sin sospechosos)
 ├── parallel.val / parallel.cat     # Lo mismo, en 2 ficheros alineados línea a línea (formato Moses/OPUS)
@@ -103,12 +103,12 @@ dades/sintetico/
 ## Estado del corpus generado
 
 - **v1** (léxico y prompt anteriores a esta ronda de mejoras): 46.315
-  frases, auditada por completo — ver `dades/sintetico/` y
-  `../documentacio/metodologia_y_resultados.md` sección 6 para los bugs
+  frases, auditada por completo — ver `dades/sintetic/` y
+  `../documentacio/metodologia_i_resultats.md` sección 6 para los bugs
   encontrados y corregidos.
 - **v2**: regeneración con el léxico de 194 entradas y todas las reglas
   maduras — es la versión que hay que usar una vez esté lista. Fichero
-  final: `dades/sintetico/parallel_val_cat.jsonl` (formato
+  final: `dades/sintetic/parallel_val_cat.jsonl` (formato
   `{"val": "...", "cat": "..."}`, una pareja por línea, listo para
   entrenar).
 

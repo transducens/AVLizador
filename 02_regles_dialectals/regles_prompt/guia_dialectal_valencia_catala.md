@@ -318,7 +318,7 @@ de casos amb eixa combinació gramatical.
 
 ## 9. Lèxic diferencial
 
-Base léxica: las 368 formas que el diccionario Apertium marca explícitamente como valencianas (`v="val_gva"`), recogidas en [`lexico/apertium_368_val_cat.json`](../lexico/apertium_368_val_cat.json) — no la lista curada más amplia de ~1.600 palabras. De esas 368, 296 también son válidas en el valenciano general/unificado (`val_uni`) — no representan una diferencia dialectal que haya que convertir. Las 72 restantes son **exclusivamente occidentales**: de esas, estas son las que tienen pareja catalana confirmada dentro del propio diccionario Apertium (ninguna se ha inventado — o coincide con la lista ya validada, o su forma oriental aparece explícitamente en el mismo diccionario).
+Base léxica: las 368 formas que el diccionario Apertium marca explícitamente como valencianas (`v="val_gva"`), recogidas en [`lexic/apertium_368_val_cat.json`](../lexic/apertium_368_val_cat.json) — no la lista curada más amplia de ~1.600 palabras. De esas 368, 296 también son válidas en el valenciano general/unificado (`val_uni`) — no representan una diferencia dialectal que haya que convertir. Las 72 restantes son **exclusivamente occidentales**: de esas, estas son las que tienen pareja catalana confirmada dentro del propio diccionario Apertium (ninguna se ha inventado — o coincide con la lista ya validada, o su forma oriental aparece explícitamente en el mismo diccionario).
 
 > **Nota de estado**: esta sección documenta de dónde sale ese subconjunto
 > concreto (368 formas de Apertium), pero **no es el listado completo de

@@ -129,4 +129,4 @@ estaba en catalán oriental o en registro mixto, generando pares donde el
 "original" ya no era realmente valenciano — habría corrompido el corpus
 sintético antes de empezar.
 
-Ver `../documentacio/metodologia_y_resultados.md` sección 1 para más contexto.
+Ver `../documentacio/metodologia_i_resultats.md` sección 1 para más contexto.

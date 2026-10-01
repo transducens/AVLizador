@@ -28,7 +28,7 @@ dins de dos fitxers distints.
    generat (no només a futures generacions), s'amplia
    `04_corpus_sintetic/repara_corpus.py` amb les noves reversions. L'
    anàlisi de què falla al corpus viu a banda, en
-   `../../dades/sintetico/analisi_corpus.html` i en les revisions
+   `../../dades/sintetic/analisi_corpus.html` i en les revisions
    manuals — no en esta carpeta.
 
 ## Relació amb la resta del projecte
@@ -39,16 +39,16 @@ dins de dos fitxers distints.
   codi; torna a copiar el text actualitzat ací després perquè esta
   carpeta no quede desactualitzada.
 - El lèxic que usa de veres el pipeline és
-  `../lexico/lexico_fiable.json` (194 entrades revisades a mà) — ja no
+  `../lexic/lexico_fiable.json` (194 entrades revisades a mà) — ja no
   `palabras_traducidas.json`, que es va retirar per tindre entrades sense
   revisar d'origen poc fiable. Afegir paraules noves: editant eixe JSON directament.
 - El lèxic antic (per a seguir traent paraules confirmades d'ahí) i el
   llistat combinat més ampli (Apertium + llista curada + lèxic del
-  corpus) estan en `../lexico/` (vore el README general de
+  corpus) estan en `../lexic/` (vore el README general de
   `02_regles_dialectals/`).
 - Les regles morfològiques "de fons" (d'on va eixir el número exacte de
-  casos de cada regla) estan en `../fuentes/reglas_cat_val.md` — este
+  casos de cada regla) estan en `../fonts/regles_cat_val.md` — este
   document nou es centra en el prompt i el glossari, no en repetir eixa
   taula.
 - L'auditoria completa de quant es complix cada regla al corpus real
-  està en `../../dades/sintetico/analisi_corpus.html`.
+  està en `../../dades/sintetic/analisi_corpus.html`.

@@ -1,11 +1,11 @@
 """
 prepara_dataset.py -- Prepara los datos para el finetuning: SOLO el corpus
-sintetico (AVL) se parte en train/dev/test. El corpus real (BOE) se
+sintetic (AVL) se parte en train/dev/test. El corpus real (BOE) se
 normaliza al MISMO esquema de campos pero se deja como fichero aparte,
 sin mezclar -- sirve para evaluar despues si el modelo generaliza a un
 dominio real (legal) que nunca ha visto en entrenamiento.
 
-El split del sintetico se agrupa por documento (doc_id), nunca por frase
+El split del sintetic se agrupa por documento (doc_id), nunca por frase
 suelta, para que ninguna frase de un mismo documento acabe a la vez en
 train y en dev/test (fuga de datos).
 
@@ -123,11 +123,11 @@ def resum(nom: str, regs: list[dict]) -> None:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Prepara train/dev/test SOLO del sintetico; normaliza BOE aparte como eval fuera de dominio"
+        description="Prepara train/dev/test SOLO del sintetic; normaliza BOE aparte como eval fuera de dominio"
     )
-    parser.add_argument("--boe", default=str(ROOT / "data" / "boe" / "corpus_entrenamiento.jsonl"))
-    parser.add_argument("--sintetic", default=str(ROOT / "data" / "sintetico" / "corpus_sintetic_val_cat.jsonl"))
-    parser.add_argument("--output-dir", default=str(ROOT / "data" / "dataset_entrenamiento"))
+    parser.add_argument("--boe", default=str(ROOT / "dades" / "boe" / "corpus_entrenamiento.jsonl"))
+    parser.add_argument("--sintetic", default=str(ROOT / "dades" / "sintetic" / "corpus_sintetic_val_cat.jsonl"))
+    parser.add_argument("--output-dir", default=str(ROOT / "dades" / "dataset_entrenament"))
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--prop-dev", type=float, default=0.05, help="Proporcio de frases del sintetic per a dev (per defecte 5%%)")
     parser.add_argument("--prop-test", type=float, default=0.05, help="Proporcio de frases del sintetic per a test (per defecte 5%%)")
@@ -156,8 +156,8 @@ def main():
     # ── 2. BOE: normalizado al MISMO esquema, pero NUNCA mezclado con lo de
     # arriba -- fichero aparte, pensado para evaluar generalizacion fuera de
     # dominio (legal/real) una vez el modelo ya este entrenado solo con el
-    # sintetico. Se le quita cualquier frase que coincida EXACTAMENTE con
-    # alguna del train del sintetico, para que de verdad sea "no vista".
+    # sintetic. Se le quita cualquier frase que coincida EXACTAMENTE con
+    # alguna del train del sintetic, para que de verdad sea "no vista".
     print("\nCarregant BOE (queda APART, no s'entrena amb ell)...")
     boe = carrega_boe(Path(args.boe))
     abans = len(boe)
@@ -168,13 +168,13 @@ def main():
     abans = len(boe)
     boe = [r for r in boe if normalitza_clau(r["val"], r["cat"]) not in claus_train]
     if abans != len(boe):
-        print(f"  {abans - len(boe)} frases de BOE coincidian exactamente con el train sintetico -- eliminadas del eval")
+        print(f"  {abans - len(boe)} frases de BOE coincidian exactamente con el train sintetic -- eliminadas del eval")
 
     escriu_jsonl(boe, out_dir / "boe_eval.jsonl")
     print(f"\nBOE normalizado (mismo esquema, fichero aparte): {len(boe)} pares -> {out_dir / 'boe_eval.jsonl'}")
 
     print(f"\nGuardat tot a {out_dir}/")
-    print("train.jsonl / dev.jsonl / test.jsonl  -> entrenar y validar (solo sintetico)")
+    print("train.jsonl / dev.jsonl / test.jsonl  -> entrenar y validar (solo sintetic)")
     print("boe_eval.jsonl                        -> evaluar generalizacion fuera de dominio (NO entrenar con esto)")
     print("benchmark_corpus.json (03_seleccio_de_model/) -> test final humano, aparte de todo lo anterior")
 

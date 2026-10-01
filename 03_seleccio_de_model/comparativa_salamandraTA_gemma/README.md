@@ -41,7 +41,7 @@ avall) — açò és nou a l'script, abans només sabia parlar amb Ollama i
 Claude.
 
 Nota important: açò és distint del "salamandra-7b-instruct" genèric que
-ja es va provar i va perdre contra qwen (vore `../../documentacio/metodologia_y_resultados.md`,
+ja es va provar i va perdre contra qwen (vore `../../documentacio/metodologia_i_resultats.md`,
 secció 5). SalamandraTA és un model *de traducció*, no un instructor de
 propòsit general — una altra arquitectura d'ús, no una repetició de la
 prova anterior.

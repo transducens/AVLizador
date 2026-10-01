@@ -33,7 +33,7 @@ configuració que va donar eixos resultats al benchmark.
     # I, quan tots els fragments han acabat, fusionar-los:
     python genera_corpus_sintetico.py --merge-shards 8
 
-SORTIDA (dins de dades/sintetico/):
+SORTIDA (dins de dades/sintetic/):
     corpus_sintetic_val_cat.jsonl   Fitxer principal: totes les parelles amb
                                      metadades i marques de qualitat. Es va
                                      escrivint frase a frase (append + flush),
@@ -130,8 +130,8 @@ DEFAULT_INPUT = ROOT_DIR / "dades" / "avl" / "final" / "dialectal" / "corpus_occ
 # generat sempre s'havia guardat/mogut a ma a un subdirectori "generado/"
 # (vore repara_corpus.py, que SI ja esperava eixe subdirectori) -- amb la
 # reorganitzacio en carpeta dades/, ara totes dos coincidixen de veritat:
-# tot el corpus sintetic (input i output) viu a dades/sintetico/.
-GENERAT_DIR   = ROOT_DIR / "dades" / "sintetico"
+# tot el corpus sintetic (input i output) viu a dades/sintetic/.
+GENERAT_DIR   = ROOT_DIR / "dades" / "sintetic"
 OUTPUT_PATH   = GENERAT_DIR / "corpus_sintetic_val_cat.jsonl"
 PARALLEL_JSONL = GENERAT_DIR / "parallel_val_cat.jsonl"
 PARALLEL_VAL  = GENERAT_DIR / "parallel.val"

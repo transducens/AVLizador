@@ -127,11 +127,11 @@ següent execució.
 ../dades/boe/
 ├── progreso.json          # registre de represa
 ├── scraper.log             # log complet amb timestamp, URL i status code
-├── catalan/
+├── catala/
 │   ├── 2001/
 │   │   └── BOE-A-2001-XXXXX-C.pdf
 │   └── ...
-└── valenciano/
+└── valencia/
     ├── 2001/
     │   └── BOE-A-2001-XXXXX-V.pdf
     └── ...
@@ -357,17 +357,17 @@ Requerix `corpus.json` ja generat (`construir_corpus.py`), opcionalment
 `corpus_bleualign.jsonl` (`alinear_corpus_bleualign.py`, si no existix
 eixa pestanya senzillament no apareix), i la carpeta
 `../02_regles_dialectals` amb estos fitxers — `cargar_materiales()` els
-busca primer a l'arrel d'eixa carpeta i si no hi són, en `lexico/` i
-`fuentes/` (la carpeta es va reorganitzar en subcarpetes per a un
+busca primer a l'arrel d'eixa carpeta i si no hi són, en `lexic/` i
+`fonts/` (la carpeta es va reorganitzar en subcarpetes per a un
 pipeline distint que també l'usa; vore el seu propi `README.md` si vols
 el detall d'eixa reorganització):
 
-- `apertium-cat.cat.dix` (diccionari Apertium, font de `palabras_val.json`; en `fuentes/`).
-- `palabras_traducidas.json`: glossari curat valencià/català/castellà (en `lexico/`).
+- `apertium-cat.cat.dix` (diccionari Apertium, font de `palabras_val.json`; en `fonts/`).
+- `palabras_traducidas.json`: glossari curat valencià/català/castellà (en `lexic/`).
 - `palabras_val.json`: formes marcades exclusivament `v="val_gva"` en el
-  diccionari Apertium, sense equivalent `cat` en la mateixa entrada (en `fuentes/`).
-- `reglas_cat_val.md`: 108 regles de terminació morfològica (verbs,
-  pronoms, adjectius...), demostratius (est-/aquest-) i locucions (en `fuentes/`).
+  diccionari Apertium, sense equivalent `cat` en la mateixa entrada (en `fonts/`).
+- `regles_cat_val.md`: 108 regles de terminació morfològica (verbs,
+  pronoms, adjectius...), demostratius (est-/aquest-) i locucions (en `fonts/`).
 
 L'informe té pestanyes: Resum (documents/any, grandària del corpus, %
 de documents amb paràgrafs alineables), Lèxic dialectal, Formes

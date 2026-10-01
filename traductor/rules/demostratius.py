@@ -8,7 +8,7 @@ senzillament no llista -- vore `traductor/README.md`, secció "DECISIÓ
 D'ARQUITECTURA").
 
 Font de dades: `traductor/data/demostratius_avl.json`, sourced de
-`reglas_dialectales_con_evidencia.md` §1 + coneixement dialectològic
+`regles_dialectals_amb_evidencia.md` §1 + coneixement dialectològic
 general (cap fitxer de Mauricio llista estes formes -- són paraules
 gramaticals tancades, no lèxic obert).
 

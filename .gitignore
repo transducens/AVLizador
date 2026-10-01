@@ -9,9 +9,9 @@ venv/
 # se deriva del BOE, así que corre la misma suerte.
 dades/avl/
 dades/boe/
-dades/dataset_entrenamiento/boe_eval.jsonl
+dades/dataset_entrenament/boe_eval.jsonl
 # Muestras de trabajo intermedias (comparaciones de modelos en bruto, con logs)
-dades/sintetico/muestra_comparativa_20260922_1254/
+dades/sintetic/muestra_comparativa_20260922_1254/
 
 # 07_entrenament_de_models/: pesos de modelos y logs de ejecucion, nunca a git
 # (los .gitkeep mantienen la carpeta en el repo aunque este vacia)
