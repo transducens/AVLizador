@@ -28,7 +28,7 @@ dentro de dos ficheros distintos.
    generado (no solo a futuras generaciones), se amplía
    `04_corpus_sintetic/repara_corpus.py` con las nuevas reversiones. El
    análisis de qué falla en el corpus vive aparte, en
-   `../../dades/sintetico/analisi_corpus.html` y en las revisiones
+   `../../dades/sintetic/analisi_corpus.html` y en las revisiones
    manuales — no en esta carpeta.
 
 ## Relación con el resto del proyecto
@@ -39,16 +39,16 @@ dentro de dos ficheros distintos.
   código; vuelve a copiar el texto actualizado aquí después para que esta
   carpeta no quede desactualizada.
 - El léxico que usa de verdad el pipeline es
-  `../lexico/lexico_fiable.json` (194 entradas revisadas a mano) — ya no
+  `../lexic/lexico_fiable.json` (194 entradas revisadas a mano) — ya no
   `palabras_traducidas.json`, que se retiró por tener entradas sin revisar
   de origen poco fiable. Añadir palabras nuevas: editando ese JSON directamente.
 - El léxico antiguo (para seguir sacando palabras confirmadas de ahí) y el
   listado combinado más amplio (Apertium + lista curada + léxico del
-  corpus) están en `../lexico/` (ver el README general de
+  corpus) están en `../lexic/` (ver el README general de
   `02_regles_dialectals/`).
 - Las reglas morfológicas "de fondo" (de dónde salió el número exacto de
-  casos de cada regla) están en `../fuentes/reglas_cat_val.md` — este
+  casos de cada regla) están en `../fonts/regles_cat_val.md` — este
   documento nuevo se centra en el prompt y el glosario, no en repetir esa
   tabla.
 - La auditoría completa de cuánto se cumple cada regla en el corpus real
-  está en `../../dades/sintetico/analisi_corpus.html`.
+  está en `../../dades/sintetic/analisi_corpus.html`.

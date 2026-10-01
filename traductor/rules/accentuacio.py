@@ -20,7 +20,7 @@ ja hi ha ficat.
 
 Excepcions conegudes del patró 1 (mateixes que es van trobar auditant els
 benchmarks reals abans de retirar `gentilicis.py` el 30/09/2026, vore
-`../../02_regles_dialectals/reglas_dialectales_con_evidencia.md` §6.2):
+`../../02_regles_dialectals/regles_dialectals_amb_evidencia.md` §6.2):
 "és" (verb "ser") i "més" (quantitat) són l'excepció explícita de la font;
 "només", "després", "procés", "congrés", "accés", "progrés", "través" es
 van trobar empíricament -- són diccionaris DIFERENCIALS (com els de

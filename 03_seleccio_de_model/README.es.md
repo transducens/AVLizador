@@ -37,6 +37,6 @@ de ejecutar); llegó a estar casi empatada en un punto intermedio, pero
 resultó ser un modelo más frágil ante cambios de prompt — a veces empeoraba
 en vez de mejorar al añadirle más reglas explícitas.
 
-Ver `../documentacio/metodologia_y_resultados.md` secciones 3, 5 y 6 para la evolución
+Ver `../documentacio/metodologia_i_resultats.md` secciones 3, 5 y 6 para la evolución
 completa, la comparativa detallada y los problemas encontrados con cada
 modelo.

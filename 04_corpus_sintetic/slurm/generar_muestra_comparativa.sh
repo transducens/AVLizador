@@ -7,7 +7,7 @@
 #
 # Modelos comparados -- los 3 que salieron viables en
 # 03_seleccio_de_model/comparativa_salamandraTA_gemma/ (SalamandraTA descartado
-# del todo, ver final/metodologia_y_resultados.md sección 10):
+# del todo, ver final/metodologia_i_resultats.md sección 10):
 #   GPU 0: qwen2.5:14b                      (el actual, mejor en el benchmark)
 #   GPU 1: gemma3:12b                       (casi empatado en el benchmark, más barato)
 #   GPU 2: hdnh2006/salamandra-7b-instruct  (el más flojo de los 3, para confirmarlo aquí también)
@@ -62,7 +62,7 @@ echo "Restringiendo el job a las GPUs físicas: $CUDA_VISIBLE_DEVICES"
 export OLLAMA_MODELS="${OLLAMA_MODELS:-$HOME/ollama_models}"
 mkdir -p "$OLLAMA_MODELS"
 
-OUT_DIR="$ROOT_DIR/dades/sintetico/muestra_comparativa_$(date +%Y%m%d_%H%M)"
+OUT_DIR="$ROOT_DIR/dades/sintetic/muestra_comparativa_$(date +%Y%m%d_%H%M)"
 LOGS_DIR="$OUT_DIR/logs"
 mkdir -p "$LOGS_DIR"
 echo "Salida en: $OUT_DIR"

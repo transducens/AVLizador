@@ -40,7 +40,7 @@ sabe hablar con ese tipo de servidor (`--model openai`, ver más abajo) —
 esto es nuevo en el script, antes solo sabía hablar con Ollama y Claude.
 
 Nota importante: esto es distinto del "salamandra-7b-instruct" genérico que
-ya se probó y perdió contra qwen (ver `../../documentacio/metodologia_y_resultados.md`,
+ya se probó y perdió contra qwen (ver `../../documentacio/metodologia_i_resultats.md`,
 sección 5). SalamandraTA es un modelo *de traducción*, no un instructor de
 propósito general — otra arquitectura de uso, no una repetición de la prueba
 anterior.

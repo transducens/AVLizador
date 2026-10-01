@@ -8,7 +8,7 @@ producte cartesià sense filtrar (per cada arrel dona les 4 combinacions
 singular/plural, incloent les 2 que barregen números: "meua"->"meves"),
 així que `_carrega_possessius` es queda només amb els parells on singular
 casa amb singular i plural amb plural (esta mateixa taula ja s'havia
-confirmat abans a `reglas_dialectales_con_evidencia.md` §2 i a
+confirmat abans a `regles_dialectals_amb_evidencia.md` §2 i a
 `lexic_paula_guerrero.json` per a "seua/seues" -- ara ve tota de Mauricio).
 
 Només afecta les formes FEBLES FEMENINES (meua, teua, seua i els seus

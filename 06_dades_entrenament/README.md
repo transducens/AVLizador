@@ -12,7 +12,7 @@ llestos.
 
 | Fitxer | D'on ix | Què és |
 |---|---|---|
-| `dades/sintetico/corpus_sintetic_val_cat.jsonl` | `04_corpus_sintetic/genera_corpus_sintetico.py` (vore `04_corpus_sintetic/README.md`) | El corpus sintètic **amb metadades** (`doc_id`, `motius_sospita`...) — **NO** uses `parallel_val_cat.jsonl` per a açò, eixe export ja no té `doc_id` i no es pot agrupar per document. |
+| `dades/sintetic/corpus_sintetic_val_cat.jsonl` | `04_corpus_sintetic/genera_corpus_sintetico.py` (vore `04_corpus_sintetic/README.md`) | El corpus sintètic **amb metadades** (`doc_id`, `motius_sospita`...) — **NO** uses `parallel_val_cat.jsonl` per a açò, eixe export ja no té `doc_id` i no es pot agrupar per document. |
 | `dades/boe/corpus_entrenamiento.jsonl` | `boe/exportar_entrenamiento.py` (vore `boe/README.md`) | El corpus real del BOE ja filtrat (268.735 parells en la versió actual). |
 | `03_seleccio_de_model/benchmark_corpus.json` | Ja existix, no es toca | Les 150 frases amb traducció de referència humana — el test final "de veres", fora de tot açò. |
 
@@ -32,7 +32,7 @@ del repositori). Per a usar un altre fitxer (p. ex. quan acabe la
 regeneració v2 del corpus sintètic, o si té un altre nom):
 
 ```bash
-python prepara_dataset.py --sintetic ../dades/sintetico/corpus_sintetic_val_cat_v2.jsonl
+python prepara_dataset.py --sintetic ../dades/sintetic/corpus_sintetic_val_cat_v2.jsonl
 ```
 
 Altres arguments:
@@ -40,8 +40,8 @@ Altres arguments:
 | Argument | Per defecte | Què controla |
 |---|---|---|
 | `--boe` | `dades/boe/corpus_entrenamiento.jsonl` | Ruta al corpus BOE |
-| `--sintetic` | `dades/sintetico/corpus_sintetic_val_cat.jsonl` | Ruta al corpus sintètic (amb metadades) |
-| `--output-dir` | `dades/dataset_entrenamiento/` | On s'escriuen els fitxers d'eixida |
+| `--sintetic` | `dades/sintetic/corpus_sintetic_val_cat.jsonl` | Ruta al corpus sintètic (amb metadades) |
+| `--output-dir` | `dades/dataset_entrenament/` | On s'escriuen els fitxers d'eixida |
 | `--seed` | `42` | Llavor del barajat — mateix seed, mateix split sempre (reproduïble) |
 | `--prop-dev` | `0.05` (5%) | Proporció aproximada de frases del sintètic per a `dev.jsonl` |
 | `--prop-test` | `0.05` (5%) | Proporció aproximada de frases del sintètic per a `test.jsonl` |
@@ -65,7 +65,7 @@ de models). 341 sospitoses descartades → 28.235 frases netes.
 ## Què genera, i per a què servix cada fitxer
 
 ```
-dades/dataset_entrenamiento/
+dades/dataset_entrenament/
 ├── train.jsonl       # entrenar el model — NOMÉS corpus sintètic
 ├── dev.jsonl         # validar durant l'entrenament (early stopping, triar checkpoint) — NOMÉS sintètic
 ├── test.jsonl        # avaluació final dins del mateix domini (AVL) — NOMÉS sintètic

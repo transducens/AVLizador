@@ -12,7 +12,7 @@ pasando por el catalán).
 
 ## Empieza por aquí
 
-**[`documentacio/metodologia_y_resultados.md`](documentacio/metodologia_y_resultados.md)**
+**[`documentacio/metodologia_i_resultats.md`](documentacio/metodologia_i_resultats.md)**
 — la historia completa del proyecto en un solo documento: de dónde sale el
 texto, cómo se decidieron las reglas, qué modelos se compararon y con qué
 resultados, qué bugs se encontraron y cómo se corrigieron, limitaciones
@@ -41,8 +41,8 @@ detalle de uso de esa etapa en concreto.
 |---|---|
 | `dades/avl/` | Salida cruda y limpia del scraping de la AVL (raw/clean/final) — entrada de la etapa 4 |
 | `dades/boe/` | Corpus real del BOE: PDFs descargados, extracción y alineación (`corpus_entrenamiento.jsonl`) |
-| `dades/sintetico/` | El corpus sintético generado (etapa 4): `corpus_sintetic_val_cat.jsonl`, `parallel_val_cat.jsonl`... |
-| `dades/dataset_entrenamiento/` | El dataset final ya partido (etapa 6): `train.jsonl`/`dev.jsonl`/`test.jsonl`/`boe_eval.jsonl` |
+| `dades/sintetic/` | El corpus sintético generado (etapa 4): `corpus_sintetic_val_cat.jsonl`, `parallel_val_cat.jsonl`... |
+| `dades/dataset_entrenament/` | El dataset final ya partido (etapa 6): `train.jsonl`/`dev.jsonl`/`test.jsonl`/`boe_eval.jsonl` |
 
 ## Cómo se relacionan las carpetas
 

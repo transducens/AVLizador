@@ -2,7 +2,7 @@
 
 > **Actualización**: el pipeline ya no lee `palabras_traducidas.json` — desde
 > que se detectaron las entradas de esta página, se sustituyó por
-> `02_regles_dialectals/lexico/lexico_fiable.json` (194 entradas revisadas
+> `02_regles_dialectals/lexic/lexico_fiable.json` (194 entradas revisadas
 > a mano). El mecanismo de abajo no ha cambiado, solo el fichero de origen;
 > las referencias a `palabras_traducidas.json` en el resto de esta página
 > son historial (así se encontraron los problemas), no la situación actual.

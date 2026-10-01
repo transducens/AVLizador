@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """repara_corpus.py — Corregeix a mà, sense tornar a cridar Ollama, els 3 tipus
-de problema trobats en l'auditoria (`dades/sintetico/analisi_corpus.html`):
+de problema trobats en l'auditoria (`dades/sintetic/analisi_corpus.html`):
 
   1. Fuita de "Frase a traduir:" (part del prompt) dins de la resposta.
      ~1.165 casos — es soluciona traient el literal, la resta de la resposta
@@ -29,7 +29,7 @@ que ja tens generat.
 
 ÚS:
     python repara_corpus.py
-    python repara_corpus.py --input ../dades/sintetico/corpus_sintetic_val_cat.jsonl
+    python repara_corpus.py --input ../dades/sintetic/corpus_sintetic_val_cat.jsonl
 
 SORTIDA:
     Sobreescriu l'`--input` (després de fer-ne una còpia de seguretat
@@ -52,7 +52,7 @@ sys.path.insert(0, str(BASE_DIR))
 import genera_corpus_sintetico as gcs  # noqa: E402  (reutilitza avalua_qualitat/exporta_nets)
 import evalua_models as em  # noqa: E402  (reutilitza _substitueix_conservant_majuscules)
 
-DEFAULT_INPUT = BASE_DIR.parent / "dades" / "sintetico" / "corpus_sintetic_val_cat.jsonl"
+DEFAULT_INPUT = BASE_DIR.parent / "dades" / "sintetic" / "corpus_sintetic_val_cat.jsonl"
 
 # (paraula valenciana original, paraula catalana errònia introduïda pel bug)
 REVERSIONS_LEXIC = [

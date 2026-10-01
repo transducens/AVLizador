@@ -1,6 +1,6 @@
 """
 sync_data.py -- Sincronitza les còpies de `traductor/data/` amb els
-fitxers font reals de `02_regles_dialectals/lexico/font_mauricio/`
+fitxers font reals de `02_regles_dialectals/lexic/font_mauricio/`
 (equip AVLizador). Des del 30/09/2026 el traductor és pur lookup de
 diccionari de Mauricio -- ja no hi ha fonts Apertium/Paula Guerrero.
 
@@ -37,7 +37,7 @@ from pathlib import Path
 from typing import Callable
 
 ARREL = Path(__file__).resolve().parent.parent
-LEXICO = ARREL / "02_regles_dialectals" / "lexico"
+LEXICO = ARREL / "02_regles_dialectals" / "lexic"
 MAURICIO = LEXICO / "font_mauricio"
 DATA = Path(__file__).resolve().parent / "data"
 

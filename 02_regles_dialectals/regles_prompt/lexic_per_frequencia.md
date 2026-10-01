@@ -1,7 +1,7 @@
 # Léxico ordenado por frecuencia real de uso en el corpus
 
 Generado cruzando `03_seleccio_de_model/palabras_traducidas.json` con el corpus
-real (`dades/sintetico/corpus_sintetic_val_cat.jsonl`). Cada fila
+real (`dades/sintetic/corpus_sintetic_val_cat.jsonl`). Cada fila
 cuenta cuántas frases del corpus contienen esa palabra valenciana (y por
 tanto reciben la pista de glosario para esa palabra).
 

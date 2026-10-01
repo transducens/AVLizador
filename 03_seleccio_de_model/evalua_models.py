@@ -168,8 +168,8 @@ import requests
 BENCHMARK_PATH  = Path(__file__).parent / "benchmark_corpus.json"
 # lexico_fiable.json (revisado a mano) sustituye a palabras_traducidas.json:
 # ese fichero tenía entradas sin revisar de origen poco fiable (ver
-# 02_regles_dialectals/reglas_prompt/glossari_dinamic.md para el historial).
-LEXIC_PATH      = Path(__file__).parent.parent / "02_regles_dialectals" / "lexico" / "lexico_fiable.json"
+# 02_regles_dialectals/regles_prompt/glossari_dinamic.md para el historial).
+LEXIC_PATH      = Path(__file__).parent.parent / "02_regles_dialectals" / "lexic" / "lexico_fiable.json"
 OUTPUT_DIR      = Path(__file__).parent / "resultats"
 OUTPUT_DIR.mkdir(exist_ok=True)
 OLLAMA_URL      = "http://localhost:11434"

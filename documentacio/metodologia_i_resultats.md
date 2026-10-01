@@ -218,7 +218,7 @@ comparación en el futuro.
 
 Antes de dar por bueno el primer corpus generado (46.315 frases, con el
 léxico y prompt de la versión inicial) se hizo una auditoría completa
-(`dades/sintetico/analisi_corpus.html`), contrastando cada regla
+(`dades/sintetic/analisi_corpus.html`), contrastando cada regla
 documentada contra lo que el modelo hizo de verdad en las 46.315 frases
 reales, no solo confiando en el benchmark de 60 frases.
 
@@ -267,7 +267,7 @@ prompt (sección 3) antes de dar el corpus por definitivo.
 Con el léxico, el prompt y las reglas ya maduros (qwen2.5:14b, BLEU 91,08
 en el benchmark), se está regenerando el corpus completo desde cero
 (v2) con esta configuración, en el clúster SLURM. El corpus v1 descrito en
-la sección 6 queda en `dades/sintetico/` como referencia
+la sección 6 queda en `dades/sintetic/` como referencia
 histórica de la auditoría, pero **el fichero a usar es el de la
 regeneración v2** una vez termine — ver `04_corpus_sintetic/README.md` para
 las instrucciones de ejecución y `04_corpus_sintetic/slurm/` para los

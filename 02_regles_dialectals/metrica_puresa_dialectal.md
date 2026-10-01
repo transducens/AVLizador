@@ -56,7 +56,7 @@ validat, repartit en 3 fonts:
 
 **Nota (28/09/2026, canvi de decisió sobre "eixe")**: `demostratius.py` ara
 tradueix `eixe→aquest` en compte de `eixe→aqueix` (vore
-`reglas_dialectales_con_evidencia.md` §1 per al raonament — l'oriental
+`regles_dialectals_amb_evidencia.md` §1 per al raonament — l'oriental
 contemporani ha col·lapsat el 2n grau cap al 1r). Efecte sobre l'IPD:
 "aqueix" ja no isca d'esta taula com a marcador oriental exclusiu. Com que
 "aqueix" seguix sent vocabulari real i exclusivament oriental (encara que

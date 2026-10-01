@@ -37,6 +37,6 @@ barat d'executar); va arribar a estar quasi empatada en un punt intermedi,
 però va resultar ser un model més fràgil davant de canvis de prompt — de
 vegades empitjorava en lloc de millorar en afegir-li més regles explícites.
 
-Vore `../documentacio/metodologia_y_resultados.md` seccions 3, 5 i 6 per
+Vore `../documentacio/metodologia_i_resultats.md` seccions 3, 5 i 6 per
 a l'evolució completa, la comparativa detallada i els problemes trobats
 amb cada model.

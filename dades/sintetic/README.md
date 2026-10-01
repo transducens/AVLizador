@@ -82,7 +82,7 @@ benchmark, per a no perdre eixa validació):
 - Un system prompt amb les regles morfològiques documentades (demostratius,
   possessius, infinitius irregulars, subjuntiu present/imperfet,
   numerals, lèxic base) — el mateix conjunt que hi ha explicat com a guia
-  d'estudi en `02_regles_dialectals/reglas_prompt/guia_dialectal_valencia_catala.md`.
+  d'estudi en `02_regles_dialectals/regles_prompt/guia_dialectal_valencia_catala.md`.
 - Un glossari dinàmic per frase: abans de cridar el model es busquen en
   `palabras_traducidas.json` (1.604 formes) les paraules valencianes
   presents en eixa frase concreta, i se li passen com a pista
@@ -103,7 +103,7 @@ frase per a traduir amb diverses GPU a la vegada (vore `04_corpus_sintetic/slurm
 ## 4. Auditoria de qualitat
 
 Abans de donar el corpus per bo es va fer una auditoria completa
-(`dades/sintetico/analisi_corpus.html`, generada a partir d'este mateix
+(`dades/sintetic/analisi_corpus.html`, generada a partir d'este mateix
 corpus), contrastant **cada una de les regles dialectals documentades**
 contra el que el model va fer de veres, no només confiant que un LLM amb
 bon BLEU en 60 frases es comportaria igual en 46.315 frases reals de tot
@@ -177,7 +177,7 @@ pitjor qualsevol altre (conversa, premsa informal, literatura).
 ## 7. Quin fitxer usar
 
 ```
-dades/sintetico/
+dades/sintetic/
 ├── corpus_sintetic_val_cat.jsonl            ← el corpus complet, amb metadades
 ├── corpus_sintetic_val_cat.abans_de_reparar.jsonl  ← còpia de seguretat pre-reparació
 ├── parallel_val_cat.jsonl                   ← ⭐ EL BO per a entrenar/usar

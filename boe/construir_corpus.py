@@ -41,8 +41,8 @@ PROGRESO_PATH = CORPUS_DIR / "progreso.json"
 SALIDA_PATH = CORPUS_DIR / "corpus.json"
 
 IDIOMAS = {
-    "catalan": {"sufijo": "-C", "dir": "catalan"},
-    "valenciano": {"sufijo": "-V", "dir": "valenciano"},
+    "catalan": {"sufijo": "-C", "dir": "catala"},
+    "valenciano": {"sufijo": "-V", "dir": "valencia"},
 }
 
 DIAS_SEMANA = (
