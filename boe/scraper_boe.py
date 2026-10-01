@@ -24,7 +24,7 @@ import requests
 from bs4 import BeautifulSoup
 
 BASE_URL = "https://www.boe.es"
-CORPUS_DIR = Path(__file__).resolve().parent.parent / "data" / "boe"
+CORPUS_DIR = Path(__file__).resolve().parent.parent / "dades" / "boe"
 PROGRESS_PATH = CORPUS_DIR / "progreso.json"
 LOG_PATH = CORPUS_DIR / "scraper.log"
 

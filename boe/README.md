@@ -17,14 +17,14 @@ traducció oficial real (classe `puntoPDFsup`), respectant `robots.txt` i
 amb ritme de cortesia (8s-2min d'espera entre peticions). Detalls i
 xifres de temps en ["Troballes importants"](#troballes-importants-llig-ho-abans-dexecutar)
 i ["Cortesia amb el servidor"](#cortesia-amb-el-servidor-per-què-trigarà-diversos-dies)
-més avall. Eixida: `../data/boe/{catalan,valenciano}/<any>/BOE-*.pdf`.
+més avall. Eixida: `../dades/boe/{catalan,valenciano}/<any>/BOE-*.pdf`.
 
 **2. Extracció** (`construir_corpus.py`) — text de cada PDF a nivell de
 **paràgraf real** (bloc de PyMuPDF, amb info de font per a fusionar
 correctament paràgrafs tallats per salts de pàgina sense confondre
 títols en cursiva amb cos de text — vore
 ["Construcció del corpus"](#construcció-del-corpus-per-a-estudi) més
-avall per al perquè exacte). Eixida: `../data/boe/corpus.json`, 45,5M/45,4M
+avall per al perquè exacte). Eixida: `../dades/boe/corpus.json`, 45,5M/45,4M
 caràcters, 6,83M/6,80M paraules (català/valencià).
 
 **3. Alineació** (`alinear_corpus_bleualign.py`, amb `texto_comun.py`) —
@@ -32,7 +32,7 @@ per similitud de text amb [Bleualign](https://github.com/rsennrich/Bleualign)
 en lloc de per coincidència exacta de recompte (açò descartava documents
 sencers per una sola discrepància). Abans s'exclouen els paràgrafs
 tabulars (pressupostos/aranzels/formularis, `texto_comun.es_tabla`) per a
-no embrutar l'alineació. Eixida: `../data/boe/corpus_bleualign.jsonl`,
+no embrutar l'alineació. Eixida: `../dades/boe/corpus_bleualign.jsonl`,
 **302.977 parells de frase** (94,0% de cobertura sobre les frases en
 català després d'excloure taules, similitud mitjana 0,71).
 Detall complet en
@@ -115,7 +115,7 @@ python scraper_boe.py --max-documentos 3 --verbose
 
 El scraper és **reprenible**: es pot interrompre (Ctrl+C) i tornar a
 llançar-lo amb el mateix comandament; reprendrà justament on ho va deixar
-gràcies a `../data/boe/progreso.json` (dies ja processats i documents ja
+gràcies a `../dades/boe/progreso.json` (dies ja processats i documents ja
 descarregats no es tornen a demanar). Un dia només es marca com a
 completat si **tots** els seus documents es van descarregar correctament;
 si algun falla o es talla l'execució a mitges, eixe dia es reintenta en la
@@ -124,7 +124,7 @@ següent execució.
 ## Eixida
 
 ```
-../data/boe/
+../dades/boe/
 ├── progreso.json          # registre de represa
 ├── scraper.log             # log complet amb timestamp, URL i status code
 ├── catalan/
@@ -178,7 +178,7 @@ descarregant més parelles): recorre el que hi haja en disc i regenera
 l'eixida sencera cada vegada.
 
 ```bash
-python construir_corpus.py   # PDF -> ../data/boe/corpus.json
+python construir_corpus.py   # PDF -> ../dades/boe/corpus.json
 ```
 
 ### `corpus.json` (nivell document)
@@ -258,7 +258,7 @@ text** en lloc de per recompte, usant
 
 ```bash
 pip install -r requirements.txt   # instal·la pymupdf i bleualign
-python alinear_corpus_bleualign.py   # corpus.json -> ../data/boe/corpus_bleualign.jsonl
+python alinear_corpus_bleualign.py   # corpus.json -> ../dades/boe/corpus_bleualign.jsonl
 ```
 
 Bleualign està pensat per a parells d'idiomes *distints*: necessita una
@@ -318,7 +318,7 @@ mitjana.
 ### `corpus_entrenamiento.jsonl` (subconjunt net per a entrenar)
 
 ```bash
-python exportar_entrenamiento.py   # corpus_bleualign.jsonl -> ../data/boe/corpus_entrenamiento.jsonl
+python exportar_entrenamiento.py   # corpus_bleualign.jsonl -> ../dades/boe/corpus_entrenamiento.jsonl
 ```
 
 Un únic llindar de similitud no separa bé "parell correcte de similitud
@@ -350,13 +350,13 @@ concret, quant es sosté a la pràctica la separació dialectal català/
 valencià:
 
 ```bash
-python analizar_corpus.py   # corpus.json + 02_reglas_dialectales -> ../data/boe/analitica_corpus.html
+python analizar_corpus.py   # corpus.json + 02_regles_dialectals -> ../dades/boe/analitica_corpus.html
 ```
 
 Requerix `corpus.json` ja generat (`construir_corpus.py`), opcionalment
 `corpus_bleualign.jsonl` (`alinear_corpus_bleualign.py`, si no existix
 eixa pestanya senzillament no apareix), i la carpeta
-`../02_reglas_dialectales` amb estos fitxers — `cargar_materiales()` els
+`../02_regles_dialectals` amb estos fitxers — `cargar_materiales()` els
 busca primer a l'arrel d'eixa carpeta i si no hi són, en `lexico/` i
 `fuentes/` (la carpeta es va reorganitzar en subcarpetes per a un
 pipeline distint que també l'usa; vore el seu propi `README.md` si vols

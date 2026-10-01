@@ -15,7 +15,7 @@ glossari dinàmic per a generar el corpus sintètic. Funciona raonablement
 bé (BLEU ~93 en el benchmark de 60 frases), però la revisió manual va
 trobar un ~20% d'errors reals enfront del ~1,5% que detecten les
 comprovacions automàtiques — la majoria, al·lucinacions del model sense
-relació amb cap regla dialectal (vore `../documentacion/metodologia_y_resultados.md`,
+relació amb cap regla dialectal (vore `../documentacio/metodologia_y_resultados.md`,
 seccions 6 i 9).
 
 Un motor de diccionari no pot al·lucinar: si una paraula no està en cap
@@ -32,7 +32,7 @@ Eixes regles cobrien més casos, però barrejaven dades de diverses fonts
 
 El mateix dia 30/09/2026, a la vesprada, es va reduir el traductor a
 **NOMÉS lookup exacte de diccionari, i NOMÉS amb dades de
-`02_reglas_dialectales/lexico/font_mauricio/`** (equip AVLizador) — cap
+`02_regles_dialectals/lexico/font_mauricio/`** (equip AVLizador) — cap
 regla de sufix, patró morfològic ni reconstrucció algorítmica, i cap font
 que no siga Mauricio.
 
@@ -145,9 +145,9 @@ S'executa una sola vegada, abans de la primera regla: marca
 `is_proper_noun` en tota paraula capitalitzada que **no** siga la primera
 del text (la primera lletra d'una frase sempre va en majúscula, siga o no
 nom propi). És la mateixa heurística ja provada en
-`03_seleccion_de_modelo/evalua_models.py::glossari_per_frase()`, afegida
+`03_seleccio_de_model/evalua_models.py::glossari_per_frase()`, afegida
 allí després d'un incident real amb `blanca`/`Blanca` i `roig`/`Roig`
-(vore `../documentacion/metodologia_y_resultados.md`, secció 6). Límit
+(vore `../documentacio/metodologia_y_resultados.md`, secció 6). Límit
 conegut, heretat sense arreglar: un nom propi que és la **primera**
 paraula del text mai es detecta.
 
@@ -220,7 +220,7 @@ paraula del text mai es detecta.
 
 ## Mantindre `traductor/data/` sincronitzat amb les fonts
 
-`traductor/rules/*.py` mai llig `02_reglas_dialectales/lexico/` en temps
+`traductor/rules/*.py` mai llig `02_regles_dialectals/lexico/` en temps
 d'execució -- només llig còpies pròpies dins de `traductor/data/` (perquè
 el paquet funcione de manera autònoma). Si edites un fitxer font de
 `font_mauricio/` directament, eixe canvi no arriba al motor fins que
@@ -270,14 +270,14 @@ feble.
 
 ## Relació amb el sistema de regles antic
 
-`03_seleccion_de_modelo/evalua_models.py` ja tenia un sistema de regles
+`03_seleccio_de_model/evalua_models.py` ja tenia un sistema de regles
 (`tradueix_regles`, opció `--model regles`) — substitucions amb regex
 sobre la frase completa. És distint i **no s'ha tocat ni substituït**: el
 paquet `traductor/` s'afig com una opció nova, `--model traductor`, per a
 poder comparar els dos directament en el mateix benchmark:
 
 ```bash
-cd 03_seleccion_de_modelo
+cd 03_seleccio_de_model
 python evalua_models.py --model traductor                    # motor nou (traductor/)
 python evalua_models.py --model regles                       # sistema antic (regex)
 python evalua_models.py --model tots                          # tot a la vegada, inclosos els dos
@@ -285,7 +285,7 @@ python evalua_models.py --model tots                          # tot a la vegada,
 
 L'adaptador (`tradueix_traductor_nou` en `evalua_models.py`) afig l'arrel
 del repositori a `sys.path` abans d'importar `traductor/`, perquè
-l'script sempre s'executa des de dins de `03_seleccion_de_modelo/` i
+l'script sempre s'executa des de dins de `03_seleccio_de_model/` i
 Python no troba ahí un paquet que viu en la carpeta del costat.
 
 ## Ús directe

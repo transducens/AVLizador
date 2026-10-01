@@ -16,7 +16,7 @@ razonablemente bien (BLEU ~93 en el benchmark de 60 frases), pero la
 revisión manual encontró un ~20% de errores reales frente al ~1,5% que
 detectan las comprobaciones automáticas — la mayoría, alucinaciones del
 modelo sin relación con ninguna regla dialectal (ver
-`../documentacion/metodologia_y_resultados.md`, secciones 6 y 9).
+`../documentacio/metodologia_y_resultados.md`, secciones 6 y 9).
 
 Un motor de diccionario no puede alucinar: si una palabra no está en
 ninguna tabla, sencillamente no la toca. Este paquete no sustituye al
@@ -32,7 +32,7 @@ fuentes (Apertium, Paula Guerrero, tablas escritas a mano) con la fuente
 de Mauricio.
 
 Ese mismo día, por la tarde, se redujo el traductor a **SOLO lookup exacto
-de diccionario, y SOLO con datos de `02_reglas_dialectales/lexico/font_mauricio/`**
+de diccionario, y SOLO con datos de `02_regles_dialectals/lexico/font_mauricio/`**
 (equipo AVLizador) — ninguna regla de sufijo, patrón morfológico ni
 reconstrucción algorítmica, y ninguna fuente que no sea Mauricio.
 
@@ -147,9 +147,9 @@ Se ejecuta una sola vez, antes de la primera regla: marca
 `is_proper_noun` en toda palabra capitalizada que **no** sea la primera
 del texto (la primera letra de una frase siempre va en mayúscula, sea o
 no nombre propio). Es la misma heurística ya probada en
-`03_seleccion_de_modelo/evalua_models.py::glossari_per_frase()`, añadida
+`03_seleccio_de_model/evalua_models.py::glossari_per_frase()`, añadida
 allí tras un incidente real con `blanca`/`Blanca` y `roig`/`Roig` (ver
-`../documentacion/metodologia_y_resultados.md`, sección 6). Límite
+`../documentacio/metodologia_y_resultados.md`, sección 6). Límite
 conocido, heredado sin arreglar: un nombre propio que es la **primera**
 palabra del texto nunca se detecta.
 
@@ -222,7 +222,7 @@ palabra del texto nunca se detecta.
 
 ## Mantener `traductor/data/` sincronizado con las fuentes
 
-`traductor/rules/*.py` nunca lee `02_reglas_dialectales/lexico/` en
+`traductor/rules/*.py` nunca lee `02_regles_dialectals/lexico/` en
 tiempo de ejecución -- solo lee copias propias dentro de `traductor/data/`
 (para que el paquete funcione de forma autónoma). Si editas un fichero
 fuente de `font_mauricio/` directamente, ese cambio no llega al motor
@@ -272,7 +272,7 @@ dejarse reprocesar por una regla más débil.
 
 ## Relación con el sistema de reglas antiguo
 
-`03_seleccion_de_modelo/evalua_models.py` ya tenía un sistema de reglas
+`03_seleccio_de_model/evalua_models.py` ya tenía un sistema de reglas
 (`tradueix_regles`, opción `--model regles`) — sustituciones con regex
 sobre la frase completa. Es distinto y **no se ha tocado ni sustituido**:
 el paquete `traductor/` se añade como una opción nueva,
@@ -280,7 +280,7 @@ el paquete `traductor/` se añade como una opción nueva,
 benchmark:
 
 ```bash
-cd 03_seleccion_de_modelo
+cd 03_seleccio_de_model
 python evalua_models.py --model traductor                    # motor nuevo (traductor/)
 python evalua_models.py --model regles                       # sistema antiguo (regex)
 python evalua_models.py --model tots                          # todo a la vez, incluidos ambos
@@ -288,7 +288,7 @@ python evalua_models.py --model tots                          # todo a la vez, i
 
 El adaptador (`tradueix_traductor_nou` en `evalua_models.py`) añade la
 raíz del repositorio a `sys.path` antes de importar `traductor/`, porque
-el script siempre se ejecuta desde dentro de `03_seleccion_de_modelo/` y
+el script siempre se ejecuta desde dentro de `03_seleccio_de_model/` y
 Python no encuentra ahí un paquete que vive en la carpeta de al lado.
 
 ## Uso directo

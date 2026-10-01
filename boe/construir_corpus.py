@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Construye ../data/boe/corpus.json a partir de los PDF ya descargados.
+"""Construye ../dades/boe/corpus.json a partir de los PDF ya descargados.
 
 Empareja cada documento en català con su equivalente en valencià (mismo ID
 base BOE-X-YYYY-NNNNN, ya garantizado por scraper_boe.py), extrae el texto
@@ -34,9 +34,9 @@ from pathlib import Path
 import pymupdf
 
 BOE_DIR = Path(__file__).resolve().parent
-# Los datos del BOE ahora viven en data/boe/ (junto a los del resto de
+# Los datos del BOE ahora viven en dades/boe/ (junto a los del resto de
 # fuentes del proyecto), no dentro de boe/ como antes.
-CORPUS_DIR = BOE_DIR.parent / "data" / "boe"
+CORPUS_DIR = BOE_DIR.parent / "dades" / "boe"
 PROGRESO_PATH = CORPUS_DIR / "progreso.json"
 SALIDA_PATH = CORPUS_DIR / "corpus.json"
 
