@@ -11,9 +11,9 @@ Des de la línia de comandes: `python -m traductor.cli "text"`.
 
 Este paquet és el "pas 5" del projecte (vore final/05_motor_reglas/README.md):
 ve DESPRÉS del corpus sintètic i el benchmark de selecció de model
-(03_seleccion_de_modelo/), i està pensat per a viure com a mòdul independent -- no
+(03_seleccio_de_model/), i està pensat per a viure com a mòdul independent -- no
 depén en temps d'execució de cap altra carpeta del projecte (el lèxic es
-copia a traductor/data/, no es llig de "02_reglas_dialectales/").
+copia a traductor/data/, no es llig de "02_regles_dialectals/").
 
 Estat (21/09): pas 1-2 fets (estructura + rules/__init__.py). La resta de
 mòduls són placeholders documentats -- vore el TODO de cada fitxer per a

@@ -17,14 +17,14 @@ oficial real (clase `puntoPDFsup`), respetando `robots.txt` y con ritmo de
 cortesía (8s-2min de espera entre peticiones). Detalles y cifras de tiempo
 en ["Hallazgos importantes"](#hallazgos-importantes-léelo-antes-de-ejecutar)
 y ["Cortesía con el servidor"](#cortesía-con-el-servidor-por-qué-tardará-varios-días)
-más abajo. Salida: `../data/boe/{catalan,valenciano}/<año>/BOE-*.pdf`.
+más abajo. Salida: `../dades/boe/{catalan,valenciano}/<año>/BOE-*.pdf`.
 
 **2. Extracción** (`construir_corpus.py`) — texto de cada PDF a nivel de
 **párrafo real** (bloque de PyMuPDF, con info de fuente para fusionar
 correctamente párrafos cortados por saltos de página sin confundir títulos
 en cursiva con cuerpo de texto — ver
 ["Construcción del corpus"](#construcción-del-corpus-para-estudio) más
-abajo para el porqué exacto). Salida: `../data/boe/corpus.json`, 45,5M/45,4M
+abajo para el porqué exacto). Salida: `../dades/boe/corpus.json`, 45,5M/45,4M
 caracteres, 6,83M/6,80M palabras (català/valencià).
 
 **3. Alineación** (`alinear_corpus_bleualign.py`, con `texto_comun.py`) —
@@ -32,7 +32,7 @@ por similitud de texto con [Bleualign](https://github.com/rsennrich/Bleualign)
 en vez de por coincidencia exacta de conteo (eso descartaba documentos
 enteros por una sola discrepancia). Antes se excluyen los párrafos
 tabulares (presupuestos/aranceles/formularios, `texto_comun.es_tabla`) para
-no ensuciar la alineación. Salida: `../data/boe/corpus_bleualign.jsonl`,
+no ensuciar la alineación. Salida: `../dades/boe/corpus_bleualign.jsonl`,
 **302.977 pares de frase** (94,0% de cobertura sobre las frases en català
 tras excluir tablas, similitud media 0,71).
 Detalle completo en
@@ -114,7 +114,7 @@ python scraper_boe.py --max-documentos 3 --verbose
 
 El scraper es **reanudable**: puede interrumpirse (Ctrl+C) y volver a
 lanzarse con el mismo comando; retomará justo donde se quedó gracias a
-`../data/boe/progreso.json` (días ya procesados y documentos ya descargados
+`../dades/boe/progreso.json` (días ya procesados y documentos ya descargados
 no se vuelven a pedir). Un día solo se marca como completado si **todos**
 sus documentos se descargaron correctamente; si alguno falla o se corta la
 ejecución a medias, ese día se reintenta en la siguiente ejecución.
@@ -122,7 +122,7 @@ ejecución a medias, ese día se reintenta en la siguiente ejecución.
 ## Salida
 
 ```
-../data/boe/
+../dades/boe/
 ├── progreso.json          # registro de reanudación
 ├── scraper.log             # log completo con timestamp, URL y status code
 ├── catalan/
@@ -174,7 +174,7 @@ cualquier momento (p.ej. según el scraper vaya descargando más parejas):
 recorre lo que haya en disco y regenera la salida entera cada vez.
 
 ```bash
-python construir_corpus.py   # PDF -> ../data/boe/corpus.json
+python construir_corpus.py   # PDF -> ../dades/boe/corpus.json
 ```
 
 ### `corpus.json` (nivel documento)
@@ -252,7 +252,7 @@ Volk, 2010):
 
 ```bash
 pip install -r requirements.txt   # instala pymupdf y bleualign
-python alinear_corpus_bleualign.py   # corpus.json -> ../data/boe/corpus_bleualign.jsonl
+python alinear_corpus_bleualign.py   # corpus.json -> ../dades/boe/corpus_bleualign.jsonl
 ```
 
 Bleualign está pensado para pares de idiomas *distintos*: necesita una
@@ -310,7 +310,7 @@ documento peor alineado baja de 0,62 de similitud media.
 ### `corpus_entrenamiento.jsonl` (subconjunto limpio para entrenar)
 
 ```bash
-python exportar_entrenamiento.py   # corpus_bleualign.jsonl -> ../data/boe/corpus_entrenamiento.jsonl
+python exportar_entrenamiento.py   # corpus_bleualign.jsonl -> ../dades/boe/corpus_entrenamiento.jsonl
 ```
 
 Un único umbral de similitud no separa bien "par correcto de similitud
@@ -341,12 +341,12 @@ cualquier navegador sin internet) para estudiar el corpus y, en concreto,
 cuánto se sostiene en la práctica la separación dialectal català/valencià:
 
 ```bash
-python analizar_corpus.py   # corpus.json + 02_reglas_dialectales -> ../data/boe/analitica_corpus.html
+python analizar_corpus.py   # corpus.json + 02_regles_dialectals -> ../dades/boe/analitica_corpus.html
 ```
 
 Requiere `corpus.json` ya generado (`construir_corpus.py`), opcionalmente
 `corpus_bleualign.jsonl` (`alinear_corpus_bleualign.py`, si no existe esa
-pestaña simplemente no aparece), y la carpeta `../02_reglas_dialectales`
+pestaña simplemente no aparece), y la carpeta `../02_regles_dialectals`
 con estos ficheros — `cargar_materiales()` los busca primero en la raíz de
 esa carpeta y si no están ahí, en `lexico/` y `fuentes/` (la carpeta se
 reorganizó en subcarpetas para un pipeline distinto que también la usa; ver

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Analitica del corpus paralelo catala/valencia + informe HTML autonomo.
 
-Lee ../data/boe/corpus.json (generado por construir_corpus.py) y los
-materiales linguisticos de "02_reglas_dialectales" (reglas morfologicas,
+Lee ../dades/boe/corpus.json (generado por construir_corpus.py) y los
+materiales linguisticos de "02_regles_dialectals" (reglas morfologicas,
 vocabulario dialectal y formas exclusivas de valencia extraidas del
 diccionario Apertium) para:
 
@@ -22,7 +22,7 @@ Genera un unico HTML autonomo (sin CDN, funciona en local sin internet)
 con tablas interactivas (filtro + orden) y graficos SVG generados en
 Python. Pensado para ejecutarse cuando el corpus este mas completo; se
 puede relanzar en cualquier momento, siempre parte de lo que haya en
-../data/boe/corpus.json en ese momento.
+../dades/boe/corpus.json en ese momento.
 
 Uso:
     python analizar_corpus.py
@@ -41,12 +41,12 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 BOE_DIR = Path(__file__).resolve().parent
-# Los datos del BOE ahora viven en data/boe/ (junto a los del resto de
+# Los datos del BOE ahora viven en dades/boe/ (junto a los del resto de
 # fuentes del proyecto), no dentro de boe/ como antes.
-CORPUS_DIR = BOE_DIR.parent / "data" / "boe"
+CORPUS_DIR = BOE_DIR.parent / "dades" / "boe"
 CORPUS_JSON = CORPUS_DIR / "corpus.json"
 BLEUALIGN_JSONL = CORPUS_DIR / "corpus_bleualign.jsonl"
-MATERIALES_DIR = BOE_DIR.parent / "02_reglas_dialectales"
+MATERIALES_DIR = BOE_DIR.parent / "02_regles_dialectals"
 SALIDA_HTML = CORPUS_DIR / "analitica_corpus.html"
 
 sys.path.insert(0, str(BOE_DIR))
@@ -80,7 +80,7 @@ def cargar_bleualign() -> list[dict] | None:
 
 
 def _leer_json_materiales(nombre: str) -> dict:
-    # 02_reglas_dialectales/ se reorganizó en subcarpetas: lexico/ (JSON de
+    # 02_regles_dialectals/ se reorganizó en subcarpetas: lexico/ (JSON de
     # pares de palabras) y fuentes/ (material bruto, incl. reglas_cat_val.md).
     # Busca primero en la raíz por compatibilidad, luego en esas subcarpetas.
     candidatos = [MATERIALES_DIR / nombre, MATERIALES_DIR / "lexico" / nombre, MATERIALES_DIR / "fuentes" / nombre]
@@ -804,7 +804,7 @@ def _marcar_par_html(fc: str, fv: str) -> tuple[bool, str, str]:
 
 
 def analizar_bleualign(registros: list[dict] | None) -> dict | None:
-    """Analiza ../data/boe/corpus_bleualign.jsonl (generado aparte por
+    """Analiza ../dades/boe/corpus_bleualign.jsonl (generado aparte por
     alinear_corpus_bleualign.py): cobertura, distribucion de similitud,
     resumen por documento, y una lista acotada de "candidatos a revision"
     (similitud baja) para inspeccionar a ojo la calidad de lo que decide
@@ -1534,7 +1534,7 @@ def generar_html(
 <header class="cabecera">
   <h1>Analitica del corpus paralelo BOE catala / valencia</h1>
   <p>{resumen["total_pares"]} documentos emparejados &middot; periodo {anios_txt} &middot; generado a partir de
-     <code>../data/boe/corpus.json</code> y los materiales de <code>02_reglas_dialectales</code>.</p>
+     <code>../dades/boe/corpus.json</code> y los materiales de <code>02_regles_dialectals</code>.</p>
 </header>
 
 <nav class="pestanas">
@@ -1692,7 +1692,7 @@ def generar_html(
         caen en el lado dialectal donde se esperaria encontrarla. No implica necesariamente un error: la AVL
         admite variantes compartidas para varias formas (p.ej. demostratius), y algunas palabras del glosario
         son sinonimos validos en ambas variantes.</li>
-    <li><strong>Fuente de los materiales linguisticos:</strong> carpeta <code>02_reglas_dialectales</code>
+    <li><strong>Fuente de los materiales linguisticos:</strong> carpeta <code>02_regles_dialectals</code>
         (diccionario Apertium <code>apertium-cat.cat.dix</code>, glosario curado y reglas derivadas).</li>
   </ul>
 </section>
