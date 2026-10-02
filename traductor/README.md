@@ -123,6 +123,39 @@ concretes.
 **111/150 (74,0%)** -- el canvi individual més gran des de la recreació
 dels demostratius.
 
+## DECISIÓ D'ARQUITECTURA (02/10/2026): relatiu locatiu "a on"→"on", i 3 regles descartades per falta d'evidència
+
+Mateix mètode que la decisió anterior, aplicat ara a partir de
+`docs_gramatica/` (les gramàtiques GEIEC/GNV completes i les seues guies
+derivades, vore `02_regles_dialectals/docs_gramatica/README.md`): cada
+diferència que documenten les guies es contrasta contra el benchmark de
+150 frases ABANS d'escriure cap regla, perquè una diferència real sobre
+el paper no sempre apareix prou sovint -- o amb prou seguretat -- com per
+a merèixer una regla.
+
+**4 candidats avaluats, 1 implementat:**
+
+- ✅ **"a on" → "on"** (relatiu/interrogatiu locatiu): 9 aparicions reals
+  al benchmark, **les 9 el mateix patró, zero excepcions**. Implementat a
+  `relatiu_on.py`. Inclou el cas especial "d'a on" → "d'on" (prefix elidit
+  enganxat a la "a"), trobat en 1 dels 9 casos durant la revisió.
+- ❌ **"lo/los" com a pronom feble proclític**: 2 aparicions, totes dos
+  falsos positius (enclítics darrere de verb, `saber-lo`/`segmentant-los`,
+  idèntics als dos dialectes -- no té res a vore amb el "lo" que
+  documenten les gramàtiques). Zero evidència real, no implementat.
+- ❌ **"per" → "per a"** (finalitat): només 2 casos reals de 28 aparicions
+  de "per"/"per a" al benchmark, i la resta de diferència depén de si
+  "per" té valor de causa o de finalitat -- distinció sintàctica real, no
+  un patró de superfície segur d'automatitzar. Mateix tipus de risc que
+  es va descartar amb l'escaneig automàtic de gènere. No implementat.
+- ❌ **"ací" → "aquí"**: només 1 aparició al benchmark, i en eixe cas
+  concret la referència deixa "ací" **sense canviar** -- contradiu la
+  teoria de la gramàtica amb l'única dada real disponible. No implementat
+  fins que n'hi haja més evidència real.
+
+**Resultat, mesurat**: el benchmark va pujar de **111/150 (74,0%)** a
+**119/150 (79,3%)**.
+
 ## Arquitectura
 
 Pipeline seqüencial de capes sobre una llista de `Token`, no substitucions
@@ -131,8 +164,8 @@ de text sobre la frase sencera:
 ```
 text ──tokenize()──▶ [Token, Token, ...] ──marca_noms_propis()──▶
     ──▶ LexicRule ──▶ ConjugacionsDictRule ──▶ PossessiusRule ──▶ NumeralsRule
-    ──▶ ConcordancaDosDuesRule ──▶ DemostratiusRule ──▶ AccentuacioRule
-    ──▶ IncoatiusRule ──▶ detokenize() ──▶ text convertit
+    ──▶ ConcordancaDosDuesRule ──▶ RelatiuOnRule ──▶ DemostratiusRule
+    ──▶ AccentuacioRule ──▶ IncoatiusRule ──▶ detokenize() ──▶ text convertit
 ```
 
 ### `Token` (`rules/__init__.py`)
@@ -157,7 +190,7 @@ reconstruïx exacte sense lògica de reinserció d'espais.
 
 Cada capa marca `is_translated = True` en el moment que toca un token, i
 totes les capes posteriors respecten eixe flag (`if tok.is_translated:
-continue`). Amb 8 capes independents, açò evita que dos fonts es
+continue`). Amb 9 capes independents, açò evita que dos fonts es
 trepitgen sense que ningú se n'adone — la primera capa que reconeix una
 paraula es queda el mèrit, la resta la salta.
 
@@ -194,7 +227,7 @@ allí després d'un incident real amb `blanca`/`Blanca` i `roig`/`Roig`
 conegut, heretat sense arreglar: un nom propi que és la **primera**
 paraula del text mai es detecta.
 
-## Les 8 capes
+## Les 9 capes
 
 - **`lexic.py`** — lookup de lèxic general + accentuació + gènere/nombre.
   Fusiona `flexio_genere_avl.json` (prioritat màxima, vore baix),
@@ -254,6 +287,13 @@ paraula del text mai es detecta.
   una constant xicoteta i tancada al mateix mòdul. NO cobrix casos
   "pelats" sense marcador davant (`dos entitats`) ni casos purament
   lèxics (`dos consonants`) -- vore la decisió per al perquè.
+- **`relatiu_on.py`** — regla de PATRÓ (afegida 02/10/2026, vore
+  "DECISIÓ D'ARQUITECTURA"): corregix `a on→on` com a relatiu/interrogatiu
+  locatiu. Gestiona el cas del prefix elidit enganxat (`d'a on→d'on`).
+  Font de l'evidència: `docs_gramatica/` (GEIEC/GNV completes), contrastat
+  contra el benchmark abans d'implementar -- 3 altres diferències
+  d'estes gramàtiques es van descartar per falta d'evidència real, vore
+  la decisió.
 - **`accentuacio.py`** — 2 regles de SUFIX productives (afegides
   30/09/2026, vesprada, vore "DECISIÓ D'ARQUITECTURA"): `-és→-ès`
   (`francés→francès`, mateix patró que 695 paraules literals de
@@ -364,8 +404,8 @@ import doctest, importlib
 modulos = [
     'traductor.rules', 'traductor.rules.lexic', 'traductor.rules.conjugacions_dict',
     'traductor.rules.possessius', 'traductor.rules.numerals', 'traductor.rules.concordanca_dos_dues',
-    'traductor.rules.demostratius', 'traductor.rules.accentuacio', 'traductor.rules.incoatius',
-    'traductor.rules.engine', 'traductor.translate',
+    'traductor.rules.relatiu_on', 'traductor.rules.demostratius', 'traductor.rules.accentuacio',
+    'traductor.rules.incoatius', 'traductor.rules.engine', 'traductor.translate',
 ]
 for nom in modulos:
     m = importlib.import_module(nom)
