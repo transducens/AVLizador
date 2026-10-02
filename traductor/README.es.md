@@ -124,6 +124,42 @@ concretas.
 **111/150 (74,0%)** -- el cambio individual más grande desde la
 recreación de los demostrativos.
 
+## DECISIÓN DE ARQUITECTURA (02/10/2026): relativo locativo "a on"→"on", y 3 reglas descartadas por falta de evidencia
+
+Mismo método que la decisión anterior, aplicado ahora a partir de
+`docs_gramatica/` (las gramáticas GEIEC/GNV completas y sus guías
+derivadas, ver `02_regles_dialectals/docs_gramatica/README.md`): cada
+diferencia que documentan las guías se contrasta contra el benchmark de
+150 frases ANTES de escribir ninguna regla, porque una diferencia real
+sobre el papel no siempre aparece lo bastante a menudo -- ni con
+suficiente seguridad -- como para merecer una regla.
+
+**4 candidatos evaluados, 1 implementado:**
+
+- ✅ **"a on" → "on"** (relativo/interrogativo locativo): 9 apariciones
+  reales en el benchmark, **las 9 el mismo patrón, cero excepciones**.
+  Implementado en `relatiu_on.py`. Incluye el caso especial "d'a on" →
+  "d'on" (prefijo elidido pegado a la "a"), encontrado en 1 de los 9
+  casos durante la revisión.
+- ❌ **"lo/los" como pronombre débil proclítico**: 2 apariciones, ambas
+  falsos positivos (enclíticos detrás de verbo, `saber-lo`/
+  `segmentant-los`, idénticos en ambos dialectos -- no tiene nada que ver
+  con el "lo" que documentan las gramáticas). Cero evidencia real, no
+  implementado.
+- ❌ **"per" → "per a"** (finalidad): solo 2 casos reales de 28
+  apariciones de "per"/"per a" en el benchmark, y el resto de la
+  diferencia depende de si "per" tiene valor de causa o de finalidad --
+  distinción sintáctica real, no un patrón de superficie seguro de
+  automatizar. Mismo tipo de riesgo que se descartó con el escaneo
+  automático de género. No implementado.
+- ❌ **"ací" → "aquí"**: solo 1 aparición en el benchmark, y en ese caso
+  concreto la referencia deja "ací" **sin cambiar** -- contradice la
+  teoría de la gramática con el único dato real disponible. No
+  implementado hasta que haya más evidencia real.
+
+**Resultado, medido**: el benchmark subió de **111/150 (74,0%)** a
+**119/150 (79,3%)**.
+
 ## Arquitectura
 
 Pipeline secuencial de capas sobre una lista de `Token`, no sustituciones
@@ -132,8 +168,8 @@ de texto sobre la frase entera:
 ```
 texto ──tokenize()──▶ [Token, Token, ...] ──marca_noms_propis()──▶
     ──▶ LexicRule ──▶ ConjugacionsDictRule ──▶ PossessiusRule ──▶ NumeralsRule
-    ──▶ ConcordancaDosDuesRule ──▶ DemostratiusRule ──▶ AccentuacioRule
-    ──▶ IncoatiusRule ──▶ detokenize() ──▶ texto convertido
+    ──▶ ConcordancaDosDuesRule ──▶ RelatiuOnRule ──▶ DemostratiusRule
+    ──▶ AccentuacioRule ──▶ IncoatiusRule ──▶ detokenize() ──▶ texto convertido
 ```
 
 ### `Token` (`rules/__init__.py`)
@@ -158,7 +194,7 @@ reconstruye exacto sin lógica de reinserción de espacios.
 
 Cada capa marca `is_translated = True` en el momento en que toca un
 token, y todas las capas posteriores respetan ese flag (`if
-tok.is_translated: continue`). Con 8 capas independientes, esto evita que
+tok.is_translated: continue`). Con 9 capas independientes, esto evita que
 dos fuentes se pisen sin que nadie se dé cuenta — la primera capa que
 reconoce una palabra se queda el mérito, el resto la salta.
 
@@ -197,7 +233,7 @@ allí tras un incidente real con `blanca`/`Blanca` y `roig`/`Roig` (ver
 conocido, heredado sin arreglar: un nombre propio que es la **primera**
 palabra del texto nunca se detecta.
 
-## Las 8 capas
+## Las 9 capas
 
 - **`lexic.py`** — lookup de léxico general + acentuación + género/número.
   Fusiona `flexio_genere_avl.json` (prioridad máxima, ver abajo),
@@ -257,6 +293,13 @@ palabra del texto nunca se detecta.
   es una constante pequeña y cerrada en el mismo módulo. NO cubre casos
   "pelados" sin marcador delante (`dos entitats`) ni casos puramente
   léxicos (`dos consonants`) -- ver la decisión para el porqué.
+- **`relatiu_on.py`** — regla de PATRÓN (añadida 02/10/2026, ver
+  "DECISIÓN DE ARQUITECTURA"): corrige `a on→on` como relativo/
+  interrogativo locativo. Gestiona el caso del prefijo elidido pegado
+  (`d'a on→d'on`). Fuente de la evidencia: `docs_gramatica/` (GEIEC/GNV
+  completas), contrastado contra el benchmark antes de implementar -- 3
+  otras diferencias de estas gramáticas se descartaron por falta de
+  evidencia real, ver la decisión.
 - **`accentuacio.py`** — 2 reglas de SUFIJO productivas (añadidas
   30/09/2026, tarde, ver "DECISIÓN DE ARQUITECTURA"): `-és→-ès`
   (`francés→francès`, mismo patrón que 695 palabras literales de
@@ -368,8 +411,8 @@ import doctest, importlib
 modulos = [
     'traductor.rules', 'traductor.rules.lexic', 'traductor.rules.conjugacions_dict',
     'traductor.rules.possessius', 'traductor.rules.numerals', 'traductor.rules.concordanca_dos_dues',
-    'traductor.rules.demostratius', 'traductor.rules.accentuacio', 'traductor.rules.incoatius',
-    'traductor.rules.engine', 'traductor.translate',
+    'traductor.rules.relatiu_on', 'traductor.rules.demostratius', 'traductor.rules.accentuacio',
+    'traductor.rules.incoatius', 'traductor.rules.engine', 'traductor.translate',
 ]
 for nom in modulos:
     m = importlib.import_module(nom)
