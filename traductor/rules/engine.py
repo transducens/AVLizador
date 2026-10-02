@@ -10,16 +10,20 @@ per l'abast complet i el raonament del canvi):
     2. conjugacions_dict   (lookup directe de formes verbals, font_mauricio)
     3. possessius          (lookup directe de possessius, font_mauricio)
     4. numerals            (lookup directe de numerals, font_mauricio)
-    5. demostratius        (lookup directe de demostratius, AVL-only --
+    5. concordanca_dos_dues (corregix "dos"->"dues" darrere d'un marcador
+                            de femení plural -- "les"/"estes"/"eixes"...,
+                            afegida 01/10/2026, vore docstring del mòdul)
+    6. demostratius        (lookup directe de demostratius, AVL-only --
                             recreada 30/09/2026, cap fitxer de Mauricio
                             llista un paradigma gramatical tancat com est)
-    6. accentuacio         (sufix -és->-ès i -éixer->-èixer, patró
+    7. accentuacio         (sufix -és->-ès i -éixer->-èixer, patró
                             productiu, afegida 30/09/2026)
-    7. incoatius           (sufix -ix->-eix, patró productiu, afegida
+    8. incoatius           (sufix -ix->-eix, patró productiu, afegida
                             30/09/2026)
 
-Les capes 1-5 són lookups exactes; 6-7 són regles de SUFIX (patró
-productiu, no llista tancada) -- per això van DESPRÉS de les de
+Les capes 1-4 i 6 són lookups exactes; 5 és una regla de CONCORDANÇA
+(mira el token anterior, no un diccionari) i 7-8 són regles de SUFIX
+(patró productiu, no llista tancada) -- per això van DESPRÉS de les de
 diccionari: si una forma ja es coneix amb exactitud (p.ex. "francés" ja
 és a `lexic_acentuacio_mauricio.json`), no té sentit deixar que una regla
 de sufix més feble la reprocesse. Cada capa salta qualsevol token ja
@@ -35,6 +39,7 @@ from __future__ import annotations
 
 from . import Token, detokenize, marca_noms_propis, tokenize
 from .accentuacio import AccentuacioRule
+from .concordanca_dos_dues import ConcordancaDosDuesRule
 from .conjugacions_dict import ConjugacionsDictRule
 from .demostratius import DemostratiusRule
 from .incoatius import IncoatiusRule
@@ -58,6 +63,8 @@ class RuleEngine:
     'Vull conèixer qui estableix aquesta norma.'
     >>> engine.translate("Este xiquet i eixa dona i aquella casa.")
     'Aquest nen i aquesta dona i aquella casa.'
+    >>> engine.translate("Estes dos germanes i les dos institucions.")
+    'Aquestes dues germanes i les dues institucions.'
     """
 
     def __init__(self) -> None:
@@ -66,6 +73,7 @@ class RuleEngine:
             ConjugacionsDictRule(),
             PossessiusRule(),
             NumeralsRule(),
+            ConcordancaDosDuesRule(),
             DemostratiusRule(),
             AccentuacioRule(),
             IncoatiusRule(),
