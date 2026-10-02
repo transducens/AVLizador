@@ -32,6 +32,7 @@ d'ús d'eixa etapa en concret.
 | [`traductor/`](traductor/) | Etapa 5 — motor de regles determinista (sense LLM); veure `traductor/README.md` |
 | [`06_dades_entrenament/`](06_dades_entrenament/) | Etapa 6 — prepara el dataset final (train/dev/test) per al finetuning |
 | [`07_entrenament_de_models/`](07_entrenament_de_models/) | Etapa 7 — finetuning, baselines i comparació de models |
+| [`08_traduccio_corpus/`](08_traduccio_corpus/) | Etapa 8 — aplica el motor de regles a un corpus complet (no només al benchmark); fase 2 (post-processat amb LLM dels casos marcats) encara pendent |
 | [`boe/`](boe/) | Scripts del corpus real i alineat del BOE — pilar independent, sense numerar (no és seqüencial amb 1-7) |
 | [`documentacio/`](documentacio/) | La metodologia completa del projecte |
 

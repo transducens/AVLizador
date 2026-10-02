@@ -19,3 +19,7 @@ dades/sintetic/muestra_comparativa_20260922_1254/
 !07_entrenament_de_models/checkpoints/.gitkeep
 07_entrenament_de_models/runs/*
 !07_entrenament_de_models/runs/.gitkeep
+
+# 08_traduccio_corpus/: salida generada por traduccio_massiva.py, regenerable
+08_traduccio_corpus/eixides/*
+!08_traduccio_corpus/eixides/.gitkeep
