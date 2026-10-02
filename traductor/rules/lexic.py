@@ -1,8 +1,12 @@
 """
 lexic.py -- Capa 1 del pipeline: substitució directa per lèxic diferencial.
-Fusiona 3 fonts, per orde de prioritat quan es contradiuen (la primera que
+Fusiona 4 fonts, per orde de prioritat quan es contradiuen (la primera que
 definix una paraula guanya):
 
+    0. TEMPORAL_hui_avui_pendent_fusio.json -- PEGAT TEMPORAL, no una font
+       permanent (vore docstring de `_carrega_temporal`). Si el fitxer no
+       existix (ja fusionat i esborrat), esta font simplement no aporta
+       res -- no cal llevar la crida a mà.
     1. flexio_genere_avl.json         -- derivació de gènere/nombre per a
        un grapat de paraules CURADES A MÀ (no cap fitxer de Mauricio),
        vore docstring de `_carrega_flexio_genere`.
@@ -84,6 +88,7 @@ _DATA = Path(__file__).resolve().parent.parent / "data"
 MAURICIO_PATH = _DATA / "lexic_mauricio.json"
 ACENTUACIO_MAURICIO_PATH = _DATA / "lexic_acentuacio_mauricio.json"
 FLEXIO_GENERE_PATH = _DATA / "flexio_genere_avl.json"
+TEMPORAL_PATH = _DATA / "TEMPORAL_hui_avui_pendent_fusio.json"
 
 # Bug de dades conegut al fitxer font (vore docstring del mòdul): "després"
 # no és una excepció dialectal, és un error de transcripció confirmat.
@@ -105,6 +110,18 @@ def _deriva_genere_nombre(masc_val: str, masc_cat: str) -> dict[str, str]:
         masc_val + "s": masc_cat + "s",
         masc_val + "es": masc_cat + "es",
     }
+
+
+def _carrega_temporal(path: Path) -> dict[str, str]:
+    """Carrega el pegat TEMPORAL (vore docstring del mòdul). Si el fitxer
+    no existix -- s'ha fusionat a una font permanent i s'ha esborrat, tal
+    com indica el seu propi `descripcio` -- torna buit sense error, perquè
+    esta funció no haja de llevar-se a mà de `carrega_lexic()`.
+    """
+    if not path.exists():
+        return {}
+    dades = json.loads(path.read_text(encoding="utf-8"))
+    return {val: cat for val, cat in dades.items() if val != "descripcio"}
 
 
 def _carrega_flexio_genere(path: Path) -> dict[str, str]:
@@ -169,8 +186,9 @@ def carrega_lexic(
     mauricio_path: Path = MAURICIO_PATH,
     acentuacio_path: Path = ACENTUACIO_MAURICIO_PATH,
     flexio_genere_path: Path = FLEXIO_GENERE_PATH,
+    temporal_path: Path = TEMPORAL_PATH,
 ) -> dict[str, str]:
-    """Fusiona les 3 fonts documentades al mòdul, per orde de prioritat
+    """Fusiona les 4 fonts documentades al mòdul, per orde de prioritat
     (la primera font que definix una paraula guanya sobre les següents).
 
     >>> lookup = carrega_lexic()
@@ -186,9 +204,12 @@ def carrega_lexic(
     'acetilè'
     >>> "després" in lookup
     False
+    >>> lookup["hui"]
+    'avui'
     """
     lookup: dict[str, str] = {}
     for carregador, path in (
+        (_carrega_temporal, temporal_path),
         (_carrega_flexio_genere, flexio_genere_path),
         (_carrega_mauricio_lexic, mauricio_path),
         (_carrega_acentuacio_mauricio, acentuacio_path),
@@ -206,7 +227,7 @@ class LexicRule:
     abans de córrer cap regla -- vore rules/__init__.py).
 
     >>> from . import tokenize, marca_noms_propis
-    >>> toks = tokenize("Hui vull parlar amb el meu servici.")
+    >>> toks = tokenize("Vull parlar amb el meu servici.")
     >>> marca_noms_propis(toks)
     >>> toks = LexicRule().apply(toks)
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
@@ -249,8 +270,9 @@ class LexicRule:
         mauricio_path: Path = MAURICIO_PATH,
         acentuacio_path: Path = ACENTUACIO_MAURICIO_PATH,
         flexio_genere_path: Path = FLEXIO_GENERE_PATH,
+        temporal_path: Path = TEMPORAL_PATH,
     ) -> None:
-        self._lookup = carrega_lexic(mauricio_path, acentuacio_path, flexio_genere_path)
+        self._lookup = carrega_lexic(mauricio_path, acentuacio_path, flexio_genere_path, temporal_path)
 
     def apply(self, tokens: list[Token]) -> list[Token]:
         for i, tok in enumerate(tokens):

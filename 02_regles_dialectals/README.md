@@ -37,7 +37,8 @@ detall complet del procés.
 02_regles_dialectals/
 ├── regles_prompt/      documentació per a llegir i revisar (comença ací)
 ├── lexic/             dades estructurades: parells valencià-català en JSON
-└── fonts/             material brut d'origen (no pensat per a llegir directament)
+├── fonts/             material brut d'origen (no pensat per a llegir directament)
+└── docs_gramatica/    GEIEC (IEC) i GNV (AVL) completes + guies dialectals derivades
 ```
 
 ### `regles_prompt/` — comença per ací
@@ -76,6 +77,25 @@ guia.
 | `apertium-cat.cat.dix` | El diccionari morfològic d'Apertium en brut (format XML/lttoolbox, ~66.500 entrades). |
 | `palabras_traducidas.txt` | La llista curada original, en text pla, abans de convertir-se a JSON. |
 | `palabras_val.json` | Formes marcades específicament com a valencianes (`v="val_gva"`) en Apertium — sense parella catalana directa, és matèria primera, no parells ja fets. |
+
+### `docs_gramatica/` — gramàtiques oficials completes
+
+Mentre `lexic/` i `fonts/` cobrixen diferències **lèxiques**, esta carpeta
+cobrix diferències **gramaticals** (articles, demostratius, pronoms
+febles, preposicions...), amb les dos normatives completes en text pla
+com a font d'autoritat:
+
+- **GEIEC** (IEC, 2018) — escrapejada en directe amb `baixar_geiec.py`
+  (Playwright, 204 seccions).
+- **GNV** (AVL, 2016) — reformatada a partir de
+  `../dades/avl/clean/avl_gnv.jsonl` (ja escrapejada per l'etapa 1), no
+  un scraping nou.
+- **`guia_dialectal_morfologia.md`** i **`guia_traduccio_dialectal.md`**
+  — anàlisi de les divergències entre totes dos, per tema i per regla
+  pràctica respectivament.
+
+Vore el seu propi [`docs_gramatica/README.md`](docs_gramatica/README.md)
+per al detall complet i com regenerar cada fitxer.
 
 ## Com afegir una paraula nova al lèxic fiable
 

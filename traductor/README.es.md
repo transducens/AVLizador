@@ -81,6 +81,49 @@ absurdas ("cercar"→"cercara"). Con la lista curada, el benchmark subió a
 Esta cifra se deja aquí a propósito, sin suavizarla: es la consecuencia
 directa y conocida de la decisión, no un bug.
 
+## DECISIÓN DE ARQUITECTURA (01/10/2026): concordancia `dos→dues`, primera capa (artículo/demostrativo)
+
+Pérdida ya documentada desde el 30/09/2026 (ver docstring de
+`numerals.py`): la concordancia de género `dos/dues` se había quitado al
+pasar a puro lookup de diccionario, porque "dos"/"dues" se escriben igual
+en ambos dialectos (no es una sustitución léxica Mauricio) -- el motor
+simplemente no corregía el desacuerdo cuando el valenciano coloquial usa
+"dos" invariable delante de un nombre femenino ("tinc dos germanes" en
+vez de "dues germanes").
+
+**Análisis previo a implementar nada** (evidencia, no teoría): se
+revisaron los 150 casos del benchmark buscando todas las frases con
+"dos"/"dues" para ver qué señal distingue los casos reales. De ~28 frases
+con "dos→dues" real, **13 iban precedidas directamente por un artículo o
+demostrativo que ya marca femenino plural por sí mismo** (`les`, `estes`,
+`eixes`, `aqueixes`): "**les** dos institucions"→dues, "**estes** dos
+circumstàncies"→dues. El resto eran casos "pelados" sin marcador delante
+("dos entitats", "dos terceres parts"), donde solo el sufijo de la
+palabra siguiente (-tat, -ció, -a) delata el género -- y un caso ("dos
+consonants") no tiene ninguna marca formal, solo se puede saber de
+memoria.
+
+**Decisión**: implementar SOLO la primera capa (marcador delante), en un
+fichero aparte (`concordanca_dos_dues.py`) para tenerla controlada por
+separado, y dejar la capa de sufijo pendiente a propósito hasta medir el
+impacto de esta primera -- mismo criterio que `flexio_genere_avl.json`:
+preferir una señal segura y acotada antes que una heurística más amplia
+con más riesgo de falsos positivos. Los casos puramente léxicos
+("consonants") se dejan fuera a propósito, para una futura lista curada a
+mano si algún día dan problemas reales -- nunca con una regla general de
+género sobre todo el léxico (mismo motivo por el que se descartó el
+escaneo automático en `flexio_genere_avl.json`).
+
+**Riesgo aceptado conscientemente**: el propio benchmark es inconsistente
+en 2 casos (citas de registro antiguo/dialectal) donde la referencia deja
+"dos" sin corregir a propósito. La regla lo corrige igualmente -- se
+prioriza la corrección gramatical real sobre esas 2 coincidencias
+concretas.
+
+**Resultado, medido**: el benchmark subió de **99/150 (66,0%)** a
+**111/150 (74,0%)** -- el cambio individual más grande desde la
+recreación de los demostrativos.
+
 ## Arquitectura
 
 Pipeline secuencial de capas sobre una lista de `Token`, no sustituciones
@@ -89,7 +132,8 @@ de texto sobre la frase entera:
 ```
 texto ──tokenize()──▶ [Token, Token, ...] ──marca_noms_propis()──▶
     ──▶ LexicRule ──▶ ConjugacionsDictRule ──▶ PossessiusRule ──▶ NumeralsRule
-    ──▶ DemostratiusRule ──▶ AccentuacioRule ──▶ IncoatiusRule ──▶ detokenize() ──▶ texto convertido
+    ──▶ ConcordancaDosDuesRule ──▶ DemostratiusRule ──▶ AccentuacioRule
+    ──▶ IncoatiusRule ──▶ detokenize() ──▶ texto convertido
 ```
 
 ### `Token` (`rules/__init__.py`)
@@ -114,7 +158,7 @@ reconstruye exacto sin lógica de reinserción de espacios.
 
 Cada capa marca `is_translated = True` en el momento en que toca un
 token, y todas las capas posteriores respetan ese flag (`if
-tok.is_translated: continue`). Con 6 capas independientes, esto evita que
+tok.is_translated: continue`). Con 8 capas independientes, esto evita que
 dos fuentes se pisen sin que nadie se dé cuenta — la primera capa que
 reconoce una palabra se queda el mérito, el resto la salta.
 
@@ -153,7 +197,7 @@ allí tras un incidente real con `blanca`/`Blanca` y `roig`/`Roig` (ver
 conocido, heredado sin arreglar: un nombre propio que es la **primera**
 palabra del texto nunca se detecta.
 
-## Las 7 capas
+## Las 8 capas
 
 - **`lexic.py`** — lookup de léxico general + acentuación + género/número.
   Fusiona `flexio_genere_avl.json` (prioridad máxima, ver abajo),
@@ -205,6 +249,14 @@ palabra del texto nunca se detecta.
   caso especial (es lookup exacto, no sustitución de subcadena). Excluye
   4 filas de "vuitavat" que parecen una extracción rota en el fichero
   fuente (mismo catalán repetido para 4 valencianos distintos).
+- **`concordanca_dos_dues.py`** — regla de CONCORDANCIA (añadida
+  01/10/2026, ver "DECISIÓN DE ARQUITECTURA"): corrige `dos→dues` cuando
+  el token inmediatamente anterior es `les`/`estes`/`eixes`/`aqueixes`/
+  `aquelles`/`unes` (marcador de femenino plural inequívoco, nunca un
+  diccionario). No lee ningún fichero de datos -- la lista de marcadores
+  es una constante pequeña y cerrada en el mismo módulo. NO cubre casos
+  "pelados" sin marcador delante (`dos entitats`) ni casos puramente
+  léxicos (`dos consonants`) -- ver la decisión para el porqué.
 - **`accentuacio.py`** — 2 reglas de SUFIJO productivas (añadidas
   30/09/2026, tarde, ver "DECISIÓN DE ARQUITECTURA"): `-és→-ès`
   (`francés→francès`, mismo patrón que 695 palabras literales de
@@ -315,8 +367,9 @@ python -c "
 import doctest, importlib
 modulos = [
     'traductor.rules', 'traductor.rules.lexic', 'traductor.rules.conjugacions_dict',
-    'traductor.rules.possessius', 'traductor.rules.numerals', 'traductor.rules.demostratius',
-    'traductor.rules.accentuacio', 'traductor.rules.incoatius', 'traductor.rules.engine', 'traductor.translate',
+    'traductor.rules.possessius', 'traductor.rules.numerals', 'traductor.rules.concordanca_dos_dues',
+    'traductor.rules.demostratius', 'traductor.rules.accentuacio', 'traductor.rules.incoatius',
+    'traductor.rules.engine', 'traductor.translate',
 ]
 for nom in modulos:
     m = importlib.import_module(nom)
