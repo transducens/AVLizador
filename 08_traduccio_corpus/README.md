@@ -86,3 +86,39 @@ s'ha de decidir:
 - Si el LLM proposa un canvi o nomes senyala per a revisió humana.
 
 Vore `postprocessat_llm/README.md` per a l'estat d'esta decisió.
+
+## `genera_muestra_test_dialectal.py` -- mostra de 200 frases per a test real
+
+```bash
+python genera_muestra_test_dialectal.py
+# -> ../dades/boe_net/muestra_test_dialectal.json
+```
+
+Les 150 frases del benchmark (`03_seleccio_de_model/benchmark_corpus.json`)
+són curades a mà, pensades per a il·lustrar un fenomen dialectal cada una.
+Esta mostra és distinta: 200 frases REALS del BOE (`dades/boe_net/`) on el
+motor `traductor/` detecta de veres almenys un marcador (alguna de les 9
+regles li canvia alguna cosa al traduir) -- pensada per a revisar i
+corregir a mà i servir despres com a segon conjunt de test, sobre corpus
+real en compte de frases ja triades per a demostrar cada regla.
+
+**Com**: executa el motor regla a regla (mateix orde que `engine.py`),
+comparant quins tokens passen a `is_translated` just despres de cada
+`regla.apply()` -- no es pot saber per paraules clau perque les regles de
+sufix (`accentuacio`, `incoatius`) i de concordança
+(`concordanca_dos_dues`, `relatiu_on`) no son llistes de paraules.
+**Estratificada per regla** (no mostreig pur a l'atzar, que eixiria
+dominat per `demostratius`/`conjugacions_dict`): es reparteix el cupo
+entre les 9 regles perquè la mostra servisca de test de totes, no només
+de les mes freqüents.
+
+Cada fila porta `texto_valenciano` (font), `texto_catalan_boe` (referencia
+oficial, bon punt de partida per a corregir), `hipotesis_traductor`
+(l'eixida actual del motor) i `reglas_disparadas` -- tot el que cal per a
+comparar i corregir sense tornar a executar res.
+
+Troballa real en generar-la: **`numerals` no es dispara ni una sola
+vegada en les 260.345 frases del corpus** -- el seu patró (huit/vuit,
+dinou/disset...) senzillament no apareix en prosa legal formal. No es un
+error de l'script, és una dada real sobre quant de freqüent és cada
+fenomen fora del benchmark curat.

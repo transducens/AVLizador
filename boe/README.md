@@ -211,7 +211,31 @@ sols hi havia diferència de tipografia, només de puntuació, així que va
 caldre a més reconéixer el patró de l'encapçalament mateix. També neteja
 les capçaleres/peus de pàgina que el BOE repetix en cada pàgina
 (encapçalament "BOLETÍN OFICIAL DEL ESTADO", línia de suplement, data,
-"Secc. X. Pàg. N", peu amb ISSN...).
+"Secc. X. Pàg. N", peu amb ISSN...) amb una llista de patrons
+(`LINEAS_RUIDO`), línia a línia, abans de fusionar/segmentar res.
+
+**Bug real trobat i corregit (02/10/2026)**: el patró de la línia de data
+(`"Dimarts 27 d'octubre de 2009"`) només reconeixia `"de " + mes`, però el
+català/valencià elidix "de" en `"d'"` davant de mes que comença en vocal
+-- `abril`, `agost`, `octubre` (no en `gener`, `febrer`, `març`, `maig`,
+`juny`, `juliol`, `setembre`, `novembre`, `desembre`, que comencen en
+consonant). Per als documents datats en estos 3 mesos, la línia de data
+mai es filtrava i es colava literalment enmig de la frase quan el salt de
+página (una posició física fixa en el PDF) queia a mitjan frase —
+`en primer lloc, davant` `Dimarts 28 d'abril de 2015` `l'enorme...` en
+compte d'una frase contínua. Verificat abans/després sobre
+`BOE-A-2015-4607` (abril) i `BOE-A-2009-17000` (octubre): la capçalera
+desapareix i la frase es torna a fusionar correctament sola, gràcies a la
+lògica de fusió per salt de pàgina que ja existia (vore paràgraf anterior)
+-- no va caldre tocar-la, només que la capçalera deixara de colar-se-hi
+pel mig. Patró corregit: `(?:de |d')\w+` en compte de `de \w+`.
+
+De pas es va trobar i corregir un segon bug, independent, que impedia
+relançar este script després de la reorganització de carpetes a
+valencià (01-02/10/2026): `"archivo"` calculava la ruta relativa al
+PDF respecte a `boe/` (`BOE_DIR`, la carpeta de l'script) en compte de
+respecte a `dades/boe/` (`CORPUS_DIR`, on viuen els PDF ara) -- fallava
+amb `ValueError` en qualsevol execució des que les dades es van moure.
 
 ```json
 {
@@ -344,10 +368,12 @@ de criteri és tocar un número i rellançar.
 
 ## Analítica del corpus (`analizar_corpus.py`)
 
-Genera un informe HTML autònom (sense dependències externes, s'obri en
-qualsevol navegador sense internet) per a estudiar el corpus i, en
-concret, quant es sosté a la pràctica la separació dialectal català/
-valencià:
+Genera un informe HTML (sense dependències externes, mai necessita
+internet) per a estudiar el corpus i, en concret, quant es sosté a la
+pràctica la separació dialectal català/valencià. Totes les pestanyes
+funcionen fent doble clic sobre el fitxer, **llevat del visor frase a
+frase**, que necessita un servidor local trivial (vore baix, secció
+"Visor frase a frase") perquè les seues dades viuen en fitxers a banda:
 
 ```bash
 python analizar_corpus.py   # corpus.json + 02_regles_dialectals -> ../dades/boe/analitica_corpus.html
@@ -407,6 +433,38 @@ traure per si sol.
 Cada parell de substitució trobat es marca com a conegut (coincidix amb
 el glossari o amb una regla morfològica) o "novetat"; la taula per
 document permet vore en quins documents canvia més vocabulari.
+L'exemple de cada parell (~44.000 files en total) mostra només un
+fragment retallat al voltant del canvi (±8 paraules), no la frase
+sencera -- amb eixe volum de files, guardar la frase completa de cada una
+(a vegades un paràgraf legal llarguíssim) pesava 37,9 MB només eixa
+taula; el fragment és alhora més lleuger i més ràpid de llegir d'un colp
+d'ull que buscar el canvi dins d'una frase llarga.
+
+**Senyals de confiança dialectal (02/10/2026)**: dos columnes noves a la
+taula de parells, pensades per a distingir una substitució dialectal
+neta d'una reescriptura d'estil del traductor -- arran de la conversa
+sobre que este corpus és la mateixa norma traduïda dos vegades, de
+vegades per persones distintes, i no tot el que canvia és dialecte:
+
+- **Similitud mitjana de la frase**: la similitud (difflib) mitjana de
+  totes les frases on apareix eixe parell, a banda del propi canvi. Alta
+  (frases pràcticament idèntiques llevat del parell) és bon senyal;
+  baixa (sol aparèixer en frases molt reescrites) és sospitós -- pot ser
+  coincidència de paraules en frases que en realitat no tenen res a vore.
+- **% de vegades que és l'únic canvi**: de totes les aparicions, en quin
+  % eixe parell és l'ÚNIC canvi de la frase (ni inserció ni cap altra
+  substitució a la vegada). Alt suggerix substitució puntual i neta;
+  baix suggerix que sol anar acompanyat de més reescriptura al voltant.
+
+A propòsit **no** es combinen en una sola puntuació: es deixen com a
+columnes ordenables a banda perquè es puga jutjar a ull, cas a cas, si
+cada senyal aporta de veres abans de confiar-hi (hi havia dubte explícit
+sobre si la segona, la dispersió, calia). Pendent per a una pròxima
+iteració: una tercera senyal de consistència temporal (si un parell és
+estable al llarg de tots els anys del corpus o es concentra en un periode
+concret, que apuntaria més a manies d'un traductor que a una regla
+dialectal real).
+
 Important: que dos versions tinguen el mateix nombre total de paràgrafs
 no garantix que el paràgraf `i` d'una corresponga al paràgraf `i` de
 l'altra en tot el document — la columna "similitud mitjana" d'eixa taula
@@ -458,10 +516,36 @@ milers de frases no bloquegen el navegador). És la forma de valorar a
 ull la qualitat d'una traducció concreta del BOE, més enllà de les
 xifres agregades.
 
-Amb 168 documents comparables l'HTML pesa unes quantes desenes de MB (el
-visor guarda el text ressaltat de cada frase de cada document
-comparable); un navegador normal l'obri sense problema, només pot trigar
-un o dos segons a carregar.
+**Cobertura ampliada amb Bleualign (02/10/2026)**: abans el visor només
+cobria els ~169 documents amb el mateix nombre EXACTE de paràgrafs en els
+dos idiomes (la resta desapareixia en silenci, encara que l'alineació a
+nivell de frase de `corpus_bleualign.jsonl` cobrix 520 dels 521). Ara
+cada document del desplegable indica el seu mètode —
+**[parrafos]** (exacte) o **[bleualign]** (per similitud, menys fiable en
+frases curtes o sense arrel lèxica comuna) — i hi ha una casella per a
+quedar-se només amb els de mètode exacte si vols la màxima confiança.
+
+**Arquitectura del fitxer (02/10/2026, canvi important)**: les 322.300
+frases de tot el corpus NO viuen dins de `analitica_corpus.html` --
+provat i revertit: embeure-les totes disparava el fitxer a més de
+180 MB i el feia pràcticament inusable. En compte d'això, cada document
+té el seu propi `.json` a `analitica_corpus_visor/<id>.json`, i el visor
+el carrega amb `fetch()` NOMÉS quan el tries al desplegable (amb caché en
+memòria mentre dures en la pàgina). Conseqüència pràctica: la majoria de
+navegadors **bloquegen `fetch()` de fitxers locals** quan obris l'HTML
+fent doble clic (`file://`) -- per a usar la pestanya del visor cal
+arrancar un servidor estàtic trivial des de `dades/boe/`:
+
+```bash
+cd ../dades/boe
+python -m http.server 8000
+# obri http://localhost:8000/analitica_corpus.html
+```
+
+La resta de pestanyes (resum, lèxic, pares de substitució...) seguixen
+funcionant igual fent doble clic, sense necessitat de servidor -- només
+el visor frase a frase el necessita, i l'HTML ho explica amb un missatge
+clar si el `fetch()` falla.
 
 (Nota tècnica interna: en implementar açò es va detectar i corregir una
 fallada real en l'HTML generat per versions anteriors de l'script — les
@@ -477,6 +561,16 @@ corpus, no signifiquen res (són preposició/adverbi molt freqüents).
 L'script els descarta automàticament (vore `_limpiar_entradas_vocabulario`
 en `analizar_corpus.py`); es va verificar a mà que tot ítem curt legítim
 del fitxer ve capitalitzat, així que el filtre no perd dades reals.
+
+## `../dades/boe_net/` -- separar dialecte real d'estil del traductor
+
+A partir de 02/10/2026, `depurar_ruido_estilistico.py` i
+`generar_visor_diferencias.py` (en esta mateixa carpeta) generen una
+versió depurada del corpus, a `../dades/boe_net/`, sense tocar cap
+fitxer d'ací -- pensada específicament per a distingir diferència
+dialectal real de diferència d'estil d'un traductor concret (mateix text
+oficial, traduït dos vegades per equips distints). Vore
+`../dades/boe_net/README.md` per al detall complet.
 
 ## Notes
 

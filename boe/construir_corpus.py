@@ -52,7 +52,14 @@ DIAS_SEMANA = (
 LINEAS_RUIDO = [
     re.compile(r"^BOLET[ÍI]N OFICIAL DEL ESTADO\s*$"),
     re.compile(r"^Suplement en (llengua catalana|valencià) al núm\.\s*\d+\s*$"),
-    re.compile(rf"^(?:{DIAS_SEMANA}) \d{{1,2}} de \w+ de \d{{4}}\s*$"),
+    # "de " davant de mes que comença en consonant (gener, febrer, març...)
+    # pero "d'" (elisio) davant de mes que comença en vocal (abril, agost,
+    # octubre) -- bug real trobat 02/10/2026: la versio anterior nomes
+    # cobria "de ", així que la capcalera de pagina NO es filtrava en cap
+    # document datat en estos 3 mesos (una cuarta part dels documents),
+    # colant-se literalment enmig d'una frase quan el salt de pagina cau
+    # ahi (vore conversa sobre "BOE-A-2015-4607").
+    re.compile(rf"^(?:{DIAS_SEMANA}) \d{{1,2}} (?:de |d')\w+ de \d{{4}}\s*$"),
     re.compile(r"^Secc\.\s*\S+\.?\s*Pàg\.?\s*\d+\s*$"),
     re.compile(r"^https?://www\.boe\.es\s*$"),
     re.compile(r"^D\.\s*L\.:.*ISSN.*$"),
@@ -228,7 +235,7 @@ def main() -> None:
                 "id": doc_id,
                 "titulo": meta.get("titulo", ""),
                 "url": meta.get("url", ""),
-                "archivo": str(ruta.relative_to(BOE_DIR)),
+                "archivo": str(ruta.relative_to(CORPUS_DIR)),
                 "num_paginas": num_paginas,
                 "num_caracteres": len(texto),
                 "texto": texto,

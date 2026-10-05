@@ -90,3 +90,39 @@ como referencia. Todavía queda por decidir:
 - Si el LLM propone un cambio o solo señala para revisión humana.
 
 Ver `postprocessat_llm/README.es.md` para el estado de esta decisión.
+
+## `genera_muestra_test_dialectal.py` -- muestra de 200 frases para test real
+
+```bash
+python genera_muestra_test_dialectal.py
+# -> ../dades/boe_net/muestra_test_dialectal.json
+```
+
+Las 150 frases del benchmark (`03_seleccio_de_model/benchmark_corpus.json`)
+son curadas a mano, pensadas para ilustrar un fenómeno dialectal cada una.
+Esta muestra es distinta: 200 frases REALES del BOE (`dades/boe_net/`)
+donde el motor `traductor/` detecta de verdad al menos un marcador
+(alguna de las 9 reglas le cambia algo al traducir) -- pensada para
+revisar y corregir a mano y servir después como segundo conjunto de test,
+sobre corpus real en vez de frases ya elegidas para demostrar cada regla.
+
+**Cómo**: ejecuta el motor regla a regla (mismo orden que `engine.py`),
+comparando qué tokens pasan a `is_translated` justo después de cada
+`regla.apply()` -- no se puede saber por palabras clave porque las reglas
+de sufijo (`accentuacio`, `incoatius`) y de concordancia
+(`concordanca_dos_dues`, `relatiu_on`) no son listas de palabras.
+**Estratificada por regla** (no muestreo puramente aleatorio, que saldría
+dominado por `demostratius`/`conjugacions_dict`): se reparte el cupo
+entre las 9 reglas para que la muestra sirva de test de todas, no solo de
+las más frecuentes.
+
+Cada fila trae `texto_valenciano` (fuente), `texto_catalan_boe`
+(referencia oficial, buen punto de partida para corregir),
+`hipotesis_traductor` (la salida actual del motor) y `reglas_disparadas`
+-- todo lo necesario para comparar y corregir sin volver a ejecutar nada.
+
+Hallazgo real al generarla: **`numerals` no se dispara ni una sola vez en
+las 260.345 frases del corpus** -- su patrón (huit/vuit, dinou/disset...)
+sencillamente no aparece en prosa legal formal. No es un error del
+script, es un dato real sobre cuán frecuente es cada fenómeno fuera del
+benchmark curado.

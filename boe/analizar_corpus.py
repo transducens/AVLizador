@@ -583,12 +583,67 @@ def _marcar_html(tokens_mostrar: list[str], rangos_resaltados: list[tuple[int, i
     return "".join(partes)
 
 
+VENTANA_CONTEXTO_PAR = 8  # tokens a cada lado del cambio, para el ejemplo de la tabla de pares
+
+
+def _fragmento_contexto(tokens: list[str], ini: int, fin: int, clase: str, ventana: int = VENTANA_CONTEXTO_PAR) -> str:
+    """Recorta `tokens` alrededor de [ini, fin) con una ventana de
+    `ventana` tokens a cada lado, marcando el cambio (vore `_marcar_html`)
+    y anadiendo "…" cuando se recorta. Pensado para los ejemplos de la
+    tabla de pares de sustitucion: no hace falta la frase entera (a veces
+    un parrafo legal larguisimo) para ver el cambio, y el HTML resultante
+    pesa una fraccion de lo que pesaria la frase completa x 44.200 filas."""
+    a = max(0, ini - ventana)
+    b = min(len(tokens), fin + ventana)
+    html = _marcar_html(tokens[a:b], [(ini - a, fin - a, clase)])
+    if a > 0:
+        html = "…" + html
+    if b < len(tokens):
+        html = html + "…"
+    return html
+
+
 def analizar_diff_textual(indice: CorpusIndexado, materiales: dict) -> dict:
     """Diff palabra a palabra (difflib) de cada documento cuyos parrafos se
     alinean 1 a 1, para ver exactamente que cambia entre la version
     catalana y la valenciana de un mismo texto oficial: tanto un resumen
     agregado (que pares de palabras cambian, en que documentos) como un
     "visor" con el HTML de cada unidad para leerla resaltada tal cual.
+
+    El ejemplo de cada par en `filas_pares` (`ejemplo_frase_cat`/
+    `ejemplo_frase_val`) NO es la frase completa, es un fragmento recortado
+    alrededor del cambio (vore `_fragmento_contexto`) -- con ~44.000 pares
+    distintos, guardar la frase entera (a veces un parrafo legal larguisimo)
+    por cada uno multiplicaba el peso del informe HTML sin anadir nada que
+    el fragmento ya no enseñe.
+
+    SEÑALES DE CONFIANZA DIALECTAL (02/10/2026, vore conversacion sobre
+    "estilo del traductor vs. variacion dialectal" -- acordado implementar
+    3 de las 4 propuestas, como columnas visibles y ordenables en vez de
+    una sola puntuacion opaca, para que se pueda juzgar a ojo si cada una
+    aporta o no antes de fiarse de ella):
+
+      1. `ratio_medio_frase`: similitud media (difflib) de las frases donde
+         aparece el par, APARTE del propio cambio. Un par que casi siempre
+         ocurre en frases practicamente identicas salvo por el es mas
+         fiable que uno que suele aparecer en frases muy reescritas (ahi la
+         coincidencia de palabras podria ser casualidad, no el patron real).
+      2. `pct_cambio_aislado`: de todas sus apariciones, en que % fue el
+         UNICO cambio de la frase (ni insercion ni otra sustitucion a la
+         vez). Señal de dispersion -- un par casi siempre aislado sugiere
+         sustitucion puntual y limpia; uno que casi nunca lo es sugiere que
+         va siempre acompañado de mas reescritura alrededor (duda planteada
+         explicitamente sobre si esta señal aporta de verdad: se deja como
+         columna aparte, visible y ordenable, no fusionada en una sola
+         cifra, precisamente para poder decidirlo mirando datos reales).
+      3. `en_glosario`/`regla_morfologica`/`novedad`: YA EXISTIAN --
+         coincide con una regla dialectal ya confirmada en
+         `02_regles_dialectals`, o es "novedad" (no catalogada todavia).
+
+    Deliberadamente NO implementada en esta tanda: la 4a señal propuesta
+    (consistencia a lo largo de los años, para distinguir una regla
+    dialectal estable de la manía de estilo de un traductor concreto en un
+    periodo concreto) -- pendiente de una proxima iteracion.
 
     Alineacion en dos niveles (parrafo primero, frase despues), no una
     unica posicion global de frase: un documento puede tener el mismo
@@ -616,6 +671,8 @@ def analizar_diff_textual(indice: CorpusIndexado, materiales: dict) -> dict:
 
     contador_pares: Counter = Counter()
     ejemplo_por_par: dict[tuple, tuple[str, str, str]] = {}
+    suma_ratio_por_par: dict[tuple, float] = defaultdict(float)
+    aislados_por_par: dict[tuple, int] = defaultdict(int)
     stats_doc: dict[str, dict] = {}
     visor: dict[str, dict] = {}
 
@@ -682,7 +739,10 @@ def analizar_diff_textual(indice: CorpusIndexado, materiales: dict) -> dict:
                 rangos_cat: list[tuple[int, int, str]] = []
                 rangos_val: list[tuple[int, int, str]] = []
 
-                for tag, i1, i2, j1, j2 in sm.get_opcodes():
+                opcodes = sm.get_opcodes()
+                num_cambios_frase = sum(1 for tag, *_ in opcodes if tag != "equal")
+
+                for tag, i1, i2, j1, j2 in opcodes:
                     if tag == "equal":
                         continue
                     if tag == "insert":
@@ -709,8 +769,15 @@ def analizar_diff_textual(indice: CorpusIndexado, materiales: dict) -> dict:
                             clave = (palabras_c, palabras_v)
                             contador_pares[clave] += 1
                             stats_doc[doc_id]["sustituciones"] += 1
+                            suma_ratio_por_par[clave] += ratio
+                            if num_cambios_frase == 1:
+                                aislados_por_par[clave] += 1
                             if clave not in ejemplo_por_par:
-                                ejemplo_por_par[clave] = (doc_id, fc, fv)
+                                ejemplo_por_par[clave] = (
+                                    doc_id,
+                                    _fragmento_contexto(disp_c, i1, i2, "chg"),
+                                    _fragmento_contexto(disp_v, j1, j2, "chg"),
+                                )
 
                 frases_visor.append(
                     {
@@ -730,7 +797,8 @@ def analizar_diff_textual(indice: CorpusIndexado, materiales: dict) -> dict:
 
     filas_pares = []
     for (cat_tok, val_tok), frecuencia in contador_pares.items():
-        doc_id, ejemplo_cat, ejemplo_val = ejemplo_por_par[(cat_tok, val_tok)]
+        clave = (cat_tok, val_tok)
+        doc_id, ejemplo_cat, ejemplo_val = ejemplo_por_par[clave]
         conocido = (cat_tok, val_tok) in conocidos
         regla = (
             _match_regla_morfologica(cat_tok[0], val_tok[0], reglas_simples)
@@ -742,6 +810,8 @@ def analizar_diff_textual(indice: CorpusIndexado, materiales: dict) -> dict:
                 "catalan": " ".join(cat_tok),
                 "valenciano": " ".join(val_tok),
                 "frecuencia": frecuencia,
+                "ratio_medio_frase": round(100 * suma_ratio_por_par[clave] / frecuencia, 1),
+                "pct_cambio_aislado": round(100 * aislados_por_par[clave] / frecuencia, 1),
                 "en_glosario": conocido,
                 "regla_morfologica": regla,
                 "novedad": not conocido and not regla,
@@ -801,6 +871,85 @@ def _marcar_par_html(fc: str, fv: str) -> tuple[bool, str, str]:
             rangos_val.append((j1, j2, "chg"))
 
     return True, _marcar_html(disp_c, rangos_cat), _marcar_html(disp_v, rangos_val)
+
+
+def _completar_visor_con_bleualign(visor: dict[str, dict], registros_bleu: list[dict] | None) -> None:
+    """Amplia `visor` (construido por `analizar_diff_textual`, solo con los
+    documentos de parrafos alineados 1 a 1 -- en la practica, ~1/3 del
+    corpus) anadiendo TODOS los documentos que Bleualign si ha podido
+    alinear a nivel de frase (~520 de 521, casi el corpus entero). Antes de
+    esto, un documento con un parrafo de mas o de menos en un idioma
+    desaparecia en silencio del visor sin ninguna indicacion -- era la
+    causa real de que "muchos documentos no se pudieran inspeccionar".
+
+    Cada documento del visor queda marcado con su `metode` ("parrafs" o
+    "bleualign") porque la confianza no es la misma: la alineacion por
+    parrafos es exacta (misma estructura en los dos idiomas), la de
+    Bleualign es por similitud y puede fallar en frases cortas o sin raiz
+    lexica comun (vore docstring de `analizar_bleualign`)."""
+    for doc in visor.values():
+        doc["metode"] = "parrafs"
+
+    if not registros_bleu:
+        return
+
+    por_documento: dict[str, list[dict]] = defaultdict(list)
+    for r in registros_bleu:
+        if r["documento_id"] not in visor:
+            por_documento[r["documento_id"]].append(r)
+
+    for doc_id, registros in por_documento.items():
+        registros.sort(key=lambda r: r["id"])
+        frases_visor = []
+        for idx, r in enumerate(registros):
+            dif, html_cat, html_val = _marcar_par_html(r["texto_catalan"], r["texto_valenciano"])
+            frases_visor.append(
+                {
+                    "idx": idx,
+                    "parrafo": None,
+                    "dif": dif,
+                    "ratio": round(100 * r["similitud"], 1),
+                    "html_cat": html_cat,
+                    "html_val": html_val,
+                }
+            )
+        visor[doc_id] = {"fecha": registros[0]["fecha"], "frases": frases_visor, "metode": "bleualign"}
+
+
+VISOR_SUBDIR = "analitica_corpus_visor"
+
+
+def _resumen_visor(visor: dict[str, dict]) -> dict[str, dict]:
+    """Version ligera de `visor` para embeber en el HTML: solo lo que hace
+    falta para poblar el <select> del visor (id, fecha, metodo, cuantas
+    frases y cuantas con diferencias) -- NUNCA las frases en si, que es lo
+    que pesa (vore `_exportar_visor_a_ficheros`)."""
+    return {
+        doc_id: {
+            "fecha": doc["fecha"],
+            "metode": doc["metode"],
+            "num_frases": len(doc["frases"]),
+            "num_dif": sum(1 for f in doc["frases"] if f["dif"]),
+        }
+        for doc_id, doc in visor.items()
+    }
+
+
+def _exportar_visor_a_ficheros(visor: dict[str, dict], directorio: Path) -> None:
+    """Escribe un .json por documento con sus frases (lo pesado del visor,
+    vore docstring del modulo) para que el HTML las cargue con fetch() solo
+    cuando se elige ese documento, en vez de meter las 322.300 frases del
+    corpus entero en el propio HTML -- eso ya se probo (ver historial) y
+    disparaba el fichero a mas de 180 MB."""
+    directorio.mkdir(parents=True, exist_ok=True)
+    existentes = {p.stem for p in directorio.glob("*.json")}
+    for doc_id, doc in visor.items():
+        (directorio / f"{doc_id}.json").write_text(
+            json.dumps(doc, ensure_ascii=False), encoding="utf-8"
+        )
+        existentes.discard(doc_id)
+    for stem in existentes:
+        (directorio / f"{stem}.json").unlink()
 
 
 def analizar_bleualign(registros: list[dict] | None) -> dict | None:
@@ -999,12 +1148,27 @@ def _svg_lineas(series: list[dict], titulo: str) -> str:
     )
 
 
-def _tabla_interactiva(id_tabla: str, columnas: list[tuple[str, str]], filas: list[dict], nota: str = "") -> str:
+def _tabla_interactiva(
+    id_tabla: str,
+    columnas: list[tuple[str, str]],
+    filas: list[dict],
+    nota: str = "",
+    columnas_html: tuple[str, ...] = (),
+) -> str:
     """columnas: lista de (clave, etiqueta). Genera contenedor + JS que
     renderiza filas dinamicamente desde un JSON embebido, con filtro de
-    texto y orden por columna al hacer clic en la cabecera."""
+    texto, orden por columna al hacer clic en la cabecera, y PAGINACION
+    (solo se construyen 300 filas de DOM a la vez, igual que ya hacia el
+    visor de frases -- con tablas de decenas de miles de filas, construir
+    todo el <tbody> de golpe con innerHTML es tan lento como el propio
+    peso del JSON, aunque este ya este cargado).
+
+    `columnas_html`: claves cuyo valor ya es HTML seguro (p.ej. un
+    fragmento con <mark> generado por `_marcar_html`/`_fragmento_contexto`)
+    y no se debe escapar como las demas columnas (texto plano)."""
     datos_json = json.dumps(filas, ensure_ascii=False)
     claves_json = json.dumps([c[0] for c in columnas])
+    html_json = json.dumps(list(columnas_html))
     cabeceras = "".join(
         f'<th data-clave="{c[0]}">{_escapar(c[1])}</th>' for c in columnas
     )
@@ -1022,9 +1186,10 @@ def _tabla_interactiva(id_tabla: str, columnas: list[tuple[str, str]], filas: li
       <tbody id="cuerpo-{id_tabla}"></tbody>
     </table>
   </div>
+  <button class="visor-mas" id="mas-{id_tabla}" hidden>Cargar mas filas</button>
 </div>
 <script type="application/json" id="datos-{id_tabla}">{datos_json}</script>
-<script>registrarTabla("{id_tabla}", {claves_json});</script>
+<script>registrarTabla("{id_tabla}", {claves_json}, {html_json});</script>
 """
 
 
@@ -1135,20 +1300,31 @@ mark.del { background: rgba(200,60,60,.28); color: inherit; text-decoration: lin
 """
 
 JS_FUNCIONES = """
-function registrarTabla(id, claves) {
+function registrarTabla(id, claves, clavesHtml) {
   const datos = JSON.parse(document.getElementById('datos-' + id).textContent);
   const cuerpo = document.getElementById('cuerpo-' + id);
   const contador = document.getElementById('contador-' + id);
+  const btnMas = document.getElementById('mas-' + id);
+  const LOTE = 300;
   let ordenClave = null, ordenAsc = true;
+  let filasActuales = [];
+  let mostradas = 0;
 
-  function pintar(filas) {
-    cuerpo.innerHTML = filas.map(f => '<tr>' + claves.map(c => {
-      let v = f[c];
-      if (v === null || v === undefined) v = '–';
-      if (typeof v === 'number' && !Number.isInteger(v)) v = v.toFixed(1);
-      return '<td>' + String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;') + '</td>';
-    }).join('') + '</tr>').join('');
-    contador.textContent = filas.length + ' fila(s)';
+  function celda(valor, clave) {
+    let v = valor;
+    if (v === null || v === undefined) v = '–';
+    if (typeof v === 'number' && !Number.isInteger(v)) v = v.toFixed(1);
+    if (clavesHtml.includes(clave)) return '<td>' + v + '</td>';
+    return '<td>' + String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;') + '</td>';
+  }
+
+  function pintarLote() {
+    const siguiente = filasActuales.slice(mostradas, mostradas + LOTE);
+    cuerpo.insertAdjacentHTML('beforeend', siguiente.map(f =>
+      '<tr>' + claves.map(c => celda(f[c], c)).join('') + '</tr>'
+    ).join(''));
+    mostradas += siguiente.length;
+    btnMas.hidden = mostradas >= filasActuales.length;
   }
 
   function aplicar() {
@@ -1166,7 +1342,11 @@ function registrarTabla(id, claves) {
         return 0;
       });
     }
-    pintar(filas);
+    filasActuales = filas;
+    mostradas = 0;
+    cuerpo.innerHTML = '';
+    contador.textContent = filas.length + ' fila(s)';
+    pintarLote();
   }
 
   document.querySelector('.filtro-tabla[data-tabla="' + id + '"]').addEventListener('input', aplicar);
@@ -1177,6 +1357,7 @@ function registrarTabla(id, claves) {
       aplicar();
     });
   });
+  btnMas.addEventListener('click', pintarLote);
   aplicar();
 }
 
@@ -1187,23 +1368,37 @@ function activarPestana(nombre) {
 }
 
 function registrarVisor() {
-  const datos = JSON.parse(document.getElementById('datos-visor').textContent);
+  // `datos` es solo el RESUMEN por documento (id, fecha, metode, num_frases,
+  // num_dif) -- deliberadamente ligero. Las frases de cada documento (lo
+  // pesado: 322.300 frases en total si se cuenta la cobertura bleualign)
+  // se cargan en `analitica_corpus_visor/<id>.json` SOLO cuando se elige
+  // ese documento -- meterlas todas aqui dentro disparaba el HTML a mas
+  // de 180 MB (probado: peor que no tener la mejora).
+  const resumen = JSON.parse(document.getElementById('datos-visor').textContent);
   const select = document.getElementById('visor-doc');
   const soloDif = document.getElementById('visor-solo-dif');
+  const soloParrafos = document.getElementById('visor-solo-parrafos');
   const filtro = document.getElementById('visor-filtro');
   const lista = document.getElementById('visor-lista');
   const contador = document.getElementById('visor-contador');
   const btnMas = document.getElementById('visor-mas');
   const LOTE = 300;
+  const cache = {};
   let frasesFiltradas = [];
   let mostradas = 0;
 
-  const ids = Object.keys(datos).sort((a, b) => (datos[a].fecha || '').localeCompare(datos[b].fecha || '') || a.localeCompare(b));
-  select.innerHTML = ids.map(id => {
-    const d = datos[id];
-    const conDif = d.frases.filter(f => f.dif).length;
-    return `<option value="${id}">${id} · ${d.fecha || '?'} · ${d.frases.length} frases (${conDif} con diferencias)</option>`;
-  }).join('');
+  const todosIds = Object.keys(resumen).sort((a, b) => (resumen[a].fecha || '').localeCompare(resumen[b].fecha || '') || a.localeCompare(b));
+
+  function repoblarSelect() {
+    const seleccionPrevia = select.value;
+    const ids = soloParrafos.checked ? todosIds.filter(id => resumen[id].metode === 'parrafs') : todosIds;
+    select.innerHTML = ids.map(id => {
+      const d = resumen[id];
+      const etiqueta = d.metode === 'bleualign' ? '[bleualign]' : '[parrafos]';
+      return `<option value="${id}">${etiqueta} ${id} · ${d.fecha || '?'} · ${d.num_frases} frases (${d.num_dif} con diferencias)</option>`;
+    }).join('');
+    if (ids.includes(seleccionPrevia)) select.value = seleccionPrevia;
+  }
 
   function pintarLote() {
     const siguiente = frasesFiltradas.slice(mostradas, mostradas + LOTE);
@@ -1218,26 +1413,50 @@ function registrarVisor() {
     btnMas.hidden = mostradas >= frasesFiltradas.length;
   }
 
-  function aplicarFiltro() {
-    const doc = datos[select.value];
+  function aplicarFiltroSobre(frases) {
     const texto = filtro.value.trim().toLowerCase();
-    frasesFiltradas = !doc ? [] : doc.frases.filter(f => {
+    frasesFiltradas = frases.filter(f => {
       if (soloDif.checked && !f.dif) return false;
       if (texto && !(f.html_cat.toLowerCase().includes(texto) || f.html_val.toLowerCase().includes(texto))) return false;
       return true;
     });
     mostradas = 0;
     lista.innerHTML = '';
-    contador.textContent = frasesFiltradas.length + ' de ' + (doc ? doc.frases.length : 0) + ' frase(s)';
+    contador.textContent = frasesFiltradas.length + ' de ' + frases.length + ' frase(s)';
     pintarLote();
   }
 
-  select.addEventListener('change', aplicarFiltro);
-  soloDif.addEventListener('change', aplicarFiltro);
-  filtro.addEventListener('input', aplicarFiltro);
+  async function cargarYAplicar() {
+    const id = select.value;
+    if (!id) { lista.innerHTML = ''; contador.textContent = ''; return; }
+    if (cache[id]) { aplicarFiltroSobre(cache[id].frases); return; }
+    lista.innerHTML = '<p class="explicacion">Cargando documento...</p>';
+    try {
+      const resp = await fetch('analitica_corpus_visor/' + id + '.json');
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      const doc = await resp.json();
+      cache[id] = doc;
+      aplicarFiltroSobre(doc.frases);
+    } catch (e) {
+      lista.innerHTML = '<p class="explicacion"><strong>No se pudo cargar el documento.</strong> '
+        + 'Esta pestana carga cada documento por separado (son 322.300 frases en total entre todos: '
+        + 'meterlas todas en este HTML lo habria dejado en mas de 180 MB). La mayoria de navegadores '
+        + 'bloquean esa carga si abres el fichero haciendo doble clic (<code>file://</code>). '
+        + 'Arranca un servidor local desde <code>dades/boe/</code> y abre la URL que indica:<br>'
+        + '<code>python -m http.server 8000</code> &rarr; '
+        + '<code>http://localhost:8000/analitica_corpus.html</code><br>'
+        + 'El resto de pestanas (resumen, vocabulario, pares de sustitucion...) funcionan igual sin esto.</p>';
+    }
+  }
+
+  select.addEventListener('change', cargarYAplicar);
+  soloDif.addEventListener('change', () => { if (cache[select.value]) aplicarFiltroSobre(cache[select.value].frases); });
+  soloParrafos.addEventListener('change', () => { repoblarSelect(); cargarYAplicar(); });
+  filtro.addEventListener('input', () => { if (cache[select.value]) aplicarFiltroSobre(cache[select.value].frases); });
   btnMas.addEventListener('click', pintarLote);
 
-  if (ids.length) aplicarFiltro();
+  repoblarSelect();
+  if (todosIds.length) cargarYAplicar();
 }
 """
 
@@ -1415,6 +1634,8 @@ def generar_html(
             ("catalan", "Catala (texto real)"),
             ("valenciano", "Valencia (texto real)"),
             ("frecuencia", "Veces encontrado"),
+            ("ratio_medio_frase", "Similitud media de la frase (%)"),
+            ("pct_cambio_aislado", "% veces que es el unico cambio"),
             ("en_glosario", "¿En el glosario?"),
             ("regla_morfologica", "Regla morfologica"),
             ("novedad", "Novedad"),
@@ -1429,8 +1650,15 @@ def generar_html(
             "glosario ni con ninguna regla morfologica (columna 'Novedad') — candidatos a marcador dialectal no "
             "catalogado todavia, o simplemente ruido de la extraccion/segmentacion. Bloques de mas de "
             f"{MAX_TOKENS_SUSTITUCION} palabras seguidas se descartan (no se consideran una sustitucion lexica "
-            "puntual sino una frase mal alineada o reescrita)."
+            "puntual sino una frase mal alineada o reescrita). Los ejemplos muestran solo el fragmento alrededor "
+            "del cambio (no la frase entera) para que el informe cargue rapido con ~44.000 filas. "
+            "'Similitud media de la frase' y '% veces que es el unico cambio' son dos señales para distinguir "
+            "sustitucion dialectal limpia de reescritura de estilo del traductor: alta en las dos = cambio puntual "
+            "en frases por lo demas identicas (mas fiable); bajas = suele aparecer en frases muy reescritas o junto "
+            "a otros cambios (mas sospechoso de ser ruido o estilo, no un patron dialectal estable). Ordena por "
+            "estas columnas para juzgarlo tu mismo caso por caso, no es un filtro automatico."
         ),
+        columnas_html=("ejemplo_frase_cat", "ejemplo_frase_val"),
     )
 
     tabla_diff_documentos = _tabla_interactiva(
@@ -1629,16 +1857,21 @@ def generar_html(
      <mark class="chg">ambar</mark> las que se sustituyen por otra, en <mark class="ins">verde</mark> las que
      solo estan en la version valenciana, en <mark class="del">rojo tachado</mark> las que solo estan en la
      catalana. Sirve para revisar a ojo la calidad/consistencia de las traducciones oficiales del BOE, no solo
-     el recuento agregado de abajo.</p>
+     el recuento agregado de abajo. Cada documento indica con que metodo se alineo:
+     <strong>[parrafos]</strong> (exacto, mismo numero de parrafos en los dos idiomas) o
+     <strong>[bleualign]</strong> (por similitud, frase a frase -- cubre casi todo el corpus pero puede fallar en
+     frases cortas o sin palabras en comun; la % de cada frase es la similitud que le asigno Bleualign, no un
+     ratio de difflib).</p>
   <div class="visor-controles">
     <select id="visor-doc"></select>
+    <label><input type="checkbox" id="visor-solo-parrafos"> Solo alineacion exacta (parrafos)</label>
     <label><input type="checkbox" id="visor-solo-dif" checked> Solo frases con diferencias</label>
     <input type="text" id="visor-filtro" placeholder="Buscar palabra...">
     <span class="contador-filas" id="visor-contador"></span>
   </div>
   <div class="visor-lista" id="visor-lista"></div>
   <button class="visor-mas" id="visor-mas" hidden>Cargar mas frases</button>
-  <script type="application/json" id="datos-visor">{json.dumps(diff["visor"], ensure_ascii=False)}</script>
+  <script type="application/json" id="datos-visor">{json.dumps(_resumen_visor(diff["visor"]), ensure_ascii=False)}</script>
   <script>registrarVisor();</script>
 
   <h3>Pares de sustitucion encontrados (resumen agregado)</h3>
@@ -1751,6 +1984,15 @@ def main() -> None:
         print(f"  {len(registros_bleu)} pares cargados")
         bleu = analizar_bleualign(registros_bleu)
         print(f"  {bleu['total_candidatos_revision']} candidatos a revision (similitud < {UMBRAL_REVISION_BLEUALIGN})")
+
+    print("Completando el visor con Bleualign para los documentos sin parrafos alineados 1 a 1...")
+    docs_antes = len(diff["visor"])
+    _completar_visor_con_bleualign(diff["visor"], registros_bleu)
+    print(f"  visor: {docs_antes} documentos (parrafos) -> {len(diff['visor'])} documentos (+ bleualign)")
+
+    visor_dir = CORPUS_DIR / VISOR_SUBDIR
+    print(f"Exportando el visor a {visor_dir}/ (un .json por documento, cargado con fetch() bajo demanda)...")
+    _exportar_visor_a_ficheros(diff["visor"], visor_dir)
 
     print("Generando HTML...")
     html = generar_html(resumen, vocab, val_esp, morfo, demo, loc, diff, bleu)
