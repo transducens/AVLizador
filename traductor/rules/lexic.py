@@ -11,14 +11,19 @@ definix una paraula guanya):
        un grapat de paraules CURADES A MÀ (no cap fitxer de Mauricio),
        vore docstring de `_carrega_flexio_genere`.
     2. lexic_mauricio.json            -- lèxic general (còpia de
-       `lexico_general_limpio.json`), filtrat: descarta entrades
-       "_PENDENT" (sense verificar), topònims (`tipo: "v:top_gva"`, el
-       motor mai els aplicaria -- protegix noms propis), entrades on
-       valencià==català (sense diferència real), i valencians de més
-       d'una paraula (esta capa fa lookup d'un sol token). Quan una
-       mateixa paraula té més d'una traducció possible, prioritza la
-       marcada `canonica: true`; si cap ho és o n'hi ha més d'una, es
-       queda la primera trobada.
+       `unificado.json` des de 05/10/2026, abans `lexico_general_limpio.json`),
+       filtrat: descarta entrades "_PENDENT" (sense verificar), topònims
+       (`tipo: "v:top_gva"`, el motor mai els aplicaria -- protegix noms
+       propis), entrades on valencià==català (sense diferència real),
+       valencians de més d'una paraula (esta capa fa lookup d'un sol
+       token), el bug de dades conegut de "després" (vore baix), i
+       qualsevol forma que ja cobrixca `demostratius.py` amb autoritat
+       pròpia (bug real trobat 05/10/2026: "unificado.json" portava
+       `eixa->aqueixa`, tècnicament vàlid pero que ignorava la decisió ja
+       presa de col·lapsar este/eixe/aqueix cap a "aquest" -- vore
+       `_formes_demostratius_conegudes`). Quan una mateixa paraula té més
+       d'una traducció possible, prioritza la marcada `canonica: true`;
+       si cap ho és o n'hi ha més d'una, es queda la primera trobada.
     3. lexic_acentuacio_mauricio.json -- patrons d'accentuació (còpia de
        `acentuacion_limpio.json`), 695 parelles.
 
@@ -63,7 +68,12 @@ general ("després" -> "desprès"), però és un error del fitxer font --
 "després" mai canvia en cap dels dos dialectes (confirmat empíricament,
 afectava 10 de les 150 frases del benchmark). Es descarta ací a mà, no
 perquè siga una "regla" sinó perquè és l'única manera de no repetir un
-error de transcripció ja conegut al fitxer font.
+error de transcripció ja conegut al fitxer font. Des de 05/10/2026
+`_BUG_DADES_CONEGUTS` s'aplica als DOS loaders (lèxic general i
+accentuació), perquè "unificado.json" va reintroduir el mateix parell
+erroni pel costat del lèxic general -- un bug de dades el pot reintroduir
+qualsevol font nova, així que l'exclusió ha de ser global, no lligada a
+un sol fitxer.
 
 Esta és la ÚNICA capa que fa lookup en un diccionari en compte d'aplicar una
 regla morfològica -- cobrix paraules que canvien de forma per motius
@@ -92,7 +102,24 @@ TEMPORAL_PATH = _DATA / "TEMPORAL_hui_avui_pendent_fusio.json"
 
 # Bug de dades conegut al fitxer font (vore docstring del mòdul): "després"
 # no és una excepció dialectal, és un error de transcripció confirmat.
+# S'exclou dels DOS loaders (abans només de l'accentuació) des que
+# "unificado.json" (05/10/2026) va reintroduir el mateix parell per una
+# via distinta -- vore conversa 05/10/2026.
 _BUG_DADES_CONEGUTS = {"després"}
+
+
+def _formes_demostratius_conegudes() -> set[str]:
+    """Formes font (valencià) que ja cobrix `demostratius.py` amb
+    autoritat pròpia -- este lèxic general les ha d'ignorar encara que
+    aparega una entrada per a elles en una font nova (bug real trobat
+    05/10/2026: "unificado.json" porta `eixa->aqueixa`, una traducció
+    "correcta" en abstracte pero que ignora la decisió ja presa de
+    col·lapsar este/eixe/aqueix tots cap a "aquest" -- vore
+    `demostratius.py` per al raonament complet). Import diferit (no al
+    nivell de mòdul) per a evitar cap problema d'orde d'importació."""
+    from .demostratius import carrega_demostratius
+
+    return set(carrega_demostratius().keys())
 
 
 def _deriva_genere_nombre(masc_val: str, masc_cat: str) -> dict[str, str]:
@@ -149,6 +176,7 @@ def _resol_mauricio(entries: list[dict]) -> str:
 
 
 def _carrega_mauricio_lexic(path: Path) -> dict[str, str]:
+    demostratius_coneguts = _formes_demostratius_conegudes()
     dades = json.loads(path.read_text(encoding="utf-8"))
     per_paraula: dict[str, list[dict]] = {}
     for entrada in dades:
@@ -161,6 +189,10 @@ def _carrega_mauricio_lexic(path: Path) -> dict[str, str]:
         if not valenciano or not catalan or " " in valenciano:
             continue
         if valenciano.lower() == catalan.lower():
+            continue
+        if valenciano.lower() in _BUG_DADES_CONEGUTS:
+            continue
+        if valenciano.lower() in demostratius_coneguts:
             continue
         per_paraula.setdefault(valenciano.lower(), []).append(entrada)
     return {val: _resol_mauricio(entries) for val, entries in per_paraula.items()}

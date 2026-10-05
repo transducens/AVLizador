@@ -1,0 +1,614 @@
+<title>Indicatiu o subjuntiu</title>
+<style>
+/*
+  Paleta: papel de gaceta oficial (BOE), tinta marino, sello rojo/verde
+  para acierto-fallo, ocre solo para la palabra ambigua marcada.
+  Tipos: Spectral (serif, para las frases citadas) + Archivo (sans, UI)
+         + JetBrains Mono (cifras/porcentajes).
+  Layout: marcador de resultados arriba (3 barras A/B/C) + expediente
+  por caso (frase valenciana con la palabra marcada, referencia BOE,
+  y las 3 vías apiladas con su acierto).
+*/
+:root {
+  --bg: #f1ede3;
+  --paper: #faf8f2;
+  --ink: #26272b;
+  --ink-soft: #5b5c62;
+  --line: #ddd6c4;
+  --accent: #2d4159;
+  --accent-soft: #e4e9ee;
+  --amber: #a8742b;
+  --amber-soft: #f3e6cd;
+  --good: #3c7a52;
+  --good-soft: #e1efe3;
+  --bad: #a33d35;
+  --bad-soft: #f5e3e0;
+  --none: #8a8577;
+  --none-soft: #ece8dc;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b1c20;
+    --paper: #232428;
+    --ink: #eceae2;
+    --ink-soft: #a6a39a;
+    --line: #3a3b40;
+    --accent: #8fa8c4;
+    --accent-soft: #2a3542;
+    --amber: #d9a65c;
+    --amber-soft: #3a3020;
+    --good: #7cbd92;
+    --good-soft: #223228;
+    --bad: #e2817a;
+    --bad-soft: #3a2422;
+    --none: #8d8a81;
+    --none-soft: #2c2b26;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1b1c20;
+  --paper: #232428;
+  --ink: #eceae2;
+  --ink-soft: #a6a39a;
+  --line: #3a3b40;
+  --accent: #8fa8c4;
+  --accent-soft: #2a3542;
+  --amber: #d9a65c;
+  --amber-soft: #3a3020;
+  --good: #7cbd92;
+  --good-soft: #223228;
+  --bad: #e2817a;
+  --bad-soft: #3a2422;
+  --none: #8d8a81;
+  --none-soft: #2c2b26;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Archivo", system-ui, sans-serif;
+  padding: 28px 16px 56px;
+  max-width: 880px;
+  margin: 0 auto;
+}
+.num { font-family: "JetBrains Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+
+header.page {
+  margin-bottom: 28px;
+}
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--amber);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+h1 {
+  font-family: "Spectral", Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(26px, 5vw, 36px);
+  margin: 0 0 8px;
+  text-wrap: balance;
+}
+.lede {
+  color: var(--ink-soft);
+  font-size: 15px;
+  max-width: 60ch;
+  line-height: 1.5;
+}
+.lede code {
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 0.92em;
+}
+
+/* --- marcador --- */
+.scoreboard {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px 22px;
+  margin-bottom: 28px;
+}
+.scoreboard h2 {
+  font-family: "Archivo", sans-serif;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  margin: 0 0 16px;
+  font-weight: 700;
+}
+.score-row {
+  display: grid;
+  grid-template-columns: 112px 1fr 56px;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.score-row:last-child { margin-bottom: 0; }
+.score-label { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.score-label .via-name { font-weight: 700; font-size: 14px; }
+.score-label .via-desc { font-size: 11.5px; color: var(--ink-soft); line-height: 1.3; }
+.bar-track {
+  background: var(--accent-soft);
+  border-radius: 8px;
+  height: 20px;
+  overflow: hidden;
+  position: relative;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 8px;
+  background: var(--accent);
+}
+.bar-fill.c { background: var(--good); }
+.score-pct {
+  font-size: 15px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.breakdown-title {
+  font-family: "Archivo", sans-serif;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  margin: 22px 0 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-weight: 700;
+}
+.breakdown-row {
+  display: grid;
+  grid-template-columns: 28px 1fr 1fr;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 13.5px;
+  align-items: center;
+}
+.breakdown-row.breakdown-head {
+  color: var(--ink-soft);
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+}
+.breakdown-via { font-weight: 800; color: var(--accent); }
+
+/* --- leyenda --- */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  margin-bottom: 28px;
+}
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+
+/* --- expediente por caso --- */
+.caso {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+.caso-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 16px 20px 0;
+}
+.caso-num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--ink-soft);
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+.caso-doc {
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-family: "JetBrains Mono", monospace;
+}
+.caso-verdad {
+  margin-left: auto;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.textos { padding: 12px 20px 16px; border-bottom: 1px solid var(--line); }
+.texto-bloc { margin-bottom: 10px; }
+.texto-bloc:last-child { margin-bottom: 0; }
+.texto-tag {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+.texto-cita {
+  font-family: "Spectral", Georgia, serif;
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.texto-cita mark {
+  background: var(--amber-soft);
+  color: var(--amber);
+  padding: 0 3px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.texto-cita mark.ref { background: var(--good-soft); color: var(--good); }
+
+.vies { padding: 6px 20px 16px; display: flex; flex-direction: column; gap: 8px; }
+.via-row {
+  display: grid;
+  grid-template-columns: 30px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  border-left: 4px solid var(--none);
+  background: var(--none-soft);
+}
+.via-row.ok { border-left-color: var(--good); background: var(--good-soft); }
+.via-row.ko { border-left-color: var(--bad); background: var(--bad-soft); }
+.via-tag {
+  font-weight: 800;
+  font-size: 13px;
+  text-align: center;
+  color: var(--ink-soft);
+}
+.via-row.ok .via-tag { color: var(--good); }
+.via-row.ko .via-tag { color: var(--bad); }
+.via-content { min-width: 0; font-size: 13.5px; line-height: 1.4; }
+.via-content .resp { color: var(--ink); }
+.via-content .resp.sentence { font-style: italic; }
+.via-content .meta { color: var(--ink-soft); font-size: 11.5px; margin-top: 1px; }
+.via-icon { font-size: 15px; }
+
+footer.note {
+  font-size: 12px;
+  color: var(--ink-soft);
+  text-align: center;
+  margin-top: 20px;
+  line-height: 1.6;
+}
+
+@media (max-width: 480px) {
+  .score-row { grid-template-columns: 1fr; gap: 6px; }
+  .score-pct { text-align: left; }
+  .via-row { grid-template-columns: 26px 1fr; }
+  .via-icon { display: none; }
+}
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;1,500&family=Archivo:wght@500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+
+<header class="page">
+  <div class="eyebrow">Postprocessat amb LLM · prova pilot</div>
+  <h1>Indicatiu o subjuntiu: 3 vies a prova</h1>
+  <p class="lede">
+    17 frases reals del BOE amb una forma verbal ambigua de 1a persona
+    (p. ex. <code>plantege</code> → <code>plantejo</code> indicatiu /
+    <code>plantegi</code> subjuntiu). Mateix model (<code>qwen2.5:14b</code>,
+    Ollama/Abaco) sota 3 estratègies de postprocessat.
+  </p>
+</header>
+
+<section class="scoreboard" id="scoreboard" aria-label="Resultats per via"></section>
+
+<div class="legend">
+  <span><span class="dot" style="background:var(--good)"></span>encert</span>
+  <span><span class="dot" style="background:var(--bad)"></span>fall o forma inventada</span>
+  <span><span class="dot" style="background:var(--amber)"></span>paraula ambigua / veritat de referència</span>
+</div>
+
+<section id="casos" aria-label="Casos individuals"></section>
+
+<footer class="note">
+  Veritat = el candidat que apareix literalment en la traducció oficial del BOE.<br>
+  A: tradueix la frase sencera · B: tradueix nomes la paraula, amb context · C: classifica el mode i aplica la taula ja coneguda.
+</footer>
+
+<script>
+const VIES = [
+  { key: "via_a", tag: "A", name: "Frase sencera", desc: "El LLM tradueix tot, generació oberta" },
+  { key: "via_b", tag: "B", name: "Paraula sola",  desc: "Nomes la forma catalana, amb context" },
+  { key: "via_c", tag: "C", name: "Classificació",  desc: "Indicatiu/subjuntiu → taula ja coneguda" },
+];
+
+const DATA = [
+  {
+    "id": "BOE-A-2009-21160-0102", "documento_id": "BOE-A-2009-21160",
+    "texto_valenciano": "a)  Que la resolució administrativa o judicial que haja autoritzat eixa anterior suspensió o reducció de jornada s’haja produït entre l’1 d’octubre de 2008 i el 31 de desembre de 2010, ambdós inclosos. b)  Que la resolució administrativa o judicial que autoritze la posterior suspensió o reducció de jornada es produïsca entre el 8 de març de 2009 i el 31 de desembre de 2010.",
+    "texto_catalan_boe": "a)  Que la resolució administrativa o judicial que hagi autoritzat aquesta anterior suspensió o reducció de jornada s’hagi produït entre l’1 d’octubre de 2008 i el 31 de desembre de 2010, tots dos inclusivament. b)  Que la resolució administrativa o judicial que autoritzi la posterior suspensió o reducció de jornada es produeixi entre el 8 de març de 2009 i el 31 de desembre de 2010.",
+    "forma_ambigua": "autoritze", "candidat_indicatiu": "autoritzo", "candidat_subjuntiu": "autoritzi", "veritat_per_referencia": "subjuntiu",
+    "via_a": { "resposta": "a) Que la resolució administrativa o judicial que hagi autoritzat eixa anterior suspensió o reducció de jornada s'hagi produït entre l'1 d'octubre de 2008 i el 31 de desembre de 2010, ambdós inclosos. b) Que la resolució administrativa o judicial que autoritzi la posterior suspensió o reducció de jornada es produïxca entre el 8 de març de 2009 i el 31 de desembre de 2010.", "tria": "subjuntiu", "encert": true },
+    "via_b": { "resposta": "autoritzi", "forma_triada": "autoritzi", "tria": "subjuntiu", "encert": true },
+    "via_c": { "resposta": "subjuntiu", "classe": "subjuntiu", "forma_final": "autoritzi", "encert": true }
+  },
+  {
+    "id": "BOE-A-2009-21162-0334", "documento_id": "BOE-A-2009-21162",
+    "texto_valenciano": "a)  La publicitat que atempte contra la dignitat de la persona o vulnere els valors i drets reconeguts en la Constitució, especialment als que es referixen els articles 14, 18 i 20, apartat 4.",
+    "texto_catalan_boe": "a)  La publicitat que atempti contra la dignitat de la persona o vulneri els valors i drets reconeguts a la Constitució, especialment aquells als quals fan referència els seus articles 14, 18 i 20, apartat 4.",
+    "forma_ambigua": "atempte", "candidat_indicatiu": "atempto", "candidat_subjuntiu": "atempti", "veritat_per_referencia": "subjuntiu",
+    "via_a": { "resposta": "La publicitat que vulgui atentar contra la dignitat de la persona o vulnere els valors i drets reconeguts en la Constitució, especialment els que es referen als articles 14, 18 i 20, apartat 4.", "tria": "cap/ambigu", "encert": false },
+    "via_b": { "resposta": "atempti", "forma_triada": "atempti", "tria": "subjuntiu", "encert": true },
+    "via_c": { "resposta": "subjuntiu", "classe": "subjuntiu", "forma_final": "atempti", "encert": true }
+  },
+  {
+    "id": "BOE-A-2009-21162-0425", "documento_id": "BOE-A-2009-21162",
+    "texto_valenciano": "El venedor està obligat a entregar al consumidor o usuari que exercite el seu dret a la reparació o substitució, justificació documental de l’entrega del producte, en la qual conste la data d’entrega i la falta de conformitat que origina l’exercici del dret.",
+    "texto_catalan_boe": "El venedor està obligat a lliurar al consumidor o usuari que exerciti el seu dret a la reparació o substitució, justificació documental del lliurament del producte, en la qual consti la data de lliurament i la falta de conformitat que origina l’exercici del dret.",
+    "forma_ambigua": "exercite", "candidat_indicatiu": "exercito", "candidat_subjuntiu": "exerciti", "veritat_per_referencia": "subjuntiu",
+    "via_a": { "resposta": "El venedor està obligat a entregar al consumidor o usuari que exerci el seu dret a la reparació o substitució, justificació documental de l’entrega del producte, en la qual consti la data d’entrega i la falta de conformitat que origina l’exercici del dret.", "tria": "cap/ambigu", "encert": false },
+    "via_b": { "resposta": "exerciti", "forma_triada": "exerciti", "tria": "subjuntiu", "encert": true },
+    "via_c": { "resposta": "subjuntiu", "classe": "subjuntiu", "forma_final": "exerciti", "encert": true }
+  },
+  {
+    "id": "BOE-A-2010-19703-2480", "documento_id": "BOE-A-2010-19703",
+    "texto_valenciano": "Als municipis que, estant en l’àmbit d’aplicació de la subsecció 2a de la secció 3a d’este capítol, no aporten la documentació que es determina en les condicions assenyalades anteriorment, se’ls aplicarà, si és el cas, un mòdul de ponderació equivalent al 60 per cent de l’esforç fiscal mitjà aplicable al municipi amb menor coeficient per este concepte, dins del tram de població en què s’enquadre, a l’efecte d’efectuar la liquidació definitiva de la seua participació en els tributs de l’Estat per a l’any 2011.",
+    "texto_catalan_boe": "Als municipis que, estant en l’àmbit d’aplicació de la subsecció  2a de la secció 3a d’aquest capítol, no aportin la documentació que es determina en les condicions assenyalades anteriorment se’ls ha d’aplicar, si s’escau, un mòdul de ponderació equivalent al 60 per cent de l’esforç fiscal mitjà aplicable al municipi amb menys coeficient per aquest concepte, dins del tram de població en què s’enquadri, als efectes de practicar la liquidació definitiva de la seva participació en els tributs de l’Estat per a l’any 2011.",
+    "forma_ambigua": "enquadre", "candidat_indicatiu": "enquadro", "candidat_subjuntiu": "enquadri", "veritat_per_referencia": "subjuntiu",
+    "via_a": { "resposta": "Als municipis que, estant en l'àmbit d'aplicació de la subsecció 2a de la secció 3a d'aquest capítol, no aporten la documentació que es determina en les condicions assenyalades anteriorment, es'ls aplicarà, si és el cas, un mòdul de ponderació equivalent al 60 percent de l'esforç fiscal mitjà aplicable al municipi amb menor coeficient per aquest concepte, dins del tram de població en què s'enquadren, a l'efecte d'efectuar la seva participació en els tributs de l'Estat per a l'any 2011.", "tria": "cap/ambigu", "encert": false },
+    "via_b": { "resposta": "enquadren", "forma_triada": "enquadren", "tria": "altra forma inventada: 'enquadren'", "encert": false },
+    "via_c": { "resposta": "subjuntiu", "classe": "subjuntiu", "forma_final": "enquadri", "encert": true }
+  },
+  {
+    "id": "BOE-A-2010-6737-0601", "documento_id": "BOE-A-2010-6737",
+    "texto_valenciano": "El saldo que presente l’esmentat concepte serà regularitzat a càrrec dels beneficis que el Banc d’Espanya ingressa anualment en el Tresor Públic.",
+    "texto_catalan_boe": "El saldo que presenti aquest concepte ha de ser regularitzat amb càrrec als beneficis que el Banc d’Espanya ingressa anualment en el Tresor Públic.",
+    "forma_ambigua": "presente", "candidat_indicatiu": "presento", "candidat_subjuntiu": "presenti", "veritat_per_referencia": "subjuntiu",
+    "via_a": { "resposta": "El saldo que presenti l'esmentat concepte serà regularitzat a càrrec dels beneficis que el Banc d'Espanya ingresa anualment en el Tresor Públic.", "tria": "subjuntiu", "encert": true },
+    "via_b": { "resposta": "presenti", "forma_triada": "presenti", "tria": "subjuntiu", "encert": true },
+    "via_c": { "resposta": "subjuntiu", "classe": "subjuntiu", "forma_final": "presenti", "encert": true }
+  },
+  {
+    "id": "BOE-A-2011-11264-0205", "documento_id": "BOE-A-2011-11264",
+    "texto_valenciano": "El jutge o tribunal podrà acordar el comís previst en els apartats anteriors d’este article encara que no s’impose cap pena a alguna persona per estar exempta de responsabilitat criminal o per haver-se extingit esta, en este últim cas, sempre que quede demostrada la situació patrimonial il·lícita.",
+    "texto_catalan_boe": "El jutge o tribunal pot acordar el comís que preveuen els apartats anteriors d’aquest article tot i que no s’imposi pena a alguna persona perquè està exempta de responsabilitat criminal o perquè aquesta s’ha extingit, en aquest últim cas, sempre que quedi demostrada la situació patrimonial il·lícita.",
+    "forma_ambigua": "impose", "candidat_indicatiu": "imposo", "candidat_subjuntiu": "imposi", "veritat_per_referencia": "subjuntiu",
+    "via_a": { "resposta": "El jutge o tribunal pot acordar el comís previst en els apartats anteriors d'aquest article encara que no s'imposi cap pena a algú per estar exmpte de responsabilitat criminal o per haver-se extingit aquesta, en aquest últim cas, sempre que quedi demostrada la situació patrimonial il·lícita.", "tria": "cap/ambigu", "encert": false },
+    "via_b": { "resposta": "imposi", "forma_triada": "imposi", "tria": "subjuntiu", "encert": true },
+    "via_c": { "resposta": "subjuntiu", "classe": "subjuntiu", "forma_final": "imposi", "encert": true }
+  },
+  {
+    "id": "BOE-A-2011-20638-0502", "documento_id": "BOE-A-2011-20638",
+    "texto_valenciano": "Les disposicions reglamentàries reguladores de la taxa per reserva de domini públic radioelèctric conservaran la vigència en tot allò que no s’opose al que preveu el present article.",
+    "texto_catalan_boe": "Les disposicions reglamentàries reguladores de la taxa per reserva de domini públic radioelèctric conserven la vigència en tot el que no s’oposi al que preveu aquest article.",
+    "forma_ambigua": "opose", "candidat_indicatiu": "oposo", "candidat_subjuntiu": "oposi", "veritat_per_referencia": "subjuntiu",
+    "via_a": { "resposta": "Les disposicions reglamentàries reguladores de la taxa per reserva de domini públic radioelèctic conservaran la vigència en tot allò que no s’opose al que preveu el present article.", "tria": "cap/ambigu", "encert": false },
+    "via_b": { "resposta": "oposiussenpt-legacy", "forma_triada": "oposiussenpt", "tria": "altra forma inventada: 'oposiussenpt'", "encert": false },
+    "via_c": { "resposta": "subjuntiu", "classe": "subjuntiu", "forma_final": "oposi", "encert": true }
+  },
+  {
+    "id": "BOE-A-2011-20638-0708", "documento_id": "BOE-A-2011-20638",
+    "texto_valenciano": "No es meritaran els recàrrecs del període executiu en el cas de deutes de titularitat d’altres estats o d’entitats internacionals o supranacionals l’actuació recaptatòria dels quals es realitze en el marc de l’assistència mútua, llevat que la normativa sobre esta assistència establisca una altra cosa.»",
+    "texto_catalan_boe": "No es meriten els recàrrecs del període executiu en el cas de deutes de titularitat d’altres estats o d’entitats internacionals o supranacionals l’actuació recaptadora dels quals es realitzi en el marc de l’assistència mútua, llevat que la normativa sobre aquesta assistència estableixi una altra cosa.»",
+    "forma_ambigua": "realitze", "candidat_indicatiu": "realitzo", "candidat_subjuntiu": "realitzi", "veritat_per_referencia": "subjuntiu",
+    "via_a": { "resposta": "No se meritarán los recargos del período ejecutivo en el caso de deudas de titularidad de otros estados o de entidades internacionales o supranacionales actuación recautoria de los cuales se realice en el marco de la asistencia mutua, salvo que la normativa sobre esta asistencia establezca otra cosa.»", "tria": "cap/ambigu", "encert": false },
+    "via_b": { "resposta": "realitzi", "forma_triada": "realitzi", "tria": "subjuntiu", "encert": true },
+    "via_c": { "resposta": "subjuntiu", "classe": "subjuntiu", "forma_final": "realitzi", "encert": true }
+  },
+  {
+    "id": "BOE-A-2011-7972-0034", "documento_id": "BOE-A-2011-7972",
+    "texto_valenciano": "En virtut d’això, fent ús de l’autorització que conté l’article 86 de la Constitució Espanyola, a proposta conjuntament dels titulars dels ministeris d’Economia i Hisenda i de Treball i Immigració, amb la deliberació prèvia del Consell de Ministres en la reunió del dia 29 d’abril de 2011, DISPOSE:",
+    "texto_catalan_boe": "En virtut d’això, en ús de l’autorització que conté l’article 86 de la Constitució espanyola, a proposta conjunta dels titulars dels ministeris d’Economia i Hisenda i de Treball i Immigració, amb la deliberació prèvia del Consell de Ministres en la reunió del dia 29 d’abril de 2011, DISPOSO:",
+    "forma_ambigua": "dispose", "candidat_indicatiu": "disposo", "candidat_subjuntiu": "disposi", "veritat_per_referencia": "indicatiu",
+    "via_a": { "resposta": "En virtut d'això, fent ús de l'autorització que conté l'article 86 de la Constitució Espanyola, a proposta conjunta dels titulars dels ministèrs d'Economia i Hacienda i de Treball i Immigració, amb la deliberació prèvia del Consell de Ministres en la reunió del dia 29 d'abril de 2011, DISPOSE:", "tria": "cap/ambigu", "encert": false },
+    "via_b": { "resposta": "disposo", "forma_triada": "disposo", "tria": "indicatiu", "encert": true },
+    "via_c": { "resposta": "indicatiu", "classe": "indicatiu", "forma_final": "disposo", "encert": true }
+  },
+  {
+    "id": "BOE-A-2013-12886-0121", "documento_id": "BOE-A-2013-12886",
+    "texto_valenciano": "L’èxit de la proposta d’avaluacions consistirà a aconseguir que cap alumne trobe davant d’ell una barrera infranquejable.",
+    "texto_catalan_boe": "L’èxit de la proposta d’avaluacions consisteix a aconseguir que cap alumne o alumna trobi davant d’aquestes una barrera infranquejable.",
+    "forma_ambigua": "trobe", "candidat_indicatiu": "trobo", "candidat_subjuntiu": "trobi", "veritat_per_referencia": "subjuntiu",
+    "via_a": { "resposta": "L’èxit de la proposta d’avaluacions consistirà en aconseguir que cap alumne trobi davant d’ell una barrera infranquejable.", "tria": "subjuntiu", "encert": true },
+    "via_b": { "resposta": "trobi", "forma_triada": "trobi", "tria": "subjuntiu", "encert": true },
+    "via_c": { "resposta": "subjuntivo", "classe": "resposta ambigua: 'subjuntivo'", "forma_final": null, "encert": false }
+  },
+  {
+    "id": "BOE-A-2014-12029-2927", "documento_id": "BOE-A-2014-12029",
+    "texto_valenciano": "Sol·licite l’obtenció i trasllat dels objectes, documents i dades especificades a continuació.",
+    "texto_catalan_boe": "Sol·licito l'obtenció i el trasllat dels objectes, documents i dades especificats a continuació A) Estat d'emissió: ……………………………………………………………………………………….……….….",
+    "forma_ambigua": "licite", "candidat_indicatiu": "licito", "candidat_subjuntiu": "liciti", "veritat_per_referencia": "indicatiu",
+    "via_a": { "resposta": "Solicito la obtenció i trasllat dels objectes, documents i dades especificades a continuació.", "tria": "cap/ambigu", "encert": false },
+    "via_b": { "resposta": "liciti", "forma_triada": "liciti", "tria": "subjuntiu", "encert": false },
+    "via_c": { "resposta": "indicatiu", "classe": "indicatiu", "forma_final": "licito", "encert": true }
+  },
+  {
+    "id": "BOE-A-2014-13248-0104", "documento_id": "BOE-A-2014-13248",
+    "texto_valenciano": "La persona o l’entitat que subscriga les accions o les participacions emeses no podrà transmetre o cedir l’ús a tercers dels elements patrimonials afectes a la seua activitat econòmica, existents en l’exercici anterior a la subscripció, en l’esmentat exercici o en els quatre exercicis posteriors, llevat que haja acabat la seua vida útil i se substituïsca, o que es tracte d’operacions realitzades en el curs normal de la seua activitat per contribuents que es dediquen, per mitjà d’una explotació econòmica, a l’arrendament o a cessió a tercers, per a ser usats, d’elements patrimonials de l’immobilitzat, sempre que no hi haja vinculació, directa o indirecta, amb els arrendataris o cessionaris d’eixos béns, en els termes definits en l’apartat 2 de l’article 18 de la Llei 27/2014, de 27 de novembre, de l’Impost sobre Societats, ni es tracte d’operacions d’arrendament financer.",
+    "texto_catalan_boe": "La persona o entitat que subscrigui les accions o participacions emeses no pot transmetre o cedir l’ús a tercers dels elements patrimonials afectes a la seva activitat econòmica, existents en l’exercici anterior a la subscripció, en l’exercici esmentat o en els quatre exercicis posteriors, llevat que hagi acabat la seva vida útil i es procedeixi a substituir-los o que es tracti d’operacions realitzades en el curs normal de la seva activitat per contribuents que es dediquin, a través d’una explotació econòmica, a l’arrendament o la cessió a tercers per al seu ús d’elements patrimonials de l’immobilitzat, sempre que no hi hagi vinculació, directa o indirecta, amb els arrendataris o cessionaris d’aquests béns, en els termes definits a l’apartat 2 de l’article 18 de la Llei 27/2014, de 27 de novembre, de l’impost sobre societats, ni es tracti d’operacions d’arrendament financer.",
+    "forma_ambigua": "tracte", "candidat_indicatiu": "tracto", "candidat_subjuntiu": "tracti", "veritat_per_referencia": "subjuntiu",
+    "via_a": { "resposta": "La persona o l’entitat que subscrigui les accions o les participacions emeses no pot transmitre o cedir l’ús a tercers dels elements patrimonials afectes a la seva activitat econòmica, existents en l’exercici anterior a la subscripció, en l’esmentat exercici o en els quatre exercicis posteriors, a menys que hagi acabat la seva vida útil i es substitueixi, o que es tracti d’operacions realitzades en el curs normal de la seva activitat per contribuents que es dediquin, per mitjà d’una explotació econòmica, a l’arrendament o a cessió a tercers, per arrendament o cessió a tercers, per ser usats, d’elements patrimonials immobles, sempre que no hi hagi vinculació, directa o indirecta, amb els arrendataris o cessionaris d’aquests béns, en els termes definits en l’apartat 2 de l’article 18 de la Llei 27/2014, de 27 de novembre, de l’Impost sobre Societats, ni es tracti d’operacions d’arrendament financer.", "tria": "subjuntiu", "encert": true },
+    "via_b": { "resposta": "tracti", "forma_triada": "tracti", "tria": "subjuntiu", "encert": true },
+    "via_c": { "resposta": "subjuntiu", "classe": "subjuntiu", "forma_final": "tracti", "encert": true }
+  },
+  {
+    "id": "BOE-A-2014-6726-2897", "documento_id": "BOE-A-2014-6726",
+    "texto_valenciano": "d)  Suspensió per un termini no superior a un any en l’exercici del càrrec d’administració o direcció que ocupe l’infractor en una entitat financera.",
+    "texto_catalan_boe": "d)  Suspensió per un termini no superior a un any en l’exercici del càrrec d’administració o direcció que ocupi l’infractor en una entitat financera.",
+    "forma_ambigua": "ocupe", "candidat_indicatiu": "ocupo", "candidat_subjuntiu": "ocupi", "veritat_per_referencia": "subjuntiu",
+    "via_a": { "resposta": "Suspensió per un termini no superior a un any en l’exercici del càrrec d’administració o direcció que ocupa l’infractor en una entitat financera.", "tria": "cap/ambigu", "encert": false },
+    "via_b": { "resposta": "ocupi", "forma_triada": "ocupi", "tria": "subjuntiu", "encert": true },
+    "via_c": { "resposta": "subjuntiu", "classe": "subjuntiu", "forma_final": "ocupi", "encert": true }
+  },
+  {
+    "id": "BOE-A-2015-5288-0405", "documento_id": "BOE-A-2015-5288",
+    "texto_valenciano": "a)  Les tipificades en l’apartat 2 de l’article 31 d’esta llei, quan en resulte un dany molt greu o se’n derive un perill molt greu i imminent per a les persones, la flora, la fauna o el medi ambient.",
+    "texto_catalan_boe": "a)  Les tipificades a l’apartat 2 de l’article 31 d’aquesta Llei quan d’aquestes en resulti un dany molt greu o se’n derivi un perill molt greu i imminent per a les persones, la flora, la fauna o el medi ambient.",
+    "forma_ambigua": "resulte", "candidat_indicatiu": "resulto", "candidat_subjuntiu": "resulti", "veritat_per_referencia": "subjuntiu",
+    "via_a": { "resposta": "Les tipificades en l’apartat 2 de l’article 31 d’aquesta llei, quan en resulti un dany molt greu o se’n derive un perill molt greu i imminent per a les persones, la flora, la fauna o el medi ambient.", "tria": "subjuntiu", "encert": true },
+    "via_b": { "resposta": "resulti", "forma_triada": "resulti", "tria": "subjuntiu", "encert": true },
+    "via_c": { "resposta": "subjuntiu", "classe": "subjuntiu", "forma_final": "resulti", "encert": true }
+  },
+  {
+    "id": "BOE-A-2015-6789-0008", "documento_id": "BOE-A-2015-6789",
+    "texto_valenciano": "Sapieu: Que les Corts Generals han aprovat la llei següent i jo la sancione:",
+    "texto_catalan_boe": "Sapigueu: Que les Corts Generals han aprovat la Llei següent i jo la sanciono:",
+    "forma_ambigua": "sancione", "candidat_indicatiu": "sanciono", "candidat_subjuntiu": "sancioni", "veritat_per_referencia": "indicatiu",
+    "via_a": { "resposta": "Sapieu: Que les Corts Generals han aprovat la llei següent i jo ho sancioni:", "tria": "subjuntiu", "encert": false },
+    "via_b": { "resposta": "sancioni", "forma_triada": "sancioni", "tria": "subjuntiu", "encert": false },
+    "via_c": { "resposta": "subjuntiu", "classe": "subjuntiu", "forma_final": "sancioni", "encert": false }
+  },
+  {
+    "id": "BOE-A-2015-7897-3958", "documento_id": "BOE-A-2015-7897",
+    "texto_valenciano": "Per tant, Mane a tots els espanyols, particulars i autoritats, que complisquen esta llei i que la facen complir.",
+    "texto_catalan_boe": "Per tant, Mano a tots els espanyols, particulars i autoritats, que compleixin aquesta Llei i que la facin complir.",
+    "forma_ambigua": "mane", "candidat_indicatiu": "mano", "candidat_subjuntiu": "mani", "veritat_per_referencia": "indicatiu",
+    "via_a": { "resposta": "Per tant, man a tots els espanyols, particulars i autoritats, que complin aquesta llei i que la facin complir.", "tria": "cap/ambigu", "encert": false },
+    "via_b": { "resposta": "maneu", "forma_triada": "maneu", "tria": "altra forma inventada: 'maneu'", "encert": false },
+    "via_c": { "resposta": "subjuntiu", "classe": "subjuntiu", "forma_final": "mani", "encert": false }
+  },
+  {
+    "id": "BOE-A-2015-8343-1050", "documento_id": "BOE-A-2015-8343",
+    "texto_valenciano": "4. Les ofertes de premis, beques, contribucions i subvencions a reunions, congressos, viatges d’estudi i actes semblants per qualsevol persona, física o jurídica, relacionada amb la fabricació, elaboració, distribució, prescripció i dispensació de medicaments i productes sanitaris, es faran públiques en la forma que es determine reglamentàriament i s’aplicaran exclusivament a activitats d’índole científica quan els seus destinataris siguen professionals sanitaris o les entitats en què s’associen.",
+    "texto_catalan_boe": "4. Les ofertes de premis, beques, contribucions i subvencions a reunions, congressos, viatges d’estudi i actes similars per qualsevol persona, física o jurídica, relacionada amb la fabricació, elaboració, distribució, prescripció i dispensació de medicaments i productes sanitaris, s’han de fer públiques en la forma que es determini per reglament i s’han d’aplicar exclusivament a activitats d’índole científica quan els destinataris siguin professionals sanitaris o les entitats en què s’associen.",
+    "forma_ambigua": "determine", "candidat_indicatiu": "determino", "candidat_subjuntiu": "determini", "veritat_per_referencia": "subjuntiu",
+    "via_a": { "resposta": "4. Les ofertes de premis, beques, contribucions i subvencions a reunions, congressos, viatges d’estudi i actes semblants per qualsevol persona, física o jurídica, relacionada amb la fabricació, elaboració, distribució, prescripció i dispensació de medicaments i productes sanitaris, es faran públiques de la forma que es determine reglamentàriament i s’aplicaran exclusivament a activitats d’índole científica quan els seus destinataris siguin professionals sanitaris o les entitats en què s’associen.", "tria": "cap/ambigu", "encert": false },
+    "via_b": { "resposta": "determineix", "forma_triada": "determineix", "tria": "altra forma inventada: 'determineix'", "encert": false },
+    "via_c": { "resposta": "subjuntiu", "classe": "subjuntiu", "forma_final": "determini", "encert": true }
+  }
+];
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+}
+
+function marcaParaula(text, paraula, cls) {
+  if (!paraula) return escapeHtml(text);
+  const re = new RegExp("\\b(" + paraula.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")\\b", "i");
+  const m = text.match(re);
+  if (!m) return escapeHtml(text);
+  const before = text.slice(0, m.index);
+  const hit = m[0];
+  const after = text.slice(m.index + hit.length);
+  return escapeHtml(before) + '<mark class="' + cls + '">' + escapeHtml(hit) + '</mark>' + escapeHtml(after);
+}
+
+function renderScoreboard() {
+  const el = document.getElementById("scoreboard");
+  let html = "<h2>Encerts sobre " + DATA.length + " frases</h2>";
+  VIES.forEach(via => {
+    const encerts = DATA.filter(c => c[via.key].encert).length;
+    const pct = Math.round((encerts / DATA.length) * 100);
+    const fillClass = via.key === "via_c" ? "bar-fill c" : "bar-fill";
+    html += `
+      <div class="score-row">
+        <div class="score-label">
+          <span class="via-name">Via ${via.tag} · ${via.name}</span>
+          <span class="via-desc">${via.desc}</span>
+        </div>
+        <div class="bar-track"><div class="${fillClass}" style="width:${pct}%"></div></div>
+        <div class="score-pct num">${encerts}/${DATA.length}</div>
+      </div>`;
+  });
+
+  // Desglossament per classe de veritat: el BOE esbiaixa fortament cap a
+  // subjuntiu (vore README), aixi que l'encert global amaga com es
+  // comporta cada via en la classe minoritaria (indicatiu) -- justament
+  // on mes es nota la diferencia entre les 3 vies.
+  const classes = ["subjuntiu", "indicatiu"];
+  const totals = Object.fromEntries(classes.map(cl => [cl, DATA.filter(c => c.veritat_per_referencia === cl).length]));
+  html += `<h2 class="breakdown-title">Per tipus de veritat</h2><div class="breakdown">`;
+  html += `<div class="breakdown-row breakdown-head"><span></span>` +
+    classes.map(cl => `<span>${cl} (n=${totals[cl]})</span>`).join("") + `</div>`;
+  VIES.forEach(via => {
+    html += `<div class="breakdown-row"><span class="breakdown-via">${via.tag}</span>`;
+    classes.forEach(cl => {
+      const subset = DATA.filter(c => c.veritat_per_referencia === cl);
+      const ok = subset.filter(c => c[via.key].encert).length;
+      html += `<span class="num">${ok}/${subset.length}</span>`;
+    });
+    html += `</div>`;
+  });
+  html += `</div>`;
+
+  el.innerHTML = html;
+}
+
+function renderCaso(caso, i) {
+  const valText = marcaParaula(caso.texto_valenciano, caso.forma_ambigua, "amb");
+  const formaVeritat = caso.veritat_per_referencia === "subjuntiu" ? caso.candidat_subjuntiu : caso.candidat_indicatiu;
+  const refText = marcaParaula(caso.texto_catalan_boe, formaVeritat, "ref");
+
+  const viesHtml = VIES.map(via => {
+    const r = caso[via.key];
+    const estat = r.encert ? "ok" : "ko";
+    const icon = r.encert ? "✓" : "✕";
+    let resp, meta;
+    if (via.key === "via_a") {
+      resp = '<span class="resp sentence">' + escapeHtml(r.resposta) + "</span>";
+      meta = "tria detectada: " + r.tria;
+    } else if (via.key === "via_b") {
+      resp = '<span class="resp">' + escapeHtml(r.resposta) + "</span>";
+      meta = r.tria;
+    } else {
+      resp = '<span class="resp">' + escapeHtml(r.classe) + "</span>" +
+        (r.forma_final ? " → <strong>" + escapeHtml(r.forma_final) + "</strong>" : "");
+      meta = "";
+    }
+    return `
+      <div class="via-row ${estat}">
+        <div class="via-tag">${via.tag}</div>
+        <div class="via-content">
+          ${resp}
+          ${meta ? '<div class="meta">' + escapeHtml(meta) + "</div>" : ""}
+        </div>
+        <div class="via-icon">${icon}</div>
+      </div>`;
+  }).join("");
+
+  return `
+    <article class="caso">
+      <div class="caso-head">
+        <span class="caso-num">#${i + 1}</span>
+        <span class="caso-doc">${escapeHtml(caso.documento_id)}</span>
+        <span class="caso-verdad">veritat: ${caso.veritat_per_referencia}</span>
+      </div>
+      <div class="textos">
+        <div class="texto-bloc">
+          <div class="texto-tag">Valencià (font)</div>
+          <div class="texto-cita">${valText}</div>
+        </div>
+        <div class="texto-bloc">
+          <div class="texto-tag">Català — referència BOE</div>
+          <div class="texto-cita">${refText}</div>
+        </div>
+      </div>
+      <div class="vies">${viesHtml}</div>
+    </article>`;
+}
+
+renderScoreboard();
+document.getElementById("casos").innerHTML = DATA.map(renderCaso).join("");
+</script>

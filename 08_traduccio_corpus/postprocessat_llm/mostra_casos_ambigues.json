@@ -1,0 +1,172 @@
+[
+  {
+    "id": "BOE-A-2009-21160-0102",
+    "documento_id": "BOE-A-2009-21160",
+    "texto_valenciano": "a)  Que la resolució administrativa o judicial que haja autoritzat eixa anterior suspensió o reducció de jornada s’haja produït entre l’1 d’octubre de 2008 i el 31 de desembre de 2010, ambdós inclosos. b)  Que la resolució administrativa o judicial que autoritze la posterior suspensió o reducció de jornada es produïsca entre el 8 de març de 2009 i el 31 de desembre de 2010.",
+    "texto_catalan_boe": "a)  Que la resolució administrativa o judicial que hagi autoritzat aquesta anterior suspensió o reducció de jornada s’hagi produït entre l’1 d’octubre de 2008 i el 31 de desembre de 2010, tots dos inclusivament. b)  Que la resolució administrativa o judicial que autoritzi la posterior suspensió o reducció de jornada es produeixi entre el 8 de març de 2009 i el 31 de desembre de 2010.",
+    "forma_ambigua": "autoritze",
+    "candidat_indicatiu": "autoritzo",
+    "candidat_subjuntiu": "autoritzi",
+    "veritat_per_referencia": "subjuntiu"
+  },
+  {
+    "id": "BOE-A-2009-21162-0334",
+    "documento_id": "BOE-A-2009-21162",
+    "texto_valenciano": "a)  La publicitat que atempte contra la dignitat de la persona o vulnere els valors i drets reconeguts en la Constitució, especialment als que es referixen els articles 14, 18 i 20, apartat 4.",
+    "texto_catalan_boe": "a)  La publicitat que atempti contra la dignitat de la persona o vulneri els valors i drets reconeguts a la Constitució, especialment aquells als quals fan referència els seus articles 14, 18 i 20, apartat 4.",
+    "forma_ambigua": "atempte",
+    "candidat_indicatiu": "atempto",
+    "candidat_subjuntiu": "atempti",
+    "veritat_per_referencia": "subjuntiu"
+  },
+  {
+    "id": "BOE-A-2009-21162-0425",
+    "documento_id": "BOE-A-2009-21162",
+    "texto_valenciano": "El venedor està obligat a entregar al consumidor o usuari que exercite el seu dret a la reparació o substitució, justificació documental de l’entrega del producte, en la qual conste la data d’entrega i la falta de conformitat que origina l’exercici del dret.",
+    "texto_catalan_boe": "El venedor està obligat a lliurar al consumidor o usuari que exerciti el seu dret a la reparació o substitució, justificació documental del lliurament del producte, en la qual consti la data de lliurament i la falta de conformitat que origina l’exercici del dret.",
+    "forma_ambigua": "exercite",
+    "candidat_indicatiu": "exercito",
+    "candidat_subjuntiu": "exerciti",
+    "veritat_per_referencia": "subjuntiu"
+  },
+  {
+    "id": "BOE-A-2010-19703-2480",
+    "documento_id": "BOE-A-2010-19703",
+    "texto_valenciano": "Als municipis que, estant en l’àmbit d’aplicació de la subsecció 2a de la secció 3a d’este capítol, no aporten la documentació que es determina en les condicions assenyalades anteriorment, se’ls aplicarà, si és el cas, un mòdul de ponderació equivalent al 60 per cent de l’esforç fiscal mitjà aplicable al municipi amb menor coeficient per este concepte, dins del tram de població en què s’enquadre, a l’efecte d’efectuar la liquidació definitiva de la seua participació en els tributs de l’Estat per a l’any 2011.",
+    "texto_catalan_boe": "Als municipis que, estant en l’àmbit d’aplicació de la subsecció  2a de la secció 3a d’aquest capítol, no aportin la documentació que es determina en les condicions assenyalades anteriorment se’ls ha d’aplicar, si s’escau, un mòdul de ponderació equivalent al 60 per cent de l’esforç fiscal mitjà aplicable al municipi amb menys coeficient per aquest concepte, dins del tram de població en què s’enquadri, als efectes de practicar la liquidació definitiva de la seva participació en els tributs de l’Estat per a l’any 2011.",
+    "forma_ambigua": "enquadre",
+    "candidat_indicatiu": "enquadro",
+    "candidat_subjuntiu": "enquadri",
+    "veritat_per_referencia": "subjuntiu"
+  },
+  {
+    "id": "BOE-A-2010-6737-0601",
+    "documento_id": "BOE-A-2010-6737",
+    "texto_valenciano": "El saldo que presente l’esmentat concepte serà regularitzat a càrrec dels beneficis que el Banc d’Espanya ingressa anualment en el Tresor Públic.",
+    "texto_catalan_boe": "El saldo que presenti aquest concepte ha de ser regularitzat amb càrrec als beneficis que el Banc d’Espanya ingressa anualment en el Tresor Públic.",
+    "forma_ambigua": "presente",
+    "candidat_indicatiu": "presento",
+    "candidat_subjuntiu": "presenti",
+    "veritat_per_referencia": "subjuntiu"
+  },
+  {
+    "id": "BOE-A-2011-11264-0205",
+    "documento_id": "BOE-A-2011-11264",
+    "texto_valenciano": "El jutge o tribunal podrà acordar el comís previst en els apartats anteriors d’este article encara que no s’impose cap pena a alguna persona per estar exempta de responsabilitat criminal o per haver-se extingit esta, en este últim cas, sempre que quede demostrada la situació patrimonial il·lícita.",
+    "texto_catalan_boe": "El jutge o tribunal pot acordar el comís que preveuen els apartats anteriors d’aquest article tot i que no s’imposi pena a alguna persona perquè està exempta de responsabilitat criminal o perquè aquesta s’ha extingit, en aquest últim cas, sempre que quedi demostrada la situació patrimonial il·lícita.",
+    "forma_ambigua": "impose",
+    "candidat_indicatiu": "imposo",
+    "candidat_subjuntiu": "imposi",
+    "veritat_per_referencia": "subjuntiu"
+  },
+  {
+    "id": "BOE-A-2011-20638-0502",
+    "documento_id": "BOE-A-2011-20638",
+    "texto_valenciano": "Les disposicions reglamentàries reguladores de la taxa per reserva de domini públic radioelèctric conservaran la vigència en tot allò que no s’opose al que preveu el present article.",
+    "texto_catalan_boe": "Les disposicions reglamentàries reguladores de la taxa per reserva de domini públic radioelèctric conserven la vigència en tot el que no s’oposi al que preveu aquest article.",
+    "forma_ambigua": "opose",
+    "candidat_indicatiu": "oposo",
+    "candidat_subjuntiu": "oposi",
+    "veritat_per_referencia": "subjuntiu"
+  },
+  {
+    "id": "BOE-A-2011-20638-0708",
+    "documento_id": "BOE-A-2011-20638",
+    "texto_valenciano": "No es meritaran els recàrrecs del període executiu en el cas de deutes de titularitat d’altres estats o d’entitats internacionals o supranacionals l’actuació recaptatòria dels quals es realitze en el marc de l’assistència mútua, llevat que la normativa sobre esta assistència establisca una altra cosa.»",
+    "texto_catalan_boe": "No es meriten els recàrrecs del període executiu en el cas de deutes de titularitat d’altres estats o d’entitats internacionals o supranacionals l’actuació recaptadora dels quals es realitzi en el marc de l’assistència mútua, llevat que la normativa sobre aquesta assistència estableixi una altra cosa.»",
+    "forma_ambigua": "realitze",
+    "candidat_indicatiu": "realitzo",
+    "candidat_subjuntiu": "realitzi",
+    "veritat_per_referencia": "subjuntiu"
+  },
+  {
+    "id": "BOE-A-2011-7972-0034",
+    "documento_id": "BOE-A-2011-7972",
+    "texto_valenciano": "En virtut d’això, fent ús de l’autorització que conté l’article 86 de la Constitució Espanyola, a proposta conjuntament dels titulars dels ministeris d’Economia i Hisenda i de Treball i Immigració, amb la deliberació prèvia del Consell de Ministres en la reunió del dia 29 d’abril de 2011, DISPOSE:",
+    "texto_catalan_boe": "En virtut d’això, en ús de l’autorització que conté l’article 86 de la Constitució espanyola, a proposta conjunta dels titulars dels ministeris d’Economia i Hisenda i de Treball i Immigració, amb la deliberació prèvia del Consell de Ministres en la reunió del dia 29 d’abril de 2011, DISPOSO:",
+    "forma_ambigua": "dispose",
+    "candidat_indicatiu": "disposo",
+    "candidat_subjuntiu": "disposi",
+    "veritat_per_referencia": "indicatiu"
+  },
+  {
+    "id": "BOE-A-2013-12886-0121",
+    "documento_id": "BOE-A-2013-12886",
+    "texto_valenciano": "L’èxit de la proposta d’avaluacions consistirà a aconseguir que cap alumne trobe davant d’ell una barrera infranquejable.",
+    "texto_catalan_boe": "L’èxit de la proposta d’avaluacions consisteix a aconseguir que cap alumne o alumna trobi davant d’aquestes una barrera infranquejable.",
+    "forma_ambigua": "trobe",
+    "candidat_indicatiu": "trobo",
+    "candidat_subjuntiu": "trobi",
+    "veritat_per_referencia": "subjuntiu"
+  },
+  {
+    "id": "BOE-A-2014-12029-2927",
+    "documento_id": "BOE-A-2014-12029",
+    "texto_valenciano": "Sol·licite l’obtenció i trasllat dels objectes, documents i dades especificades a continuació.",
+    "texto_catalan_boe": "Sol·licito l'obtenció i el trasllat dels objectes, documents i dades especificats a continuació A) Estat d'emissió: ……………………………………………………………………………………….……….….",
+    "forma_ambigua": "licite",
+    "candidat_indicatiu": "licito",
+    "candidat_subjuntiu": "liciti",
+    "veritat_per_referencia": "indicatiu"
+  },
+  {
+    "id": "BOE-A-2014-13248-0104",
+    "documento_id": "BOE-A-2014-13248",
+    "texto_valenciano": "La persona o l’entitat que subscriga les accions o les participacions emeses no podrà transmetre o cedir l’ús a tercers dels elements patrimonials afectes a la seua activitat econòmica, existents en l’exercici anterior a la subscripció, en l’esmentat exercici o en els quatre exercicis posteriors, llevat que haja acabat la seua vida útil i se substituïsca, o que es tracte d’operacions realitzades en el curs normal de la seua activitat per contribuents que es dediquen, per mitjà d’una explotació econòmica, a l’arrendament o a cessió a tercers, per a ser usats, d’elements patrimonials de l’immobilitzat, sempre que no hi haja vinculació, directa o indirecta, amb els arrendataris o cessionaris d’eixos béns, en els termes definits en l’apartat 2 de l’article 18 de la Llei 27/2014, de 27 de novembre, de l’Impost sobre Societats, ni es tracte d’operacions d’arrendament financer.",
+    "texto_catalan_boe": "La persona o entitat que subscrigui les accions o participacions emeses no pot transmetre o cedir l’ús a tercers dels elements patrimonials afectes a la seva activitat econòmica, existents en l’exercici anterior a la subscripció, en l’exercici esmentat o en els quatre exercicis posteriors, llevat que hagi acabat la seva vida útil i es procedeixi a substituir-los o que es tracti d’operacions realitzades en el curs normal de la seva activitat per contribuents que es dediquin, a través d’una explotació econòmica, a l’arrendament o la cessió a tercers per al seu ús d’elements patrimonials de l’immobilitzat, sempre que no hi hagi vinculació, directa o indirecta, amb els arrendataris o cessionaris d’aquests béns, en els termes definits a l’apartat 2 de l’article 18 de la Llei 27/2014, de 27 de novembre, de l’impost sobre societats, ni es tracti d’operacions d’arrendament financer.",
+    "forma_ambigua": "tracte",
+    "candidat_indicatiu": "tracto",
+    "candidat_subjuntiu": "tracti",
+    "veritat_per_referencia": "subjuntiu"
+  },
+  {
+    "id": "BOE-A-2014-6726-2897",
+    "documento_id": "BOE-A-2014-6726",
+    "texto_valenciano": "d)  Suspensió per un termini no superior a un any en l’exercici del càrrec d’administració o direcció que ocupe l’infractor en una entitat financera.",
+    "texto_catalan_boe": "d)  Suspensió per un termini no superior a un any en l’exercici del càrrec d’administració o direcció que ocupi l’infractor en una entitat financera.",
+    "forma_ambigua": "ocupe",
+    "candidat_indicatiu": "ocupo",
+    "candidat_subjuntiu": "ocupi",
+    "veritat_per_referencia": "subjuntiu"
+  },
+  {
+    "id": "BOE-A-2015-5288-0405",
+    "documento_id": "BOE-A-2015-5288",
+    "texto_valenciano": "a)  Les tipificades en l’apartat 2 de l’article 31 d’esta llei, quan en resulte un dany molt greu o se’n derive un perill molt greu i imminent per a les persones, la flora, la fauna o el medi ambient.",
+    "texto_catalan_boe": "a)  Les tipificades a l’apartat 2 de l’article 31 d’aquesta Llei quan d’aquestes en resulti un dany molt greu o se’n derivi un perill molt greu i imminent per a les persones, la flora, la fauna o el medi ambient.",
+    "forma_ambigua": "resulte",
+    "candidat_indicatiu": "resulto",
+    "candidat_subjuntiu": "resulti",
+    "veritat_per_referencia": "subjuntiu"
+  },
+  {
+    "id": "BOE-A-2015-6789-0008",
+    "documento_id": "BOE-A-2015-6789",
+    "texto_valenciano": "Sapieu: Que les Corts Generals han aprovat la llei següent i jo la sancione:",
+    "texto_catalan_boe": "Sapigueu: Que les Corts Generals han aprovat la Llei següent i jo la sanciono:",
+    "forma_ambigua": "sancione",
+    "candidat_indicatiu": "sanciono",
+    "candidat_subjuntiu": "sancioni",
+    "veritat_per_referencia": "indicatiu"
+  },
+  {
+    "id": "BOE-A-2015-7897-3958",
+    "documento_id": "BOE-A-2015-7897",
+    "texto_valenciano": "Per tant, Mane a tots els espanyols, particulars i autoritats, que complisquen esta llei i que la facen complir.",
+    "texto_catalan_boe": "Per tant, Mano a tots els espanyols, particulars i autoritats, que compleixin aquesta Llei i que la facin complir.",
+    "forma_ambigua": "mane",
+    "candidat_indicatiu": "mano",
+    "candidat_subjuntiu": "mani",
+    "veritat_per_referencia": "indicatiu"
+  },
+  {
+    "id": "BOE-A-2015-8343-1050",
+    "documento_id": "BOE-A-2015-8343",
+    "texto_valenciano": "4. Les ofertes de premis, beques, contribucions i subvencions a reunions, congressos, viatges d’estudi i actes semblants per qualsevol persona, física o jurídica, relacionada amb la fabricació, elaboració, distribució, prescripció i dispensació de medicaments i productes sanitaris, es faran públiques en la forma que es determine reglamentàriament i s’aplicaran exclusivament a activitats d’índole científica quan els seus destinataris siguen professionals sanitaris o les entitats en què s’associen.",
+    "texto_catalan_boe": "4. Les ofertes de premis, beques, contribucions i subvencions a reunions, congressos, viatges d’estudi i actes similars per qualsevol persona, física o jurídica, relacionada amb la fabricació, elaboració, distribució, prescripció i dispensació de medicaments i productes sanitaris, s’han de fer públiques en la forma que es determini per reglament i s’han d’aplicar exclusivament a activitats d’índole científica quan els destinataris siguin professionals sanitaris o les entitats en què s’associen.",
+    "forma_ambigua": "determine",
+    "candidat_indicatiu": "determino",
+    "candidat_subjuntiu": "determini",
+    "veritat_per_referencia": "subjuntiu"
+  }
+]
