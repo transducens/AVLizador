@@ -156,6 +156,112 @@ a merèixer una regla.
 **Resultat, mesurat**: el benchmark va pujar de **111/150 (74,0%)** a
 **119/150 (79,3%)**.
 
+## DECISIÓ D'ARQUITECTURA (05/10/2026): nou lèxic unificat, i conjugacions massives provades i revertides
+
+Mauricio va compartir 3 fitxers nous a `font_mauricio/`. Cada un es va
+avaluar per separat abans d'integrar-lo (mateix mètode de sempre:
+comparar contra les dades existents i el benchmark, no confiar a cegues
+en volum gran de dades noves).
+
+**`unificado.json` → substituix `lexico_general_limpio.json` (integrat)**:
+quasi un superconjunt (610 de les 611 entrades antigues hi són, +860
+noves). Va introduir 2 regressions puntuals en integrar-lo, totes dos
+corregides:
+- `eixa→aqueixa`: l'entrada nova és tècnicament vàlida pero ignora la
+  decisió ja presa de col·lapsar este/eixe/aqueix cap a "aquest" --
+  `lexic.py` ara exclou de `lexic_mauricio.json` qualsevol forma que ja
+  cobrisca `demostratius.py` amb autoritat pròpia.
+- `"després"` reapareixia (bug de dades ja conegut, vore `lexic.py`) per
+  una via distinta de l'original -- l'exclusió `_BUG_DADES_CONEGUTS` ara
+  s'aplica als dos loaders (lèxic general i accentuació), no només un.
+
+**`conjugaciones_nuevo.json` (5.465 verbs, 49.443 formes, generades
+sistemàticament) → PROVAT I REVERTIT**: no és un problema d'ambigüitat
+puntual com les 65 formes ja conegudes (indicatiu/subjuntiu que
+col·lapsen) -- és **col·lisió homògrafa massiva**. Amb tants verbs,
+moltes conjugacions regulars coincidixen amb substantius plurals
+molt més freqüents que el verb rar que les origina: `persones→personis`
+(del verb "personar"), `projectes→projectis` ("projectar"),
+`pobles→poblis` ("poblar"). Mesurat amb el benchmark: **119/150 (79,3%)**
+abans, **89/150 (59,3%)** amb esta font integrada -- 30 regressions
+reals, paraules comunes convertides en no-paraules. Una llista
+d'exclusions curada no ho arregla (caldrien milers); és un problema
+estructural de no tindre pos-tagging a eixa escala. Es va provar també
+`verbos_todos_anotados.json` (1.229 formes, anàlisi d'ambigüitat en 50
+verbs amb formes repetides) -- massa acotat per a resoldre el problema
+general, es deixa pendent per a una futura anàlisi puntual.
+
+De pas, un tercer bug trobat per la mateixa via (homògraf, no de les
+fonts noves): `conjugacions_dict.py` tenia `germanes` (substantiu,
+"hermanas") col·lidint amb la 2a persona subjuntiu del verb "germanar" --
+ara exclòs explícitament (`EXCLUSIONS_HOMOGRAF`).
+
+**Resultat net**: lèxic ampliat (+860 entrades), 2 regressions noves
+corregides, i una font grossa descartada amb evidència clara en compte
+d'integrar-la a cegues perquè "és més dades".
+
+## DECISIÓ D'ARQUITECTURA (06/10/2026): `conjugaciones_nuevo.json` re-integrat a propòsit, acceptant la baixada del benchmark
+
+Decisió explícita de l'usuari: tornar a afegir `conjugaciones_nuevo.json`
+(els 5.465 verbs revertits un dia abans) encara que es sàpia que torna a
+introduir la col·lisió homògrafa documentada dalt. Raonament: ara no
+preocupa tant la xifra del benchmark perquè **el pla és afegir mes avant
+un pas de postprocessat amb un LLM** (`08_traduccio_corpus/postprocessat_llm/`,
+encara NO implementat) que puga resoldre estos casos ambigus mirant el
+context real de la frase -- cosa que un lookup pla mai pot fer. Mentre
+no existisca eixe pas, preferix tindre mes cobertura (5.465 verbs mes)
+encara que isca mes soroll, en compte d'esperar amb el motor limitat a 156
+verbs.
+
+**Canvi concret**: `sync_data.py` torna a incloure
+`conjugaciones_nuevo.json` a la tupla de fonts de
+`conjugacions_dialectals.json`, ara EN DARRER lloc (abans de
+`verbos_no_ambiguos.json` i `conjugaciones_limpio.json`, que guanyen en
+cas de conflicte per ser mes fiables i cobrir verbs mes comuns).
+
+**Resultat, mesurat de nou**: el benchmark torna a baixar de **119/150
+(79,3%)** a **89/150 (59,3%)**, BLEU 95,31 -- exactament la mateixa xifra
+que la prova descartada el dia anterior, confirmant que el problema és
+reproduïble i no depén de l'orde d'integració. Esta baixada es queda
+documentada i acceptada a propòsit, no és una regressió sense detectar.
+
+**Pendent, NO fet en esta decisió** (a propòsit, per abast): no s'ha
+implementat cap postprocessat LLM encara -- això s'anirà fent a poc a
+poc en properes sessions. Tampoc s'ha integrat `verbos_todos_anotados.json`
+-- vore nota important baix, té un problema DISTINT (no de col·lisió,
+sinó de dades corruptes) que calia detectar i reportar abans d'afegir-lo.
+
+### `verbos_todos_anotados.json` -- integrat sense filtrar (06/10/2026, correcció d'una alarma prèvia)
+
+Al revisar si calia afegir `verbos_todos_anotados.json` (1.229 formes,
+anàlisi detallada de 50 verbs amb formes repetides) es va detectar un cas
+que semblava preocupant: 8 dels 50 verbs tenen un infinitiu de MÉS D'UNA
+PARAULA ("fer una ullada", "telefonar"→"trucar per telèfon"...), i un
+d'ells ("fer una ullada" / "donar un cop d'ull") apareixia amb la forma
+catalana concatenada sense espais: la forma neta i comuna **"faria"**
+(condicional de "fer") associada al no-mot **"uncopd'ulldonaria"**.
+Primera alarma: com que semblava no tindre ambigüitat interna detectable,
+es va pensar que res ho protegiria i trencaria "faria" sempre.
+
+**Verificat despres (i corregit ací)**: eixa alarma estava mal calculada.
+Dins d'este mateix fitxer, "faria" ja apareix DOS vegades amb catalans
+distints ("faria" net, de l'idioma "fer una besada"/"fer un petó"; i
+"uncopd'ulldonaria" trencat, de "fer una ullada"/"donar un cop d'ull") --
+exactament el patró que `_marca_ambigues_dins_del_mateix_fitxer` ja
+detecta i marca `problematica: true` (verificat: ambdós entrades queden
+excloses del lookup). Revisant la resta dels 227 formes afectades pels 8
+verbs multi-paraula: la majoria (telefonar→trucar, pegar un bac→clavar
+una patacada, parar atenció→parar esment, armar un canyaret→armar un
+sidral, caure com una punyada→caure com un cop de puny) són formes
+NETES i correctes -- el verb nucli de l'idioma es conjuga bé en els dos
+costats, i només la part no-verbal de "fer una ullada"/"donar un cop
+d'ull" produïx concatenacions, que ja queden excloses pel mecanisme
+existent. **Decisió: integrat sense cap filtre addicional** (475 de les
+1.229 formes acaben marcades `problematica` pel mecanisme ja existent;
+la resta s'afig al lookup tal qual). No ha canviat el resultat del
+benchmark (continua 89/150) perquè cap d'estos 50 verbs hi apareix, però
+queden disponibles per al corpus real.
+
 ## Arquitectura
 
 Pipeline seqüencial de capes sobre una llista de `Token`, no substitucions

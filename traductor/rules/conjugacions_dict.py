@@ -41,6 +41,21 @@ morfologia_verbal.py al pipeline, la proteccio original (nomes alla)
 mai arribava a executar-se: "o siga" es traduia mal a "o sigui" des que
 esta capa es va afegir. Corregit mirant la paraula anterior amb
 `paraula_anterior_es` (rules/__init__.py).
+
+Col·lisions homògraf verb/paraula comuna (05/10/2026, des que
+`conjugaciones_nuevo.json` va afegir 5.465 verbs en compte dels 156
+originals): amb tants verbs, és molt mes probable que una forma
+conjugada RARA coincidisca per casualitat amb una paraula comuna d'una
+altra categoria gramatical. Cas trobat: "germanes" (substantiu, "hermanas",
+ultra-comú) és identica a la 2a persona del present de subjuntiu del verb
+"germanar" ("que tu germanes"), una forma que ningú fa servir mai en eixe
+sentit -- sense pos-tagging, `ConjugacionsDictRule` no pot distingir-les,
+i sense esta exclusio traduiria "germanes" (el substantiu) a "germanis"
+(el verb) sempre. `EXCLUSIONS_HOMOGRAF` és una llista CURADA a mà, afegida
+cas a cas conforme es descobrixen -- no una solucio general (eixa
+requeriria pos-tagging real). Nomes s'ha trobat este cas fins ara; es
+recomana ampliar-la si apareixen mes col·lisions revisant el benchmark o
+el corpus del BOE (`08_traduccio_corpus/`, `dades/boe_net/`).
 """
 
 from __future__ import annotations
@@ -54,11 +69,16 @@ DEFAULT_CONJUGACIONS_PATH = (
     Path(__file__).resolve().parent.parent / "data" / "conjugacions_dialectals.json"
 )
 
+# Vore docstring del modul: formes conjugades RARES que coincidixen per
+# casualitat amb una paraula comuna d'una altra categoria gramatical.
+EXCLUSIONS_HOMOGRAF = {"germanes"}
+
 
 def carrega_conjugacions(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[str, str]:
     """Llig el JSON de conjugacions i el converteix en un diccionari pla
     `{forma_valenciana_en_minuscules: forma_catalana}`, descartant les
-    entrades `problematica: true` (vore docstring del modul).
+    entrades `problematica: true` i les de `EXCLUSIONS_HOMOGRAF` (vore
+    docstring del modul).
 
     >>> lookup = carrega_conjugacions()
     >>> lookup["oferisca"]
@@ -69,6 +89,8 @@ def carrega_conjugacions(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[str, st
     'treure'
     >>> "abalance" in lookup
     False
+    >>> "germanes" in lookup
+    False
     """
     dades = json.loads(Path(path).read_text(encoding="utf-8"))
     lookup: dict[str, str] = {}
@@ -78,6 +100,8 @@ def carrega_conjugacions(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[str, st
         valenciano = (entrada.get("valenciano") or "").strip().lower()
         catalan = (entrada.get("catalan") or "").strip()
         if not valenciano or not catalan:
+            continue
+        if valenciano in EXCLUSIONS_HOMOGRAF:
             continue
         lookup.setdefault(valenciano, catalan)
     return lookup

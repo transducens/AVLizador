@@ -160,6 +160,116 @@ suficiente seguridad -- como para merecer una regla.
 **Resultado, medido**: el benchmark subió de **111/150 (74,0%)** a
 **119/150 (79,3%)**.
 
+## DECISIÓN DE ARQUITECTURA (05/10/2026): nuevo léxico unificado, y conjugaciones masivas probadas y revertidas
+
+Mauricio compartió 3 ficheros nuevos en `font_mauricio/`. Cada uno se
+evaluó por separado antes de integrarlo (mismo método de siempre:
+comparar contra los datos existentes y el benchmark, no confiar a ciegas
+en un volumen grande de datos nuevos).
+
+**`unificado.json` → sustituye a `lexico_general_limpio.json` (integrado)**:
+casi un superconjunto (610 de las 611 entradas antiguas están, +860
+nuevas). Introdujo 2 regresiones puntuales al integrarlo, las dos
+corregidas:
+- `eixa→aqueixa`: la entrada nueva es técnicamente válida pero ignora la
+  decisión ya tomada de colapsar este/eixe/aqueix hacia "aquest" --
+  `lexic.py` ahora excluye de `lexic_mauricio.json` cualquier forma que
+  ya cubra `demostratius.py` con autoridad propia.
+- `"después"` reaparecía (bug de datos ya conocido, ver `lexic.py`) por
+  una vía distinta a la original -- la exclusión `_BUG_DADES_CONEGUTS`
+  ahora se aplica a los dos loaders (léxico general y acentuación), no
+  solo uno.
+
+**`conjugaciones_nuevo.json` (5.465 verbos, 49.443 formas, generadas
+sistemáticamente) → PROBADO Y REVERTIDO**: no es un problema de
+ambigüedad puntual como las 65 formas ya conocidas (indicativo/subjuntivo
+que colapsan) -- es **colisión homógrafa masiva**. Con tantos verbos,
+muchas conjugaciones regulares coinciden con sustantivos plurales mucho
+más frecuentes que el verbo raro que las origina: `persones→personis`
+(del verbo "personar"), `projectes→projectis` ("projectar"),
+`pobles→poblis` ("poblar"). Medido con el benchmark: **119/150 (79,3%)**
+antes, **89/150 (59,3%)** con esta fuente integrada -- 30 regresiones
+reales, palabras comunes convertidas en no-palabras. Una lista de
+exclusiones curada no lo arregla (harían falta miles); es un problema
+estructural de no tener pos-tagging a esa escala. Se probó también
+`verbos_todos_anotados.json` (1.229 formas, análisis de ambigüedad en 50
+verbos con formas repetidas) -- demasiado acotado para resolver el
+problema general, se deja pendiente para un análisis puntual futuro.
+
+De paso, un tercer bug encontrado por la misma vía (homógrafo, no de las
+fuentes nuevas): `conjugacions_dict.py` tenía `germanes` (sustantivo,
+"hermanas") colisionando con la 2ª persona subjuntivo del verbo
+"germanar" -- ahora excluido explícitamente (`EXCLUSIONS_HOMOGRAF`).
+
+**Resultado neto**: léxico ampliado (+860 entradas), 2 regresiones nuevas
+corregidas, y una fuente grande descartada con evidencia clara en vez de
+integrarla a ciegas porque "son más datos".
+
+## DECISIÓN DE ARQUITECTURA (06/10/2026): `conjugaciones_nuevo.json` re-integrado a propósito, aceptando la bajada del benchmark
+
+Decisión explícita del usuario: volver a añadir `conjugaciones_nuevo.json`
+(los 5.465 verbos revertidos un día antes) aunque se sepa que vuelve a
+introducir la colisión homógrafa documentada arriba. Razonamiento: ahora
+no preocupa tanto la cifra del benchmark porque **el plan es añadir más
+adelante un paso de postprocesado con un LLM**
+(`08_traduccio_corpus/postprocessat_llm/`, todavía NO implementado) que
+pueda resolver estos casos ambiguos mirando el contexto real de la frase
+-- algo que un lookup plano nunca puede hacer. Mientras no exista ese
+paso, se prefiere tener más cobertura (5.465 verbos más) aunque salga más
+ruido, en vez de esperar con el motor limitado a 156 verbos.
+
+**Cambio concreto**: `sync_data.py` vuelve a incluir
+`conjugaciones_nuevo.json` en la tupla de fuentes de
+`conjugacions_dialectals.json`, ahora en ÚLTIMO lugar (antes de
+`verbos_no_ambiguos.json` y `conjugaciones_limpio.json`, que ganan en
+caso de conflicto por ser más fiables y cubrir verbos más comunes).
+
+**Resultado, medido de nuevo**: el benchmark vuelve a bajar de **119/150
+(79,3%)** a **89/150 (59,3%)**, BLEU 95,31 -- exactamente la misma cifra
+que la prueba descartada el día anterior, confirmando que el problema es
+reproducible y no depende del orden de integración. Esta bajada queda
+documentada y aceptada a propósito, no es una regresión sin detectar.
+
+**Pendiente, NO hecho en esta decisión** (a propósito, por alcance): no
+se ha implementado ningún postprocesado LLM todavía -- eso se irá
+haciendo poco a poco en próximas sesiones. Tampoco se ha integrado
+`verbos_todos_anotados.json` -- ver nota importante abajo, tiene un
+problema DISTINTO (no de colisión, sino de datos corruptos) que había
+que detectar y reportar antes de añadirlo.
+
+### `verbos_todos_anotados.json` -- integrado sin filtrar (06/10/2026, corrección de una alarma previa)
+
+Al revisar si convenía añadir `verbos_todos_anotados.json` (1.229 formas,
+análisis detallado de 50 verbos con formas repetidas) se detectó un caso
+que parecía preocupante: 8 de los 50 verbos tienen un infinitivo de MÁS
+DE UNA PALABRA ("fer una ullada", "telefonar"→"trucar per telèfon"...), y
+uno de ellos ("fer una ullada" / "donar un cop d'ull") aparecía con la
+forma catalana concatenada sin espacios: la forma limpia y común
+**"faria"** (condicional de "fer") asociada a la no-palabra
+**"uncopd'ulldonaria"**. Primera alarma: como parecía no tener ambigüedad
+interna detectable, se pensó que nada lo protegería y rompería "faria"
+siempre.
+
+**Verificado después (y corregido aquí)**: esa alarma estaba mal
+calculada. Dentro de este mismo fichero, "faria" aparece DOS veces con
+catalanes distintos ("faria" limpio, del idioma "fer una besada"/"fer un
+petó"; y "uncopd'ulldonaria" roto, de "fer una ullada"/"donar un cop
+d'ull") -- exactamente el patrón que `_marca_ambigues_dins_del_mateix_fitxer`
+ya detecta y marca `problematica: true` (verificado: ambas entradas
+quedan excluidas del lookup). Revisando el resto de las 227 formas
+afectadas por los 8 verbos multi-palabra: la mayoría (telefonar→trucar,
+pegar un bac→clavar una patacada, parar atenció→parar esment, armar un
+canyaret→armar un sidral, caure com una punyada→caure com un cop de
+puny) son formas LIMPIAS y correctas -- el verbo núcleo del idioma se
+conjuga bien en los dos lados, y solo la parte no-verbal de "fer una
+ullada"/"donar un cop d'ull" produce concatenaciones, que ya quedan
+excluidas por el mecanismo existente. **Decisión: integrado sin ningún
+filtro adicional** (475 de las 1.229 formas acaban marcadas
+`problematica` por el mecanismo ya existente; el resto se añade al
+lookup tal cual). No ha cambiado el resultado del benchmark (sigue en
+89/150) porque ninguno de estos 50 verbos aparece ahí, pero quedan
+disponibles para el corpus real.
+
 ## Arquitectura
 
 Pipeline secuencial de capas sobre una lista de `Token`, no sustituciones

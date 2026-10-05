@@ -25,6 +25,17 @@ negoci (descartar `_PENDENT`, topònims, resoldre `canonica`, excloure
 regla (`lexic.py`, `numerals.py`...) i s'apliquen soles la pròxima vegada
 que s'instancie `RuleEngine` -- este script només s'assegura que la
 matèria primera (les còpies de `traductor/data/`) estiga al dia.
+
+Excepció deliberada (05/10/2026): `_marca_ambigues_dins_del_mateix_fitxer`
+SÍ és una xicoteta decisió de negoci feta ací, no al loader. Raó: nomes
+ací, en processar cada fitxer font UN A UN (abans de fusionar-los), es pot
+distingir "ambigüitat gramatical real dins d'un fitxer" (indicatiu/
+subjuntiu que col·lapsen en la mateixa forma valenciana) de "dos fonts que
+prioritzen traduccions distintes per a la mateixa forma" (com "eixir",
+vore comentari a FONTS) -- una volta fusionat tot en una sola llista
+"entradas", eixa distinció es perd. Equival a l'anotació `problematica`
+que Mauricio ja posa a mà a les seues fonts, només que automatitzada i
+nomes aplicada quan el propi fitxer font ho confirma interiorment.
 """
 
 from __future__ import annotations
@@ -41,15 +52,70 @@ LEXICO = ARREL / "02_regles_dialectals" / "lexic"
 MAURICIO = LEXICO / "font_mauricio"
 DATA = Path(__file__).resolve().parent / "data"
 
+def _marca_ambigues_dins_del_mateix_fitxer(dades: list[dict]) -> list[dict]:
+    """Afig `problematica: true` a qualsevol entrada la forma valenciana de
+    la qual té MÉS D'UNA forma catalana distinta DINS D'ESTE MATEIX FITXER
+    (ambiguitat gramatical real, típicament indicatiu/subjuntiu que
+    col·lapsen en la mateixa forma en valencià -- vore docstring de
+    `conjugacions_dict.py`). Mai lleva una marca ja posada a mà.
+
+    A PROPÒSIT nomes mira dins d'un sol fitxer font, no del conjunt ja
+    fusionat: una forma que discrepa ENTRE fitxers (com "eixir", vore
+    comentari baix) no és ambigua de veres, és que dos fonts prioritzen
+    traduccions distintes -- eixe cas ja el resol `setdefault` per orde
+    de prioritat, i marcar-lo ací com a "problematica" el llevaria del
+    lookup sense necessitat. Verificat (05/10/2026) que este criteri
+    reproduix EXACTAMENT les 20 marques manuals ja existents a
+    `conjugaciones_limpio.json` que tenen duplicat intern, sense tocar les
+    15 que estan marcades per coneixement lingüístic encara que eixe
+    fitxer concret només en llistara una forma, ni les 16 d'"eixir" que
+    discrepen entre fitxers -- vore conversa 05/10/2026 per als números."""
+    per_valencia: dict[str, set[str]] = {}
+    for entrada in dades:
+        valenciano = entrada["valenciano"].strip().lower()
+        per_valencia.setdefault(valenciano, set()).add(entrada["catalan"].strip())
+    ambigues = {v for v, cats in per_valencia.items() if len(cats) > 1}
+
+    resultat = []
+    for entrada in dades:
+        valenciano = entrada["valenciano"].strip().lower()
+        if valenciano in ambigues and not entrada.get("problematica"):
+            entrada = {**entrada, "problematica": True}
+        resultat.append(entrada)
+    return resultat
+
+
 _CONJUGACIONS_DESCRIPCIO = (
     "Formes verbals valencia/catala que difereixen entre dialectes, extretes de "
     "l'apertium bilingue catala-castella per Mauricio (equip AVLizador, 29/09/2026). "
-    "Cobrix 111 verbs on almenys una conjugacio difereix. El camp 'problematica' "
-    "marca formes on el valencia usa la mateixa paraula per al present d'indicatiu "
-    "i el de subjuntiu (p.ex. abalance = jo abalanco / que jo abalanci), cosa que fa "
-    "la conversio ambigua sense analisi gramatical (pos-tagging); conjugacions_dict.py "
-    "exclou estes entrades del lookup automatic i les deixa documentades aci per si en "
-    "el futur es pot afegir un mecanisme de desambiguacio."
+    "Cobrix 111 verbs on almenys una conjugacio difereix, mes 5.465 verbs addicionals "
+    "de 'conjugaciones_nuevo.json' (vore baix). El camp 'problematica' marca formes on "
+    "el valencia usa la mateixa paraula per al present d'indicatiu i el de subjuntiu "
+    "(p.ex. abalance = jo abalanco / que jo abalanci), cosa que fa la conversio "
+    "ambigua sense analisi gramatical (pos-tagging); conjugacions_dict.py exclou estes "
+    "entrades del lookup automatic i les deixa documentades aci per si en el futur es "
+    "pot afegir un mecanisme de desambiguacio.\n\n"
+    "PROVAT, REVERTIT, I RE-INTEGRAT A PROPOSIT (05/10/2026 i 06/10/2026): "
+    "'conjugaciones_nuevo.json' (5.465 verbs, 49.443 formes, generat sistematicament) "
+    "es va provar com a 3a font el 05/10/2026 i es va REVERTIR en trobar-se que no es "
+    "un problema d'ambiguitat puntual (eixe ja el cobreix _marca_ambigues_dins_del_mateix_fitxer) "
+    "sino de COL·LISIO HOMOGRAFA massiva -- amb tants verbs, moltes conjugacions "
+    "regulars (persones->personis, del verb 'personar'; projectes->projectis, de "
+    "'projectar'; pobles->poblis, de 'poblar'...) coincidixen amb substantius plurals "
+    "o verbs distints MOLT mes freqüents que el verb rar que els origina. Mesurat amb "
+    "el benchmark de 150 frases: 119/150 (79,3%) abans, 89/150 (59,3%) amb esta font "
+    "integrada -- 30 regressions reals, paraules comunes convertides en no-paraules "
+    "('projectis', 'personis', 'poblis', 'plomis'). No es una llista d'exclusions "
+    "curada la solucio (caldrien milers), es un problema estructural de no tindre "
+    "pos-tagging a eixa escala.\n\n"
+    "El 06/10/2026 l'usuari ha decidit RE-INTEGRAR esta font a proposit, acceptant "
+    "la baixada del benchmark (torna a 89/150): mes cobertura ara, encara que "
+    "introduisca soroll, es preferix a esperar -- el pla es afegir mes avant un "
+    "pas de postprocessat amb un LLM (vore 08_traduccio_corpus/postprocessat_llm/) "
+    "que resolga els casos ambigus/col·lisionats fent servir context real de la "
+    "frase, cosa que un lookup pla mai pot fer. Fins que eixe pas existisca, el "
+    "motor pur de regles produira mes errors d'este tipus que abans -- es un "
+    "compromis deliberat, no una regressio sense detectar."
 )
 
 
@@ -77,8 +143,13 @@ class FontSpec:
 
 FONTS: list[FontSpec] = [
     FontSpec(
+        # 05/10/2026: "unificado.json" substituix "lexico_general_limpio.json"
+        # -- és quasi un superconjunt (610 de les 611 entrades antigues hi
+        # són, només falta "huitantena/vuitantena"; + 860 entrades noves).
+        # L'única perduda coneguda es documenta ací a propòsit, no
+        # s'afig a mà sense deixar rastre.
         dest="lexic_mauricio.json",
-        font=MAURICIO / "lexico_general_limpio.json",
+        font=MAURICIO / "unificado.json",
         entrades=lambda d: d,
     ),
     FontSpec(
@@ -104,14 +175,38 @@ FONTS: list[FontSpec] = [
         # "ixi"/"ixin"/"ixo" a conjugaciones_limpio.json vs "surti"/
         # "surtin"/"surto" ací) -- guanya "surti" per coherència amb la
         # decisió ja presa a lexic.py (`eixir->sortir`, vore lexic_mauricio.json).
-        # `carrega_conjugacions` fa `setdefault`, així que el primer fitxer
-        # de la tupla és el que guanya; totes dos fitxers es conserven
-        # sencers dins de "entradas" per transparència (no es descarta cap
-        # entrada en sincronitzar, només en carregar -- vore docstring del
-        # mòdul).
+        # "verbos_todos_anotados.json" (1.229 formes, analisi detallada de
+        # 50 verbs amb formes repetides/ambigues) va just despres dels dos
+        # fiables: te el seu propi doble-check morfologic (camp "ambigu"),
+        # encara que ac� es reconstruïx l'ambiguitat amb el mateix criteri
+        # que la resta (_marca_ambigues_dins_del_mateix_fitxer), que ja
+        # protegix el cas trobat ("faria" colisionant amb la concatenacio
+        # trencada "uncopd'ulldonaria" de l'idioma "donar un cop d'ull" ->
+        # ambdos queden marcades "problematica" perque dins d'este mateix
+        # fitxer "faria" ja te 2 traduccions catalanes distintes). Verificat
+        # 06/10/2026 que les 227 entrades dels 8 verbs amb infinitiu de mes
+        # d'una paraula (telefonar->trucar, pegar un bac->clavar una
+        # patacada...) NO son dades corruptes en general -- son expressions
+        # legitimes on el verb nucli es conjuga be; nomes "fer una ullada"/
+        # "donar un cop d'ull" produïx formes concatenades, i eixes ja
+        # queden excloses perque col·lidixen amb la forma neta dins del
+        # mateix fitxer. Decisio explicita de l'usuari: no filtrar res mes.
+        # "conjugaciones_nuevo.json" (5.465 verbs, 49.443 formes) VA DARRER
+        # a propòsit: provat i revertit 05/10/2026 per col·lisió homògrafa
+        # massiva amb substantius comuns (vore _CONJUGACIONS_DESCRIPCIO), i
+        # RE-INTEGRAT 06/10/2026 per decisió explícita de l'usuari (acceptar
+        # mes soroll ara, resoldre mes avant amb un LLM de postprocessat).
+        # Anar DARRER vol dir que si una forma ja existix a les altres
+        # fonts (mes fiables, verbs mes comuns), guanya eixa -- esta font
+        # nomes omplix els verbs que les altres no cobrixen.
         dest="conjugacions_dialectals.json",
-        font=(MAURICIO / "verbos_no_ambiguos.json", MAURICIO / "conjugaciones_limpio.json"),
-        entrades=lambda d: d,
+        font=(
+            MAURICIO / "verbos_no_ambiguos.json",
+            MAURICIO / "conjugaciones_limpio.json",
+            MAURICIO / "verbos_todos_anotados.json",
+            MAURICIO / "conjugaciones_nuevo.json",
+        ),
+        entrades=_marca_ambigues_dins_del_mateix_fitxer,
         embolica=lambda entrades: {
             "total_entradas": len(entrades),
             "descripcio": _CONJUGACIONS_DESCRIPCIO,
