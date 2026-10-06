@@ -18,14 +18,19 @@
 # complet, NO en Abaco -- Abaco (vore `~/scrapeo/` al servidor) no té la
 # resta de l'estructura del projecte (`traductor/`, `02_regles_dialectals/`,
 # `dades/boe_net/`), nomes els scripts de generació de corpus sintètic i
-# el benchmark. `mostra_casos_ambigues.json` (ja generat, xicotet) es puja
-# tal qual junt amb els scripts -- vore el README d'esta carpeta per al
-# comandament `rsync` exacte.
+# el benchmark. El fitxer de mostra (`mostra_casos_ambigues.json` del BOE,
+# o `mostra_casos_ambigues_benchmark.json` dels 150 de benchmark_corpus.json,
+# o qualsevol altre generat amb `identifica_ambigues.py --corpus ...`) es
+# puja tal qual junt amb els scripts -- vore el README d'esta carpeta per
+# al comandament `scp` exacte.
 #
 # Lanzarlo (des del node de login d'Abaco, dins de ~/scrapeo/postprocesado_llm/):
 #   cd slurm
-#   sbatch compara_postprocessat.sh                  # tota la mostra
-#   sbatch compara_postprocessat.sh 10               # nomes les primeres 10 (prova rapida)
+#   sbatch compara_postprocessat.sh                                       # mostra del BOE, qwen2.5:14b (per defecte)
+#   sbatch compara_postprocessat.sh qwen3:8b                              # mateixa mostra, un altre model
+#   sbatch compara_postprocessat.sh qwen3:8b 10                          # + nomes les primeres 10 (prova rapida)
+#   sbatch compara_postprocessat.sh qwen2.5:14b "" mostra_casos_ambigues_benchmark.json
+#                                                                          # mostra del benchmark de 150 (nomes 2 casos reals -- vore README)
 #
 # Les línies marcadas CAMBIA-ESTO depenen de la configuracio del teu
 # cluster concret -- revisa-les abans de llançar-lo.
@@ -42,7 +47,9 @@
 
 set -euo pipefail
 
-LIMIT="${1:-}"   # si es dona, nomes prova les primeres N frases de la mostra
+MODEL="${1:-qwen2.5:14b}"                         # model d'Ollama a provar en les 3 vies (A/B/C)
+LIMIT="${2:-}"                                     # si es dona, nomes prova les primeres N frases de la mostra
+MOSTRA_FILE="${3:-mostra_casos_ambigues.json}"    # quin fitxer de mostra (BOE per defecte, o el del benchmark)
 
 # IMPORTANT: SLURM copia este script a /var/spool/slurmd/jobXXXXX/ abans
 # d'executar-lo, aixi que ${BASH_SOURCE[0]} apunta ahi, NO al projecte
@@ -85,18 +92,23 @@ for _ in $(seq 1 30); do
     sleep 2
 done
 
-echo "Comprovant que qwen2.5:14b esta descarregat (~9-10 GB, nomes la primera vegada)..."
-ollama pull qwen2.5:14b
+echo "Comprovant que $MODEL esta descarregat (nomes la primera vegada)..."
+ollama pull "$MODEL"
 
 cd "$POSTPROC_DIR"
-if [ ! -f "mostra_casos_ambigues.json" ]; then
-    echo "ERROR: no es troba mostra_casos_ambigues.json en $POSTPROC_DIR." >&2
-    echo "  Genera'l en local (python identifica_ambigues.py) i puja'l amb rsync" >&2
-    echo "  junt amb la resta d'esta carpeta -- vore README.md." >&2
+if [ ! -f "$MOSTRA_FILE" ]; then
+    echo "ERROR: no es troba $MOSTRA_FILE en $POSTPROC_DIR." >&2
+    echo "  Genera'l en local (python identifica_ambigues.py, o amb --corpus per a" >&2
+    echo "  un altre corpus com el benchmark de 150) i puja'l amb scp/rsync junt" >&2
+    echo "  amb la resta d'esta carpeta -- vore README.md." >&2
     exit 1
 fi
 
-OUT_DIR="$POSTPROC_DIR/resultats_$(date +%Y%m%d_%H%M)"
+# El nom del model pot portar ":" (p.ex. "qwen3:8b"), es substituïx per
+# "-" al nom de carpeta/fitxer perque ":" dona problemes en alguns FS.
+MODEL_SLUG="${MODEL//:/-}"
+MOSTRA_SLUG="$(basename "$MOSTRA_FILE" .json)"
+OUT_DIR="$POSTPROC_DIR/resultats_${MODEL_SLUG}_${MOSTRA_SLUG}_$(date +%Y%m%d_%H%M)"
 mkdir -p "$OUT_DIR"
 echo "Eixida en: $OUT_DIR"
 
@@ -106,10 +118,11 @@ if [ -n "$LIMIT" ]; then
 fi
 
 echo ""
-echo "Comparant les 3 vies (A/B/C) amb qwen2.5:14b..."
+echo "Comparant les 3 vies (A/B/C) amb $MODEL sobre $MOSTRA_FILE..."
 python3 compara_postprocessat.py \
-    --model qwen2.5:14b --ollama-url "http://127.0.0.1:${OLLAMA_PORT}" --ollama-timeout 300 \
-    --output "$OUT_DIR/resultats_comparativa_ABC.json" "${LIMIT_ARGS[@]}"
+    --model "$MODEL" --ollama-url "http://127.0.0.1:${OLLAMA_PORT}" --ollama-timeout 300 \
+    --mostra-path "$MOSTRA_FILE" \
+    --output "$OUT_DIR/resultats_comparativa_ABC_${MODEL_SLUG}.json" "${LIMIT_ARGS[@]}"
 
 echo ""
-echo "Fet. Resultats en $OUT_DIR/resultats_comparativa_ABC.json"
+echo "Fet. Resultats en $OUT_DIR/resultats_comparativa_ABC_${MODEL_SLUG}.json"

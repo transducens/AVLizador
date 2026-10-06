@@ -42,6 +42,7 @@ import argparse
 import json
 import re
 import sys
+import time
 from pathlib import Path
 
 import requests
@@ -205,22 +206,42 @@ def main() -> None:
     print(f"Provant {len(mostra)} frases amb model '{args.model}' via {OLLAMA_URL} (3 crides Ollama per frase)...\n")
     resultats = []
     encerts = {"A": 0, "B": 0, "C": 0}
+    temps = {"A": [], "B": [], "C": []}
+    t_inici_total = time.perf_counter()
     for i, cas in enumerate(mostra, 1):
         print(f"[{i}/{len(mostra)}] {cas['forma_ambigua']!r} "
               f"(veritat: {cas['veritat_per_referencia']}) -- {cas['texto_valenciano'][:70]}...")
+
+        t0 = time.perf_counter()
         res_a = via_a(cas, guia, args.model, args.ollama_timeout)
+        t1 = time.perf_counter()
         res_b = via_b(cas, guia, args.model, args.ollama_timeout)
+        t2 = time.perf_counter()
         res_c = via_c(cas, args.model, args.ollama_timeout)
+        t3 = time.perf_counter()
+        res_a["segons"] = round(t1 - t0, 2)
+        res_b["segons"] = round(t2 - t1, 2)
+        res_c["segons"] = round(t3 - t2, 2)
+        temps["A"].append(res_a["segons"])
+        temps["B"].append(res_b["segons"])
+        temps["C"].append(res_c["segons"])
+
         for clau, res in (("A", res_a), ("B", res_b), ("C", res_c)):
             marca = "OK" if res["encert"] else "FALLA"
-            print(f"    {clau}: {marca} ({res.get('tria') or res.get('classe')})")
+            print(f"    {clau}: {marca} ({res.get('tria') or res.get('classe')}) -- {res['segons']}s")
             if res["encert"]:
                 encerts[clau] += 1
         resultats.append({**cas, "via_a": res_a, "via_b": res_b, "via_c": res_c})
 
+    t_total = time.perf_counter() - t_inici_total
+
     print("\n--- RESUM ---")
     for clau in ("A", "B", "C"):
-        print(f"  Via {clau}: {encerts[clau]}/{len(mostra)} ({100 * encerts[clau] / len(mostra):.1f}%)")
+        mitjana = sum(temps[clau]) / len(temps[clau])
+        print(f"  Via {clau}: {encerts[clau]}/{len(mostra)} ({100 * encerts[clau] / len(mostra):.1f}%) "
+              f"-- {mitjana:.1f}s/frase de mitjana")
+    print(f"  Temps total ({len(mostra)} frases x 3 vies = {3 * len(mostra)} crides Ollama): "
+          f"{t_total:.1f}s ({t_total / len(mostra):.1f}s/frase)")
 
     args.output.write_text(json.dumps(resultats, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"\nGuardat: {args.output}")

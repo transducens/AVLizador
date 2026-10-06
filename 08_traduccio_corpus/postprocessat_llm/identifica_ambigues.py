@@ -26,12 +26,19 @@ carpeta per als numeros trobats).
 Us:
     python identifica_ambigues.py
     python identifica_ambigues.py --mostra 30 --seed 7
+
+    # Sobre un altre corpus (p.ex. el benchmark de 150 frases, camps
+    # distints i format JSON -- no JSONL -- i sense "documento_id"):
+    python identifica_ambigues.py --corpus ../../03_seleccio_de_model/benchmark_corpus.json \
+        --format json --camp-valencia occidental --camp-catala oriental --camp-doc id \
+        --salida mostra_casos_ambigues_benchmark.json --mostra 999
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import random
 import re
 import sys
@@ -40,7 +47,11 @@ from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-ARREL = Path(__file__).resolve().parent.parent.parent
+# En local, l'arrel del repo esta 2 nivells amunt. En Abaco este fitxer es
+# puja sol dins d'una carpeta plana que ja conte 02_regles_dialectals/
+# directament -- per aixo es permet sobreescriure amb AVLIZADOR_ROOT (vore
+# benchmark_integrat.py i slurm/benchmark_integrat_multimodel.sh).
+ARREL = Path(os.environ.get("AVLIZADOR_ROOT", Path(__file__).resolve().parent.parent.parent))
 MAURICIO = ARREL / "02_regles_dialectals" / "lexic" / "font_mauricio"
 CORPUS_PATH = ARREL / "dades" / "boe_net" / "corpus_entrenamiento_net.jsonl"
 SALIDA_AMBIGUITATS = Path(__file__).resolve().parent / "ambiguitats_indicatiu_subjuntiu.json"
@@ -86,7 +97,24 @@ def calcula_ambiguitats() -> dict[str, dict[str, str]]:
 _PARAULA = re.compile(r"[a-zàèéíòóúïüç']+", re.IGNORECASE)
 
 
-def troba_frases(ambiguitats: dict[str, dict[str, str]], mostra: int, seed: int) -> list[dict]:
+def llig_registres(corpus_path: Path, format_: str) -> list[dict]:
+    if format_ == "jsonl":
+        with open(corpus_path, encoding="utf-8") as f:
+            return [json.loads(linia) for linia in f]
+    return json.loads(corpus_path.read_text(encoding="utf-8"))
+
+
+def troba_frases(
+    ambiguitats: dict[str, dict[str, str]],
+    mostra: int,
+    seed: int,
+    corpus_path: Path = CORPUS_PATH,
+    format_: str = "jsonl",
+    camp_valencia: str = "texto_valenciano",
+    camp_catala: str = "texto_catalan",
+    camp_id: str = "id",
+    camp_doc: str = "documento_id",
+) -> list[dict]:
     # Tokenitza CADA frase UNA vegada i consulta per pertinença a un set
     # (O(1)) en compte d'aplicar 3.004 regex per frase (l'enfoc inicial
     # trigava massa: 3.004 patrons x 260.345 frases).
@@ -103,34 +131,32 @@ def troba_frases(ambiguitats: dict[str, dict[str, str]], mostra: int, seed: int)
     # ens dona una etiqueta "correcta" GRATIS per a jutjar les 3 vies
     # A/B/C sense anotar res a mà.
     candidates: list[dict] = []
-    with open(CORPUS_PATH, encoding="utf-8") as f:
-        for linia in f:
-            registre = json.loads(linia)
-            text = registre["texto_valenciano"]
-            referencia = registre["texto_catalan"]
-            paraules_val = {p.lower() for p in _PARAULA.findall(text)}
-            paraules_ref = {p.lower() for p in _PARAULA.findall(referencia)}
-            trobades = paraules_val & ambiguitats.keys()
-            for forma in trobades:
-                indicatiu = ambiguitats[forma]["indicatiu"]
-                subjuntiu = ambiguitats[forma]["subjuntiu"]
-                en_ref_indicatiu = indicatiu in paraules_ref
-                en_ref_subjuntiu = subjuntiu in paraules_ref
-                if en_ref_indicatiu == en_ref_subjuntiu:
-                    # cap dels dos (probable substantiu, descartem) o
-                    # tots dos a la vegada (ambigu de veres en la pròpia
-                    # referència, no útil com a "veritat" automàtica)
-                    continue
-                candidates.append({
-                    "id": registre["id"],
-                    "documento_id": registre["documento_id"],
-                    "texto_valenciano": text,
-                    "texto_catalan_boe": referencia,
-                    "forma_ambigua": forma,
-                    "candidat_indicatiu": indicatiu,
-                    "candidat_subjuntiu": subjuntiu,
-                    "veritat_per_referencia": "indicatiu" if en_ref_indicatiu else "subjuntiu",
-                })
+    for registre in llig_registres(corpus_path, format_):
+        text = registre[camp_valencia]
+        referencia = registre[camp_catala]
+        paraules_val = {p.lower() for p in _PARAULA.findall(text)}
+        paraules_ref = {p.lower() for p in _PARAULA.findall(referencia)}
+        trobades = paraules_val & ambiguitats.keys()
+        for forma in trobades:
+            indicatiu = ambiguitats[forma]["indicatiu"]
+            subjuntiu = ambiguitats[forma]["subjuntiu"]
+            en_ref_indicatiu = indicatiu in paraules_ref
+            en_ref_subjuntiu = subjuntiu in paraules_ref
+            if en_ref_indicatiu == en_ref_subjuntiu:
+                # cap dels dos (probable substantiu, descartem) o
+                # tots dos a la vegada (ambigu de veres en la pròpia
+                # referència, no útil com a "veritat" automàtica)
+                continue
+            candidates.append({
+                "id": registre[camp_id],
+                "documento_id": registre.get(camp_doc, registre[camp_id]),
+                "texto_valenciano": text,
+                "texto_catalan_boe": referencia,
+                "forma_ambigua": forma,
+                "candidat_indicatiu": indicatiu,
+                "candidat_subjuntiu": subjuntiu,
+                "veritat_per_referencia": "indicatiu" if en_ref_indicatiu else "subjuntiu",
+            })
 
     comptador = Counter(c["veritat_per_referencia"] for c in candidates)
     print(f"  {len(candidates)} frases amb forma ambigua I candidat confirmat en la referència (filtrats substantius)")
@@ -170,6 +196,13 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--mostra", type=int, default=25, help="Nombre de frases a seleccionar")
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--corpus", type=Path, default=CORPUS_PATH, help="Fitxer font (per defecte, el corpus del BOE)")
+    parser.add_argument("--format", choices=["jsonl", "json"], default="jsonl")
+    parser.add_argument("--camp-valencia", default="texto_valenciano")
+    parser.add_argument("--camp-catala", default="texto_catalan")
+    parser.add_argument("--camp-id", default="id")
+    parser.add_argument("--camp-doc", default="documento_id", help="Si el registre no el te, s'usa --camp-id")
+    parser.add_argument("--salida", type=Path, default=SALIDA_MOSTRA)
     args = parser.parse_args()
 
     print("Calculant ambigüitats indicatiu/subjuntiu (1a persona) des de font_mauricio...")
@@ -178,11 +211,16 @@ def main() -> None:
     SALIDA_AMBIGUITATS.write_text(json.dumps(ambiguitats, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"  Guardat: {SALIDA_AMBIGUITATS}")
 
-    print("\nBuscant frases reals del BOE amb alguna d'estes formes...")
-    mostra = troba_frases(ambiguitats, args.mostra, args.seed)
-    SALIDA_MOSTRA.write_text(json.dumps(mostra, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"\nBuscant frases amb alguna d'estes formes en {args.corpus}...")
+    mostra = troba_frases(
+        ambiguitats, args.mostra, args.seed,
+        corpus_path=args.corpus, format_=args.format,
+        camp_valencia=args.camp_valencia, camp_catala=args.camp_catala,
+        camp_id=args.camp_id, camp_doc=args.camp_doc,
+    )
+    args.salida.write_text(json.dumps(mostra, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"  {len(mostra)} frases seleccionades (una per forma distinta com a molt)")
-    print(f"  Guardat: {SALIDA_MOSTRA}")
+    print(f"  Guardat: {args.salida}")
 
 
 if __name__ == "__main__":
