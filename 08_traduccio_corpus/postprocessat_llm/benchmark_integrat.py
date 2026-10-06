@@ -169,10 +169,13 @@ def processa_frase(reg: dict, ambiguitats: dict, guia: str, via: str, model: str
             tria = res["classe"]
             forma_final = res["forma_final"]
 
-        encert = None if veritat is None else (tria == veritat)
+        # res["encert"] ja te en compte el cas "cap" (vore _encert en
+        # compara_postprocessat.py): si veritat es None (probable
+        # substantiu homograf) i la via ha triat "cap", es considera
+        # ENCERT -- no una resposta "sense veritat coneguda".
         info_paraules.append({
             "forma": forma, "prefix": prefix, "veritat": veritat,
-            "tria": tria, "forma_final": forma_final, "encert": encert,
+            "tria": tria, "forma_final": forma_final, "encert": res["encert"],
             "resposta_llm": res.get("resposta"), "segons": res.get("segons"),
         })
 
@@ -245,7 +248,9 @@ def main() -> None:
     tots_paraules = [p for r in resultats for p in r["paraules_ambigues"]]
     amb_veritat = [p for p in tots_paraules if p["veritat"] is not None]
     sense_veritat = [p for p in tots_paraules if p["veritat"] is None]
-    encerts_paraula = sum(1 for p in amb_veritat if p["encert"])
+    encerts_paraula = sum(1 for p in tots_paraules if p["encert"])
+    encerts_amb_veritat = sum(1 for p in amb_veritat if p["encert"])
+    encerts_sense_veritat = sum(1 for p in sense_veritat if p["encert"])
 
     print("\n--- RESUM (comparable amb evalua_models.py --model traductor) ---")
     print(f"NOMES REGLES (base):     exacte {exactes_base}/{len(resultats)} "
@@ -256,12 +261,15 @@ def main() -> None:
           f"({100 * exactes_final / len(resultats):.1f}%)  "
           f"BLEU {mitjana('metriques_final', 'bleu'):.2f}  "
           f"chrF {mitjana('metriques_final', 'chrf'):.2f}")
-    print(f"\nParaules ambigües trobades: {len(tots_paraules)} en {sum(1 for r in resultats if r['paraules_ambigues'])} frases")
-    print(f"  Amb veritat coneguda (confirmable per la referència): {len(amb_veritat)} "
-          f"-- encerts: {encerts_paraula}/{len(amb_veritat)}")
-    print(f"  SENSE veritat coneguda (probable substantiu homògraf, risc de fals positiu): {len(sense_veritat)}")
+    print(f"\nParaules ambigües trobades: {len(tots_paraules)} en {sum(1 for r in resultats if r['paraules_ambigues'])} frases"
+          f" -- encert global: {encerts_paraula}/{len(tots_paraules)}")
+    print(f"  Verb de veres (confirmable per la referència): {len(amb_veritat)} "
+          f"-- encerts: {encerts_amb_veritat}/{len(amb_veritat)}")
+    print(f"  Probable substantiu/preposició homògraf (la resposta correcta es 'cap'): "
+          f"{len(sense_veritat)} -- encerts: {encerts_sense_veritat}/{len(sense_veritat)}")
     for p in sense_veritat:
-        print(f"    {p['forma']!r} -> {p['tria']} -> {p['forma_final'] or '(sense tocar)'}")
+        if not p["encert"]:
+            print(f"    REGRESSIO: {p['forma']!r} -> {p['tria']} -> {p['forma_final'] or '(sense tocar)'}")
     print(f"\nTemps total: {t_total:.1f}s ({t_total / len(resultats):.2f}s/frase de mitjana, "
           f"incloent frases sense cap paraula ambigua -- eixes no criden Ollama)")
 

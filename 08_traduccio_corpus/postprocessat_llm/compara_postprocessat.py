@@ -128,29 +128,53 @@ def via_a(cas: dict, guia: str, model: str, timeout: int) -> dict:
     return {"resposta": resposta, "tria": tria, "encert": tria == cas["veritat_per_referencia"]}
 
 
+def _encert(tria: str, veritat: str | None) -> bool:
+    """La paraula marcada pot ser de veres un substantiu/preposicio homograf
+    (vore 06/10/2026: "base", "entre", "poble"... existixen a les dades com
+    a formes "problematica" d'un verb rar, pero en la practica son MOLT mes
+    freqüents amb un atra categoria gramatical -- la mateixa paraula es a
+    voltes el verb de veres i a voltes no, NO hi ha cap llista que ho
+    distingisca). Quan `veritat` es None (la referencia no confirma cap
+    dels 2 candidats, senyal de que probablement no era este verb), la
+    resposta CORRECTA es "cap" -- no es pot comparar amb cap candidat."""
+    if veritat is None:
+        return tria == "cap"
+    return tria == veritat
+
+
 def via_b(cas: dict, guia: str, model: str, timeout: int) -> dict:
     system = (
         f"Ets un expert en dialectologia valenciana/catalana. Guia de referencia:\n\n{guia}\n\n"
         f"{CRITERI_MODE_VERBAL}\n"
         "Se't dona una frase en valencia i una paraula marcada d'eixa frase "
-        "que es una forma verbal ambigua: en valencia la mateixa forma "
-        "escrita servix tant per al present d'indicatiu com per al present "
-        "de subjuntiu (1a persona singular). Digues NOMES la forma catalana "
-        "oriental correcta d'eixa paraula EN EIXE CONTEXT. Respon amb UNA "
-        "SOLA PARAULA, sense puntuacio ni explicacions."
+        "que, segons les dades, POT ser una forma verbal ambigua: en "
+        "valencia la mateixa forma escrita pot servir tant per al present "
+        "d'indicatiu com per al present de subjuntiu (1a persona singular) "
+        "d'un verb rar. ATENCIO: la mateixa forma sovint es en realitat un "
+        "substantiu, preposicio o un atra categoria gramatical NO "
+        "relacionada amb eixe verb (p.ex. \"base\", \"entre\", \"poble\") --"
+        " mira el context amb cura abans de decidir.\n"
+        "- Si la paraula marcada SI funciona com este verb en este context, "
+        "digues NOMES la forma catalana oriental correcta EN EIXE CONTEXT.\n"
+        "- Si la paraula marcada NO funciona com este verb ahi (es un "
+        "substantiu, preposicio, etc.), respon EXACTAMENT: CAP\n"
+        "Respon amb UNA SOLA PARAULA, sense puntuacio ni explicacions."
     )
     prompt = f'Frase: "{cas["texto_valenciano"]}"\n\nParaula marcada: {cas["forma_ambigua"]}'
     resposta = crida_ollama(system, prompt, model, timeout)
     forma = _PARAULA.findall(resposta.lower())
     forma = forma[0] if forma else resposta.strip().lower()
-    if forma == cas["candidat_subjuntiu"].lower():
+    if forma == "cap":
+        tria = "cap"
+        forma = None
+    elif forma == cas["candidat_subjuntiu"].lower():
         tria = "subjuntiu"
     elif forma == cas["candidat_indicatiu"].lower():
         tria = "indicatiu"
     else:
         tria = f"altra forma inventada: {forma!r}"
     return {"resposta": resposta, "forma_triada": forma, "tria": tria,
-            "encert": tria == cas["veritat_per_referencia"]}
+            "encert": _encert(tria, cas["veritat_per_referencia"])}
 
 
 def via_c(cas: dict, model: str, timeout: int) -> dict:
@@ -159,26 +183,36 @@ def via_c(cas: dict, model: str, timeout: int) -> dict:
     system = (
         "Ets un expert en gramatica catalana/valenciana. "
         f"{CRITERI_MODE_VERBAL}\n"
-        "Se't dona una frase en valencia i una paraula marcada que es una "
-        "forma verbal ambigua entre present d'indicatiu i present de "
-        "subjuntiu (1a persona singular). Classifica NOMES el mode "
-        "gramatical d'eixa paraula EN EIXE CONTEXT. Respon amb UNA SOLA "
-        "PARAULA: 'indicatiu' o 'subjuntiu'."
+        "Se't dona una frase en valencia i una paraula marcada que, segons "
+        "les dades, POT ser una forma verbal ambigua entre present "
+        "d'indicatiu i present de subjuntiu (1a persona singular) d'un verb "
+        "rar. ATENCIO: la mateixa forma sovint es en realitat un substantiu, "
+        "preposicio o un atra categoria gramatical NO relacionada amb eixe "
+        "verb (p.ex. \"base\", \"entre\", \"poble\") -- mira el context amb "
+        "cura. Classifica EIXA PARAULA EN EIXE CONTEXT concret:\n"
+        "- 'indicatiu' si ahi funciona com el present d'indicatiu del verb.\n"
+        "- 'subjuntiu' si ahi funciona com el present de subjuntiu del verb.\n"
+        "- 'cap' si NO funciona com este verb ahi (es un substantiu, "
+        "preposicio, etc.).\n"
+        "Respon amb UNA SOLA PARAULA: 'indicatiu', 'subjuntiu' o 'cap'."
     )
     prompt = f'Frase: "{cas["texto_valenciano"]}"\n\nParaula marcada: {cas["forma_ambigua"]}'
     resposta = crida_ollama(system, prompt, model, timeout)
     resposta_neta = resposta.strip().lower()
-    if "subjuntiu" in resposta_neta and "indicatiu" not in resposta_neta:
+    trobades = {p for p in ("indicatiu", "subjuntiu", "cap") if p in resposta_neta}
+    if trobades == {"subjuntiu"}:
         classe = "subjuntiu"
-    elif "indicatiu" in resposta_neta and "subjuntiu" not in resposta_neta:
+    elif trobades == {"indicatiu"}:
         classe = "indicatiu"
+    elif trobades == {"cap"}:
+        classe = "cap"
     else:
         classe = f"resposta ambigua: {resposta_neta!r}"
     forma_final = cas["candidat_subjuntiu"] if classe == "subjuntiu" else (
         cas["candidat_indicatiu"] if classe == "indicatiu" else None
     )
     return {"resposta": resposta, "classe": classe, "forma_final": forma_final,
-            "encert": classe == cas["veritat_per_referencia"]}
+            "encert": _encert(classe, cas["veritat_per_referencia"])}
 
 
 def main() -> None:

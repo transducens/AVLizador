@@ -177,6 +177,69 @@ dona hui al LLM (vore `CRITERI_MODE_VERBAL` en `compara_postprocessat.py`)
 no ho menciona explícitament -- candidat clar per a ampliar el prompt
 quan hi haja mes exemples d'este patró.
 
+## Benchmark INTEGRAT (06/10/2026): motor + postprocessat mesurat sobre el benchmark real
+
+Tot l'anterior mesurava l'encert AÏLLAT per paraula (compara els
+candidats coneguts). Pas següent: mesurar l'efecte REAL sobre la
+traducció completa, integrant el postprocessat dins del pipeline de
+veres i avaluant amb BLEU/chrF/exacte -- les MATEIXES mètriques
+d'`evalua_models.py`, directament comparables amb el 89/150 (59,3%) ja
+conegut.
+
+Nou script: `benchmark_integrat.py` -- aplica les 9 regles de
+`RuleEngine` (replicades manualment per a poder intervindre abans de
+`detokenize()`, mateix patró que `genera_muestra_test_dialectal.py`),
+detecta tokens que casen amb el patró ambigu i que el motor ha deixat
+sense traduir, crida el LLM (via B o C) i aplica la forma triada
+DIRECTAMENT a la traducció final.
+
+### Troballa 1 (abans de corregir): el detector sense filtre REGRESSIX el benchmark
+
+Primera prova (qwen2.5:14b, via C, 150 frases, sense cap filtre
+addicional):
+
+| | Exacte | BLEU | chrF |
+|---|---|---|---|
+| Nomes regles (base) | 89/150 (59,3%) | 95,31 | 98,42 |
+| Regles + postproc C | **78/150 (52,0%)** | 94,18 | 98,09 |
+
+**Empitjora -11 frases.** Causa: de les 28 paraules detectades, nomes 2
+eren verbs ambigus de veres (`base`->`basi`, `recupere`->`recuperi`, els
+dos encertats). Les altres 26 son substantius/preposicions homògrafes
+("entre", "sobre", "poble", "informe", "pacte", "contacte"...) que el
+motor ja deixava CORRECTAMENT sense tocar, i que el LLM, obligat a
+triar entre indicatiu/subjuntiu, va convertir en verbs inventats
+("entre"->"entro", "poble"->"pobli", "informe"->"informo"...).
+
+**Intentat i descartat**: restringir per llista de paraules o per font
+(nomes els 156 verbs originals, abans de `conjugaciones_nuevo.json`).
+No funciona -- comprovat directament sobre les dades: "base" ÉS alhora
+un cas real (frase "quan el tractament es base en...") i un fals
+positiu (altres 3 frases on es nomes el substantiu), **la mateixa
+paraula, el mateix flag `problematica: true`, la mateixa font**. No hi
+ha cap propietat estàtica que distinga els dos usos -- nomes el context
+de la frase ho fa, que és justament el que decidix el LLM.
+
+### Correcció aplicada: 3a opció "cap" (no és este verb ací)
+
+`via_b` i `via_c` (`compara_postprocessat.py`) ara permeten una 3a
+resposta explícita -- "CAP" (B) / "cap" (C) -- quan la paraula marcada
+NO funciona com el verb ambigu en eixe context concret. Quan la
+referència no confirma cap dels 2 candidats (probable substantiu), la
+resposta CORRECTA ara es "cap" -- açò permet per fi avaluar també estos
+casos (abans quedaven fora de l'encert, en la categoria "sense veritat
+coneguda").
+
+*(pendent: tornar a mesurar amb esta correcció i actualitzar la taula de
+dalt -- en curs)*
+
+### Baseline multi-model (06/10/2026, en curs)
+
+Triats per l'usuari: `gemma4:12b`, `qwen3:8b`, `qwen3:14b`, vies B i C,
+sobre el benchmark complet. Script de SLURM:
+`slurm/benchmark_integrat_multimodel.sh` (3 GPUs en paral·lel, igual
+patró que `rellanca_benchmark.sh`). *(resultats pendents)*
+
 ### Eines i on estan els resultats
 
 - `identifica_ambigues.py` -- calcula les 3.004 formes i la mostra
@@ -189,6 +252,14 @@ quan hi haja mes exemples d'este patró.
 - Visualització: artifact HTML a Claude amb pestanyes per model i
   comparativa cap a cap -- demana l'enllaç si el necessites, o torna a
   pegar un JSON de resultats nou per a regenerar-lo.
+- `benchmark_integrat.py` -- motor + postprocessat mesurat sobre
+  `benchmark_corpus.json` amb BLEU/chrF/exacte reals (vore secció
+  "Benchmark INTEGRAT" dalt). Necessita l'arrel del repo (`traductor/`,
+  `02_regles_dialectals/`, `03_seleccio_de_model/`) -- vore
+  `AVLIZADOR_ROOT` si es puja a un entorn amb estructura plana com Abaco.
+- `slurm/benchmark_integrat_multimodel.sh` -- job de SLURM que corre
+  `benchmark_integrat.py` amb 3 models en paral·lel (una GPU cada un),
+  vies B i C.
 
 ## El que falta decidir abans d'escriure cap codi
 

@@ -182,6 +182,69 @@ criterio explícito que se le da hoy al LLM (ver `CRITERI_MODE_VERBAL` en
 `compara_postprocessat.py`) no lo menciona explícitamente -- candidato
 claro para ampliar el prompt cuando haya más ejemplos de este patrón.
 
+## Benchmark INTEGRADO (06/10/2026): motor + postprocesado medido sobre el benchmark real
+
+Todo lo anterior medía el acierto AISLADO por palabra (compara contra
+los candidatos conocidos). Paso siguiente: medir el efecto REAL sobre la
+traducción completa, integrando el postprocesado dentro del pipeline de
+verdad y evaluando con BLEU/chrF/exacto -- las MISMAS métricas de
+`evalua_models.py`, directamente comparables con el 89/150 (59,3%) ya
+conocido.
+
+Script nuevo: `benchmark_integrat.py` -- aplica las 9 reglas de
+`RuleEngine` (replicadas a mano para poder intervenir antes de
+`detokenize()`, mismo patrón que `genera_muestra_test_dialectal.py`),
+detecta tokens que encajan con el patrón ambiguo y que el motor ha
+dejado sin traducir, llama al LLM (vía B o C) y aplica la forma elegida
+DIRECTAMENTE a la traducción final.
+
+### Hallazgo 1 (antes de corregir): el detector sin filtro REGRESIONA el benchmark
+
+Primera prueba (qwen2.5:14b, vía C, 150 frases, sin ningún filtro
+adicional):
+
+| | Exacto | BLEU | chrF |
+|---|---|---|---|
+| Solo reglas (base) | 89/150 (59,3%) | 95,31 | 98,42 |
+| Reglas + postproc C | **78/150 (52,0%)** | 94,18 | 98,09 |
+
+**Empeora -11 frases.** Causa: de las 28 palabras detectadas, solo 2
+eran verbos ambiguos de verdad (`base`->`basi`, `recupere`->`recuperi`,
+las dos acertadas). Las otras 26 son sustantivos/preposiciones
+homógrafas ("entre", "sobre", "poble", "informe", "pacte", "contacte"...)
+que el motor ya dejaba CORRECTAMENTE sin tocar, y que el LLM, obligado a
+elegir entre indicativo/subjuntivo, convirtió en verbos inventados
+("entre"->"entro", "poble"->"pobli", "informe"->"informo"...).
+
+**Intentado y descartado**: restringir por lista de palabras o por
+fuente (solo los 156 verbos originales, antes de `conjugaciones_nuevo.json`).
+No funciona -- comprobado directamente sobre los datos: "base" ES a la
+vez un caso real (frase "quan el tractament es base en...") y un falso
+positivo (otras 3 frases donde es solo el sustantivo), **la misma
+palabra, el mismo flag `problematica: true`, la misma fuente**. No hay
+ninguna propiedad estática que distinga los dos usos -- solo el contexto
+de la frase lo hace, que es justo lo que decide el LLM.
+
+### Corrección aplicada: 3ª opción "cap" (no es este verbo aquí)
+
+`via_b` y `via_c` (`compara_postprocessat.py`) ahora permiten una 3ª
+respuesta explícita -- "CAP" (B) / "cap" (C) -- cuando la palabra
+marcada NO funciona como el verbo ambiguo en ese contexto concreto.
+Cuando la referencia no confirma ninguno de los 2 candidatos (probable
+sustantivo), la respuesta CORRECTA ahora es "cap" -- esto permite por
+fin evaluar también estos casos (antes quedaban fuera del acierto, en la
+categoría "sin verdad conocida").
+
+*(pendiente: volver a medir con esta corrección y actualizar la tabla de
+arriba -- en curso)*
+
+### Baseline multi-modelo (06/10/2026, en curso)
+
+Elegidos por el usuario: `gemma4:12b`, `qwen3:8b`, `qwen3:14b`, vías B y
+C, sobre el benchmark completo. Script de SLURM:
+`slurm/benchmark_integrat_multimodel.sh` (3 GPUs en paralelo, mismo
+patrón que `rellanca_benchmark.sh`). *(resultados pendientes)*
+
 ### Herramientas y dónde están los resultados
 
 - `identifica_ambigues.py` -- calcula las 3.004 formas y la muestra
@@ -194,6 +257,14 @@ claro para ampliar el prompt cuando haya más ejemplos de este patrón.
 - Visualización: artifact HTML en Claude con pestañas por modelo y
   comparativa cabeza a cabeza -- pide el enlace si lo necesitas, o pega
   un JSON de resultados nuevo para regenerarlo.
+- `benchmark_integrat.py` -- motor + postprocesado medido sobre
+  `benchmark_corpus.json` con BLEU/chrF/exacto reales (ver sección
+  "Benchmark INTEGRADO" arriba). Necesita la raíz del repo (`traductor/`,
+  `02_regles_dialectals/`, `03_seleccio_de_model/`) -- ver
+  `AVLIZADOR_ROOT` si se sube a un entorno con estructura plana como Abaco.
+- `slurm/benchmark_integrat_multimodel.sh` -- job de SLURM que corre
+  `benchmark_integrat.py` con 3 modelos en paralelo (una GPU cada uno),
+  vías B y C.
 
 ## Lo que falta decidir antes de escribir ningún código
 

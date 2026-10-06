@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visor de diferencias — corpus BOE net</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --fondo: #f7f5f0;
+  --texto: #22201c;
+  --texto-tenue: #5b5750;
+  --borde: #ddd7ca;
+  --superficie: #ffffff;
+  --acento: #3b6ea5;
+  --acento-val: #c0442c;
+  --fila-alt: #f1efe8;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fondo: #1c1a17;
+    --texto: #ece8e0;
+    --texto-tenue: #a89f8f;
+    --borde: #3a352d;
+    --superficie: #26231e;
+    --fila-alt: #211f1a;
+  }
+}
+:root[data-theme="dark"] {
+  --fondo: #1c1a17;
+  --texto: #ece8e0;
+  --texto-tenue: #a89f8f;
+  --borde: #3a352d;
+  --superficie: #26231e;
+  --fila-alt: #211f1a;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0 0 4rem;
+}
+header.cabecera {
+  padding: 2rem 1.5rem 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+header.cabecera h1 { margin: 0 0 .25rem; font-size: 1.6rem; }
+header.cabecera p { color: var(--texto-tenue); margin: 0; }
+nav.pestanas {
+  position: sticky; top: 0; z-index: 5;
+  background: var(--fondo);
+  border-bottom: 1px solid var(--borde);
+  display: flex; gap: .25rem; flex-wrap: wrap;
+  padding: .5rem 1.5rem;
+  max-width: 1100px; margin: 0 auto;
+}
+nav.pestanas button {
+  background: none; border: none; cursor: pointer;
+  padding: .5rem .9rem; border-radius: 6px;
+  color: var(--texto-tenue); font-size: .92rem;
+}
+nav.pestanas button.activa { background: var(--acento); color: white; }
+main { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+section.pestana { display: none; }
+section.pestana.activa { display: block; }
+h2 { font-size: 1.25rem; border-bottom: 1px solid var(--borde); padding-bottom: .4rem; margin-top: 2rem; }
+h3 { font-size: 1.05rem; margin-top: 1.6rem; }
+p.explicacion { color: var(--texto-tenue); max-width: 70ch; }
+.tarjetas { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: .75rem; margin: 1rem 0; }
+.tarjeta { background: var(--superficie); border: 1px solid var(--borde); border-radius: 10px; padding: .9rem 1rem; }
+.tarjeta .valor { font-size: 1.5rem; font-weight: 600; }
+.tarjeta .etiqueta { color: var(--texto-tenue); font-size: .82rem; }
+.grafico { background: var(--superficie); border: 1px solid var(--borde); border-radius: 10px; padding: 1rem; margin: 1rem 0; }
+.etiqueta-eje, .etiqueta-valor { fill: var(--texto-tenue); }
+.linea-ref { stroke: var(--borde); stroke-width: 1; }
+.leyenda { display: flex; gap: 1.2rem; font-size: .85rem; color: var(--texto-tenue); margin-top: .3rem; }
+.leyenda span.punto { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: .3rem; }
+.tabla-interactiva { margin: 1rem 0 2rem; }
+.tabla-controles { display: flex; justify-content: space-between; align-items: center; margin-bottom: .5rem; gap: 1rem; }
+.filtro-tabla { padding: .4rem .6rem; border: 1px solid var(--borde); border-radius: 6px; background: var(--superficie); color: var(--texto); min-width: 220px; }
+.contador-filas { color: var(--texto-tenue); font-size: .85rem; white-space: nowrap; }
+.nota-tabla { color: var(--texto-tenue); font-size: .85rem; margin: 0 0 .5rem; }
+.tabla-scroll { overflow-x: auto; border: 1px solid var(--borde); border-radius: 10px; }
+table { border-collapse: collapse; width: 100%; font-size: .87rem; }
+thead th { position: sticky; top: 0; background: var(--superficie); text-align: left; padding: .5rem .6rem; cursor: pointer; border-bottom: 1px solid var(--borde); white-space: nowrap; }
+thead th:hover { color: var(--acento); }
+tbody td { padding: .4rem .6rem; border-bottom: 1px solid var(--borde); white-space: nowrap; }
+tbody tr:nth-child(even) { background: var(--fila-alt); }
+footer { max-width: 1100px; margin: 2rem auto 0; padding: 0 1.5rem; color: var(--texto-tenue); font-size: .82rem; }
+code { background: var(--fila-alt); padding: .1rem .35rem; border-radius: 4px; }
+mark.chg { background: rgba(230,160,20,.38); color: inherit; border-radius: 3px; padding: 0 .1em; }
+mark.ins { background: rgba(40,160,80,.32); color: inherit; border-radius: 3px; padding: 0 .1em; }
+mark.del { background: rgba(200,60,60,.28); color: inherit; text-decoration: line-through; border-radius: 3px; padding: 0 .1em; }
+.visor-controles { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin: .75rem 0; }
+.visor-controles select, .visor-controles input[type=text] { padding: .4rem .6rem; border: 1px solid var(--borde); border-radius: 6px; background: var(--superficie); color: var(--texto); }
+.visor-controles select { min-width: 320px; max-width: 100%; }
+.visor-controles input[type=text] { min-width: 180px; }
+.visor-lista { display: flex; flex-direction: column; gap: .6rem; margin: .75rem 0; }
+.visor-frase { background: var(--superficie); border: 1px solid var(--borde); border-radius: 10px; padding: .6rem .8rem; }
+.visor-frase.con-dif { border-left: 3px solid var(--acento-val); }
+.visor-num { font-size: .78rem; color: var(--texto-tenue); margin-bottom: .3rem; }
+.visor-linea { display: flex; gap: .5rem; align-items: baseline; padding: .1rem 0; }
+.visor-tag { font-size: .7rem; font-weight: 700; color: var(--texto-tenue); border: 1px solid var(--borde); border-radius: 4px; padding: 0 .3rem; flex: none; }
+.visor-texto { line-height: 1.6; }
+.visor-mas { margin: .5rem 0 1.5rem; padding: .5rem 1rem; border: 1px solid var(--borde); border-radius: 6px; background: var(--superficie); color: var(--texto); cursor: pointer; }
+.visor-mas:hover { color: var(--acento); }
+
+.resumen { color: var(--texto-tenue); margin: 0 0 1rem; }
+.aviso-servidor { background: var(--superficie); border: 1px solid var(--borde); border-radius: 10px; padding: 1rem; margin: 1rem 0; }
+.aviso-servidor code { display: block; margin: .4rem 0; }
+</style>
+</head>
+<body>
+<header class="cabecera">
+  <h1>Visor de diferencias — corpus BOE net</h1>
+  <p>178416 frases con diferencia real. Fuente: <code>dades/boe_net/corpus_entrenamiento_net.jsonl</code>
+     (520 documentos, ya sin ruido de mayusculas ni reordenamiento puro).</p>
+</header>
+<nav class="pestanas">
+  <button data-pestana="grandes" class="activa">Mayor diferencia primero</button>
+  <button data-pestana="pequenas">Mayor similitud primero</button>
+</nav>
+<main>
+  <div id="aviso" class="aviso-servidor" hidden>
+    <strong>No se pudo cargar.</strong> Esta pagina carga las frases por trozos con <code>fetch()</code>
+    (son demasiadas para meterlas todas en el HTML). La mayoria de navegadores bloquean eso si abres
+    el fichero haciendo doble clic (<code>file://</code>). Arranca un servidor local desde esta carpeta:
+    <code>cd dades/boe_net &amp;&amp; python -m http.server 8000</code>
+    y abre <code>http://localhost:8000/visor_diferencias.html</code>
+  </div>
+
+  <section id="pestana-grandes" class="pestana activa">
+    <p class="explicacion">Ordenadas de mas a menos diferencia (similitud ascendente) -- para encontrar
+       errores de alineamiento reales, empezando por las mas sospechosas.</p>
+    <div class="visor-controles">
+      <input type="text" id="filtro-grandes" placeholder="Buscar palabra o documento...">
+      <span class="contador-filas" id="contador-grandes"></span>
+    </div>
+    <div class="visor-lista" id="lista-grandes"></div>
+    <button class="visor-mas" id="mas-grandes">Cargar mas frases</button>
+  </section>
+
+  <section id="pestana-pequenas" class="pestana">
+    <p class="explicacion">Ordenadas de mas a menos similitud (similitud descendente) -- casi identicas salvo
+       un detalle, normalmente el caso mas limpio de sustitucion dialectal puntual.</p>
+    <div class="visor-controles">
+      <input type="text" id="filtro-pequenas" placeholder="Buscar palabra o documento...">
+      <span class="contador-filas" id="contador-pequenas"></span>
+    </div>
+    <div class="visor-lista" id="lista-pequenas"></div>
+    <button class="visor-mas" id="mas-pequenas">Cargar mas frases</button>
+  </section>
+</main>
+<footer>Generado por <code>generar_visor_diferencias.py</code>. 179 + 179
+  trozos de datos en <code>visor_diferencias_chunks*/</code>.</footer>
+<script>
+const aviso = document.getElementById('aviso');
+
+document.querySelectorAll('nav.pestanas button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('nav.pestanas button').forEach(x => x.classList.toggle('activa', x === b));
+    document.querySelectorAll('section.pestana').forEach(s => s.classList.toggle('activa', s.id === 'pestana-' + b.dataset.pestana));
+  });
+});
+
+function crearVisor(prefijo, directorioChunks, numChunks) {
+  const lista = document.getElementById('lista-' + prefijo);
+  const contador = document.getElementById('contador-' + prefijo);
+  const btnMas = document.getElementById('mas-' + prefijo);
+  const filtro = document.getElementById('filtro-' + prefijo);
+
+  let siguienteChunk = 0;
+  let todasLasFilas = [];  // acumula TODO lo ya cargado, para poder filtrar sin re-pedir nada
+
+  function repintar() {
+    const texto = filtro.value.trim().toLowerCase();
+    const visibles = !texto ? todasLasFilas : todasLasFilas.filter(f =>
+      f.html_cat.toLowerCase().includes(texto) || f.html_val.toLowerCase().includes(texto) ||
+      f.doc.toLowerCase().includes(texto));
+    lista.innerHTML = visibles.map(f => `
+      <div class="visor-frase con-dif">
+        <div class="visor-num">${f.doc} &middot; ${f.fecha || '?'} &middot; ${(f.similitud*100).toFixed(1)}% similar</div>
+        <div class="visor-linea"><span class="visor-tag visor-tag-ca">CA</span><span class="visor-texto">${f.html_cat}</span></div>
+        <div class="visor-linea"><span class="visor-tag visor-tag-va">VA</span><span class="visor-texto">${f.html_val}</span></div>
+      </div>
+    `).join('');
+    const etiquetaFiltro = texto ? ' (filtradas de ' + todasLasFilas.length + ' cargadas)' : '';
+    contador.textContent = visibles.length + ' frase(s)' + etiquetaFiltro + ' -- ' + siguienteChunk + ' de ' + numChunks + ' trozos cargados';
+  }
+
+  async function cargarSiguienteChunk() {
+    if (siguienteChunk >= numChunks) { btnMas.hidden = true; return; }
+    try {
+      const resp = await fetch(directorioChunks + '/chunk_' + String(siguienteChunk).padStart(4, '0') + '.json');
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      const filas = await resp.json();
+      todasLasFilas = todasLasFilas.concat(filas);
+      siguienteChunk++;
+      repintar();
+      if (siguienteChunk >= numChunks) btnMas.hidden = true;
+    } catch (e) {
+      aviso.hidden = false;
+      btnMas.hidden = true;
+    }
+  }
+
+  filtro.addEventListener('input', repintar);
+  btnMas.addEventListener('click', cargarSiguienteChunk);
+  cargarSiguienteChunk();
+}
+
+crearVisor('grandes', 'visor_diferencias_chunks', 179);
+crearVisor('pequenas', 'visor_diferencias_chunks_similares', 179);
+</script>
+</body>
+</html>
