@@ -23,3 +23,4 @@ dades/sintetic/muestra_comparativa_20260922_1254/
 # 08_traduccio_corpus/: salida generada por traduccio_massiva.py, regenerable
 08_traduccio_corpus/eixides/*
 !08_traduccio_corpus/eixides/.gitkeep
+dades/boe_net/corpus_entrenamiento_net.jsonl
