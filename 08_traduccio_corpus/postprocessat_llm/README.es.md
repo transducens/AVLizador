@@ -235,15 +235,29 @@ sustantivo), la respuesta CORRECTA ahora es "cap" -- esto permite por
 fin evaluar también estos casos (antes quedaban fuera del acierto, en la
 categoría "sin verdad conocida").
 
-*(pendiente: volver a medir con esta corrección y actualizar la tabla de
-arriba -- en curso)*
+**Verificado (07/10/2026): la corrección funciona, SIN EXCEPCIÓN en las
+6 combinaciones modelo x vía probadas** (`gemma4:12b`, `qwen3:8b`,
+`qwen3:14b`, vías B y C, benchmark completo de 150, vía SLURM
+`slurm/benchmark_integrat_multimodel.sh`, 3 GPUs en paralelo):
 
-### Baseline multi-modelo (06/10/2026, en curso)
+| Modelo | Vía | Exacto | BLEU | Aciertos por palabra (28 total) |
+|---|---|---|---|---|
+| gemma4:12b | B | 90/150 (+1) | 95,35 | 27/28 |
+| gemma4:12b | C | 90/150 (+1) | 95,35 | 27/28 |
+| qwen3:8b | B | 89/150 (+0) | 95,31 | 25/28 |
+| qwen3:8b | C | **90/150 (+1)** | 95,37 | 27/28 |
+| qwen3:14b | B | 90/150 (+1) | 95,35 | 27/28 |
+| qwen3:14b | C | 89/150 (+0) | 95,31 | 26/28 |
 
-Elegidos por el usuario: `gemma4:12b`, `qwen3:8b`, `qwen3:14b`, vías B y
-C, sobre el benchmark completo. Script de SLURM:
-`slurm/benchmark_integrat_multimodel.sh` (3 GPUs en paralelo, mismo
-patrón que `rellanca_benchmark.sh`). *(resultados pendientes)*
+**Ninguna regresión en ninguna combinación** -- el peor caso ahora es
+quedarse igual (89/150), nunca empeorar. `gemma4:12b` es el más
+consistente (empata primero en las dos vías). Curiosamente `qwen3:14b`
+(el modelo más grande) es el peor en vía C -- no hay relación directa
+entre tamaño y acierto en este caso concreto. Pendiente: revisar con
+detalle los 1-3 fallos por combinación (ver JSON completos en
+`resultats_benchmark_integrat_20261006_1650/` en Abaco) para saber si
+son errores de clasificación u otro bug de parseo como el ya encontrado
+con "subjuntivo" en castellano.
 
 ### Herramientas y dónde están los resultados
 

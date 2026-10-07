@@ -44,6 +44,10 @@ class Token:
     cap etiqueta gramatical, se li ha posat `= ""` ací -- si no,
     tokenize() no podria crear cap Token sense dependre de spaCy, que és
     justament el que NO volem (dependència opcional, no obligatòria).
+    Des del 07/10/2026 `RuleEngine.translate()` sí que l'omple, si spaCy
+    està instal·lat, cridant `pos_tagger.etiqueta()` just després de
+    `marca_noms_propis()` -- vore eixe mòdul per al perquè i per a qui el
+    fa servir (`ConjugacionsDictRule`).
     """
 
     surface: str
@@ -274,6 +278,47 @@ def aplica_amb_prefix_elidit(tokens: list[Token], index: int, prefix: str, resta
                 return
 
     tok.translated = preserva_majuscula(prefix, complet) + " " + forma_cap
+
+
+# Pronoms febles enclítics reals de valencià/català, enganxats al final
+# d'un verb amb apòstrof (quan el verb acaba en vocal i el clític comença
+# en vocal/h muda: "traure'n", "porta'l") o amb guionet (la resta de
+# casos: "dir-li", "vine't-en"). Llista TANCADA dels clítics simples mes
+# habituals -- els combinats (dos clítics seguits, "porta-te'l") no estan
+# coberts perque encara no hi ha cap cas real que ho necessite; s'amplia
+# nomes amb evidencia, com la resta de llistes d'este projecte.
+_SUFIX_ELIDIT_RE = re.compile(
+    r"^(.+?)(['’-])(me|te|se|nos|vos|los|les|la|lo|li|ho|hi|ne|ls|ns|m|t|s|n|l)$",
+    re.IGNORECASE,
+)
+
+
+def separa_sufix_elidit(surface: str) -> tuple[str, str] | None:
+    """Si `surface` acaba en un pronom feble enclític enganxat amb
+    apòstrof o guionet ("traure'n", "dir-li"), torna `(arrel, connector_i_sufix)`;
+    si no, torna `None`.
+
+    Simetric a `separa_prefix_elidit` pero pel costat contrari: el
+    tokenitzador tracta l'apòstrof/guionet com a part de la paraula, així
+    que un verb com "traure'n" mai casa amb l'entrada "traure" d'un
+    diccionari. Les regles de lookup exacte que ho necessiten (de moment,
+    `conjugacions_dict.py`) ho usen com a segon intent quan la cerca
+    directa amb `tok.surface.lower()` no troba res -- cerquen `arrel` en
+    el seu diccionari i, si hi és, reconstruïxen el token com
+    `forma_traduïda + connector_i_sufix`.
+
+    >>> separa_sufix_elidit("traure'n")
+    ('traure', "'n")
+    >>> separa_sufix_elidit("dir-li")
+    ('dir', '-li')
+    >>> separa_sufix_elidit("traure") is None
+    True
+    """
+    m = _SUFIX_ELIDIT_RE.match(surface)
+    if m is None:
+        return None
+    arrel, connector, sufix = m.groups()
+    return arrel, connector + sufix
 
 
 def paraula_anterior_es(tokens: list[Token], index: int, paraula: str) -> bool:

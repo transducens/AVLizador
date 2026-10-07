@@ -1557,5 +1557,15 @@
     ],
     "occidental": "Després d'este signe hi ha sempre un canvi de paràgraf.",
     "oriental": "Després d'aquest signe hi ha sempre un canvi de paràgraf."
+  },
+  {
+    "id": "RC151",
+    "doc_id": "777",
+    "doc_type": "manual_creada",
+    "source_url": "https://www.avl.gva.es/gnv/buscador.jsp?gramatica=GNV&index=GNV#capitol_7",
+    "categories_detectadas": [
+    ],
+    "occidental": "Jo em centre en que el partit isca bé.",
+    "oriental": "Jo em centro en que el partit surti bé."
   }
 ]

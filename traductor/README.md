@@ -262,6 +262,176 @@ la resta s'afig al lookup tal qual). No ha canviat el resultat del
 benchmark (continua 89/150) perquè cap d'estos 50 verbs hi apareix, però
 queden disponibles per al corpus real.
 
+## DECISIÓ D'ARQUITECTURA (07/10/2026): filtre POS opcional (spaCy) dins de `ConjugacionsDictRule`
+
+Problema real trobat revisant el benchmark de 150 frases: paraules com
+"persones", "pares", "projectes", "pobles", "plomes" es traduïen SEMPRE
+amb confiança total a "personis", "paris", "projectis", "poblis", "plomis"
+-- formes conjugades de verbs rars (personar, parar, projectar, poblar,
+plomar) que col·lidixen per casualitat amb un substantiu MOLT mes
+freqüent. `_marca_ambigues_dins_del_mateix_fitxer` (vore `sync_data.py`)
+nomes detecta col·lisions INTERNES (la mateixa paraula amb >=2 traduccions
+DINS del mateix fitxer font de Mauricio -- aixina es com es marca
+`problematica` "base"/"entre"/"centre"). Estos 5 casos nomes tenen UNA
+entrada cadascun al seu fitxer font, aixina que mai es marquen
+`problematica` -- la col·lisió és EXTERNA, amb una paraula que cap fitxer
+de Mauricio llista (els lexicons son diferencials: "persones" no canvia
+entre dialectes, per això no hi ha cap fitxer que la continga). Curar-ho
+a mà, paraula a paraula (com `EXCLUSIONS_HOMOGRAF`), no escala: 42.625 de
+les 51.901 entrades de `conjugacions_dialectals.json` no tenen cap
+protecció.
+
+**Solució**: un etiquetador POS OPCIONAL (`rules/pos_tagger.py`, spaCy +
+`ca_core_news_sm`) corre com a "capa 0" dins de `RuleEngine.translate()`,
+just després de `marca_noms_propis()`. `ConjugacionsDictRule` (capa 2)
+consulta `tok.pos`: si spaCy diu que la paraula NO és un VERB (ni un AUX)
+en eixe context concret, no s'aplica el lookup de conjugacions, siga quina
+siga la paraula -- substituïx la necessitat d'una llista d'exclusió per
+paraula per una decisió basada en el CONTEXT real de la frase. Dependència
+estrictament opcional: si spaCy no està instal·lat, `pos_tagger.etiqueta()`
+no fa res i el pipeline es comporta exactament igual que abans (cap
+excepció, cap degradació -- només es perd la protecció extra).
+
+**Dos bugs reals trobats i corregits DURANT la validació** (exactament el
+tipus de cosa que la metodologia de dos proves -- doctests + benchmark --
+existix per a atrapar):
+
+1. Filtrar nomes acceptant `pos == "VERB"` causava **11 regressions noves**
+   al benchmark (frases que abans eixien exactes van deixar de ser-ho).
+   Causa: spaCy fa servir l'etiqueta universal "AUX" (no "VERB") per als
+   verbs auxiliars/copulatius, i precisament els verbs mes freqüents
+   d'esta taula son formes de "ser" ("sigut", "siga") i "haver" ("haja")
+   -- "ha sigut", "que siga externa". Corregit acceptant "VERB" i "AUX"
+   tots dos: 7 de les 11 regressions desapareixen.
+2. Les 4 regressions restants ("vinga"/"traure" a l'inici de frase, "haja"
+   en mig de frase, "siga" davant d'un adjectiu) son un atre bug, d'spaCy
+   mateix: `ca_core_news_sm` està entrenat en català central (AnCora) i
+   mai ha vist estes formes EXCLUSIVAMENT valencianes escrites aixina --
+   les etiqueta "PROPN" (el calaix de sastre d'spaCy per a paraules
+   desconegudes) o "ADJ". Com cap d'estes 5 formes té cap col·lisió real
+   coneguda (a diferència de "persones" etc.), es tracten com una llista
+   tancada de seguretat, `SEMPRE_VERB` a `conjugacions_dict.py` --mateix
+   criteri que `EXCLUSIONS_HOMOGRAF`, pero en sentit invers ("confia
+   sempre en la taula per a estes formes concretes").
+
+**Resultat final, benchmark complet (151 frases, incloent RC151)**:
+
+| | Exactes | BLEU | chrF |
+|---|---|---|---|
+| Sense filtre (abans) | 89/151 (58,9%) | 95,15 | 98,35 |
+| Amb filtre POS + `SEMPRE_VERB` | **99/151 (65,6%)** | **95,97** | **98,61** |
+
+**Zero regressions** (verificat comparant totes dos corregudes frase a
+frase): cap frase que abans eixia exacta ha deixat de ser-ho. Les 10
+frases que passen a exactes inclouen els 5 casos originals
+(persones/pares/projectes/pobles/plomes) mes 5 mes trobats pel mateix
+mecanisme.
+
+**Cost mesurat** (no estimat): motor de regles sol, 0,78 ms/frase; amb
+spaCy, ~11 ms/frase (carrega del model: ~1,15 s, una sola vegada per
+procés) -- insignificant per a qualsevol ús real. El cost real no és de
+velocitat, és de dependència: `traductor/` deixa de ser pur Python sense
+dependències (disseny original) i passa a admetre spaCy + el model
+`ca_core_news_sm` (uns centenars de MB) com a dependència OPCIONAL de
+producció.
+
+**Pendent explícitament NO fet en esta decisió**: `EXCLUSIONS_HOMOGRAF`
+("germanes") es queda tal qual, com a xarxa de seguretat per a quan spaCy
+no està instal·lat -- amb spaCy actiu és protecció redundant (spaCy ja
+l'etiqueta NOUN correctament), pero no fa mal mantindre-la. `SEMPRE_VERB`
+nomes s'amplia amb evidència real (revisant benchmark o corpus), mai per
+endevinar quines atres formes podrien patir el mateix problema.
+
+## ANÀLISI DE FALLADES RESIDUALS (07/10/2026) -- 51 de 151, sobre 100/151 (66,2%)
+
+Resultat oficial d'esta sessió, guardat a
+`03_seleccio_de_model/resultats/benchmark_Traductor_Nou_FILTRE_POS_07102026.json`
+(confirmat idèntic en local i en Abaco: 100/151, BLEU 96,03, chrF 98,63).
+Analitzat paraula a paraula amb el script nou
+`03_seleccio_de_model/analitza_fallades.py` (reutilitzable: `python
+analitza_fallades.py resultats/<fitxer>.json [--id RCxxx]`). Categories,
+de major a menor pes:
+
+**A -- Col·lisió de mode/temps verbal en persones DISTINTES de la 1a
+singular (24 de 51 frases, la categoria mes gran amb diferència)**:
+exactament el mateix mecanisme que "persones"→"personis" d'avui (una
+forma conjugada rara coincidix amb una forma comuna d'UN ALTRE mode/temps
+del MATEIX o un verb distint, i `_marca_ambigues_dins_del_mateix_fitxer`
+no ho detecta perque nomes té una entrada en son fitxer font), pero en
+3a persona plural (i alguna 2a singular) en compte d'homògraf
+substantiu/verb -- per aixo el filtre POS (que nomes distingix VERB
+d'ALTRES categories) no ho pot resoldre: ACÍ LES DOS PARAULES JA SÓN
+VERB per a spaCy. Casos reals (ref → la nostra forma incorrecta):
+`limiten→limitin` (RC001), `creuen→creuin` (RC006), `predominen→predominin`
+(RC009), `reben→rebin` (RC016), `poden→podin` (RC017, RC049, RC062, RC148),
+`aspiren→aspirin` (RC026), `quedaren→quedessin` (RC040),
+`transformaren→transformessin` (RC051), `designen→designin` (RC057),
+`procuren→procurin`/`s'esforcen→s'esforcin` (RC069),
+`passaren→passessin`/`aplicaren→apliquessin` (RC070),
+`conformen→conformin` (RC071), `avalen→avalin` (RC078),
+`estimularen→estimulessin` (RC079), `s'emmarquen→s'emmarquin` (RC086),
+`deriven→derivin` (RC090), `opten→optin` (RC093), `presenten→presentin`
+(RC101), `originen→originin` (RC107), `consideren→considerin` i
+`representen→representin` (RC142), `porten→portin` (RC144). **Decisió
+explícita de l'usuari (07/10/2026): aparcat per ara** -- ja es va discutir
+que el filtre POS (VERB/no-VERB) no servix ací perque les dos candidates
+ja son verbs; faria falta ampliar `ambiguitats`/una llista evidenciada
+cas a cas, com `SEMPRE_VERB`, pero per a persones/temps que avui no
+cobrim (nomes 1a sing. indicatiu/subjuntiu).
+
+**B -- Ambigüitat 1a persona singular indicatiu/subjuntiu (4 frases,
+RESIDUAL ESPERAT, NO es un bug de `traductor/`)**: `plantejo→plantege`
+(RC095), `basi→base` (RC106), `recuperi→recupere` (RC110),
+`centro→centre` (RC151). Exactament el fenomen que
+`08_traduccio_corpus/postprocessat_llm/` ja ataca amb postprocessat LLM
+(vore eixa carpeta) -- `traductor/` per disseny deixa estes formes sense
+tocar (`problematica: true`, exclusió deliberada des de fa sessions) fins
+que hi haja un mecanisme de desambiguació per context. No cal "arreglar"
+res ací, és l'abast ja conegut i acceptat.
+
+**C -- Concordança "dos"/"dues" incompleta (7 frases)**: la regla
+`concordanca_dos_dues.py` ja existent no cobrix tots els contextos.
+Casos: RC062 ("dues:"), RC078, RC094 (×3 en la mateixa frase), RC096,
+RC118, RC138, RC142. Pendent de revisar `concordanca_dos_dues.py` per
+vore quins patrons concrets li falten (probablement nomes mira
+marcadors com "les"/"estes" immediatament davant, no sintagmes mes
+llargs com "dos entitats de població" o "dos terceres parts").
+
+**D -- Preposició "en"/"a" sense regla seg​ura (5 frases, direcció
+CONTRADICTÒRIA segons l'expressió -- NO hi ha arreglo general)**:
+RC027 (ref "vinculat EN", nosaltres "a"), RC100 (ref "a les mans",
+nosaltres "en"), RC115 (ref "a la ciutat", nosaltres "en"), RC135 (ref
+"a l'interior", nosaltres "en"), RC137 (ref "en les Corts", nosaltres
+"a"). Com la direcció correcta depén de l'expressió regida pel verb
+anterior (no hi ha un patró "en→a" ni "a→en" que valga sempre), nomes
+es podria resoldre amb una llista tancada per expressió concreta
+("vinculat a", "tindre la seu a", "interior de"...), mai amb una regla
+general -- i no hi ha prou evidència encara per a saber si val la pena.
+
+**E -- Concordança de gènere tras substitució léxica (1 frase, ja
+discutit avui, disseny proposat pero NO implementat)**: RC044 "la dacsa"
+→"blat de moro" dona "la blat de moro" en compte de "el blat de moro".
+
+**F -- Buits lèxics/morfològics puntuals, sense patró comú (la resta,
+NO revisar encara -- decisió explícita de l'usuari 07/10/2026)**:
+`calfar`/`escalfar` sense entrada (RC032, RC046), `vetlar`/`vetllar`
+doble ela (RC062), `deixa fora`/`deixa fos` (RC064), `gaudeixin`/
+`disfruten` sense entrada (RC069), `ofertes`/`oferides` participi
+distint (RC107), `complisca`/`compleixi` -- possible inconsistència de
+la pròpia referència, no traduït allí (RC126), `com`/`com a` possible
+error tipogràfic de la referència (RC133), ortografia arcaica
+`y`/`i`, `le`/`li`, `he`/`haig` en un text històric citat literalment
+(RC119, RC120). **RC065 NO és cap bug**: la referència té un doble espai
+literal ("estancamiento **  **i inflación") que la nostra hipòtesi no
+reproduïx -- artefacte de les dades, no de `traductor/`.
+
+**Troballa nova, a part**: "o siga" (RC067) es protegix a propòsit com a
+locució fixa (vore `conjugacions_dict.py`), però la referència SÍ la
+tradueix a "o sigui" en este cas concret -- contradicció entre el
+criteri conservador aplicat i el que fa de veres el corpus de referència
+en, almenys, este exemple. No tocat avui, queda apuntat per si es decidix
+revisar eixa protecció.
+
 ## Arquitectura
 
 Pipeline seqüencial de capes sobre una llista de `Token`, no substitucions
@@ -321,6 +491,17 @@ l'elisió (torna el prefix a la seua forma completa: "l'"→"el", "d'"→"de"...
 i, si el resultat és "el" i el token anterior és la preposició "a"/"de",
 els contrau ("a"+"el"→"al", "de"+"el"→"del") en compte de deixar "a el".
 
+**Simètric pel costat del sufix (07/10/2026)**: `dir-li`, `traure'n` també
+són UN sol token, i un pronom feble enclític pegat al final tampoc
+coincidix mai amb l'entrada del diccionari ("traure'n" no trobava
+"traure"). `separa_sufix_elidit()` (`rules/__init__.py`) fa el mateix
+paper que `separa_prefix_elidit()` pero pel costat contrari -- llista
+tancada de clítics simples (m/t/s/n/l/ls/ns + me/te/se/nos/vos/los/les/
+la/lo/li/ho/hi/ne). Nomes cablejat a `conjugacions_dict.py` de moment
+(únic cas real trobat, "traure"); no cobrix clítics dobles ("porta-te'l",
+sense cap cas real encara) ni s'ha cablejat a `lexic.py` (sense evidència
+ahí tampoc).
+
 ### Protecció de noms propis (`marca_noms_propis`)
 
 S'executa una sola vegada, abans de la primera regla: marca
@@ -332,6 +513,15 @@ allí després d'un incident real amb `blanca`/`Blanca` i `roig`/`Roig`
 (vore `../documentacio/metodologia_i_resultats.md`, secció 6). Límit
 conegut, heretat sense arreglar: un nom propi que és la **primera**
 paraula del text mai es detecta.
+
+## Capa 0 (opcional): `pos_tagger.py`
+
+S'executa just després de `marca_noms_propis()`, abans de les 9 capes
+(vore "DECISIÓ D'ARQUITECTURA (07/10/2026)" dalt). Omple `tok.pos` amb
+l'etiqueta POS universal d'spaCy (`ca_core_news_sm`) si està instal·lat;
+si no, no fa res. Nomes la consulta `ConjugacionsDictRule` (capa 2), per a
+no aplicar una conjugació verbal rara sobre una paraula que en eixe
+context concret és, de veres, una atra categoria gramatical.
 
 ## Les 9 capes
 
@@ -511,7 +701,8 @@ modulos = [
     'traductor.rules', 'traductor.rules.lexic', 'traductor.rules.conjugacions_dict',
     'traductor.rules.possessius', 'traductor.rules.numerals', 'traductor.rules.concordanca_dos_dues',
     'traductor.rules.relatiu_on', 'traductor.rules.demostratius', 'traductor.rules.accentuacio',
-    'traductor.rules.incoatius', 'traductor.rules.engine', 'traductor.translate',
+    'traductor.rules.incoatius', 'traductor.rules.pos_tagger', 'traductor.rules.engine',
+    'traductor.translate',
 ]
 for nom in modulos:
     m = importlib.import_module(nom)
@@ -519,3 +710,5 @@ for nom in modulos:
     print(nom, r)
 "
 ```
+
+Estat actual (07/10/2026): **246 tests, 0 fallos**. `traductor.rules.pos_tagger` s'afig a la llista des que existix (vore "DECISIÓ D'ARQUITECTURA (07/10/2026)" dalt) -- els seus doctests criden spaCy de veres (no el simulen), així que requerixen `pip install spacy && python -m spacy download ca_core_news_sm` instal·lat per a passar; si no ho està, els doctests de `pos_tagger.py` i els 2 nous de `conjugacions_dict.py` que usen `etiqueta()` fallarien en l'assert concret (no amb una excepció), perquè `tok.pos` es quedaria `""` -- **esta és l'única part de la suite que depén d'spaCy instal·lat; la resta del paquet (i la seua pròpia execució normal) mai en depén** (dependència opcional, vore `pos_tagger.py`).

@@ -52,10 +52,50 @@ ultra-comú) és identica a la 2a persona del present de subjuntiu del verb
 sentit -- sense pos-tagging, `ConjugacionsDictRule` no pot distingir-les,
 i sense esta exclusio traduiria "germanes" (el substantiu) a "germanis"
 (el verb) sempre. `EXCLUSIONS_HOMOGRAF` és una llista CURADA a mà, afegida
-cas a cas conforme es descobrixen -- no una solucio general (eixa
-requeriria pos-tagging real). Nomes s'ha trobat este cas fins ara; es
-recomana ampliar-la si apareixen mes col·lisions revisant el benchmark o
-el corpus del BOE (`08_traduccio_corpus/`, `dades/boe_net/`).
+cas a cas conforme es descobrixen.
+
+Filtre POS general (07/10/2026, vore `pos_tagger.py`): `EXCLUSIONS_HOMOGRAF`
+nomes cobrix "germanes" perque va caldre trobar-ho a mà revisant el
+benchmark. El mateix problema és MOLT mes ampli -- "persones", "pares",
+"projectes", "pobles", "plomes"... cada un amb una unica entrada al seu
+fitxer font (per aixo `_marca_ambigues_dins_del_mateix_fitxer` mai els
+marca `problematica`) que coincidix amb un substantiu ultra-comú que cap
+lexicó llista (els lexicons de Mauricio son diferencials: no canvien entre
+dialectes, per això no hi ha cap fitxer que els continga). Curar-los un a
+un no escala (42.625 entrades sense esta proteccio, vore
+`sync_data.py`). En compte d'una llista, `apply()` consulta ara
+`tok.pos` (si `pos_tagger.etiqueta()` l'ha omplit -- dependencia opcional,
+vore eixe modul): si spaCy diu que la paraula NO es un VERB (ni un AUX, vore
+baix) en eixe context concret, no s'aplica el lookup, siga quina siga la
+paraula. `EXCLUSIONS_HOMOGRAF` es queda com a xarxa de seguretat per a quan
+spaCy no esta instal·lat (dependencia opcional, no obligatoria).
+
+Bug real trobat i corregit (07/10/2026, primer intent d'esta mateixa capa):
+acceptar NOMES "VERB" causava regressions reals al benchmark de 150 -- 11
+frases que abans eixien EXACTES van deixar de ser-ho. Causa: spaCy fa
+servir l'etiqueta universal "AUX" (no "VERB") per als verbs auxiliars/
+copulatius ("ser", "haver", "estar" quan acompanyen un atre verb o
+adjectiu), i precisament els verbs mes freqüents d'esta taula son formes
+de "ser" ("sigut", "siga") i "haver" ("haja") -- "ha sigut" (AUX+AUX),
+"que siga externa" (copula+adjectiu). Filtrar nomes per "VERB" bloquejava
+EIXACTAMENT els casos mes importants. Corregit acceptant "VERB" i "AUX"
+tots dos: 7 de les 11 regressions desapareixen, sense perdre cap millora.
+
+Les 4 regressions restants ("vinga"/"traure" a l'inici de frase, "haja" en
+mig de frase, "siga" davant d'un adjectiu) son un atre bug d'spaCy, no del
+filtre: el model `ca_core_news_sm` esta entrenat en català central
+(corpus AnCora) i mai ha vist estes formes EXCLUSIVAMENT valencianes
+escrites aixina -- les etiqueta "PROPN" (nom propi, el "calaix de sastre"
+d'spaCy per a paraules desconegudes) o, en el cas de "siga" davant
+d'adjectiu, "ADJ". Son errors reals del tagger, confirmats revisant cada
+frase (vore el benchmark de 150). Com NO son casos de col·lisio real (cap
+d'estes 5 formes coincidix mai amb un substantiu/adjectiu d'un atre
+sentit -- a diferencia de "persones"/"pobles"/etc., que SI col·lidixen),
+es tracten com una llista tancada de SEGURETAT ("confia sempre en la
+taula de conjugacions per a estes formes concretes, ignora el que diga
+spaCy"), seguint el mateix criteri que `EXCLUSIONS_HOMOGRAF` pero en
+sentit invers. `SEMPRE_VERB` es amplia nomes amb evidencia (revisant el
+benchmark o el corpus), mai per endevinar.
 """
 
 from __future__ import annotations
@@ -63,7 +103,14 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from . import Token, aplica_amb_prefix_elidit, paraula_anterior_es, preserva_majuscula, separa_prefix_elidit
+from . import (
+    Token,
+    aplica_amb_prefix_elidit,
+    paraula_anterior_es,
+    preserva_majuscula,
+    separa_prefix_elidit,
+    separa_sufix_elidit,
+)
 
 DEFAULT_CONJUGACIONS_PATH = (
     Path(__file__).resolve().parent.parent / "data" / "conjugacions_dialectals.json"
@@ -72,6 +119,13 @@ DEFAULT_CONJUGACIONS_PATH = (
 # Vore docstring del modul: formes conjugades RARES que coincidixen per
 # casualitat amb una paraula comuna d'una altra categoria gramatical.
 EXCLUSIONS_HOMOGRAF = {"germanes"}
+
+# Vore docstring del modul ("Les 4 regressions restants..."): formes
+# verbals SENSE cap col·lisio coneguda que spaCy (ca_core_news_sm,
+# entrenat en català central) etiqueta de manera no fiable com a "PROPN"
+# o "ADJ" perque mai les ha vist en valencia -- es confia sempre en la
+# taula per a estes, ignorant `tok.pos`.
+SEMPRE_VERB = {"sigut", "siga", "haja", "vinga", "traure"}
 
 
 def carrega_conjugacions(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[str, str]:
@@ -154,6 +208,41 @@ class ConjugacionsDictRule:
     >>> toks = ConjugacionsDictRule().apply(toks)
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
     [('siga', 'sigui')]
+
+    Filtre POS (07/10/2026, nomes actiu si spaCy esta instal·lat -- vore
+    `pos_tagger.py`): "persones" té una entrada neta a les dades de
+    Mauricio ("personis", del verb rar "personar"), però ací funciona com
+    a substantiu -- `pos_tagger.etiqueta()` ho detecta ("NOUN") i esta capa
+    no l'toca:
+
+    >>> from .pos_tagger import etiqueta
+    >>> toks = tokenize("Hi havia moltes persones al carrer.")
+    >>> marca_noms_propis(toks)
+    >>> etiqueta(toks)
+    >>> toks = ConjugacionsDictRule().apply(toks)
+    >>> [(t.surface, t.translated) for t in toks if t.is_translated]
+    []
+
+    El mateix filtre NO bloqueja un verb de veres -- "oferisca"/"tinguen"
+    seguixen traduint-se igual que sense POS (vore doctest de dalt):
+
+    >>> toks = tokenize("Els vaig oferisca ajuda encara que tinguen pressa.")
+    >>> marca_noms_propis(toks)
+    >>> etiqueta(toks)
+    >>> toks = ConjugacionsDictRule().apply(toks)
+    >>> [(t.surface, t.translated) for t in toks if t.is_translated]
+    [('oferisca', 'ofereixi'), ('tinguen', 'tinguin')]
+
+    Paraula enganxada a un pronom feble enclític ("'n", "-li"...), mateix
+    mecanisme que el prefix elidit pero pel costat contrari (07/10/2026,
+    vore `separa_sufix_elidit` a rules/__init__.py -- cas real trobat al
+    benchmark: "traure'n" no es traduia mai a "treure'n"):
+
+    >>> toks = tokenize("Per a traure'n algun profit.")
+    >>> marca_noms_propis(toks)
+    >>> toks = ConjugacionsDictRule().apply(toks)
+    >>> [(t.surface, t.translated) for t in toks if t.is_translated]
+    [("traure'n", "treure'n")]
     """
 
     def __init__(self, path: Path = DEFAULT_CONJUGACIONS_PATH) -> None:
@@ -166,17 +255,26 @@ class ConjugacionsDictRule:
             minuscules = tok.surface.lower()
             if minuscules == "siga" and paraula_anterior_es(tokens, i, "o"):
                 continue
+            if tok.pos and tok.pos not in ("VERB", "AUX") and minuscules not in SEMPRE_VERB:
+                continue
             forma = self._lookup.get(minuscules)
             if forma is not None:
                 tok.translated = preserva_majuscula(tok.surface, forma)
                 tok.is_translated = True
                 continue
             prefix_resta = separa_prefix_elidit(tok.surface)
-            if prefix_resta is None:
+            if prefix_resta is not None:
+                prefix, resta = prefix_resta
+                forma = self._lookup.get(resta.lower())
+                if forma is not None:
+                    aplica_amb_prefix_elidit(tokens, i, prefix, resta, forma)
+                    tok.is_translated = True
                 continue
-            prefix, resta = prefix_resta
-            forma = self._lookup.get(resta.lower())
-            if forma is not None:
-                aplica_amb_prefix_elidit(tokens, i, prefix, resta, forma)
-                tok.is_translated = True
+            sufix_resta = separa_sufix_elidit(tok.surface)
+            if sufix_resta is not None:
+                arrel, sufix = sufix_resta
+                forma = self._lookup.get(arrel.lower())
+                if forma is not None:
+                    tok.translated = preserva_majuscula(arrel, forma) + sufix
+                    tok.is_translated = True
         return tokens

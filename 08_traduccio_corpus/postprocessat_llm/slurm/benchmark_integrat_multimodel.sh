@@ -65,6 +65,16 @@ echo "Restringint el job a les GPUs fisiques: $CUDA_VISIBLE_DEVICES"
 export OLLAMA_MODELS="${OLLAMA_MODELS:-$HOME/ollama_models}"
 mkdir -p "$OLLAMA_MODELS"
 
+echo "Instal·lant/comprovant spaCy + model de catala (ca_core_news_sm) -- filtre POS, 07/10/2026..."
+# Vore benchmark_integrat_posfiltre.sh per a l'explicacio completa de
+# PIP_BREAK_SYSTEM_PACKAGES (PEP 668, "externally-managed-environment" en
+# Linux moderns -- cal la variable, no nomes el flag, perque spacy
+# download crida pip per dins sense exposar eixe flag).
+export PIP_BREAK_SYSTEM_PACKAGES=1
+pip install -q spacy
+python3 -m spacy download ca_core_news_sm -q || python3 -m pip install -q \
+    https://github.com/explosion/spacy-models/releases/download/ca_core_news_sm-3.8.0/ca_core_news_sm-3.8.0-py3-none-any.whl
+
 OUT_DIR="$POSTPROC_DIR/resultats_benchmark_integrat_$(date +%Y%m%d_%H%M)"
 LOGS_DIR="$OUT_DIR/logs"
 mkdir -p "$LOGS_DIR"

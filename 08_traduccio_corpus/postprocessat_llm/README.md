@@ -230,15 +230,29 @@ resposta CORRECTA ara es "cap" -- açò permet per fi avaluar també estos
 casos (abans quedaven fora de l'encert, en la categoria "sense veritat
 coneguda").
 
-*(pendent: tornar a mesurar amb esta correcció i actualitzar la taula de
-dalt -- en curs)*
+**Verificat (07/10/2026): la correcció funciona, SENSE EXCEPCIÓ en els 6
+combinacions model x via provades** (`gemma4:12b`, `qwen3:8b`,
+`qwen3:14b`, vies B i C, benchmark complet de 150, via SLURM
+`slurm/benchmark_integrat_multimodel.sh`, 3 GPUs en paral·lel):
 
-### Baseline multi-model (06/10/2026, en curs)
+| Model | Via | Exacte | BLEU | Encerts per paraula (28 total) |
+|---|---|---|---|---|
+| gemma4:12b | B | 90/150 (+1) | 95,35 | 27/28 |
+| gemma4:12b | C | 90/150 (+1) | 95,35 | 27/28 |
+| qwen3:8b | B | 89/150 (+0) | 95,31 | 25/28 |
+| qwen3:8b | C | **90/150 (+1)** | 95,37 | 27/28 |
+| qwen3:14b | B | 90/150 (+1) | 95,35 | 27/28 |
+| qwen3:14b | C | 89/150 (+0) | 95,31 | 26/28 |
 
-Triats per l'usuari: `gemma4:12b`, `qwen3:8b`, `qwen3:14b`, vies B i C,
-sobre el benchmark complet. Script de SLURM:
-`slurm/benchmark_integrat_multimodel.sh` (3 GPUs en paral·lel, igual
-patró que `rellanca_benchmark.sh`). *(resultats pendents)*
+**Cap regressió en cap combinació** -- el pitjor cas ara es quedar-se
+igual (89/150), mai empitjorar. `gemma4:12b` es el mes consistent
+(empata primer en les dos vies). Curiosament `qwen3:14b` (el model mes
+gran) es el pitjor en via C -- no hi ha relació directa entre grandaria
+i encert en este cas concret. Pendent: revisar amb detall els 1-3 fallos
+per combinació (vore JSON complets a
+`resultats_benchmark_integrat_20261006_1650/` en Abaco) per a saber si
+son errors de classificació o un atre bug de parseig com el ja trobat
+amb "subjuntivo" en castellà.
 
 ### Eines i on estan els resultats
 

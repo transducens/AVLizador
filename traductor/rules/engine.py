@@ -1,6 +1,15 @@
 """
 engine.py -- RuleEngine: orquesta totes les capes del pipeline, en orde fix.
 
+Capa 0 OPCIONAL (07/10/2026, vore `pos_tagger.py`): abans de les 9 capes de
+regles, s'intenta etiquetar cada token amb la seua categoria gramatical
+(spaCy, `ca_core_news_sm`). Nomes la fa servir `ConjugacionsDictRule` (capa
+2), per a no aplicar una conjugacio verbal RARA sobre una paraula que en
+eixe context es, de veres, un substantiu/preposicio/etc. ("persones",
+"pobles", "projectes"... vore `pos_tagger.py` per als casos reals). Es
+estrictament opcional: si spaCy no esta instal·lat, `etiqueta()` no fa res
+i el pipeline es comporta exactament igual que abans.
+
 Orde de les capes (30/09/2026, arquitectura reduïda a pur lookup de
 diccionari + 2 regles de sufix productives -- vore `traductor/README.md`
 per l'abast complet i el raonament del canvi):
@@ -41,6 +50,7 @@ reordenar o traure una capa, este és l'ÚNIC lloc a tocar.
 from __future__ import annotations
 
 from . import Token, detokenize, marca_noms_propis, tokenize
+from . import pos_tagger
 from .accentuacio import AccentuacioRule
 from .concordanca_dos_dues import ConcordancaDosDuesRule
 from .conjugacions_dict import ConjugacionsDictRule
@@ -89,6 +99,7 @@ class RuleEngine:
     def translate(self, text: str) -> str:
         tokens: list[Token] = tokenize(text)
         marca_noms_propis(tokens)
+        pos_tagger.etiqueta(tokens)
         for regla in self._regles:
             tokens = regla.apply(tokens)
         return detokenize(tokens)

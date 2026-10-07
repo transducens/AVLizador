@@ -34,9 +34,21 @@ podria introduir regressions noves en paraules que ja estaven bé. Es
 mesura i es reporta això explícitament (vore "paraules sense veritat
 coneguda" en l'eixida).
 
+FILTRE POS AMB SPACY (07/10/2026, activat per defecte): abans de cridar
+el LLM, es comprova amb `ca_core_news_sm` si la paraula marcada funciona
+com a VERB en eixa frase. Si NO ho es (NOUN/ADP/ADJ...), es decideix
+"cap" SENSE cridar el LLM -- provat sobre els 28 casos reals del
+benchmark: 27/28 correctes nomes amb este filtre, 0 falsos positius
+sobre substantius (vore conversa 07/10/2026). Nomes els casos que spaCy
+confirma com a VERB arriben a la via B/C -- aço estalvia la majoria de
+crides Ollama i reduix el risc, encara que no l'elimina del tot (si
+spaCy diu VERB per error, la via C encara pot dir "cap" com a segona
+xarxa de seguretat). Desactiva amb --no-pos-filter per a comparar.
+
 Us:
     python benchmark_integrat.py --via c --model qwen2.5:14b
     python benchmark_integrat.py --via b --model qwen3:8b --limit 20
+    python benchmark_integrat.py --via c --model qwen3:8b --no-pos-filter   # sense filtre, per comparar
 """
 
 from __future__ import annotations
@@ -71,6 +83,7 @@ from traductor.rules import (  # noqa: E402
     separa_prefix_elidit,
     tokenize,
 )
+from traductor.rules import pos_tagger as _pos_tagger_motor  # noqa: E402
 from traductor.rules.accentuacio import AccentuacioRule  # noqa: E402
 from traductor.rules.concordanca_dos_dues import ConcordancaDosDuesRule  # noqa: E402
 from traductor.rules.conjugacions_dict import ConjugacionsDictRule  # noqa: E402
@@ -100,10 +113,46 @@ _PARAULA = re.compile(r"[a-zàèéíòóúïüç']+", re.IGNORECASE)
 DEFAULT_BENCHMARK = ARREL / "03_seleccio_de_model" / "benchmark_corpus.json"
 DEFAULT_OUTPUT = POSTPROC_DIR / "resultats_benchmark_integrat.json"
 
+_NLP_CA = None  # carregat de manera peresosa -- vore carrega_spacy()
+
+
+def carrega_spacy():
+    """Carrega el pipeline de spaCy en catala (ca_core_news_sm) una sola
+    vegada. Torna None si spaCy o el model no estan instal·lats -- en eixe
+    cas el filtre POS simplement es desactiva (tot va a la via B/C, mateix
+    comportament que abans del 07/10/2026)."""
+    global _NLP_CA
+    if _NLP_CA is not None:
+        return _NLP_CA
+    try:
+        import spacy
+        _NLP_CA = spacy.load("ca_core_news_sm")
+    except Exception as e:  # noqa: BLE001
+        print(f"AVIS: no s'ha pogut carregar spaCy/ca_core_news_sm ({e}) -- filtre POS desactivat.")
+        _NLP_CA = False
+    return _NLP_CA
+
+
+def pos_de_paraula(doc, forma: str) -> str | None:
+    """Cerca `forma` (comparacio insensible a majuscules) entre els tokens
+    del document de spaCy i torna la seua etiqueta POS universal, o None
+    si no s'ha trobat (p.ex. diferencies de tokenitzacio)."""
+    for tok in doc:
+        if tok.text.lower() == forma.lower():
+            return tok.pos_
+    return None
+
 
 def tradueix_amb_tokens(text: str) -> list:
     tokens = tokenize(text)
     marca_noms_propis(tokens)
+    # Mateixa capa 0 que `RuleEngine.translate()` (vore engine.py,
+    # 07/10/2026) -- sense esta crida, `ConjugacionsDictRule` mai veu
+    # `tok.pos` omplit ací (encara que reutilitze la mateixa classe real),
+    # i el filtre homograf nou (persones/pobles/projectes/plomes/pares/
+    # visites...) es queda silenciosament inactiu en este benchmark, tot
+    # i estar actiu de veres en `traductor.translate()`.
+    _pos_tagger_motor.etiqueta(tokens)
     for regla in REGLES:
         tokens = regla.apply(tokens)
     return tokens
@@ -141,7 +190,10 @@ def veritat_coneguda(forma: str, ambiguitats: dict, referencia: str) -> str | No
     return "indicatiu" if ind else "subjuntiu"
 
 
-def processa_frase(reg: dict, ambiguitats: dict, guia: str, via: str, model: str, timeout: int) -> dict:
+def processa_frase(
+    reg: dict, ambiguitats: dict, guia: str, via: str, model: str, timeout: int,
+    pos_filter: bool = True,
+) -> dict:
     text = reg["occidental"]
     referencia = reg["oriental"]
 
@@ -150,33 +202,67 @@ def processa_frase(reg: dict, ambiguitats: dict, guia: str, via: str, model: str
     metriques_base = calcula_metriques(hipotesi_base, referencia)
 
     candidats = troba_candidats_ambigus(tokens, ambiguitats)
+
+    # El pipeline de spaCy es relativament car -- NOMES es crida si de
+    # veres hi ha candidats en esta frase, i UNA vegada per frase (no per
+    # candidat), reutilitzant el mateix `doc` per a tots.
+    doc_spacy = None
+    nlp = carrega_spacy() if (pos_filter and candidats) else None
+    if nlp:
+        doc_spacy = nlp(text)
+
     info_paraules = []
     for (i, forma, prefix, resta_original) in candidats:
         veritat = veritat_coneguda(forma, ambiguitats, referencia)
-        cas = {
-            "texto_valenciano": text,
-            "forma_ambigua": forma,
-            "candidat_indicatiu": ambiguitats[forma]["indicatiu"],
-            "candidat_subjuntiu": ambiguitats[forma]["subjuntiu"],
-            "veritat_per_referencia": veritat,
-        }
-        if via == "b":
-            res = cp.via_b(cas, guia, model, timeout)
-            tria = res["tria"]
-            forma_final = res["forma_triada"] if tria in ("indicatiu", "subjuntiu") else None
-        else:
-            res = cp.via_c(cas, model, timeout)
-            tria = res["classe"]
-            forma_final = res["forma_final"]
+        pos = pos_de_paraula(doc_spacy, forma) if doc_spacy is not None else None
 
-        # res["encert"] ja te en compte el cas "cap" (vore _encert en
+        if cp.VERBOSE:
+            print(f"\n### FRASE {reg.get('id', '?')!r} -- paraula ambigua {forma!r} "
+                  f"(indicatiu={ambiguitats[forma]['indicatiu']!r}, subjuntiu={ambiguitats[forma]['subjuntiu']!r}, "
+                  f"veritat_per_referencia={veritat!r}) ###")
+            print(f"[FILTRE POS] spaCy etiqueta {forma!r} com a: {pos!r} "
+                  f"({'NO es VERB -> es decidix cap SENSE cridar el LLM' if pos is not None and pos != 'VERB' else 'es VERB (o spaCy no disponible/no trobat) -> es crida la via ' + via.upper()})",
+                  flush=True)
+
+        if pos is not None and pos != "VERB":
+            # Filtre POS: spaCy diu que ací NO funciona com el verb ambigu
+            # (NOUN/ADP/ADJ...) -- es decidix "cap" SENSE cridar el LLM.
+            tria = "cap"
+            forma_final = None
+            resposta_llm = None
+            segons = 0.0
+            encert = cp._encert(tria, veritat)
+        else:
+            # O no hi ha filtre POS, o spaCy diu que SI es VERB (o no l'ha
+            # trobat al document) -- es crida la via B/C com fins ara.
+            cas = {
+                "texto_valenciano": text,
+                "forma_ambigua": forma,
+                "candidat_indicatiu": ambiguitats[forma]["indicatiu"],
+                "candidat_subjuntiu": ambiguitats[forma]["subjuntiu"],
+                "veritat_per_referencia": veritat,
+            }
+            if via == "b":
+                res = cp.via_b(cas, guia, model, timeout)
+                tria = res["tria"]
+                forma_final = res["forma_triada"] if tria in ("indicatiu", "subjuntiu") else None
+            else:
+                res = cp.via_c(cas, model, timeout)
+                tria = res["classe"]
+                forma_final = res["forma_final"]
+            resposta_llm = res.get("resposta")
+            segons = res.get("segons")
+            encert = res["encert"]
+
+        # "encert" ja te en compte el cas "cap" (vore _encert en
         # compara_postprocessat.py): si veritat es None (probable
         # substantiu homograf) i la via ha triat "cap", es considera
         # ENCERT -- no una resposta "sense veritat coneguda".
         info_paraules.append({
             "forma": forma, "prefix": prefix, "veritat": veritat,
-            "tria": tria, "forma_final": forma_final, "encert": res["encert"],
-            "resposta_llm": res.get("resposta"), "segons": res.get("segons"),
+            "tria": tria, "forma_final": forma_final, "encert": encert,
+            "resposta_llm": resposta_llm, "segons": segons,
+            "pos_spacy": pos, "filtrat_per_pos": pos is not None and pos != "VERB",
         })
 
         if forma_final is not None:
@@ -212,15 +298,40 @@ def main() -> None:
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--guia", type=Path, default=cp.GUIA_PATH)
     parser.add_argument("--limit", type=int, default=None)
+    parser.add_argument("--ids", default=None,
+                         help="Nomes proba estos id's concrets del benchmark, separats per comes "
+                              "(p.ex. --ids RC151 o --ids RC106,RC110,RC151) -- ignora --limit si es dona")
+    parser.add_argument("--pos-filter", dest="pos_filter", action="store_true", default=True,
+                         help="Filtra amb spaCy abans de cridar el LLM (per defecte activat)")
+    parser.add_argument("--no-pos-filter", dest="pos_filter", action="store_false",
+                         help="Desactiva el filtre POS -- tot va a la via B/C, com abans del 07/10/2026")
+    parser.add_argument("--debug", action="store_true",
+                         help="Log super complet: imprimix el prompt EXACTE enviat a Ollama, la "
+                              "resposta crua i com es parseja cada crida (compara_postprocessat.VERBOSE)")
     args = parser.parse_args()
     cp.OLLAMA_URL = args.ollama_url
+    cp.VERBOSE = args.debug
 
     print(f"Calculant formes ambigües des de font_mauricio...")
     ambiguitats = calcula_ambiguitats()
     guia = cp.carrega_guia(args.guia)
+    if args.pos_filter:
+        if carrega_spacy():
+            print("Filtre POS amb spaCy (ca_core_news_sm): ACTIVAT")
+        else:
+            print("Filtre POS demanat pero spaCy no disponible -- continua sense filtre")
+    else:
+        print("Filtre POS: DESACTIVAT (--no-pos-filter)")
 
     benchmark = json.loads(args.benchmark.read_text(encoding="utf-8"))
-    if args.limit:
+    if args.ids:
+        ids_triats = {i.strip() for i in args.ids.split(",") if i.strip()}
+        benchmark = [r for r in benchmark if r.get("id") in ids_triats]
+        trobats = {r["id"] for r in benchmark}
+        faltants = ids_triats - trobats
+        if faltants:
+            print(f"AVIS: no s'han trobat estos id's en {args.benchmark.name}: {sorted(faltants)}")
+    elif args.limit:
         benchmark = benchmark[: args.limit]
 
     print(f"Processant {len(benchmark)} frases -- via {args.via.upper()}, model '{args.model}'...\n")
@@ -228,7 +339,7 @@ def main() -> None:
     t0 = time.perf_counter()
     resultats = []
     for i, reg in enumerate(benchmark, 1):
-        r = processa_frase(reg, ambiguitats, guia, args.via, args.model, args.ollama_timeout)
+        r = processa_frase(reg, ambiguitats, guia, args.via, args.model, args.ollama_timeout, args.pos_filter)
         if r["paraules_ambigues"]:
             marques = ", ".join(
                 f"{p['forma']}->{p['forma_final'] or '(sense tocar)'} "
@@ -270,6 +381,11 @@ def main() -> None:
     for p in sense_veritat:
         if not p["encert"]:
             print(f"    REGRESSIO: {p['forma']!r} -> {p['tria']} -> {p['forma_final'] or '(sense tocar)'}")
+
+    filtrades = sum(1 for p in tots_paraules if p["filtrat_per_pos"])
+    if args.pos_filter:
+        print(f"\nFiltre POS: {filtrades}/{len(tots_paraules)} paraules resoltes SENSE cridar el LLM "
+              f"(spaCy ha dit que no eren el verb) -- {len(tots_paraules) - filtrades} crides Ollama reals fetes.")
     print(f"\nTemps total: {t_total:.1f}s ({t_total / len(resultats):.2f}s/frase de mitjana, "
           f"incloent frases sense cap paraula ambigua -- eixes no criden Ollama)")
 
