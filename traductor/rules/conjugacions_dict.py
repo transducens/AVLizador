@@ -138,6 +138,7 @@ from pathlib import Path
 from . import (
     Token,
     aplica_amb_prefix_elidit,
+    corregeix_elisio_de_abans,
     paraula_anterior_es,
     preserva_majuscula,
     separa_prefix_elidit,
@@ -328,6 +329,18 @@ class ConjugacionsDictRule:
     >>> toks = ConjugacionsDictRule().apply(toks)
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
     [("traure'n", "treure'n")]
+
+    Elisió afegida davant de "de" quan la traducció passa de consonant a
+    vocal inicial (08/10/2026, vore `corregeix_elisio_de_abans` a
+    rules/__init__.py -- cas real: "de calfar-nos" no es traduia mai a
+    "d'escalfar-nos"):
+
+    >>> from . import detokenize
+    >>> toks = tokenize("La manera de calfar-nos.")
+    >>> marca_noms_propis(toks)
+    >>> toks = ConjugacionsDictRule().apply(toks)
+    >>> detokenize(toks)
+    "La manera d'escalfar-nos."
     """
 
     def __init__(self, path: Path = DEFAULT_CONJUGACIONS_PATH) -> None:
@@ -346,6 +359,7 @@ class ConjugacionsDictRule:
             if forma is not None:
                 tok.translated = preserva_majuscula(tok.surface, forma)
                 tok.is_translated = True
+                corregeix_elisio_de_abans(tokens, i)
                 continue
             prefix_resta = separa_prefix_elidit(tok.surface)
             if prefix_resta is not None:
@@ -362,4 +376,5 @@ class ConjugacionsDictRule:
                 if forma is not None:
                     tok.translated = preserva_majuscula(arrel, forma) + sufix
                     tok.is_translated = True
+                    corregeix_elisio_de_abans(tokens, i)
         return tokens

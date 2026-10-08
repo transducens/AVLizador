@@ -1,0 +1,6 @@
+{
+  "descripcio": "Paraules de lexic_mauricio.json on la substitucio valencia->catala canvia el genere gramatical de la paraula sencera (p.ex. 'dacsa', femeni, es substituix per 'blat de moro', masculi). Cap fitxer font de Mauricio documenta genere -- es una llista CURADA A MA, afegida nomes quan hi ha evidencia real (benchmark/corpus) que el determinant anterior quedava mal concordat, mai per endevinar sobre tot el lexic (vore flexio_genere_avl.json per al mateix criteri en un cas distint -- flexio de genere de la MATEIXA paraula, no canvi de genere entre paraules). Camp: forma valenciana (minuscules) -> genere catala resultant ('m' o 'f').",
+  "canvis": {
+    "dacsa": "m"
+  }
+}

@@ -70,6 +70,18 @@ diagnostica útil, vore `traça_verbs_fallats.py` a 03_seleccio_de_model/)
 pero cap regla el consulta hui. Si en el futur es decidix atacar este
 problema, la solució haurà de ser una atra (possiblement estendre
 `postprocessat_llm/` a esta persona tambe, amb LLM, no amb spaCy sol).
+
+Tercer us, mateixa capa -- `Token.gender` (afegit 08/10/2026, vore
+`concordanca_dos_dues.py`): el tret `Gender` d'spaCy sobre NOUN/ADJ per a
+la concordanca "dos"/"dues" sense marcador explicit davant ("dos entitats"
+-> "dues entitats"). Provat sobre 5 frases reals del benchmark amb
+col·lisio coneguda: 6 de 7 paraules rellevants
+(entitats/xifres/llengües/terceres/parts/geminada) be etiquetades Fem; UNA
+(`consonants`) mal etiquetada Masc (hauria de ser Fem, "la consonant"). A
+diferencia de `Mood`, este tret SI s'usa -- pero nomes com a senyal
+POSITIVA (si diu Fem, corregix; si diu Masc/buit/no disponible, no toca
+res), mateixa filosofia de "preferix fals negatiu" que la resta del
+projecte.
 """
 
 from __future__ import annotations
@@ -147,6 +159,15 @@ def etiqueta(tokens: list[Token]) -> None:
     >>> etiqueta(toks)
     >>> [(t.surface, t.mood) for t in toks if t.surface == "creuen"]
     [('creuen', 'Ind')]
+
+    `gender` (afegit 08/10/2026, vore docstring del mòdul i
+    `concordanca_dos_dues.py`): el tret `Gender` d'spaCy per a NOUN/ADJ:
+
+    >>> toks = tokenize("Hem creat dos entitats noves.")
+    >>> marca_noms_propis(toks)
+    >>> etiqueta(toks)
+    >>> [(t.surface, t.gender) for t in toks if t.surface == "entitats"]
+    [('entitats', 'Fem')]
     """
     nlp = _carrega_spacy()
     if nlp is None:
@@ -164,6 +185,8 @@ def etiqueta(tokens: list[Token]) -> None:
                 tok.pos = dt.pos_
                 mood = dt.morph.get("Mood")
                 tok.mood = mood[0] if mood else ""
+                gender = dt.morph.get("Gender")
+                tok.gender = gender[0] if gender else ""
                 break
 
 

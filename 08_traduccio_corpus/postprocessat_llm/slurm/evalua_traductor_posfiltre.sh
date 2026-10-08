@@ -1,9 +1,11 @@
 #!/bin/bash
 # evalua_traductor_posfiltre.sh -- Job de SLURM NOMES CPU (sense GPU): corre
-# `03_seleccio_de_model/evalua_models.py --model traductor` per a mesurar
-# l'efecte real del filtre POS (spaCy) nou dins de `ConjugacionsDictRule`
-# (vore CLAUDE.md, secció "Sesion 07/10/2026", i traductor/README.md,
-# "DECISIO D'ARQUITECTURA (07/10/2026)", per al contexte complet).
+# la suite de doctests + `03_seleccio_de_model/evalua_models.py --model
+# traductor` per a validar canvis al motor de `traductor/` abans de fer
+# commit. Usat per primera vegada per al filtre POS (07/10/2026, vore
+# traductor/README.md "DECISIO D'ARQUITECTURA"); reutilitzat el
+# 08/10/2026 per a validar dos/dues capa 2, elisio "de"->"d'" i
+# concordança de gènere tras substitució lèxica (vore CLAUDE_HISTORIAL.md).
 #
 # A diferencia de la resta de scripts d'esta carpeta, este NO necessita
 # Ollama ni GPU -- nomes el motor de regles de `traductor/` + spaCy
@@ -12,16 +14,31 @@
 # `03_seleccio_de_model/benchmark_corpus.json` (ja hi son, pujats en
 # sessions anteriors per als scripts de benchmark_integrat.py).
 #
-# FITXERS A PUJAR abans de llançar-ho (nomes els que han canviat,
-# 07/10/2026 -- vore detall en CLAUDE.md):
-#   traductor/rules/pos_tagger.py          (NOU)
-#   traductor/rules/engine.py              (modificat)
-#   traductor/rules/conjugacions_dict.py   (modificat)
-#   traductor/rules/__init__.py            (modificat, nomes docstring)
+# FITXERS A PUJAR abans de llançar-ho (08/10/2026 -- dos/dues capa 2,
+# elisio "de"->"d'", concordança de gènere; vore CLAUDE_HISTORIAL.md):
+#   traductor/rules/__init__.py              (modificat: Token.gender,
+#                                              corregeix_elisio_de_abans)
+#   traductor/rules/pos_tagger.py            (modificat: omple gender)
+#   traductor/rules/concordanca_dos_dues.py  (modificat: capa 2 spaCy)
+#   traductor/rules/conjugacions_dict.py     (modificat: crida elisio)
+#   traductor/rules/lexic.py                 (modificat: concordança genere)
+#   traductor/data/canvi_genere_lexic_avl.json (NOU)
+#   traductor/data/conjugacions_dialectals.json (resincronitzat abans
+#                                              d'avui -- calfar/escalfar,
+#                                              vetlar/vetllar -- pujar per
+#                                              si Abaco encara te la versio
+#                                              vella)
 #
-#   scp traductor/rules/pos_tagger.py traductor/rules/engine.py \
-#       traductor/rules/conjugacions_dict.py traductor/rules/__init__.py \
+#   ssh nmartin@abaco "mkdir -p ~/scrapeo/postprocesado_llm/traductor/rules ~/scrapeo/postprocesado_llm/traductor/data"
+#   scp traductor/rules/__init__.py traductor/rules/pos_tagger.py \
+#       traductor/rules/concordanca_dos_dues.py traductor/rules/conjugacions_dict.py \
+#       traductor/rules/lexic.py \
 #       nmartin@abaco:~/scrapeo/postprocesado_llm/traductor/rules/
+#   scp traductor/data/canvi_genere_lexic_avl.json \
+#       traductor/data/conjugacions_dialectals.json \
+#       nmartin@abaco:~/scrapeo/postprocesado_llm/traductor/data/
+#   scp 08_traduccio_corpus/postprocessat_llm/slurm/evalua_traductor_posfiltre.sh \
+#       nmartin@abaco:~/scrapeo/postprocesado_llm/08_traduccio_corpus/postprocessat_llm/slurm/
 #
 # Lanzarlo (des del node de login d'Abaco):
 #   cd ~/scrapeo/postprocesado_llm/08_traduccio_corpus/postprocessat_llm/slurm
@@ -66,7 +83,7 @@ python3 -m spacy download ca_core_news_sm -q || python3 -m pip install -q \
     https://github.com/explosion/spacy-models/releases/download/ca_core_news_sm-3.8.0/ca_core_news_sm-3.8.0-py3-none-any.whl
 
 echo ""
-echo "Corrent la suite de doctests de traductor/ (246 tests esperats, 0 fallos)..."
+echo "Corrent la suite de doctests de traductor/ (244 tests esperats en local, 0 fallos)..."
 cd "$POSTPROC_DIR"
 python3 -c "
 import doctest, importlib
@@ -93,5 +110,7 @@ cd "$POSTPROC_DIR/03_seleccio_de_model"
 python3 evalua_models.py --model traductor
 
 echo ""
-echo "Fet. Compara el 'Exactes: N/151' de dalt amb el baseline conegut (89/151"
-echo "sense filtre, 99/151 esperat amb el filtre -- vore CLAUDE.md)."
+echo "Fet. Compara el 'Exactes: N/151' de dalt amb el baseline conegut: 109/151"
+echo "abans dels canvis d'avui, 114/151 (75,5%) BLEU 97,54 esperat amb els 3"
+echo "fixes nous (dos/dues capa 2, elisio 'de'->'d'', concordança de genere)"
+echo "-- vore CLAUDE.md i CLAUDE_HISTORIAL.md."

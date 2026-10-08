@@ -55,12 +55,23 @@ class Token:
     plural, pero es va DESCARTAR el mateix dia (vore `pos_tagger.py` per
     al perquè -- spaCy diu "Ind" quasi sempre, siga veritat o no). Cap
     regla el consulta hui; es queda calculat com a informació diagnòstica.
+
+    `gender` (afegit 08/10/2026, mateix mecanisme opcional que `pos`): el
+    tret morfològic `Gender` d'spaCy ("Fem", "Masc") per a NOUN/ADJ. A
+    diferencia de `mood`, este SÍ es consulta -- per `ConcordancaDosDuesRule`
+    per a la concordança "dos"/"dues" davant de nom/adjectiu femení sense
+    marcador explícit al davant. No és infal·lible (provat amb casos reals
+    del benchmark: "consonants" l'etiqueta Masc per error, hauria de ser
+    Fem), per això nomes s'actua quan diu Fem explícitament -- si diu Masc,
+    buit, o spaCy no està disponible, no es toca "dos" (preferix fals
+    negatiu, vore `pos_tagger.py`).
     """
 
     surface: str
     translated: str
     pos: str = ""
     mood: str = ""
+    gender: str = ""
     is_translated: bool = False
     is_proper_noun: bool = False
     start: int = 0
@@ -286,6 +297,61 @@ def aplica_amb_prefix_elidit(tokens: list[Token], index: int, prefix: str, resta
                 return
 
     tok.translated = preserva_majuscula(prefix, complet) + " " + forma_cap
+
+
+def corregeix_elisio_de_abans(tokens: list[Token], index: int) -> None:
+    """Si `tokens[index]` ha canviat de consonant inicial a vocal/h muda
+    com a resultat d'una substitució (lookup exacte), i el token real
+    anterior és la preposició "de" solta (sense apòstrof -- si ja en tenia
+    un, és un cas distint, el de `aplica_amb_prefix_elidit`), la convertix
+    a "d'" eliminant l'espai intermedi. Al revés que
+    `aplica_amb_prefix_elidit` (que DESFÀ una elisió que ja no té sentit),
+    esta funció AFIG una elisió que no existia perquè el text original no
+    en necessitava cap.
+
+    Cas real trobat (08/10/2026, RC032): "la manera de calfar-nos" ->
+    "la manera de escalfar-nos" en compte de "d'escalfar-nos", perquè
+    "calfar" (consonant inicial) es tradueix a "escalfar" (vocal inicial)
+    -- `conjugacions_dict.py` és l'únic cridador conegut hui.
+
+    >>> toks = tokenize("de calfar-nos")
+    >>> toks[-1].translated = "escalfar-nos"
+    >>> corregeix_elisio_de_abans(toks, len(toks) - 1)
+    >>> detokenize(toks)
+    "d'escalfar-nos"
+
+    Si el token anterior no és "de" (solt), no fa res:
+
+    >>> toks = tokenize("per a calfar-nos")
+    >>> toks[-1].translated = "escalfar-nos"
+    >>> corregeix_elisio_de_abans(toks, len(toks) - 1)
+    >>> detokenize(toks)
+    'per a escalfar-nos'
+
+    Si la forma traduïda seguix començant en consonant, tampoc fa res:
+
+    >>> toks = tokenize("de parlar-nos")
+    >>> toks[-1].translated = "parlar-nos"
+    >>> corregeix_elisio_de_abans(toks, len(toks) - 1)
+    >>> detokenize(toks)
+    'de parlar-nos'
+    """
+    tok = tokens[index]
+    if not _COMENCA_EN_VOCAL_O_H_MUDA_RE.match(tok.translated):
+        return
+    i_anterior = None
+    for i in range(index - 1, -1, -1):
+        if tokens[i].surface.isspace():
+            continue
+        i_anterior = i
+        break
+    if i_anterior is None or tokens[i_anterior].translated.lower() != "de":
+        return
+    anterior = tokens[i_anterior]
+    anterior.translated = preserva_majuscula(anterior.surface, "d'")
+    anterior.is_translated = True
+    for espai in tokens[i_anterior + 1 : index]:
+        espai.translated = ""
 
 
 # Pronoms febles enclítics reals de valencià/català, enganxats al final

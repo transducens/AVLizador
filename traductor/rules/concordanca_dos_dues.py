@@ -18,15 +18,16 @@ sense article/demostratiu davant, com "dos entitats" o "dos xifres")
 necessiten mirar el SUFIX de la paraula següent -- eixa és la segona capa
 pendent, NO implementada ací a propòsit (vore nota baix).
 
-PENDENT, NO IMPLEMENTAT A PROPÒSIT (decidit 01/10/2026, mesurar l'impacte
-d'esta primera capa abans d'afegir la segona):
-  - Sufix del nom/adjectiu següent ("dos entitats" -> "dues", per
-    "entitats"; "dos terceres parts" -> "dues", per l'ordinal "terceres").
-  - Casos purament lèxics sense cap marca formal ("dos consonants" --
-    "consonant" és femení però no ho diu ni el sufix ni cap article
-    davant). Nomes amb una llista curada a mà si algun dia dona problemes
-    reals -- mai amb una regla general de gènere sobre tot el lèxic (vore
-    `lexic.py`, secció sobre `flexio_genere_avl.json`, pel mateix motiu).
+SEGONA CAPA (afegida 08/10/2026): quan no hi ha marcador explícit davant,
+es consulta `Token.gender` (spaCy, capa 0 opcional, vore `pos_tagger.py`)
+de la primera paraula NOUN/ADJ després de "dos" -- cobrix "dos entitats"
+(entitats=NOUN Fem) i "dos terceres parts" (terceres=ADJ Fem, ja resol
+sense arribar al nom). NOMÉS s'actua quan spaCy diu Fem explícitament; si
+diu Masc, buit, o spaCy no està instal·lat, no es toca res -- preferix fals
+negatiu (vore `pos_tagger.py`: provat amb 5 frases reals, 6/7 paraules
+rellevants be etiquetades, pero "consonants" ix Masc per error, així que
+"dos consonants" es queda SENSE corregir amb esta capa -- acceptat, no
+s'afig cap llista curada mentre no es trobe evidencia real que calga).
 
 RISC CONEGUT (acceptat): el corpus benchmark mateix és inconsistent en 2
 casos (RC112, RC120) on "dos" + nom femení ("dos llengües") es deixa
@@ -63,8 +64,21 @@ class ConcordancaDosDuesRule:
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
     [('dos', 'dues')]
 
-    Sense marcador davant, no toca res -- eixe cas ("dos entitats") el
-    cobrirà la futura capa de sufix, encara no implementada:
+    Sense marcador davant, la segona capa (spaCy, `Token.gender`) detecta
+    el femení del nom/adjectiu següent -- nomes funciona si s'ha cridat
+    `pos_tagger.etiqueta()` abans (com fa `RuleEngine`; en estos doctests
+    es crida a mà):
+
+    >>> from . import pos_tagger
+    >>> toks = tokenize("Hem creat dos entitats noves.")
+    >>> marca_noms_propis(toks)
+    >>> pos_tagger.etiqueta(toks)
+    >>> toks = ConcordancaDosDuesRule().apply(toks)
+    >>> [(t.surface, t.translated) for t in toks if t.is_translated]
+    [('dos', 'dues')]
+
+    Sense spaCy disponible (`gender` buit per a tots els tokens), esta
+    capa no fa res -- es queda igual que abans:
 
     >>> toks = tokenize("Hem creat dos entitats noves.")
     >>> marca_noms_propis(toks)
@@ -96,7 +110,7 @@ class ConcordancaDosDuesRule:
                 continue
             if tok.surface.lower() != "dos":
                 continue
-            if not _marcador_femeni_abans(tokens, i):
+            if not (_marcador_femeni_abans(tokens, i) or _femeni_despres(tokens, i)):
                 continue
             tok.translated = preserva_majuscula(tok.surface, "dues")
             tok.is_translated = True
@@ -111,4 +125,20 @@ def _marcador_femeni_abans(tokens: list[Token], index: int) -> bool:
         if tok.surface.isspace():
             continue
         return tok.surface.lower() in _MARCADORS_FEMENI_PLURAL
+    return False
+
+
+def _femeni_despres(tokens: list[Token], index: int) -> bool:
+    """Segona capa (vore docstring del mòdul): mira la primera paraula
+    NOUN/ADJ després de "dos" i comprova `Token.gender` (spaCy, capa 0
+    opcional). Nomes torna `True` quan diu "Fem" explícitament -- buit
+    (spaCy no disponible o paraula no reconeguda) o "Masc" no activen la
+    regla, mateixa filosofia de preferir fals negatiu que la resta del
+    projecte."""
+    for tok in tokens[index + 1 :]:
+        if tok.surface.isspace():
+            continue
+        if tok.pos not in ("NOUN", "ADJ"):
+            return False
+        return tok.gender == "Fem"
     return False

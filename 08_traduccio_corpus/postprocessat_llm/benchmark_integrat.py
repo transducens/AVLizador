@@ -181,10 +181,28 @@ def troba_candidats_ambigus(tokens: list, ambiguitats: dict) -> list[tuple[int, 
 def veritat_coneguda(forma: str, ambiguitats: dict, referencia: str) -> str | None:
     """Mateixa tècnica que identifica_ambigues.py: si nomes un dels dos
     candidats apareix literalment en la referència, eixa és la "veritat".
-    Si apareixen els dos o cap, no se sap (probablement substantiu)."""
-    paraules_ref = {p.lower() for p in _PARAULA.findall(referencia)}
-    ind = ambiguitats[forma]["indicatiu"] in paraules_ref
-    sub = ambiguitats[forma]["subjuntiu"] in paraules_ref
+    Si apareixen els dos o cap, no se sap (probablement substantiu).
+
+    Bug real trobat i corregit (08/10/2026): la paraula de referència
+    sovint du un prefix elidit pegat ("s'hagin", "s'emmarquen"), i
+    `_PARAULA` tracta l'apòstrof com a part del token -- "s'hagin" mai
+    coincidia amb el candidat solt "hagin", aixina que `veritat_coneguda`
+    tornava `None` (semblava "cap") encara que el candidat SI aparega,
+    nomes que amb un prefix davant. Això disparava `REGRESSIO` falsos al
+    informe per a casos que en realitat ja eren correctes (p.ex.
+    "hagen"->"hagin" en RC094, "esforcen" en RC069, "emmarquen" en RC086
+    -- els 3 duien prefix elidit a la referència). Ara es busca TAMBÉ la
+    forma sense el prefix.
+    """
+    paraules_ref: set[str] = set()
+    for p in _PARAULA.findall(referencia):
+        pl = p.lower()
+        paraules_ref.add(pl)
+        prefix_resta = separa_prefix_elidit(pl)
+        if prefix_resta is not None:
+            paraules_ref.add(prefix_resta[1])
+    ind = ambiguitats[forma]["indicatiu"].lower() in paraules_ref
+    sub = ambiguitats[forma]["subjuntiu"].lower() in paraules_ref
     if ind == sub:
         return None
     return "indicatiu" if ind else "subjuntiu"
@@ -221,17 +239,22 @@ def processa_frase(
                   f"(indicatiu={ambiguitats[forma]['indicatiu']!r}, subjuntiu={ambiguitats[forma]['subjuntiu']!r}, "
                   f"veritat_per_referencia={veritat!r}) ###")
             print(f"[FILTRE POS] spaCy etiqueta {forma!r} com a: {pos!r} "
-                  f"({'NO es VERB -> es decidix cap SENSE cridar el LLM' if pos is not None and pos != 'VERB' else 'es VERB (o spaCy no disponible/no trobat) -> es crida la via ' + via.upper()})",
+                  f"({'NO es VERB/AUX -> es decidix cap SENSE cridar el LLM' if pos is not None and pos not in ('VERB', 'AUX') else 'es VERB/AUX (o spaCy no disponible/no trobat) -> es crida la via ' + via.upper()})",
                   flush=True)
 
-        if pos is not None and pos != "VERB":
+        if pos is not None and pos not in ("VERB", "AUX"):
             # Filtre POS: spaCy diu que ací NO funciona com el verb ambigu
             # (NOUN/ADP/ADJ...) -- es decidix "cap" SENSE cridar el LLM.
+            # "AUX" compta com a verb (mateix criteri que ConjugacionsDictRule
+            # al motor -- "poden"/"puguen" sovint s'etiqueten AUX quan van
+            # davant d'un infinitiu, "puguen fer", i son el verb ambigu de
+            # veres, 08/10/2026).
             tria = "cap"
             forma_final = None
             resposta_llm = None
             segons = 0.0
-            encert = cp._encert(tria, veritat)
+            indistingible = ambiguitats[forma]["indicatiu"].lower() == forma.lower()
+            encert = cp._encert(tria, veritat, indistingible)
         else:
             # O no hi ha filtre POS, o spaCy diu que SI es VERB (o no l'ha
             # trobat al document) -- es crida la via B/C com fins ara.
@@ -262,7 +285,7 @@ def processa_frase(
             "forma": forma, "prefix": prefix, "veritat": veritat,
             "tria": tria, "forma_final": forma_final, "encert": encert,
             "resposta_llm": resposta_llm, "segons": segons,
-            "pos_spacy": pos, "filtrat_per_pos": pos is not None and pos != "VERB",
+            "pos_spacy": pos, "filtrat_per_pos": pos is not None and pos not in ("VERB", "AUX"),
         })
 
         if forma_final is not None:

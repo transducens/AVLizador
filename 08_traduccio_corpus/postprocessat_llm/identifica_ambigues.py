@@ -1,19 +1,32 @@
 #!/usr/bin/env python3
-"""Identifica l'ambiguitat 1a persona present indicatiu/subjuntiu
-(p.ex. valencia "plantege" -> catala "plantejo" indicatiu / "plantegi"
-subjuntiu) a partir de les 4 fonts crues de Mauricio, i localitza frases
-reals del BOE on apareix -- mostra de prova per a comparar les 3 vies de
-postprocessat amb LLM (A/B/C, vore conversa 06/10/2026).
+"""Identifica dos fenomens d'ambiguitat INDICATIU/SUBJUNTIU en valencia
+que el motor de regles deixa a proposit sense traduir, per a que el
+postprocessat LLM (vía C) decidisca mirant el context real de la frase:
 
-Per que este patro i no un altre: ConjugacionsDictRule EXCLOU del lookup
-qualsevol forma marcada "problematica" (vore traductor/rules/conjugacions_dict.py),
-que inclou este cas entre altres. Este script aïlla NOMÉS el subconjunt
-on dos candidats catalans comparteixen arrel i un acaba en "-o" (present
-indicatiu, 1a pers. sg.) i l'altre en "-i" (present subjuntiu, 1a pers.
-sg.) -- el cas EXACTE que l'usuari ha demanat etiquetar ("jo plantejo" /
-"jo plantege"), ignorant la resta de formes "problematica" (locucions
-fixes, col·lisions homografes amb substantius, etc.) que no son este
-fenomen.
+1. **1a persona singular, present** (06/10/2026): "plantege" -> "plantejo"
+   indicatiu / "plantegi" subjuntiu. Calculat a `calcula_ambiguitats_1a_persona()`
+   a partir de les 4 fonts crues de Mauricio (dos candidats catalans que
+   comparteixen arrel i acaben en "-o"/"-i").
+2. **3a plural, present i imperfet** (08/10/2026): "creuen" -> "creuen"
+   indicatiu (no canvia, per aixo no hi ha fila a les dades) / "creuin"
+   subjuntiu; "quedaren" -> "quedaren" indicatiu / "quedessin" subjuntiu.
+   Calculat a `calcula_ambiguitats_3a_plural()` a partir de
+   `traductor/data/conjugacions_dialectals.json` ja fusionat, reutilitzant
+   `es_risc_mode_3a_plural()` de `conjugacions_dict.py` -- mateixa funcio
+   que el motor fa servir per a EXCLOURE estes formes del lookup directe,
+   perque este script ha de mirar EXACTAMENT el mateix conjunt.
+
+`calcula_ambiguitats()` combina els dos (vore baix). Este fitxer tambe
+localitza frases reals del BOE on apareixen -- mostra de prova per a
+comparar les 3 vies de postprocessat amb LLM (A/B/C, vore conversa
+06/10/2026).
+
+Per que estos patrons i no uns atres: ConjugacionsDictRule EXCLOU del
+lookup qualsevol forma marcada "problematica" o detectada per
+`es_risc_mode_3a_plural()` (vore traductor/rules/conjugacions_dict.py).
+La resta de formes "problematica" (locucions fixes, col·lisions
+homografes amb substantius com "germanes", etc.) NO son estos fenomens i
+es gestionen per atres mecanismes (EXCLUSIONS_HOMOGRAF, filtre POS).
 
 Nota important: esta detecció NOMES mira el PARELL de catalans candidats
 per forma valenciana -- no consulta el camp "problematica" existent,
@@ -65,11 +78,12 @@ FONTS = (
 )
 
 
-def calcula_ambiguitats() -> dict[str, dict[str, str]]:
+def calcula_ambiguitats_1a_persona() -> dict[str, dict[str, str]]:
     """Torna {forma_valenciana: {"indicatiu": ..., "subjuntiu": ...}} per a
     totes les formes on, entre les 4 fonts de Mauricio, hi ha EXACTAMENT 2
     traduccions catalanes candidates que comparteixen arrel i difereixen
-    només en la vocal final -o (indicatiu) / -i (subjuntiu)."""
+    només en la vocal final -o (indicatiu) / -i (subjuntiu) -- 1a persona
+    singular."""
     per_valencia: dict[str, set[str]] = defaultdict(set)
     for nom_font in FONTS:
         dades = json.loads((MAURICIO / nom_font).read_text(encoding="utf-8"))
@@ -91,6 +105,63 @@ def calcula_ambiguitats() -> dict[str, dict[str, str]]:
         else:
             continue
         resultat[valenciano] = {"indicatiu": indicatiu, "subjuntiu": subjuntiu}
+    return resultat
+
+
+def calcula_ambiguitats_3a_plural() -> dict[str, dict[str, str]]:
+    """Torna {forma_valenciana: {"indicatiu": ..., "subjuntiu": ...}} per a
+    la col·lisio INDICATIU/SUBJUNTIU de 3a plural trobada el 08/10/2026
+    (present "-en"->"-in", imperfet "-aren"/"-eren"->"-essin"/"-issin" --
+    vore `traductor/rules/conjugacions_dict.py::es_risc_mode_3a_plural`,
+    la mateixa funcio que `ConjugacionsDictRule` fa servir per a EXCLOURE
+    estes formes del lookup directe, perque este script ha de mirar
+    EXACTAMENT el mateix conjunt que el motor deixa sense traduir).
+
+    A diferencia de `calcula_ambiguitats_1a_persona()`, ací l'indicatiu NO
+    ve de cap fila de dades -- es la mateixa forma valenciana SENSE
+    CANVIAR (el present/pretèrit d'indicatiu de 3a plural no canvia mai
+    entre dialectes, per aixo cap lexic diferencial el llista; nomes hi
+    ha la fila de subjuntiu, que es l'unica que veu `conjugacions_dialectals.json`).
+    """
+    sys.path.insert(0, str(ARREL))
+    from traductor.rules.conjugacions_dict import (  # noqa: E402
+        DEFAULT_CONJUGACIONS_PATH,
+        EXCLUSIONS_HOMOGRAF,
+        SEMPRE_VERB,
+        es_risc_mode_3a_plural,
+    )
+
+    dades = json.loads(DEFAULT_CONJUGACIONS_PATH.read_text(encoding="utf-8"))
+    per_valencia: dict[str, set[str]] = defaultdict(set)
+    for entrada in dades.get("entradas", []):
+        if entrada.get("problematica"):
+            continue
+        v = (entrada.get("valenciano") or "").strip().lower()
+        c = (entrada.get("catalan") or "").strip()
+        if v and c:
+            per_valencia[v].add(c)
+
+    resultat: dict[str, dict[str, str]] = {}
+    for valenciano, catalans in per_valencia.items():
+        if valenciano in EXCLUSIONS_HOMOGRAF or valenciano in SEMPRE_VERB:
+            continue
+        if len(catalans) != 1:
+            continue
+        subjuntiu = next(iter(catalans))
+        if not es_risc_mode_3a_plural(valenciano, subjuntiu):
+            continue
+        resultat[valenciano] = {"indicatiu": valenciano, "subjuntiu": subjuntiu}
+    return resultat
+
+
+def calcula_ambiguitats() -> dict[str, dict[str, str]]:
+    """Combina 1a persona singular + 3a plural (08/10/2026) -- vore
+    `calcula_ambiguitats_1a_persona()` i `calcula_ambiguitats_3a_plural()`.
+    Mantinguda com a punt d'entrada unic perque `benchmark_integrat.py`
+    i la resta de scripts ja la criden tal qual, sense saber quants
+    fenomens distints combina per davall."""
+    resultat = calcula_ambiguitats_1a_persona()
+    resultat.update(calcula_ambiguitats_3a_plural())
     return resultat
 
 

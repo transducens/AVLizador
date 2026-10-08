@@ -389,13 +389,18 @@ tocar (`problematica: true`, exclusió deliberada des de fa sessions) fins
 que hi haja un mecanisme de desambiguació per context. No cal "arreglar"
 res ací, és l'abast ja conegut i acceptat.
 
-**C -- Concordança "dos"/"dues" incompleta (7 frases)**: la regla
-`concordanca_dos_dues.py` ja existent no cobrix tots els contextos.
-Casos: RC062 ("dues:"), RC078, RC094 (×3 en la mateixa frase), RC096,
-RC118, RC138, RC142. Pendent de revisar `concordanca_dos_dues.py` per
-vore quins patrons concrets li falten (probablement nomes mira
-marcadors com "les"/"estes" immediatament davant, no sintagmes mes
-llargs com "dos entitats de població" o "dos terceres parts").
+**C -- Concordança "dos"/"dues" incompleta (RESOLTA EN GRAN PART, 08/10/2026)**:
+`concordanca_dos_dues.py` tenia nomes la capa 1 (marcador explícit davant).
+Afegida la capa 2: `Token.gender` (spaCy, `pos_tagger.py`) sobre la
+primera paraula NOUN/ADJ després de "dos" -- si diu Fem, corregix; si diu
+Masc/buit, no toca res (preferix fals negatiu). **+3 frases exactes**
+(RC078, RC096, RC138); RC094 i RC118 ara tenen el "dos"→"dues" correcte
+pero seguixen fallant per motius NO relacionats (categoria A i "per
+acabar"/"per a acabar" respectivament). Casos que SEGUIXEN sense corregir,
+per motius ja identificats: RC062 ("en dos:", anafòric -- cap nom
+despres que mirar, fora de l'abast d'esta capa) i RC142 ("dos consonants"
+-- spaCy etiqueta "consonants" com a Masc per error, hauria de ser Fem;
+no s'afig cap llista curada mentre no hi haja mes evidencia real).
 
 **D -- Preposició "en"/"a" sense regla seg​ura (5 frases, direcció
 CONTRADICTÒRIA segons l'expressió -- NO hi ha arreglo general)**:
@@ -408,22 +413,26 @@ es podria resoldre amb una llista tancada per expressió concreta
 ("vinculat a", "tindre la seu a", "interior de"...), mai amb una regla
 general -- i no hi ha prou evidència encara per a saber si val la pena.
 
-**E -- Concordança de gènere tras substitució léxica (1 frase, ja
-discutit avui, disseny proposat pero NO implementat)**: RC044 "la dacsa"
-→"blat de moro" dona "la blat de moro" en compte de "el blat de moro".
+**E -- Concordança de gènere tras substitució léxica (RESOLTA, 08/10/2026)**:
+RC044 "la dacsa"→"blat de moro" donava "la blat de moro". Implementat el
+disseny ja escrit: `canvi_genere_lexic_avl.json` (llista curada a mà de
+paraules on `LexicRule` canvia el gènere sencer) + correcció del
+determinant immediatament anterior amb una taula tancada. Vore
+`lexic.py`. **+1 frase exacta.**
 
 **F -- Buits lèxics/morfològics puntuals, sense patró comú (la resta,
 NO revisar encara -- decisió explícita de l'usuari 07/10/2026)**:
-`calfar`/`escalfar` sense entrada (RC032, RC046), `vetlar`/`vetllar`
-doble ela (RC062), `deixa fora`/`deixa fos` (RC064), `gaudeixin`/
-`disfruten` sense entrada (RC069), `ofertes`/`oferides` participi
-distint (RC107), `complisca`/`compleixi` -- possible inconsistència de
-la pròpia referència, no traduït allí (RC126), `com`/`com a` possible
-error tipogràfic de la referència (RC133), ortografia arcaica
-`y`/`i`, `le`/`li`, `he`/`haig` en un text històric citat literalment
-(RC119, RC120). **RC065 NO és cap bug**: la referència té un doble espai
-literal ("estancamiento **  **i inflación") que la nostra hipòtesi no
-reproduïx -- artefacte de les dades, no de `traductor/`.
+`vetlar`/`vetllar` doble ela (RC062), `deixa fora`/`deixa fos` (RC064),
+`gaudeixin`/`disfruten` sense entrada (RC069), `ofertes`/`oferides`
+participi distint (RC107), `complisca`/`compleixi` -- possible
+inconsistència de la pròpia referència, no traduït allí (RC126), `com`/
+`com a` possible error tipogràfic de la referència (RC133), ortografia
+arcaica `y`/`i`, `le`/`li`, `he`/`haig` en un text històric citat
+literalment (RC119, RC120). **RC065 NO és cap bug**: la referència té un
+doble espai literal ("estancamiento **  **i inflación") que la nostra
+hipòtesi no reproduïx -- artefacte de les dades, no de `traductor/`.
+(`calfar`/`escalfar`, RC032/RC046, ja no és un buit -- vore seccions
+d'elisió i la resincronització de dades mes amunt.)
 
 **Troballa nova, a part**: "o siga" (RC067) es protegix a propòsit com a
 locució fixa (vore `conjugacions_dict.py`), però la referència SÍ la

@@ -62,6 +62,30 @@ SALIDA_PATH = SCRIPT_DIR / "resultats_comparativa_ABC.json"
 
 OLLAMA_URL = "http://localhost:11434"
 
+# Activat des de benchmark_integrat.py amb --debug (07/10/2026): quan es
+# True, crida_ollama() imprimix el prompt EXACTE que es manda a Ollama i
+# la resposta crua, sencers, abans de cap parseig -- per a poder traure
+# una traça completa al .out de SLURM i vore paraula per paraula com es
+# decidix cada cas, sense haver d'adivinar que hi ha "per dins".
+VERBOSE = False
+
+
+def _imprimix_crida(system: str, prompt: str, model: str) -> None:
+    print("\n" + "=" * 100)
+    print(f"[OLLAMA] model={model!r}")
+    print("-" * 100)
+    print("SYSTEM PROMPT (el que fixa el comportament, no canvia entre frases):")
+    print(system)
+    print("-" * 100)
+    print("USER PROMPT (la frase + la paraula marcada d'esta crida concreta):")
+    print(prompt)
+    print("-" * 100, flush=True)
+
+
+def _imprimix_resposta(resposta: str, segons: float) -> None:
+    print(f"RESPOSTA CRUA D'OLLAMA (abans de cap parseig, {segons:.2f}s): {resposta!r}")
+    print("=" * 100 + "\n", flush=True)
+
 CRITERI_MODE_VERBAL = """
 CRITERI PER A DECIDIR INDICATIU VS. SUBJUNTIU (la guia de dialectologia no
 cobrix mode verbal, nomes determinants/pronoms/preposicions -- este criteri
@@ -71,9 +95,36 @@ es general, no ve d'eixe document):
   ("vull que", "cal que", "és necessari que", "sempre que", "a fi que"), o
   darrere de "perquè" amb valor final, o en frases de relatiu amb valor
   hipotetic/indefinit ("qualsevol que...", "el que siga que...").
-- INDICATIU si expressa un fet asseverat en primera persona, normalment en
-  oracio principal o subordinada completiva sense eixe matís de voluntat/
-  dubte ("jo declare que...", "per la present jo autorize...").
+- INDICATIU si expressa un fet asseverat (en qualsevol persona, singular
+  o plural), normalment en oracio principal o subordinada completiva
+  sense eixe matís de voluntat/dubte ("jo declare que...", "per la
+  present jo autorize...", "els experts creuen que...", "molts pares
+  poden quedar...").
+ATENCIO -- NO confongues la paraula marcada en el verb de la SEUA PROPIA
+subordinada: en "jo em centre en que el partit isca bé", la paraula
+marcada ("centre") es el verb PRINCIPAL, que asseverA un fet ("centrar-se
+en" = fixar l'atencio en), encara que vaja seguit de "que" i encara que el
+verb DINS d'eixa subordinada ("isca") siga, ell si, subjuntiu de veres.
+Verbs assertius/factuals seguits de "en que"/"que" com "centrar-se en
+que", "basar-se en que", "fixar-se en que", "constatar que" son INDICATIU
+encara que hi haja un "que" immediatament darrere -- NO es el mateix
+patro que "vull que" (ahi el verb marcat seria "vull", no el verb de la
+subordinada). Mira SEMPRE si la paraula marcada es la que GOVERNA el
+"que" (verb principal, asseveratiu -> INDICATIU) o la que ve DESPRES del
+"que" depenent d'un verb de voluntat/dubte/valoracio (-> SUBJUNTIU).
+ATENCIO -- frases de relatiu REALS (amb antecedent concret, conegut,
+existent) son INDICATIU, encara que hi haja un "que" de relatiu: "els
+alumnes que opten a estudiar-hi" (uns alumnes reals i concrets que, de
+fet, trien aixo -> opten, INDICATIU), "les persones que creuen aixo"
+(persones reals que, de fet, ho creuen -> creuen, INDICATIU). Son
+SUBJUNTIU NOMES les frases de relatiu HIPOTETIQUES o INDEFINIDES, on
+l'antecedent NO es cap persona/cosa concreta coneguda sino "qualsevol
+que complisca la condicio" ("qualsevol que vinga", "el primer que
+arribe", "no hi ha ningu que ho sapia"). La prova: si pots substituir
+"que" per "qui de fet" o afegir "en concret" sense que la frase perda
+sentit (p.ex. "els alumnes que, en concret, opten..."), es relatiu REAL
+-> INDICATIU; si nomes te sentit amb "siga qui siga" o "qualsevol que",
+es relatiu HIPOTETIC -> SUBJUNTIU.
 """
 
 
@@ -82,6 +133,9 @@ def carrega_guia(path: Path = GUIA_PATH) -> str:
 
 
 def crida_ollama(system: str, prompt: str, model: str, timeout: int = 120) -> str:
+    if VERBOSE:
+        _imprimix_crida(system, prompt, model)
+    t0 = time.perf_counter()
     payload = {
         "model": model,
         "system": system,
@@ -94,11 +148,14 @@ def crida_ollama(system: str, prompt: str, model: str, timeout: int = 120) -> st
         r = requests.post(f"{OLLAMA_URL}/api/generate", json=payload, timeout=timeout)
         # nota: OLLAMA_URL es global i es fixa a main() segons --ollama-url
         r.raise_for_status()
-        return r.json().get("response", "").strip()
+        resposta = r.json().get("response", "").strip()
     except requests.exceptions.ConnectionError:
-        return "ERROR: no es pot connectar amb Ollama"
+        resposta = "ERROR: no es pot connectar amb Ollama"
     except Exception as e:  # noqa: BLE001
-        return f"ERROR: {e}"
+        resposta = f"ERROR: {e}"
+    if VERBOSE:
+        _imprimix_resposta(resposta, time.perf_counter() - t0)
+    return resposta
 
 
 _PARAULA = re.compile(r"[a-zàèéíòóúïüç']+", re.IGNORECASE)
@@ -128,7 +185,7 @@ def via_a(cas: dict, guia: str, model: str, timeout: int) -> dict:
     return {"resposta": resposta, "tria": tria, "encert": tria == cas["veritat_per_referencia"]}
 
 
-def _encert(tria: str, veritat: str | None) -> bool:
+def _encert(tria: str, veritat: str | None, indicatiu_es_forma_sense_canviar: bool = False) -> bool:
     """La paraula marcada pot ser de veres un substantiu/preposicio homograf
     (vore 06/10/2026: "base", "entre", "poble"... existixen a les dades com
     a formes "problematica" d'un verb rar, pero en la practica son MOLT mes
@@ -136,10 +193,30 @@ def _encert(tria: str, veritat: str | None) -> bool:
     voltes el verb de veres i a voltes no, NO hi ha cap llista que ho
     distingisca). Quan `veritat` es None (la referencia no confirma cap
     dels 2 candidats, senyal de que probablement no era este verb), la
-    resposta CORRECTA es "cap" -- no es pot comparar amb cap candidat."""
+    resposta CORRECTA es "cap" -- no es pot comparar amb cap candidat.
+
+    `indicatiu_es_forma_sense_canviar` (afegit 08/10/2026 -- vore
+    "Col·lisio INDICATIU/SUBJUNTIU en 3a plural" a conjugacions_dict.py):
+    per a la 3a plural, el candidat indicatiu ES la mateixa forma
+    valenciana sense canviar -- exactament el mateix text que produiria
+    "cap" (no tocar res). Les dos respostes son INDISTINGIBLES pel text
+    final, aixina que quan `veritat == "indicatiu"` i este flag es cert,
+    s'accepten LES DOS com a encert (nomes "subjuntiu" seria un error de
+    veres ahí). Sense este flag (1a persona, on indicatiu/subjuntiu/cap
+    son 3 cadenes distintes), es manté el criteri estricte d'abans.
+    """
     if veritat is None:
         return tria == "cap"
+    if veritat == "indicatiu" and indicatiu_es_forma_sense_canviar:
+        return tria in ("indicatiu", "cap")
     return tria == veritat
+
+
+def _es_indistingible_de_cap(cas: dict) -> bool:
+    """Torna True si `cas["candidat_indicatiu"]` es la mateixa paraula
+    valenciana sense canviar (patro de la 3a plural) -- vore docstring
+    de `_encert`."""
+    return cas["candidat_indicatiu"].lower() == cas["forma_ambigua"].lower()
 
 
 def via_b(cas: dict, guia: str, model: str, timeout: int) -> dict:
@@ -148,9 +225,11 @@ def via_b(cas: dict, guia: str, model: str, timeout: int) -> dict:
         f"{CRITERI_MODE_VERBAL}\n"
         "Se't dona una frase en valencia i una paraula marcada d'eixa frase "
         "que, segons les dades, POT ser una forma verbal ambigua: en "
-        "valencia la mateixa forma escrita pot servir tant per al present "
-        "d'indicatiu com per al present de subjuntiu (1a persona singular) "
-        "d'un verb rar. ATENCIO: la mateixa forma sovint es en realitat un "
+        "valencia la mateixa forma escrita pot servir tant per a un mode "
+        "d'indicatiu (present o pretèrit perfet simple) com per al "
+        "corresponent de subjuntiu (present o imperfet), en qualsevol "
+        "persona (singular o plural) d'un verb rar. ATENCIO: la mateixa "
+        "forma sovint es en realitat un "
         "substantiu, preposicio o un atra categoria gramatical NO "
         "relacionada amb eixe verb (p.ex. \"base\", \"entre\", \"poble\") --"
         " mira el context amb cura abans de decidir.\n"
@@ -173,8 +252,13 @@ def via_b(cas: dict, guia: str, model: str, timeout: int) -> dict:
         tria = "indicatiu"
     else:
         tria = f"altra forma inventada: {forma!r}"
+    indistingible = _es_indistingible_de_cap(cas)
+    if VERBOSE:
+        print(f"[PARSEIG via_b] resposta_crua={resposta!r} -> paraula_extreta={forma!r} "
+              f"(candidat_indicatiu={cas['candidat_indicatiu']!r}, candidat_subjuntiu={cas['candidat_subjuntiu']!r}) "
+              f"-> tria={tria!r} -> encert={_encert(tria, cas['veritat_per_referencia'], indistingible)}", flush=True)
     return {"resposta": resposta, "forma_triada": forma, "tria": tria,
-            "encert": _encert(tria, cas["veritat_per_referencia"])}
+            "encert": _encert(tria, cas["veritat_per_referencia"], indistingible)}
 
 
 def via_c(cas: dict, model: str, timeout: int) -> dict:
@@ -184,35 +268,61 @@ def via_c(cas: dict, model: str, timeout: int) -> dict:
         "Ets un expert en gramatica catalana/valenciana. "
         f"{CRITERI_MODE_VERBAL}\n"
         "Se't dona una frase en valencia i una paraula marcada que, segons "
-        "les dades, POT ser una forma verbal ambigua entre present "
-        "d'indicatiu i present de subjuntiu (1a persona singular) d'un verb "
-        "rar. ATENCIO: la mateixa forma sovint es en realitat un substantiu, "
+        "les dades, POT ser una forma verbal ambigua entre un mode "
+        "d'indicatiu (present o pretèrit perfet simple) i el corresponent "
+        "de subjuntiu (present o imperfet), en qualsevol persona (singular "
+        "o plural) d'un verb rar. ATENCIO: la mateixa forma sovint es en realitat un substantiu, "
         "preposicio o un atra categoria gramatical NO relacionada amb eixe "
         "verb (p.ex. \"base\", \"entre\", \"poble\") -- mira el context amb "
         "cura. Classifica EIXA PARAULA EN EIXE CONTEXT concret:\n"
-        "- 'indicatiu' si ahi funciona com el present d'indicatiu del verb.\n"
-        "- 'subjuntiu' si ahi funciona com el present de subjuntiu del verb.\n"
-        "- 'cap' si NO funciona com este verb ahi (es un substantiu, "
-        "preposicio, etc.).\n"
-        "Respon amb UNA SOLA PARAULA: 'indicatiu', 'subjuntiu' o 'cap'."
+        "- 'indicatiu' si ahi funciona com un mode d'indicatiu del verb "
+        "(present o pretèrit perfet simple -- expressa un fet asseverat).\n"
+        "- 'subjuntiu' si ahi funciona com el corresponent de subjuntiu "
+        "(present o imperfet -- voluntat, dubte, concessio...).\n"
+        "- 'cap' si la paraula marcada NO es en absolut este verb ahi (es "
+        "un substantiu, preposicio, una atra categoria gramatical sense "
+        "relacio -- NO triga 'cap' nomes perque has descartat subjuntiu; "
+        "si es este verb pero en mode indicatiu, la resposta es "
+        "'indicatiu', mai 'cap').\n"
+        "Respon amb UNA SOLA PARAULA: 'indicatiu', 'subjuntiu' o 'cap'. "
+        "Sense cap explicacio ni raonament, nomes la paraula."
     )
     prompt = f'Frase: "{cas["texto_valenciano"]}"\n\nParaula marcada: {cas["forma_ambigua"]}'
     resposta = crida_ollama(system, prompt, model, timeout)
     resposta_neta = resposta.strip().lower()
-    trobades = {p for p in ("indicatiu", "subjuntiu", "cap") if p in resposta_neta}
-    if trobades == {"subjuntiu"}:
-        classe = "subjuntiu"
-    elif trobades == {"indicatiu"}:
-        classe = "indicatiu"
-    elif trobades == {"cap"}:
-        classe = "cap"
+    # Prioritat 1: la PRIMERA paraula de la resposta (cas normal, i cas
+    # 08/10/2026 trobat: el model a voltes explica el raonament encara
+    # que se li diga que no ho faça -- eixa explicacio pot mencionar les
+    # 3 etiquetes alhora, p.ex. "'cap'... no es pot classificar com a
+    # subjuntiu...", que confonia el metode antic de "quines etiquetes
+    # apareixen a tot el text").
+    m = re.match(r"^[^a-zàèéíòóúïüç]*([a-zàèéíòóúïüç]+)", resposta_neta)
+    primera = m.group(1) if m else ""
+    trobades: set[str] | None = None
+    if primera in ("indicatiu", "subjuntiu", "cap"):
+        classe = primera
     else:
-        classe = f"resposta ambigua: {resposta_neta!r}"
+        trobades = {p for p in ("indicatiu", "subjuntiu", "cap") if p in resposta_neta}
+        if trobades == {"subjuntiu"}:
+            classe = "subjuntiu"
+        elif trobades == {"indicatiu"}:
+            classe = "indicatiu"
+        elif trobades == {"cap"}:
+            classe = "cap"
+        else:
+            classe = f"resposta ambigua: {resposta_neta!r}"
     forma_final = cas["candidat_subjuntiu"] if classe == "subjuntiu" else (
         cas["candidat_indicatiu"] if classe == "indicatiu" else None
     )
+    indistingible = _es_indistingible_de_cap(cas)
+    if VERBOSE:
+        print(f"[PARSEIG via_c] resposta_crua={resposta!r} -> net={resposta_neta!r} -> "
+              f"primera_paraula={primera!r} paraules_clau_trobades={trobades!r} -> classe={classe!r} -> "
+              f"forma_final={forma_final!r} (candidat_indicatiu={cas['candidat_indicatiu']!r}, "
+              f"candidat_subjuntiu={cas['candidat_subjuntiu']!r}) -> "
+              f"encert={_encert(classe, cas['veritat_per_referencia'], indistingible)}", flush=True)
     return {"resposta": resposta, "classe": classe, "forma_final": forma_final,
-            "encert": _encert(classe, cas["veritat_per_referencia"])}
+            "encert": _encert(classe, cas["veritat_per_referencia"], indistingible)}
 
 
 def main() -> None:
