@@ -1,7 +1,17 @@
 # slurm/ -- qué script usar
 
-Solo quedan 2 scripts activos (08/10/2026, tras limpiar el resto de
-herramientas de exploración ya superadas):
+3 scripts activos (08/10/2026):
+
+- **`evalua_traductor_posfiltre.sh`** -- SOLO CPU, sin Ollama/GPU,
+  ~15 min. Doctests + `evalua_models.py --model traductor` únicamente.
+  Usar ANTES DE HACER COMMIT cuando el cambio es solo en `traductor/`
+  (no toca `postprocessat_llm/`) y no hace falta medir el postprocesado
+  LLM — mucho más rápido que `genera_resultats_complet.sh` para este caso.
+  Revisar la cabecera del script para la lista de ficheros a subir (varía
+  según qué se haya tocado).
+  ```
+  sbatch evalua_traductor_posfiltre.sh
+  ```
 
 - **`genera_resultats_complet.sh`** -- uso normal, "¿cómo va todo?".
   Doctests + motor solo + motor con postprocessat LLM, en un solo job,
