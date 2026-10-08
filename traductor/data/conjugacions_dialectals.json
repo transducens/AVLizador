@@ -1,5 +1,5 @@
 {
-  "total_entradas": 51901,
+  "total_entradas": 51983,
   "descripcio": "Formes verbals valencia/catala que difereixen entre dialectes, extretes de l'apertium bilingue catala-castella per Mauricio (equip AVLizador, 29/09/2026). Cobrix 111 verbs on almenys una conjugacio difereix, mes 5.465 verbs addicionals de 'conjugaciones_nuevo.json' (vore baix). El camp 'problematica' marca formes on el valencia usa la mateixa paraula per al present d'indicatiu i el de subjuntiu (p.ex. abalance = jo abalanco / que jo abalanci), cosa que fa la conversio ambigua sense analisi gramatical (pos-tagging); conjugacions_dict.py exclou estes entrades del lookup automatic i les deixa documentades aci per si en el futur es pot afegir un mecanisme de desambiguacio.\n\nPROVAT, REVERTIT, I RE-INTEGRAT A PROPOSIT (05/10/2026 i 06/10/2026): 'conjugaciones_nuevo.json' (5.465 verbs, 49.443 formes, generat sistematicament) es va provar com a 3a font el 05/10/2026 i es va REVERTIR en trobar-se que no es un problema d'ambiguitat puntual (eixe ja el cobreix _marca_ambigues_dins_del_mateix_fitxer) sino de COL·LISIO HOMOGRAFA massiva -- amb tants verbs, moltes conjugacions regulars (persones->personis, del verb 'personar'; projectes->projectis, de 'projectar'; pobles->poblis, de 'poblar'...) coincidixen amb substantius plurals o verbs distints MOLT mes freqüents que el verb rar que els origina. Mesurat amb el benchmark de 150 frases: 119/150 (79,3%) abans, 89/150 (59,3%) amb esta font integrada -- 30 regressions reals, paraules comunes convertides en no-paraules ('projectis', 'personis', 'poblis', 'plomis'). No es una llista d'exclusions curada la solucio (caldrien milers), es un problema estructural de no tindre pos-tagging a eixa escala.\n\nEl 06/10/2026 l'usuari ha decidit RE-INTEGRAR esta font a proposit, acceptant la baixada del benchmark (torna a 89/150): mes cobertura ara, encara que introduisca soroll, es preferix a esperar -- el pla es afegir mes avant un pas de postprocessat amb un LLM (vore 08_traduccio_corpus/postprocessat_llm/) que resolga els casos ambigus/col·lisionats fent servir context real de la frase, cosa que un lookup pla mai pot fer. Fins que eixe pas existisca, el motor pur de regles produira mes errors d'este tipus que abans -- es un compromis deliberat, no una regressio sense detectar.",
   "entradas": [
     {
@@ -42709,6 +42709,1734 @@
       "ambigu_val_a_cat": false,
       "ambigu_cat_a_val": false,
       "ambigu": false
+    },
+    {
+      "catalan": "escalfaríem",
+      "valenciano": "calfaríem",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfaria",
+      "valenciano": "calfaria",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfaríeu",
+      "valenciano": "calfaríeu",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "cni",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfaries",
+      "valenciano": "calfaries",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "cni",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfarien",
+      "valenciano": "calfarien",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "cni",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfarem",
+      "valenciano": "calfarem",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fti",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfaré",
+      "valenciano": "calfaré",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fti",
+          "p1",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfareu",
+      "valenciano": "calfareu",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fti",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfaràs",
+      "valenciano": "calfaràs",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fti",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfaran",
+      "valenciano": "calfaran",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fti",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfarà",
+      "valenciano": "calfarà",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fti",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalféssim",
+      "valenciano": "calféssim",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fts",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "calfàrem",
+        "calféssim"
+      ]
+    },
+    {
+      "catalan": "escalfés",
+      "valenciano": "calfés",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fts",
+          "p1",
+          "sg"
+        ],
+        [
+          "fts",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "calfara",
+        "calfés"
+      ]
+    },
+    {
+      "catalan": "escalféssiu",
+      "valenciano": "calféssiu",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fts",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "calfàreu",
+        "calféssiu"
+      ]
+    },
+    {
+      "catalan": "escalfessis",
+      "valenciano": "calfessis",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fts",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "calfares",
+        "calfessis"
+      ]
+    },
+    {
+      "catalan": "escalfessin",
+      "valenciano": "calfessin",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fts",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "calfaren",
+        "calfessin"
+      ]
+    },
+    {
+      "catalan": "escalfant",
+      "valenciano": "calfant",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "ger"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfem",
+      "valenciano": "calfem",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfeu",
+      "valenciano": "calfeu",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfa",
+      "valenciano": "calfa",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfin",
+      "valenciano": "calfen",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "pl"
+        ],
+        [
+          "prs",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": true,
+      "ambigu_cat_a_val": false,
+      "ambigu": true,
+      "val_traduccions_cat": [
+        "escalfen",
+        "escalfin"
+      ],
+      "problematica": true
+    },
+    {
+      "catalan": "escalfi",
+      "valenciano": "calfe",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "sg"
+        ],
+        [
+          "prs",
+          "p1",
+          "sg"
+        ],
+        [
+          "prs",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": true,
+      "ambigu_cat_a_val": false,
+      "ambigu": true,
+      "val_traduccions_cat": [
+        "escalfi",
+        "escalfo"
+      ],
+      "problematica": true
+    },
+    {
+      "catalan": "escalfar",
+      "valenciano": "calfar",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "inf"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfàvem",
+      "valenciano": "calfàvem",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfava",
+      "valenciano": "calfava",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfàveu",
+      "valenciano": "calfàveu",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pii",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfaves",
+      "valenciano": "calfaves",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pii",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfaven",
+      "valenciano": "calfaven",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pii",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalféssim",
+      "valenciano": "calfàrem",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pis",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "calfàrem",
+        "calféssim"
+      ]
+    },
+    {
+      "catalan": "escalfés",
+      "valenciano": "calfara",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pis",
+          "p1",
+          "sg"
+        ],
+        [
+          "pis",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "calfara",
+        "calfés"
+      ]
+    },
+    {
+      "catalan": "escalféssiu",
+      "valenciano": "calfàreu",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pis",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "calfàreu",
+        "calféssiu"
+      ]
+    },
+    {
+      "catalan": "escalfessis",
+      "valenciano": "calfares",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pis",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "calfares",
+        "calfessis"
+      ]
+    },
+    {
+      "catalan": "escalfessin",
+      "valenciano": "calfaren",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pis",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "calfaren",
+        "calfessin"
+      ]
+    },
+    {
+      "catalan": "escalfades",
+      "valenciano": "calfades",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pp",
+          "pl",
+          "f"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfats",
+      "valenciano": "calfats",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pp",
+          "pl",
+          "m"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfada",
+      "valenciano": "calfada",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pp",
+          "sg",
+          "f"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfat",
+      "valenciano": "calfat",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pp",
+          "sg",
+          "m"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "escalfo",
+      "valenciano": "calfe",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pri",
+          "p1",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": true,
+      "ambigu_cat_a_val": false,
+      "ambigu": true,
+      "val_traduccions_cat": [
+        "escalfi",
+        "escalfo"
+      ],
+      "problematica": true
+    },
+    {
+      "catalan": "escalfes",
+      "valenciano": "calfes",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pri",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": true,
+      "ambigu_cat_a_val": false,
+      "ambigu": true,
+      "val_traduccions_cat": [
+        "escalfes",
+        "escalfis"
+      ],
+      "problematica": true
+    },
+    {
+      "catalan": "escalfen",
+      "valenciano": "calfen",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pri",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": true,
+      "ambigu_cat_a_val": false,
+      "ambigu": true,
+      "val_traduccions_cat": [
+        "escalfen",
+        "escalfin"
+      ],
+      "problematica": true
+    },
+    {
+      "catalan": "escalfis",
+      "valenciano": "calfes",
+      "infinitiu_cat": "escalfar",
+      "infinitiu_val": "calfar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "prs",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": true,
+      "ambigu_cat_a_val": false,
+      "ambigu": true,
+      "val_traduccions_cat": [
+        "escalfes",
+        "escalfis"
+      ],
+      "problematica": true
+    },
+    {
+      "catalan": "vetllaríem",
+      "valenciano": "vetlaríem",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllaria",
+      "valenciano": "vetlaria",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "cni",
+          "p1",
+          "sg"
+        ],
+        [
+          "cni",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllaríeu",
+      "valenciano": "vetlaríeu",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "cni",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllaries",
+      "valenciano": "vetlaries",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "cni",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllarien",
+      "valenciano": "vetlarien",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "cni",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllarem",
+      "valenciano": "vetlarem",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fti",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllaré",
+      "valenciano": "vetlaré",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fti",
+          "p1",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllareu",
+      "valenciano": "vetlareu",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fti",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllaràs",
+      "valenciano": "vetlaràs",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fti",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllaran",
+      "valenciano": "vetlaran",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fti",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllarà",
+      "valenciano": "vetlarà",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fti",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetlléssim",
+      "valenciano": "vetléssim",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fts",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "vetlàrem",
+        "vetléssim"
+      ]
+    },
+    {
+      "catalan": "vetllés",
+      "valenciano": "vetlés",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fts",
+          "p1",
+          "sg"
+        ],
+        [
+          "fts",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "vetlara",
+        "vetlés"
+      ]
+    },
+    {
+      "catalan": "vetlléssiu",
+      "valenciano": "vetléssiu",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fts",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "vetlàreu",
+        "vetléssiu"
+      ]
+    },
+    {
+      "catalan": "vetllessis",
+      "valenciano": "vetlessis",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fts",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "vetlares",
+        "vetlessis"
+      ]
+    },
+    {
+      "catalan": "vetllessin",
+      "valenciano": "vetlessin",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "fts",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "vetlaren",
+        "vetlessin"
+      ]
+    },
+    {
+      "catalan": "vetllant",
+      "valenciano": "vetlant",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "ger"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllem",
+      "valenciano": "vetlem",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "imp",
+          "p1",
+          "pl"
+        ],
+        [
+          "pri",
+          "p1",
+          "pl"
+        ],
+        [
+          "prs",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetlleu",
+      "valenciano": "vetleu",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "pl"
+        ],
+        [
+          "pri",
+          "p2",
+          "pl"
+        ],
+        [
+          "prs",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetlla",
+      "valenciano": "vetla",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "imp",
+          "p2",
+          "sg"
+        ],
+        [
+          "pri",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllin",
+      "valenciano": "vetlen",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "pl"
+        ],
+        [
+          "prs",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": true,
+      "ambigu_cat_a_val": false,
+      "ambigu": true,
+      "val_traduccions_cat": [
+        "vetllen",
+        "vetllin"
+      ],
+      "problematica": true
+    },
+    {
+      "catalan": "vetlli",
+      "valenciano": "vetle",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "imp",
+          "p3",
+          "sg"
+        ],
+        [
+          "prs",
+          "p1",
+          "sg"
+        ],
+        [
+          "prs",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": true,
+      "ambigu_cat_a_val": false,
+      "ambigu": true,
+      "val_traduccions_cat": [
+        "vetlli",
+        "vetllo"
+      ],
+      "problematica": true
+    },
+    {
+      "catalan": "vetllar",
+      "valenciano": "vetlar",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "inf"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllàvem",
+      "valenciano": "vetlàvem",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllava",
+      "valenciano": "vetlava",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pii",
+          "p1",
+          "sg"
+        ],
+        [
+          "pii",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllàveu",
+      "valenciano": "vetlàveu",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pii",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllaves",
+      "valenciano": "vetlaves",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pii",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllaven",
+      "valenciano": "vetlaven",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pii",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetlléssim",
+      "valenciano": "vetlàrem",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pis",
+          "p1",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "vetlàrem",
+        "vetléssim"
+      ]
+    },
+    {
+      "catalan": "vetllés",
+      "valenciano": "vetlara",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pis",
+          "p1",
+          "sg"
+        ],
+        [
+          "pis",
+          "p3",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "vetlara",
+        "vetlés"
+      ]
+    },
+    {
+      "catalan": "vetlléssiu",
+      "valenciano": "vetlàreu",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pis",
+          "p2",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "vetlàreu",
+        "vetléssiu"
+      ]
+    },
+    {
+      "catalan": "vetllessis",
+      "valenciano": "vetlares",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pis",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "vetlares",
+        "vetlessis"
+      ]
+    },
+    {
+      "catalan": "vetllessin",
+      "valenciano": "vetlaren",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pis",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": true,
+      "ambigu": true,
+      "cat_traduccions_val": [
+        "vetlaren",
+        "vetlessin"
+      ]
+    },
+    {
+      "catalan": "vetllades",
+      "valenciano": "vetlades",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pp",
+          "pl",
+          "f"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllats",
+      "valenciano": "vetlats",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pp",
+          "pl",
+          "m"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllada",
+      "valenciano": "vetlada",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pp",
+          "sg",
+          "f"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllat",
+      "valenciano": "vetlat",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pp",
+          "sg",
+          "m"
+        ]
+      ],
+      "ambigu_val_a_cat": false,
+      "ambigu_cat_a_val": false,
+      "ambigu": false
+    },
+    {
+      "catalan": "vetllo",
+      "valenciano": "vetle",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pri",
+          "p1",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": true,
+      "ambigu_cat_a_val": false,
+      "ambigu": true,
+      "val_traduccions_cat": [
+        "vetlli",
+        "vetllo"
+      ],
+      "problematica": true
+    },
+    {
+      "catalan": "vetlles",
+      "valenciano": "vetles",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pri",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": true,
+      "ambigu_cat_a_val": false,
+      "ambigu": true,
+      "val_traduccions_cat": [
+        "vetlles",
+        "vetllis"
+      ],
+      "problematica": true
+    },
+    {
+      "catalan": "vetllen",
+      "valenciano": "vetlen",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "pri",
+          "p3",
+          "pl"
+        ]
+      ],
+      "ambigu_val_a_cat": true,
+      "ambigu_cat_a_val": false,
+      "ambigu": true,
+      "val_traduccions_cat": [
+        "vetllen",
+        "vetllin"
+      ],
+      "problematica": true
+    },
+    {
+      "catalan": "vetllis",
+      "valenciano": "vetles",
+      "infinitiu_cat": "vetllar",
+      "infinitiu_val": "vetlar",
+      "repetida": false,
+      "id": null,
+      "morfologies": [
+        [
+          "prs",
+          "p2",
+          "sg"
+        ]
+      ],
+      "ambigu_val_a_cat": true,
+      "ambigu_cat_a_val": false,
+      "ambigu": true,
+      "val_traduccions_cat": [
+        "vetlles",
+        "vetllis"
+      ],
+      "problematica": true
     },
     {
       "verbo": "abaixar",

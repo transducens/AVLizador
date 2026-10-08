@@ -42,6 +42,34 @@ no estan instal·lats, `etiqueta()` no fa res -- cap token rep `pos`, i
 lookup sense cap filtre). El pipeline de `traductor/` mai falla ni
 requerix spaCy per a funcionar; nomes guanya esta protecció extra quan
 spaCy esta disponible.
+
+Segon problema, mateixa arrel, trobat el 08/10/2026 -- col·lisió
+d'INDICATIU/SUBJUNTIU en 3a persona del plural: en valencià, el present
+d'indicatiu i el present de subjuntiu de la 3a plural es poden escriure
+IGUAL ("ells creuen" indicatiu / "que ells creuen" subjuntiu), mentre que
+en català sempre es distinguixen ("creuen" / "creuin"). Com l'indicatiu
+no canvia, els lexicons diferencials nomes llisten la fila de subjuntiu
+-- exactament el mateix mecanisme que el problema de dalt, pero afecta a
+**9.220 formes (el 20% de tota la taula)**, no 5 paraules soltes.
+
+`etiqueta()` TAMBE omple `Token.mood` (el tret `Mood` d'spaCy: "Ind",
+"Sub"...) per si podia servir ací. **Provat i DESCARTAT el mateix
+08/10/2026**: la idea era "si spaCy diu Ind, no apliques la fila de
+subjuntiu". Pero spaCy diu "Ind" quasi SEMPRE per a estes formes, siga
+quina siga la veritat -- no nomes en els 20 casos on de veres tocava
+indicatiu, sino TAMBE en casos on hui la traducció a subjuntiu ja es
+CORRECTA i ja funciona ("puguen"→"puguin", "siguen"→"siguin",
+"tinguen"→"tinguin", verificat amb el benchmark real i amb doctests ja
+existents). És a dir, `Mood` no distingix res ací -- es un valor per
+defecte quan la forma no es reconeguda de l'entrenament (`ca_core_news_sm`
+es català central), no una classificació real. Fer-ho servir per a
+bloquejar hauria introduit regressions noves (trencar "puguen"/"siguen"
+que hui van bé) a canvi d'arreglar els 24 casos coneguts -- NO es fa
+servir per a res de moment. `Token.mood` es queda calculat (es informació
+diagnostica útil, vore `traça_verbs_fallats.py` a 03_seleccio_de_model/)
+pero cap regla el consulta hui. Si en el futur es decidix atacar este
+problema, la solució haurà de ser una atra (possiblement estendre
+`postprocessat_llm/` a esta persona tambe, amb LLM, no amb spaCy sol).
 """
 
 from __future__ import annotations
@@ -107,6 +135,18 @@ def etiqueta(tokens: list[Token]) -> None:
     >>> etiqueta(toks)
     >>> [(t.surface, t.pos) for t in toks if t.surface == "s'oferisca"]
     [("s'oferisca", 'VERB')]
+
+    `mood` (afegit 08/10/2026, vore docstring del mòdul -- col·lisió
+    d'indicatiu/subjuntiu en 3a plural): "creuen" ací es present
+    d'indicatiu de "creure" ("creure" -- Mood=Ind), encara que
+    `conjugacions_dialectals.json` nomes té la conjugació de subjuntiu
+    d'un verb DISTINT ("creuar"):
+
+    >>> toks = tokenize("Les dues terceres parts creuen que cal fer-ho.")
+    >>> marca_noms_propis(toks)
+    >>> etiqueta(toks)
+    >>> [(t.surface, t.mood) for t in toks if t.surface == "creuen"]
+    [('creuen', 'Ind')]
     """
     nlp = _carrega_spacy()
     if nlp is None:
@@ -122,6 +162,8 @@ def etiqueta(tokens: list[Token]) -> None:
         for dt in doc:
             if dt.text.lower() == buscada_min:
                 tok.pos = dt.pos_
+                mood = dt.morph.get("Mood")
+                tok.mood = mood[0] if mood else ""
                 break
 
 

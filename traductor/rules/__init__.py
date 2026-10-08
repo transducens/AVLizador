@@ -48,11 +48,19 @@ class Token:
     està instal·lat, cridant `pos_tagger.etiqueta()` just després de
     `marca_noms_propis()` -- vore eixe mòdul per al perquè i per a qui el
     fa servir (`ConjugacionsDictRule`).
+
+    `mood` (afegit 08/10/2026, mateix mecanisme opcional que `pos`): el
+    tret morfològic `Mood` d'spaCy ("Ind", "Sub"...) quan es pot calcular.
+    Es va provar per a detectar la col·lisió d'indicatiu/subjuntiu en 3a
+    plural, pero es va DESCARTAR el mateix dia (vore `pos_tagger.py` per
+    al perquè -- spaCy diu "Ind" quasi sempre, siga veritat o no). Cap
+    regla el consulta hui; es queda calculat com a informació diagnòstica.
     """
 
     surface: str
     translated: str
     pos: str = ""
+    mood: str = ""
     is_translated: bool = False
     is_proper_noun: bool = False
     start: int = 0

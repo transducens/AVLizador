@@ -70,7 +70,7 @@ class RuleEngine:
     >>> engine.translate("Tinc huitanta anys i el meu amic francés parla.")
     'Tinc vuitanta anys i el meu amic francès parla.'
     >>> engine.translate("Vull que els oferisca ajuda encara que tinguen pressa.")
-    'Vull que els ofereixi ajuda encara que tinguin pressa.'
+    'Vull que els ofereixi ajuda encara que tinguen pressa.'
     >>> engine.translate("La meua casa i la seua obra.")
     'La meva casa i la seva obra.'
     >>> engine.translate("Vull conéixer qui establix esta norma.")

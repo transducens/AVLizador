@@ -96,11 +96,43 @@ taula de conjugacions per a estes formes concretes, ignora el que diga
 spaCy"), seguint el mateix criteri que `EXCLUSIONS_HOMOGRAF` pero en
 sentit invers. `SEMPRE_VERB` es amplia nomes amb evidencia (revisant el
 benchmark o el corpus), mai per endevinar.
+
+Col·lisio INDICATIU/SUBJUNTIU en 3a plural (08/10/2026, un atre problema,
+mateixa arrel que "persones"/"pobles" pero en mode verbal, no en
+categoria gramatical): en valencia, el present ("ells creuen") i
+l'imperfet ("ells transformaren", pretèrit perfet simple) d'indicatiu de
+la 3a plural NO canvien mai entre dialectes, aixina que un lexic
+diferencial mai els llista -- nomes hi apareix la fila de subjuntiu
+("creuin"/"transformessin"), i `ConjugacionsDictRule` l'aplicava sempre
+amb confiança, encara que el 100% dels casos reals trobats al benchmark
+eren realment indicatiu. **Mesurat (08/10/2026): 9.220 formes afectades,
+el 20% de tota la taula** (4.935 present + 4.285 imperfet). `tok.pos`
+(VERB/AUX) no ajuda ací -- les dos lectures JA SON verb per a spaCy; fa
+falta el MODE, no la categoria. Es va provar `tok.mood` (`Mood` d'spaCy)
+com a segon filtre i es va DESCARTAR el mateix dia: spaCy diu "Ind" quasi
+sempre per a estes formes, siga veritat o no -- hauria trencat
+"puguen"/"siguen"/"tinguen" (hui correctes, subjuntiu de veres) per a
+arreglar els 24 casos coneguts (vore `pos_tagger.py` per als numeros
+exactes). **Solucio aplicada**: `es_risc_mode_3a_plural()` exclou estes
+9.220 formes del lookup (mateix mecanisme que `problematica`), deixant-
+les SENSE TOCAR -- i `08_traduccio_corpus/postprocessat_llm/
+identifica_ambigues.py` les afig a la taula d'ambigüitats perque el
+postprocessat LLM (vía C, ja validat per a la 1a persona) decidisca
+indicatiu/subjuntiu/cap mirant el context real de la frase. **Nomes
+cobrix 3a plural** (l'unica persona amb evidencia real de fallades al
+benchmark); ampliar a atres persones (2a singular, etc. -- la mateixa
+auditoria de dades mostra ~34.000 formes mes en risc potencial a tota la
+taula) es deixa pendent fins trobar casos reals (p.ex. al corpus del
+BOE) -- "haja"->"hagi" és un exemple ja comprovat de per que no es pot
+generalitzar nomes pel sufix: no es ambigu de veres (sempre es subjuntiu
+en valencia, l'indicatiu de "haver" es "he"/"ha", no "haja"), i una
+regla mes amplia el classificaria malament.
 """
 
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from . import (
@@ -127,23 +159,63 @@ EXCLUSIONS_HOMOGRAF = {"germanes"}
 # taula per a estes, ignorant `tok.pos`.
 SEMPRE_VERB = {"sigut", "siga", "haja", "vinga", "traure"}
 
+# Vore docstring del modul ("Col·lisio INDICATIU/SUBJUNTIU en 3a plural,
+# 08/10/2026"): el present i l'imperfet d'indicatiu de la 3a plural NO
+# canvien mai entre valencia i catala (per aixo mai apareixen en un
+# lexico diferencial), pero s'escriuen IGUAL que el present/imperfet de
+# subjuntiu en valencia -- que SI canvia. Regex restringides NOMES a
+# estos dos patrons EVIDENCIATS (3a plural, present i imperfet); NO
+# s'amplia a cap atra persona sense evidencia real (vore CLAUDE.md,
+# 08/10/2026 -- "haja"->"hagi" per exemple NO es real ambiguitat, es
+# SEMPRE subjuntiu, i una regla mes amplia el classificaria malament).
+_RE_PRESENT_SUBJ_3A_PL = re.compile(r"in$")
+_RE_IMPERFET_SUBJ_3A_PL = re.compile(r"(essin|issin)$")
+
+
+def es_risc_mode_3a_plural(valenciano: str, catalan: str) -> bool:
+    """Torna `True` si `valenciano` (acaba en "-en" present, o "-aren"/
+    "-eren" imperfet) i `catalan` (acaba en "-in" o "-essin"/"-issin")
+    casen amb el patro de col·lisio INDICATIU/SUBJUNTIU de 3a plural --
+    vore docstring del modul. Funcio publica perque
+    `identifica_ambigues.py` (postprocessat_llm/) la reutilitza per a
+    construir els mateixos candidats (indicatiu = la forma valenciana
+    sense canviar, subjuntiu = `catalan`) i no duplicar el criteri.
+
+    >>> es_risc_mode_3a_plural("creuen", "creuin")
+    True
+    >>> es_risc_mode_3a_plural("quedaren", "quedessin")
+    True
+    >>> es_risc_mode_3a_plural("traure", "treure")
+    False
+    >>> es_risc_mode_3a_plural("haja", "hagi")
+    False
+    """
+    if valenciano.endswith(("aren", "eren")):
+        return bool(_RE_IMPERFET_SUBJ_3A_PL.search(catalan))
+    if valenciano.endswith("en"):
+        return bool(_RE_PRESENT_SUBJ_3A_PL.search(catalan))
+    return False
+
 
 def carrega_conjugacions(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[str, str]:
     """Llig el JSON de conjugacions i el converteix en un diccionari pla
     `{forma_valenciana_en_minuscules: forma_catalana}`, descartant les
-    entrades `problematica: true` i les de `EXCLUSIONS_HOMOGRAF` (vore
-    docstring del modul).
+    entrades `problematica: true`, les de `EXCLUSIONS_HOMOGRAF`, i les
+    que col·lidixen de mode en 3a plural (`es_risc_mode_3a_plural`, vore
+    docstring del modul -- 08/10/2026).
 
     >>> lookup = carrega_conjugacions()
     >>> lookup["oferisca"]
     'ofereixi'
-    >>> lookup["tinguen"]
-    'tinguin'
     >>> lookup["traure"]
     'treure'
     >>> "abalance" in lookup
     False
     >>> "germanes" in lookup
+    False
+    >>> "tinguen" in lookup
+    False
+    >>> "creuen" in lookup
     False
     """
     dades = json.loads(Path(path).read_text(encoding="utf-8"))
@@ -157,6 +229,8 @@ def carrega_conjugacions(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[str, st
             continue
         if valenciano in EXCLUSIONS_HOMOGRAF:
             continue
+        if valenciano not in SEMPRE_VERB and es_risc_mode_3a_plural(valenciano, catalan):
+            continue
         lookup.setdefault(valenciano, catalan)
     return lookup
 
@@ -168,11 +242,21 @@ class ConjugacionsDictRule:
     propi (`is_proper_noun`).
 
     >>> from . import tokenize, marca_noms_propis
-    >>> toks = tokenize("Els vaig oferisca ajuda encara que tinguen pressa.")
+    >>> toks = tokenize("Els vaig oferisca ajuda.")
     >>> marca_noms_propis(toks)
     >>> toks = ConjugacionsDictRule().apply(toks)
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
-    [('oferisca', 'ofereixi'), ('tinguen', 'tinguin')]
+    [('oferisca', 'ofereixi')]
+
+    "tinguen" (3a plural) NO es toca -- col·lisio indicatiu/subjuntiu,
+    vore docstring del modul ("Col·lisio INDICATIU/SUBJUNTIU en 3a
+    plural, 08/10/2026"):
+
+    >>> toks = tokenize("Encara que tinguen pressa, ho faran be.")
+    >>> marca_noms_propis(toks)
+    >>> toks = ConjugacionsDictRule().apply(toks)
+    >>> [(t.surface, t.translated) for t in toks if t.is_translated]
+    []
 
     Formes "problematica" (ambigues entre indicatiu i subjuntiu) no es
     toquen -- vore docstring del modul:
@@ -223,15 +307,16 @@ class ConjugacionsDictRule:
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
     []
 
-    El mateix filtre NO bloqueja un verb de veres -- "oferisca"/"tinguen"
-    seguixen traduint-se igual que sense POS (vore doctest de dalt):
+    El mateix filtre NO bloqueja un verb de veres -- "oferisca" seguix
+    traduint-se igual que sense POS (vore doctest de dalt; "tinguen" ja
+    no es toca mai, siga quin siga `tok.pos`, per la col·lisio de mode):
 
     >>> toks = tokenize("Els vaig oferisca ajuda encara que tinguen pressa.")
     >>> marca_noms_propis(toks)
     >>> etiqueta(toks)
     >>> toks = ConjugacionsDictRule().apply(toks)
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
-    [('oferisca', 'ofereixi'), ('tinguen', 'tinguin')]
+    [('oferisca', 'ofereixi')]
 
     Paraula enganxada a un pronom feble enclític ("'n", "-li"...), mateix
     mecanisme que el prefix elidit pero pel costat contrari (07/10/2026,
