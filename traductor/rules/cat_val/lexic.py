@@ -43,6 +43,19 @@ costat val->cat. Els `irregulars` (xicoteta/petita, els dos -> "menuda")
 NO reverteixen nets -- "menuda" és ambigua de veres (podria vindre de
 "xicoteta" o de "petita", dos paraules valencianes reals i distintes),
 així que s'exclouen de la taula inversa sencera, preferint fals negatiu.
+
+**Contracció "al"/"del" desfeta davant de vocal (13/10/2026, RC016)**:
+"sortir" (consonant inicial) es tradueix a "eixir" (vocal inicial), així
+que "Al sortir..." (català) es convertia en "Al eixir..." en compte
+d'"A l'eixir...". Corregit cridant `corregeix_contraccio_al_abans`
+(`rules/__init__.py`) just després del lookup d'una paraula -- mirall
+invers d'`aplica_amb_prefix_elidit`, que fa la contracció contrària
+(DESFÀ "l'" quan la paraula deixa de començar en vocal).
+
+**"tard" excluit (13/10/2026, RC067)**: `lexic_mauricio.json` confon
+l'adverbi "tard" (late) amb el nom "tarda" (afternoon) per l'ambigüitat
+del castellà d'origen "tarde" -- vore comentari de `_BUG_DADES_CONEGUTS_CAT`
+més avall per al detall complet.
 """
 
 from __future__ import annotations
@@ -55,6 +68,7 @@ from .. import (
     Token,
     aplica_amb_prefix_elidit,
     carrega_categoria_gramatical,
+    corregeix_contraccio_al_abans,
     corregeix_determinant_abans,
     paraules_segudents_son,
     pos_compatible,
@@ -81,7 +95,31 @@ CANVI_GENERE_PATH = _DATA / "canvi_genere_lexic_avl.json"
 # majoria clara. S'exclou (preferix la majoria, mateix criteri que
 # "aquest"->"este" a `demostratius.py`, pero ací la majoria diu "no
 # toques res" en compte de "tria un valor per defecte").
-_BUG_DADES_CONEGUTS_CAT = {"desprès", "ensenyament"}
+#
+# "què" (afegit 13/10/2026, trobat mesurant -- RC053/RC057/RC094):
+# `lexic_acentuacio_mauricio.json` té {"valenciano": "qué", "catalan":
+# "què"}, seguint el mateix patró general que francés/francès. Pero
+# comptant totes les aparicions reals de "qué"/"què" al costat valencià
+# del benchmark: 7 de 9 fan servir "què" (accent OBERT, com el català),
+# nomes 2 "qué" -- majoria clara en sentit contrari al que diu esta
+# entrada en concret. S'exclou, mateix criteri que "ensenyament" --
+# CASUALITAT ACCEPTADA: RC055 és un dels 2 casos minoritaris que SI
+# volien "qué", i ara es queda sense tocar (abans eixia be per
+# casualitat, convertint-ho SEMPRE). Net +3 (+4 casos majoritaris, -1
+# minoritari) -- mateixa filosofia que "aquest"->"este" (77/23).
+#
+# "tard" (afegit 13/10/2026, trobat investigant RC067): `lexic_mauricio.json`
+# té {"valenciano": "vesprada", "catalan": "tard"} (id E0100, camp
+# `espanol: "tarde"`) -- el castellà "tarde" és ambigu entre l'ADVERBI
+# ("late") i el NOM ("afternoon"), i la font ha confós els dos sentits:
+# "vesprada" és la traducció correcta nomes per al NOM ("tarda" en
+# català, no "tard"), mai per a l'adverbi. L'ÚNICA aparició real
+# d'esta entrada a tot el benchmark (RC067, "més tard" = "later",
+# adverbi) confirma l'error -- la referència valenciana vol "tard" sense
+# tocar. S'exclou; "tarda"->"vesprada" (el nom, el parell correcte) no
+# té cap entrada pròpia encara perque no hi ha evidencia real al
+# benchmark (0 aparicions de "tarda" trobades).
+_BUG_DADES_CONEGUTS_CAT = {"desprès", "ensenyament", "què", "tard"}
 
 # Filtre POS general per categoria gramatical (13/10/2026, vore
 # `rules/__init__.py::pos_compatible` i
@@ -319,6 +357,23 @@ class LexicInversRule:
     >>> toks = LexicInversRule().apply(toks)
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
     []
+
+    Contracció "al" desfeta en "a l'" quan la paraula substituïda passa a
+    començar en vocal (RC016, vore docstring del mòdul):
+
+    >>> toks = tokenize("Al sortir a l'exterior.")
+    >>> marca_noms_propis(toks)
+    >>> toks = LexicInversRule().apply(toks)
+    >>> detokenize(toks)
+    "A l'eixir a l'exterior."
+
+    "tard" (adverbi) mai es toca -- vore docstring del mòdul (RC067):
+
+    >>> toks = tokenize("Ho vaig saber més tard.")
+    >>> marca_noms_propis(toks)
+    >>> toks = LexicInversRule().apply(toks)
+    >>> [(t.surface, t.translated) for t in toks if t.is_translated]
+    []
     """
 
     def __init__(
@@ -376,6 +431,7 @@ class LexicInversRule:
                     continue
                 tok.translated = preserva_majuscula(tok.surface, forma)
                 tok.is_translated = True
+                corregeix_contraccio_al_abans(tokens, i)
                 continue
             prefix_resta = separa_prefix_elidit(tok.surface)
             if prefix_resta is None:

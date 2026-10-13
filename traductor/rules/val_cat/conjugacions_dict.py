@@ -33,14 +33,16 @@ la paraula sense traduir -- abans que un fals positiu), EXCLOU del lookup
 qualsevol entrada marcada `problematica: true`. Es queden documentades al
 JSON de dades per si en el futur s'afig eixe mecanisme de desambiguacio.
 
-Excepcio real (bug trobat 30/09/2026): "siga" (verb "ser", subjuntiu) ja
-ve net a les dades de Mauricio i es traduiria ací sense cap protecció --
-pero "o siga" es una locucio fixa ("es a dir") que mai canvia als dos
-dialectes (RC067, vore morfologia_verbal.py). Com esta capa va ABANS que
-morfologia_verbal.py al pipeline, la proteccio original (nomes alla)
-mai arribava a executar-se: "o siga" es traduia mal a "o sigui" des que
-esta capa es va afegir. Corregit mirant la paraula anterior amb
-`paraula_anterior_es` (rules/__init__.py).
+CORRECCIÓ (13/10/2026, trobat investigant `cat_val/conjugacions_dict.py`
+en sentit contrari -- RC067): esta capa tenia una protecció que impedia
+traduir "siga" quan anava precedida de "o", basant-se en la suposició
+que "o siga" ("és a dir") és una locució fixa invariable als dos
+dialectes. **La suposició era FALSA** -- mesurant l'ÚNICA aparició real
+d'esta expressió a tot el benchmark (RC067), el costat català diu "o
+sigui" i el valencià diu "o siga": és un parell dialectal NORMAL, no una
+locució congelada. La protecció es retira -- el filtre `SEMPRE_VERB` ja
+basta (vore baix, "siga" ja hi era inclòs perquè spaCy l'etiqueta
+malament en general, siga quin siga el context).
 
 Col·lisions homògraf verb/paraula comuna (05/10/2026, des que
 `conjugaciones_nuevo.json` va afegir 5.465 verbs en compte dels 156
@@ -139,7 +141,6 @@ from .. import (
     Token,
     aplica_amb_prefix_elidit,
     corregeix_elisio_de_abans,
-    paraula_anterior_es,
     preserva_majuscula,
     separa_prefix_elidit,
     separa_sufix_elidit,
@@ -277,16 +278,16 @@ class ConjugacionsDictRule:
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
     [("s'oferisca", "s'ofereixi")]
 
-    "o siga" (locució fixa, "és a dir") no és el verb "ser" en subjuntiu,
-    encara que "siga" sí és una forma neta a les dades de Mauricio:
+    "o siga" ("és a dir") NO és una locució congelada -- és un parell
+    dialectal normal ("o siga"/"o sigui", vore docstring del mòdul,
+    correcció 13/10/2026 trobada amb RC067), així que "siga" es tradueix
+    igual encara que vaja precedit d'"o":
 
     >>> toks = tokenize("El recompte acaba hui, o siga, el 29 de febrer.")
     >>> marca_noms_propis(toks)
     >>> toks = ConjugacionsDictRule().apply(toks)
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
-    []
-
-    Però "siga" SÍ es tradueix quan és de veres el verb (no precedit de "o"):
+    [('siga', 'sigui')]
 
     >>> toks = tokenize("Vull que siga possible.")
     >>> marca_noms_propis(toks)
@@ -351,8 +352,6 @@ class ConjugacionsDictRule:
             if tok.is_translated or tok.is_proper_noun:
                 continue
             minuscules = tok.surface.lower()
-            if minuscules == "siga" and paraula_anterior_es(tokens, i, "o"):
-                continue
             if tok.pos and tok.pos not in ("VERB", "AUX") and minuscules not in SEMPRE_VERB:
                 continue
             forma = self._lookup.get(minuscules)

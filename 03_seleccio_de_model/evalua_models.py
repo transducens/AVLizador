@@ -1084,6 +1084,12 @@ def avalua_model(
     d'eines ja els esperen aixina -- en direccio cat-val, "occidental"
     conte de fet la frase d'ENTRADA (catala) i "referencia" la de
     EIXIDA esperada (valencia), no el dialecte occidental de veres.
+
+    El propi `direccio` es guarda tal qual al JSON de eixida (afegit
+    13/10/2026) perque ferramentes com `visor_resultats.html` sapien
+    quina es l'entrada i quina l'eixida sense haver d'invertir-ho a
+    ulls -- fitxers antics (abans d'este canvi) no el tenen i cal
+    inferir-ho pel nom del model.
     """
     print(f"\n{'='*60}")
     print(f"AVALUANT: {nom_model} (direccio: {direccio})")
@@ -1184,6 +1190,7 @@ def avalua_model(
 
     resum = {
         "model":          nom_model,
+        "direccio":       direccio,
         "timestamp":      datetime.now().isoformat(),
         "n_frases":       len(resultats),
         "errors":         errors,

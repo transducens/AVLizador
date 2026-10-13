@@ -41,6 +41,19 @@ es queden buits de moment (cap cas trobat encara on spaCy s'equivoque en
 esta direcció) -- s'amplien només amb evidència, com la resta del
 projecte.
 
+**"sigui" dins d'"o sigui" (13/10/2026, RC067)**: spaCy etiqueta "sigui"
+com a NOUN (no VERB/AUX) quan funciona com a marcador discursiu ("o
+sigui" = "és a dir") -- el mateix tipus d'error de tagger ja documentat a
+`rules/val_cat/conjugacions_dict.py::SEMPRE_VERB`, pero aplicat ací en
+sentit contrari. **Mentres investigava açò es va trobar un bug relacionat
+en l'altra direcció**: `rules/val_cat/conjugacions_dict.py` tenia una
+protecció que assumia que "o siga" era una locució CONGELADA (mai
+canviava als dos dialectes) -- fals, l'únic cas real del benchmark
+(RC067) mostra que és un parell dialectal normal ("o siga"/"o sigui").
+Corregit afegint "sigui" ací a `SEMPRE_VERB_INVERS` (perquè spaCy
+l'etiqueta malament) i retirant la protecció equivocada de l'altra
+banda (perquè `SEMPRE_VERB` ja cobria "siga" per la mateixa raó).
+
 **Elisió combinada** (cas real trobat al propi benchmark invertit,
 RC032): "d'escalfar-nos" (català, UN sol token amb prefix elidit "d'" I
 sufix enclític "-nos" alhora) ha de tornar "de calfar-nos" (valencià,
@@ -68,12 +81,14 @@ DEFAULT_CONJUGACIONS_PATH = (
     Path(__file__).resolve().parent.parent.parent / "data" / "conjugacions_dialectals.json"
 )
 
-# Vore docstring del mòdul ("Correcció important 08/10/2026"): cap cas
-# conegut encara on calga ignorar `tok.pos` -- es queden buides fins que
-# n'hi haja evidència real, mateix patró que `EXCLUSIONS_HOMOGRAF`/
+# Vore docstring del mòdul ("Correcció important 08/10/2026" i "'sigui'
+# dins d''o sigui'" 13/10/2026): "sigui" és l'únic cas conegut on calga
+# ignorar `tok.pos` -- spaCy l'etiqueta NOUN en el marcador discursiu "o
+# sigui". La resta de `EXCLUSIONS_HOMOGRAF_INVERS` es queda buida fins
+# que n'hi haja evidència real, mateix patró que `EXCLUSIONS_HOMOGRAF`/
 # `SEMPRE_VERB` de `rules/val_cat/conjugacions_dict.py`.
 EXCLUSIONS_HOMOGRAF_INVERS: set[str] = set()
-SEMPRE_VERB_INVERS: set[str] = set()
+SEMPRE_VERB_INVERS: set[str] = {"sigui"}
 
 
 def carrega_conjugacions_invers(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[str, str]:
@@ -197,6 +212,17 @@ class ConjugacionsDictInversRule:
     >>> toks = ConjugacionsDictInversRule().apply(toks)
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
     []
+
+    "sigui" dins d'"o sigui" (marcador discursiu, RC067) es tradueix igual
+    encara que spaCy l'etiquete NOUN en este context (vore docstring del
+    mòdul):
+
+    >>> toks = tokenize("el recompte, o sigui, el 29 de febrer.")
+    >>> marca_noms_propis(toks)
+    >>> pos_tagger.etiqueta(toks)
+    >>> toks = ConjugacionsDictInversRule().apply(toks)
+    >>> [(t.surface, t.translated) for t in toks if t.is_translated]
+    [('sigui', 'siga')]
 
     Prefix I sufix alhora -- el cas real del benchmark invertit (RC032):
     "escalfar" (vocal inicial en català) torna "calfar" (consonant

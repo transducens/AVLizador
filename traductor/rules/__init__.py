@@ -356,6 +356,74 @@ def corregeix_elisio_de_abans(tokens: list[Token], index: int) -> None:
         espai.translated = ""
 
 
+# Contraccions "a"+"el" -> "al", "de"+"el" -> "del" -- mateixa taula que
+# `_PREPOSICIONS_CONTRAIBLES` pero invertida (clau = contracció, valor =
+# preposició solta), per a `corregeix_contraccio_al_abans`.
+_CONTRACCIO_A_PREPOSICIO = {"al": "a", "del": "de"}
+
+
+def corregeix_contraccio_al_abans(tokens: list[Token], index: int) -> None:
+    """Si `tokens[index]` ha canviat de consonant inicial a vocal/h muda
+    com a resultat d'una substitució (lookup exacte), i el token real
+    anterior és la contracció "al" o "del" ("a"+"el", "de"+"el"), la
+    desfà en "a"/"de" solt seguit de "l'" enganxat a la paraula ja
+    traduïda -- "al sortir" -> "a l'eixir" quan "sortir" (consonant
+    inicial) es tradueix a "eixir" (vocal inicial).
+
+    Mirall invers d'`aplica_amb_prefix_elidit` (que DESFÀ una elisió que
+    ja no té sentit perquè la paraula ha passat de vocal a consonant);
+    ací el cas és el contrari -- una paraula consonant es torna vocal i
+    cal CREAR l'elisió que abans no calia, igual que
+    `corregeix_elisio_de_abans` pero partint d'una contracció ("al"/"del")
+    en compte d'una preposició solta ("de").
+
+    Cas real trobat (13/10/2026, RC016, cat->val): "Al sortir a
+    l'exterior, la lava discorre..." es convertia en "Al eixir a
+    l'exterior..." en compte d'"A l'eixir a l'exterior...".
+    `cat_val/lexic.py` és el cridador conegut hui (lookup d'una paraula).
+
+    >>> toks = tokenize("Al sortir a l'exterior.")
+    >>> toks[2].translated = "eixir"
+    >>> corregeix_contraccio_al_abans(toks, 2)
+    >>> detokenize(toks)
+    "A l'eixir a l'exterior."
+
+    Si el token anterior no és "al"/"del", no fa res:
+
+    >>> toks = tokenize("Vaig eixir a l'exterior.")
+    >>> toks[2].translated = "eixir"
+    >>> corregeix_contraccio_al_abans(toks, 2)
+    >>> detokenize(toks)
+    "Vaig eixir a l'exterior."
+
+    Si la forma traduïda seguix començant en consonant, tampoc fa res:
+
+    >>> toks = tokenize("Al parlar clar.")
+    >>> toks[2].translated = "parlar"
+    >>> corregeix_contraccio_al_abans(toks, 2)
+    >>> detokenize(toks)
+    'Al parlar clar.'
+    """
+    tok = tokens[index]
+    if not _COMENCA_EN_VOCAL_O_H_MUDA_RE.match(tok.translated):
+        return
+    i_anterior = None
+    for i in range(index - 1, -1, -1):
+        if tokens[i].surface.isspace():
+            continue
+        i_anterior = i
+        break
+    if i_anterior is None:
+        return
+    anterior = tokens[i_anterior]
+    preposicio = _CONTRACCIO_A_PREPOSICIO.get(anterior.translated.lower())
+    if preposicio is None:
+        return
+    anterior.translated = preserva_majuscula(anterior.surface, preposicio)
+    anterior.is_translated = True
+    tok.translated = "l'" + tok.translated
+
+
 # Determinants femenins i el seu parell masculí -- mateixes formes ja
 # documentades a `concordanca_dos_dues.py` (`_MARCADORS_FEMENI_PLURAL`)
 # mes les singulars. Taula tancada, curada a mà. Compartida entre les dos

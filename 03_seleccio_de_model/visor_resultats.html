@@ -111,6 +111,12 @@
   }
   .pill.ok { background: var(--ins); color: var(--ins-text); }
   .pill.no { background: var(--del); color: var(--del-text); }
+  .pill.dir-val-cat { background: var(--accent-bg); color: var(--accent); }
+  .pill.dir-cat-val { background: #ffe9d6; color: #b5560a; }
+  @media (prefers-color-scheme: dark) {
+    .pill.dir-cat-val { background: #4a2f16; color: #f0a35e; }
+  }
+  .avis { font-size: .82rem; color: var(--mid); margin: 0 0 14px; }
 
   .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
   .controls input[type=search] {
@@ -223,6 +229,24 @@
     return (d.model || m.nombre) + (d.timestamp ? ` · ${d.timestamp.replace('T', ' ').slice(0, 16)}` : '');
   }
 
+  // Direcció de la traducció ("val-cat" o "cat-val"). Fitxers nous (a partir
+  // del 13/10/2026) porten el camp `direccio` explícit al JSON; els antics no
+  // el tenen i cal inferir-ho pel nom del model ("Traductor_Invers" = cat-val).
+  function direccioDeDades(d, nombreFichero) {
+    if (d.direccio === 'cat-val' || d.direccio === 'val-cat') return d.direccio;
+    return /invers/i.test(d.model || nombreFichero || '') ? 'cat-val' : 'val-cat';
+  }
+
+  function direccioModelo(m) {
+    return direccioDeDades(m.data, m.nombre);
+  }
+
+  function etiquetesDireccio(dir) {
+    return dir === 'cat-val'
+      ? { origen: 'català', desti: 'valencià', fletxa: 'Català → Valencià' }
+      : { origen: 'valencià', desti: 'català', fletxa: 'Valencià → Català' };
+  }
+
   function escapeHtml(s) {
     return String(s ?? '').replace(/[&<>"']/g, c => ({
       '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
@@ -257,11 +281,15 @@
 
   function renderTabs() {
     if (!modelos.length) { tabsWrap.innerHTML = ''; return; }
-    tabsWrap.innerHTML = `<div class="tabs">${modelos.map((m, idx) => `
+    tabsWrap.innerHTML = `<div class="tabs">${modelos.map((m, idx) => {
+      const dir = direccioModelo(m);
+      return `
       <div class="tab ${idx === activo ? 'active' : ''}" data-idx="${idx}">
+        <span class="pill dir-${dir}">${etiquetesDireccio(dir).fletxa}</span>
         <span>${escapeHtml(etiquetaModelo(m))}</span>
         <button class="close" data-idx="${idx}" title="Descarregar">×</button>
-      </div>`).join('')}</div>`;
+      </div>`;
+    }).join('')}</div>`;
 
     tabsWrap.querySelectorAll('.tab').forEach(el => {
       el.addEventListener('click', () => { activo = Number(el.dataset.idx); render(); });
@@ -294,26 +322,34 @@
       mejores[met.key] = met.mejorAlta ? Math.max(...vals) : Math.min(...vals);
     });
 
+    const direccions = new Set(modelos.map(direccioModelo));
+
     comparativaEl.innerHTML = `
       <div class="panel">
         <h2>Comparativa (${modelos.length} models)</h2>
+        ${direccions.size > 1 ? `<p class="avis">⚠ Estàs comparant models en direccions diferents (valencià→català i català→valencià) — les mètriques no mesuren la mateixa tasca.</p>` : ''}
         <div style="overflow-x:auto">
         <table>
           <thead><tr>
             <th>Model</th>
+            <th>Direcció</th>
             ${metricas.map(m => `<th>${m.label}</th>`).join('')}
           </tr></thead>
           <tbody>
-            ${modelos.map(m => `
+            ${modelos.map(m => {
+              const dir = direccioModelo(m);
+              return `
               <tr>
                 <td>${escapeHtml(etiquetaModelo(m))}</td>
+                <td><span class="pill dir-${dir}">${etiquetesDireccio(dir).fletxa}</span></td>
                 ${metricas.map(met => {
                   const v = m.data[met.key];
                   const esMejor = mejores[met.key] !== undefined && v === mejores[met.key];
                   const val = met.dec === 0 ? (v ?? '—') : fmt(v, met.dec);
                   return `<td class="score" style="color:${met.mejorAlta === null ? 'inherit' : colorScore(met.key.includes('pct') || met.key.includes('bleu') || met.key.includes('chrf') || met.key.includes('comet') ? v : (met.mejorAlta ? v : 100 - (v || 0)))}${esMejor ? ';font-weight:800' : ''}">${val}${esMejor ? ' ★' : ''}</td>`;
                 }).join('')}
-              </tr>`).join('')}
+              </tr>`;
+            }).join('')}
           </tbody>
         </table>
         </div>
@@ -327,6 +363,8 @@
   function renderDetalle() {
     if (activo < 0 || !modelos[activo]) { detallEl.innerHTML = modelos.length ? '' : `<div class="empty">Encara no has carregat cap fitxer.</div>`; return; }
     const d = modelos[activo].data;
+    const dir = direccioModelo(modelos[activo]);
+    const et = etiquetesDireccio(dir);
 
     const cards = [
       { label: 'Frases', value: d.n_frases ?? '—' },
@@ -342,6 +380,7 @@
     const dificultats = groupTables(d.per_dificultat, 'Dificultat');
 
     detallEl.innerHTML = `
+      <div style="margin-bottom:10px"><span class="pill dir-${dir}">${et.fletxa}</span></div>
       <div class="cards">
         ${cards.map(c => `
           <div class="card">
@@ -360,7 +399,7 @@
       <div class="panel">
         <h2>Frase a frase</h2>
         <div class="controls">
-          <input type="search" id="cercaInput" placeholder="Cerca per id, text origen, referència o hipòtesi…" value="${escapeHtml(filtro.texto)}">
+          <input type="search" id="cercaInput" placeholder="Cerca per id, origen (${et.origen}), referència o hipòtesi (${et.desti})…" value="${escapeHtml(filtro.texto)}">
           <select id="filtreTipo">
             <option value="todos">Totes</option>
             <option value="exactes">Només exactes</option>
@@ -428,10 +467,11 @@
 
     badge.textContent = `${filas.length} / ${(d.resultats || []).length} frases`;
 
+    const etq = etiquetesDireccio(direccioDeDades(d));
     const columnas = [
       { key: 'id', label: 'ID' },
-      { key: 'occidental', label: 'Origen (occidental)' },
-      { key: 'diff', label: 'Referència → Hipòtesi' },
+      { key: 'occidental', label: `Origen (${etq.origen})` },
+      { key: 'diff', label: `Referència → Hipòtesi (${etq.desti})` },
       { key: 'bleu', label: 'BLEU' },
       { key: 'chrf', label: 'chrF' },
       { key: 'exacte', label: 'Exacte' },
