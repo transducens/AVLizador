@@ -19,8 +19,10 @@ encara (vore engine.py per l'orde complet).
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass
+from pathlib import Path
 
 
 @dataclass
@@ -558,6 +560,59 @@ def marca_noms_propis(tokens: list[Token]) -> None:
         if paraula_trobada and tok.surface[:1].isupper():
             tok.is_proper_noun = True
         paraula_trobada = True
+
+
+# Camp OBERT (13/10/2026, vore documentacio/hoja_de_ruta_traductor_invers.md):
+# categoria gramatical curada a mà de les entrades de `lexic_mauricio.json`
+# que SÍ necessiten comprovar `tok.pos` abans d'aplicar-se (homògrafs entre
+# categories, p.ex. català "nou" = new/ADJ, nine/NUM, walnut/NOUN). Pensat
+# per a reemplaçar les llistes d'excepció soltes per paraula
+# (`_EXIGEIX_NOUN_CAT` a `cat_val/lexic.py`...) per un mecanisme ÚNIC i
+# compartit entre les dos direccions -- la clau sempre és la forma
+# VALENCIANA (la identitat canònica), encara que qui ho consulte estiga
+# mirant el costat català (cat_val) o el valencià (val_cat).
+CATEGORIA_GRAMATICAL_PATH = Path(__file__).resolve().parent.parent / "data" / "categoria_gramatical_lexic.json"
+
+
+def carrega_categoria_gramatical(path: Path = CATEGORIA_GRAMATICAL_PATH) -> dict[str, set[str]]:
+    """Llig `categoria_gramatical_lexic.json`, tornant
+    `{forma_valenciana_en_minuscules: {categories_POS_valides}}`. Nomes
+    conté les poques paraules classificades fins ara -- es queda OBERT,
+    s'amplia poc a poc (vore docstring del fitxer de dades).
+
+    >>> categories = carrega_categoria_gramatical()
+    >>> categories["anou"]
+    {'NOUN'}
+    """
+    dades = json.loads(Path(path).read_text(encoding="utf-8"))
+    resultat: dict[str, set[str]] = {}
+    for paraula, categoria in dades.get("categories", {}).items():
+        resultat[paraula.lower()] = {categoria} if isinstance(categoria, str) else set(categoria)
+    return resultat
+
+
+def pos_compatible(tok_pos: str, paraula_valenciana: str, categories: dict[str, set[str]]) -> bool:
+    """Torna `True` si no hi ha cap restricció coneguda per a
+    `paraula_valenciana` (la majoria del lèxic -- preferix fals negatiu,
+    mai bloquejar per defecte), o si `tok_pos` hi és compatible. Si
+    `tok_pos` és buit (spaCy no disponible o no ha trobat la paraula),
+    també torna `True` -- el filtre nomes actua quan spaCy SÍ dona una
+    resposta clara que contradiu la categoria esperada.
+
+    >>> cats = {"anou": {"NOUN"}}
+    >>> pos_compatible("NOUN", "anou", cats)
+    True
+    >>> pos_compatible("ADJ", "anou", cats)
+    False
+    >>> pos_compatible("", "anou", cats)
+    True
+    >>> pos_compatible("ADJ", "casa", cats)
+    True
+    """
+    requerides = categories.get(paraula_valenciana.lower())
+    if not requerides or not tok_pos:
+        return True
+    return tok_pos in requerides
 
 
 if __name__ == "__main__":

@@ -60,6 +60,17 @@ AVL_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "demostratiu
 # com a resposta per defecte seria pitjor (són la minoria real, ~23%).
 _DEFAULT_AQUEST = {"aquest": "este", "aquesta": "esta", "aquests": "estos", "aquestes": "estes"}
 
+# Els dos candidats reals per a cada forma ambigua -- exposat en públic
+# perquè `08_traduccio_corpus/postprocessat_llm/` (Fase 3, desambiguació
+# per LLM) necessita saber quins SON els dos candidats, no nomes quin
+# s'aplica per defecte.
+CANDIDATS_AQUEST = {
+    "aquest": ("este", "eixe"),
+    "aquesta": ("esta", "eixa"),
+    "aquests": ("estos", "eixos"),
+    "aquestes": ("estes", "eixes"),
+}
+
 
 def carrega_demostratius_invers(path: Path = AVL_PATH) -> dict[str, str]:
     """Llig `demostratius_avl.json`, camp `invers_pendent_no_implementat`

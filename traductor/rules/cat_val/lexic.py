@@ -51,10 +51,13 @@ import json
 from pathlib import Path
 
 from .. import (
+    CATEGORIA_GRAMATICAL_PATH,
     Token,
     aplica_amb_prefix_elidit,
+    carrega_categoria_gramatical,
     corregeix_determinant_abans,
     paraules_segudents_son,
+    pos_compatible,
     preserva_majuscula,
     separa_prefix_elidit,
 )
@@ -79,6 +82,17 @@ CANVI_GENERE_PATH = _DATA / "canvi_genere_lexic_avl.json"
 # "aquest"->"este" a `demostratius.py`, pero ací la majoria diu "no
 # toques res" en compte de "tria un valor per defecte").
 _BUG_DADES_CONEGUTS_CAT = {"desprès", "ensenyament"}
+
+# Filtre POS general per categoria gramatical (13/10/2026, vore
+# `rules/__init__.py::pos_compatible` i
+# `traductor/data/categoria_gramatical_lexic.json`): abans nomes hi havia
+# "nou" com a set solt ací mateix (`_EXIGEIX_NOUN_CAT = {"nou"}`, homògraf
+# TRIPLE "nou"=new/ADJ, nine/NUM, walnut/NOUN -- RC070/RC076/RC097
+# volien el sentit "new" sense tocar). Ara és un mecanisme ÚNIC i OBERT:
+# qualsevol paraula classificada al fitxer de dades es comprova igual,
+# sense fer falta tocar codi cada vegada que apareix un cas nou -- vore
+# el fitxer de dades per a l'estat de la classificació (de moment nomes
+# "anou"/"nou", pendent d'ampliar-se).
 
 
 def _formes_demostratius_coneguts_cat() -> set[str]:
@@ -292,6 +306,19 @@ class LexicInversRule:
     >>> toks = LexicInversRule().apply(toks)
     >>> detokenize(toks)
     'Mengem la dacsa cada estiu.'
+
+    Filtre POS per a "nou" (homògraf): com a ADJ ("new", el cas real
+    conegut) mai es toca -- vore docstring del mòdul per a per què el
+    sentit NOUN ("walnut") no es pot demostrar encara (spaCy no el
+    distingix fiablement, cap cas real tampoc el necessita):
+
+    >>> from .. import pos_tagger
+    >>> toks = tokenize("En un nou procés d'expansió.")
+    >>> marca_noms_propis(toks)
+    >>> pos_tagger.etiqueta(toks)
+    >>> toks = LexicInversRule().apply(toks)
+    >>> [(t.surface, t.translated) for t in toks if t.is_translated]
+    []
     """
 
     def __init__(
@@ -301,8 +328,10 @@ class LexicInversRule:
         flexio_genere_path: Path = FLEXIO_GENERE_PATH,
         frases_path: Path = MAURICIO_PATH,
         canvi_genere_path: Path = CANVI_GENERE_PATH,
+        categoria_path: Path = CATEGORIA_GRAMATICAL_PATH,
     ) -> None:
         self._lookup = carrega_lexic_invers(mauricio_path, acentuacio_path, flexio_genere_path)
+        self._categories = carrega_categoria_gramatical(categoria_path)
         frases = carrega_frases_invers(frases_path)
         self._canvis_genere = carrega_canvis_genere_invers(frases, canvi_genere_path)
         self._frases_per_inici: dict[str, list[tuple[tuple[str, ...], str]]] = {}
@@ -340,8 +369,11 @@ class LexicInversRule:
                 continue
             if self._intenta_frase(tokens, i):
                 continue
-            forma = self._lookup.get(tok.surface.lower())
+            minuscules = tok.surface.lower()
+            forma = self._lookup.get(minuscules)
             if forma is not None:
+                if not pos_compatible(tok.pos, forma, self._categories):
+                    continue
                 tok.translated = preserva_majuscula(tok.surface, forma)
                 tok.is_translated = True
                 continue
@@ -350,6 +382,8 @@ class LexicInversRule:
                 continue
             prefix, resta = prefix_resta
             forma = self._lookup.get(resta.lower())
+            if forma is not None and not pos_compatible(tok.pos, forma, self._categories):
+                continue
             if forma is not None:
                 aplica_amb_prefix_elidit(tokens, i, prefix, resta, forma)
                 tok.is_translated = True
