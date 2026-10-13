@@ -49,8 +49,8 @@ reordenar o traure una capa, este és l'ÚNIC lloc a tocar.
 
 from __future__ import annotations
 
-from . import Token, detokenize, marca_noms_propis, tokenize
-from . import pos_tagger
+from .. import Token, detokenize, marca_noms_propis, tokenize
+from .. import pos_tagger
 from .accentuacio import AccentuacioRule
 from .concordanca_dos_dues import ConcordancaDosDuesRule
 from .conjugacions_dict import ConjugacionsDictRule
@@ -59,6 +59,7 @@ from .incoatius import IncoatiusRule
 from .lexic import LexicRule
 from .numerals import NumeralsRule
 from .possessius import PossessiusRule
+from .preposicions_locucions import PreposicionsLocucionsRule
 from .relatiu_on import RelatiuOnRule
 
 
@@ -94,6 +95,7 @@ class RuleEngine:
             DemostratiusRule(),
             AccentuacioRule(),
             IncoatiusRule(),
+            PreposicionsLocucionsRule(),
         ]
 
     def translate(self, text: str) -> str:

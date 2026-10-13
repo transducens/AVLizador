@@ -1043,6 +1043,22 @@ def tradueix_traductor_nou(frase: str) -> str:
     return translate(frase)
 
 
+def tradueix_traductor_invers(frase: str) -> str:
+    """Adaptador cap a la direcció INVERSA del paquet `traductor/`
+    (`translate_cat_val`, afegida 08/10/2026 -- vore
+    `documentacio/hoja_de_ruta_traductor_invers.md`). Mateix mecanisme
+    d'import peresós que `tradueix_traductor_nou`, mateix motiu."""
+    import sys
+    from pathlib import Path
+
+    arrel_projecte = str(Path(__file__).resolve().parent.parent)
+    if arrel_projecte not in sys.path:
+        sys.path.insert(0, arrel_projecte)
+
+    from traductor.translate_invers import translate_cat_val
+    return translate_cat_val(frase)
+
+
 # ─── Pipeline d'avaluació ─────────────────────────────────────────────────────
 
 def avalua_model(
@@ -1052,13 +1068,25 @@ def avalua_model(
     delay: float = 1.0,
     usa_comet: bool = False,
     comet_model_name: str = COMET_MODEL_NAME,
+    direccio: str = "val-cat",
 ) -> dict:
     """
     Avalua un model sobre totes les frases del benchmark.
     Retorna el resultat complet amb mètriques.
+
+    `direccio` (afegit 08/10/2026, vore
+    `documentacio/hoja_de_ruta_traductor_invers.md`): "val-cat" (per
+    defecte) usa 'occidental' com a entrada i 'oriental' com a
+    referencia, igual que sempre. "cat-val" ho fa al reves -- mateix
+    benchmark, cap dada nova, nomes es canvia quin camp es l'entrada.
+    Els noms de camp del resultat ("occidental"/"referencia") es queden
+    igual en els dos casos perque `analitza_fallades.py` i la resta
+    d'eines ja els esperen aixina -- en direccio cat-val, "occidental"
+    conte de fet la frase d'ENTRADA (catala) i "referencia" la de
+    EIXIDA esperada (valencia), no el dialecte occidental de veres.
     """
     print(f"\n{'='*60}")
-    print(f"AVALUANT: {nom_model}")
+    print(f"AVALUANT: {nom_model} (direccio: {direccio})")
     print(f"{'='*60}")
 
     resultats = []
@@ -1066,8 +1094,12 @@ def avalua_model(
 
     for i, item in enumerate(benchmark, 1):
         # Normalitza apòstrofs en entrada i referència (el benchmark pot tenir ´ en lloc de ')
-        frase_occ  = normalitza_apostrofa(item["occidental"])
-        referencia = normalitza_apostrofa(item["oriental"])
+        if direccio == "cat-val":
+            frase_occ  = normalitza_apostrofa(item["oriental"])
+            referencia = normalitza_apostrofa(item["occidental"])
+        else:
+            frase_occ  = normalitza_apostrofa(item["occidental"])
+            referencia = normalitza_apostrofa(item["oriental"])
 
         print(f"[{i:02d}/{len(benchmark)}] {frase_occ[:55]}...")
 
@@ -1259,6 +1291,17 @@ def main():
         help="Model a avaluar"
     )
     parser.add_argument(
+        "--direccio",
+        choices=["val-cat", "cat-val"],
+        default="val-cat",
+        help="Nomes afecta --model traductor: val-cat (per defecte, "
+             "traductor.translate) o cat-val (traductor.translate_cat_val, "
+             "direccio inversa, 08/10/2026 -- vore "
+             "documentacio/hoja_de_ruta_traductor_invers.md). Per a cat-val, "
+             "el benchmark s'usa al reves: 'oriental' com a entrada, "
+             "'occidental' com a referencia."
+    )
+    parser.add_argument(
         "--api-key", default=os.getenv("ANTHROPIC_API_KEY"),
         help="API key d'Anthropic (opcional, només per a --model claude/tots)"
     )
@@ -1441,11 +1484,10 @@ def main():
         ))
 
     if args.model in ("traductor", "tots"):
-        models_a_avaluar.append((
-            "Traductor_Nou",
-            tradueix_traductor_nou,
-            0.0
-        ))
+        if args.direccio == "cat-val":
+            models_a_avaluar.append(("Traductor_Invers", tradueix_traductor_invers, 0.0))
+        else:
+            models_a_avaluar.append(("Traductor_Nou", tradueix_traductor_nou, 0.0))
 
     if not models_a_avaluar:
         print("No hi ha models per avaluar.")
@@ -1460,7 +1502,8 @@ def main():
     for nom, funcio, delay in models_a_avaluar:
         resum = avalua_model(
             nom, funcio, benchmark, delay=delay,
-            usa_comet=args.comet, comet_model_name=args.comet_model
+            usa_comet=args.comet, comet_model_name=args.comet_model,
+            direccio=args.direccio,
         )
         tots_resultats.append(resum)
 

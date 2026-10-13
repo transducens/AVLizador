@@ -4,6 +4,13 @@ __pycache__/
 venv/
 .vscode/
 
+# Memoria de trabajo para Claude Code entre sesiones (decisiones, qué se
+# probó y descartó, estado del benchmark) -- NO es documentación del
+# proyecto, esa vive en README.md/README.es.md y en los README.md de
+# cada carpeta. Se queda solo en local.
+CLAUDE.md
+CLAUDE_HISTORIAL.md
+
 # Datos crudos de scraping (AVL y BOE): demasiado grandes para GitHub y
 # regenerables con los scripts documentados en cada README. boe_eval.jsonl
 # se deriva del BOE, así que corre la misma suerte.

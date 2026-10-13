@@ -1,7 +1,7 @@
 """
 translate.py -- Punt d'entrada públic del traductor: `translate(text) -> str`.
 
-Orquestra el pipeline complet delegant en RuleEngine (rules/engine.py), amb
+Orquestra el pipeline complet delegant en RuleEngine (rules/val_cat/engine.py), amb
 un únic RuleEngine reutilitzat entre crides (`_ENGINE`, carregat de manera
 peresosa la primera vegada que cal). Això evita rellegir i re-indexar tots
 els fitxers de dades de `traductor/data/` (lèxics, conjugacions,
@@ -17,7 +17,7 @@ s'orquesten les regles, només cal tocar este fitxer.
 
 from __future__ import annotations
 
-from .rules.engine import RuleEngine
+from .rules.val_cat.engine import RuleEngine
 
 _ENGINE: RuleEngine | None = None
 

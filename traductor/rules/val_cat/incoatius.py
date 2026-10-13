@@ -34,7 +34,7 @@ from __future__ import annotations
 
 import re
 
-from . import Token, preserva_majuscula
+from .. import Token, preserva_majuscula
 
 _EXCEPCIONS = {"baix", "calaix", "dibuix", "guix", "fix", "prefix", "sufix"}
 # Exigix que la lletra just abans de "ix" NO siga "e" -- així mai toca
@@ -47,7 +47,7 @@ class IncoatiusRule:
     """Substitueix el sufix -ix per -eix, amb les proteccions del
     docstring del mòdul.
 
-    >>> from . import tokenize, marca_noms_propis
+    >>> from .. import tokenize, marca_noms_propis
     >>> toks = tokenize("Este servix per a establix una nova norma.")
     >>> marca_noms_propis(toks)
     >>> toks = IncoatiusRule().apply(toks)

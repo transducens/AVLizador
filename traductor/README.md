@@ -8,6 +8,14 @@ Python que s'importa pel nom (`import traductor`) des d'altres parts del
 codi — un nom de mòdul no pot començar per un dígit en Python.
 Conceptualment és l'etapa 5 del projecte.
 
+**Direcció inversa (català→valencià, en construcció des del 08/10/2026)**:
+`from traductor import translate_cat_val` — vore
+`traductor/rules/cat_val/README.md` i
+`documentacio/hoja_de_ruta_traductor_invers.md` (arrel del repositori)
+per a l'estat, l'abast actual i el raonament complet. Esta direcció
+original (`translate`, val→cat) es queda exactament igual, sense cap
+canvi.
+
 ## Per què existix açò
 
 Les etapes 1-4 usen un LLM (qwen2.5:14b) amb un system prompt de regles +
@@ -402,16 +410,16 @@ despres que mirar, fora de l'abast d'esta capa) i RC142 ("dos consonants"
 -- spaCy etiqueta "consonants" com a Masc per error, hauria de ser Fem;
 no s'afig cap llista curada mentre no hi haja mes evidencia real).
 
-**D -- Preposició "en"/"a" sense regla seg​ura (5 frases, direcció
-CONTRADICTÒRIA segons l'expressió -- NO hi ha arreglo general)**:
-RC027 (ref "vinculat EN", nosaltres "a"), RC100 (ref "a les mans",
-nosaltres "en"), RC115 (ref "a la ciutat", nosaltres "en"), RC135 (ref
-"a l'interior", nosaltres "en"), RC137 (ref "en les Corts", nosaltres
-"a"). Com la direcció correcta depén de l'expressió regida pel verb
-anterior (no hi ha un patró "en→a" ni "a→en" que valga sempre), nomes
-es podria resoldre amb una llista tancada per expressió concreta
-("vinculat a", "tindre la seu a", "interior de"...), mai amb una regla
-general -- i no hi ha prou evidència encara per a saber si val la pena.
+**D -- Preposició "en"/"a" (RESOLTA, 08/10/2026)**: 5 frases, direcció
+CONTRADICTÒRIA segons l'expressió (RC027 "vinculat a"→"en", RC100 "en
+les seues mans"→"a", RC115 "en la ciutat"→"a", RC135 "en l'interior"→"a",
+RC137 "a les Corts Valencianes"→"en" -- este últim en la MATEIXA frase
+que "elevar AL Consell", que es queda igual). Confirmat que no hi ha cap
+patró fonològic ni gramatical que ho predigga, només la col·locació
+concreta -- implementat com 5 entrades EXACTES en una llista tancada,
+`traductor/rules/preposicions_locucions.py` (`PreposicionsLocucionsRule`,
+nova capa al final del pipeline). **+5 frases exactes, cero
+regressions.**
 
 **E -- Concordança de gènere tras substitució léxica (RESOLTA, 08/10/2026)**:
 RC044 "la dacsa"→"blat de moro" donava "la blat de moro". Implementat el

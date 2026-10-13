@@ -98,7 +98,11 @@ més llunyà no es corregisca (preferix fals negatiu, mateixa filosofia que
 la resta del projecte). Com `LexicRule` és la PRIMERA capa del pipeline,
 el determinant encara no l'ha tocat cap regla (demostratius.py va després),
 així que es compara contra la seua forma VALENCIANA original, no la
-catalana.
+catalana. El mecanisme (`corregeix_determinant_abans`, la taula
+`DET_FEM_A_MASC`/`DET_MASC_A_FEM`) viu a `rules/__init__.py` des del
+08/10/2026 -- es comparteix amb la direcció inversa (català->valencià,
+vore `traductor/rules/cat_val/`), que necessita exactament el mateix
+mecanisme en sentit contrari.
 """
 
 from __future__ import annotations
@@ -106,34 +110,20 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from . import Token, aplica_amb_prefix_elidit, preserva_majuscula, separa_prefix_elidit
+from .. import (
+    Token,
+    aplica_amb_prefix_elidit,
+    corregeix_determinant_abans,
+    preserva_majuscula,
+    separa_prefix_elidit,
+)
 
-_DATA = Path(__file__).resolve().parent.parent / "data"
+_DATA = Path(__file__).resolve().parent.parent.parent / "data"
 MAURICIO_PATH = _DATA / "lexic_mauricio.json"
 ACENTUACIO_MAURICIO_PATH = _DATA / "lexic_acentuacio_mauricio.json"
 FLEXIO_GENERE_PATH = _DATA / "flexio_genere_avl.json"
 TEMPORAL_PATH = _DATA / "TEMPORAL_hui_avui_pendent_fusio.json"
 CANVI_GENERE_PATH = _DATA / "canvi_genere_lexic_avl.json"
-
-# Determinants femenins (valencià) i el seu parell masculí -- mateixes
-# formes ja documentades a `concordanca_dos_dues.py`
-# (`_MARCADORS_FEMENI_PLURAL`) mes les singulars. Taula tancada, curada a
-# mà -- vore docstring del mòdul, secció "Concordança de gènere".
-_DET_FEM_A_MASC = {
-    "la": "el",
-    "una": "un",
-    "esta": "este",
-    "eixa": "eixe",
-    "aqueixa": "aqueix",
-    "aquella": "aquell",
-    "les": "els",
-    "unes": "uns",
-    "estes": "estos",
-    "eixes": "eixos",
-    "aqueixes": "aqueixos",
-    "aquelles": "aquells",
-}
-_DET_MASC_A_FEM = {masc: fem for fem, masc in _DET_FEM_A_MASC.items()}
 
 # Bug de dades conegut al fitxer font (vore docstring del mòdul): "després"
 # no és una excepció dialectal, és un error de transcripció confirmat.
@@ -261,35 +251,6 @@ def carrega_canvis_genere(path: Path = CANVI_GENERE_PATH) -> dict[str, str]:
     return dict(dades.get("canvis", {}))
 
 
-def _corregeix_determinant_abans(tokens: list[Token], index: int, genere_nou: str) -> None:
-    """Corregix el determinant IMMEDIATAMENT anterior (un token arrere,
-    saltant espais) perquè concorde amb `genere_nou` ("m" o "f") -- vore
-    docstring del mòdul. Si no hi ha determinant conegut just davant (p.ex.
-    ja concordava, o hi ha una altra paraula), no fa res.
-
-    >>> from . import tokenize
-    >>> toks = tokenize("la dacsa")
-    >>> _corregeix_determinant_abans(toks, 2, "m")
-    >>> [t.translated for t in toks]
-    ['el', ' ', 'dacsa']
-    """
-    i_anterior = None
-    for i in range(index - 1, -1, -1):
-        if tokens[i].surface.isspace():
-            continue
-        i_anterior = i
-        break
-    if i_anterior is None:
-        return
-    anterior = tokens[i_anterior]
-    taula = _DET_FEM_A_MASC if genere_nou == "m" else _DET_MASC_A_FEM
-    nova_forma = taula.get(anterior.translated.lower())
-    if nova_forma is None:
-        return
-    anterior.translated = preserva_majuscula(anterior.surface, nova_forma)
-    anterior.is_translated = True
-
-
 def carrega_lexic(
     mauricio_path: Path = MAURICIO_PATH,
     acentuacio_path: Path = ACENTUACIO_MAURICIO_PATH,
@@ -334,7 +295,7 @@ class LexicRule:
     possible nom propi (`is_proper_noun`, fixat per `marca_noms_propis()`
     abans de córrer cap regla -- vore rules/__init__.py).
 
-    >>> from . import tokenize, marca_noms_propis
+    >>> from .. import tokenize, marca_noms_propis
     >>> toks = tokenize("Vull parlar amb el meu servici.")
     >>> marca_noms_propis(toks)
     >>> toks = LexicRule().apply(toks)
@@ -365,7 +326,7 @@ class LexicRule:
     l'elisió original ja no té sentit i es desfà (bug real, 30/09/2026--
     vore `aplica_amb_prefix_elidit` a rules/__init__.py):
 
-    >>> from . import detokenize
+    >>> from .. import detokenize
     >>> toks = tokenize("A l'eixir carrec la caixa.")
     >>> marca_noms_propis(toks)
     >>> toks = LexicRule().apply(toks)
@@ -403,7 +364,7 @@ class LexicRule:
                 tok.is_translated = True
                 genere_nou = self._canvis_genere.get(tok.surface.lower())
                 if genere_nou is not None:
-                    _corregeix_determinant_abans(tokens, i, genere_nou)
+                    corregeix_determinant_abans(tokens, i, genere_nou)
                 continue
             prefix_resta = separa_prefix_elidit(tok.surface)
             if prefix_resta is None:

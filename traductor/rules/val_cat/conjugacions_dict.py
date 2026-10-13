@@ -135,7 +135,7 @@ import json
 import re
 from pathlib import Path
 
-from . import (
+from .. import (
     Token,
     aplica_amb_prefix_elidit,
     corregeix_elisio_de_abans,
@@ -146,7 +146,7 @@ from . import (
 )
 
 DEFAULT_CONJUGACIONS_PATH = (
-    Path(__file__).resolve().parent.parent / "data" / "conjugacions_dialectals.json"
+    Path(__file__).resolve().parent.parent.parent / "data" / "conjugacions_dialectals.json"
 )
 
 # Vore docstring del modul: formes conjugades RARES que coincidixen per
@@ -242,7 +242,7 @@ class ConjugacionsDictRule:
     traduit per una capa anterior (`is_translated`) ni un possible nom
     propi (`is_proper_noun`).
 
-    >>> from . import tokenize, marca_noms_propis
+    >>> from .. import tokenize, marca_noms_propis
     >>> toks = tokenize("Els vaig oferisca ajuda.")
     >>> marca_noms_propis(toks)
     >>> toks = ConjugacionsDictRule().apply(toks)
@@ -300,7 +300,7 @@ class ConjugacionsDictRule:
     a substantiu -- `pos_tagger.etiqueta()` ho detecta ("NOUN") i esta capa
     no l'toca:
 
-    >>> from .pos_tagger import etiqueta
+    >>> from ..pos_tagger import etiqueta
     >>> toks = tokenize("Hi havia moltes persones al carrer.")
     >>> marca_noms_propis(toks)
     >>> etiqueta(toks)
@@ -335,7 +335,7 @@ class ConjugacionsDictRule:
     rules/__init__.py -- cas real: "de calfar-nos" no es traduia mai a
     "d'escalfar-nos"):
 
-    >>> from . import detokenize
+    >>> from .. import detokenize
     >>> toks = tokenize("La manera de calfar-nos.")
     >>> marca_noms_propis(toks)
     >>> toks = ConjugacionsDictRule().apply(toks)

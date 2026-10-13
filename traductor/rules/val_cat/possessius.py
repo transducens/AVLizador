@@ -24,9 +24,9 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from . import Token, preserva_majuscula
+from .. import Token, preserva_majuscula
 
-MAURICIO_PATH = Path(__file__).resolve().parent.parent / "data" / "possessius_mauricio.json"
+MAURICIO_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "possessius_mauricio.json"
 
 
 def _mateix_nombre(valenciano: str, catalan: str) -> bool:
@@ -50,7 +50,7 @@ class PossessiusRule:
     oriental. Les formes masculines/tòniques no apareixen en la taula a
     propòsit (vore docstring del mòdul) -- esta regla les deixa intactes.
 
-    >>> from . import tokenize, marca_noms_propis
+    >>> from .. import tokenize, marca_noms_propis
     >>> toks = tokenize("La meua casa i la seua obra, el meu gos.")
     >>> marca_noms_propis(toks)
     >>> toks = PossessiusRule().apply(toks)

@@ -26,9 +26,9 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from . import Token, preserva_majuscula
+from .. import Token, preserva_majuscula
 
-MAURICIO_PATH = Path(__file__).resolve().parent.parent / "data" / "numerals_mauricio.json"
+MAURICIO_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "numerals_mauricio.json"
 
 # Vore docstring del mòdul: extracció trencada al fitxer font, s'exclouen.
 _VUITAVAT_EXCLOSOS = {"huitavdes", "huitavda", "huitavts", "huitavt"}
@@ -60,7 +60,7 @@ class NumeralsRule:
     """Substitueix numerals valencians coneguts per la seua forma
     catalana (vore docstring del mòdul).
 
-    >>> from . import tokenize, marca_noms_propis
+    >>> from .. import tokenize, marca_noms_propis
     >>> toks = tokenize("Tinc huitanta anys i en fea díhuit quan vaig anar.")
     >>> marca_noms_propis(toks)
     >>> toks = NumeralsRule().apply(toks)

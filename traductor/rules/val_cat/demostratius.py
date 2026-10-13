@@ -35,9 +35,9 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from . import Token, aplica_amb_prefix_elidit, preserva_majuscula, separa_prefix_elidit
+from .. import Token, aplica_amb_prefix_elidit, preserva_majuscula, separa_prefix_elidit
 
-AVL_PATH = Path(__file__).resolve().parent.parent / "data" / "demostratius_avl.json"
+AVL_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "demostratius_avl.json"
 
 
 def carrega_demostratius(path: Path = AVL_PATH) -> dict[str, str]:
@@ -49,7 +49,7 @@ class DemostratiusRule:
     """Substitueix demostratius occidentals (este/eixe/aqueix + el
     neutre açò) per la seua forma oriental.
 
-    >>> from . import tokenize, marca_noms_propis
+    >>> from .. import tokenize, marca_noms_propis
     >>> toks = tokenize("Este xiquet i eixes xiquetes i aqueixa dona.")
     >>> marca_noms_propis(toks)
     >>> toks = DemostratiusRule().apply(toks)

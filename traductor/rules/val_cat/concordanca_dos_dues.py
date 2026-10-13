@@ -40,7 +40,7 @@ Acceptat conscientment: preferix corregir bé la immensa majoria a canvi de
 
 from __future__ import annotations
 
-from . import Token, preserva_majuscula
+from .. import Token, preserva_majuscula
 
 # Articles/demostratius valencians que ja marquen femení plural per si
 # mateixos -- mai ambigus, mai coincidixen amb la forma masculina.
@@ -51,7 +51,7 @@ class ConcordancaDosDuesRule:
     """Corregix "dos" -> "dues" quan el precedix un marcador de femení
     plural (vore docstring del mòdul per a la llista i el raonament).
 
-    >>> from . import tokenize, marca_noms_propis
+    >>> from .. import tokenize, marca_noms_propis
     >>> toks = tokenize("Les dos institucions han firmat un conveni.")
     >>> marca_noms_propis(toks)
     >>> toks = ConcordancaDosDuesRule().apply(toks)
@@ -69,7 +69,7 @@ class ConcordancaDosDuesRule:
     `pos_tagger.etiqueta()` abans (com fa `RuleEngine`; en estos doctests
     es crida a mà):
 
-    >>> from . import pos_tagger
+    >>> from .. import pos_tagger
     >>> toks = tokenize("Hem creat dos entitats noves.")
     >>> marca_noms_propis(toks)
     >>> pos_tagger.etiqueta(toks)

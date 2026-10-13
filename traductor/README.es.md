@@ -8,6 +8,14 @@ paquete Python que se importa por el nombre (`import traductor`) desde
 otras partes del código — un nombre de módulo no puede empezar por un
 dígito en Python. Conceptualmente es la etapa 5 del proyecto.
 
+**Dirección inversa (catalán→valenciano, en construcción desde el
+08/10/2026)**: `from traductor import translate_cat_val` — ver
+`traductor/rules/cat_val/README.es.md` y
+`documentacio/hoja_de_ruta_traductor_invers.md` (raíz del repositorio)
+para el estado, el alcance actual y el razonamiento completo. Esta
+dirección original (`translate`, val→cat) se queda exactamente igual,
+sin ningún cambio.
+
 ## Por qué existe esto
 
 Las etapas 1-4 usan un LLM (qwen2.5:14b) con un system prompt de reglas +

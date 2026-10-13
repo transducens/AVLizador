@@ -36,7 +36,7 @@ from __future__ import annotations
 
 import re
 
-from . import Token, preserva_majuscula
+from .. import Token, preserva_majuscula
 
 _EXCEPCIONS_ES = {
     "és", "més", "només", "després", "procés", "congrés", "accés", "progrés", "través",
@@ -48,7 +48,7 @@ _SUFIX_EIXER_RE = re.compile(r"éixer$", re.IGNORECASE)
 class AccentuacioRule:
     """Aplica els dos patrons de sufix documentats al mòdul.
 
-    >>> from . import tokenize, marca_noms_propis
+    >>> from .. import tokenize, marca_noms_propis
     >>> toks = tokenize("El meu amic francés parla anglés i és cortés.")
     >>> marca_noms_propis(toks)
     >>> toks = AccentuacioRule().apply(toks)

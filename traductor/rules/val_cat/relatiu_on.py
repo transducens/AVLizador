@@ -35,14 +35,14 @@ CAS ESPECIAL trobat en la mateixa revisió: un dels 9 casos és "d'a on"
 
 from __future__ import annotations
 
-from . import Token, preserva_majuscula, separa_prefix_elidit
+from .. import Token, preserva_majuscula, separa_prefix_elidit
 
 
 class RelatiuOnRule:
     """Lleva la "a" de "a on" quan funciona com a relatiu/interrogatiu
     locatiu (vore docstring del mòdul per a l'evidència).
 
-    >>> from . import tokenize, marca_noms_propis, detokenize
+    >>> from .. import tokenize, marca_noms_propis, detokenize
     >>> toks = tokenize("Hem fet bancals a on hi havia pendents.")
     >>> marca_noms_propis(toks)
     >>> toks = RelatiuOnRule().apply(toks)

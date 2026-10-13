@@ -354,6 +354,65 @@ def corregeix_elisio_de_abans(tokens: list[Token], index: int) -> None:
         espai.translated = ""
 
 
+# Determinants femenins i el seu parell masculí -- mateixes formes ja
+# documentades a `concordanca_dos_dues.py` (`_MARCADORS_FEMENI_PLURAL`)
+# mes les singulars. Taula tancada, curada a mà. Compartida entre les dos
+# direccions (08/10/2026, abans vivia només a `lexic.py`): tant
+# "LexicRule" (occidental->oriental, vore eixe mòdul) com la seua futura
+# parella en sentit invers necessiten corregir el determinant quan una
+# substitució canvia el gènere gramatical sencer de la paraula.
+DET_FEM_A_MASC = {
+    "la": "el",
+    "una": "un",
+    "esta": "este",
+    "eixa": "eixe",
+    "aqueixa": "aqueix",
+    "aquella": "aquell",
+    "les": "els",
+    "unes": "uns",
+    "estes": "estos",
+    "eixes": "eixos",
+    "aqueixes": "aqueixos",
+    "aquelles": "aquells",
+}
+DET_MASC_A_FEM = {masc: fem for fem, masc in DET_FEM_A_MASC.items()}
+
+
+def corregeix_determinant_abans(tokens: list[Token], index: int, genere_nou: str) -> None:
+    """Corregix el determinant IMMEDIATAMENT anterior (un token arrere,
+    saltant espais) perquè concorde amb `genere_nou` ("m" o "f"). Si no hi
+    ha determinant conegut just davant (p.ex. ja concordava, o hi ha una
+    altra paraula), no fa res -- preferix fals negatiu (vore `lexic.py`,
+    secció "Concordança de gènere tras substitució lèxica", per al cas
+    real que ho va motivar: "la dacsa" -> "el blat de moro").
+
+    >>> toks = tokenize("la dacsa")
+    >>> corregeix_determinant_abans(toks, 2, "m")
+    >>> [t.translated for t in toks]
+    ['el', ' ', 'dacsa']
+
+    >>> toks = tokenize("el blat de moro")
+    >>> corregeix_determinant_abans(toks, 2, "f")
+    >>> [t.translated for t in toks]
+    ['la', ' ', 'blat', ' ', 'de', ' ', 'moro']
+    """
+    i_anterior = None
+    for i in range(index - 1, -1, -1):
+        if tokens[i].surface.isspace():
+            continue
+        i_anterior = i
+        break
+    if i_anterior is None:
+        return
+    anterior = tokens[i_anterior]
+    taula = DET_FEM_A_MASC if genere_nou == "m" else DET_MASC_A_FEM
+    nova_forma = taula.get(anterior.translated.lower())
+    if nova_forma is None:
+        return
+    anterior.translated = preserva_majuscula(anterior.surface, nova_forma)
+    anterior.is_translated = True
+
+
 # Pronoms febles enclítics reals de valencià/català, enganxats al final
 # d'un verb amb apòstrof (quan el verb acaba en vocal i el clític comença
 # en vocal/h muda: "traure'n", "porta'l") o amb guionet (la resta de
@@ -419,6 +478,46 @@ def paraula_anterior_es(tokens: list[Token], index: int, paraula: str) -> bool:
             continue
         return tok.surface.lower() == paraula
     return False
+
+
+def paraules_segudents_son(tokens: list[Token], index: int, paraules: list[str]) -> bool:
+    """Torna `True` si les properes `len(paraules)` paraules reals despres
+    de `index` (saltant espais en blanc) son exactament `paraules`, en
+    orde i comparades en minuscules sobre `tok.surface` (no
+    `tok.translated` -- aixina la comprovacio val siga quin siga l'orde
+    d'esta capa respecte a `possessius.py`/`demostratius.py`).
+
+    Usat per locucions prepositives fixes (vore
+    `preposicions_locucions.py`) on cal mirar diverses paraules seguides,
+    no nomes una. Normalitza l'apòstrof (`'`/`’`) als dos costats abans de
+    comparar, perquè el corpus real barreja els dos (p.ex. "l’interior"
+    amb apòstrof tipogràfic) -- mateix criteri que `separa_prefix_elidit`.
+
+    >>> toks = tokenize("La seu en la ciutat de Valencia.")
+    >>> idx = [t.surface for t in toks].index("en")
+    >>> paraules_segudents_son(toks, idx, ["la", "ciutat"])
+    True
+    >>> paraules_segudents_son(toks, idx, ["la", "poble"])
+    False
+    >>> paraules_segudents_son(toks, idx, ["la", "ciutat", "de", "valencia"])
+    True
+
+    >>> toks = tokenize("Esta en l’interior de la frase.")
+    >>> idx = [t.surface for t in toks].index("en")
+    >>> paraules_segudents_son(toks, idx, ["l'interior"])
+    True
+    """
+    def _normalitza(s: str) -> str:
+        return s.replace("’", "'")
+
+    trobades: list[str] = []
+    for tok in tokens[index + 1 :]:
+        if tok.surface.isspace():
+            continue
+        trobades.append(_normalitza(tok.surface.lower()))
+        if len(trobades) == len(paraules):
+            break
+    return trobades == [_normalitza(p.lower()) for p in paraules]
 
 
 def marca_noms_propis(tokens: list[Token]) -> None:
