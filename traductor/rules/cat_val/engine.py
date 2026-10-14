@@ -21,6 +21,17 @@ cada diferència.
 Pos_tagger (spaCy) es crida igual que en `rules/val_cat/engine.py` -- i ací amb
 MES fiabilitat, perquè l'entrada ja és català real (vore hoja de ruta,
 secció sobre spaCy).
+
+**`preposicions_locucions.py` RETIRADA del pipeline (14/10/2026)**: vore
+`rules/val_cat/engine.py` per l'explicació completa (la regla "a"/"en"
+no generalitzava i la regla general C1 mesurada contra els dos
+benchmarks (151 + gplsi, 1.958 frases) va eixir amb nomes 1,5% de
+conversions reals -- es descarta del tot, no és soroll que valga la pena
+perseguir). S'ha llevat també l'única entrada que quedava ("per a
+acabar"->"per acabar", un marcador discursiu fix sense relació amb la
+regla C1) perquè l'usuari va decidir llevar el fitxer sencer -- si cal
+recuperar eixe cas puntual (2 evidències, RC112/RC118), fer-ho en un
+fitxer nou a banda, no ressuscitar este.
 """
 
 from __future__ import annotations
@@ -35,7 +46,6 @@ from .incoatius import IncoatiusInversRule
 from .lexic import LexicInversRule
 from .numerals import NumeralsInversRule
 from .possessius import PossessiusInversRule
-from .preposicions_locucions import PreposicionsLocucionsInversRule
 from .relatiu_on import RelatiuOnInversRule
 
 
@@ -63,7 +73,6 @@ class RuleEngineInvers:
             DemostratiusInversRule(),
             IncoatiusInversRule(),
             AccentuacioInversRule(),
-            PreposicionsLocucionsInversRule(),
             RelatiuOnInversRule(),
         ]
 

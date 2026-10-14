@@ -33,6 +33,24 @@ per l'abast complet i el raonament del canvi):
     9. incoatius           (sufix -ix->-eix, patró productiu, afegida
                             30/09/2026)
 
+**`preposicions_locucions.py` RETIRADA del pipeline (14/10/2026)**: la
+"regla" de les 5 locucions "a"/"en" (vinculat, les seues mans, la
+ciutat, l'interior, les Corts Valencianes) nomes casava amb el text
+EXACTE d'eixes 5 frases del benchmark -- zero cobertura sobre qualsevol
+frase nova (a diferencia dels atres "llistes tancades" d'este motor,
+que son paradigmes lingüísticament tancats de veres: numerals,
+demostratius, incoatius). Provat un reemplaç amb la regla general C1 de
+`02_regles_dialectals/docs_gramatica/guia_traduccio_dialectal.md`
+("en"+article definit -> "a"+article definit, font GEIEC/GNV) i va EMPITJORAR
+molt el benchmark (120->76/151): en registre formal, "en + article"
+s'usa sobretot en sentit ABSTRACTE ("en el Congrés", "en el model
+lingüístic"), no de lloc físic, i la regla no pot distingir els dos
+sentits sense entendre el significat -- mateixa classe de problema
+discursiu que "aquest"/"eixe". Detall i xifres completes a
+`CLAUDE_HISTORIAL.md`, 14/10/2026. Es retira del tot en compte de
+deixar-la com a "benchmark-only" per honestedat -- no arreglar res de
+veres no val la pena mantindre'l.
+
 Les capes 1-4 i 7 són lookups exactes; 5-6 són regles de CONCORDANÇA/PATRÓ
 (miren els tokens veïns, no un diccionari) i 8-9 són regles de SUFIX
 (patró productiu, no llista tancada) -- per això van DESPRÉS de les de
@@ -59,7 +77,6 @@ from .incoatius import IncoatiusRule
 from .lexic import LexicRule
 from .numerals import NumeralsRule
 from .possessius import PossessiusRule
-from .preposicions_locucions import PreposicionsLocucionsRule
 from .relatiu_on import RelatiuOnRule
 
 
@@ -95,7 +112,6 @@ class RuleEngine:
             DemostratiusRule(),
             AccentuacioRule(),
             IncoatiusRule(),
-            PreposicionsLocucionsRule(),
         ]
 
     def translate(self, text: str) -> str:
