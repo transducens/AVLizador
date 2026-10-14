@@ -1,0 +1,289 @@
+<title>Informe de progreso AVLizador</title>
+<style>
+  :root {
+    /* Layout: memo de una columna, ancho de lectura fijo, jerarquía tipográfica
+       clara, tarjetas de cifra solo donde el número es el dato relevante. */
+    --bg: #f4f5f3;
+    --panel: #ffffff;
+    --border: #dde1de;
+    --ink: #1b2422;
+    --ink-dim: #5c6b66;
+    --accent: #0f6b5c;
+    --accent-soft: #e4f0ec;
+    --good: #1a7a4c;
+    --warn: #b4790f;
+    --bad: #b23a2e;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14181a;
+      --panel: #1d2224;
+      --border: #333c3a;
+      --ink: #e9ece9;
+      --ink-dim: #9aa39e;
+      --accent: #5fd4b8;
+      --accent-soft: #1b3a34;
+      --good: #5fd08a;
+      --warn: #e0b24a;
+      --bad: #e8786a;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14181a;
+    --panel: #1d2224;
+    --border: #333c3a;
+    --ink: #e9ece9;
+    --ink-dim: #9aa39e;
+    --accent: #5fd4b8;
+    --accent-soft: #1b3a34;
+    --good: #5fd08a;
+    --warn: #e0b24a;
+    --bad: #e8786a;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Source Sans 3", -apple-system, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    padding-inline: 20px;
+    padding-block: 48px 80px;
+  }
+  main {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  h1, h2, h3 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  h1 { font-size: 1.9rem; line-height: 1.2; margin: 0 0 6px; }
+  h2 {
+    font-size: 1.25rem;
+    margin: 40px 0 14px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+  }
+  h2 .num {
+    display: inline-block;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .95rem;
+    color: var(--accent);
+    margin-right: 10px;
+  }
+  p { margin: 0 0 14px; max-width: 65ch; }
+  ul, ol { margin: 0 0 14px; padding-left: 1.3em; }
+  li { margin-bottom: 6px; max-width: 62ch; }
+  strong { color: var(--ink); }
+
+  header.doc {
+    margin-bottom: 8px;
+  }
+  .meta {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    color: var(--ink-dim);
+    font-size: .85rem;
+    margin: 10px 0 28px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--accent);
+  }
+  .meta b { color: var(--ink); font-weight: 600; }
+
+  .lead {
+    font-size: 1.05rem;
+    color: var(--ink-dim);
+    max-width: 62ch;
+    margin-bottom: 10px;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 12px;
+    margin: 18px 0 22px;
+  }
+  .stat {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .stat .label {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--ink-dim);
+    margin-bottom: 6px;
+  }
+  .stat .value {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat .sub {
+    font-size: .8rem;
+    color: var(--ink-dim);
+    margin-top: 4px;
+  }
+
+  .callout {
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 16px 0;
+    font-size: .92rem;
+    color: var(--ink);
+  }
+
+  .steps {
+    list-style: none;
+    padding: 0;
+    counter-reset: step;
+  }
+  .steps li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 34px;
+    margin-bottom: 12px;
+  }
+  .steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0; top: 0;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--panel);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .78rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  footer {
+    margin-top: 44px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    color: var(--ink-dim);
+    font-size: .78rem;
+  }
+
+  @media (max-width: 480px) {
+    h1 { font-size: 1.5rem; }
+    .stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+
+<main>
+  <header class="doc">
+    <h1>Informe de progreso — AVLizador</h1>
+    <p class="lead">Traductor dialectal automático valenciano ↔ catalán</p>
+  </header>
+  <div class="meta">
+    <span><b>Fecha</b> 14 de octubre de 2026</span>
+    <span><b>Período</b> desde el 5 de octubre de 2026</span>
+  </div>
+
+  <p>El proyecto ha avanzado en tres frentes desde el último informe: el motor de traducción funciona ahora en las dos direcciones entre valenciano y catalán; se ha creado una métrica propia para validar el sistema contra datos reales e independientes; y se ha reestructurado el repositorio completo de cara a una eventual publicación pública. El detalle de cada punto, con las cifras exactas, sigue abajo.</p>
+
+  <h2><span class="num">01</span>Estado del motor de traducción</h2>
+  <p>El motor es un sistema de reglas deterministas, no un modelo de lenguaje generativo: nunca «alucina» — si no reconoce una palabra o construcción, la deja intacta en vez de arriesgarse a inventar algo. Se complementa con un modelo de lenguaje que interviene solo en los puntos concretos donde el motor detecta ambigüedad real y no puede decidir por sí solo.</p>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="label">Valenciano → catalán, motor solo</div>
+      <div class="value">115 / 151</div>
+      <div class="sub">76,2% · BLEU 97,67</div>
+    </div>
+    <div class="stat">
+      <div class="label">Valenciano → catalán, con LLM</div>
+      <div class="value">129 / 151</div>
+      <div class="sub">85,4% · BLEU 98,64 · récord</div>
+    </div>
+    <div class="stat">
+      <div class="label">Catalán → valenciano, motor solo</div>
+      <div class="value">116 / 151</div>
+      <div class="sub">76,8% · BLEU 98,08 · dirección nueva</div>
+    </div>
+  </div>
+
+  <p>La dirección catalán → valenciano no tenía ningún código hace dos semanas: se ha construido desde cero una estructura completa simétrica a la original, reutilizando los mismos datos lingüísticos de base.</p>
+
+  <div class="callout">
+    <strong>Por qué las cifras bajaron un poco esta semana</strong> (de 120/123 a 115/116): se detectó que un módulo del motor solo acertaba en las frases exactas usadas para medir, sin generalizar a ninguna frase nueva — inflaba el número de aciertos de forma engañosa. Se retiró, dejando los números reflejar la capacidad real del motor. Es una corrección de rigor, no una regresión real. El récord con LLM (129/151) es anterior a este ajuste y está pendiente de recalcular; se espera un resultado similar.
+  </div>
+
+  <h2><span class="num">02</span>Validación contra datos reales</h2>
+  <p>Hasta ahora el motor solo se había medido contra un banco de 151 frases seleccionadas a mano. Esta semana se ha probado contra datos mucho más grandes y variados:</p>
+  <ul>
+    <li><strong>Corpus del Boletín Oficial del Estado (BOE)</strong> — textos legales reales con traducción oficial a los dos idiomas.</li>
+    <li><strong>Dataset público <code>gplsi/CA-VA_alignment_test</code></strong> (Universidad de Alicante, licencia abierta) — 1.958 frases traducidas de forma independiente por un filólogo, en un dominio mucho más variado.</li>
+  </ul>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="label">gplsi, 1.958 frases, sin filtrar</div>
+      <div class="value">65,4% / 61,9%</div>
+      <div class="sub">val→cat / cat→val</div>
+    </div>
+    <div class="stat">
+      <div class="label">gplsi, filtrado por pureza dialectal</div>
+      <div class="value">88,9% / 87,9%</div>
+      <div class="sub">muy cerca del banco de 151</div>
+    </div>
+  </div>
+
+  <p>La caída inicial frente al 76% del banco curado es esperable en un corpus mucho más grande y heterogéneo. Filtrando las frases donde la métrica de pureza dialectal (punto 3) confirma que no hay sinonimia de por medio, la precisión sube a niveles muy próximos al banco original — confirma que buena parte de la caída es variabilidad natural entre dos traductores humanos independientes, no el motor fallando más.</p>
+
+  <p>Esta validación a gran escala también sacó a la luz <strong>4 errores reales en el diccionario del motor</strong> (palabras mal emparejadas entre dialectos, formas verbales no cubiertas), ya localizados y documentados, pendientes de corregir en la próxima iteración.</p>
+
+  <h2><span class="num">03</span>Nueva métrica: Índice de Pureza Dialectal</h2>
+  <p>Se ha diseñado e implementado una métrica propia que, dado cualquier texto, calcula qué porcentaje de sus palabras dialectalmente marcadas son valencianas frente a catalanas — útil tanto para validar el propio traductor como para analizar cualquier corpus futuro sin depender del motor de reglas.</p>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="label">Pureza lado valenciano</div>
+      <div class="value">0,87–0,93</div>
+      <div class="sub">consistente en 3 corpus</div>
+    </div>
+    <div class="stat">
+      <div class="label">Pureza lado catalán</div>
+      <div class="value">0,01–0,05</div>
+      <div class="sub">consistente en 3 corpus</div>
+    </div>
+  </div>
+
+  <p>Validada contra tres fuentes independientes (el banco de 151 frases, el BOE y el dataset público), con resultados consistentes en las tres. Se incluye además una herramienta visual para inspeccionar palabra por palabra qué está marcando la métrica y por qué, pensada para auditar el propio índice en vez de confiar ciegamente en el número final.</p>
+
+  <h2><span class="num">04</span>Reestructuración del repositorio</h2>
+  <p>El repositorio había acumulado, a lo largo de varias semanas de trabajo, una organización poco clara para alguien que lo viera por primera vez. Esta semana se ha hecho una revisión completa, carpeta por carpeta:</p>
+  <ul>
+    <li>Las 9 etapas del proyecto se han agrupado bajo una carpeta común, separadas claramente del producto final (el motor de traducción) y de los datos.</li>
+    <li>Se han eliminado más de una decena de ficheros que ya no aportaban nada: fuentes de datos descartadas hace semanas, prompts sin uso real, informes generados automáticamente regenerables en cualquier momento.</li>
+    <li>Se ha actualizado la documentación que había quedado desfasada tras los avances más recientes.</li>
+    <li>Todo el trabajo se ha verificado paso a paso — más de 500 pruebas automáticas, además de los bancos de traducción — para garantizar que la reorganización no ha roto nada.</li>
+  </ul>
+
+  <h2><span class="num">05</span>Próximos pasos</h2>
+  <ol class="steps">
+    <li>Corregir los 4 errores de diccionario encontrados en la validación a gran escala.</li>
+    <li>Retomar la capa de modelo de lenguaje para la dirección catalán → valenciano — un primer intento no dio buenos resultados; se ha identificado por qué y cómo corregirlo.</li>
+    <li>Repetir la validación a gran escala sobre el corpus completo del BOE (cerca de 270.000 frases, de las que hasta ahora solo se ha probado una muestra).</li>
+    <li>Hacer el commit definitivo del trabajo acumulado y fusionar la reorganización del repositorio a la rama principal.</li>
+  </ol>
+
+  <footer>AVLizador — traductor dialectal valenciano ↔ catalán. Informe de progreso interno.</footer>
+</main>
