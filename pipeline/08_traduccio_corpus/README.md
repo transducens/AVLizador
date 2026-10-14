@@ -28,7 +28,7 @@ veres.
 pipeline/08_traduccio_corpus/
 ├── traduccio_massiva.py   aplica traductor/ a un corpus .jsonl sencer
 ├── eixides/               fitxers generats (gitignored, regenerables)
-└── postprocessat_llm/     fase 2 del pla, encara NO implementada (vore baix)
+└── postprocessat_llm/     fase 2 del pla (vía C, qwen3:8b), ja implementada i en ús (vore baix)
 ```
 
 ## Ús
@@ -58,10 +58,12 @@ Cada línia de l'eixida és `{"id", "text_occidental", "text_oriental_regles"}`.
 - **Un únic camp de text per document** (`--camp-text`, per defecte
   `"text"`): no combina `title` + `text`, no gestiona estructura HTML/
   Markdown dins del text.
-- **Cap mecanisme d'etiquetatge encara**: l'eixida només té el text
-  traduït, no diu QUINES paraules o construccions són d'alta confiança
-  (regla de lookup exacte) i quines són dubtoses o no s'han tocat. Això
-  és la fase 2 del pla (vore baix) -- a propòsit encara no implementat.
+- **Cap mecanisme d'etiquetatge ací mateix**: l'eixida d'este script
+  només té el text traduït, no diu QUINES paraules o construccions són
+  d'alta confiança (regla de lookup exacte) i quines són dubtoses o no
+  s'han tocat. La fase 2 (vía C, vore baix) SÍ existix i funciona, però
+  com a script a banda (`postprocessat_llm/benchmark_integrat.py`), no
+  integrat encara dins d'este script ni dins de `traductor/` mateix.
 
 ## El pla complet (2 fases)
 
@@ -73,19 +75,21 @@ sap que hi ha fenòmens gramaticals documentats a
 (p.ex. "per"→"per a", que depén de si té valor de causa o de finalitat --
 vore `traductor/README.md`, secció "DECISIÓ D'ARQUITECTURA" 02/10/2026).
 
-**Fase 2 -- `postprocessat_llm/` (pendent, NO implementada)**: en compte
-d'intentar que el motor de regles ho resolga tot (arriscat, com ja s'ha
-vist amb els intents d'heurística automàtica de gènere), el pla és
-**etiquetar** dins de `traductor/` els casos on una regla és dubtosa o on
-cap regla actua però se sap que hi pot haver una diferència dialectal, i
-que un model de llenguatge revise NOMÉS eixos punts marcats -- no tota la
-frase -- usant les guies de `docs_gramatica/` com a referència. Encara
-s'ha de decidir:
-- Quin format tindrà la marca (al nivell de `Token`? de frase sencera?).
-- Quin model LLM (local via Ollama, com la resta del projecte, o un altre).
-- Si el LLM proposa un canvi o nomes senyala per a revisió humana.
-
-Vore `postprocessat_llm/README.md` per a l'estat d'esta decisió.
+**Fase 2 -- `postprocessat_llm/` (IMPLEMENTADA i en ús actiu, actualitzat
+14/10/2026)**: en compte d'intentar que el motor de regles ho resolga
+tot (arriscat, com ja s'ha vist amb els intents d'heurística automàtica
+de gènere), el problema es va dividir en dos: el motor de regles
+tradueix, i un LLM revisa NOMÉS els punts concrets on el motor ha
+decidit expressament no actuar per ambigüitat coneguda -- mai la frase
+sencera. La versió que es va integrar de veres (**"vía C"**, classificar
+entre 2 candidats ja coneguts, mai generar text nou) és un script
+embolcall (`benchmark_integrat.py`) que replica les 9 regles per fora de
+`traductor/`, no un canvi dins de la classe `Token` com es plantejava
+originalment més avall -- un camí mes senzill i de menys risc que es va
+acabar triant en la pràctica. **Rècord actual: qwen3:8b + vía C, 129/151
+(85,4%) al benchmark val→cat**, confirmat en Abaco. Vore
+`postprocessat_llm/README.md` per a tot el detall (per què vía C i no
+A/B, les xifres de l'experiment, com llançar-ho de veres hui).
 
 ## `genera_muestra_test_dialectal.py` -- mostra de 200 frases per a test real
 

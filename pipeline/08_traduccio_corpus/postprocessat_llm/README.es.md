@@ -2,12 +2,31 @@
 
 # Post-procesado con LLM de los casos marcados
 
-**Estado (06/10/2026): un caso concreto ya probado y documentado (ver
-abajo), el resto todavía PENDIENTE.** El mecanismo general de marcado en
-`Token` (ver "Lo que falta decidir" más abajo) todavía no existe -- las
-pruebas hechas hasta ahora son scripts autónomos fuera de `traductor/`,
-nada integrado en producción. No integrar nada en `traductor/` hasta que
-el usuario lo diga explícitamente.
+> **⚠️ Estado actualizado 14/10/2026**: todo lo que sigue (probado
+> 06-07/10/2026) se quedó como referencia histórica -- ES exactamente
+> cómo se llegó a elegir la "vía C". Lo que ha cambiado desde entonces:
+> **la vía C ya está en uso activo de verdad**, vía `benchmark_integrat.py`
+> (script envoltorio fuera de `traductor/`, NO el mecanismo de marcado en
+> `Token` que se planteaba en "Lo que falta decidir" -- esa parte se
+> quedó sin hacer, la integración real fue por un camino más sencillo).
+> **Récord actual: qwen3:8b + vía C, 129/151 (85,4%), BLEU 98,64, chrF
+> 99,55**, confirmado en Abaco (`slurm/genera_resultats_complet.sh` es
+> el script normal para lanzarlo hoy -- ver `slurm/README.md`, que sí
+> está al día). Este número es ANTERIOR a la eliminación de
+> `preposicions_locucions.py` del motor (14/10/2026) -- pendiente de
+> reconfirmar en el próximo run. Para cat→val, un intento paralelo (Fase
+> 3, desambiguar "aquest"/"eixe" con el mismo patrón de vía C) se probó
+> y se DESCARTÓ (empeoró el resultado, `qwen2.5:14b`) -- aparcado, a
+> retomar con `qwen3` y un criterio más exigente. Ver
+> `CLAUDE.md`/`documentacio/hoja_de_ruta_traductor_invers.md` para el
+> detalle completo y actualizado de esta decisión.
+
+**Estado original (06/10/2026, mantenido como contexto histórico): un
+caso concreto ya probado y documentado (ver abajo), el resto todavía
+PENDIENTE.** El mecanismo general de marcado en `Token` (ver "Lo que
+falta decidir" más abajo) no se llegó a hacer -- las pruebas hechas en
+este momento eran scripts autónomos fuera de `traductor/`, y la
+integración final (ver aviso de arriba) tampoco tocó `Token`.
 
 Esta carpeta documenta la decisión de
 arquitectura tomada el 02/10/2026: en vez de forzar al motor de reglas a
@@ -281,6 +300,13 @@ con "subjuntivo" en castellano.
   vías B y C.
 
 ## Lo que falta decidir antes de escribir ningún código
+
+> Nota 14/10/2026: esto describe una integración MÁS profunda (marcar
+> dentro de `Token` mismo) que la que hoy ya funciona en producción
+> (`benchmark_integrat.py`, script aparte). No bloquea nada -- la vía C
+> ya se puede usar hoy tal cual está; esto sigue abierto por si en el
+> futuro interesa integrarlo dentro de `traductor/` mismo en vez de
+> como script envoltorio.
 
 - **Formato de la marca**: a nivel de `Token` (añadir un campo como
   `necessita_revisio: bool` o `candidat_regla: str | None` a la clase

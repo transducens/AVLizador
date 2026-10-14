@@ -29,7 +29,7 @@ verdad.
 pipeline/08_traduccio_corpus/
 ├── traduccio_massiva.py   aplica traductor/ a un corpus .jsonl entero
 ├── eixides/               ficheros generados (gitignored, regenerables)
-└── postprocessat_llm/     fase 2 del plan, todavía NO implementada (ver abajo)
+└── postprocessat_llm/     fase 2 del plan (vía C, qwen3:8b), ya implementada y en uso (ver abajo)
 ```
 
 ## Uso
@@ -60,11 +60,13 @@ Cada línea de la salida es `{"id", "text_occidental", "text_oriental_regles"}`.
 - **Un único campo de texto por documento** (`--camp-text`, por defecto
   `"text"`): no combina `title` + `text`, no gestiona estructura HTML/
   Markdown dentro del texto.
-- **Ningún mecanismo de etiquetado todavía**: la salida solo tiene el
-  texto traducido, no dice QUÉ palabras o construcciones son de alta
-  confianza (regla de lookup exacto) y cuáles son dudosas o no se han
-  tocado. Eso es la fase 2 del plan (ver abajo) -- a propósito todavía no
-  implementado.
+- **Ningún mecanismo de etiquetado aquí mismo**: la salida de este
+  script solo tiene el texto traducido, no dice QUÉ palabras o
+  construcciones son de alta confianza (regla de lookup exacto) y
+  cuáles son dudosas o no se han tocado. La fase 2 (vía C, ver abajo) SÍ
+  existe y funciona, pero como script aparte
+  (`postprocessat_llm/benchmark_integrat.py`), no integrado todavía
+  dentro de este script ni dentro de `traductor/` mismo.
 
 ## El plan completo (2 fases)
 
@@ -77,17 +79,22 @@ seguridad (p.ej. "per"→"per a", que depende de si tiene valor de causa o
 de finalidad -- ver `traductor/README.es.md`, sección "DECISIÓN DE
 ARQUITECTURA" 02/10/2026).
 
-**Fase 2 -- `postprocessat_llm/` (pendiente, NO implementada)**: en vez
-de intentar que el motor de reglas lo resuelva todo (arriesgado, como ya
-se ha visto con los intentos de heurística automática de género), el
-plan es **etiquetar** dentro de `traductor/` los casos donde una regla es
-dudosa o donde ninguna regla actúa pero se sabe que puede haber una
-diferencia dialectal, y que un modelo de lenguaje revise SOLO esos puntos
-marcados -- no toda la frase -- usando las guías de `docs_gramatica/`
-como referencia. Todavía queda por decidir:
-- Qué formato tendrá la marca (¿a nivel de `Token`? ¿de frase entera?).
-- Qué modelo LLM (local vía Ollama, como el resto del proyecto, u otro).
-- Si el LLM propone un cambio o solo señala para revisión humana.
+**Fase 2 -- `postprocessat_llm/` (IMPLEMENTADA y en uso activo,
+actualizado 14/10/2026)**: en vez de intentar que el motor de reglas lo
+resuelva todo (arriesgado, como ya se ha visto con los intentos de
+heurística automática de género), el problema se dividió en dos: el
+motor de reglas traduce, y un LLM revisa SOLO los puntos concretos
+donde el motor ha decidido expresamente no actuar por ambigüedad
+conocida -- nunca la frase entera. La versión que se integró de verdad
+(**"vía C"**, clasificar entre 2 candidatos ya conocidos, nunca generar
+texto nuevo) es un script envoltorio (`benchmark_integrat.py`) que
+replica las 9 reglas por fuera de `traductor/`, no un cambio dentro de
+la clase `Token` como se planteaba originalmente -- un camino más
+sencillo y de menos riesgo que se acabó eligiendo en la práctica.
+**Récord actual: qwen3:8b + vía C, 129/151 (85,4%) en el benchmark
+val→cat**, confirmado en Abaco. Ver `postprocessat_llm/README.es.md`
+para todo el detalle (por qué vía C y no A/B, las cifras del
+experimento, cómo lanzarlo de verdad hoy).
 
 Ver `postprocessat_llm/README.es.md` para el estado de esta decisión.
 
