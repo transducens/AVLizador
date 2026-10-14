@@ -75,6 +75,32 @@ Acepta tanto un fichero JSONL (un documento por línea) como un JSON
 normal con un array de objetos (como `benchmark_corpus.json`) — se
 detecta solo.
 
+### `visor_ipd.html` — revisar resultados sin volver a ejecutar nada (14/10/2026)
+
+En vez de generar un informe HTML nuevo para cada corpus que se prueba
+(que se iba acumulando como ficheros sueltos en el repo, regenerables
+pero pesados — ver `CLAUDE_HISTORIAL.md`), `--sortida` (el JSON, no el
+`--html`) es ahora la salida recomendada para revisar resultados:
+incluye el mismo detalle por documento (texto, IPD, marcadores) y, si se
+da `--camp-alt`, también los datos de la segunda columna (`text_alt`,
+`ipd_alt`, `marcadors_*_alt`) — todo lo que hace falta para reconstruir
+la comparativa de dos columnas sin volver a ejecutar `ipd.py`.
+
+`visor_ipd.html` es un visor genérico y reutilizable (sin dependencias,
+todo el procesamiento en el navegador, ningún dato sale de ahí) que
+carga ese JSON y lo muestra con el texto resaltado y un buscador, igual
+que el informe `--html` pero sin generar un fichero nuevo por cada
+corpus:
+
+```bash
+python ipd.py --corpus ../03_seleccio_de_model/benchmark_corpus.json \
+    --camp occidental --camp-alt oriental --sortida resultat.json
+# despues, abre visor_ipd.html en el navegador y arrastra resultat.json
+```
+
+Admite cargar varios JSON a la vez (en pestañas), para comparar p.ej.
+el benchmark y gplsi uno al lado del otro sin generar nada nuevo.
+
 Como módulo, desde otro script del proyecto:
 
 ```python
@@ -118,6 +144,50 @@ nuevos al mismo tipo de problema que "nou" (entradas de léxico sin filtro
 de categoría gramatical): "afecte" (confundido con "cariño" cuando en
 realidad significa "sujeto a" en texto legal) y "estat" (spaCy a veces lo
 etiqueta como verbo cuando es el sustantivo "el Estado").
+
+## Validación adicional (14/10/2026): texto propio del usuario y el corpus gplsi
+
+**Sobre dos noticias reales del usuario** (`proves/noticia_val.txt`
+valenciano, `proves/noticia_cat.txt` catalán): IPD 0,7308 / 0,1111 —
+patrón correcto, pero revisando los marcadores palabra a palabra salieron
+3 casos reales a investigar (un 4º, "estes"/"estès", lo descartó el
+propio usuario — es una errata real del texto catalán de origen, sin
+tilde, no un bug del IPD):
+
+1. **"petit"/"menut" mal emparejado** en `lexic_mauricio.json` — después
+   confirmado también como bug real del traductor (no solo del IPD) con
+   el corpus gplsi de abajo.
+2. **"què" se cuela como marcador oriental en texto valenciano** porque
+   la exclusión `_BUG_DADES_CONEGUTS_CAT` (que ya excluye "què"/"tard"/
+   "ensenyament") solo existe en `cat_val/lexic.py`, y `val_cat/lexic.py`
+   tiene su propia `_BUG_DADES_CONEGUTS = {"después"}` sin espejar las
+   otras 3 — pendiente de arreglar (no rompe ninguna traducción hoy,
+   solo contamina el IPD, que fusiona las dos direcciones).
+3. **"acull" por colisión de persona** (1ª "jo acull" vs. 3ª persona
+   compartida) — confirmado que NO afecta a ninguna traducción real (la
+   clave de lookup siempre es la forma exacta de una sola persona), solo
+   contamina el IPD por ser un conteo agregado sin contexto.
+
+**Con el dataset `gplsi/CA-VA_alignment_test`** (Hugging Face, CC BY 4.0,
+1.958 frases catalán/valenciano traducidas independientemente): IPD
+global 0,9039 valenciano / 0,0533 catalán — confirma el mismo patrón que
+el benchmark de 151 y el BOE, a una escala y dominio distintos, tercera
+confirmación independiente.
+
+**Filtrado por IPD para separar sinonimia de fallos reales del motor**:
+de las 1.958, 1.139 (58,2%) tienen IPD occidental=1,0 Y oriental=0,0 a la
+vez — sobre ese subconjunto "limpio", el motor de traducción sube de
+65,4%/61,9% a 88,9%/87,9% (val→cat/cat→val), muy cerca del benchmark de
+151. Confirma que gran parte de la caída a escala era sinonimia entre
+dos traductores independientes, no el motor fallando más.
+
+**El análisis de fallos del motor sobre gplsi** (no del IPD, pero
+encontrado gracias a esta validación) destapó 4 bugs reales en el
+traductor — "xicotet"/"menut"/"petit" mal etiquetado `canonica`, los
+pares AVL-only "tindre/vore/obtindre/mantindre" y "últim/darrer"
+retirados el 30/09/2026 (~25% de los fallos val→cat), `incoatius.py`
+sin cubrir el plural "-ixen", y el plural "servicis"/"serveis" sin
+derivar — ver `CLAUDE.md` para el detalle y el estado de cada uno.
 
 ## Relación con el resto del proyecto
 

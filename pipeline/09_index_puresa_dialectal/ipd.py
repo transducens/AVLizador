@@ -515,9 +515,11 @@ def _ipd_color(ipd: float | None) -> str:
 
 
 def genera_informe_html(
-    path: Path, camp: str, camp_alt: str | None, formes, sortida: Path,
-    limit: int | None = None,
-) -> tuple[float | None, float | None]:
+    path: Path, camp: str, camp_alt: str | None, formes,
+    res_a: list[dict], ipd_a: float | None,
+    res_b: list[dict] | None, ipd_b: float | None,
+    sortida: Path,
+) -> None:
     """Genera un informe HTML autònom (sense dependencies externes) amb
     una fila per document: el text ressaltat paraula a paraula (verd =
     marcador occidental, taronja = marcador oriental) i l'IPD de cada
@@ -525,17 +527,13 @@ def genera_informe_html(
     com puntua, no només llegir el número agregat. Si `camp_alt` es
     dona (p.ex. "occidental"/"oriental" del benchmark del projecte),
     mostra les dos columnes una al costat de l'altra per al mateix
-    document. `limit` restringix a les primeres N files (vore
-    `_resum_camp`). Torna `(ipd_global_camp, ipd_global_camp_alt)`.
+    document.
+
+    Rep els resultats ja calculats (`res_a`/`res_b`, vore `_resum_camp`)
+    en compte de recalcular-los -- `_processa_corpus` els reutilitza
+    també per a `--sortida`, així que no es tokenitza dos vegades el
+    mateix corpus (14/10/2026).
     """
-    res_a, occ_a, or_a = _resum_camp(path, camp, formes, limit)
-    ipd_a = round(occ_a / (occ_a + or_a), 4) if (occ_a + or_a) else None
-
-    res_b = ipd_b = None
-    if camp_alt is not None:
-        res_b, occ_b, or_b = _resum_camp(path, camp_alt, formes, limit)
-        ipd_b = round(occ_b / (occ_b + or_b), 4) if (occ_b + or_b) else None
-
     files_html = []
     for i, ra in enumerate(res_a):
         rb = res_b[i] if res_b is not None else None
@@ -632,7 +630,6 @@ document.getElementById('cerca').addEventListener('input', function (e) {{
 </html>
 """
     sortida.write_text(html, encoding="utf-8")
-    return ipd_a, ipd_b
 
 
 def _processa_corpus(
@@ -640,20 +637,46 @@ def _processa_corpus(
     sortida_json: Path | None, sortida_html: Path | None, limit: int | None,
 ) -> None:
     formes = carrega_formes_dialectals()
-    resultats, total_occ, total_or = _resum_camp(path, camp, formes, limit)
+    res_a, occ_a, or_a = _resum_camp(path, camp, formes, limit)
+    ipd_a = round(occ_a / (occ_a + or_a), 4) if (occ_a + or_a) else None
 
-    denom = total_occ + total_or
-    ipd_global = round(total_occ / denom, 4) if denom else None
+    res_b = ipd_b = None
+    if camp_alt is not None:
+        res_b, occ_b, or_b = _resum_camp(path, camp_alt, formes, limit)
+        ipd_b = round(occ_b / (occ_b + or_b), 4) if (occ_b + or_b) else None
+
     limit_text = f", limit a {limit}" if limit is not None else ""
-    print(f"Corpus: {path}  ({len(resultats)} documents, camp '{camp}'{limit_text})")
-    print(f"  IPD global: {ipd_global if ipd_global is not None else '-- (cap paraula marcada)'}")
-    print(f"  occidentals={total_occ}  orientals={total_or}")
+    print(f"Corpus: {path}  ({len(res_a)} documents, camp '{camp}'{limit_text})")
+    print(f"  IPD global: {ipd_a if ipd_a is not None else '-- (cap paraula marcada)'}")
+    print(f"  occidentals={occ_a}  orientals={or_a}")
 
     if sortida_json is not None:
+        # Si hi ha camp_alt (p.ex. "occidental"/"oriental" del benchmark),
+        # el document inclou també les claus "_alt" amb el mateix detall
+        # per a eixa segona columna -- així un sol JSON basta per a
+        # reconstruir la comparativa de dos columnes sense tornar a
+        # executar res (vore visor_ipd.html, pensat per a llegir este
+        # format, 14/10/2026).
+        documents = []
+        for i, ra in enumerate(res_a):
+            doc = dict(ra)
+            if res_b is not None:
+                rb = res_b[i]
+                doc["text_alt"] = rb["text"]
+                doc["ipd_alt"] = rb["ipd"]
+                doc["total_occidentals_alt"] = rb["total_occidentals"]
+                doc["total_orientals_alt"] = rb["total_orientals"]
+                doc["marcadors_occidentals_alt"] = rb["marcadors_occidentals"]
+                doc["marcadors_orientals_alt"] = rb["marcadors_orientals"]
+            documents.append(doc)
         sortida_json.write_text(
             json.dumps(
-                {"ipd_global": ipd_global, "total_occidentals": total_occ,
-                 "total_orientals": total_or, "documents": resultats},
+                {
+                    "camp": camp, "camp_alt": camp_alt,
+                    "ipd_global": ipd_a, "total_occidentals": occ_a, "total_orientals": or_a,
+                    "ipd_global_alt": ipd_b,
+                    "documents": documents,
+                },
                 ensure_ascii=False, indent=2,
             ),
             encoding="utf-8",
@@ -661,7 +684,7 @@ def _processa_corpus(
         print(f"  Guardat detall per document a {sortida_json}")
 
     if sortida_html is not None:
-        ipd_a, ipd_b = genera_informe_html(path, camp, camp_alt, formes, sortida_html, limit)
+        genera_informe_html(path, camp, camp_alt, formes, res_a, ipd_a, res_b, ipd_b, sortida_html)
         extra = f" / '{camp_alt}'={ipd_b}" if camp_alt is not None else ""
         print(f"  Informe HTML guardat a {sortida_html} (IPD '{camp}'={ipd_a}{extra})")
 

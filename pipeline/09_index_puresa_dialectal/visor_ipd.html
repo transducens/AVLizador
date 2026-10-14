@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visor de resultats de l'IPD</title>
+<style>
+  :root {
+    --bg: #f7f7f8;
+    --panel: #ffffff;
+    --border: #e2e2e6;
+    --text: #1c1c1f;
+    --text-dim: #6b6b74;
+    --accent: #4f46e5;
+    --accent-bg: #eef0ff;
+    --good: #1a9850;
+    --mid: #d6a300;
+    --bad: #d1372f;
+    --mk-occ-bg: #d7f3d9;
+    --mk-occ-text: #16652b;
+    --mk-or-bg: #ffe2c7;
+    --mk-or-text: #9c4b0a;
+    --shadow: 0 1px 2px rgba(0,0,0,.04), 0 1px 8px rgba(0,0,0,.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17181c;
+      --panel: #202128;
+      --border: #33343c;
+      --text: #eceef2;
+      --text-dim: #9a9ba5;
+      --accent: #8b85ff;
+      --accent-bg: #2a2960;
+      --good: #4cbb6c;
+      --mid: #e0b93a;
+      --bad: #f0665e;
+      --mk-occ-bg: #163a22;
+      --mk-occ-text: #7fe39a;
+      --mk-or-bg: #4a2f16;
+      --mk-or-text: #f0a35e;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 1px 8px rgba(0,0,0,.3);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    padding: 24px 28px 60px;
+  }
+  h1 { font-size: 1.4rem; margin: 0 0 4px; }
+  .subt { color: var(--text-dim); font-size: .88rem; margin: 0 0 20px; }
+
+  #dropzone {
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    text-align: center;
+    color: var(--text-dim);
+    cursor: pointer;
+    margin-bottom: 18px;
+    background: var(--panel);
+  }
+  #dropzone.hover { border-color: var(--accent); background: var(--accent-bg); }
+  #dropzone strong { color: var(--text); }
+  #fileInput { display: none; }
+
+  #tabsWrap { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .tab {
+    padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--panel); cursor: pointer; font-size: .85rem; display: flex;
+    align-items: center; gap: 8px;
+  }
+  .tab.actiu { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); }
+  .tab button { border: none; background: none; color: inherit; cursor: pointer; opacity: .6; font-size: 1rem; line-height: 1; padding: 0; }
+  .tab button:hover { opacity: 1; }
+
+  .cards { display: flex; gap: 14px; margin-bottom: 16px; flex-wrap: wrap; }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px; box-shadow: var(--shadow); }
+  .card .label { color: var(--text-dim); font-size: .72rem; text-transform: uppercase; letter-spacing: .03em; }
+  .card .value { font-size: 1.4rem; font-weight: 700; }
+
+  .legend { font-size: .82rem; color: var(--text-dim); margin-bottom: 14px; }
+  .legend span { padding: 1px 7px; border-radius: 5px; margin-right: 4px; }
+
+  input#cerca {
+    width: 100%; max-width: 420px; padding: 7px 11px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--panel); color: var(--text);
+    margin-bottom: 12px; font-size: .9rem;
+  }
+
+  table { border-collapse: collapse; width: 100%; font-size: .86rem; background: var(--panel); }
+  th, td { padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--text-dim); font-weight: 600; position: sticky; top: 0; background: var(--panel); }
+  td.score { font-variant-numeric: tabular-nums; font-weight: 700; white-space: nowrap; }
+  td.mono { font-family: ui-monospace, Consolas, monospace; white-space: nowrap; }
+  td.txt { line-height: 1.5; }
+  .mk-occ { background: var(--mk-occ-bg); color: var(--mk-occ-text); padding: 0 2px; border-radius: 3px; }
+  .mk-or { background: var(--mk-or-bg); color: var(--mk-or-text); padding: 0 2px; border-radius: 3px; }
+
+  #buit { color: var(--text-dim); padding: 30px 0; text-align: center; }
+  footer { margin-top: 30px; color: var(--text-dim); font-size: .78rem; }
+</style>
+</head>
+<body>
+
+  <h1>Visor de resultats de l'IPD</h1>
+  <p class="subt">Carrega un fitxer JSON generat amb <code>python ipd.py --corpus ... --sortida resultat.json</code> per a explorar-lo frase a frase, amb les paraules ressaltades.</p>
+
+  <div id="dropzone">
+    <div><strong>Arrossega ací el fitxer .json</strong> o fes clic per a seleccionar-lo</div>
+    <div style="font-size:.8rem;margin-top:4px;">Pots carregar-ne diversos alhora per a comparar-los en pestanyes</div>
+    <input id="fileInput" type="file" accept=".json,application/json" multiple>
+  </div>
+
+  <div id="tabsWrap"></div>
+  <div id="contingut"><div id="buit">Encara no s'ha carregat cap fitxer.</div></div>
+
+  <footer>Tot el processament passa localment al navegador; els fitxers no s'envien enlloc. Ressaltat aproximat (coincidència de paraula, en minúscules) -- per a la classificació exacta, vore la columna de marcadors de cada document.</footer>
+
+<script>
+(function () {
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const tabsWrap = document.getElementById('tabsWrap');
+  const contingut = document.getElementById('contingut');
+
+  /** @type {{nombre:string, data:object}[]} */
+  let fitxers = [];
+  let actiu = -1;
+
+  // --- Càrrega de fitxers ---------------------------------------------------
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('hover'); });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('hover'));
+  dropzone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropzone.classList.remove('hover');
+    carregarFitxers(e.dataTransfer.files);
+  });
+  fileInput.addEventListener('change', () => {
+    carregarFitxers(fileInput.files);
+    fileInput.value = '';
+  });
+
+  function carregarFitxers(fileList) {
+    const seleccio = Array.from(fileList).filter(f => f.name.toLowerCase().endsWith('.json'));
+    if (!seleccio.length) return;
+    seleccio.forEach(f => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const data = JSON.parse(reader.result);
+          if (!Array.isArray(data.documents)) throw new Error('No té un camp "documents" -- no sembla un JSON de ipd.py --sortida.');
+          fitxers.push({ nombre: f.name, data });
+          actiu = fitxers.length - 1;
+          render();
+        } catch (err) {
+          alert(`No s'ha pogut llegir "${f.name}":\n${err.message}`);
+        }
+      };
+      reader.readAsText(f, 'utf-8');
+    });
+  }
+
+  function quitar(idx, ev) {
+    ev.stopPropagation();
+    fitxers.splice(idx, 1);
+    if (actiu === idx) actiu = fitxers.length ? Math.max(0, idx - 1) : -1;
+    else if (actiu > idx) actiu -= 1;
+    render();
+  }
+
+  // --- Utilitats ------------------------------------------------------------
+
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function colorIpd(v) {
+    if (v === null || v === undefined || Number.isNaN(v)) return 'var(--text-dim)';
+    if (v >= 0.8) return 'var(--good)';
+    if (v >= 0.5) return 'var(--mid)';
+    return 'var(--bad)';
+  }
+
+  function fmtIpd(v) {
+    return (v === null || v === undefined) ? '—' : Number(v).toFixed(4);
+  }
+
+  // Ressaltat aproximat: parteix el text en paraules (conservant separadors)
+  // i marca-les si la seua forma en minúscules apareix als marcadors
+  // coneguts d'eixe document -- mateix criteri visual que l'informe
+  // generat per ipd.py (--html), però calculat al navegador a partir dels
+  // marcadors ja calculats pel propi ipd.py, no d'una re-tokenització.
+  function ressalta(text, marcadorsOcc, marcadorsOr) {
+    if (!text) return '';
+    const occ = new Set((marcadorsOcc || []).map(w => w.toLowerCase()));
+    const or = new Set((marcadorsOr || []).map(w => w.toLowerCase()));
+    const parts = text.split(/([^\p{L}\p{N}'’]+)/u);
+    return parts.map(part => {
+      if (!part) return '';
+      const baix = part.toLowerCase();
+      if (occ.has(baix)) return `<span class="mk-occ">${esc(part)}</span>`;
+      if (or.has(baix)) return `<span class="mk-or">${esc(part)}</span>`;
+      return esc(part);
+    }).join('');
+  }
+
+  function etiquetaFitxer(f) {
+    const d = f.data;
+    return d.camp ? `${f.nombre} (${d.camp})` : f.nombre;
+  }
+
+  // --- Render -----------------------------------------------------------
+
+  function render() {
+    renderTabs();
+    if (actiu === -1) {
+      contingut.innerHTML = '<div id="buit">Encara no s\'ha carregat cap fitxer.</div>';
+      return;
+    }
+    renderContingut(fitxers[actiu].data, fitxers[actiu].nombre);
+  }
+
+  function renderTabs() {
+    if (!fitxers.length) { tabsWrap.innerHTML = ''; return; }
+    tabsWrap.innerHTML = fitxers.map((f, i) => `
+      <div class="tab ${i === actiu ? 'actiu' : ''}" data-idx="${i}">
+        <span>${esc(etiquetaFitxer(f))}</span>
+        <button data-idx="${i}" title="Llevar">×</button>
+      </div>
+    `).join('');
+    tabsWrap.querySelectorAll('.tab').forEach(el => {
+      el.addEventListener('click', () => { actiu = Number(el.dataset.idx); render(); });
+    });
+    tabsWrap.querySelectorAll('.tab button').forEach(el => {
+      el.addEventListener('click', ev => quitar(Number(el.dataset.idx), ev));
+    });
+  }
+
+  function renderContingut(data, nom) {
+    const camp = data.camp || 'text';
+    const campAlt = data.camp_alt || null;
+    const docs = data.documents || [];
+
+    const targetes = `
+      <div class="cards">
+        <div class="card"><div class="label">IPD global "${esc(camp)}"</div>
+          <div class="value" style="color:${colorIpd(data.ipd_global)}">${fmtIpd(data.ipd_global)}</div></div>
+        ${campAlt ? `
+        <div class="card"><div class="label">IPD global "${esc(campAlt)}"</div>
+          <div class="value" style="color:${colorIpd(data.ipd_global_alt)}">${fmtIpd(data.ipd_global_alt)}</div></div>
+        ` : ''}
+        <div class="card"><div class="label">Documents</div><div class="value">${docs.length}</div></div>
+      </div>
+      <div class="legend"><span class="mk-occ">occidental</span><span class="mk-or">oriental</span></div>
+      <input id="cerca" type="search" placeholder="Cerca per id o text...">
+      <div style="overflow-x:auto">
+      <table id="taula">
+        <thead><tr>
+          <th>ID</th><th>${esc(camp)}</th><th>IPD</th>
+          ${campAlt ? `<th>${esc(campAlt)}</th><th>IPD</th>` : ''}
+        </tr></thead>
+        <tbody>${docs.map(filaDoc(campAlt)).join('')}</tbody>
+      </table>
+      </div>
+    `;
+    contingut.innerHTML = targetes;
+
+    const cerca = document.getElementById('cerca');
+    cerca.addEventListener('input', e => {
+      const q = e.target.value.toLowerCase();
+      document.querySelectorAll('#taula tbody tr').forEach(tr => {
+        tr.style.display = tr.getAttribute('data-cerca').indexOf(q) !== -1 ? '' : 'none';
+      });
+    });
+  }
+
+  function filaDoc(campAlt) {
+    return (doc, i) => {
+      const id = esc(doc.id !== null && doc.id !== undefined ? doc.id : i);
+      const cercaText = [doc.text, doc.text_alt].filter(Boolean).join(' ').toLowerCase();
+      let fila = `<tr data-cerca="${esc(cercaText)}"><td class="mono">${id}</td>`;
+      fila += `<td class="txt">${ressalta(doc.text, doc.marcadors_occidentals, doc.marcadors_orientals)}</td>`;
+      fila += `<td class="score" style="color:${colorIpd(doc.ipd)}">${fmtIpd(doc.ipd)}</td>`;
+      if (campAlt) {
+        fila += `<td class="txt">${ressalta(doc.text_alt, doc.marcadors_occidentals_alt, doc.marcadors_orientals_alt)}</td>`;
+        fila += `<td class="score" style="color:${colorIpd(doc.ipd_alt)}">${fmtIpd(doc.ipd_alt)}</td>`;
+      }
+      fila += '</tr>';
+      return fila;
+    };
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
