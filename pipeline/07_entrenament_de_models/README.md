@@ -19,7 +19,7 @@ pipeline/07_entrenament_de_models/
 ├── scripts/       codi genèric, reutilitzat per tots els experiments
 ├── checkpoints/   pesos dels models entrenats (no versionat en git)
 ├── runs/          logs de cada execució (no versionat en git)
-└── resultados/    taules comparatives entre experiments (sí versionat)
+└── resultats/    taules comparatives entre experiments (sí versionat)
 ```
 
 ### `configs/` — un experiment, un fitxer
@@ -73,7 +73,7 @@ reimplementar-la.
 Els pesos d'un model entrenat pesen de centenars de MB a diversos GB — mai
 han d'anar a control de versions. `.gitignore` ja exclou el contingut
 d'estes dos carpetes (mantenint només un `.gitkeep` perquè la carpeta
-existisca al repo). `resultados/` sí es versiona perquè són taules de text
+existisca al repo). `resultats/` sí es versiona perquè són taules de text
 xicotetes, no els pesos en si.
 
 ## Pròxim pas

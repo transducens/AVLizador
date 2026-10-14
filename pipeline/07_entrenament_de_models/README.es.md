@@ -20,7 +20,7 @@ pipeline/07_entrenament_de_models/
 ├── scripts/       código genérico, reutilizado por todos los experimentos
 ├── checkpoints/   pesos de los modelos entrenados (no versionado en git)
 ├── runs/          logs de cada ejecución (no versionado en git)
-└── resultados/    tablas comparativas entre experimentos (sí versionado)
+└── resultats/    tablas comparativas entre experimentos (sí versionado)
 ```
 
 ### `configs/` — un experimento, un fichero
@@ -74,7 +74,7 @@ reimplementarla.
 Los pesos de un modelo entrenado pesan de cientos de MB a varios GB — nunca
 deben ir a control de versiones. `.gitignore` ya excluye el contenido de
 estas dos carpetas (manteniendo solo un `.gitkeep` para que la carpeta
-exista en el repo). `resultados/` sí se versiona porque son tablas de texto
+exista en el repo). `resultats/` sí se versiona porque son tablas de texto
 pequeñas, no los pesos en sí.
 
 ## Siguiente paso
