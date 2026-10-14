@@ -68,7 +68,7 @@ Reglas de segmentación (`genera_corpus_sintetico.py`):
 para reproducibilidad).
 
 **Por qué este modelo y no otro**: se benchmarkearon varias opciones en
-`03_seleccio_de_model/` (varios tamaños de Ollama, reglas deterministas, NLLB-200)
+`pipeline/03_seleccio_de_model/` (varios tamaños de Ollama, reglas deterministas, NLLB-200)
 sobre 60 frases con referencia humana. qwen2.5:14b + el prompt/glosario de
 abajo dio **BLEU 84,52 / chrF 92,34 / chrF++ 91,84**, muy por encima del
 resto (NLLB-200-600M, por comparación, dio BLEU 53,13 sin ese prompt/glosario
@@ -76,12 +76,12 @@ resto (NLLB-200-600M, por comparación, dio BLEU 53,13 sin ese prompt/glosario
 tamaño del modelo).
 
 **Prompt y glosario**: se reutiliza tal cual el motor de
-`03_seleccio_de_model/evalua_models.py` (el mismo que se usó en el benchmark, para
+`pipeline/03_seleccio_de_model/evalua_models.py` (el mismo que se usó en el benchmark, para
 no perder esa validación):
 - Un system prompt con las reglas morfológicas documentadas (demostrativos,
   posesivos, infinitivos irregulares, subjuntivo presente/imperfecto,
   numerales, léxico base) — el mismo conjunto que hay explicado como guía de
-  estudio en `02_regles_dialectals/regles_prompt/guia_dialectal_valencia_catala.md`.
+  estudio en `pipeline/02_regles_dialectals/regles_prompt/guia_dialectal_valencia_catala.md`.
 - Un glosario dinámico por frase: antes de llamar al modelo se buscan en
   `palabras_traducidas.json` (1.604 formas) las palabras valencianas
   presentes en esa frase concreta, y se le pasan como pista
@@ -97,7 +97,7 @@ tocan, y solo si ya estaban en el original.
 
 **Dónde se ejecutó**: en el clúster SLURM de la universidad ("abaco", 8x
 RTX 2080 Ti), repartiendo el corpus en fragmentos por hash del id de cada
-frase para traducir con varias GPUs a la vez (ver `04_corpus_sintetic/slurm/`).
+frase para traducir con varias GPUs a la vez (ver `pipeline/04_corpus_sintetic/slurm/`).
 
 ## 4. Auditoría de calidad
 
@@ -122,7 +122,7 @@ que existe `repara_corpus.py`.
 
 ## 5. Bugs encontrados y corregidos (sin volver a traducir nada)
 
-Todo esto se corrigió con `04_corpus_sintetic/repara_corpus.py` — manipulación de
+Todo esto se corrigió con `pipeline/04_corpus_sintetic/repara_corpus.py` — manipulación de
 texto sobre el corpus ya generado, sin llamar otra vez a Ollama:
 
 | Problema | Casos | Cómo se corrigió |
@@ -196,8 +196,8 @@ dades/sintetic/
 
 ## 8. Cómo se generó / cómo reproducirlo o ampliarlo
 
-Ver `04_corpus_sintetic/README.md` (uso del script principal) y
-`04_corpus_sintetic/slurm/README.md` (ejecución en el clúster con GPU). Resumen:
+Ver `pipeline/04_corpus_sintetic/README.md` (uso del script principal) y
+`pipeline/04_corpus_sintetic/slurm/README.md` (ejecución en el clúster con GPU). Resumen:
 
 ```bash
 python genera_corpus_sintetico.py                 # generación completa (reanudable)

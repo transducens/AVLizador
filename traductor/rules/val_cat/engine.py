@@ -40,7 +40,7 @@ EXACTE d'eixes 5 frases del benchmark -- zero cobertura sobre qualsevol
 frase nova (a diferencia dels atres "llistes tancades" d'este motor,
 que son paradigmes lingüísticament tancats de veres: numerals,
 demostratius, incoatius). Provat un reemplaç amb la regla general C1 de
-`02_regles_dialectals/docs_gramatica/guia_traduccio_dialectal.md`
+`pipeline/02_regles_dialectals/docs_gramatica/guia_traduccio_dialectal.md`
 ("en"+article definit -> "a"+article definit, font GEIEC/GNV) i va EMPITJORAR
 molt el benchmark (120->76/151): en registre formal, "en + article"
 s'usa sobretot en sentit ABSTRACTE ("en el Congrés", "en el model

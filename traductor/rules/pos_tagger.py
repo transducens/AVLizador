@@ -66,7 +66,7 @@ es català central), no una classificació real. Fer-ho servir per a
 bloquejar hauria introduit regressions noves (trencar "puguen"/"siguen"
 que hui van bé) a canvi d'arreglar els 24 casos coneguts -- NO es fa
 servir per a res de moment. `Token.mood` es queda calculat (es informació
-diagnostica útil, vore `traça_verbs_fallats.py` a 03_seleccio_de_model/)
+diagnostica útil, vore `traça_verbs_fallats.py` a pipeline/03_seleccio_de_model/)
 pero cap regla el consulta hui. Si en el futur es decidix atacar este
 problema, la solució haurà de ser una atra (possiblement estendre
 `postprocessat_llm/` a esta persona tambe, amb LLM, no amb spaCy sol).
@@ -116,7 +116,7 @@ def etiqueta(tokens: list[Token]) -> None:
     Es crida ABANS de qualsevol regla (per aixo fa falta `tok.surface`, no
     `tok.translated` -- en eixe moment son identics). Cerca cada paraula
     pel seu TEXT dins del document d'spaCy (mateix mecanisme ja validat a
-    `08_traduccio_corpus/postprocessat_llm/benchmark_integrat.py`,
+    `pipeline/08_traduccio_corpus/postprocessat_llm/benchmark_integrat.py`,
     `pos_de_paraula()`): primera coincidencia insensible a majuscules,
     sense alinear índexs -- la tokenitzacio d'spaCy no coincidix sempre
     amb la nostra (p.ex. "s'oferisca" es UN token nostre pero DOS per a

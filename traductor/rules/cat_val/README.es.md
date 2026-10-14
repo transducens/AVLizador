@@ -76,7 +76,7 @@ reales lo querían sin tocar), y la locución "per a acabar"→"per acabar".
 **Deliberadamente sin implementar todavía**:
 - Fase 3 de verdad: desambiguación asistida por LLM de "aquest" por
   encima del 77% (candidatos cerrados "este"/"eixe", mismo patrón que
-  `08_traduccio_corpus/postprocessat_llm/` ya usa para indicativo/
+  `pipeline/08_traduccio_corpus/postprocessat_llm/` ya usa para indicativo/
   subjuntivo).
 - Homógrafo "nou"/"anou" (nuevo/nuez en catalán, 3 casos) — sin señal de
   contexto comprobada todavía.

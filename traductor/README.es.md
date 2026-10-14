@@ -40,7 +40,7 @@ fuentes (Apertium, Paula Guerrero, tablas escritas a mano) con la fuente
 de Mauricio.
 
 Ese mismo día, por la tarde, se redujo el traductor a **SOLO lookup exacto
-de diccionario, y SOLO con datos de `02_regles_dialectals/lexic/font_mauricio/`**
+de diccionario, y SOLO con datos de `pipeline/02_regles_dialectals/lexic/font_mauricio/`**
 (equipo AVLizador) — ninguna regla de sufijo, patrón morfológico ni
 reconstrucción algorítmica, y ninguna fuente que no sea Mauricio.
 
@@ -136,7 +136,7 @@ recreación de los demostrativos.
 
 Mismo método que la decisión anterior, aplicado ahora a partir de
 `docs_gramatica/` (las gramáticas GEIEC/GNV completas y sus guías
-derivadas, ver `02_regles_dialectals/docs_gramatica/README.md`): cada
+derivadas, ver `pipeline/02_regles_dialectals/docs_gramatica/README.md`): cada
 diferencia que documentan las guías se contrasta contra el benchmark de
 150 frases ANTES de escribir ninguna regla, porque una diferencia real
 sobre el papel no siempre aparece lo bastante a menudo -- ni con
@@ -220,7 +220,7 @@ Decisión explícita del usuario: volver a añadir `conjugaciones_nuevo.json`
 introducir la colisión homógrafa documentada arriba. Razonamiento: ahora
 no preocupa tanto la cifra del benchmark porque **el plan es añadir más
 adelante un paso de postprocesado con un LLM**
-(`08_traduccio_corpus/postprocessat_llm/`, todavía NO implementado) que
+(`pipeline/08_traduccio_corpus/postprocessat_llm/`, todavía NO implementado) que
 pueda resolver estos casos ambiguos mirando el contexto real de la frase
 -- algo que un lookup plano nunca puede hacer. Mientras no exista ese
 paso, se prefiere tener más cobertura (5.465 verbos más) aunque salga más
@@ -345,7 +345,7 @@ Se ejecuta una sola vez, antes de la primera regla: marca
 `is_proper_noun` en toda palabra capitalizada que **no** sea la primera
 del texto (la primera letra de una frase siempre va en mayúscula, sea o
 no nombre propio). Es la misma heurística ya probada en
-`03_seleccio_de_model/evalua_models.py::glossari_per_frase()`, añadida
+`pipeline/03_seleccio_de_model/evalua_models.py::glossari_per_frase()`, añadida
 allí tras un incidente real con `blanca`/`Blanca` y `roig`/`Roig` (ver
 `../documentacio/metodologia_i_resultats.md`, sección 6). Límite
 conocido, heredado sin arreglar: un nombre propio que es la **primera**
@@ -435,7 +435,7 @@ palabra del texto nunca se detecta.
 
 ## Mantener `traductor/data/` sincronizado con las fuentes
 
-`traductor/rules/*.py` nunca lee `02_regles_dialectals/lexic/` en
+`traductor/rules/*.py` nunca lee `pipeline/02_regles_dialectals/lexic/` en
 tiempo de ejecución -- solo lee copias propias dentro de `traductor/data/`
 (para que el paquete funcione de forma autónoma). Si editas un fichero
 fuente de `font_mauricio/` directamente, ese cambio no llega al motor
@@ -485,7 +485,7 @@ dejarse reprocesar por una regla más débil.
 
 ## Relación con el sistema de reglas antiguo
 
-`03_seleccio_de_model/evalua_models.py` ya tenía un sistema de reglas
+`pipeline/03_seleccio_de_model/evalua_models.py` ya tenía un sistema de reglas
 (`tradueix_regles`, opción `--model regles`) — sustituciones con regex
 sobre la frase completa. Es distinto y **no se ha tocado ni sustituido**:
 el paquete `traductor/` se añade como una opción nueva,
@@ -493,7 +493,7 @@ el paquete `traductor/` se añade como una opción nueva,
 benchmark:
 
 ```bash
-cd 03_seleccio_de_model
+cd pipeline/03_seleccio_de_model
 python evalua_models.py --model traductor                    # motor nuevo (traductor/)
 python evalua_models.py --model regles                       # sistema antiguo (regex)
 python evalua_models.py --model tots                          # todo a la vez, incluidos ambos
@@ -501,7 +501,7 @@ python evalua_models.py --model tots                          # todo a la vez, i
 
 El adaptador (`tradueix_traductor_nou` en `evalua_models.py`) añade la
 raíz del repositorio a `sys.path` antes de importar `traductor/`, porque
-el script siempre se ejecuta desde dentro de `03_seleccio_de_model/` y
+el script siempre se ejecuta desde dentro de `pipeline/03_seleccio_de_model/` y
 Python no encuentra ahí un paquete que vive en la carpeta de al lado.
 
 ## Uso directo

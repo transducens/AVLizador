@@ -76,7 +76,7 @@ sense tocar), i la locució "per a acabar"->"per acabar".
 **Deliberadament sense implementar encara**:
 - Fase 3 de veres: desambiguació assistida per LLM d'"aquest" per damunt
   del 77% (candidats tancats "este"/"eixe", mateix patró que
-  `08_traduccio_corpus/postprocessat_llm/` ja fa servir per a indicatiu/
+  `pipeline/08_traduccio_corpus/postprocessat_llm/` ja fa servir per a indicatiu/
   subjuntiu).
 - Homògraf "nou"/"anou" (nou/nou en català, 3 casos) — sense senyal de
   context comprovada encara.

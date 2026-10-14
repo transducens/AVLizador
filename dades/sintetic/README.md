@@ -68,7 +68,7 @@ Regles de segmentació (`genera_corpus_sintetico.py`):
 per a reproduïbilitat).
 
 **Per què este model i no un altre**: es van fer benchmark de diverses
-opcions en `03_seleccio_de_model/` (diverses grandàries d'Ollama, regles
+opcions en `pipeline/03_seleccio_de_model/` (diverses grandàries d'Ollama, regles
 deterministes, NLLB-200) sobre 60 frases amb referència humana.
 qwen2.5:14b + el prompt/glossari de davall va donar **BLEU 84,52 / chrF
 92,34 / chrF++ 91,84**, molt per damunt de la resta (NLLB-200-600M, per
@@ -77,12 +77,12 @@ l'avantatge ve sobretot del prompt afinat, no només de la grandària del
 model).
 
 **Prompt i glossari**: es reutilitza tal qual el motor de
-`03_seleccio_de_model/evalua_models.py` (el mateix que es va usar al
+`pipeline/03_seleccio_de_model/evalua_models.py` (el mateix que es va usar al
 benchmark, per a no perdre eixa validació):
 - Un system prompt amb les regles morfològiques documentades (demostratius,
   possessius, infinitius irregulars, subjuntiu present/imperfet,
   numerals, lèxic base) — el mateix conjunt que hi ha explicat com a guia
-  d'estudi en `02_regles_dialectals/regles_prompt/guia_dialectal_valencia_catala.md`.
+  d'estudi en `pipeline/02_regles_dialectals/regles_prompt/guia_dialectal_valencia_catala.md`.
 - Un glossari dinàmic per frase: abans de cridar el model es busquen en
   `palabras_traducidas.json` (1.604 formes) les paraules valencianes
   presents en eixa frase concreta, i se li passen com a pista
@@ -98,7 +98,7 @@ RACV) mai es toquen, i només si ja estaven a l'original.
 
 **On es va executar**: al clúster SLURM de la universitat ("abaco", 8x
 RTX 2080 Ti), repartint el corpus en fragments per hash de l'id de cada
-frase per a traduir amb diverses GPU a la vegada (vore `04_corpus_sintetic/slurm/`).
+frase per a traduir amb diverses GPU a la vegada (vore `pipeline/04_corpus_sintetic/slurm/`).
 
 ## 4. Auditoria de qualitat
 
@@ -123,7 +123,7 @@ la raó per la qual existix `repara_corpus.py`.
 
 ## 5. Bugs trobats i corregits (sense tornar a traduir res)
 
-Tot açò es va corregir amb `04_corpus_sintetic/repara_corpus.py` —
+Tot açò es va corregir amb `pipeline/04_corpus_sintetic/repara_corpus.py` —
 manipulació de text sobre el corpus ja generat, sense cridar altra vegada
 Ollama:
 
@@ -200,8 +200,8 @@ dades/sintetic/
 
 ## 8. Com es va generar / com reproduir-ho o ampliar-ho
 
-Vore `04_corpus_sintetic/README.md` (ús de l'script principal) i
-`04_corpus_sintetic/slurm/README.md` (execució al clúster amb GPU). Resum:
+Vore `pipeline/04_corpus_sintetic/README.md` (ús de l'script principal) i
+`pipeline/04_corpus_sintetic/slurm/README.md` (execució al clúster amb GPU). Resum:
 
 ```bash
 python genera_corpus_sintetico.py                 # generació completa (reprenible)

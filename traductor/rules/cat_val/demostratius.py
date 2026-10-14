@@ -34,7 +34,7 @@ que la majoria dels "aquest" reals VENIEN d'"este" per començar).
 Per això ara SÍ es tradueix "aquest"->"este" (i el seu paradigma) per
 defecte -- un valor per defecte MESURAT, amb un 23% d'error conegut i
 acceptat, no una suposició. La Fase 3 de la hoja de ruta (desambiguació
-assistida per LLM, mateix patró que `08_traduccio_corpus/postprocessat_llm/`
+assistida per LLM, mateix patró que `pipeline/08_traduccio_corpus/postprocessat_llm/`
 ja fa per a indicatiu/subjuntiu) és l'única manera de pujar per damunt
 d'eixe 77% -- pendent, no implementada encara.
 
@@ -61,7 +61,7 @@ AVL_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "demostratiu
 _DEFAULT_AQUEST = {"aquest": "este", "aquesta": "esta", "aquests": "estos", "aquestes": "estes"}
 
 # Els dos candidats reals per a cada forma ambigua -- exposat en públic
-# perquè `08_traduccio_corpus/postprocessat_llm/` (Fase 3, desambiguació
+# perquè `pipeline/08_traduccio_corpus/postprocessat_llm/` (Fase 3, desambiguació
 # per LLM) necessita saber quins SON els dos candidats, no nomes quin
 # s'aplica per defecte.
 CANDIDATS_AQUEST = {

@@ -6,7 +6,7 @@ Versiones DERIVADAS del corpus BOE (`../boe/`), pensadas para separar
 diferencias **dialectales reales** de diferencias de **estilo del
 traductor** (mismo texto oficial, traducido dos veces por equipos
 distintos). Los ficheros originales de `../boe/` **no se tocan nunca** --
-todo lo que hay aquí se obtiene ejecutando los scripts de `boe/`
+todo lo que hay aquí se obtiene ejecutando los scripts de `pipeline/05_corpus_boe/`
 indicados abajo, y se puede regenerar siempre que haga falta.
 
 ## Ficheros

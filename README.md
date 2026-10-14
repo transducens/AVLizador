@@ -21,20 +21,40 @@ d'ús d'eixa etapa en concret.
 
 ## Estructura del repositori
 
-**Codi** (cada carpeta és una etapa o un pilar del projecte):
+**Reestructurat el 14/10/2026**: les 9 etapes numerades viuen ara dins de
+[`pipeline/`](pipeline/), separades del producte real (`traductor/`) i de
+les dades (`dades/`). `boe/` (abans solt en l'arrel, sense número) ara és
+`pipeline/05_corpus_boe/` — tanca el forat que hi havia en la numeració
+(abans no existia cap "05") sense tocar cap de les altres 8 carpetes.
+
+```
+traductor/              # el motor real -- el PRODUCTE, no una etapa
+pipeline/
+  01_extraccio_i_neteja/
+  02_regles_dialectals/
+  03_seleccio_de_model/
+  04_corpus_sintetic/
+  05_corpus_boe/         # abans "boe/" solt en l'arrel, sense número
+  06_dades_entrenament/
+  07_entrenament_de_models/
+  08_traduccio_corpus/
+  09_index_puresa_dialectal/
+dades/                   # transversal, el consumeixen diverses etapes
+documentacio/            # transversal
+```
 
 | Carpeta | Què és |
 |---|---|
-| [`01_extraccio_i_neteja/`](01_extraccio_i_neteja/) | Etapa 1 — scraping de la web de l'AVL i neteja/classificació dialectal |
-| [`02_regles_dialectals/`](02_regles_dialectals/) | Etapa 2 — regles dialectals i lèxic diferencial valencià↔català |
-| [`03_seleccio_de_model/`](03_seleccio_de_model/) | Etapa 3 — benchmark i selecció del model de traducció |
-| [`04_corpus_sintetic/`](04_corpus_sintetic/) | Etapa 4 — generació del corpus sintètic complet |
-| [`traductor/`](traductor/) | Etapa 5 — motor de regles determinista (sense LLM); veure `traductor/README.md` |
-| [`06_dades_entrenament/`](06_dades_entrenament/) | Etapa 6 — prepara el dataset final (train/dev/test) per al finetuning |
-| [`07_entrenament_de_models/`](07_entrenament_de_models/) | Etapa 7 — finetuning, baselines i comparació de models |
-| [`08_traduccio_corpus/`](08_traduccio_corpus/) | Etapa 8 — aplica el motor de regles a un corpus complet (no només al benchmark); fase 2 (post-processat amb LLM dels casos marcats) encara pendent |
-| [`09_index_puresa_dialectal/`](09_index_puresa_dialectal/) | Etapa 9 — Índex de Puresa Dialectal (IPD): mètrica reutilitzable per a mesurar quin percentatge d'un text és occidental vs. oriental, basada en l'índex de parells de `traductor/` |
-| [`boe/`](boe/) | Scripts del corpus real i alineat del BOE — pilar independent, sense numerar (no és seqüencial amb 1-7) |
+| [`traductor/`](traductor/) | El motor de regles determinista (sense LLM) — el producte del projecte, per això viu fora de `pipeline/`; veure `traductor/README.md` |
+| [`pipeline/01_extraccio_i_neteja/`](pipeline/01_extraccio_i_neteja/) | Etapa 1 — scraping de la web de l'AVL i neteja/classificació dialectal |
+| [`pipeline/02_regles_dialectals/`](pipeline/02_regles_dialectals/) | Etapa 2 — regles dialectals i lèxic diferencial valencià↔català |
+| [`pipeline/03_seleccio_de_model/`](pipeline/03_seleccio_de_model/) | Etapa 3 — benchmark i selecció del model de traducció |
+| [`pipeline/04_corpus_sintetic/`](pipeline/04_corpus_sintetic/) | Etapa 4 — generació del corpus sintètic complet |
+| [`pipeline/05_corpus_boe/`](pipeline/05_corpus_boe/) | Etapa 5 — scripts del corpus real i alineat del BOE (abans `boe/`, sense número) |
+| [`pipeline/06_dades_entrenament/`](pipeline/06_dades_entrenament/) | Etapa 6 — prepara el dataset final (train/dev/test) per al finetuning |
+| [`pipeline/07_entrenament_de_models/`](pipeline/07_entrenament_de_models/) | Etapa 7 — finetuning, baselines i comparació de models |
+| [`pipeline/08_traduccio_corpus/`](pipeline/08_traduccio_corpus/) | Etapa 8 — aplica el motor de regles a un corpus complet (no només al benchmark); postprocessat amb LLM dels casos ambigus |
+| [`pipeline/09_index_puresa_dialectal/`](pipeline/09_index_puresa_dialectal/) | Etapa 9 — Índex de Puresa Dialectal (IPD): mètrica reutilitzable per a mesurar quin percentatge d'un text és occidental vs. oriental, basada en l'índex de parells de `traductor/` |
 | [`documentacio/`](documentacio/) | La metodologia completa del projecte |
 
 **Dades** (tot agrupat en [`dades/`](dades/), separat del codi):
@@ -51,18 +71,23 @@ d'ús d'eixa etapa en concret.
 Les etapes 1-4 i 6 són codi actiu (scraping, regles, benchmark, generació
 del corpus, split final); cada una llig/escriu en la seua subcarpeta
 corresponent de `dades/`. L'etapa 7 consumeix l'eixida de la 6 per a
-entrenar/avaluar models. `traductor/` (etapa 5) és un paquet Python
-independent que viu en l'arrel perquè s'importa com a mòdul des d'altres
-parts del projecte — no porta prefix numèric perquè un mòdul Python no pot
-començar per un dígit. `boe/` és una font de dades paral·lela i
-independent del pipeline AVL — el seu codi viu en `boe/`, les seues dades
-en `dades/boe/`, i no es mescla amb el corpus sintètic en l'entrenament: 
-s'usa per a avaluar generalització fora de domini (veure
-`06_dades_entrenament/README.md`).
+entrenar/avaluar models. `traductor/` és un paquet Python independent que
+viu en l'arrel, fora de `pipeline/`, perquè s'importa com a mòdul des
+d'altres parts del projecte i perquè no és una etapa d'un sol ús sinó el
+producte que totes les etapes alimenten (a més, un mòdul Python no pot
+començar per un dígit). `pipeline/05_corpus_boe/` és una font de dades
+paral·lela i independent del pipeline AVL — el seu codi viu ahí, les
+seues dades en `dades/boe/`, i no es mescla amb el corpus sintètic en
+l'entrenament: s'usa per a avaluar generalització fora de domini (veure
+`pipeline/06_dades_entrenament/README.md`).
 
 ## Nota si treballes també en un clúster remot
 
-Esta estructura de carpetes es va reorganitzar localment — si tens una
-còpia en un altre lloc (p. ex. un clúster SLURM) sincronitzada a mà amb
+Esta estructura de carpetes es va reorganitzar localment (última vegada,
+14/10/2026: les etapes numerades es van moure dins de `pipeline/` i
+`boe/` va passar a ser `pipeline/05_corpus_boe/`) — si tens una còpia en
+un altre lloc (p. ex. un clúster SLURM) sincronitzada a mà amb
 `scp`/`rsync`, hauràs de replicar ahí els mateixos renombraments abans de
-la teua pròxima sincronització, o les rutes no coincidiran.
+la teua pròxima sincronització, o les rutes no coincidiran. L'estructura
+plana d'Abaco (`~/scrapeo/postprocesado_llm/`) es manté expressament
+independent d'este canvi — veure `pipeline/08_traduccio_corpus/postprocessat_llm/README.md`.

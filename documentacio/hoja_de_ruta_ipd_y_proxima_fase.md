@@ -27,7 +27,7 @@ Plan de 3 pasos, en el orden exacto que pidió el usuario:
 ## Paso 1 — HECHO (13/10/2026)
 
 Implementado como hito propio del proyecto, etapa 9:
-`09_index_puresa_dialectal/ipd.py` + README.md (valencià) + README.es.md
+`pipeline/09_index_puresa_dialectal/ipd.py` + README.md (valencià) + README.es.md
 (castellano) — ver esos ficheros para el detalle técnico completo
 (fórmula, fuentes de datos, limitaciones conocidas), que SÍ siguen
 existiendo y no se han perdido.

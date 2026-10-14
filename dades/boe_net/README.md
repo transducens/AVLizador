@@ -6,7 +6,7 @@ Versions DERIVADES del corpus BOE (`../boe/`), pensades per a separar
 diferències **dialectals reals** de diferències d'**estil del traductor**
 (mateix text oficial, traduït dos vegades per equips distints). Els
 fitxers originals de `../boe/` **no es toquen mai** -- tot el que hi ha
-ací s'obté executant els scripts de `boe/` indicats baix, i es pot
+ací s'obté executant els scripts de `pipeline/05_corpus_boe/` indicats baix, i es pot
 regenerar sempre que calga.
 
 ## Fitxers

@@ -13,9 +13,9 @@ Des de la línia de comandes: `python -m traductor.cli "text"` (vore
 
 Este paquet és el "pas 5" del projecte (vore final/05_motor_reglas/README.md):
 ve DESPRÉS del corpus sintètic i el benchmark de selecció de model
-(03_seleccio_de_model/), i està pensat per a viure com a mòdul independent -- no
+(pipeline/03_seleccio_de_model/), i està pensat per a viure com a mòdul independent -- no
 depén en temps d'execució de cap altra carpeta del projecte (el lèxic es
-copia a traductor/data/, no es llig de "02_regles_dialectals/").
+copia a traductor/data/, no es llig de "pipeline/02_regles_dialectals/").
 
 Direcció inversa (`translate_cat_val`, afegida 08/10/2026): vore
 `documentacio/hoja_de_ruta_traductor_invers.md` i

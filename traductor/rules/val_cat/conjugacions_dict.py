@@ -117,7 +117,7 @@ sempre per a estes formes, siga veritat o no -- hauria trencat
 arreglar els 24 casos coneguts (vore `pos_tagger.py` per als numeros
 exactes). **Solucio aplicada**: `es_risc_mode_3a_plural()` exclou estes
 9.220 formes del lookup (mateix mecanisme que `problematica`), deixant-
-les SENSE TOCAR -- i `08_traduccio_corpus/postprocessat_llm/
+les SENSE TOCAR -- i `pipeline/08_traduccio_corpus/postprocessat_llm/
 identifica_ambigues.py` les afig a la taula d'ambigüitats perque el
 postprocessat LLM (vía C, ja validat per a la 1a persona) decidisca
 indicatiu/subjuntiu/cap mirant el context real de la frase. **Nomes

@@ -40,7 +40,7 @@ Eixes regles cobrien més casos, però barrejaven dades de diverses fonts
 
 El mateix dia 30/09/2026, a la vesprada, es va reduir el traductor a
 **NOMÉS lookup exacte de diccionari, i NOMÉS amb dades de
-`02_regles_dialectals/lexic/font_mauricio/`** (equip AVLizador) — cap
+`pipeline/02_regles_dialectals/lexic/font_mauricio/`** (equip AVLizador) — cap
 regla de sufix, patró morfològic ni reconstrucció algorítmica, i cap font
 que no siga Mauricio.
 
@@ -135,7 +135,7 @@ dels demostratius.
 
 Mateix mètode que la decisió anterior, aplicat ara a partir de
 `docs_gramatica/` (les gramàtiques GEIEC/GNV completes i les seues guies
-derivades, vore `02_regles_dialectals/docs_gramatica/README.md`): cada
+derivades, vore `pipeline/02_regles_dialectals/docs_gramatica/README.md`): cada
 diferència que documenten les guies es contrasta contra el benchmark de
 150 frases ABANS d'escriure cap regla, perquè una diferència real sobre
 el paper no sempre apareix prou sovint -- o amb prou seguretat -- com per
@@ -214,7 +214,7 @@ Decisió explícita de l'usuari: tornar a afegir `conjugaciones_nuevo.json`
 (els 5.465 verbs revertits un dia abans) encara que es sàpia que torna a
 introduir la col·lisió homògrafa documentada dalt. Raonament: ara no
 preocupa tant la xifra del benchmark perquè **el pla és afegir mes avant
-un pas de postprocessat amb un LLM** (`08_traduccio_corpus/postprocessat_llm/`,
+un pas de postprocessat amb un LLM** (`pipeline/08_traduccio_corpus/postprocessat_llm/`,
 encara NO implementat) que puga resoldre estos casos ambigus mirant el
 context real de la frase -- cosa que un lookup pla mai pot fer. Mentre
 no existisca eixe pas, preferix tindre mes cobertura (5.465 verbs mes)
@@ -353,10 +353,10 @@ endevinar quines atres formes podrien patir el mateix problema.
 ## ANÀLISI DE FALLADES RESIDUALS (07/10/2026) -- 51 de 151, sobre 100/151 (66,2%)
 
 Resultat oficial d'esta sessió, guardat a
-`03_seleccio_de_model/resultats/benchmark_Traductor_Nou_FILTRE_POS_07102026.json`
+`pipeline/03_seleccio_de_model/resultats/benchmark_Traductor_Nou_FILTRE_POS_07102026.json`
 (confirmat idèntic en local i en Abaco: 100/151, BLEU 96,03, chrF 98,63).
 Analitzat paraula a paraula amb el script nou
-`03_seleccio_de_model/analitza_fallades.py` (reutilitzable: `python
+`pipeline/03_seleccio_de_model/analitza_fallades.py` (reutilitzable: `python
 analitza_fallades.py resultats/<fitxer>.json [--id RCxxx]`). Categories,
 de major a menor pes:
 
@@ -391,7 +391,7 @@ cobrim (nomes 1a sing. indicatiu/subjuntiu).
 RESIDUAL ESPERAT, NO es un bug de `traductor/`)**: `plantejo→plantege`
 (RC095), `basi→base` (RC106), `recuperi→recupere` (RC110),
 `centro→centre` (RC151). Exactament el fenomen que
-`08_traduccio_corpus/postprocessat_llm/` ja ataca amb postprocessat LLM
+`pipeline/08_traduccio_corpus/postprocessat_llm/` ja ataca amb postprocessat LLM
 (vore eixa carpeta) -- `traductor/` per disseny deixa estes formes sense
 tocar (`problematica: true`, exclusió deliberada des de fa sessions) fins
 que hi haja un mecanisme de desambiguació per context. No cal "arreglar"
@@ -525,7 +525,7 @@ S'executa una sola vegada, abans de la primera regla: marca
 `is_proper_noun` en tota paraula capitalitzada que **no** siga la primera
 del text (la primera lletra d'una frase sempre va en majúscula, siga o no
 nom propi). És la mateixa heurística ja provada en
-`03_seleccio_de_model/evalua_models.py::glossari_per_frase()`, afegida
+`pipeline/03_seleccio_de_model/evalua_models.py::glossari_per_frase()`, afegida
 allí després d'un incident real amb `blanca`/`Blanca` i `roig`/`Roig`
 (vore `../documentacio/metodologia_i_resultats.md`, secció 6). Límit
 conegut, heretat sense arreglar: un nom propi que és la **primera**
@@ -624,7 +624,7 @@ context concret és, de veres, una atra categoria gramatical.
 
 ## Mantindre `traductor/data/` sincronitzat amb les fonts
 
-`traductor/rules/*.py` mai llig `02_regles_dialectals/lexic/` en temps
+`traductor/rules/*.py` mai llig `pipeline/02_regles_dialectals/lexic/` en temps
 d'execució -- només llig còpies pròpies dins de `traductor/data/` (perquè
 el paquet funcione de manera autònoma). Si edites un fitxer font de
 `font_mauricio/` directament, eixe canvi no arriba al motor fins que
@@ -674,14 +674,14 @@ feble.
 
 ## Relació amb el sistema de regles antic
 
-`03_seleccio_de_model/evalua_models.py` ja tenia un sistema de regles
+`pipeline/03_seleccio_de_model/evalua_models.py` ja tenia un sistema de regles
 (`tradueix_regles`, opció `--model regles`) — substitucions amb regex
 sobre la frase completa. És distint i **no s'ha tocat ni substituït**: el
 paquet `traductor/` s'afig com una opció nova, `--model traductor`, per a
 poder comparar els dos directament en el mateix benchmark:
 
 ```bash
-cd 03_seleccio_de_model
+cd pipeline/03_seleccio_de_model
 python evalua_models.py --model traductor                    # motor nou (traductor/)
 python evalua_models.py --model regles                       # sistema antic (regex)
 python evalua_models.py --model tots                          # tot a la vegada, inclosos els dos
@@ -689,7 +689,7 @@ python evalua_models.py --model tots                          # tot a la vegada,
 
 L'adaptador (`tradueix_traductor_nou` en `evalua_models.py`) afig l'arrel
 del repositori a `sys.path` abans d'importar `traductor/`, perquè
-l'script sempre s'executa des de dins de `03_seleccio_de_model/` i
+l'script sempre s'executa des de dins de `pipeline/03_seleccio_de_model/` i
 Python no troba ahí un paquet que viu en la carpeta del costat.
 
 ## Ús directe

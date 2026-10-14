@@ -21,20 +21,41 @@ detalle de uso de esa etapa en concreto.
 
 ## Estructura del repositorio
 
-**Código** (cada carpeta es una etapa o un pilar del proyecto):
+**Reestructurado el 14/10/2026**: las 9 etapas numeradas viven ahora
+dentro de [`pipeline/`](pipeline/), separadas del producto real
+(`traductor/`) y de los datos (`dades/`). `boe/` (antes suelto en la
+raíz, sin número) ahora es `pipeline/05_corpus_boe/` — cierra el hueco
+que había en la numeración (antes no existía ningún "05") sin tocar
+ninguna de las otras 8 carpetas.
+
+```
+traductor/              # el motor real -- el PRODUCTO, no una etapa
+pipeline/
+  01_extraccio_i_neteja/
+  02_regles_dialectals/
+  03_seleccio_de_model/
+  04_corpus_sintetic/
+  05_corpus_boe/         # antes "boe/" suelto en la raíz, sin número
+  06_dades_entrenament/
+  07_entrenament_de_models/
+  08_traduccio_corpus/
+  09_index_puresa_dialectal/
+dades/                   # transversal, lo consumen varias etapas
+documentacio/            # transversal
+```
 
 | Carpeta | Qué es |
 |---|---|
-| [`01_extraccio_i_neteja/`](01_extraccio_i_neteja/) | Etapa 1 — scraping de la web de la AVL y limpieza/clasificación dialectal |
-| [`02_regles_dialectals/`](02_regles_dialectals/) | Etapa 2 — reglas dialectales y léxico diferencial valencià↔català |
-| [`03_seleccio_de_model/`](03_seleccio_de_model/) | Etapa 3 — benchmark y selección del modelo de traducción |
-| [`04_corpus_sintetic/`](04_corpus_sintetic/) | Etapa 4 — generación del corpus sintético completo |
-| [`traductor/`](traductor/) | Etapa 5 — motor de reglas determinista (sin LLM); ver `traductor/README.md` |
-| [`06_dades_entrenament/`](06_dades_entrenament/) | Etapa 6 — prepara el dataset final (train/dev/test) para el finetuning |
-| [`07_entrenament_de_models/`](07_entrenament_de_models/) | Etapa 7 — finetuning, baselines y comparación de modelos |
-| [`08_traduccio_corpus/`](08_traduccio_corpus/) | Etapa 8 — aplica el motor de reglas a un corpus completo (no solo al benchmark); fase 2 (post-procesado con LLM de los casos marcados) todavía pendiente |
-| [`09_index_puresa_dialectal/`](09_index_puresa_dialectal/) | Etapa 9 — Índice de Pureza Dialectal (IPD): métrica reutilizable para medir qué porcentaje de un texto es occidental vs. oriental, basada en el índice de pares de `traductor/` |
-| [`boe/`](boe/) | Scripts del corpus real y alineado del BOE — pilar independiente, no numerado (no es secuencial con 1-7) |
+| [`traductor/`](traductor/) | El motor de reglas determinista (sin LLM) — el producto del proyecto, por eso vive fuera de `pipeline/`; ver `traductor/README.md` |
+| [`pipeline/01_extraccio_i_neteja/`](pipeline/01_extraccio_i_neteja/) | Etapa 1 — scraping de la web de la AVL y limpieza/clasificación dialectal |
+| [`pipeline/02_regles_dialectals/`](pipeline/02_regles_dialectals/) | Etapa 2 — reglas dialectales y léxico diferencial valencià↔català |
+| [`pipeline/03_seleccio_de_model/`](pipeline/03_seleccio_de_model/) | Etapa 3 — benchmark y selección del modelo de traducción |
+| [`pipeline/04_corpus_sintetic/`](pipeline/04_corpus_sintetic/) | Etapa 4 — generación del corpus sintético completo |
+| [`pipeline/05_corpus_boe/`](pipeline/05_corpus_boe/) | Etapa 5 — scripts del corpus real y alineado del BOE (antes `boe/`, sin número) |
+| [`pipeline/06_dades_entrenament/`](pipeline/06_dades_entrenament/) | Etapa 6 — prepara el dataset final (train/dev/test) para el finetuning |
+| [`pipeline/07_entrenament_de_models/`](pipeline/07_entrenament_de_models/) | Etapa 7 — finetuning, baselines y comparación de modelos |
+| [`pipeline/08_traduccio_corpus/`](pipeline/08_traduccio_corpus/) | Etapa 8 — aplica el motor de reglas a un corpus completo (no solo al benchmark); postprocesado con LLM de los casos ambiguos |
+| [`pipeline/09_index_puresa_dialectal/`](pipeline/09_index_puresa_dialectal/) | Etapa 9 — Índice de Pureza Dialectal (IPD): métrica reutilizable para medir qué porcentaje de un texto es occidental vs. oriental, basada en el índice de pares de `traductor/` |
 | [`documentacio/`](documentacio/) | La metodología completa del proyecto |
 
 **Datos** (todo agrupado en [`dades/`](dades/), separado del código):
@@ -51,18 +72,24 @@ detalle de uso de esa etapa en concreto.
 Las etapas 1-4 y 6 son código activo (scraping, reglas, benchmark,
 generación del corpus, split final); cada una lee/escribe en su subcarpeta
 correspondiente de `dades/`. La etapa 7 consume la salida de la 6 para
-entrenar/evaluar modelos. `traductor/` (etapa 5) es un paquete Python
-independiente que vive en la raíz porque se importa como módulo desde otras
-partes del proyecto — no lleva prefijo numérico porque un módulo Python no
-puede empezar por un dígito. `boe/` es una fuente de datos paralela e
-independiente del pipeline AVL — su código vive en `boe/`, sus datos en
-`dades/boe/`, y no se mezcla con el corpus sintético en el entrenamiento: se
-usa para evaluar generalización fuera de dominio (ver
-`06_dades_entrenament/README.md`).
+entrenar/evaluar modelos. `traductor/` es un paquete Python independiente
+que vive en la raíz, fuera de `pipeline/`, porque se importa como módulo
+desde otras partes del proyecto y porque no es una etapa de un solo uso
+sino el producto que todas las etapas alimentan (además, un módulo
+Python no puede empezar por un dígito). `pipeline/05_corpus_boe/` es una
+fuente de datos paralela e independiente del pipeline AVL — su código
+vive ahí, sus datos en `dades/boe/`, y no se mezcla con el corpus
+sintético en el entrenamiento: se usa para evaluar generalización fuera
+de dominio (ver `pipeline/06_dades_entrenament/README.md`).
 
 ## Nota si trabajas también en un clúster remoto
 
-Esta estructura de carpetas se reorganizó localmente — si tienes una copia
-en otro sitio (p. ej. un clúster SLURM) sincronizada a mano con `scp`/`rsync`,
-tendrás que replicar ahí los mismos renombrados antes de tu próxima
-sincronización, o las rutas no coincidirán.
+Esta estructura de carpetas se reorganizó localmente (última vez,
+14/10/2026: las etapas numeradas se movieron dentro de `pipeline/` y
+`boe/` pasó a ser `pipeline/05_corpus_boe/`) — si tienes una copia en
+otro sitio (p. ej. un clúster SLURM) sincronizada a mano con
+`scp`/`rsync`, tendrás que replicar ahí los mismos renombrados antes de
+tu próxima sincronización, o las rutas no coincidirán. La estructura
+plana de Abaco (`~/scrapeo/postprocesado_llm/`) se mantiene a propósito
+independiente de este cambio — ver
+`pipeline/08_traduccio_corpus/postprocessat_llm/README.md`.

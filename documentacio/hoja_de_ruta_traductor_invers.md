@@ -70,7 +70,7 @@ regresión aceptada en RC055).
 
 ## Fase 3 (LLM para "aquest") — implementada, medida, descartada (13/10/2026)
 
-Construido `08_traduccio_corpus/postprocessat_llm/compara_demostratius_invers.py`
+Construido `pipeline/08_traduccio_corpus/postprocessat_llm/compara_demostratius_invers.py`
 (criterio + vía C, reutilizando `crida_ollama` de `compara_postprocessat.py`)
 y `benchmark_demostratius_invers.py` (replica el motor `cat_val`, mismo
 patrón que `benchmark_integrat.py`). Criterio escrito tras revisar a
