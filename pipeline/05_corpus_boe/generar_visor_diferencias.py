@@ -44,7 +44,7 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 BOE_DIR = Path(__file__).resolve().parent
-NET_DIR = BOE_DIR.parent / "dades" / "boe_net"
+NET_DIR = BOE_DIR.parent.parent / "dades" / "boe_net"
 ENTRADA_PATH = NET_DIR / "corpus_entrenamiento_net.jsonl"
 SALIDA_HTML = NET_DIR / "visor_diferencias.html"
 CHUNKS_DIR_GRANDES = NET_DIR / "visor_diferencias_chunks"

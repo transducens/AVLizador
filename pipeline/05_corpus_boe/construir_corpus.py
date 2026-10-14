@@ -34,9 +34,10 @@ from pathlib import Path
 import pymupdf
 
 BOE_DIR = Path(__file__).resolve().parent
-# Los datos del BOE ahora viven en dades/boe/ (junto a los del resto de
-# fuentes del proyecto), no dentro de boe/ como antes.
-CORPUS_DIR = BOE_DIR.parent / "dades" / "boe"
+# Los datos del BOE viven en dades/boe/ (junto a los del resto de fuentes
+# del proyecto), en la raiz real -- dos niveles por encima de esta carpeta
+# desde la reestructuracion del 14/10/2026 (pipeline/05_corpus_boe/).
+CORPUS_DIR = BOE_DIR.parent.parent / "dades" / "boe"
 PROGRESO_PATH = CORPUS_DIR / "progreso.json"
 SALIDA_PATH = CORPUS_DIR / "corpus.json"
 

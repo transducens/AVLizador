@@ -57,7 +57,7 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 BOE_DIR = Path(__file__).resolve().parent
 # Los datos del BOE ahora viven en dades/boe/ (junto a los del resto de
 # fuentes del proyecto), no dentro de boe/ como antes.
-CORPUS_DIR = BOE_DIR.parent / "dades" / "boe"
+CORPUS_DIR = BOE_DIR.parent.parent / "dades" / "boe"
 ENTRADA_PATH = CORPUS_DIR / "corpus.json"
 SALIDA_PATH = CORPUS_DIR / "corpus_bleualign.jsonl"
 

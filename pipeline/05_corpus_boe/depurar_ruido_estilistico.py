@@ -35,8 +35,8 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 BOE_DIR = Path(__file__).resolve().parent
-CORPUS_DIR = BOE_DIR.parent / "dades" / "boe"
-NET_DIR = BOE_DIR.parent / "dades" / "boe_net"
+CORPUS_DIR = BOE_DIR.parent.parent / "dades" / "boe"
+NET_DIR = BOE_DIR.parent.parent / "dades" / "boe_net"
 
 ENTRADA_PATH = CORPUS_DIR / "corpus_entrenamiento.jsonl"
 SALIDA_NET = NET_DIR / "corpus_entrenamiento_net.jsonl"
