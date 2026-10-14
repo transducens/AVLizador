@@ -31,7 +31,7 @@ from playwright.async_api import async_playwright
 
 URL = "https://www.avl.gva.es/gnv/buscador.jsp?gramatica=GNV&index=GNV"
 # Ancorat a __file__ (no al directori de treball): este fitxer viu a
-# 01_extraccio_i_neteja/, i "corpus/" és a l'arrel del repositori.
+# pipeline/01_extraccio_i_neteja/, i "corpus/" és a l'arrel del repositori.
 OUTPUT_DIR = str(Path(__file__).resolve().parent.parent.parent / "dades" / "avl" / "raw")
 
 # ─── Descàrrega amb Playwright ────────────────────────────────────────────────

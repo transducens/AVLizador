@@ -12,7 +12,7 @@ dialectalment marcada (el text no diu res sobre quin dialecte és -- no
 es pot calcular un percentatge sobre zero).
 
 ORIGEN (13/10/2026, vore `documentacio/hoja_de_ruta_ipd_y_proxima_fase.md`):
-`01_extraccio_i_neteja/estudi_dialectal.py` ja calculava una mètrica molt
+`pipeline/01_extraccio_i_neteja/estudi_dialectal.py` ja calculava una mètrica molt
 semblant (`ratio_occ`), pero contra dos llistes curades a mà d'una
 vuitantena de paraules cadascuna (`OCCIDENTAL_MARKERS`/`ORIENTAL_MARKERS`
 en eixe fitxer). Este mòdul fa el mateix càlcul pero contra l'índex de
@@ -407,7 +407,7 @@ def _llig_jsonl(path: Path) -> Iterator[dict]:
     """Llig `path` com a corpus de documents -- accepta DOS formats sense
     que calga dir quin és: JSONL (un objecte per linia, com
     `dades/avl/final/unified.jsonl`) o un JSON normal amb un array
-    d'objectes (com `03_seleccio_de_model/benchmark_corpus.json`)."""
+    d'objectes (com `pipeline/03_seleccio_de_model/benchmark_corpus.json`)."""
     contingut = path.read_text(encoding="utf-8").strip()
     if contingut.startswith("["):
         dades = json.loads(contingut)

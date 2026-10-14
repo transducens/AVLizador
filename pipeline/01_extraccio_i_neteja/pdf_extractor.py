@@ -8,8 +8,8 @@ INSTAL·LACIÓ:
     pip install pymupdf requests
 
 US (des de l'arrel del repositori):
-    python 01_extraccio_i_neteja/pdf_extractor.py --source 01_extraccio_i_neteja/fonts_pdf.txt
-    python 01_extraccio_i_neteja/pdf_extractor.py --url https://exemple.com/doc.pdf
+    python pipeline/01_extraccio_i_neteja/pdf_extractor.py --source pipeline/01_extraccio_i_neteja/fonts_pdf.txt
+    python pipeline/01_extraccio_i_neteja/pdf_extractor.py --url https://exemple.com/doc.pdf
 
 SORTIDA:
     dades/avl/pdf/raw/avl_pdfs.jsonl
@@ -46,7 +46,7 @@ HEADERS = {
 DELAY_MIN   = 5
 DELAY_MAX   = 10
 # Ancorat a __file__ (no al directori de treball): este fitxer viu a
-# 01_extraccio_i_neteja/, i "corpus/" és a l'arrel del repositori.
+# pipeline/01_extraccio_i_neteja/, i "corpus/" és a l'arrel del repositori.
 OUTPUT_DIR  = str(Path(__file__).resolve().parent.parent.parent / "dades" / "avl" / "pdf" / "raw")
 OUTPUT_FILE = "avl_pdfs.jsonl"
 MIN_TOKENS  = 50
