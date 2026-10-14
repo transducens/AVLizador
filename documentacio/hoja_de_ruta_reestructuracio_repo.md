@@ -99,24 +99,44 @@ retirados el 30/09/2026 según `val_cat/lexic.py`):
 - `fonts/palabras_val.json` — pendiente de revisar contenido antes de
   decidir (no se ha inspeccionado todavía)
 
-**Pendiente de decidir con el usuario**:
-- [ ] ¿Aplanar `lexic/font_mauricio/*` directamente a `lexic/*` (ya que
-      no quedará nada más dentro de `lexic/`), o mantener la subcarpeta
-      `font_mauricio/` como está?
-- [ ] `fonts/regles_cat_val.md` — ¿se mantiene o está duplicado con
-      `regles_dialectals_amb_evidencia.md`?
-- [ ] `regles_prompt/` (system_prompt.md, glossari_dinamic.md...) — ¿se
-      sigue usando de verdad desde `08_traduccio_corpus/postprocessat_llm/`,
-      o quedó obsoleto cuando se pasó a la "vía C"?
-- [ ] `metrica_puresa_dialectal.md` — ¿sigue vigente o ya está
-      reemplazado por el README del IPD (`09_index_puresa_dialectal/`)?
+**Ejecutado 14/10/2026** — respuestas del usuario y resultado:
+- [x] Aplanar `lexic/font_mauricio/*` → `lexic/*` (elegido). Hecho con
+      `git mv`, carpeta `font_mauricio/` eliminada.
+- [x] `fonts/regles_cat_val.md` → **eliminarlo, pero se encontró un
+      CONFLICTO REAL antes de hacerlo**: `pipeline/05_corpus_boe/analizar_corpus.py`
+      lo lee con ruta fija (`cargar_materiales()`, el núcleo del script
+      que genera `analitica_corpus.html`). Igual con
+      `lexic/palabras_traducidas.json` (cargado vía `_leer_json_materiales()`).
+      Avisado al usuario, decisión final: **mantener los 2 ficheros**, no
+      se borran — el resto de la limpieza se ejecuta igual.
+- [x] `regles_prompt/` → eliminada entera (confirmado sin uso real: la
+      única mención en todo el repo era un comentario, no una carga de
+      fichero; los 5 ficheros llevaban desde el 01/10 sin tocarse).
+- [x] `metrica_puresa_dialectal.md` → eliminado (superado por
+      `pipeline/09_index_puresa_dialectal/README.md`, ya implementado y validado).
 
-- [ ] Ejecutar la limpieza una vez confirmados los puntos pendientes.
-- [ ] Actualizar `traductor/sync_data.py` con las rutas nuevas si se
-      aplana `font_mauricio/`.
-- [ ] Verificar después: doctests completos + benchmark de 151 (las dos
-      direcciones) sin cambios — esta limpieza no debería tocar ningún
-      dato que el motor lee en caliente, solo las fuentes previas.
+**Borrado definitivo**: `lexic/apertium_368_val_cat.json`,
+`lexic/contrastius_paula_guerrero.json`, `lexic/lexico_fiable.json`,
+`fonts/apertium-cat.cat.dix`, `fonts/palabras_traducidas.txt`,
+`fonts/paralelos.txt`, `regles_prompt/` (carpeta entera),
+`metrica_puresa_dialectal.md`. **Se mantienen**: `fonts/regles_cat_val.md`,
+`fonts/palabras_val.json` (confirmado en uso por `analizar_corpus.py`),
+`lexic/palabras_traducidas.json` (ídem).
+
+**Efecto secundario aceptado**: `lexico_fiable.json` también lo carga
+`evalua_models.py` a nivel de módulo (`LEXIC_PATH`), pero
+`carrega_lexic()` ya maneja el fichero ausente con un aviso y estructuras
+vacías (no revienta) — solo degrada el modelo "regles" (baseline antiguo
+de solo substituciones, ya no es el que se usa de verdad). Confirmado sin
+impacto en `--model traductor`, que es el que importa.
+
+**Actualizado tras aplanar**: `traductor/sync_data.py` (`MAURICIO =
+LEXICO`) y `postprocessat_llm/identifica_ambigues.py` (mismo cambio), más
+las menciones de `font_mauricio/` en los README de `02_regles_dialectals/`
+y de `traductor/` (valencià/català y castellano).
+
+**Verificado después**: 536/536 doctests, val→cat 115/151, cat→val
+116/151 — sin cambios frente a antes de la limpieza.
 
 ## Resto de carpetas — directrices del usuario (pendiente, folder a folder)
 

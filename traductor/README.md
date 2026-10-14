@@ -40,7 +40,7 @@ Eixes regles cobrien més casos, però barrejaven dades de diverses fonts
 
 El mateix dia 30/09/2026, a la vesprada, es va reduir el traductor a
 **NOMÉS lookup exacte de diccionari, i NOMÉS amb dades de
-`pipeline/02_regles_dialectals/lexic/font_mauricio/`** (equip AVLizador) — cap
+`pipeline/02_regles_dialectals/lexic/`** (equip AVLizador) — cap
 regla de sufix, patró morfològic ni reconstrucció algorítmica, i cap font
 que no siga Mauricio.
 
@@ -63,7 +63,7 @@ afegir 2 regles de sufix (no llistes tancades) per als 3 patrons més
 productius i millor evidenciats: `accentuacio.py` (`-és→-ès`,
 `-éixer→-èixer`) i `incoatius.py` (`-ix→-eix`). No es va tornar arrere en
 la resta encara (pretèrit perfet, locucions, elisió automàtica general)
--- vore "Coses que ja no es cobrixen" a `font_mauricio/README.md`. Amb
+-- vore "Coses que ja no es cobrixen" a `lexic/README.md`. Amb
 això el benchmark va pujar a **28/150 (18,7%)** -- una millora xicoteta
 perquè la majoria dels casos d'estos 2 patrons ja estaven coberts pel
 diccionari d'accentuació.
@@ -166,7 +166,7 @@ a merèixer una regla.
 
 ## DECISIÓ D'ARQUITECTURA (05/10/2026): nou lèxic unificat, i conjugacions massives provades i revertides
 
-Mauricio va compartir 3 fitxers nous a `font_mauricio/`. Cada un es va
+Mauricio va compartir 3 fitxers nous a `lexic/`. Cada un es va
 avaluar per separat abans d'integrar-lo (mateix mètode de sempre:
 comparar contra les dades existents i el benchmark, no confiar a cegues
 en volum gran de dades noves).
@@ -627,7 +627,7 @@ context concret és, de veres, una atra categoria gramatical.
 `traductor/rules/*.py` mai llig `pipeline/02_regles_dialectals/lexic/` en temps
 d'execució -- només llig còpies pròpies dins de `traductor/data/` (perquè
 el paquet funcione de manera autònoma). Si edites un fitxer font de
-`font_mauricio/` directament, eixe canvi no arriba al motor fins que
+`lexic/` directament, eixe canvi no arriba al motor fins que
 sincronitzes:
 
 ```bash
@@ -651,7 +651,7 @@ tocar cap `.py`, és lookup de diccionari.
 1. Edita el fitxer font que toque (`lexico_general_limpio.json`,
    `conjugaciones_limpio.json`, `verbos_no_ambiguos.json`,
    `numerales_limpio.json`, `acentuacion_limpio.json`,
-   `posesivos_cat_val.json`) directament a `font_mauricio/`.
+   `posesivos_cat_val.json`) directament a `lexic/`.
 2. Corre `python -m traductor.sync_data` (vore dalt).
 3. Corre el benchmark (secció següent) per a confirmar que no hi ha
    regressió.

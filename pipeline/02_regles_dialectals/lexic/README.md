@@ -11,7 +11,7 @@ guarden ací sense modificar, tal com es van rebre, com a font d'evidència.
 externes (`apertium_368_val_cat.json`, `contrastius_paula_guerrero.json`,
 `lexico_fiable.json`) i totes les regles de sufix/patró morfològic
 (`demostratius.py`, `gentilicis.py`, `morfologia_verbal.py`, `perfet.py`,
-`locucions.py`, `elisio.py`). Estos 6 fitxers de `font_mauricio/` són ara
+`locucions.py`, `elisio.py`). Estos 6 fitxers de `lexic/` són ara
 **l'ÚNICA font de dades del traductor**. Vore `traductor/README.md`,
 secció "DECISIÓ D'ARQUITECTURA", per l'impacte mesurat en el benchmark
 (89/150 → 27/150 exactes) i el raonament complet.
@@ -89,7 +89,7 @@ diccionari mai pot cobrir un patró obert i productiu.
 **Recuperat el mateix dia, encara més tard**: `este/esta/estos/estes`,
 `eixe/eixa/eixos/eixes`, `aqueix/aqueixa/aqueixos/aqueixes` (tots cap a
 `aquest`) i el neutre `açò→això` van tornar a `traductor/rules/demostratius.py`,
-sourced de `demostratius_avl.json` -- cap fitxer de `font_mauricio/` els
+sourced de `demostratius_avl.json` -- cap fitxer de `lexic/` els
 llista (són un paradigma gramatical tancat, no lèxic obert), però
 retirar-los havia sigut un error: eren el patró MÉS FREQÜENT del corpus,
 i el benchmark ho va confirmar de seguida (28/150 → 83/150 exactes en

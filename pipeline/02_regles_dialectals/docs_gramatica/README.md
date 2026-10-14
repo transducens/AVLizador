@@ -3,7 +3,7 @@
 Les dos gramàtiques normatives completes, en text pla, que es fan servir
 com a font d'autoritat per a derivar regles dialectals morfològiques
 (més enllà del lèxic diferencial d'Apertium/Mauricio que ja cobrixen
-`lexic/` i `font_mauricio/`). Mentre `regles_dialectals_amb_evidencia.md`
+`lexic/`). Mentre `regles_dialectals_amb_evidencia.md`
 i `lexic/` documenten diferències **lèxiques** confirmades paraula a
 paraula, esta carpeta documenta diferències **gramaticals** (articles,
 demostratius, pronoms febles, preposicions...) citant el paràgraf exacte

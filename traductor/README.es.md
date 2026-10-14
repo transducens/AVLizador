@@ -40,7 +40,7 @@ fuentes (Apertium, Paula Guerrero, tablas escritas a mano) con la fuente
 de Mauricio.
 
 Ese mismo día, por la tarde, se redujo el traductor a **SOLO lookup exacto
-de diccionario, y SOLO con datos de `pipeline/02_regles_dialectals/lexic/font_mauricio/`**
+de diccionario, y SOLO con datos de `pipeline/02_regles_dialectals/lexic/`**
 (equipo AVLizador) — ninguna regla de sufijo, patrón morfológico ni
 reconstrucción algorítmica, y ninguna fuente que no sea Mauricio.
 
@@ -64,7 +64,7 @@ patrones más productivos y mejor evidenciados: `accentuacio.py`
 (`-és→-ès`, `-éixer→-èixer`) e `incoatius.py` (`-ix→-eix`). No se dio
 marcha atrás en el resto todavía (pretérito perfecto, locuciones, elisión
 automática general) -- ver "Cosas que ya no se cubren" en
-`font_mauricio/README.md`. Con esto el benchmark subió a **28/150
+`lexic/README.md`. Con esto el benchmark subió a **28/150
 (18,7%)** -- una mejora pequeña porque la mayoría de los casos de estos 2
 patrones ya estaban cubiertos por el diccionario de acentuación.
 
@@ -170,7 +170,7 @@ suficiente seguridad -- como para merecer una regla.
 
 ## DECISIÓN DE ARQUITECTURA (05/10/2026): nuevo léxico unificado, y conjugaciones masivas probadas y revertidas
 
-Mauricio compartió 3 ficheros nuevos en `font_mauricio/`. Cada uno se
+Mauricio compartió 3 ficheros nuevos en `lexic/`. Cada uno se
 evaluó por separado antes de integrarlo (mismo método de siempre:
 comparar contra los datos existentes y el benchmark, no confiar a ciegas
 en un volumen grande de datos nuevos).
@@ -438,7 +438,7 @@ palabra del texto nunca se detecta.
 `traductor/rules/*.py` nunca lee `pipeline/02_regles_dialectals/lexic/` en
 tiempo de ejecución -- solo lee copias propias dentro de `traductor/data/`
 (para que el paquete funcione de forma autónoma). Si editas un fichero
-fuente de `font_mauricio/` directamente, ese cambio no llega al motor
+fuente de `lexic/` directamente, ese cambio no llega al motor
 hasta que sincronizas:
 
 ```bash
@@ -462,7 +462,7 @@ hace falta tocar ningún `.py`, es lookup de diccionario.
 1. Edita el fichero fuente que toque (`lexico_general_limpio.json`,
    `conjugaciones_limpio.json`, `verbos_no_ambiguos.json`,
    `numerales_limpio.json`, `acentuacion_limpio.json`,
-   `posesivos_cat_val.json`) directamente en `font_mauricio/`.
+   `posesivos_cat_val.json`) directamente en `lexic/`.
 2. Corre `python -m traductor.sync_data` (ver arriba).
 3. Corre el benchmark (sección siguiente) para confirmar que no hay
    regresión.

@@ -1,7 +1,9 @@
 """
 sync_data.py -- Sincronitza les còpies de `traductor/data/` amb els
-fitxers font reals de `pipeline/02_regles_dialectals/lexic/font_mauricio/`
-(equip AVLizador). Des del 30/09/2026 el traductor és pur lookup de
+fitxers font reals de `pipeline/02_regles_dialectals/lexic/` (equip
+AVLizador; abans dins d'una subcarpeta `font_mauricio/`, aplanada el
+14/10/2026 en no quedar-hi cap altra font al costat). Des del 30/09/2026
+el traductor és pur lookup de
 diccionari de Mauricio -- ja no hi ha fonts Apertium/Paula Guerrero.
 
 Per què cal esta sincronització manual: `traductor/rules/*.py` mai llig
@@ -49,7 +51,7 @@ from typing import Callable
 
 ARREL = Path(__file__).resolve().parent.parent
 LEXICO = ARREL / "pipeline" / "02_regles_dialectals" / "lexic"
-MAURICIO = LEXICO / "font_mauricio"
+MAURICIO = LEXICO  # font_mauricio/ aplanada dins de lexic/ el 14/10/2026
 DATA = Path(__file__).resolve().parent / "data"
 
 def _marca_ambigues_dins_del_mateix_fitxer(dades: list[dict]) -> list[dict]:

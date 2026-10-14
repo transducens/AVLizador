@@ -701,7 +701,7 @@ bugs trobats en auditar el corpus generat amb este lèxic.
 
 Mauricio (company d'equip) va compartir un diccionari català-valencià en
 4 fitxers, basat majoritàriament en l'apertium bilingüe català-castellà,
-guardats a `lexic/font_mauricio/` (vore el README d'eixa carpeta per al
+guardats a `lexic/` (vore el README d'eixa carpeta per al
 detall exacte de què es va incorporar i què no, fitxer per fitxer). Resum:
 
 - **Conjugacions** (969 formes, 111 verbs): la font més valuosa —

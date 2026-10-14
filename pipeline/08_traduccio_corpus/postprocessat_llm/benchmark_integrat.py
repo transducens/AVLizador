@@ -343,7 +343,7 @@ def main() -> None:
     cp.OLLAMA_URL = args.ollama_url
     cp.VERBOSE = args.debug
 
-    print(f"Calculant formes ambigües des de font_mauricio...")
+    print(f"Calculant formes ambigües des de lexic/...")
     ambiguitats = calcula_ambiguitats()
     guia = cp.carrega_guia(args.guia)
     if args.pos_filter:

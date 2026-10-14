@@ -69,7 +69,7 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 _AVLIZADOR_ROOT_ENV = os.environ.get("AVLIZADOR_ROOT")
 ARREL = Path(_AVLIZADOR_ROOT_ENV) if _AVLIZADOR_ROOT_ENV else Path(__file__).resolve().parent.parent.parent.parent
 _DIR_02 = ARREL / "02_regles_dialectals" if _AVLIZADOR_ROOT_ENV else ARREL / "pipeline" / "02_regles_dialectals"
-MAURICIO = _DIR_02 / "lexic" / "font_mauricio"
+MAURICIO = _DIR_02 / "lexic"  # font_mauricio/ aplanada dins de lexic/ el 14/10/2026
 CORPUS_PATH = ARREL / "dades" / "boe_net" / "corpus_entrenamiento_net.jsonl"
 SALIDA_AMBIGUITATS = Path(__file__).resolve().parent / "ambiguitats_indicatiu_subjuntiu.json"
 SALIDA_MOSTRA = Path(__file__).resolve().parent / "mostra_casos_ambigues.json"
