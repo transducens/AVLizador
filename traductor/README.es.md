@@ -278,6 +278,110 @@ lookup tal cual). No ha cambiado el resultado del benchmark (sigue en
 89/150) porque ninguno de estos 50 verbos aparece ahí, pero quedan
 disponibles para el corpus real.
 
+## DECISIÓN DE ARQUITECTURA (07/10/2026): filtro POS opcional (spaCy) dentro de `ConjugacionsDictRule`
+
+Se pensaba innecesario por intuición (el motor funciona sin spaCy desde
+el principio), pero medido contra el benchmark resultó SÍ hacer falta:
+formas verbales raras de `conjugacions_dialectals.json` coincidían con
+palabras MUY frecuentes de otra categoría gramatical ("persones" →
+"personis" del verbo "personar", "pares" → "paris" de "parar",
+"projectes" → "projectis" de "projectar", "pobles" → "poblis" de
+"poblar"). Ninguno de estos casos lo detecta
+`_marca_ambigues_dins_del_mateix_fitxer` porque cada uno solo tiene una
+entrada en su fichero fuente — la colisión es con una palabra de OTRA
+categoría que ningún diccionario diferencial lista (los diccionarios de
+Mauricio son diferenciales: solo listan pares que cambian, nunca
+palabras que se quedan igual). Confirmado con spaCy (`ca_core_news_sm`):
+etiqueta correctamente estos 5 casos como NOUN en su frase real, sin
+romper ningún caso ya conocido. **Resultado, medido**: 89/151 (58,9%) →
+**99/151 (65,6%)**, BLEU 95,97, chrF 98,61.
+
+## Análisis de fallos residuales (07/10/2026) — resumen
+
+Con el filtro POS ya aplicado, el benchmark subió a 100/151 (66,2%)
+tras una corrección adicional. Categorización completa de los 51 fallos
+restantes (detalle caso por caso, con cada identificador RC, en la
+versión catalana de este documento):
+
+- **Colisión de modo/tiempo verbal en personas distintas de 1ª
+  singular** (24 de 51, la categoría más grande): mismo mecanismo que
+  arriba, pero en 3ª persona plural — aquí el filtro POS no sirve porque
+  las dos candidatas ya son VERBO para spaCy. Aparcado explícitamente:
+  haría falta una lista evidenciada caso a caso, como ya existe para 1ª
+  persona.
+- **Ambigüedad 1ª persona singular indicativo/subjuntivo** (4 frases,
+  residual esperado, no es un bug): es exactamente el fenómeno que
+  `pipeline/08_traduccio_corpus/postprocessat_llm/` ataca con
+  postprocesado LLM — el motor, por diseño, deja estas formas sin tocar.
+- **Concordancia "dos"/"dues" incompleta** (resuelta en gran parte,
+  08/10/2026): añadida una segunda capa con `Token.gender` (spaCy) sobre
+  el sustantivo/adjetivo siguiente cuando no hay marcador explícito
+  delante. +3 frases exactas.
+- **Preposición "en"/"a"** (resuelta el 08/10/2026, **retirada del todo
+  el 14/10/2026** — ver "Actualización 13-14/10/2026" más abajo): 5
+  entradas exactas en una lista cerrada que, medido después con más
+  rigor, no generalizaba a ninguna frase nueva.
+- **Concordancia de género tras sustitución léxica** (resuelta,
+  08/10/2026): +1 frase exacta.
+- **Huecos léxicos/morfológicos puntuales sin patrón común**: aparcados
+  explícitamente, incluye artefactos puros del corpus (doble espacio,
+  ortografía arcaica citada literalmente).
+- **Hallazgo nuevo**: "o siga" (RC067) se protegía a propósito como
+  locución fija, pero la referencia SÍ la traduce a "o sigui" en ese
+  caso concreto — contradicción entre el criterio conservador aplicado
+  y el corpus real. **Arreglado el 13/10/2026** (ver abajo): la
+  protección asumía que era una locución CONGELADA idéntica en los dos
+  dialectos — falso, medido contra el único caso real. Protección
+  retirada, 119→120/151.
+
+## Actualización (13-14/10/2026): "o siga" arreglado, `preposicions_locucions.py` retirada, vía C en producción
+
+Resumen de lo ocurrido desde el análisis de fallos de arriba
+(07/10/2026) hasta hoy — detalle completo de cada punto en
+`documentacio/metodologia_i_resultats.md`, secciones 11-17.
+
+**14/10/2026, `preposicions_locucions.py` retirada del todo**: a
+petición del usuario ("eso no es un traductor, solo hace que funcione
+nuestro benchmark"), se investigó si la regla C1 de
+`pipeline/02_regles_dialectals/docs_gramatica/guia_traduccio_dialectal.md`
+("en"+artículo definido en valenciano ↔ "a"+artículo definido en catalán,
+fuente normativa GEIEC/GNV) podía sustituir las 5 entradas exactas por
+una regla de verdad general. Implementada sin excepciones y medida
+contra los dos benchmarks disponibles (el de 151 y el dataset público
+`gplsi`, 1.958 frases): **regresión grave en las dos direcciones**
+(120→76/151, 123→107/151) — en registro formal, "en + artículo" se usa
+sobre todo en sentido ABSTRACTO ("en el Congrés", "en el model
+lingüístic"), no de lugar físico, y la regla no puede distinguir los dos
+sentidos sin entender el significado. Revertido, y medido limpio antes
+de descartarlo del todo: de 136 frases reales con "en + artículo" en
+valenciano (53 del benchmark + 83 de gplsi), solo 2 (1,5%) convierten de
+verdad a "a" en el catalán de referencia — el fenómeno normativo es real
+pero casi no se manifiesta en este registro. Se retira el módulo entero,
+sin dejar ninguna regla de reemplazo: **120→115/151**, 536/536 doctests.
+
+**La dirección inversa (`cat_val/`) y la vía C (postprocesado LLM) ya
+existen y están maduras**, pero no se documentan en detalle en este
+fichero porque tienen su propio README (`rules/cat_val/README.md`) y su
+propia carpeta
+(`pipeline/08_traduccio_corpus/postprocessat_llm/`) respectivamente. En
+resumen: `cat_val/` es una estructura simétrica completa (116/151 hoy), y
+la vía C (clasificar entre 2 candidatos ya conocidos, nunca generar
+texto nuevo) es el mecanismo que da el récord **129/151 (85,4%)
+motor+LLM con `qwen3:8b`**, confirmado en Abaco — cifra anterior a la
+limpieza de hoy, pendiente de reconfirmar.
+
+**Índice de Pureza Dialectal**: métrica nueva e independiente
+(`pipeline/09_index_puresa_dialectal/ipd.py`) que reutiliza el mismo
+índice de diccionario que este motor, pero para medir pureza dialectal
+de cualquier texto, no para traducir. No toca ni depende de ningún
+fichero de esta carpeta.
+
+**Reestructuración del repositorio (14/10/2026)**: las carpetas
+numeradas mencionadas en esta documentación (`02_regles_dialectals/`,
+`03_seleccio_de_model/`, etc.) viven ahora dentro de `pipeline/` — las
+rutas de este README ya están actualizadas, pero cualquier ruta vista en
+capturas o logs antiguos sin ese prefijo es de antes de esta fecha.
+
 ## Arquitectura
 
 Pipeline secuencial de capas sobre una lista de `Token`, no sustituciones

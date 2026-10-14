@@ -421,6 +421,13 @@ concreta -- implementat com 5 entrades EXACTES en una llista tancada,
 nova capa al final del pipeline). **+5 frases exactes, cero
 regressions.**
 
+> **Retirada el 14/10/2026** (vore secció "Actualització 13-14/10/2026"
+> més avall): mesurant-ho de veres, estes 5 entrades només casaven amb
+> el text EXACTE d'eixes 5 frases -- zero cobertura sobre qualsevol frase
+> nova, a diferència de la resta de "llistes tancades" d'este motor
+> (numerals, demostratius...), que SÍ són paradigmes lingüísticament
+> tancats de veres. El motor torna a tindre 9 capes, no 10.
+
 **E -- Concordança de gènere tras substitució léxica (RESOLTA, 08/10/2026)**:
 RC044 "la dacsa"→"blat de moro" donava "la blat de moro". Implementat el
 disseny ja escrit: `canvi_genere_lexic_avl.json` (llista curada a mà de
@@ -448,6 +455,63 @@ tradueix a "o sigui" en este cas concret -- contradicció entre el
 criteri conservador aplicat i el que fa de veres el corpus de referència
 en, almenys, este exemple. No tocat avui, queda apuntat per si es decidix
 revisar eixa protecció.
+
+> **Arreglat el 13/10/2026** (vore secció "Actualització 13-14/10/2026"
+> més avall): la protecció assumia que "o siga" era una locució CONGELADA
+> idèntica als dos dialectes -- fals, mesurat contra l'únic cas real.
+> Protecció retirada, 119→120/151.
+
+## Actualització (13-14/10/2026): "o siga" arreglat, `preposicions_locucions.py` retirada, vía C en producció
+
+Resum del que ha passat des de l'anàlisi de fallades de dalt (07/10/2026)
+fins hui -- detall complet de cada punt a
+`documentacio/metodologia_i_resultats.md`, seccions 11-17.
+
+**13/10/2026, "o siga"/"o sigui"**: ja documentat dalt. 119→120/151.
+
+**14/10/2026, `preposicions_locucions.py` retirada del tot**: a petició
+de l'usuari ("això no és un traductor, nomes fa que funcione el nostre
+benchmark"), es va investigar si la regla C1 de
+`pipeline/02_regles_dialectals/docs_gramatica/guia_traduccio_dialectal.md`
+("en"+article definit en valencià ↔ "a"+article definit en català, font
+normativa GEIEC/GNV) podia substituir les 5 entrades exactes per una
+regla de veres general. Implementada sense excepcions i mesurada contra
+els dos benchmarks disponibles (el de 151 i el dataset públic `gplsi`,
+1.958 frases): **regressió greu en les dos direccions** (120→76/151,
+123→107/151) -- en registre formal, "en + article" s'usa sobretot en
+sentit ABSTRACTE ("en el Congrés", "en el model lingüístic"), no de lloc
+físic, i la regla no pot distingir els dos sentits sense entendre el
+significat. Revertit, i mesurat net abans de descartar del tot: de 136
+frases reals amb "en + article" en valencià (53 del benchmark + 83 de
+gplsi), només 2 (1,5%) convertixen de veres a "a" en el català de
+referència -- el fenomen normatiu és real pero quasi no es manifesta en
+este registre. Es retira el mòdul sencer, sense deixar cap regla de
+reemplaç: **120→115/151**, 536/536 doctests. Els números "oficials" de
+més amunt en este README (119/150, 100/151, etc.) segueixen tal qual com
+a registre històric de cada pas -- no s'han reescrit un a un, només
+s'avisa ací i en les notes puntuals de dalt.
+
+**Direcció inversa (`cat_val/`) i vía C (postprocessat LLM) ja existixen
+i estan madures**, pero no es documenten en detall en este fitxer perquè
+tenen el seu propi README (`rules/cat_val/README.md`) i la seua pròpia
+carpeta (`pipeline/08_traduccio_corpus/postprocessat_llm/`)
+respectivament. En resum: `cat_val/` és una estructura simètrica completa
+(116/151 hui), i la vía C (classificació entre 2 candidats coneguts,
+mai generació de text nou) és el mecanisme que dona el rècord
+**129/151 (85,4%) motor+LLM amb `qwen3:8b`**, confirmat en Abaco -- xifra
+anterior a la neteja d'avui, pendent de reconfirmar.
+
+**Índex de Puresa Dialectal**: mètrica nova i independent
+(`pipeline/09_index_puresa_dialectal/ipd.py`) que reutilitza el mateix
+índex de diccionari que este motor, pero per a mesurar puresa dialectal
+d'un text qualsevol, no per a traduir. No toca ni depén de cap fitxer
+d'esta carpeta.
+
+**Reestructuració del repositori (14/10/2026)**: les carpetes numerades
+d'esta documentació (`02_regles_dialectals/`, `03_seleccio_de_model/`,
+etc.) viuen ara dins de `pipeline/` -- les rutes d'este README ja estan
+actualitzades, pero qualsevol ruta vista en captures/logs antics sense
+eixe prefix és d'abans d'esta data.
 
 ## Arquitectura
 
