@@ -5,7 +5,7 @@ Parteix del corpus ja depurat i verificat com a valencià pur
 (``dades/avl/final/dialectal/corpus_occidental_net.jsonl``, generat per
 ``estudi_dialectal.py``) i genera, frase a frase, la seua traducció al
 català oriental amb el model que millor va puntuar al benchmark de
-``03_seleccio_de_model/evalua_models.py`` (qwen2.5:14b, BLEU 84.52 / chrF 92.34 /
+``pipeline/03_seleccio_de_model/evalua_models.py`` (qwen2.5:14b, BLEU 84.52 / chrF 92.34 /
 chrF++ 91.84).
 
 Reutilitza D'EVALUA_MODELS.PY, sense duplicar-los, el system prompt, el

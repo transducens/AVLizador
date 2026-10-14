@@ -6,7 +6,7 @@
 # generación completa.
 #
 # Modelos comparados -- los 3 que salieron viables en
-# 03_seleccio_de_model/comparativa_salamandraTA_gemma/ (SalamandraTA descartado
+# pipeline/03_seleccio_de_model/comparativa_salamandraTA_gemma/ (SalamandraTA descartado
 # del todo, ver final/metodologia_i_resultats.md sección 10):
 #   GPU 0: qwen2.5:14b                      (el actual, mejor en el benchmark)
 #   GPU 1: gemma3:12b                       (casi empatado en el benchmark, más barato)

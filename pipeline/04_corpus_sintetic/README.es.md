@@ -49,7 +49,7 @@ Parámetros más relevantes (`--help` para la lista completa):
 | Parámetro | Por defecto | Para qué sirve |
 |---|---|---|
 | `--model` | `qwen2.5:14b` | Modelo de Ollama |
-| `--ollama-url` | `http://localhost:11434` | URL del servidor Ollama (cámbiala para apuntar a un Ollama remoto, p.ej. un nodo GPU — ver `slurm/README.md`) |
+| `--ollama-url` | `http://localhost:11434` | URL del servidor Ollama (cámbiala para apuntar a un Ollama remoto, p.ej. un nodo GPU — ver `slurm/` abajo) |
 | `--ollama-timeout` | 300 | Segundos de espera por petición |
 | `--max-caracters` | 280 | Frases más largas se descartan (evita cortes en la respuesta) |
 | `--sample N` / `--limit N` | — | Muestra aleatoria / las N primeras, mutuamente excluyentes |
@@ -82,12 +82,15 @@ CPU (unos 9-10 GB de VRAM), lo que convertiría las ~3 semanas estimadas
 arriba en el orden de 1-2 días. `--ollama-url` permite apuntar a un Ollama
 que corre en otro sitio. Ya hay un script preparado:
 
-- `slurm/` — scripts `sbatch` para el clúster GPU de la universidad: túnel
-  SSH para probarlo, un job autónomo con 1 GPU, y otro que reparte el
-  corpus entre **todas las GPU libres a la vez** (`--num-shards`) si el
-  clúster tiene varias en la misma máquina — con 8 GPU libres, esto
-  puede convertir 1-2 días en unas pocas horas. Detalles completos en su
-  README.
+- `slurm/` — scripts `sbatch` para el clúster GPU de la universidad: un
+  job autónomo con 1 GPU (`generar_corpus.sh`), otro que reparte el
+  corpus entre **todas las GPU libres a la vez**
+  (`generar_corpus_paralelo.sh`, `--num-shards`) si el clúster tiene
+  varias en la misma máquina — con 8 GPU libres, esto puede convertir
+  1-2 días en unas pocas horas — y un tercero para comparar modelos
+  antes de lanzar la generación completa (`generar_muestra_comparativa.sh`).
+  No hay un `README.md` aparte dentro de `slurm/`: cada script explica
+  el uso completo en su propio comentario de cabecera.
 
 ## Salida
 
