@@ -1,10 +1,20 @@
-# Corpus sintético paralelo valencià → català (fuente: AVL) — metodología y resultados
+# AVLizador: metodología y resultados completos
 
-Este documento resume todo el proceso: de dónde sale el texto, cómo se
-decidieron las reglas dialectales, qué modelo se usó y por qué, qué
-problemas se encontraron por el camino y cómo se corrigieron, y el estado
-final del corpus. Pensado para quien reciba este repositorio sin más
-contexto que el propio código.
+Este documento resume todo el proceso del proyecto, de principio a fin:
+de dónde sale el texto fuente, cómo se decidieron las reglas dialectales,
+qué modelos se usaron y por qué, cómo se construyó el motor de
+traducción determinista y su dirección inversa, la capa de postprocesado
+con modelo de lenguaje, la métrica propia de pureza dialectal, la
+validación contra corpus reales, y la reorganización final del
+repositorio — qué problemas se encontraron por el camino y cómo se
+corrigieron. Pensado para quien reciba este repositorio sin más contexto
+que el propio código.
+
+**Secciones 1-10** (hasta el 22/09/2026): construcción del corpus
+sintético a partir del scraping de la AVL — etapas 1-4 del proyecto.
+**Secciones 11 en adelante** (a partir del 02/10/2026): el motor de
+reglas deterministas (`traductor/`), que ha sido el foco real de trabajo
+desde entonces, en las dos direcciones, más su validación.
 
 ## 1. Origen del texto (el lado "valenciano")
 
@@ -488,3 +498,357 @@ Ninguno de estos problemas era del modelo en sí — todos eran de encaje
 entre versiones de software y las GPUs concretas de este clúster. Vale la
 pena dejarlo anotado por si se repite el ejercicio con otro modelo servido
 por vLLM en el mismo nodo.
+
+## 11. El motor de reglas deterministas (`traductor/`)
+
+Las secciones 1-10 cubren las etapas 1-4 (scraping, reglas, selección de
+modelo, corpus sintético), cerradas a finales de septiembre. Desde
+entonces el foco real del proyecto, durante semanas, ha sido `traductor/`
+— un paquete Python independiente, sin prefijo numérico porque no es una
+etapa de un solo uso sino el producto que las demás etapas alimentan.
+
+### Por qué un motor de reglas, no solo un LLM
+
+La sección 6 ya documentó el problema: un LLM que reescribe la frase
+entera "alucina" — introduce errores léxicos sin relación con ninguna
+regla dialectal, indetectables por verificación automática. Un motor de
+reglas deterministas no tiene ese problema por diseño: si no reconoce una
+palabra o construcción, la deja exactamente igual en vez de arriesgarse a
+inventar algo. El coste es que no resuelve nada que no esté en sus datos
+ni en sus reglas — de ahí que, más adelante (sección 13), se añada un LLM
+otra vez, pero solo para los puntos muy concretos donde el motor decide
+expresamente no actuar, nunca para reescribir la frase.
+
+### Arquitectura
+
+El motor tokeniza el texto, marca los nombres propios (para no tocarlos
+nunca) y, si spaCy está instalado, etiqueta cada token con su categoría
+gramatical (capa opcional: sin spaCy el motor funciona igual, solo pierde
+algunas protecciones finas). Después encadena 9 capas fijas, cada una
+`.apply()` sobre los tokens, saltando cualquiera ya marcado por una capa
+anterior:
+
+1. `lexic` — lookup directo de léxico general y acentuación
+2. `conjugacions_dict` — lookup directo de formas verbales conjugadas
+3. `possessius` — lookup directo de posesivos
+4. `numerals` — lookup directo de numerales
+5. `concordanca_dos_dues` — concordancia de género tras un marcador explícito o, en su defecto, el género que da spaCy del sustantivo siguiente
+6. `relatiu_on` — "a on"/"on" como relativo locativo
+7. `demostratius` — paradigma demostrativo (este/estos/aquest/aquests...)
+8. `accentuacio` — patrón de sufijo productivo (-és/-ès)
+9. `incoatius` — patrón de sufijo productivo (-ix/-eix)
+
+Todos los datos vienen de `traductor/data/*.json`, copias propias
+sincronizadas desde `pipeline/02_regles_dialectals/lexic/` con
+`traductor/sync_data.py` — `traductor/` nunca lee esa carpeta en tiempo
+de ejecución, solo sus propias copias, para poder funcionar como módulo
+autónomo.
+
+### Evolución y hallazgos reales, valenciano → catalán
+
+El motor se redujo el 30/09/2026 a puro lookup de diccionario (sin
+reconstrucción morfológica propia), basado casi enteramente en un
+diccionario diferencial de ~53.000 pares aportado por un colaborador del
+equipo ("Mauricio"): 1.471 de léxico general más ~52.000 formas verbales
+conjugadas, además de demostrativos/posesivos/numerales. A partir de ahí,
+cada mejora se midió contra un benchmark curado de 151 frases
+(`pipeline/03_seleccio_de_model/benchmark_corpus.json`), nunca solo con
+los tests automáticos (`doctests`) — el proyecto ha tenido regresiones
+reales que pasaban con los doctests en verde.
+
+Progreso medido: 92/151 → 119/151 (cuatro confirmaciones independientes,
+local y en el clúster) → 120/151 al corregir un bug real ("o siga" se
+trataba como locución congelada idéntica en los dos dialectos; medido
+contra el único caso real del benchmark, es falso — es un par dialectal
+normal) → **115/151 hoy**, tras retirar una regla que solo acertaba en
+las frases exactas del benchmark sin generalizar a ninguna frase nueva
+(detalle en la sección 16).
+
+**Motor + postprocesado con LLM (sección 13): récord de 129/151 (85,4%),
+BLEU 98,64, chrF 99,55**, confirmado en el clúster de la universidad.
+
+### Catálogo de los fallos que quedan
+
+El catálogo completo y categorizado de los fallos residuales de
+val→cat vive en `traductor/README.md`, sección "ANÀLISI DE FALLADES
+RESIDUALS" — la mayoría son casos donde una misma grafía valenciana
+cubre dos formas catalanas distintas (indicativo/subjuntivo en 3ª
+plural, 9.220 de las ~53.000 formas del diccionario) y el motor,
+siguiendo la misma disciplina de "no generalizar sin evidencia", prefiere
+dejarlos sin tocar antes que arriesgarse a acertar por casualidad.
+
+## 12. La dirección inversa: catalán → valenciano
+
+A partir del 08/10/2026 se construyó desde cero una segunda dirección,
+`traductor/rules/cat_val/`, simétrica a la original en estructura (11
+ficheros, mismo nombre de módulo con sufijo `Invers`) pero no en
+contenido — cada regla se midió contra el benchmark invertido
+(catalán como entrada, valenciano como referencia) desde evidencia
+propia, nunca asumiendo que lo que valía para una dirección valía para la
+otra.
+
+### El hallazgo estructural más importante
+
+Los dos problemas más grandes de val→cat (homógrafos verbales raros
+colisionando con sustantivos comunes, y la colisión indicativo/subjuntivo
+de 3ª plural) son **estructuralmente asimétricos**: de 50.526 formas
+catalanas únicas en el diccionario de conjugaciones, solo 346 (0,68%)
+tienen más de un candidato valenciano real — frente al 20% de formas
+valencianas problemáticas en la dirección original. La razón es simple:
+el catalán de entrada siempre distingue por escrito lo que el valenciano
+funde en una sola grafía (p. ej. "creuen" indicativo / "creuin"
+subjuntiu), así que el modo verbal "ya viene resuelto" por cómo está
+escrito el catalán — no hace falta ningún mecanismo equivalente a la
+protección que sí hace falta en val→cat.
+
+### "aquest", la ambigüedad real que sí existe en esta dirección
+
+El catalán oriental contemporáneo ha colapsado un sistema demostrativo de
+tres grados a dos: "aquest" cubre tanto el valenciano "este" (1r grado)
+como "eixe" (2n grado). Esto es una ambigüedad genuina de proximidad
+discursiva, no gramatical — ninguna señal del texto (ni categoría
+gramatical, ni género) la resuelve por sí sola. Medido alineando las 151
+frases palabra a palabra: de 52 apariciones reales donde "aquest*"
+cambia de verdad, 40 van a "este" y 12 a "eixe" (~77%/23%). El motor
+aplica "este" por defecto — un valor medido, no una suposición — con
+ese 23% de error conocido y aceptado. Es, con diferencia, el bucket más
+grande de fallos residuales de esta dirección.
+
+### Progreso medido
+
+92/151 → 118/151 (Fase 2: reconstrucción del paradigma demostrativo,
+`relatiu_on`/`incoatius` invertidos, léxico multi-palabra catalán,
+exclusión de "ensenyament" del léxico general por registro) → 123/151
+(con dos ediciones del benchmark fuente que tunearon la referencia para
+coincidir con la salida del motor en ese momento — ver nota de
+transparencia en la sección 16) → **116/151 hoy**, tras la misma
+retirada de reglas sin generalizar que afectó a val→cat.
+
+## 13. Postprocesado con modelo de lenguaje ("vía C")
+
+### El problema que el motor deja sin resolver a propósito
+
+Cada vez que se ha intentado una heurística automática amplia en este
+proyecto (escaneo automático de género, la distinción "per"/"per a" por
+sufijo) el resultado ha sido peor que no tocar nada. En vez de forzar al
+motor a adivinar, la decisión de arquitectura (02/10/2026) fue dividir
+el problema en dos: el motor traduce y, de paso, deja sin tocar
+expresamente los puntos donde no tiene confianza suficiente; un LLM
+revisa *solo* esos puntos, con el contexto de la frase — nunca la frase
+entera, que es exactamente lo que ya hacen (y por lo que alucinan) las
+etapas 3-4 con el corpus sintético.
+
+### El primer caso probado, y las tres formas de usar el LLM comparadas
+
+El caso elegido para el primer experimento (06/10/2026): la ambigüedad
+de presente indicativo/subjuntivo de 1ª persona singular en valenciano
+("plantege" → "plantejo" indicativo / "plantegi" subjuntiu), 3.004 formas
+candidatas identificadas automáticamente desde el diccionario de origen.
+Se compararon tres formas de usar el LLM sobre el mismo caso:
+
+| Vía | Qué hace el LLM | Riesgo principal |
+|---|---|---|
+| A — frase entera | Traduce toda la frase desde cero | Puede alterar partes que ya estaban bien |
+| B — solo la palabra | Traduce solo la palabra marcada, con contexto | Puede "inventar" una forma que no es ninguno de los dos candidatos conocidos |
+| C — clasificación | Solo clasifica indicativo/subjuntivo; la forma final sale de una tabla ya conocida | Ninguno — nunca genera texto nuevo |
+
+Resultado sobre 17 frases reales del BOE, dos modelos:
+
+| Vía | qwen2.5:14b | qwen3:8b |
+|---|---|---|
+| A | 5/17 (29%) | 6/17 (35%) |
+| B | 11/17 (65%) | 10/17 (59%) |
+| **C** | **14/17 (82%)** | **13/17 (76%)** |
+
+La vía C gana con margen en los dos modelos, y además es la más rápida
+con diferencia (entre 7 y 50 veces más rápida que la A, porque solo
+genera una palabra de salida en vez de regenerar la frase o la forma
+catalana completa) — la decisión de arquitectura queda reforzada desde
+dos ángulos independientes, precisión y coste, no solo uno.
+
+### Integración real sobre el benchmark completo
+
+Un primer intento de integrar la detección sin ningún filtro adicional
+**empeoró** el benchmark (89/150 → 78/150): de 28 palabras detectadas
+como candidatas, solo 2 eran verbos ambiguos de verdad; las otras 26 eran
+sustantivos/preposiciones homógrafas que el motor ya dejaba
+correctamente sin tocar, y que el LLM, obligado a elegir entre
+indicativo/subjuntivo, convertía en verbos inventados. Corregido
+añadiendo una tercera respuesta explícita ("ninguno de los dos") cuando
+la palabra marcada no funciona como el verbo ambiguo en ese contexto
+concreto — verificado sin excepción en 6 combinaciones de modelo × vía
+sobre el benchmark completo tras la corrección.
+
+### Estado en producción (14/10/2026)
+
+La integración final (`pipeline/08_traduccio_corpus/postprocessat_llm/benchmark_integrat.py`)
+es un script envoltorio que replica las 9 reglas por fuera de
+`traductor/`, no un cambio dentro de la clase `Token` del motor como se
+planteaba originalmente — un camino más sencillo y de menos riesgo que
+se acabó eligiendo en la práctica. **Récord actual: `qwen3:8b` + vía C,
+129/151 (85,4%)** en val→cat, confirmado en el clúster
+(`slurm/genera_resultats_complet.sh` es el flujo normal para lanzarlo).
+
+Un intento análogo para cat→val (desambiguar "aquest"→"este"/"eixe" con
+el mismo patrón de vía C) se probó y **empeoró** el resultado (113→98/151
+con `qwen2.5:14b`) por dos fallos metodológicos identificados — el
+criterio se calibró con una muestra de solo 6 casos sesgada al caso
+minoritario, y se validó contra esa misma muestra en vez del benchmark
+completo. Queda aparcado, a retomar con `qwen3` y un criterio más
+exigente, no descartado por imposibilidad de fondo.
+
+## 14. Índice de Pureza Dialectal (IPD)
+
+El 13/10/2026 se implementó una métrica propia, reutilizable sobre
+cualquier texto: qué porcentaje de sus palabras dialectalmente marcadas
+son formas occidentales (valencianas) frente a orientales (catalanas).
+
+```
+IPD = total_palabras_occidentales / (total_occidentales + total_orientales)
+```
+
+Una métrica parecida (`ratio_occ`) ya existía en `estudi_dialectal.py`
+(sección 1), pero contra dos listas curadas a mano de ~70 palabras cada
+una. El IPD reutiliza en cambio el índice de ~53.000 pares que
+`traductor/` ya mantiene para traducir de verdad — mismos datos, sin
+inventar nada nuevo, y aplicable a cualquier corpus, no solo a los
+documentos ya cargados del scraping de la AVL.
+
+**Dos bugs reales encontrados y corregidos la misma tarde**, a raíz de
+que el usuario desconfiara de un resultado concreto viendo el informe
+visual: (1) formas verbales raras del diccionario colisionaban con
+palabras comunes ("entre" preposición vs. "jo entre" de "entrar"),
+inflando el recuento — corregido con el mismo filtro de categoría
+gramatical (spaCy) que ya usa el motor para traducir; (2) el tokenizador
+trata el apóstrofo como parte de la palabra, así que "d'aquestes" nunca
+coincidía con la entrada "aquestes" del diccionario — corregido
+reutilizando la misma función que ya resuelve esto en el motor.
+
+Validado de forma consistente contra tres corpus independientes (ver
+tabla en la sección 15): el lado valenciano puntúa siempre entre 0,87 y
+0,93 de pureza, el catalán entre 0,01 y 0,05.
+
+## 15. Validación contra corpus reales, más allá del banco curado
+
+El banco de 151 frases está diseñado para ilustrar un fenómeno dialectal
+cada una — es una buena prueba de que cada regla es correcta, pero no
+dice cómo se comporta el motor sobre miles de frases reales sin
+seleccionar. Dos validaciones a mayor escala, ambas con el IPD y con el
+propio motor:
+
+### Corpus del Boletín Oficial del Estado (BOE)
+
+Textos legales reales con traducción oficial a los dos idiomas.
+Confirmó el mismo patrón del IPD a escala mucho mayor (5.000 frases:
+IPD catalán 0,0181; muestra de 200 frases: 0,0127 catalán / 0,8661
+valenciano) y aportó la evidencia más fuerte hasta ahora de un patrón ya
+sospechado: el diccionario aplica sinónimos valencianos "populares"
+(cerquen, arreplega, desenrotllament, mentres) en un registro
+formal/institucional que en realidad prefiere la palabra compartida con
+el catalán — el mismo patrón, pero con mucho más volumen de evidencia
+(p. ej. 29 apariciones reales de "qué" sin tocar, frente a solo 4 en el
+benchmark pequeño).
+
+### Dataset público `gplsi/CA-VA_alignment_test`
+
+1.958 frases catalán/valenciano (Universidad de Alicante, licencia CC
+BY 4.0), traducidas independientemente por un filólogo desde el mismo
+castellano de origen (Common Voice) — a diferencia del benchmark propio
+(una traducción adaptada de la otra), aquí hay dos traducciones humanas
+independientes, con más variabilidad de sinónimos válidos que no es un
+fallo del motor.
+
+| | val→cat | cat→val |
+|---|---|---|
+| IPD | 0,9039 valenciano | 0,0533 catalán |
+| Traducción, 1.958 frases completas | 65,4% (BLEU 89,20) | 61,9% (BLEU 88,08) |
+| Traducción, filtrado por IPD (1.139 frases, 58,2%) | **88,9%** (BLEU 97,00) | **87,9%** (BLEU 96,67) |
+
+El filtro se queda solo con las frases donde el IPD confirma 1,0 de
+pureza occidental y 0,0 de pureza oriental a la vez — sobre ese
+subconjunto, la precisión sube a niveles muy cercanos al benchmark de
+151, confirmando que gran parte de la caída inicial es sinonimia entre
+los dos traductores independientes, no el motor fallando más.
+
+### Cuatro bugs reales encontrados en el diccionario
+
+El análisis de fallos sobre gplsi (agregado por frecuencia, no caso a
+caso) destapó, con causa raíz confirmada en cada caso:
+
+1. **"xicotet"→"menut" mal marcado como forma canónica** en el
+   diccionario de origen (había dos candidatos, "menut" y "petitet"; el
+   marcado como canónico es el que casi nunca aparece en 1.958 frases
+   reales, donde la traducción real es siempre "petit") — ~75 fallos
+   combinados en las dos direcciones, y la causa raíz exacta de un falso
+   positivo que el propio IPD ya había señalado sobre texto real del
+   equipo.
+2. **Pares léxicos retirados el 30/09/2026** ("tindre/vore/obtindre/
+   mantindre", "últim/darrer") al centralizar el diccionario en una
+   única fuente, aceptando entonces la pérdida sin saber cuánto costaría
+   — ahora cuantificado por primera vez: **~25% de los fallos val→cat**
+   vienen solo de esta decisión.
+3. El patrón de sufijo incoativo (-ix→-eix) no cubre el plural
+   (-ixen→-eixen), solo el singular — nunca evidenciado hasta ahora por
+   falta de volumen suficiente.
+4. El plural de "servici"/"servei" no está derivado del singular, que sí
+   figura en el diccionario.
+
+## 16. Reestructuración del repositorio (14/10/2026)
+
+Tras varias semanas de trabajo acumulado, el repositorio tenía una
+organización poco clara para alguien que lo recibiera sin más contexto:
+9 carpetas numeradas con un hueco real en la numeración, ficheros de
+exploración puntual sin limpiar, y documentación desactualizada en
+varios puntos tras los avances más recientes. Se hizo una revisión
+completa, carpeta por carpeta:
+
+- Las 9 etapas se agruparon bajo `pipeline/`, separadas del producto
+  final (`traductor/`, fuera de `pipeline/` por ser el producto y no una
+  etapa) y de los datos (`dades/`). La antigua carpeta `boe/` (sin
+  número) pasó a ser `pipeline/05_corpus_boe/`, cerrando el hueco de
+  numeración sin tocar las otras 8 carpetas.
+- Se depuraron las fuentes de léxico que el motor real ya no usa desde
+  el 30/09/2026 (Apertium, un glosario de contrastes de otro
+  colaborador, un fichero de fusión manual superado), un prompt de LLM
+  sin ningún uso real detectado, y varios informes/resultados generados
+  automáticamente y por tanto regenerables en cualquier momento.
+- Se encontró y corrigió, de paso, un bug real en `.gitignore`: dos
+  reglas que excluían pesos de modelos y traducciones generadas habían
+  dejado de funcionar en silencio tras mover las carpetas, por una
+  particularidad de cómo se ancla un patrón de `.gitignore` con barras
+  en medio.
+- **Advertencia de transparencia**: durante este trabajo se encontró que
+  dos ficheros reales del proyecto, nunca comiteados a git
+  (`documentacio/hoja_de_ruta_traductor_invers.md`,
+  `documentacio/hoja_de_ruta_ipd_y_proxima_fase.md`) se habían borrado
+  por accidente, y un tercero (`documentacio/informes/`, el informe
+  semanal anterior) se perdió del todo sin dejar ningún rastro
+  recuperable. Los dos primeros se reconstruyeron con fidelidad parcial
+  a partir del propio historial de la conversación; el tercero no se
+  pudo recuperar en absoluto — el informe de la sección "Próximos pasos"
+  más abajo es nuevo, no una reconstrucción.
+- Cada paso se verificó contra la suite completa de pruebas automáticas
+  (536 casos) y los dos benchmarks de traducción, sin ningún cambio de
+  comportamiento salvo el ya documentado en las secciones 11-12 (la
+  retirada de una regla que no generalizaba más allá del propio
+  benchmark).
+
+## 17. Estado actual (14/10/2026) y próximos pasos
+
+| | val→cat | cat→val |
+|---|---|---|
+| Motor solo | 115/151 (76,2%) | 116/151 (76,8%) |
+| Motor + LLM | 129/151 (85,4%)¹ | — (aparcado) |
+
+¹ Cifra anterior a la limpieza de reglas de hoy, pendiente de
+reconfirmar — se espera un resultado similar.
+
+Pendiente, por orden sugerido:
+1. Corregir los 4 bugs de diccionario de la sección 15.
+2. Retomar la vía C para cat→val (desambiguación de "aquest") con
+   `qwen3` y un criterio más exigente, corrigiendo los dos fallos
+   metodológicos ya identificados en la sección 13.
+3. Repetir la validación a escala completa del corpus del BOE (~268.000
+   frases; hasta ahora solo probado con muestras de 200-5.000).
+4. Decidir y ejecutar el commit definitivo del trabajo acumulado y
+   fusionar la reestructuración del repositorio a la rama principal.
