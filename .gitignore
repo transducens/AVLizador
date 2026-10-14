@@ -20,14 +20,24 @@ dades/dataset_entrenament/boe_eval.jsonl
 # Muestras de trabajo intermedias (comparaciones de modelos en bruto, con logs)
 dades/sintetic/muestra_comparativa_20260922_1254/
 
-# 07_entrenament_de_models/: pesos de modelos y logs de ejecucion, nunca a git
-# (los .gitkeep mantienen la carpeta en el repo aunque este vacia)
-07_entrenament_de_models/checkpoints/*
-!07_entrenament_de_models/checkpoints/.gitkeep
-07_entrenament_de_models/runs/*
-!07_entrenament_de_models/runs/.gitkeep
+# pipeline/07_entrenament_de_models/: pesos de modelos y logs de ejecucion,
+# nunca a git (los .gitkeep mantienen la carpeta en el repo aunque este
+# vacia). Rutas actualizadas el 14/10/2026 (las carpetas numeradas se
+# movieron dentro de pipeline/ -- un patron con "/" en medio queda anclado
+# a donde vive el .gitignore, asi que sin el prefijo "pipeline/" dejaba de
+# colar en silencio).
+pipeline/07_entrenament_de_models/checkpoints/*
+!pipeline/07_entrenament_de_models/checkpoints/.gitkeep
+pipeline/07_entrenament_de_models/runs/*
+!pipeline/07_entrenament_de_models/runs/.gitkeep
 
-# 08_traduccio_corpus/: salida generada por traduccio_massiva.py, regenerable
-08_traduccio_corpus/eixides/*
-!08_traduccio_corpus/eixides/.gitkeep
+# pipeline/08_traduccio_corpus/: salida generada por traduccio_massiva.py,
+# regenerable
+pipeline/08_traduccio_corpus/eixides/*
+!pipeline/08_traduccio_corpus/eixides/.gitkeep
 dades/boe_net/corpus_entrenamiento_net.jsonl
+
+# pipeline/03_seleccio_de_model/resultats/: salida de evalua_models.py,
+# se acumula un fichero por cada run -- regenerable relanzando el benchmark
+pipeline/03_seleccio_de_model/resultats/*
+!pipeline/03_seleccio_de_model/resultats/.gitkeep
