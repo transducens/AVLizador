@@ -84,15 +84,16 @@ from traductor.rules import (  # noqa: E402
     tokenize,
 )
 from traductor.rules import pos_tagger as _pos_tagger_motor  # noqa: E402
-from traductor.rules.accentuacio import AccentuacioRule  # noqa: E402
-from traductor.rules.concordanca_dos_dues import ConcordancaDosDuesRule  # noqa: E402
-from traductor.rules.conjugacions_dict import ConjugacionsDictRule  # noqa: E402
-from traductor.rules.demostratius import DemostratiusRule  # noqa: E402
-from traductor.rules.incoatius import IncoatiusRule  # noqa: E402
-from traductor.rules.lexic import LexicRule  # noqa: E402
-from traductor.rules.numerals import NumeralsRule  # noqa: E402
-from traductor.rules.possessius import PossessiusRule  # noqa: E402
-from traductor.rules.relatiu_on import RelatiuOnRule  # noqa: E402
+from traductor.rules.val_cat.accentuacio import AccentuacioRule  # noqa: E402
+from traductor.rules.val_cat.concordanca_dos_dues import ConcordancaDosDuesRule  # noqa: E402
+from traductor.rules.val_cat.conjugacions_dict import ConjugacionsDictRule  # noqa: E402
+from traductor.rules.val_cat.demostratius import DemostratiusRule  # noqa: E402
+from traductor.rules.val_cat.incoatius import IncoatiusRule  # noqa: E402
+from traductor.rules.val_cat.lexic import LexicRule  # noqa: E402
+from traductor.rules.val_cat.numerals import NumeralsRule  # noqa: E402
+from traductor.rules.val_cat.possessius import PossessiusRule  # noqa: E402
+from traductor.rules.val_cat.preposicions_locucions import PreposicionsLocucionsRule  # noqa: E402
+from traductor.rules.val_cat.relatiu_on import RelatiuOnRule  # noqa: E402
 
 import compara_postprocessat as cp  # noqa: E402
 from identifica_ambigues import calcula_ambiguitats  # noqa: E402
@@ -105,7 +106,7 @@ from evalua_models import calcula_metriques  # noqa: E402
 REGLES = [
     LexicRule(), ConjugacionsDictRule(), PossessiusRule(), NumeralsRule(),
     ConcordancaDosDuesRule(), RelatiuOnRule(), DemostratiusRule(),
-    AccentuacioRule(), IncoatiusRule(),
+    AccentuacioRule(), IncoatiusRule(), PreposicionsLocucionsRule(),
 ]
 
 _PARAULA = re.compile(r"[a-zàèéíòóúïüç']+", re.IGNORECASE)

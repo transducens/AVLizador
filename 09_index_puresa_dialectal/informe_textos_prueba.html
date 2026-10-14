@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Informe IPD -- corpus_textos_prueba.json</title>
+<style>
+  :root {
+    --bg:#f7f7f8; --panel:#fff; --border:#e2e2e6; --text:#1c1c1f; --text-dim:#6b6b74;
+    --mk-occ-bg:#d7f3d9; --mk-occ-text:#16652b; --mk-or-bg:#ffe2c7; --mk-or-text:#9c4b0a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#17181c; --panel:#202128; --border:#33343c; --text:#eceef2; --text-dim:#9a9ba5;
+      --mk-occ-bg:#163a22; --mk-occ-text:#7fe39a; --mk-or-bg:#4a2f16; --mk-or-text:#f0a35e;
+    }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,"Segoe UI",Arial,sans-serif; padding:22px 26px 50px; }
+  h1 { font-size:1.3rem; margin:0 0 4px; }
+  .subt { color:var(--text-dim); font-size:.85rem; margin:0 0 16px; }
+  .cards { display:flex; gap:14px; margin-bottom:16px; flex-wrap:wrap; }
+  .card { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:10px 16px; }
+  .card .label { color:var(--text-dim); font-size:.72rem; text-transform:uppercase; letter-spacing:.03em; }
+  .card .value { font-size:1.4rem; font-weight:700; }
+  .legend { font-size:.82rem; color:var(--text-dim); margin-bottom:14px; }
+  .legend span { padding:1px 7px; border-radius:5px; margin-right:4px; }
+  input#cerca { width:100%; max-width:420px; padding:7px 11px; border-radius:8px; border:1px solid var(--border); background:var(--panel); color:var(--text); margin-bottom:12px; }
+  table { border-collapse:collapse; width:100%; font-size:.86rem; background:var(--panel); }
+  th,td { padding:6px 10px; text-align:left; border-bottom:1px solid var(--border); vertical-align:top; }
+  th { color:var(--text-dim); font-weight:600; position:sticky; top:0; background:var(--panel); cursor:pointer; }
+  td.score { font-variant-numeric:tabular-nums; font-weight:700; white-space:nowrap; }
+  td.mono { font-family:ui-monospace,Consolas,monospace; white-space:nowrap; }
+  td.txt { line-height:1.5; }
+  .mk-occ { background:var(--mk-occ-bg); color:var(--mk-occ-text); padding:0 2px; border-radius:3px; }
+  .mk-or { background:var(--mk-or-bg); color:var(--mk-or-text); padding:0 2px; border-radius:3px; }
+</style>
+</head>
+<body>
+  <h1>Informe IPD -- corpus_textos_prueba.json</h1>
+  <p class="subt">1 documents. Verd = marcador occidental (valencià), taronja = marcador oriental (català).</p>
+  <div class="cards">
+    <div class="card"><div class="label">IPD global "valencia"</div>
+      <div class="value" style="color:#d6a300">0.7308</div></div>
+    <div class="card"><div class="label">IPD global "catala"</div><div class="value" style="color:#d1372f">0.1111</div></div>
+  </div>
+  <div class="legend"><span class="mk-occ">occidental</span><span class="mk-or">oriental</span></div>
+  <input id="cerca" type="search" placeholder="Cerca per id o text...">
+  <div style="overflow-x:auto">
+  <table id="taula">
+    <thead><tr><th>ID</th><th>valencia</th><th>IPD</th><th>catala</th><th>IPD</th></tr></thead>
+    <tbody><tr data-cerca="valència ja coneix les dos falleres que representaran el col·lectiu per a les pròximes falles de valència 2027. beatriz blanco tamarit, de la comissió castelló–sogorb, és la fallera major de valència i compartirà regnat amb la xiqueta julia vizcayno orero, de la comissió plaça del rosari – plaça de calabuig, que serà la fallera major infantil. pertanyen als sectors russafa b i canyamelar-grau-natzaret, respectivament.
+
+beatriz, de 24 anys, i julia, de 9, prenen així el relleu de carmen prades i marta mercader, les anteriors falleres majors de 2026. les dos, escollides entre 26 candidates, han rebut la que segur serà de les notícies més importants de les seues vides de l’alcaldessa de valència, maría josé catalá, durant el tradicional acte de la telefonada. ha sigut passades les set de la vesprada i després del ple extraordinari dels membres de junta central fallera i els jurats en el saló de cristall a la seu consistorial. es tracta d'un dels moments més esperats i il·lusionants per al món faller, que dona el tret d'eixida a un nou cicle amb l’elecció de les màximes representants de les festes en honor a sant josep que acull cada any la ciutat.
+
+quan el telèfon ha sonat al casal de la falla castelló-sogorb ha esclatat l'alegria de la comissió. beatriz, graduada en enginyeria d'organització industrial per la upv i fallera des del naixement, no podia articular paraula. entre plors i emoció ha sentit les paraules de l'alcaldessa català, que ha tractat de calmar-la. la nova fallera major de valència, que treballa en el departament de manteniment d'una empresa de servicis, ha dirigit paraules d'agraïment al jurat per haver-la escollida i ha promés que ho farà &quot;el millor possible&quot;. &quot;és el somni de la meua vida&quot;, ha dit.
+per a la comissió castelló-sogorb no és nou comptar amb una fallera major de valència. ja va debutar amb maría josé ariza el 1984, ara fa 43 anys. en declaracions al magazín d'à punt està passant cv, que ha mobilitzat per la ciutat un equip de diversos periodistes, beatriz ha explicat com ha viscut els instants immediats al so del telèfon. &quot;ha sigut un moment preciós, però de molts nervis&quot;, ha dit la jove, vestida de verd claret per a esta primera compareixença en públic. encara ha de digerir tot el que comportarà la designació com a fallera major, un somni que &quot;mai pensava que es compliria&quot;. ha anticipat que, entre tots els actes que l'esperen, l'acte que viurà amb més emoció i ganes és la crida per ser, ha dit, el més &quot;emblemàtic&quot; de les falles: &quot;no puc ni imaginar el que sentiré quan puge les escales de les torres dels serrans&quot;.
+
+moments abans, julia vizcayno escoltava el seu nom i quedava designada com la fallera major infantil. esta estudiant, de quint de primària al cambridge house british international school, ha despenjat el telèfon molt emocionada i nerviosa, envoltada de la seua comissió plaça del rosari – plaça de calabuig. ha donat les gràcies al jurat i ha enviat &quot;una abraçada molt fort&quot; a les dotze xiquetes que li faran companyia des de la cort d'honor. abans de penjar, s'han viscut moment molt còmic que ha despertat les rialles a l'hemicicle consistorial quan s'ha pogut sentir la menuda preguntar: &quot;i ara què faig?&quot;.
+
+un equip d'està passant cv ha acudit a correcuita al casal de plaça del rosari - plaça de calabuig per a fer la primera entrevista a julia, que ha aparegut vestida de roig. toca el piano, practica jujitsu brasiler i juga a futbol a l'equip femení del marítim. encara amb els nervis a flor de pell, ha contat que ha viscut la telefonada amb molta emoció i tota la comissió cridant. sap que té per davant &quot;un any molt especial&quot; i espera amb ganes la crida i l'exaltació.
+
+això és perquè la responsabilitat que té és molt gran: julia és la primera fallera major de valència d’una comissió que té l’honor d’haver tingut fins a huit falleres en la cort d’honor, inclosa la mare de la menuda el 2004, però que s'estrena en el càrrec gran.
+
+nou telèfon retro
+com a curiositat, l'ajuntament de valència ha adquirit un nou aparell per a fer la telefonada de rigor a les falleres majors que només s'usarà este dia especial i que ha concentrat tot el protagonisme uns instants abans de l'anunci. reproduïx un model antic de principis del segle xx i que funciona amb les noves línies telefòniques, segons ha explicat el consistori. en declaracions als mitjans abans de desvelar el nom de la xiqueta afortunada, l'alcaldessa catalá ha assenyalat que l'han batejat com a josefina. amb este gest simbòlic es commemora també el 35 aniversari de la telefonada, que es va fer per primera vegada en novembre del 1991 per a designar mónica palmer i carmen serrano màximes representants de la festa del 1992.
+
+el debut oficial de beatriz i julia com a falleres majors de valència serà este dimecres, quan seran proclamades a l'ajuntament. un acte que es podrà seguir en directe en la televisió d’à punt a partir de les 18:30 hores, en el magazín està passant cv que presenta maria domínguez. un equip encapçalat per la periodista ampa caballero estarà a l’hemicicle consistorial per a presentar-nos les dos elegides i les components de les corts d’honor, vestides amb les millors gales d’indumentària valenciana. la cerimònia solemne començarà oficialment a les 19:30 hores.
+
+ els metges de l'hospital gemelli de roma han confirmat aquest dimarts que el papa lleó xiv, que ha estat intervingut en una operació d'uns noranta minuts de durada aquesta tarda, té un càncer de pulmó. concretament, es tractaria d'un &quot;adenocarcinoma de pulmó&quot;, que li ha estat extirpat juntament amb el &quot;lòbul inferior del pulmó dret&quot;. en una nota, els dos cirurgians que han operat al sant parem luigi carbone i stefano margaritora, han confirmat que &quot;per fer el procediment radical, s'ha extirpat el lòbul inferior dret mitjançant cirurgia assistida per vídeo. l'examen histològic extemporani ha confirmat el diagnòstic d'adenocarcinoma de pulmó, tal com sospitaven les proves peroperatòries&quot;, afegeixen. 
+
+l'adenocarcinoma de pulmó és el tipus més freqüent de càncer de pulmó i es diagnostica en un 30% dels casos, tant a persones fumadores com no fumadores. en general, l'adenocarcinoma de pulmó té un pronòstic millor que altres tipus de càncer, en particular si es diagnostica en un estadi primerenc, com hauria estat el cas de lleó xiv, ja que segons el vaticà era un nòdul &quot;petit&quot; i &quot;localitzat&quot;. la intervenció quirúrgica, amb l'extirpació d'una part del pulmó, com amb lleó, és el tractament que ofereix més possibilitat de curar si es realitza abans que aquest s'hagi estes massa. 
+
+el papa lleó xiv ha estat operat amb èxit de l'extirpació d'un &quot;petit, localitzat nòdul&quot; que li van detectar en el seu pulmó, segons ha informat l'oficina de premsa del vaticà. &quot;l'operació ha estat completada amb èxit, dins del termini temporal expectat i com planejat, i el sant pare ha tornat a la seva habitació&quot;, s'ha informat en un breu comunicat. lleó xiv ha pogut tornar a la seva habitació de l'hospital gemelli de roma, on va ser ingressat el seu predecessor, francesc, abans de la seva mort aquest mes d'abril.
+
+lleó ha arribat aquest dimarts al migdia a l'hospital policlínic universitari agostino gemelli de roma, el de referència pels inquilins del vaticà, ja que també hi han estat ingressats francesc i joan pau ii durant els seus pontificats. joan pau ii va ser hospitalitzat deu vegades i per aquest motiu el 1996, fins i tot va fer broma dient: &quot;el vaticà u és a la plaça de sant pere, el vaticà dos és a castel gandolfo, el vaticà tres s'ha convertit en el policlínic gemelli&quot;. durant la jornada, el vaticà ha fet una crida a la pregària per l'estat de salut del papa, que segons les fonts vaticanes, ha estat intervingut amb èxit del nòdul pulmonar que se li va localitzar al sant pare, de 71 anys. 
+
+el papa ha entrat aquest migdia a l'hospital, amb pas serè i acompanyat dels seus secretaris i el seu metge personal. la intervenció l'ha dut a terme el professor stefano margaritora, un cirurgià toràcic expert amb milers d'intervencions d'aquestes característiques. durant el res de l'àngelus d'aquest diumenge, el sant pare va anunciar que li havien descobert el nòdul en una fase molt inicial i que estava ben localitzat, motiu pel qual els metges de l'hospital li van recomanar la intervenció quirúrgica. 
+
+estarà hospitalitzat durant una setmana, aproximadament
+en un comunicat per a la premsa aquest diumenge, el portaveu del vaticà, matteo bruni, va indicar que el sant pare romandria hospitalitzat al gemelli &quot;aproximadament&quot; durant &quot;una setmana&quot;, que és &quot;el temps previst d'hospitalització postoperatòria&quot;. a lleó xiv li ha estat extirpat un nòdul pulmonar, una peita massa de teixit anòmal que es pot detectar en exploracions radiològiques. poden tenir l'origen en anteriors infeccions o en altres alteracions de la salut, però alguns poden ser cancerosos.
+
+"><td class="mono">textos_prueba</td><td class="txt">València ja coneix les dos falleres que representaran el col·lectiu per a les pròximes Falles de València 2027. Beatriz Blanco Tamarit, de la comissió Castelló–Sogorb, és la fallera major de València i compartirà regnat amb la <span class="mk-occ">xiqueta</span> Julia Vizcayno Orero, de la comissió Plaça del Rosari – Plaça de Calabuig, que serà la fallera major infantil. Pertanyen als sectors Russafa B i Canyamelar-Grau-Natzaret, respectivament.
+
+Beatriz, de 24 anys, i Julia, de 9, prenen així el relleu de Carmen Prades i Marta Mercader, les anteriors falleres majors de 2026. Les dos, escollides entre 26 candidates, han rebut la que segur serà de les notícies més importants de les <span class="mk-occ">seues</span> vides de l’alcaldessa de València, María José Catalá, durant el tradicional acte de la telefonada. Ha <span class="mk-occ">sigut</span> passades les set de la <span class="mk-occ">vesprada</span> i després del ple extraordinari dels membres de Junta Central Fallera i els jurats en el Saló de Cristall a la seu consistorial. Es tracta d'un dels moments més esperats i il·lusionants per al món faller, que dona el tret <span class="mk-occ">d'eixida</span> a un <span class="mk-or">nou</span> cicle amb l’elecció de les màximes representants de les festes en honor a Sant Josep que <span class="mk-occ">acull</span> cada any la ciutat.
+
+Quan el telèfon ha sonat al casal de la falla Castelló-Sogorb ha esclatat l'alegria de la comissió. Beatriz, graduada en Enginyeria d'Organització Industrial per la UPV i fallera des del naixement, no podia articular paraula. Entre plors i emoció ha sentit les paraules de l'alcaldessa Català, que ha tractat de calmar-la. La nova fallera major de València, que treballa en el departament de manteniment d'una empresa de servicis, ha dirigit paraules d'agraïment al jurat per haver-la escollida i ha <span class="mk-occ">promés</span> que ho farà &quot;el millor possible&quot;. &quot;És el somni de la <span class="mk-occ">meua</span> vida&quot;, ha dit.
+Per a la comissió Castelló-Sogorb no és <span class="mk-or">nou</span> comptar amb una fallera major de València. Ja va debutar amb María José Ariza el 1984, ara fa 43 anys. En declaracions al magazín d'À Punt Està passant CV, que ha mobilitzat per la ciutat un equip de diversos periodistes, Beatriz ha explicat com ha viscut els instants immediats al so del telèfon. &quot;Ha <span class="mk-occ">sigut</span> un moment preciós, però de molts nervis&quot;, ha dit la jove, vestida de verd claret per a <span class="mk-occ">esta</span> primera compareixença en públic. Encara ha de digerir tot el que comportarà la designació com a fallera major, un somni que &quot;mai pensava que es compliria&quot;. Ha anticipat que, entre tots els actes que <span class="mk-occ">l'esperen</span>, l'acte que viurà amb més emoció i ganes és la Crida per ser, ha dit, el més &quot;emblemàtic&quot; de les Falles: &quot;No puc ni imaginar el que sentiré quan puge les escales de les Torres dels Serrans&quot;.
+
+Moments abans, Julia Vizcayno escoltava el seu nom i quedava designada com la fallera major infantil. Esta estudiant, de <span class="mk-occ">quint</span> de primària al Cambridge House British International School, ha despenjat el telèfon molt emocionada i nerviosa, envoltada de la <span class="mk-occ">seua</span> comissió Plaça del Rosari – Plaça de Calabuig. Ha donat les gràcies al jurat i ha enviat &quot;una <span class="mk-or">abraçada</span> molt fort&quot; a les dotze <span class="mk-occ">xiquetes</span> que li faran companyia des de la cort d'honor. Abans de penjar, s'han viscut moment molt còmic que ha despertat les rialles a l'hemicicle consistorial quan s'ha pogut sentir la <span class="mk-or">menuda</span> preguntar: &quot;I ara <span class="mk-or">què</span> faig?&quot;.
+
+Un equip d'Està Passant CV ha acudit a correcuita al casal de Plaça del Rosari - Plaça de Calabuig per a fer la primera entrevista a Julia, que ha aparegut vestida de roig. Toca el piano, practica jujitsu brasiler i juga a futbol a l'equip femení del Marítim. Encara amb els nervis a flor de pell, ha contat que ha viscut la telefonada amb molta emoció i tota la comissió cridant. Sap que té per davant &quot;un any molt especial&quot; i espera amb ganes la Crida i l'Exaltació.
+
+Això és perquè la responsabilitat que té és molt gran: Julia és la primera fallera major de València d’una comissió que té l’honor d’haver tingut fins a <span class="mk-occ">huit</span> falleres en la cort d’honor, inclosa la mare de la <span class="mk-or">menuda</span> el 2004, però que s'estrena en el càrrec gran.
+
+Nou telèfon retro
+Com a curiositat, l'Ajuntament de València ha adquirit un <span class="mk-or">nou</span> aparell per a fer la telefonada de rigor a les falleres majors que només s'usarà <span class="mk-occ">este</span> dia especial i que ha concentrat tot el protagonisme uns instants abans de l'anunci. Reproduïx un model antic de principis del segle XX i que funciona amb les noves línies telefòniques, segons ha explicat el consistori. En declaracions als mitjans abans de desvelar el nom de la <span class="mk-occ">xiqueta</span> afortunada, l'alcaldessa Catalá ha assenyalat que l'han batejat com a Josefina. Amb <span class="mk-occ">este</span> gest simbòlic es commemora també el 35 aniversari de la telefonada, que es va fer per primera vegada en novembre del 1991 per a designar Mónica Palmer i Carmen Serrano màximes representants de la festa del 1992.
+
+El debut oficial de Beatriz i Julia com a falleres majors de València serà <span class="mk-occ">este</span> dimecres, quan seran proclamades a l'Ajuntament. Un acte que es podrà seguir en directe en la televisió d’À Punt a partir de les 18:30 hores, en el magazín Està passant CV que presenta Maria Domínguez. Un equip encapçalat per la periodista Ampa Caballero estarà a l’hemicicle consistorial per a presentar-nos les dos elegides i les components de les corts d’honor, vestides amb les millors gales d’indumentària valenciana. La cerimònia solemne començarà oficialment a les 19:30 hores.
+
+</td><td class="score" style="color:#d6a300">0.7308</td><td class="txt">Els metges de l'Hospital Gemelli de Roma han confirmat <span class="mk-or">aquest</span> dimarts que el papa Lleó XIV, que ha <span class="mk-or">estat</span> intervingut en una operació d'uns noranta minuts de durada <span class="mk-or">aquesta</span> tarda, té un càncer de pulmó. Concretament, es tractaria d'un &quot;adenocarcinoma de pulmó&quot;, que li ha <span class="mk-or">estat</span> extirpat juntament amb el &quot;lòbul inferior del pulmó dret&quot;. En una nota, els dos cirurgians que han operat al sant parem Luigi Carbone i Stefano Margaritora, han confirmat que &quot;per fer el procediment radical, s'ha extirpat el lòbul inferior dret mitjançant cirurgia assistida per vídeo. L'examen histològic extemporani ha confirmat el diagnòstic d'adenocarcinoma de pulmó, tal com sospitaven les proves peroperatòries&quot;, afegeixen. 
+
+L'adenocarcinoma de pulmó és el tipus més freqüent de càncer de pulmó i es diagnostica en un 30% dels casos, tant a persones fumadores com no fumadores. En general, l'adenocarcinoma de pulmó té un pronòstic millor que altres tipus de càncer, en particular si es diagnostica en un estadi primerenc, com hauria <span class="mk-or">estat</span> el cas de Lleó XIV, ja que segons el Vaticà era un nòdul &quot;<span class="mk-occ">petit</span>&quot; i &quot;localitzat&quot;. La intervenció quirúrgica, amb l'extirpació d'una part del pulmó, com amb Lleó, és el tractament que ofereix més possibilitat de curar si es realitza abans que <span class="mk-or">aquest</span> <span class="mk-or">s'hagi</span> <span class="mk-occ">estes</span> massa. 
+
+El papa Lleó XIV ha <span class="mk-or">estat</span> operat amb èxit de l'extirpació d'un &quot;<span class="mk-occ">petit</span>, localitzat nòdul&quot; que li van detectar en el seu pulmó, segons ha informat l'oficina de premsa del Vaticà. &quot;L'operació ha <span class="mk-or">estat</span> completada amb èxit, dins del termini temporal expectat i com planejat, i el sant pare ha tornat a la <span class="mk-or">seva</span> habitació&quot;, s'ha informat en un breu comunicat. Lleó XIV ha pogut tornar a la <span class="mk-or">seva</span> habitació de l'Hospital Gemelli de Roma, on va ser ingressat el seu predecessor, Francesc, abans de la <span class="mk-or">seva</span> mort <span class="mk-or">aquest</span> mes d'abril.
+
+Lleó ha arribat <span class="mk-or">aquest</span> dimarts al migdia a l'Hospital Policlínic Universitari Agostino Gemelli de Roma, el de referència pels inquilins del Vaticà, ja que també hi han <span class="mk-or">estat</span> ingressats Francesc i Joan Pau II durant els seus pontificats. Joan Pau II va ser hospitalitzat deu vegades i per <span class="mk-or">aquest</span> motiu el 1996, fins i tot va fer broma dient: &quot;El Vaticà U és a la plaça de Sant Pere, el Vaticà Dos és a Castel Gandolfo, el Vaticà Tres s'ha convertit en el Policlínic Gemelli&quot;. Durant la jornada, el Vaticà ha fet una crida a la pregària per <span class="mk-or">l'estat</span> de salut del papa, que segons les fonts vaticanes, ha <span class="mk-or">estat</span> intervingut amb èxit del nòdul pulmonar que se li va localitzar al sant pare, de 71 anys. 
+
+El papa ha entrat <span class="mk-or">aquest</span> migdia a l'hospital, amb pas <span class="mk-or">serè</span> i acompanyat dels seus secretaris i el seu metge personal. La intervenció l'ha dut a terme el professor Stefano Margaritora, un cirurgià toràcic expert amb milers d'intervencions <span class="mk-or">d'aquestes</span> característiques. Durant el res de l'Àngelus <span class="mk-or">d'aquest</span> diumenge, el sant pare va anunciar que li havien descobert el nòdul en una fase molt inicial i que estava ben localitzat, motiu pel qual els metges de l'hospital li van recomanar la intervenció quirúrgica. 
+
+Estarà hospitalitzat durant una setmana, aproximadament
+En un comunicat per a la premsa <span class="mk-or">aquest</span> diumenge, el portaveu del Vaticà, Matteo Bruni, va indicar que el sant pare romandria hospitalitzat al Gemelli &quot;aproximadament&quot; durant &quot;una setmana&quot;, que és &quot;el temps previst d'hospitalització postoperatòria&quot;. A Lleó XIV li ha <span class="mk-or">estat</span> extirpat un nòdul pulmonar, una peita massa de teixit anòmal que es pot detectar en exploracions radiològiques. Poden tenir l'origen en anteriors infeccions o en altres alteracions de la salut, però alguns poden ser cancerosos.
+
+</td><td class="score" style="color:#d1372f">0.1111</td></tr></tbody>
+  </table>
+  </div>
+<script>
+document.getElementById('cerca').addEventListener('input', function (e) {
+  var q = e.target.value.toLowerCase();
+  document.querySelectorAll('#taula tbody tr').forEach(function (tr) {
+    tr.style.display = tr.getAttribute('data-cerca').indexOf(q) !== -1 ? '' : 'none';
+  });
+});
+</script>
+</body>
+</html>

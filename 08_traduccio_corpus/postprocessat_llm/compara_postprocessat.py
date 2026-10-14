@@ -125,6 +125,20 @@ arribe", "no hi ha ningu que ho sapia"). La prova: si pots substituir
 sentit (p.ex. "els alumnes que, en concret, opten..."), es relatiu REAL
 -> INDICATIU; si nomes te sentit amb "siga qui siga" o "qualsevol que",
 es relatiu HIPOTETIC -> SUBJUNTIU.
+ATENCIO -- "quan" NO sempre es el mateix mode: si introduïx un fet REAL,
+HABITUAL o ja ocorregut ("quan vaig arribar, plovia", "quan plou, no
+ixc", "quan el tractament es base de fet en X" parlant d'un cas concret
+ja establit) es INDICATIU. Es SUBJUNTIU quan "quan" (igual que "sempre
+que", "fins que", "a fi que") introduïx una condicio FUTURA o
+HIPOTETICA encara NO verificada -- patro molt comu en textos legals/
+normatius: "Quan el tractament es base en el seu consentiment, [...]"
+vol dir "en el cas que / sempre que es base" (una condicio que pot
+complir-se o no en el futur, no un fet ja establit), per tant SUBJUNTIU
+("basi"), encara que no hi haja cap verb de voluntat/dubte explicit
+davant. La prova: si pots substituir "quan" per "sempre que" o "en el
+cas que" sense que la frase perda sentit, es la lectura condicional/
+hipotetica -> SUBJUNTIU; si nomes te sentit com "en el moment en que,
+de fet," (un moment concret, real o habitual), es INDICATIU.
 """
 
 
