@@ -46,6 +46,32 @@ p.ex. per homografia accidental), no es fiable com a marcador de cap
 dels dos costats -- se'n descarta dels dos conjunts (preferix fals
 negatiu, mateix criteri que la resta del projecte).
 
+MARCADORS NO FIABLES PER REGISTRE (15/10/2026, vore `_MARCADORS_NO_FIABLES_REGISTRE`):
+diferent de l'ambigüitat de dalt -- ací el parell és real i el traductor
+el convertix bé (`translate("Açò no és correcte.")` -> "Això no és
+correcte."), pero la seua presencia NO és fiable com a senyal de dialecte
+en registre formal/institucional. Mesurat DIRECTAMENT sobre el BOE
+complet (267.962 documents reals, mai sobre l'eixida del motor): "qué"
+nomes apareix 1 volta per cada 17.584 "què" (0,0%) i "açò" nomes 65
+voltes per cada 5.708 "això" (1,1%) al costat VALENCIÀ real -- el mateix
+patró ja confirmat a menor escala amb el benchmark de 151 (7/9 "què").
+S'exclouen dels DOS costats de l'índex de l'IPD (ni compten com a
+marcador occidental ni oriental), PERO NO es toca
+`traductor/rules/val_cat/lexic.py::_BUG_DADES_CONEGUTS` -- eixe set
+alimenta la TRADUCCIÓ de veres (`carrega_lexic()`), i ja es va mesurar
+(15/10/2026) que excloure "qué" ahí trenca una traducció real (RC055).
+Els dos mecanismes són independents a propòsit: l'IPD pot decidir que
+una paraula no és un bon marcador sense que això canvie com es traduïx.
+
+Mateixa mesura feta sobre uns atres candidats del BOE que NO entren en
+esta categoria, per contrast: "estat" i "recull" són col·lisions
+d'homògraf (participi/verb vs. nom, mateix problema que ja cobrix el
+mecanisme de categoria gramatical de `rules/__init__.py::pos_compatible`,
+pero encara sense entrada per a estes dos formes -- pendent de la
+classificació manual del lèxic, no d'este fitxer). "afecte"/"carinyo"
+sembla un error de dades del lexicó (el mateix patró que "vesprada"/"tard"),
+pendent de confirmar -- cap dels dos es toca ací.
+
 ÚS com a script:
 
     python ipd.py --text "Este xiquet vol vindre hui."
@@ -104,6 +130,12 @@ from traductor.rules.val_cat.possessius import _carrega_possessius
 WORD_RE = re.compile(r"[^\W\d_]+", re.UNICODE)
 
 _CACHE: "Formes | None" = None
+
+# Vore "MARCADORS NO FIABLES PER REGISTRE" al docstring del mòdul.
+# S'exclouen els DOS costats de cada parell -- ni "qué" ni "què", ni
+# "açò" ni "això" compten com a marcador, encara que el traductor seguïx
+# convertint-los bé.
+_MARCADORS_NO_FIABLES_REGISTRE = {"qué", "què", "açò", "això"}
 
 
 class Formes:
@@ -202,6 +234,15 @@ def carrega_formes_dialectals(forcar_recarrega: bool = False) -> Formes:
     True
     >>> "entre" in formes.occ_verbal or "entre" in formes.occ_simple
     False
+
+    "qué"/"què" i "açò"/"això" són parells reals (el traductor els
+    convertix bé) pero no fiables com a marcador en registre formal --
+    vore "MARCADORS NO FIABLES PER REGISTRE" al docstring del mòdul:
+
+    >>> "qué" in formes.occ_simple or "què" in formes.or_simple
+    False
+    >>> "açò" in formes.occ_simple or "això" in formes.or_simple
+    False
     """
     global _CACHE
     if _CACHE is not None and not forcar_recarrega:
@@ -245,6 +286,9 @@ def carrega_formes_dialectals(forcar_recarrega: bool = False) -> Formes:
     orr -= ambigues
     occ_verbal -= ambigues
     or_verbal -= ambigues
+
+    occ -= _MARCADORS_NO_FIABLES_REGISTRE
+    orr -= _MARCADORS_NO_FIABLES_REGISTRE
 
     _CACHE = Formes(frozenset(occ), frozenset(orr), frozenset(occ_verbal), frozenset(or_verbal))
     return _CACHE

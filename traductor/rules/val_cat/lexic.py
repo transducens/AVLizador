@@ -75,6 +75,25 @@ erroni pel costat del lèxic general -- un bug de dades el pot reintroduir
 qualsevol font nova, així que l'exclusió ha de ser global, no lligada a
 un sol fitxer.
 
+Dos bugs de dades més (15/10/2026, trobats validant l'IPD contra textos
+reals de l'usuari, vore `cat_val/lexic.py` per als mateixos bugs mirats
+des de l'altre costat): "vesprada" (el nom, "afternoon") ve llistat a
+`unificado.json` amb `catalan: "tard"`, confonent el nom amb l'adverbi
+"tard" (late) -- `translate("La vesprada va ser bonica.")` donava
+"La tard va ser bonica." abans d'exclòure-ho. "ensenyança" ve amb
+`catalan: "ensenyament"`, un sinònim real pero de gènere DIFERENT
+(fem->masc) que `LexicRule` no sap arreglar sol -- `translate("L'ensenyança
+pública és important.")` donava "L'ensenyament pública és important.",
+sense concordar l'adjectiu. Cap benchmark (151 ni gplsi, 1.958 frases) conté
+cap de les dos paraules, així que no hi ha cap xifra que puga confirmar-ho
+ni refutar-ho -- l'evidència és la traducció directa, no el benchmark. Com
+"qué" sí apareix al benchmark de 151 i EXCLOURE'L hi causa una regressió
+real (RC055: `translate("Qué fas?")` ja dona bé "Què fas?" hui), "qué" NO
+s'afig a `_BUG_DADES_CONEGUTS` encara que sí estiga exclòs al costat
+cat->val (`_BUG_DADES_CONEGUTS_CAT`) -- els dos costats filtren camps
+distints de la mateixa taula (`valenciano` ací, `catalan` allà) per motius
+distints, no són el mateix set mirat del revés.
+
 Esta és la ÚNICA capa que fa lookup en un diccionari en compte d'aplicar una
 regla morfològica -- cobrix paraules que canvien de forma per motius
 purament lèxics, sense cap patró gramatical que ho prediga (p.ex. "roig" ->
@@ -130,7 +149,15 @@ CANVI_GENERE_PATH = _DATA / "canvi_genere_lexic_avl.json"
 # S'exclou dels DOS loaders (abans només de l'accentuació) des que
 # "unificado.json" (05/10/2026) va reintroduir el mateix parell per una
 # via distinta -- vore conversa 05/10/2026.
-_BUG_DADES_CONEGUTS = {"després"}
+#
+# "vesprada" i "ensenyança" (15/10/2026, vore docstring del mòdul): dos bugs
+# de dades més trobats validant l'IPD, confirmats per traducció directa
+# (cap benchmark conté cap de les dos paraules). "qué" es queda FORA
+# d'esta llista a propòsit -- ahí sí hi ha evidència de benchmark (RC055)
+# que excloure'l és una regressió real en este sentit, encara que estiga
+# exclòs al costat cat->val per un motiu distint (vore
+# `cat_val/lexic.py::_BUG_DADES_CONEGUTS_CAT`).
+_BUG_DADES_CONEGUTS = {"després", "vesprada", "ensenyança"}
 
 
 def _formes_demostratius_conegudes() -> set[str]:
@@ -273,6 +300,12 @@ def carrega_lexic(
     'acetilè'
     >>> "després" in lookup
     False
+    >>> "vesprada" in lookup
+    False
+    >>> "ensenyança" in lookup
+    False
+    >>> lookup["qué"]
+    'què'
     >>> lookup["hui"]
     'avui'
     """
