@@ -157,7 +157,48 @@ CANVI_GENERE_PATH = _DATA / "canvi_genere_lexic_avl.json"
 # que excloure'l és una regressió real en este sentit, encara que estiga
 # exclòs al costat cat->val per un motiu distint (vore
 # `cat_val/lexic.py::_BUG_DADES_CONEGUTS_CAT`).
-_BUG_DADES_CONEGUTS = {"després", "vesprada", "ensenyança"}
+#
+# "vesprada" ELIMINAT d'esta llista (16/10/2026): la nova font
+# (`lexico_general.json`, vore hoja_de_ruta_migracio_diccionarios_v1.md)
+# ja porta "vesprada"->"tarda" (abans "tard", l'error) -- confirmat
+# directament al fitxer sincronitzat, ja no fa falta excloure'l.
+# "ensenyança" es queda, el bug persistix a la font nova.
+#
+# "alcalde" i "tancada" afegits 16/10/2026 (regressions reals RC136/RC144
+# trobades migrant a `lexico_general.json`, vore hoja_de_ruta_migracio_diccionarios_v1.md):
+# - "alcalde"->"batlle" (`canonica: true`, `problema: "colision"`): mateix
+#   patró que "ensenyança"/"qué" -- parell dialectal real pero este
+#   registre formal/institucional prefereix la paraula compartida.
+# - "tancada"->"closa" (`problema: "homonimia_lexica"`, `lemas: ["tancada
+#   [n]", "tancat [adj]"]`): homògraf nom/adjectiu -- l'entrada és nomes
+#   per al sentit NOM ("vallado"), pero s'aplicava també a l'adjectiu
+#   (RC144, "e tancada" = "e closed", un terme lingüístic). Mauricio ja
+#   marca 24 entrades amb este mateix `problema` -- només s'exclou esta,
+#   la resta queden pendents de mesurar una a una abans de tocar-les
+#   (no generalitzar sense evidència, vore hoja de ruta).
+_BUG_DADES_CONEGUTS = {"després", "ensenyança", "alcalde", "tancada"}
+
+# Paraules perdudes de veres migrant a `lexico_general.json` (16/10/2026,
+# vore hoja_de_ruta_migracio_diccionarios_v1.md §4ter): la font nova no
+# les porta per cap categoria ni com a verb d'arrel distinta -- es
+# restauren a mà des de la font vella (`unificado.json`) per no perdre
+# cobertura real mentre no arriben en una entrega futura. "llavar" i
+# "espentar" confirmats amb regressió real de benchmark (RC002/RC022/RC025);
+# la resta no tenien cap cas al benchmark pero es restauren igual per
+# coherència (podrien aparéixer en gplsi/BOE).
+_LEXIC_PERDUT_RESTAURAT = {
+    "llavar": "rentar",
+    "espentar": "empentar",
+    "encollir": "encongir",
+    "enllandar": "enllaunar",
+    "bollir": "bullir",
+    "solejar": "assolellar",
+    "amprar": "manllevar",
+    "subdesenrotllar": "subdesenvolupar",
+    "invadir": "envair",
+    "i+d": "R+D",
+    "i+d+i": "R+D+I",
+}
 
 
 def _formes_demostratius_conegudes() -> set[str]:
@@ -227,6 +268,23 @@ def _resol_mauricio(entries: list[dict]) -> str:
     return triada["catalan"].strip()
 
 
+# Categories de `lexico_general.json` (16/10/2026, vore docstring del
+# mòdul i documentacio/hoja_de_ruta_migracio_diccionarios_v1.md) que
+# pertanyen a ESTA capa -- "num" (numerals.py) i "det" (demostratius.py,
+# que a sobre té un conflicte real mesurat: "eixe"->"aqueix" literal del
+# fitxer NO val, el motor ja mesurava "eixe"->"aquest") es queden fora,
+# cada un amb el seu propi mòdul/font.
+_CATEGORIES_LEXIC_GENERAL = {"n", "adj", "adv", "cnjadv", "pr", "ij", "prn"}
+
+# Bug de dades conegut, sense corregir a l'origen encara (16/10/2026,
+# vore hoja_de_ruta_migracio_diccionarios_v1.md §4ter): "xicotet" ve
+# marcat `canonica: true` cap a "menut", pero mesurat contra 1.958
+# frases reals de gplsi (14/10/2026) la traducció real és SEMPRE
+# "petit". Override explícit per a no perdre eixa evidència mentre la
+# font no ho corregisca.
+_CANONICA_OVERRIDES = {"xicotet": "petit"}
+
+
 def _carrega_mauricio_lexic(path: Path) -> dict[str, str]:
     demostratius_coneguts = _formes_demostratius_conegudes()
     dades = json.loads(path.read_text(encoding="utf-8"))
@@ -235,6 +293,8 @@ def _carrega_mauricio_lexic(path: Path) -> dict[str, str]:
         if "PENDENT" in (entrada.get("tipo") or ""):
             continue
         if entrada.get("tipo") == "v:top_gva":
+            continue
+        if entrada.get("categoria") not in _CATEGORIES_LEXIC_GENERAL:
             continue
         valenciano = entrada.get("valenciano", "").strip()
         catalan = entrada.get("catalan", "").strip()
@@ -247,7 +307,11 @@ def _carrega_mauricio_lexic(path: Path) -> dict[str, str]:
         if valenciano.lower() in demostratius_coneguts:
             continue
         per_paraula.setdefault(valenciano.lower(), []).append(entrada)
-    return {val: _resol_mauricio(entries) for val, entries in per_paraula.items()}
+    lookup = {val: _resol_mauricio(entries) for val, entries in per_paraula.items()}
+    for val, cat in _CANONICA_OVERRIDES.items():
+        if val in lookup:
+            lookup[val] = cat
+    return lookup
 
 
 def _carrega_acentuacio_mauricio(path: Path) -> dict[str, str]:
@@ -300,14 +364,20 @@ def carrega_lexic(
     'acetilè'
     >>> "després" in lookup
     False
-    >>> "vesprada" in lookup
-    False
+    >>> lookup["vesprada"]
+    'tarda'
     >>> "ensenyança" in lookup
     False
+    >>> lookup["xicotet"]
+    'petit'
     >>> lookup["qué"]
     'què'
     >>> lookup["hui"]
     'avui'
+    >>> lookup["llavar"]
+    'rentar'
+    >>> "alcalde" in lookup
+    False
     """
     lookup: dict[str, str] = {}
     for carregador, path in (
@@ -318,6 +388,8 @@ def carrega_lexic(
     ):
         for val, cat in carregador(path).items():
             lookup.setdefault(val, cat)
+    for val, cat in _LEXIC_PERDUT_RESTAURAT.items():
+        lookup.setdefault(val, cat)
     return lookup
 
 
@@ -360,11 +432,11 @@ class LexicRule:
     vore `aplica_amb_prefix_elidit` a rules/__init__.py):
 
     >>> from .. import detokenize
-    >>> toks = tokenize("A l'eixir carrec la caixa.")
+    >>> toks = tokenize("Han penjat l'espill a la paret.")
     >>> marca_noms_propis(toks)
     >>> toks = LexicRule().apply(toks)
     >>> detokenize(toks)
-    'Al sortir carrec la caixa.'
+    'Han penjat el mirall a la paret.'
 
     Concordança de gènere tras substitució (RC044 -- vore docstring del
     mòdul i `canvi_genere_lexic_avl.json`):

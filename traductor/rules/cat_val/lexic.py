@@ -108,18 +108,18 @@ CANVI_GENERE_PATH = _DATA / "canvi_genere_lexic_avl.json"
 # casualitat, convertint-ho SEMPRE). Net +3 (+4 casos majoritaris, -1
 # minoritari) -- mateixa filosofia que "aquest"->"este" (77/23).
 #
-# "tard" (afegit 13/10/2026, trobat investigant RC067): `lexic_mauricio.json`
-# té {"valenciano": "vesprada", "catalan": "tard"} (id E0100, camp
-# `espanol: "tarde"`) -- el castellà "tarde" és ambigu entre l'ADVERBI
-# ("late") i el NOM ("afternoon"), i la font ha confós els dos sentits:
-# "vesprada" és la traducció correcta nomes per al NOM ("tarda" en
-# català, no "tard"), mai per a l'adverbi. L'ÚNICA aparició real
-# d'esta entrada a tot el benchmark (RC067, "més tard" = "later",
-# adverbi) confirma l'error -- la referència valenciana vol "tard" sense
-# tocar. S'exclou; "tarda"->"vesprada" (el nom, el parell correcte) no
-# té cap entrada pròpia encara perque no hi ha evidencia real al
-# benchmark (0 aparicions de "tarda" trobades).
-_BUG_DADES_CONEGUTS_CAT = {"desprès", "ensenyament", "què", "tard"}
+# "tard" ELIMINAT d'esta llista (16/10/2026): la nova font
+# (`lexico_general.json`, vore hoja_de_ruta_migracio_diccionarios_v1.md)
+# ja no porta cap entrada amb catalan=="tard" -- el bug "vesprada"/"tard"
+# ve corregit en origen ("vesprada"->"tarda" ara), confirmat que cap
+# entrada col·lidix ja amb "tard". Es queda documentat ací per
+# l'historial (RC067 original) pero ja no cal excloure'l.
+_BUG_DADES_CONEGUTS_CAT = {"desprès", "ensenyament", "què"}
+
+# Categories de `lexico_general.json` (16/10/2026, mateix criteri que
+# `rules/val_cat/lexic.py` -- vore hoja_de_ruta_migracio_diccionarios_v1.md):
+# "num"/"det" es queden fora, cada un amb el seu propi mòdul/font.
+_CATEGORIES_LEXIC_GENERAL = {"n", "adj", "adv", "cnjadv", "pr", "ij", "prn"}
 
 # Filtre POS general per categoria gramatical (13/10/2026, vore
 # `rules/__init__.py::pos_compatible` i
@@ -131,6 +131,14 @@ _BUG_DADES_CONEGUTS_CAT = {"desprès", "ensenyament", "què", "tard"}
 # sense fer falta tocar codi cada vegada que apareix un cas nou -- vore
 # el fitxer de dades per a l'estat de la classificació (de moment nomes
 # "anou"/"nou", pendent d'ampliar-se).
+
+# Paraules perdudes de veres migrant a `lexico_general.json` (16/10/2026,
+# mateix criteri que `rules/val_cat/lexic.py::_LEXIC_PERDUT_RESTAURAT`):
+# confirmades amb regressió real de benchmark (RC022, RC025).
+_LEXIC_PERDUT_RESTAURAT_CAT = {
+    "empentar": "espentar",
+    "rentar": "llavar",
+}
 
 
 def _formes_demostratius_coneguts_cat() -> set[str]:
@@ -157,6 +165,8 @@ def _carrega_mauricio_lexic_invers(path: Path) -> dict[str, str]:
         if "PENDENT" in (entrada.get("tipo") or ""):
             continue
         if entrada.get("tipo") == "v:top_gva":
+            continue
+        if entrada.get("categoria") not in _CATEGORIES_LEXIC_GENERAL:
             continue
         valenciano = entrada.get("valenciano", "").strip()
         catalan = entrada.get("catalan", "").strip()
@@ -192,6 +202,8 @@ def carrega_frases_invers(path: Path = MAURICIO_PATH) -> dict[tuple[str, ...], s
         if "PENDENT" in (entrada.get("tipo") or ""):
             continue
         if entrada.get("tipo") == "v:top_gva":
+            continue
+        if entrada.get("categoria") not in _CATEGORIES_LEXIC_GENERAL:
             continue
         valenciano = entrada.get("valenciano", "").strip()
         catalan = entrada.get("catalan", "").strip()
@@ -293,6 +305,8 @@ def carrega_lexic_invers(
     'hui'
     >>> "menuda" in lookup
     False
+    >>> lookup["empentar"]
+    'espentar'
     """
     lookup: dict[str, str] = {}
     for carregador, path in (
@@ -302,6 +316,8 @@ def carrega_lexic_invers(
     ):
         for cat, val in carregador(path).items():
             lookup.setdefault(cat, val)
+    for cat, val in _LEXIC_PERDUT_RESTAURAT_CAT.items():
+        lookup.setdefault(cat, val)
     return lookup
 
 
@@ -361,11 +377,11 @@ class LexicInversRule:
     Contracció "al" desfeta en "a l'" quan la paraula substituïda passa a
     començar en vocal (RC016, vore docstring del mòdul):
 
-    >>> toks = tokenize("Al sortir a l'exterior.")
+    >>> toks = tokenize("Es va mirar al mirall.")
     >>> marca_noms_propis(toks)
     >>> toks = LexicInversRule().apply(toks)
     >>> detokenize(toks)
-    "A l'eixir a l'exterior."
+    "Es va mirar a l'espill."
 
     "tard" (adverbi) mai es toca -- vore docstring del mòdul (RC067):
 

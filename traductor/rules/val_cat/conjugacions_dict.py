@@ -159,7 +159,18 @@ EXCLUSIONS_HOMOGRAF = {"germanes"}
 # entrenat en català central) etiqueta de manera no fiable com a "PROPN"
 # o "ADJ" perque mai les ha vist en valencia -- es confia sempre en la
 # taula per a estes, ignorant `tok.pos`.
-SEMPRE_VERB = {"sigut", "siga", "haja", "vinga", "traure"}
+#
+# "eixir" afegit 16/10/2026: exposat migrant el lèxic general a
+# `lexico_general.json` (vore hoja_de_ruta_migracio_diccionarios_v1.md),
+# que ja no porta l'infinitiu "eixir"->"sortir" com abans (ara nomes a
+# `verbos_diferentes_conjugados.json`, encara sense integrar). Sense la
+# xarxa de seguretat del lèxic general, va quedar al descobert que spaCy
+# etiqueta "l'eixir" (infinitiu nominalitzat, "a l'eixir" = "en eixir")
+# com a NOUN, no VERB/AUX -- confirmat directament
+# (`pos_tagger.etiqueta()` dona NOUN per a eixe token en
+# "A l'eixir carrec la caixa."). "eixir" mai és un nom comú de veres als
+# dos dialectes, sense risc de col·lisio real.
+SEMPRE_VERB = {"sigut", "siga", "haja", "vinga", "traure", "eixir"}
 
 # Vore docstring del modul ("Col·lisio INDICATIU/SUBJUNTIU en 3a plural,
 # 08/10/2026"): el present i l'imperfet d'indicatiu de la 3a plural NO
@@ -352,7 +363,17 @@ class ConjugacionsDictRule:
             if tok.is_translated or tok.is_proper_noun:
                 continue
             minuscules = tok.surface.lower()
-            if tok.pos and tok.pos not in ("VERB", "AUX") and minuscules not in SEMPRE_VERB:
+            prefix_resta = separa_prefix_elidit(tok.surface)
+            # Comprova SEMPRE_VERB contra la superfície TAL QUAL i, si en
+            # porta, contra la paraula sense el prefix elidit (16/10/2026,
+            # bug real trobat amb "eixir": "l'eixir" mai coincidia amb
+            # "eixir" perque este filtre corria ABANS de separar el
+            # prefix -- cap de les 5 formes anteriors de SEMPRE_VERB
+            # començava en vocal, per això no s'havia vist fins ara).
+            es_sempre_verb = minuscules in SEMPRE_VERB or (
+                prefix_resta is not None and prefix_resta[1].lower() in SEMPRE_VERB
+            )
+            if tok.pos and tok.pos not in ("VERB", "AUX") and not es_sempre_verb:
                 continue
             forma = self._lookup.get(minuscules)
             if forma is not None:
@@ -360,7 +381,6 @@ class ConjugacionsDictRule:
                 tok.is_translated = True
                 corregeix_elisio_de_abans(tokens, i)
                 continue
-            prefix_resta = separa_prefix_elidit(tok.surface)
             if prefix_resta is not None:
                 prefix, resta = prefix_resta
                 forma = self._lookup.get(resta.lower())

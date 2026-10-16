@@ -145,13 +145,21 @@ class FontSpec:
 
 FONTS: list[FontSpec] = [
     FontSpec(
-        # 05/10/2026: "unificado.json" substituix "lexico_general_limpio.json"
-        # -- és quasi un superconjunt (610 de les 611 entrades antigues hi
-        # són, només falta "huitantena/vuitantena"; + 860 entrades noves).
-        # L'única perduda coneguda es documenta ací a propòsit, no
-        # s'afig a mà sense deixar rastre.
+        # 16/10/2026: "diccionarios_v1/lexico_general.json" substituix
+        # "unificado.json" -- primera entrega de Mauricio amb categoria
+        # gramatical real (camp "categoria") i resolucio de colisions
+        # explicita (camp "canonica", "problema", "id_colision"). Mesurat
+        # abans de canviar (vore documentacio/hoja_de_ruta_migracio_diccionarios_v1.md):
+        # net +175 entrades (1.027->1.202 tras els mateixos filtres),
+        # nomes ~10 paraules realment perdudes (<1%), 1 millora real
+        # confirmada ("hereua"->"hereva", abans "hereu" amb gènere mal
+        # aparellat). NO inclou encara numerals complets (falten ordinals,
+        # vore numerals_mauricio.json que es queda com estava) ni
+        # possessius (0 cobertura) ni accentuacio (695 parelles tipo
+        # "francés"/"francès" no vistos) -- eixes 3 peces es queden amb
+        # la font vella fins que arriben en una entrega futura.
         dest="lexic_mauricio.json",
-        font=MAURICIO / "unificado.json",
+        font=MAURICIO / "diccionarios_v1" / "lexico_general.json",
         entrades=lambda d: d,
     ),
     FontSpec(
