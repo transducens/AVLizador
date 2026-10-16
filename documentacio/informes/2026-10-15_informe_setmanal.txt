@@ -1,0 +1,90 @@
+INFORME SEMANAL - AVLIZADOR (traductor dialectal valenciano-catalan)
+Semana del 13 al 15 de octubre de 2026
+
+1. NOVEDADES DE LA SEMANA
+
+- Se ha construido desde cero la direccion catalan->valenciano, que el
+proyecto no tenia hasta ahora (solo traducia valenciano->catalan). Parte
+de la misma base de datos linguisticos que la direccion original.
+Resultado actual: 116 de 151 frases exactas del banco de pruebas (76,8%),
+BLEU 98,08.
+- Se ha completado y cerrado la reorganizacion del repositorio, en marcha
+desde hacia semanas: se ha fusionado a la rama principal y subido al
+repositorio de forma definitiva. El proyecto queda con una estructura de
+carpetas clara y mantenible, sin cambios pendientes de confirmar en este
+frente.
+- Se ha creado una metrica propia nueva, el "Indice de Pureza Dialectal"
+(IPD): dado un texto cualquiera, calcula que porcentaje de sus palabras
+caracteristicas son valencianas frente a catalanas. Se ha validado contra
+tres fuentes de datos de tamano creciente: el banco de 151 frases, un
+dataset publico de 1.958 frases, y esta misma semana contra el corpus
+completo del Boletin Oficial del Estado (267.962 documentos reales, el
+conjunto de datos mas grande disponible para el proyecto).
+- Al validar el IPD contra el BOE completo, el primer resultado (0,81 de
+pureza en el lado valenciano) salia notablemente mas bajo que en los
+otros dos bancos de prueba (0,90-0,93). Investigando el detalle se
+confirmo un problema real, aunque no en el traductor: dos palabras muy
+frecuentes ("que" y "aco") resultan ser mal indicador de dialecto en
+textos institucionales de este tipo, aunque el traductor las sigue
+traduciendo bien cuando hace falta. Corregida la metrica (no el
+traductor, son dos cosas independientes), el resultado sobre el BOE
+completo sube a 0,92, en linea con los otros dos bancos de prueba.
+- Se han corregido dos errores reales mas en el diccionario del
+traductor, encontrados en la misma revision del BOE: una palabra que se
+traducia confundiendo un sustantivo con un adverbio distinto ("vesprada"
+con "tard"), y otra que cambiaba el genero gramatical de la palabra sin
+ajustar el resto de la frase ("ensenyanca" a "ensenyament"). Las dos ya
+estan corregidas y verificadas sin ninguna regresion.
+- Se ha retirado un modulo del motor (en las dos direcciones) que solo
+acertaba memorizando el texto exacto del banco de pruebas, sin funcionar
+con ninguna frase nueva - el propio equipo lo detecto al cuestionar si de
+verdad generalizaba. Esto hizo bajar el porcentaje de aciertos medido
+(de 120/123 sobre 151 a 115/116), pero refleja la capacidad real del
+motor en vez de una cifra inflada por memorizacion.
+
+
+2. TAREAS EN LAS QUE HEMOS AVANZADO
+
+- Auditoria completa de una guia normativa de referencia (fuente
+academica citada en el proyecto) para encontrar nuevas reglas
+dialectales que implementar: de 4 reglas candidatas evaluadas contra
+datos reales (el banco de pruebas y el dataset publico de 1.958 frases),
+solo 1 resulto tener uso real suficiente para implementarse - las otras
+3 se midieron y se descartaron con evidencia, evitando introducir reglas
+que sonaban bien en teoria pero no se cumplian en la practica.
+- Exploracion de una linea de trabajo nueva: construir traductores
+completos castellano<->valenciano y valenciano<->ingles, reutilizando
+este proyecto como base (aplicando el traductor dialectal sobre corpus
+catalan-X ya existentes, o usando datos nativos cuando los hay). Esta
+semana se han identificado y conseguido varios datasets publicos reales:
+tres fuentes de castellano-valenciano (mas de 80.000 pares de frases
+combinados) y la primera fuente real de valenciano-ingles que tiene el
+proyecto. Se ha decidido que este desarrollo viva en un repositorio
+nuevo y separado del traductor dialectal actual, que lo reutilizara como
+herramienta de base.
+
+
+3. TAREAS PENDIENTES
+
+- Completar la clasificacion manual del diccionario del traductor (en
+curso por un colaborador externo, Mauricio) antes de ampliar varias
+reglas que dependen de esa clasificacion.
+- Investigar si la ambiguedad gramatical indicativo/subjuntivo (ya
+corregida en valenciano->catalan para un caso concreto) aparece tambien
+en mas casos gramaticales, usando el corpus completo del BOE como
+evidencia - mismo criterio de no generalizar ninguna regla sin evidencia
+real.
+- Repetir en el cluster de computacion de la universidad la validacion
+combinada motor + capa de IA tras los ultimos ajustes del motor, para
+confirmar si el record anterior (129 de 151, 85,4%) se mantiene con la
+base actual.
+- Retomar la capa de IA para la direccion catalan->valenciano (un primer
+intento no dio buenos resultados; ya identificado por que y como
+corregirlo para un segundo intento).
+- Avanzar en el desarrollo del nuevo proyecto de traductores
+castellano-valenciano y valenciano-ingles cuando convenga priorizarlo.
+
+
+4. ASUNTOS URGENTES
+
+- No hay incidencias bloqueantes esta semana.
