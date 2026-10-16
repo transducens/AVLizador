@@ -78,7 +78,6 @@ from .. import (
 
 _DATA = Path(__file__).resolve().parent.parent.parent / "data"
 MAURICIO_PATH = _DATA / "lexic_mauricio.json"
-ACENTUACIO_MAURICIO_PATH = _DATA / "lexic_acentuacio_mauricio.json"
 FLEXIO_GENERE_PATH = _DATA / "flexio_genere_avl.json"
 CANVI_GENERE_PATH = _DATA / "canvi_genere_lexic_avl.json"
 
@@ -138,6 +137,52 @@ _CATEGORIES_LEXIC_GENERAL = {"n", "adj", "adv", "cnjadv", "pr", "ij", "prn"}
 _LEXIC_PERDUT_RESTAURAT_CAT = {
     "empentar": "espentar",
     "rentar": "llavar",
+}
+
+# Ordinals bàsics 5é/7é/9é/10é en sentit adjectiu (16/10/2026, RC144):
+# `lexico_general.json` SÍ te l'entrada correcta ("cinqué"->"cinquè" amb
+# `canonica: true`, colisionant amb una altra entrada "cinqué"->"cinqué"
+# sentit nom, `canonica: false`) -- `_carrega_mauricio_lexic` (val->cat)
+# la resol be triant la `canonica`, pero `_invertix_sense_ambiguitat`
+# (agrupa per CATALAN) exclou "cinquè" sencer perque, mirat des d'eixe
+# costat, hi ha mes d'un candidat valencià real. Mateix patró de
+# conservadorisme ja documentat (preferix fals negatiu), restaurat a mà
+# amb l'evidencia d'esta regressió real.
+_ORDINALS_BASICS_PERDUTS_CAT = {
+    "cinquè": "cinqué",
+    "sisè": "sisé",
+    "setè": "seté",
+    "novè": "nové",
+}
+
+# Ordinals masculins singulars en "-è", sentit invers (16/10/2026, vore
+# `rules/val_cat/lexic.py::_ORDINALS_PERDUTS` per a l'evidència completa).
+_ORDINALS_PERDUTS_CAT = {
+    "divuitè": "dihuitè",
+    "vuitens": "huitens",
+    "vuitè": "huitè",
+    "vint-i-vuitè": "vint-i-huitè",
+    "trenta-vuitè": "trenta-huitè",
+    "quaranta-vuitè": "quaranta-huitè",
+    "cinquanta-vuitè": "cinquanta-huitè",
+    "seixanta-vuitè": "seixanta-huitè",
+    "setanta-vuitè": "setanta-huitè",
+    "noranta-vuitè": "noranta-huitè",
+    "vuitanta-unè": "huitanta-unè",
+    "vuitanta-dosè": "huitanta-dosè",
+    "vuitanta-tresè": "huitanta-tresè",
+    "vuitanta-quatrè": "huitanta-quatrè",
+    "vuitanta-cinquè": "huitanta-cinquè",
+    "vuitanta-sisè": "huitanta-sisè",
+    "vuitanta-setè": "huitanta-setè",
+    "vuitanta-vuitè": "huitanta-huitè",
+    "vuitanta-novè": "huitanta-novè",
+    "vuitantenes": "huitantenes",
+    "vuit-centè": "huit-centè",
+    "vuitantena": "huitantena",
+    "vuitantè": "huitantè",
+    "dinovè": "denovè",
+    "dissetè": "dessetè",
 }
 
 
@@ -239,22 +284,6 @@ def carrega_canvis_genere_invers(
     return resultat
 
 
-def _carrega_acentuacio_invers(path: Path) -> dict[str, str]:
-    dades = json.loads(path.read_text(encoding="utf-8"))
-    entrades: list[tuple[str, str]] = []
-    for entrada in dades:
-        valenciano = entrada.get("valenciano", "").strip()
-        catalan = entrada.get("catalan", "").strip()
-        if not valenciano or not catalan or " " in valenciano or " " in catalan:
-            continue
-        if valenciano.lower() == catalan.lower():
-            continue
-        if catalan.lower() in _BUG_DADES_CONEGUTS_CAT:
-            continue
-        entrades.append((valenciano.lower(), catalan.lower()))
-    return _invertix_sense_ambiguitat(entrades)
-
-
 def _deriva_genere_nombre_invers(masc_cat: str, masc_val: str) -> dict[str, str]:
     """Mirall invers de `_deriva_genere_nombre` de `rules/val_cat/lexic.py`.
 
@@ -283,12 +312,12 @@ def _carrega_flexio_genere_invers(path: Path = FLEXIO_GENERE_PATH) -> dict[str, 
 
 def carrega_lexic_invers(
     mauricio_path: Path = MAURICIO_PATH,
-    acentuacio_path: Path = ACENTUACIO_MAURICIO_PATH,
     flexio_genere_path: Path = FLEXIO_GENERE_PATH,
 ) -> dict[str, str]:
-    """Fusiona el lèxic general, el d'accentuació i la flexió de gènere
-    en sentit invers (el primer que definix una paraula guanya, mateixa
-    prioritat que `rules/val_cat/lexic.py`).
+    """Fusiona el lèxic general i la flexió de gènere en sentit invers
+    (el primer que definix una paraula guanya, mateixa prioritat que
+    `rules/val_cat/lexic.py`). La capa d'accentuació a banda es va
+    retirar 16/10/2026 -- vore docstring de `rules/val_cat/lexic.py`.
 
     >>> lookup = carrega_lexic_invers()
     >>> lookup["nen"]
@@ -307,16 +336,21 @@ def carrega_lexic_invers(
     False
     >>> lookup["empentar"]
     'espentar'
+    >>> lookup["vuitè"]
+    'huitè'
     """
     lookup: dict[str, str] = {}
     for carregador, path in (
         (_carrega_flexio_genere_invers, flexio_genere_path),
         (_carrega_mauricio_lexic_invers, mauricio_path),
-        (_carrega_acentuacio_invers, acentuacio_path),
     ):
         for cat, val in carregador(path).items():
             lookup.setdefault(cat, val)
     for cat, val in _LEXIC_PERDUT_RESTAURAT_CAT.items():
+        lookup.setdefault(cat, val)
+    for cat, val in _ORDINALS_PERDUTS_CAT.items():
+        lookup.setdefault(cat, val)
+    for cat, val in _ORDINALS_BASICS_PERDUTS_CAT.items():
         lookup.setdefault(cat, val)
     return lookup
 
@@ -395,13 +429,12 @@ class LexicInversRule:
     def __init__(
         self,
         mauricio_path: Path = MAURICIO_PATH,
-        acentuacio_path: Path = ACENTUACIO_MAURICIO_PATH,
         flexio_genere_path: Path = FLEXIO_GENERE_PATH,
         frases_path: Path = MAURICIO_PATH,
         canvi_genere_path: Path = CANVI_GENERE_PATH,
         categoria_path: Path = CATEGORIA_GRAMATICAL_PATH,
     ) -> None:
-        self._lookup = carrega_lexic_invers(mauricio_path, acentuacio_path, flexio_genere_path)
+        self._lookup = carrega_lexic_invers(mauricio_path, flexio_genere_path)
         self._categories = carrega_categoria_gramatical(categoria_path)
         frases = carrega_frases_invers(frases_path)
         self._canvis_genere = carrega_canvis_genere_invers(frases, canvi_genere_path)

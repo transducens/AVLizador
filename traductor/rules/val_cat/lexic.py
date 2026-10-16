@@ -1,6 +1,6 @@
 """
 lexic.py -- Capa 1 del pipeline: substitució directa per lèxic diferencial.
-Fusiona 4 fonts, per orde de prioritat quan es contradiuen (la primera que
+Fusiona 3 fonts, per orde de prioritat quan es contradiuen (la primera que
 definix una paraula guanya):
 
     0. TEMPORAL_hui_avui_pendent_fusio.json -- PEGAT TEMPORAL, no una font
@@ -11,21 +11,31 @@ definix una paraula guanya):
        un grapat de paraules CURADES A MÀ (no cap fitxer de Mauricio),
        vore docstring de `_carrega_flexio_genere`.
     2. lexic_mauricio.json            -- lèxic general (còpia de
-       `unificado.json` des de 05/10/2026, abans `lexico_general_limpio.json`),
+       `lexico_general.json` des de 16/10/2026, abans `unificado.json`),
        filtrat: descarta entrades "_PENDENT" (sense verificar), topònims
        (`tipo: "v:top_gva"`, el motor mai els aplicaria -- protegix noms
-       propis), entrades on valencià==català (sense diferència real),
-       valencians de més d'una paraula (esta capa fa lookup d'un sol
-       token), el bug de dades conegut de "després" (vore baix), i
-       qualsevol forma que ja cobrixca `demostratius.py` amb autoritat
-       pròpia (bug real trobat 05/10/2026: "unificado.json" portava
-       `eixa->aqueixa`, tècnicament vàlid pero que ignorava la decisió ja
-       presa de col·lapsar este/eixe/aqueix cap a "aquest" -- vore
+       propis), categories que no pertanyen a esta capa ("num"/"det",
+       vore `_CATEGORIES_LEXIC_GENERAL`), entrades on valencià==català
+       (sense diferència real), valencians de més d'una paraula (esta
+       capa fa lookup d'un sol token), el bug de dades conegut de
+       "després" (vore baix), i qualsevol forma que ja cobrixca
+       `demostratius.py` amb autoritat pròpia (bug real trobat
+       05/10/2026: la font portava `eixa->aqueixa`, tècnicament vàlid
+       pero que ignorava la decisió ja presa de col·lapsar
+       este/eixe/aqueix cap a "aquest" -- vore
        `_formes_demostratius_conegudes`). Quan una mateixa paraula té més
        d'una traducció possible, prioritza la marcada `canonica: true`;
        si cap ho és o n'hi ha més d'una, es queda la primera trobada.
-    3. lexic_acentuacio_mauricio.json -- patrons d'accentuació (còpia de
-       `acentuacion_limpio.json`), 695 parelles.
+
+**Capa d'accentuació RETIRADA (16/10/2026)**: `lexic_acentuacio_mauricio.json`
+(695 parelles, còpia de `acentuacion_limpio.json`) ja no es carrega a
+banda -- mesurat que 681 de les 682 parelles reals (després de filtres)
+ja ixen be NOMÉS amb la categoria "adj" de `lexico_general.json` (p.ex.
+"francés"->"francès" ara ve del lèxic general, no d'un fitxer a banda).
+L'única perduda ("tèlexs"->"tèlexs") no és ni una alternança dialectal
+real. A més, el patró productiu de sufix "-és"->"-ès" ja el cobrix
+`accentuacio.py` de forma general (qualsevol paraula, no nomes les
+enumerades), independentment d'este fitxer -- vore eixe mòdul.
 
 DECISIÓ (30/09/2026): esta capa és sobretot diccionari de Mauricio --
 s'han llevat les fonts Apertium-368, Paula Guerrero i els parells AVL-only
@@ -139,7 +149,6 @@ from .. import (
 
 _DATA = Path(__file__).resolve().parent.parent.parent / "data"
 MAURICIO_PATH = _DATA / "lexic_mauricio.json"
-ACENTUACIO_MAURICIO_PATH = _DATA / "lexic_acentuacio_mauricio.json"
 FLEXIO_GENERE_PATH = _DATA / "flexio_genere_avl.json"
 TEMPORAL_PATH = _DATA / "TEMPORAL_hui_avui_pendent_fusio.json"
 CANVI_GENERE_PATH = _DATA / "canvi_genere_lexic_avl.json"
@@ -198,6 +207,40 @@ _LEXIC_PERDUT_RESTAURAT = {
     "invadir": "envair",
     "i+d": "R+D",
     "i+d+i": "R+D+I",
+}
+
+# Ordinals masculins singulars en "-è" (16/10/2026, vore docstring de
+# `numerals.py`): únic patró real que falta a `lexico_general.json`
+# (categoria "adj") respecte a `numerals_mauricio.json` -- mesurat
+# exhaustivament (153/176 ja coincidixen, nomes estos 25 falten). Van
+# ací, no a `numerals.py`, perquè per categoria gramatical real són
+# ADJECTIUS (ordinals), igual que la resta que ja agafa esta capa.
+_ORDINALS_PERDUTS = {
+    "dihuitè": "divuitè",
+    "huitens": "vuitens",
+    "huitè": "vuitè",
+    "vint-i-huitè": "vint-i-vuitè",
+    "trenta-huitè": "trenta-vuitè",
+    "quaranta-huitè": "quaranta-vuitè",
+    "cinquanta-huitè": "cinquanta-vuitè",
+    "seixanta-huitè": "seixanta-vuitè",
+    "setanta-huitè": "setanta-vuitè",
+    "noranta-huitè": "noranta-vuitè",
+    "huitanta-unè": "vuitanta-unè",
+    "huitanta-dosè": "vuitanta-dosè",
+    "huitanta-tresè": "vuitanta-tresè",
+    "huitanta-quatrè": "vuitanta-quatrè",
+    "huitanta-cinquè": "vuitanta-cinquè",
+    "huitanta-sisè": "vuitanta-sisè",
+    "huitanta-setè": "vuitanta-setè",
+    "huitanta-huitè": "vuitanta-vuitè",
+    "huitanta-novè": "vuitanta-novè",
+    "huitantenes": "vuitantenes",
+    "huit-centè": "vuit-centè",
+    "huitantena": "vuitantena",
+    "huitantè": "vuitantè",
+    "denovè": "dinovè",
+    "dessetè": "dissetè",
 }
 
 
@@ -314,22 +357,6 @@ def _carrega_mauricio_lexic(path: Path) -> dict[str, str]:
     return lookup
 
 
-def _carrega_acentuacio_mauricio(path: Path) -> dict[str, str]:
-    dades = json.loads(path.read_text(encoding="utf-8"))
-    lookup: dict[str, str] = {}
-    for entrada in dades:
-        valenciano = entrada.get("valenciano", "").strip()
-        catalan = entrada.get("catalan", "").strip()
-        if not valenciano or not catalan or " " in valenciano:
-            continue
-        if valenciano.lower() == catalan.lower():
-            continue
-        if valenciano.lower() in _BUG_DADES_CONEGUTS:
-            continue
-        lookup.setdefault(valenciano.lower(), catalan)
-    return lookup
-
-
 def carrega_canvis_genere(path: Path = CANVI_GENERE_PATH) -> dict[str, str]:
     """Llig `canvi_genere_lexic_avl.json`: `{forma_valenciana: "m"|"f"}`
     per a les poques paraules on `LexicRule` canvia el gènere gramatical
@@ -344,11 +371,10 @@ def carrega_canvis_genere(path: Path = CANVI_GENERE_PATH) -> dict[str, str]:
 
 def carrega_lexic(
     mauricio_path: Path = MAURICIO_PATH,
-    acentuacio_path: Path = ACENTUACIO_MAURICIO_PATH,
     flexio_genere_path: Path = FLEXIO_GENERE_PATH,
     temporal_path: Path = TEMPORAL_PATH,
 ) -> dict[str, str]:
-    """Fusiona les 4 fonts documentades al mòdul, per orde de prioritat
+    """Fusiona les 3 fonts documentades al mòdul, per orde de prioritat
     (la primera font que definix una paraula guanya sobre les següents).
 
     >>> lookup = carrega_lexic()
@@ -378,17 +404,20 @@ def carrega_lexic(
     'rentar'
     >>> "alcalde" in lookup
     False
+    >>> lookup["huitè"]
+    'vuitè'
     """
     lookup: dict[str, str] = {}
     for carregador, path in (
         (_carrega_temporal, temporal_path),
         (_carrega_flexio_genere, flexio_genere_path),
         (_carrega_mauricio_lexic, mauricio_path),
-        (_carrega_acentuacio_mauricio, acentuacio_path),
     ):
         for val, cat in carregador(path).items():
             lookup.setdefault(val, cat)
     for val, cat in _LEXIC_PERDUT_RESTAURAT.items():
+        lookup.setdefault(val, cat)
+    for val, cat in _ORDINALS_PERDUTS.items():
         lookup.setdefault(val, cat)
     return lookup
 
@@ -451,12 +480,11 @@ class LexicRule:
     def __init__(
         self,
         mauricio_path: Path = MAURICIO_PATH,
-        acentuacio_path: Path = ACENTUACIO_MAURICIO_PATH,
         flexio_genere_path: Path = FLEXIO_GENERE_PATH,
         temporal_path: Path = TEMPORAL_PATH,
         canvi_genere_path: Path = CANVI_GENERE_PATH,
     ) -> None:
-        self._lookup = carrega_lexic(mauricio_path, acentuacio_path, flexio_genere_path, temporal_path)
+        self._lookup = carrega_lexic(mauricio_path, flexio_genere_path, temporal_path)
         self._canvis_genere = carrega_canvis_genere(canvi_genere_path)
 
     def apply(self, tokens: list[Token]) -> list[Token]:

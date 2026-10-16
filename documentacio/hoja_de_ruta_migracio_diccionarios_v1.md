@@ -210,19 +210,90 @@ composición (RC049 arreglado, RC038 como trade-off defendible).
 (64,7%), +55 frases**, BLEU 88,08→88,89. Mejora real a escala en las dos
 direcciones.
 
+## 4sexies. CORRECCIÓN (16/10/2026, más tarde): numerales y acentuación SÍ se podían migrar casi del todo
+
+Las secciones 4bis/4ter de arriba (numerales "77/176", acentuación "no
+está en la entrega") estaban **mal medidas** — comprobaciones rápidas
+sin pasar por la resolución real de `canonica`, y sin mirar la categoría
+`"adj"` para los ordinales. El usuario preguntó explícitamente "¿no
+deberían bastar los 3 ficheros nuevos?" y al remedir con rigor
+(usando los loaders reales, no atajos) resultó que sí, casi del todo:
+
+- **Ordinales**: los masculinos singulares en "-è" están bajo
+  `categoria: "adj"` (gramaticalmente correcto, un ordinal es un
+  adjetivo), no `"num"` — por eso no aparecían en mi primera
+  comprobación. Combinando `categoria: "adj"` (vía `LexicRule`, que ya
+  corre antes que `NumeralsRule`) + `categoria: "num"`: **153/176
+  cubiertas**, solo 25 huecos reales (un único patrón morfológico: el
+  ordinal masculino singular en "-è" — "huitè", "dihuitè"... — ausente
+  de la entrega, mientras que el femenino "-ena" y los plurales "-ens"/
+  "-enes" sí están).
+- **Acentuación**: remedido con el loader real (`carrega_lexic()`, no
+  una comparación manual de 2-3 palabras sueltas) — **693 de 705 pares
+  reales ya cubiertos** solo con el léxico general migrado. Los 12
+  huecos reales: 8 son locuciones multi-paraula que NINGÚN mecanismo
+  del proyecto soporta (ni el viejo fichero de acentuación las cubría
+  realmente — "vostè mateix" tiene multi-paraula a los DOS lados, fuera
+  del alcance de `carrega_frases_invers`), 1 es "després" (exclusión ya
+  intencional), 1 es "tèlexs" (ni es una diferencia dialectal real), y
+  **4 son un hallazgo real** ("cinquè"/"sisè"/"setè"/"novè" como
+  ordinales básicos) — ver más abajo.
+- **Posesivos**: confirmado de nuevo, con búsqueda exhaustiva en TODAS
+  las categorías — siguen con 0/6 cobertura real, genuinamente ausentes.
+
+**Migración ejecutada**: `numerals.py` (las dos direcciones) ahora lee
+directamente `lexic_mauricio.json` filtrando `categoria == "num"` — ya
+no existen `numerals_mauricio.json` ni su fuente `numerales_limpio.json`.
+La capa de acentuación a banda (`lexic_acentuacio_mauricio.json` /
+`acentuacion_limpio.json`) se **retiró por completo** — el patrón
+productivo de sufijo en `accentuacio.py` (que no depende de ningún
+fichero, cubre CUALQUIER palabra con ese sufijo) sigue intacto como red
+de seguridad independiente.
+
+**Bug real encontrado de paso** (RC144, cat→val): "cinquè"→"cinqué" SÍ
+existe en `lexico_general.json` con `canonica: true` (colisionando con
+otra entrada "cinqué"→"cinqué" de sentido nombre, `canonica: false`) —
+`_carrega_mauricio_lexic()` (val→cat) la resuelve bien con `canonica`,
+pero `_invertix_sense_ambiguitat` (cat→val, agrupa por catalán) la
+excluye por tener más de un candidato valenciano real visto desde ese
+lado — mismo criterio conservador de siempre (prefiere falso negativo),
+pero aquí costaba una regresión real. Restaurados a mano los 4 casos
+("cinquè", "sisè", "setè", "novè") en `_ORDINALS_BASICS_PERDUTS_CAT`.
+
+**Ficheros borrados en esta ronda**: `numerales_limpio.json`,
+`acentuacion_limpio.json` (fuentes), sus copias en `traductor/data/`, y
+`numerals_ordinals_pendent.json` (el de 99 entradas que se creó con el
+análisis incompleto — ya no hace falta, los 25 reales viven embebidos
+en `_ORDINALS_PERDUTS`/`_ORDINALS_PERDUTS_CAT` con su evidencia).
+
+**Lección**: la primera vez NO se verificó con el mismo rigor que el
+resto del proyecto exige (comprobaciones rápidas en vez de pasar por los
+loaders reales) — el usuario tuvo razón en pedir que se revisara otra
+vez antes de descartar nada.
+
 ## Resumen del estado tras hoy (16/10/2026)
 
-Léxico general migrado y verificado en las dos direcciones:
+Léxico general, numerales y acentuación migrados y verificados en las
+dos direcciones:
 
 | | val→cat (151) | val→cat (gplsi) | cat→val (151) | cat→val (gplsi) |
 |---|---|---|---|---|
 | Antes de migrar | 115/151 | 1281/1958 | 116/151 | 1212/1958 |
 | Después de migrar | 115/151 | **1330/1958 (+49)** | 116/151 | **1267/1958 (+55)** |
 
-Numerales (ordinales), posesivos y acentuación siguen con la fuente
-vieja (huecos reales en la entrega nueva, documentados arriba).
-Conjugaciones (`conjugaciones_general.json`/`verbos_diferentes_conjugados.json`)
-sin empezar, bloqueadas hasta tener la explicación de `morfologia`.
+Mismos números en el benchmark curado en las dos rondas de migración
+(léxico general, y después numerales/acentuación) — cero regresión neta
+en ningún punto, verificado con doctests + los 2 benchmarks + gplsi
+completo en cada paso.
+
+**Solo posesivos se queda de verdad con la fuente vieja** (0%
+cobertura, confirmado dos veces). El resto de `lexic/` que queda:
+`posesivos_cat_val.json` (posesivos), las 4 fuentes de conjugaciones
+(`verbos_no_ambiguos.json`, `conjugaciones_limpio.json`,
+`conjugaciones_nuevo.json`, `verbos_todos_anotados.json` — bloqueadas
+hasta la explicación de `morfologia`), y `palabras_traducidas.json`
+(dependencia real de `05_corpus_boe/analizar_corpus.py`, sin relación
+con el traductor).
 
 ## 5. Pendiente de la explicación prometida (NO adivinar mientras tanto)
 

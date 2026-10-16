@@ -1,10 +1,11 @@
 """
-cat_val/numerals.py -- Lookup invers de numerals: el MATEIX
-`traductor/data/numerals_mauricio.json` que fa servir `rules/val_cat/numerals.py`,
-indexat per `catalan`. Cobrix vuitanta->huitanta, divuit->díhuit,
-dinou->dènou... Mateixa exclusió de les 4 files "vuitavat" corruptes al
-fitxer font (vore `rules/val_cat/numerals.py`) -- ara pel costat català, ja que
-les 4 files comparteixen el mateix "vuitavat" com a clau.
+cat_val/numerals.py -- Lookup invers dels CARDINALS (categoria "num" de
+`traductor/data/lexic_mauricio.json`, el MATEIX fitxer que fa servir
+`rules/val_cat/numerals.py`, ara indexat per `catalan`). Cobrix
+vuitanta->huitanta, divuit->díhuit, dinou->dènou... Els ORDINALS
+(categoria "adj") ja els agafa `LexicInversRule` abans que esta regla
+córrega -- vore docstring de `rules/val_cat/numerals.py` per al detall
+complet de la migració (16/10/2026).
 """
 
 from __future__ import annotations
@@ -14,9 +15,7 @@ from pathlib import Path
 
 from .. import Token, preserva_majuscula
 
-MAURICIO_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "numerals_mauricio.json"
-
-_VUITAVAT_EXCLOS = "vuitavat"
+MAURICIO_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "lexic_mauricio.json"
 
 
 def carrega_numerals_invers(path: Path = MAURICIO_PATH) -> dict[str, str]:
@@ -28,16 +27,19 @@ def carrega_numerals_invers(path: Path = MAURICIO_PATH) -> dict[str, str]:
     'díhuit'
     >>> lookup["dinou"]
     'dènou'
-    >>> "vuitavat" in lookup
-    False
     """
     dades = json.loads(Path(path).read_text(encoding="utf-8"))
     lookup: dict[str, str] = {}
     for entrada in dades:
-        catalan = entrada["catalan"].strip().lower()
-        if catalan == _VUITAVAT_EXCLOS:
+        if entrada.get("categoria") != "num":
             continue
-        lookup.setdefault(catalan, entrada["valenciano"].strip())
+        if "PENDENT" in (entrada.get("tipo") or ""):
+            continue
+        valenciano = (entrada.get("valenciano") or "").strip()
+        catalan = (entrada.get("catalan") or "").strip().lower()
+        if not valenciano or not catalan:
+            continue
+        lookup.setdefault(catalan, valenciano)
     return lookup
 
 

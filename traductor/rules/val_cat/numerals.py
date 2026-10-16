@@ -1,24 +1,27 @@
 """
-numerals.py -- Lookup exacte contra `traductor/data/numerals_mauricio.json`
-(còpia de `numerales_limpio.json`, equip AVLizador): cobrix tota la
-família huit/vuit (huitanta->vuitanta, huitanta-huité->vuitanta-vuitè...)
-I les arrels "dinou"/"disset" + derivats ("dènou"->"dinou",
-"denové"->"dinovè"). Inclou "díhuit"->"divuit" (fila 82 del fitxer font)
-sense necessitat de cap cas especial, perquè és lookup exacte, no
-substitució de subcadena.
+numerals.py -- Lookup exacte dels CARDINALS (categoria "num" de
+`traductor/data/lexic_mauricio.json`, còpia de `lexico_general.json`
+de Mauricio, 16/10/2026): huit->vuit, huitanta->vuitanta,
+dènou->dinou... Els ORDINALS (categoria "adj": huitena, huitens...) ja
+els agafa `LexicRule` ABANS que esta regla córrega (vore engine.py) --
+esta capa nomes necessita cobrir els cardinals purs.
 
-Exclusió: 4 files de "vuitavat" al fitxer font semblen una extracció
-trencada (el mateix català "vuitavat" repetit per a 4 valencians
-diferents -- probablement havien de ser les 4 formes de gènere/nombre i es
-va perdre l'alineació); s'exclouen explícitament del lookup.
+Inclou "díhuit"->"divuit" sense necessitat de cap cas especial, perquè
+és lookup exacte, no substitució de subcadena.
 
-DECISIÓ (30/09/2026): s'ha llevat d'ací tot el que NO era lookup exacte de
-Mauricio -- la substitució de subcadena `huit->vuit` (fallback per a
-compostos no enumerats), els ordinals `-é->-è` (taula AVL-only, sense
-fitxer font), i la concordança de gènere `dos/dues` (heurística
-algorítmica). El traductor complet ara és pur lookup de diccionari --
-vore `traductor/README.md` per l'abast i les pèrdues de cobertura que
-això implica (numerals compostos no enumerats, ordinals, "dos/dues").
+Migrat 16/10/2026 des de `numerals_mauricio.json` (vore
+documentacio/hoja_de_ruta_migracio_diccionarios_v1.md): mesurat abans de
+canviar -- de les 176 formes antigues, 153 ja coincidixen via
+`LexicRule` (categoria "adj", ordinals) + esta regla (categoria "num",
+cardinals); nomes 25 (un únic patró, l'ordinal masculí singular en "-è":
+"huitè", "dihuitè"...) falten de veres a la font nova -- restaurades a
+mà en `_ORDINALS_PERDUTS` de `rules/val_cat/lexic.py` (hi pertanyen per
+categoria gramatical real, no ací).
+
+DECISIÓ (30/09/2026, encara vigent): continua sense cap substitució de
+subcadena (`huit->vuit` com a fallback), ni concordança `dos/dues`
+(heurística algorítmica a banda, vore `concordanca_dos_dues.py`). Pur
+lookup de diccionari.
 """
 
 from __future__ import annotations
@@ -28,10 +31,7 @@ from pathlib import Path
 
 from .. import Token, preserva_majuscula
 
-MAURICIO_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "numerals_mauricio.json"
-
-# Vore docstring del mòdul: extracció trencada al fitxer font, s'exclouen.
-_VUITAVAT_EXCLOSOS = {"huitavdes", "huitavda", "huitavts", "huitavt"}
+MAURICIO_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "lexic_mauricio.json"
 
 
 def carrega_numerals(path: Path = MAURICIO_PATH) -> dict[str, str]:
@@ -43,16 +43,19 @@ def carrega_numerals(path: Path = MAURICIO_PATH) -> dict[str, str]:
     'divuit'
     >>> lookup["dènou"]
     'dinou'
-    >>> "huitavdes" in lookup
-    False
     """
     dades = json.loads(Path(path).read_text(encoding="utf-8"))
     lookup: dict[str, str] = {}
     for entrada in dades:
-        valenciano = entrada["valenciano"].strip().lower()
-        if valenciano in _VUITAVAT_EXCLOSOS:
+        if entrada.get("categoria") != "num":
             continue
-        lookup.setdefault(valenciano, entrada["catalan"].strip())
+        if "PENDENT" in (entrada.get("tipo") or ""):
+            continue
+        valenciano = (entrada.get("valenciano") or "").strip().lower()
+        catalan = (entrada.get("catalan") or "").strip()
+        if not valenciano or not catalan:
+            continue
+        lookup.setdefault(valenciano, catalan)
     return lookup
 
 

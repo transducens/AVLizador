@@ -153,23 +153,18 @@ FONTS: list[FontSpec] = [
         # net +175 entrades (1.027->1.202 tras els mateixos filtres),
         # nomes ~10 paraules realment perdudes (<1%), 1 millora real
         # confirmada ("hereua"->"hereva", abans "hereu" amb gènere mal
-        # aparellat). NO inclou encara numerals complets (falten ordinals,
-        # vore numerals_mauricio.json que es queda com estava) ni
-        # possessius (0 cobertura) ni accentuacio (695 parelles tipo
-        # "francés"/"francès" no vistos) -- eixes 3 peces es queden amb
-        # la font vella fins que arriben en una entrega futura.
+        # aparellat).
+        #
+        # Este mateix fitxer ara alimenta TAMBÉ numerals.py (categoria
+        # "num") i l'antiga capa d'accentuació (categoria "adj"/"n",
+        # retirada com a font a banda -- vore docstring de
+        # `rules/val_cat/lexic.py`): ja NO fan falta
+        # "numerals_mauricio.json" ni "lexic_acentuacio_mauricio.json"
+        # com a còpies separades. Possessius (0 cobertura a la font nova)
+        # es queden fora d'esta llista fins que arriben en una entrega
+        # futura -- vore `posesivos_cat_val.json` baix.
         dest="lexic_mauricio.json",
         font=MAURICIO / "diccionarios_v1" / "lexico_general.json",
-        entrades=lambda d: d,
-    ),
-    FontSpec(
-        dest="numerals_mauricio.json",
-        font=MAURICIO / "numerales_limpio.json",
-        entrades=lambda d: d,
-    ),
-    FontSpec(
-        dest="lexic_acentuacio_mauricio.json",
-        font=MAURICIO / "acentuacion_limpio.json",
         entrades=lambda d: d,
     ),
     FontSpec(
