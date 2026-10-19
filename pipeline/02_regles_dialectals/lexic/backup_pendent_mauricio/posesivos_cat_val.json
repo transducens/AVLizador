@@ -1,0 +1,110 @@
+[
+  {
+    "espanol": "mía",
+    "catalan": "meva",
+    "valenciano": "meua",
+    "tipo": "v:lexic_val_avl",
+    "fuente": "avl_equip",
+    "id": "POS001",
+    "categoria": "det"
+  },
+  {
+    "espanol": "mías",
+    "catalan": "meva",
+    "valenciano": "meues",
+    "tipo": "v:lexic_val_avl",
+    "fuente": "avl_equip",
+    "id": "POS002",
+    "categoria": "det"
+  },
+  {
+    "espanol": "mía",
+    "catalan": "meves",
+    "valenciano": "meua",
+    "tipo": "v:lexic_val_avl",
+    "fuente": "avl_equip",
+    "id": "POS003",
+    "categoria": "det"
+  },
+  {
+    "espanol": "mías",
+    "catalan": "meves",
+    "valenciano": "meues",
+    "tipo": "v:lexic_val_avl",
+    "fuente": "avl_equip",
+    "id": "POS004",
+    "categoria": "det"
+  },
+  {
+    "espanol": "suya",
+    "catalan": "seva",
+    "valenciano": "seua",
+    "tipo": "v:lexic_val_avl",
+    "fuente": "avl_equip",
+    "id": "POS005",
+    "categoria": "det"
+  },
+  {
+    "espanol": "suyas",
+    "catalan": "seva",
+    "valenciano": "seues",
+    "tipo": "v:lexic_val_avl",
+    "fuente": "avl_equip",
+    "id": "POS006",
+    "categoria": "det"
+  },
+  {
+    "espanol": "suya",
+    "catalan": "seves",
+    "valenciano": "seua",
+    "tipo": "v:lexic_val_avl",
+    "fuente": "avl_equip",
+    "id": "POS007",
+    "categoria": "det"
+  },
+  {
+    "espanol": "suyas",
+    "catalan": "seves",
+    "valenciano": "seues",
+    "tipo": "v:lexic_val_avl",
+    "fuente": "avl_equip",
+    "id": "POS008",
+    "categoria": "det"
+  },
+  {
+    "espanol": "tuya",
+    "catalan": "teva",
+    "valenciano": "teua",
+    "tipo": "v:lexic_val_avl",
+    "fuente": "avl_equip",
+    "id": "POS009",
+    "categoria": "det"
+  },
+  {
+    "espanol": "tuyas",
+    "catalan": "teva",
+    "valenciano": "teues",
+    "tipo": "v:lexic_val_avl",
+    "fuente": "avl_equip",
+    "id": "POS010",
+    "categoria": "det"
+  },
+  {
+    "espanol": "tuya",
+    "catalan": "teves",
+    "valenciano": "teua",
+    "tipo": "v:lexic_val_avl",
+    "fuente": "avl_equip",
+    "id": "POS011",
+    "categoria": "det"
+  },
+  {
+    "espanol": "tuyas",
+    "catalan": "teves",
+    "valenciano": "teues",
+    "tipo": "v:lexic_val_avl",
+    "fuente": "avl_equip",
+    "id": "POS012",
+    "categoria": "det"
+  }
+]

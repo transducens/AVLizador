@@ -639438,5 +639438,7456 @@
       ]
     ],
     "id": "43242"
+  },
+  {
+    "verbo": "abalançar",
+    "catalan": "abalancessin",
+    "valenciano": "abalançaren",
+    "morfologia": null,
+    "id": "LIMPIO_1"
+  },
+  {
+    "verbo": "abalançar",
+    "catalan": "abalancessis",
+    "valenciano": "abalançares",
+    "morfologia": null,
+    "id": "LIMPIO_2"
+  },
+  {
+    "verbo": "abalançar",
+    "catalan": "abalanci",
+    "valenciano": "abalance",
+    "morfologia": null,
+    "id": "LIMPIO_3",
+    "problematica": true
+  },
+  {
+    "verbo": "abalançar",
+    "catalan": "abalancin",
+    "valenciano": "abalancen",
+    "morfologia": null,
+    "id": "LIMPIO_4"
+  },
+  {
+    "verbo": "abalançar",
+    "catalan": "abalancis",
+    "valenciano": "abalances",
+    "morfologia": null,
+    "id": "LIMPIO_5"
+  },
+  {
+    "verbo": "abalançar",
+    "catalan": "abalancés",
+    "valenciano": "abalançara",
+    "morfologia": null,
+    "id": "LIMPIO_6"
+  },
+  {
+    "verbo": "abalançar",
+    "catalan": "abalancéssim",
+    "valenciano": "abalançàrem",
+    "morfologia": null,
+    "id": "LIMPIO_7"
+  },
+  {
+    "verbo": "abalançar",
+    "catalan": "abalancéssiu",
+    "valenciano": "abalançàreu",
+    "morfologia": null,
+    "id": "LIMPIO_8"
+  },
+  {
+    "verbo": "abalançar",
+    "catalan": "abalanço",
+    "valenciano": "abalance",
+    "morfologia": null,
+    "id": "LIMPIO_9",
+    "problematica": true
+  },
+  {
+    "verbo": "abanderar",
+    "catalan": "abanderessin",
+    "valenciano": "abanderaren",
+    "morfologia": null,
+    "id": "LIMPIO_10"
+  },
+  {
+    "verbo": "abanderar",
+    "catalan": "abanderessis",
+    "valenciano": "abanderares",
+    "morfologia": null,
+    "id": "LIMPIO_11"
+  },
+  {
+    "verbo": "abanderar",
+    "catalan": "abanderi",
+    "valenciano": "abandere",
+    "morfologia": null,
+    "id": "LIMPIO_12",
+    "problematica": true
+  },
+  {
+    "verbo": "abanderar",
+    "catalan": "abanderin",
+    "valenciano": "abanderen",
+    "morfologia": null,
+    "id": "LIMPIO_13"
+  },
+  {
+    "verbo": "abanderar",
+    "catalan": "abanderis",
+    "valenciano": "abanderes",
+    "morfologia": null,
+    "id": "LIMPIO_14"
+  },
+  {
+    "verbo": "abanderar",
+    "catalan": "abandero",
+    "valenciano": "abandere",
+    "morfologia": null,
+    "id": "LIMPIO_15",
+    "problematica": true
+  },
+  {
+    "verbo": "abanderar",
+    "catalan": "abanderés",
+    "valenciano": "abanderara",
+    "morfologia": null,
+    "id": "LIMPIO_16"
+  },
+  {
+    "verbo": "abanderar",
+    "catalan": "abanderéssim",
+    "valenciano": "abanderàrem",
+    "morfologia": null,
+    "id": "LIMPIO_17"
+  },
+  {
+    "verbo": "abanderar",
+    "catalan": "abanderéssiu",
+    "valenciano": "abanderàreu",
+    "morfologia": null,
+    "id": "LIMPIO_18"
+  },
+  {
+    "verbo": "abaratir",
+    "catalan": "abarateixi",
+    "valenciano": "abaratisca",
+    "morfologia": null,
+    "id": "LIMPIO_19"
+  },
+  {
+    "verbo": "abaratir",
+    "catalan": "abarateixin",
+    "valenciano": "abaratisquen",
+    "morfologia": null,
+    "id": "LIMPIO_20"
+  },
+  {
+    "verbo": "abaratir",
+    "catalan": "abarateixis",
+    "valenciano": "abaratisques",
+    "morfologia": null,
+    "id": "LIMPIO_21"
+  },
+  {
+    "verbo": "abaratir",
+    "catalan": "abarateixo",
+    "valenciano": "abaratisc",
+    "morfologia": null,
+    "id": "LIMPIO_22"
+  },
+  {
+    "verbo": "abaratir",
+    "catalan": "abaratissin",
+    "valenciano": "abaratiren",
+    "morfologia": null,
+    "id": "LIMPIO_23"
+  },
+  {
+    "verbo": "abaratir",
+    "catalan": "abaratissis",
+    "valenciano": "abaratires",
+    "morfologia": null,
+    "id": "LIMPIO_24"
+  },
+  {
+    "verbo": "abaratir",
+    "catalan": "abaratís",
+    "valenciano": "abaratira",
+    "morfologia": null,
+    "id": "LIMPIO_25"
+  },
+  {
+    "verbo": "abaratir",
+    "catalan": "abaratíssim",
+    "valenciano": "abaratírem",
+    "morfologia": null,
+    "id": "LIMPIO_26"
+  },
+  {
+    "verbo": "abaratir",
+    "catalan": "abaratíssiu",
+    "valenciano": "abaratíreu",
+    "morfologia": null,
+    "id": "LIMPIO_27"
+  },
+  {
+    "verbo": "abatre",
+    "catalan": "abatessin",
+    "valenciano": "abateren",
+    "morfologia": null,
+    "id": "LIMPIO_28"
+  },
+  {
+    "verbo": "abatre",
+    "catalan": "abatessis",
+    "valenciano": "abateres",
+    "morfologia": null,
+    "id": "LIMPIO_29"
+  },
+  {
+    "verbo": "abatre",
+    "catalan": "abati",
+    "valenciano": "abata",
+    "morfologia": null,
+    "id": "LIMPIO_30"
+  },
+  {
+    "verbo": "abatre",
+    "catalan": "abatin",
+    "valenciano": "abaten",
+    "morfologia": null,
+    "id": "LIMPIO_31"
+  },
+  {
+    "verbo": "abatre",
+    "catalan": "abatis",
+    "valenciano": "abates",
+    "morfologia": null,
+    "id": "LIMPIO_32"
+  },
+  {
+    "verbo": "abatre",
+    "catalan": "abatés",
+    "valenciano": "abatera",
+    "morfologia": null,
+    "id": "LIMPIO_33"
+  },
+  {
+    "verbo": "abatre",
+    "catalan": "abatéssim",
+    "valenciano": "abatérem",
+    "morfologia": null,
+    "id": "LIMPIO_34"
+  },
+  {
+    "verbo": "abatre",
+    "catalan": "abatéssiu",
+    "valenciano": "abatéreu",
+    "morfologia": null,
+    "id": "LIMPIO_35"
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboco",
+    "valenciano": "aboque",
+    "morfologia": null,
+    "id": "LIMPIO_36",
+    "problematica": true
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboquessin",
+    "valenciano": "abocaren",
+    "morfologia": null,
+    "id": "LIMPIO_37"
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboquessis",
+    "valenciano": "abocares",
+    "morfologia": null,
+    "id": "LIMPIO_38"
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboqueu",
+    "valenciano": "abocau",
+    "morfologia": null,
+    "id": "LIMPIO_39"
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboqui",
+    "valenciano": "aboque",
+    "morfologia": null,
+    "id": "LIMPIO_40",
+    "problematica": true
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboquin",
+    "valenciano": "aboquen",
+    "morfologia": null,
+    "id": "LIMPIO_41"
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboquis",
+    "valenciano": "aboques",
+    "morfologia": null,
+    "id": "LIMPIO_42"
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboqués",
+    "valenciano": "abocara",
+    "morfologia": null,
+    "id": "LIMPIO_43"
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboquéssim",
+    "valenciano": "abocàrem",
+    "morfologia": null,
+    "id": "LIMPIO_44"
+  },
+  {
+    "verbo": "abocar",
+    "catalan": "aboquéssiu",
+    "valenciano": "abocàreu",
+    "morfologia": null,
+    "id": "LIMPIO_45"
+  },
+  {
+    "verbo": "aboiar",
+    "catalan": "aboiessin",
+    "valenciano": "aboiaren",
+    "morfologia": null,
+    "id": "LIMPIO_46"
+  },
+  {
+    "verbo": "aboiar",
+    "catalan": "aboiessis",
+    "valenciano": "aboiares",
+    "morfologia": null,
+    "id": "LIMPIO_47"
+  },
+  {
+    "verbo": "aboiar",
+    "catalan": "aboio",
+    "valenciano": "aboie",
+    "morfologia": null,
+    "id": "LIMPIO_48",
+    "problematica": true
+  },
+  {
+    "verbo": "aboiar",
+    "catalan": "aboiés",
+    "valenciano": "aboiara",
+    "morfologia": null,
+    "id": "LIMPIO_49"
+  },
+  {
+    "verbo": "aboiar",
+    "catalan": "aboiéssim",
+    "valenciano": "aboiàrem",
+    "morfologia": null,
+    "id": "LIMPIO_50"
+  },
+  {
+    "verbo": "aboiar",
+    "catalan": "aboiéssiu",
+    "valenciano": "aboiàreu",
+    "morfologia": null,
+    "id": "LIMPIO_51"
+  },
+  {
+    "verbo": "aboiar",
+    "catalan": "aboï",
+    "valenciano": "aboie",
+    "morfologia": null,
+    "id": "LIMPIO_52",
+    "problematica": true
+  },
+  {
+    "verbo": "aboiar",
+    "catalan": "aboïn",
+    "valenciano": "aboien",
+    "morfologia": null,
+    "id": "LIMPIO_53"
+  },
+  {
+    "verbo": "aboiar",
+    "catalan": "aboïs",
+    "valenciano": "aboies",
+    "morfologia": null,
+    "id": "LIMPIO_54"
+  },
+  {
+    "verbo": "abolir",
+    "catalan": "abolissin",
+    "valenciano": "aboliren",
+    "morfologia": null,
+    "id": "LIMPIO_55"
+  },
+  {
+    "verbo": "abolir",
+    "catalan": "abolissis",
+    "valenciano": "abolires",
+    "morfologia": null,
+    "id": "LIMPIO_56"
+  },
+  {
+    "verbo": "abolir",
+    "catalan": "abolís",
+    "valenciano": "abolira",
+    "morfologia": null,
+    "id": "LIMPIO_57"
+  },
+  {
+    "verbo": "abolir",
+    "catalan": "abolíssim",
+    "valenciano": "abolírem",
+    "morfologia": null,
+    "id": "LIMPIO_58"
+  },
+  {
+    "verbo": "abolir",
+    "catalan": "abolíssiu",
+    "valenciano": "abolíreu",
+    "morfologia": null,
+    "id": "LIMPIO_59"
+  },
+  {
+    "verbo": "absoldre",
+    "catalan": "absolguessin",
+    "valenciano": "absolgueren",
+    "morfologia": null,
+    "id": "LIMPIO_60"
+  },
+  {
+    "verbo": "absoldre",
+    "catalan": "absolguessis",
+    "valenciano": "absolgueres",
+    "morfologia": null,
+    "id": "LIMPIO_61"
+  },
+  {
+    "verbo": "absoldre",
+    "catalan": "absolgui",
+    "valenciano": "absolga",
+    "morfologia": null,
+    "id": "LIMPIO_62"
+  },
+  {
+    "verbo": "absoldre",
+    "catalan": "absolguin",
+    "valenciano": "absolguen",
+    "morfologia": null,
+    "id": "LIMPIO_63"
+  },
+  {
+    "verbo": "absoldre",
+    "catalan": "absolguis",
+    "valenciano": "absolgues",
+    "morfologia": null,
+    "id": "LIMPIO_64"
+  },
+  {
+    "verbo": "absoldre",
+    "catalan": "absolgués",
+    "valenciano": "absolguera",
+    "morfologia": null,
+    "id": "LIMPIO_65"
+  },
+  {
+    "verbo": "absoldre",
+    "catalan": "absolguéssim",
+    "valenciano": "absolguérem",
+    "morfologia": null,
+    "id": "LIMPIO_66"
+  },
+  {
+    "verbo": "absoldre",
+    "catalan": "absolguéssiu",
+    "valenciano": "absolguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_67"
+  },
+  {
+    "verbo": "abstenir",
+    "catalan": "abstinguessin",
+    "valenciano": "abstingueren",
+    "morfologia": null,
+    "id": "LIMPIO_68"
+  },
+  {
+    "verbo": "abstenir",
+    "catalan": "abstinguessis",
+    "valenciano": "abstingueres",
+    "morfologia": null,
+    "id": "LIMPIO_69"
+  },
+  {
+    "verbo": "abstenir",
+    "catalan": "abstingui",
+    "valenciano": "abstinga",
+    "morfologia": null,
+    "id": "LIMPIO_70"
+  },
+  {
+    "verbo": "abstenir",
+    "catalan": "abstinguin",
+    "valenciano": "abstinguen",
+    "morfologia": null,
+    "id": "LIMPIO_71"
+  },
+  {
+    "verbo": "abstenir",
+    "catalan": "abstinguis",
+    "valenciano": "abstingues",
+    "morfologia": null,
+    "id": "LIMPIO_72"
+  },
+  {
+    "verbo": "abstenir",
+    "catalan": "abstingués",
+    "valenciano": "abstinguera",
+    "morfologia": null,
+    "id": "LIMPIO_73"
+  },
+  {
+    "verbo": "abstenir",
+    "catalan": "abstinguéssim",
+    "valenciano": "abstinguérem",
+    "morfologia": null,
+    "id": "LIMPIO_74"
+  },
+  {
+    "verbo": "abstenir",
+    "catalan": "abstinguéssiu",
+    "valenciano": "abstinguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_75"
+  },
+  {
+    "verbo": "acariciar",
+    "catalan": "acariciessin",
+    "valenciano": "acariciaren",
+    "morfologia": null,
+    "id": "LIMPIO_76"
+  },
+  {
+    "verbo": "acariciar",
+    "catalan": "acariciessis",
+    "valenciano": "acariciares",
+    "morfologia": null,
+    "id": "LIMPIO_77"
+  },
+  {
+    "verbo": "acariciar",
+    "catalan": "acaricio",
+    "valenciano": "acaricie",
+    "morfologia": null,
+    "id": "LIMPIO_78",
+    "problematica": true
+  },
+  {
+    "verbo": "acariciar",
+    "catalan": "acariciés",
+    "valenciano": "acariciara",
+    "morfologia": null,
+    "id": "LIMPIO_79"
+  },
+  {
+    "verbo": "acariciar",
+    "catalan": "acariciéssim",
+    "valenciano": "acariciàrem",
+    "morfologia": null,
+    "id": "LIMPIO_80"
+  },
+  {
+    "verbo": "acariciar",
+    "catalan": "acariciéssiu",
+    "valenciano": "acariciàreu",
+    "morfologia": null,
+    "id": "LIMPIO_81"
+  },
+  {
+    "verbo": "acariciar",
+    "catalan": "acariciï",
+    "valenciano": "acaricie",
+    "morfologia": null,
+    "id": "LIMPIO_82",
+    "problematica": true
+  },
+  {
+    "verbo": "acariciar",
+    "catalan": "acariciïn",
+    "valenciano": "acaricien",
+    "morfologia": null,
+    "id": "LIMPIO_83"
+  },
+  {
+    "verbo": "acariciar",
+    "catalan": "acariciïs",
+    "valenciano": "acaricies",
+    "morfologia": null,
+    "id": "LIMPIO_84"
+  },
+  {
+    "verbo": "acollir",
+    "catalan": "acollissin",
+    "valenciano": "acolliren",
+    "morfologia": null,
+    "id": "LIMPIO_85"
+  },
+  {
+    "verbo": "acollir",
+    "catalan": "acollissis",
+    "valenciano": "acollires",
+    "morfologia": null,
+    "id": "LIMPIO_86"
+  },
+  {
+    "verbo": "acollir",
+    "catalan": "acollís",
+    "valenciano": "acollira",
+    "morfologia": null,
+    "id": "LIMPIO_87"
+  },
+  {
+    "verbo": "acollir",
+    "catalan": "acollíssim",
+    "valenciano": "acollírem",
+    "morfologia": null,
+    "id": "LIMPIO_88"
+  },
+  {
+    "verbo": "acollir",
+    "catalan": "acollíssiu",
+    "valenciano": "acollíreu",
+    "morfologia": null,
+    "id": "LIMPIO_89"
+  },
+  {
+    "verbo": "acollir",
+    "catalan": "aculli",
+    "valenciano": "aculla",
+    "morfologia": null,
+    "id": "LIMPIO_90"
+  },
+  {
+    "verbo": "acollir",
+    "catalan": "acullin",
+    "valenciano": "acullen",
+    "morfologia": null,
+    "id": "LIMPIO_91"
+  },
+  {
+    "verbo": "acollir",
+    "catalan": "acullis",
+    "valenciano": "aculles",
+    "morfologia": null,
+    "id": "LIMPIO_92"
+  },
+  {
+    "verbo": "acollir",
+    "catalan": "acullo",
+    "valenciano": "acull",
+    "morfologia": null,
+    "id": "LIMPIO_93"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acompleixi",
+    "valenciano": "acomplisca",
+    "morfologia": null,
+    "id": "LIMPIO_94"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acompleixin",
+    "valenciano": "acomplisquen",
+    "morfologia": null,
+    "id": "LIMPIO_95"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acompleixis",
+    "valenciano": "acomplisques",
+    "morfologia": null,
+    "id": "LIMPIO_96"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acompleixo",
+    "valenciano": "acomplisc",
+    "morfologia": null,
+    "id": "LIMPIO_97"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acomplert",
+    "valenciano": "acomplit",
+    "morfologia": null,
+    "id": "LIMPIO_98"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acomplerta",
+    "valenciano": "acomplida",
+    "morfologia": null,
+    "id": "LIMPIO_99"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acomplertes",
+    "valenciano": "acomplides",
+    "morfologia": null,
+    "id": "LIMPIO_100"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acomplerts",
+    "valenciano": "acomplits",
+    "morfologia": null,
+    "id": "LIMPIO_101"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acomplissin",
+    "valenciano": "acompliren",
+    "morfologia": null,
+    "id": "LIMPIO_102"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acomplissis",
+    "valenciano": "acomplires",
+    "morfologia": null,
+    "id": "LIMPIO_103"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acomplís",
+    "valenciano": "acomplira",
+    "morfologia": null,
+    "id": "LIMPIO_104"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acomplíssim",
+    "valenciano": "acomplírem",
+    "morfologia": null,
+    "id": "LIMPIO_105"
+  },
+  {
+    "verbo": "acomplir",
+    "catalan": "acomplíssiu",
+    "valenciano": "acomplíreu",
+    "morfologia": null,
+    "id": "LIMPIO_106"
+  },
+  {
+    "verbo": "acréixer",
+    "catalan": "acreixem",
+    "valenciano": "acresquem",
+    "morfologia": [
+      "prs",
+      "p1",
+      "pl"
+    ],
+    "id": "LIMPIO_107"
+  },
+  {
+    "verbo": "acréixer",
+    "catalan": "acreixeren",
+    "valenciano": "acresqueren",
+    "morfologia": null,
+    "id": "LIMPIO_108",
+    "problematica": true
+  },
+  {
+    "verbo": "acréixer",
+    "catalan": "acreixeres",
+    "valenciano": "acresqueres",
+    "morfologia": null,
+    "id": "LIMPIO_109",
+    "problematica": true
+  },
+  {
+    "verbo": "acréixer",
+    "catalan": "acreixessin",
+    "valenciano": "acresqueren",
+    "morfologia": null,
+    "id": "LIMPIO_110",
+    "problematica": true
+  },
+  {
+    "verbo": "acréixer",
+    "catalan": "acreixessis",
+    "valenciano": "acresqueres",
+    "morfologia": null,
+    "id": "LIMPIO_111",
+    "problematica": true
+  },
+  {
+    "verbo": "acréixer",
+    "catalan": "acreixeu",
+    "valenciano": "acresqueu",
+    "morfologia": [
+      "prs",
+      "p2",
+      "pl"
+    ],
+    "id": "LIMPIO_112"
+  },
+  {
+    "verbo": "acréixer",
+    "catalan": "acreixi",
+    "valenciano": "acresca",
+    "morfologia": [
+      [
+        "imp",
+        "p3",
+        "sg"
+      ],
+      [
+        "prs",
+        "p1",
+        "sg"
+      ],
+      [
+        "prs",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_113"
+  },
+  {
+    "verbo": "acréixer",
+    "catalan": "acreixin",
+    "valenciano": "acresquen",
+    "morfologia": null,
+    "id": "LIMPIO_114"
+  },
+  {
+    "verbo": "acréixer",
+    "catalan": "acreixis",
+    "valenciano": "acresques",
+    "morfologia": [
+      "prs",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_115"
+  },
+  {
+    "verbo": "acréixer",
+    "catalan": "acreixo",
+    "valenciano": "acresc",
+    "morfologia": [
+      "pri",
+      "p1",
+      "sg"
+    ],
+    "id": "LIMPIO_116"
+  },
+  {
+    "verbo": "acréixer",
+    "catalan": "acreixé",
+    "valenciano": "acresqué",
+    "morfologia": null,
+    "id": "LIMPIO_117"
+  },
+  {
+    "verbo": "acréixer",
+    "catalan": "acreixérem",
+    "valenciano": "acresquérem",
+    "morfologia": null,
+    "id": "LIMPIO_118",
+    "problematica": true
+  },
+  {
+    "verbo": "acréixer",
+    "catalan": "acreixéreu",
+    "valenciano": "acresquéreu",
+    "morfologia": null,
+    "id": "LIMPIO_119",
+    "problematica": true
+  },
+  {
+    "verbo": "acréixer",
+    "catalan": "acreixés",
+    "valenciano": "acresquera",
+    "morfologia": [
+      "pis",
+      "p3",
+      "sg"
+    ],
+    "id": "LIMPIO_120"
+  },
+  {
+    "verbo": "acréixer",
+    "catalan": "acreixéssim",
+    "valenciano": "acresquérem",
+    "morfologia": null,
+    "id": "LIMPIO_121",
+    "problematica": true
+  },
+  {
+    "verbo": "acréixer",
+    "catalan": "acreixéssiu",
+    "valenciano": "acresquéreu",
+    "morfologia": null,
+    "id": "LIMPIO_122",
+    "problematica": true
+  },
+  {
+    "verbo": "acréixer",
+    "catalan": "acreixí",
+    "valenciano": "acresquí",
+    "morfologia": null,
+    "id": "LIMPIO_123"
+  },
+  {
+    "verbo": "adduir",
+    "catalan": "addueixi",
+    "valenciano": "adduïsca",
+    "morfologia": null,
+    "id": "LIMPIO_124"
+  },
+  {
+    "verbo": "adduir",
+    "catalan": "addueixin",
+    "valenciano": "adduïsquen",
+    "morfologia": null,
+    "id": "LIMPIO_125"
+  },
+  {
+    "verbo": "adduir",
+    "catalan": "addueixis",
+    "valenciano": "adduïsques",
+    "morfologia": null,
+    "id": "LIMPIO_126"
+  },
+  {
+    "verbo": "adduir",
+    "catalan": "addueixo",
+    "valenciano": "adduïsc",
+    "morfologia": null,
+    "id": "LIMPIO_127"
+  },
+  {
+    "verbo": "adduir",
+    "catalan": "adduís",
+    "valenciano": "adduïra",
+    "morfologia": null,
+    "id": "LIMPIO_128"
+  },
+  {
+    "verbo": "adduir",
+    "catalan": "adduíssim",
+    "valenciano": "adduïrem",
+    "morfologia": null,
+    "id": "LIMPIO_129"
+  },
+  {
+    "verbo": "adduir",
+    "catalan": "adduíssiu",
+    "valenciano": "adduïreu",
+    "morfologia": null,
+    "id": "LIMPIO_130"
+  },
+  {
+    "verbo": "adduir",
+    "catalan": "adduïssin",
+    "valenciano": "adduïren",
+    "morfologia": null,
+    "id": "LIMPIO_131"
+  },
+  {
+    "verbo": "adduir",
+    "catalan": "adduïssis",
+    "valenciano": "adduïres",
+    "morfologia": null,
+    "id": "LIMPIO_132"
+  },
+  {
+    "verbo": "adeqüar",
+    "catalan": "adeqüessin",
+    "valenciano": "adeqüaren",
+    "morfologia": null,
+    "id": "LIMPIO_133"
+  },
+  {
+    "verbo": "adeqüar",
+    "catalan": "adeqüessis",
+    "valenciano": "adeqüares",
+    "morfologia": [
+      "pis",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_134"
+  },
+  {
+    "verbo": "adeqüar",
+    "catalan": "adeqüi",
+    "valenciano": "adeqüe",
+    "morfologia": [
+      [
+        "imp",
+        "p3",
+        "sg"
+      ],
+      [
+        "prs",
+        "p1",
+        "sg"
+      ],
+      [
+        "prs",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_135"
+  },
+  {
+    "verbo": "adeqüar",
+    "catalan": "adeqüin",
+    "valenciano": "adeqüen",
+    "morfologia": null,
+    "id": "LIMPIO_136"
+  },
+  {
+    "verbo": "adeqüar",
+    "catalan": "adeqüis",
+    "valenciano": "adeqües",
+    "morfologia": [
+      "prs",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_137"
+  },
+  {
+    "verbo": "adeqüar",
+    "catalan": "adeqüés",
+    "valenciano": "adeqüara",
+    "morfologia": [
+      [
+        "pis",
+        "p1",
+        "sg"
+      ],
+      [
+        "pis",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_138"
+  },
+  {
+    "verbo": "adeqüar",
+    "catalan": "adeqüéssim",
+    "valenciano": "adeqüàrem",
+    "morfologia": [
+      "pis",
+      "p1",
+      "pl"
+    ],
+    "id": "LIMPIO_139"
+  },
+  {
+    "verbo": "adeqüar",
+    "catalan": "adeqüéssiu",
+    "valenciano": "adeqüàreu",
+    "morfologia": [
+      "pis",
+      "p2",
+      "pl"
+    ],
+    "id": "LIMPIO_140"
+  },
+  {
+    "verbo": "admetre",
+    "catalan": "admetessin",
+    "valenciano": "admeteren",
+    "morfologia": null,
+    "id": "LIMPIO_141"
+  },
+  {
+    "verbo": "admetre",
+    "catalan": "admetessis",
+    "valenciano": "admeteres",
+    "morfologia": null,
+    "id": "LIMPIO_142"
+  },
+  {
+    "verbo": "admetre",
+    "catalan": "admeti",
+    "valenciano": "admeta",
+    "morfologia": null,
+    "id": "LIMPIO_143"
+  },
+  {
+    "verbo": "admetre",
+    "catalan": "admetin",
+    "valenciano": "admeten",
+    "morfologia": null,
+    "id": "LIMPIO_144"
+  },
+  {
+    "verbo": "admetre",
+    "catalan": "admetis",
+    "valenciano": "admetes",
+    "morfologia": null,
+    "id": "LIMPIO_145"
+  },
+  {
+    "verbo": "admetre",
+    "catalan": "admeto",
+    "valenciano": "admet",
+    "morfologia": null,
+    "id": "LIMPIO_146"
+  },
+  {
+    "verbo": "admetre",
+    "catalan": "admetés",
+    "valenciano": "admetera",
+    "morfologia": null,
+    "id": "LIMPIO_147"
+  },
+  {
+    "verbo": "admetre",
+    "catalan": "admetéssim",
+    "valenciano": "admetérem",
+    "morfologia": null,
+    "id": "LIMPIO_148"
+  },
+  {
+    "verbo": "admetre",
+    "catalan": "admetéssiu",
+    "valenciano": "admetéreu",
+    "morfologia": null,
+    "id": "LIMPIO_149"
+  },
+  {
+    "verbo": "adscriure",
+    "catalan": "adscrigui",
+    "valenciano": "adscriga",
+    "morfologia": null,
+    "id": "LIMPIO_150"
+  },
+  {
+    "verbo": "adscriure",
+    "catalan": "adscriguin",
+    "valenciano": "adscriguen",
+    "morfologia": null,
+    "id": "LIMPIO_151"
+  },
+  {
+    "verbo": "adscriure",
+    "catalan": "adscriguis",
+    "valenciano": "adscrigues",
+    "morfologia": null,
+    "id": "LIMPIO_152"
+  },
+  {
+    "verbo": "adscriure",
+    "catalan": "adscrivissin",
+    "valenciano": "adscrigueren",
+    "morfologia": null,
+    "id": "LIMPIO_153"
+  },
+  {
+    "verbo": "adscriure",
+    "catalan": "adscrivissis",
+    "valenciano": "adscrigueres",
+    "morfologia": null,
+    "id": "LIMPIO_154"
+  },
+  {
+    "verbo": "adscriure",
+    "catalan": "adscrivís",
+    "valenciano": "adscriguera",
+    "morfologia": null,
+    "id": "LIMPIO_155"
+  },
+  {
+    "verbo": "adscriure",
+    "catalan": "adscrivíssim",
+    "valenciano": "adscriguérem",
+    "morfologia": null,
+    "id": "LIMPIO_156"
+  },
+  {
+    "verbo": "adscriure",
+    "catalan": "adscrivíssiu",
+    "valenciano": "adscriguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_157"
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalago",
+    "valenciano": "afalague",
+    "morfologia": null,
+    "id": "LIMPIO_158",
+    "problematica": true
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalaguessin",
+    "valenciano": "afalagaren",
+    "morfologia": null,
+    "id": "LIMPIO_159"
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalaguessis",
+    "valenciano": "afalagares",
+    "morfologia": null,
+    "id": "LIMPIO_160"
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalagueu",
+    "valenciano": "afalagau",
+    "morfologia": null,
+    "id": "LIMPIO_161"
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalagui",
+    "valenciano": "afalague",
+    "morfologia": null,
+    "id": "LIMPIO_162",
+    "problematica": true
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalaguin",
+    "valenciano": "afalaguen",
+    "morfologia": null,
+    "id": "LIMPIO_163"
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalaguis",
+    "valenciano": "afalagues",
+    "morfologia": null,
+    "id": "LIMPIO_164"
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalagués",
+    "valenciano": "afalagara",
+    "morfologia": null,
+    "id": "LIMPIO_165"
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalaguéssim",
+    "valenciano": "afalagàrem",
+    "morfologia": null,
+    "id": "LIMPIO_166"
+  },
+  {
+    "verbo": "afalagar",
+    "catalan": "afalaguéssiu",
+    "valenciano": "afalagàreu",
+    "morfologia": null,
+    "id": "LIMPIO_167"
+  },
+  {
+    "verbo": "agreujar",
+    "catalan": "agreugessin",
+    "valenciano": "agreujaren",
+    "morfologia": null,
+    "id": "LIMPIO_168"
+  },
+  {
+    "verbo": "agreujar",
+    "catalan": "agreugessis",
+    "valenciano": "agreujares",
+    "morfologia": null,
+    "id": "LIMPIO_169"
+  },
+  {
+    "verbo": "agreujar",
+    "catalan": "agreugi",
+    "valenciano": "agreuge",
+    "morfologia": null,
+    "id": "LIMPIO_170",
+    "problematica": true
+  },
+  {
+    "verbo": "agreujar",
+    "catalan": "agreugin",
+    "valenciano": "agreugen",
+    "morfologia": null,
+    "id": "LIMPIO_171"
+  },
+  {
+    "verbo": "agreujar",
+    "catalan": "agreugis",
+    "valenciano": "agreuges",
+    "morfologia": null,
+    "id": "LIMPIO_172"
+  },
+  {
+    "verbo": "agreujar",
+    "catalan": "agreugés",
+    "valenciano": "agreujara",
+    "morfologia": null,
+    "id": "LIMPIO_173"
+  },
+  {
+    "verbo": "agreujar",
+    "catalan": "agreugéssim",
+    "valenciano": "agreujàrem",
+    "morfologia": null,
+    "id": "LIMPIO_174"
+  },
+  {
+    "verbo": "agreujar",
+    "catalan": "agreugéssiu",
+    "valenciano": "agreujàreu",
+    "morfologia": null,
+    "id": "LIMPIO_175"
+  },
+  {
+    "verbo": "agreujar",
+    "catalan": "agreujo",
+    "valenciano": "agreuge",
+    "morfologia": null,
+    "id": "LIMPIO_176",
+    "problematica": true
+  },
+  {
+    "verbo": "ajupir",
+    "catalan": "ajupi",
+    "valenciano": "ajupa",
+    "morfologia": [
+      [
+        "imp",
+        "p3",
+        "sg"
+      ],
+      [
+        "prs",
+        "p1",
+        "sg"
+      ],
+      [
+        "prs",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_177"
+  },
+  {
+    "verbo": "ajupir",
+    "catalan": "ajupin",
+    "valenciano": "ajupen",
+    "morfologia": null,
+    "id": "LIMPIO_178"
+  },
+  {
+    "verbo": "ajupir",
+    "catalan": "ajupis",
+    "valenciano": "ajupes",
+    "morfologia": [
+      "prs",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_179"
+  },
+  {
+    "verbo": "ajupir",
+    "catalan": "ajupissin",
+    "valenciano": "ajupiren",
+    "morfologia": null,
+    "id": "LIMPIO_180"
+  },
+  {
+    "verbo": "ajupir",
+    "catalan": "ajupissis",
+    "valenciano": "ajupires",
+    "morfologia": [
+      "pis",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_181"
+  },
+  {
+    "verbo": "ajupir",
+    "catalan": "ajupís",
+    "valenciano": "ajupira",
+    "morfologia": [
+      [
+        "pis",
+        "p1",
+        "sg"
+      ],
+      [
+        "pis",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_182"
+  },
+  {
+    "verbo": "ajupir",
+    "catalan": "ajupíssim",
+    "valenciano": "ajupírem",
+    "morfologia": [
+      "pis",
+      "p1",
+      "pl"
+    ],
+    "id": "LIMPIO_183"
+  },
+  {
+    "verbo": "ajupir",
+    "catalan": "ajupíssiu",
+    "valenciano": "ajupíreu",
+    "morfologia": [
+      "pis",
+      "p2",
+      "pl"
+    ],
+    "id": "LIMPIO_184"
+  },
+  {
+    "verbo": "anar",
+    "catalan": "anessin",
+    "valenciano": "anaren",
+    "morfologia": null,
+    "id": "LIMPIO_185"
+  },
+  {
+    "verbo": "anar",
+    "catalan": "anessis",
+    "valenciano": "anares",
+    "morfologia": null,
+    "id": "LIMPIO_186"
+  },
+  {
+    "verbo": "anar",
+    "catalan": "anés",
+    "valenciano": "anara",
+    "morfologia": null,
+    "id": "LIMPIO_187"
+  },
+  {
+    "verbo": "anar",
+    "catalan": "anéssim",
+    "valenciano": "anàrem",
+    "morfologia": null,
+    "id": "LIMPIO_188"
+  },
+  {
+    "verbo": "anar",
+    "catalan": "anéssiu",
+    "valenciano": "anàreu",
+    "morfologia": null,
+    "id": "LIMPIO_189"
+  },
+  {
+    "verbo": "anar",
+    "catalan": "vagi",
+    "valenciano": "vaja",
+    "morfologia": null,
+    "id": "LIMPIO_190"
+  },
+  {
+    "verbo": "anar",
+    "catalan": "vagin",
+    "valenciano": "vagen",
+    "morfologia": null,
+    "id": "LIMPIO_191"
+  },
+  {
+    "verbo": "anar",
+    "catalan": "vagis",
+    "valenciano": "vages",
+    "morfologia": null,
+    "id": "LIMPIO_192"
+  },
+  {
+    "verbo": "aparèixer",
+    "catalan": "apareguessin",
+    "valenciano": "aparegueren",
+    "morfologia": null,
+    "id": "LIMPIO_193"
+  },
+  {
+    "verbo": "aparèixer",
+    "catalan": "apareguessis",
+    "valenciano": "aparegueres",
+    "morfologia": [
+      "pis",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_194"
+  },
+  {
+    "verbo": "aparèixer",
+    "catalan": "aparegui",
+    "valenciano": "aparega",
+    "morfologia": [
+      [
+        "imp",
+        "p3",
+        "sg"
+      ],
+      [
+        "prs",
+        "p1",
+        "sg"
+      ],
+      [
+        "prs",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_195"
+  },
+  {
+    "verbo": "aparèixer",
+    "catalan": "apareguin",
+    "valenciano": "apareguen",
+    "morfologia": null,
+    "id": "LIMPIO_196"
+  },
+  {
+    "verbo": "aparèixer",
+    "catalan": "apareguis",
+    "valenciano": "aparegues",
+    "morfologia": [
+      "prs",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_197"
+  },
+  {
+    "verbo": "aparèixer",
+    "catalan": "aparegués",
+    "valenciano": "apareguera",
+    "morfologia": [
+      [
+        "pis",
+        "p1",
+        "sg"
+      ],
+      [
+        "pis",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_198"
+  },
+  {
+    "verbo": "aparèixer",
+    "catalan": "apareguéssim",
+    "valenciano": "apareguérem",
+    "morfologia": [
+      "pis",
+      "p1",
+      "pl"
+    ],
+    "id": "LIMPIO_199"
+  },
+  {
+    "verbo": "aparèixer",
+    "catalan": "apareguéssiu",
+    "valenciano": "apareguéreu",
+    "morfologia": [
+      "pis",
+      "p2",
+      "pl"
+    ],
+    "id": "LIMPIO_200"
+  },
+  {
+    "verbo": "argüir",
+    "catalan": "arguïssin",
+    "valenciano": "arguïren",
+    "morfologia": null,
+    "id": "LIMPIO_201"
+  },
+  {
+    "verbo": "argüir",
+    "catalan": "arguïssis",
+    "valenciano": "arguïres",
+    "morfologia": null,
+    "id": "LIMPIO_202"
+  },
+  {
+    "verbo": "argüir",
+    "catalan": "argüeixi",
+    "valenciano": "arguïsca",
+    "morfologia": null,
+    "id": "LIMPIO_203"
+  },
+  {
+    "verbo": "argüir",
+    "catalan": "argüeixin",
+    "valenciano": "arguïsquen",
+    "morfologia": null,
+    "id": "LIMPIO_204"
+  },
+  {
+    "verbo": "argüir",
+    "catalan": "argüeixis",
+    "valenciano": "arguïsques",
+    "morfologia": null,
+    "id": "LIMPIO_205"
+  },
+  {
+    "verbo": "argüir",
+    "catalan": "argüeixo",
+    "valenciano": "arguïsc",
+    "morfologia": null,
+    "id": "LIMPIO_206"
+  },
+  {
+    "verbo": "argüir",
+    "catalan": "argüís",
+    "valenciano": "arguïra",
+    "morfologia": null,
+    "id": "LIMPIO_207"
+  },
+  {
+    "verbo": "argüir",
+    "catalan": "argüíssim",
+    "valenciano": "arguïrem",
+    "morfologia": null,
+    "id": "LIMPIO_208"
+  },
+  {
+    "verbo": "argüir",
+    "catalan": "argüíssiu",
+    "valenciano": "arguïreu",
+    "morfologia": null,
+    "id": "LIMPIO_209"
+  },
+  {
+    "verbo": "asseure",
+    "catalan": "asseguessin",
+    "valenciano": "assegueren",
+    "morfologia": null,
+    "id": "LIMPIO_210"
+  },
+  {
+    "verbo": "asseure",
+    "catalan": "asseguessis",
+    "valenciano": "assegueres",
+    "morfologia": null,
+    "id": "LIMPIO_211"
+  },
+  {
+    "verbo": "asseure",
+    "catalan": "assegui",
+    "valenciano": "assega",
+    "morfologia": null,
+    "id": "LIMPIO_212"
+  },
+  {
+    "verbo": "asseure",
+    "catalan": "asseguin",
+    "valenciano": "asseguen",
+    "morfologia": null,
+    "id": "LIMPIO_213"
+  },
+  {
+    "verbo": "asseure",
+    "catalan": "asseguis",
+    "valenciano": "assegues",
+    "morfologia": null,
+    "id": "LIMPIO_214"
+  },
+  {
+    "verbo": "asseure",
+    "catalan": "assegués",
+    "valenciano": "asseguera",
+    "morfologia": null,
+    "id": "LIMPIO_215"
+  },
+  {
+    "verbo": "asseure",
+    "catalan": "asseguéssim",
+    "valenciano": "asseguérem",
+    "morfologia": null,
+    "id": "LIMPIO_216"
+  },
+  {
+    "verbo": "asseure",
+    "catalan": "asseguéssiu",
+    "valenciano": "asseguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_217"
+  },
+  {
+    "verbo": "atendre",
+    "catalan": "atenguessin",
+    "valenciano": "atengueren",
+    "morfologia": null,
+    "id": "LIMPIO_218"
+  },
+  {
+    "verbo": "atendre",
+    "catalan": "atenguessis",
+    "valenciano": "atengueres",
+    "morfologia": null,
+    "id": "LIMPIO_219"
+  },
+  {
+    "verbo": "atendre",
+    "catalan": "atengui",
+    "valenciano": "atenga",
+    "morfologia": null,
+    "id": "LIMPIO_220"
+  },
+  {
+    "verbo": "atendre",
+    "catalan": "atenguin",
+    "valenciano": "atenguen",
+    "morfologia": null,
+    "id": "LIMPIO_221"
+  },
+  {
+    "verbo": "atendre",
+    "catalan": "atenguis",
+    "valenciano": "atengues",
+    "morfologia": null,
+    "id": "LIMPIO_222"
+  },
+  {
+    "verbo": "atendre",
+    "catalan": "atengués",
+    "valenciano": "atenguera",
+    "morfologia": null,
+    "id": "LIMPIO_223"
+  },
+  {
+    "verbo": "atendre",
+    "catalan": "atenguéssim",
+    "valenciano": "atenguérem",
+    "morfologia": null,
+    "id": "LIMPIO_224"
+  },
+  {
+    "verbo": "atendre",
+    "catalan": "atenguéssiu",
+    "valenciano": "atenguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_225"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atraguessin",
+    "valenciano": "atragueren",
+    "morfologia": null,
+    "id": "LIMPIO_226"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atraguessis",
+    "valenciano": "atragueres",
+    "morfologia": null,
+    "id": "LIMPIO_227"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atragués",
+    "valenciano": "atraguera",
+    "morfologia": null,
+    "id": "LIMPIO_228"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atraguéssim",
+    "valenciano": "atraguérem",
+    "morfologia": null,
+    "id": "LIMPIO_229"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atraguéssiu",
+    "valenciano": "atraguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_230"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atrec",
+    "valenciano": "atrac",
+    "morfologia": null,
+    "id": "LIMPIO_231"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atregui",
+    "valenciano": "atraga",
+    "morfologia": null,
+    "id": "LIMPIO_232"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atreguin",
+    "valenciano": "atraguen",
+    "morfologia": null,
+    "id": "LIMPIO_233"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atreguis",
+    "valenciano": "atragues",
+    "morfologia": null,
+    "id": "LIMPIO_234"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atreu",
+    "valenciano": "atrau",
+    "morfologia": null,
+    "id": "LIMPIO_235"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atreuen",
+    "valenciano": "atrauen",
+    "morfologia": null,
+    "id": "LIMPIO_236"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atreure",
+    "valenciano": "atraure",
+    "morfologia": null,
+    "id": "LIMPIO_237"
+  },
+  {
+    "verbo": "atreure",
+    "catalan": "atreus",
+    "valenciano": "atraus",
+    "morfologia": null,
+    "id": "LIMPIO_238"
+  },
+  {
+    "verbo": "beure",
+    "catalan": "beguessin",
+    "valenciano": "begueren",
+    "morfologia": null,
+    "id": "LIMPIO_239"
+  },
+  {
+    "verbo": "beure",
+    "catalan": "beguessis",
+    "valenciano": "begueres",
+    "morfologia": null,
+    "id": "LIMPIO_240"
+  },
+  {
+    "verbo": "beure",
+    "catalan": "begui",
+    "valenciano": "bega",
+    "morfologia": null,
+    "id": "LIMPIO_241"
+  },
+  {
+    "verbo": "beure",
+    "catalan": "beguin",
+    "valenciano": "beguen",
+    "morfologia": null,
+    "id": "LIMPIO_242"
+  },
+  {
+    "verbo": "beure",
+    "catalan": "beguis",
+    "valenciano": "begues",
+    "morfologia": null,
+    "id": "LIMPIO_243"
+  },
+  {
+    "verbo": "beure",
+    "catalan": "begués",
+    "valenciano": "beguera",
+    "morfologia": null,
+    "id": "LIMPIO_244"
+  },
+  {
+    "verbo": "beure",
+    "catalan": "beguéssim",
+    "valenciano": "beguérem",
+    "morfologia": null,
+    "id": "LIMPIO_245"
+  },
+  {
+    "verbo": "beure",
+    "catalan": "beguéssiu",
+    "valenciano": "beguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_246"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "cabessin",
+    "valenciano": "caberen",
+    "morfologia": null,
+    "id": "LIMPIO_247"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "cabessis",
+    "valenciano": "caberes",
+    "morfologia": null,
+    "id": "LIMPIO_248"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "cabés",
+    "valenciano": "cabera",
+    "morfologia": null,
+    "id": "LIMPIO_249"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "cabéssim",
+    "valenciano": "cabérem",
+    "morfologia": null,
+    "id": "LIMPIO_250"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "cabéssiu",
+    "valenciano": "cabéreu",
+    "morfologia": null,
+    "id": "LIMPIO_251"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "capiguem",
+    "valenciano": "capiem",
+    "morfologia": null,
+    "id": "LIMPIO_252"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "capigueu",
+    "valenciano": "capieu",
+    "morfologia": null,
+    "id": "LIMPIO_253"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "càpiga",
+    "valenciano": "càpia",
+    "morfologia": null,
+    "id": "LIMPIO_254"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "càpiguen",
+    "valenciano": "càpien",
+    "morfologia": null,
+    "id": "LIMPIO_255"
+  },
+  {
+    "verbo": "cabre",
+    "catalan": "càpigues",
+    "valenciano": "càpies",
+    "morfologia": null,
+    "id": "LIMPIO_256"
+  },
+  {
+    "verbo": "caldre",
+    "catalan": "calguessin",
+    "valenciano": "calgueren",
+    "morfologia": null,
+    "id": "LIMPIO_257"
+  },
+  {
+    "verbo": "caldre",
+    "catalan": "calgui",
+    "valenciano": "calga",
+    "morfologia": null,
+    "id": "LIMPIO_258"
+  },
+  {
+    "verbo": "caldre",
+    "catalan": "calgués",
+    "valenciano": "calguera",
+    "morfologia": null,
+    "id": "LIMPIO_259"
+  },
+  {
+    "verbo": "callar",
+    "catalan": "callessin",
+    "valenciano": "callaren",
+    "morfologia": null,
+    "id": "LIMPIO_260"
+  },
+  {
+    "verbo": "callar",
+    "catalan": "callessis",
+    "valenciano": "callares",
+    "morfologia": null,
+    "id": "LIMPIO_261"
+  },
+  {
+    "verbo": "callar",
+    "catalan": "calli",
+    "valenciano": "calle",
+    "morfologia": null,
+    "id": "LIMPIO_262",
+    "problematica": true
+  },
+  {
+    "verbo": "callar",
+    "catalan": "callin",
+    "valenciano": "callen",
+    "morfologia": null,
+    "id": "LIMPIO_263"
+  },
+  {
+    "verbo": "callar",
+    "catalan": "callis",
+    "valenciano": "calles",
+    "morfologia": null,
+    "id": "LIMPIO_264"
+  },
+  {
+    "verbo": "callar",
+    "catalan": "callo",
+    "valenciano": "calle",
+    "morfologia": null,
+    "id": "LIMPIO_265",
+    "problematica": true
+  },
+  {
+    "verbo": "callar",
+    "catalan": "callés",
+    "valenciano": "callara",
+    "morfologia": null,
+    "id": "LIMPIO_266"
+  },
+  {
+    "verbo": "callar",
+    "catalan": "calléssim",
+    "valenciano": "callàrem",
+    "morfologia": null,
+    "id": "LIMPIO_267"
+  },
+  {
+    "verbo": "callar",
+    "catalan": "calléssiu",
+    "valenciano": "callàreu",
+    "morfologia": null,
+    "id": "LIMPIO_268"
+  },
+  {
+    "verbo": "caure",
+    "catalan": "caiguessin",
+    "valenciano": "caigueren",
+    "morfologia": null,
+    "id": "LIMPIO_269"
+  },
+  {
+    "verbo": "caure",
+    "catalan": "caiguessis",
+    "valenciano": "caigueres",
+    "morfologia": null,
+    "id": "LIMPIO_270"
+  },
+  {
+    "verbo": "caure",
+    "catalan": "caigui",
+    "valenciano": "caiga",
+    "morfologia": null,
+    "id": "LIMPIO_271"
+  },
+  {
+    "verbo": "caure",
+    "catalan": "caiguin",
+    "valenciano": "caiguen",
+    "morfologia": null,
+    "id": "LIMPIO_272"
+  },
+  {
+    "verbo": "caure",
+    "catalan": "caiguis",
+    "valenciano": "caigues",
+    "morfologia": null,
+    "id": "LIMPIO_273"
+  },
+  {
+    "verbo": "caure",
+    "catalan": "caigués",
+    "valenciano": "caiguera",
+    "morfologia": null,
+    "id": "LIMPIO_274"
+  },
+  {
+    "verbo": "caure",
+    "catalan": "caiguéssim",
+    "valenciano": "caiguérem",
+    "morfologia": null,
+    "id": "LIMPIO_275"
+  },
+  {
+    "verbo": "caure",
+    "catalan": "caiguéssiu",
+    "valenciano": "caiguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_276"
+  },
+  {
+    "verbo": "cerndre",
+    "catalan": "cernguessin",
+    "valenciano": "cerngueren",
+    "morfologia": null,
+    "id": "LIMPIO_277"
+  },
+  {
+    "verbo": "cerndre",
+    "catalan": "cernguessis",
+    "valenciano": "cerngueres",
+    "morfologia": null,
+    "id": "LIMPIO_278"
+  },
+  {
+    "verbo": "cerndre",
+    "catalan": "cerngui",
+    "valenciano": "cernga",
+    "morfologia": null,
+    "id": "LIMPIO_279"
+  },
+  {
+    "verbo": "cerndre",
+    "catalan": "cernguin",
+    "valenciano": "cernguen",
+    "morfologia": null,
+    "id": "LIMPIO_280"
+  },
+  {
+    "verbo": "cerndre",
+    "catalan": "cernguis",
+    "valenciano": "cerngues",
+    "morfologia": null,
+    "id": "LIMPIO_281"
+  },
+  {
+    "verbo": "cerndre",
+    "catalan": "cerngués",
+    "valenciano": "cernguera",
+    "morfologia": null,
+    "id": "LIMPIO_282"
+  },
+  {
+    "verbo": "cerndre",
+    "catalan": "cernguéssim",
+    "valenciano": "cernguérem",
+    "morfologia": null,
+    "id": "LIMPIO_283"
+  },
+  {
+    "verbo": "cerndre",
+    "catalan": "cernguéssiu",
+    "valenciano": "cernguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_284"
+  },
+  {
+    "verbo": "cloure",
+    "catalan": "cloguessin",
+    "valenciano": "clogueren",
+    "morfologia": null,
+    "id": "LIMPIO_285"
+  },
+  {
+    "verbo": "cloure",
+    "catalan": "cloguessis",
+    "valenciano": "clogueres",
+    "morfologia": null,
+    "id": "LIMPIO_286"
+  },
+  {
+    "verbo": "cloure",
+    "catalan": "clogui",
+    "valenciano": "cloga",
+    "morfologia": null,
+    "id": "LIMPIO_287"
+  },
+  {
+    "verbo": "cloure",
+    "catalan": "cloguin",
+    "valenciano": "cloguen",
+    "morfologia": null,
+    "id": "LIMPIO_288"
+  },
+  {
+    "verbo": "cloure",
+    "catalan": "cloguis",
+    "valenciano": "clogues",
+    "morfologia": null,
+    "id": "LIMPIO_289"
+  },
+  {
+    "verbo": "cloure",
+    "catalan": "clogués",
+    "valenciano": "cloguera",
+    "morfologia": null,
+    "id": "LIMPIO_290"
+  },
+  {
+    "verbo": "cloure",
+    "catalan": "cloguéssim",
+    "valenciano": "cloguérem",
+    "morfologia": null,
+    "id": "LIMPIO_291"
+  },
+  {
+    "verbo": "cloure",
+    "catalan": "cloguéssiu",
+    "valenciano": "cloguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_292"
+  },
+  {
+    "verbo": "cobrir",
+    "catalan": "cobreixi",
+    "valenciano": "cobrisca",
+    "morfologia": null,
+    "id": "LIMPIO_293"
+  },
+  {
+    "verbo": "cobrir",
+    "catalan": "cobreixin",
+    "valenciano": "cobrisquen",
+    "morfologia": null,
+    "id": "LIMPIO_294"
+  },
+  {
+    "verbo": "cobrir",
+    "catalan": "cobreixis",
+    "valenciano": "cobrisques",
+    "morfologia": null,
+    "id": "LIMPIO_295"
+  },
+  {
+    "verbo": "cobrir",
+    "catalan": "cobreixo",
+    "valenciano": "cobrisc",
+    "morfologia": null,
+    "id": "LIMPIO_296"
+  },
+  {
+    "verbo": "cobrir",
+    "catalan": "cobrissin",
+    "valenciano": "cobriren",
+    "morfologia": null,
+    "id": "LIMPIO_297"
+  },
+  {
+    "verbo": "cobrir",
+    "catalan": "cobrissis",
+    "valenciano": "cobrires",
+    "morfologia": null,
+    "id": "LIMPIO_298"
+  },
+  {
+    "verbo": "cobrir",
+    "catalan": "cobrís",
+    "valenciano": "cobrira",
+    "morfologia": null,
+    "id": "LIMPIO_299"
+  },
+  {
+    "verbo": "cobrir",
+    "catalan": "cobríssim",
+    "valenciano": "cobrírem",
+    "morfologia": null,
+    "id": "LIMPIO_300"
+  },
+  {
+    "verbo": "cobrir",
+    "catalan": "cobríssiu",
+    "valenciano": "cobríreu",
+    "morfologia": null,
+    "id": "LIMPIO_301"
+  },
+  {
+    "verbo": "complaure",
+    "catalan": "complaguessin",
+    "valenciano": "complagueren",
+    "morfologia": null,
+    "id": "LIMPIO_302"
+  },
+  {
+    "verbo": "complaure",
+    "catalan": "complaguessis",
+    "valenciano": "complagueres",
+    "morfologia": null,
+    "id": "LIMPIO_303"
+  },
+  {
+    "verbo": "complaure",
+    "catalan": "complagui",
+    "valenciano": "complaga",
+    "morfologia": null,
+    "id": "LIMPIO_304"
+  },
+  {
+    "verbo": "complaure",
+    "catalan": "complaguin",
+    "valenciano": "complaguen",
+    "morfologia": null,
+    "id": "LIMPIO_305"
+  },
+  {
+    "verbo": "complaure",
+    "catalan": "complaguis",
+    "valenciano": "complagues",
+    "morfologia": null,
+    "id": "LIMPIO_306"
+  },
+  {
+    "verbo": "complaure",
+    "catalan": "complagués",
+    "valenciano": "complaguera",
+    "morfologia": null,
+    "id": "LIMPIO_307"
+  },
+  {
+    "verbo": "complaure",
+    "catalan": "complaguéssim",
+    "valenciano": "complaguérem",
+    "morfologia": null,
+    "id": "LIMPIO_308"
+  },
+  {
+    "verbo": "complaure",
+    "catalan": "complaguéssiu",
+    "valenciano": "complaguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_309"
+  },
+  {
+    "verbo": "compondre",
+    "catalan": "componguessin",
+    "valenciano": "compongueren",
+    "morfologia": null,
+    "id": "LIMPIO_310"
+  },
+  {
+    "verbo": "compondre",
+    "catalan": "componguessis",
+    "valenciano": "compongueres",
+    "morfologia": null,
+    "id": "LIMPIO_311"
+  },
+  {
+    "verbo": "compondre",
+    "catalan": "compongui",
+    "valenciano": "componga",
+    "morfologia": null,
+    "id": "LIMPIO_312"
+  },
+  {
+    "verbo": "compondre",
+    "catalan": "componguin",
+    "valenciano": "componguen",
+    "morfologia": null,
+    "id": "LIMPIO_313"
+  },
+  {
+    "verbo": "compondre",
+    "catalan": "componguis",
+    "valenciano": "compongues",
+    "morfologia": null,
+    "id": "LIMPIO_314"
+  },
+  {
+    "verbo": "compondre",
+    "catalan": "compongués",
+    "valenciano": "componguera",
+    "morfologia": null,
+    "id": "LIMPIO_315"
+  },
+  {
+    "verbo": "compondre",
+    "catalan": "componguéssim",
+    "valenciano": "componguérem",
+    "morfologia": null,
+    "id": "LIMPIO_316"
+  },
+  {
+    "verbo": "compondre",
+    "catalan": "componguéssiu",
+    "valenciano": "componguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_317"
+  },
+  {
+    "verbo": "concloure",
+    "catalan": "concloguessin",
+    "valenciano": "conclogueren",
+    "morfologia": null,
+    "id": "LIMPIO_318"
+  },
+  {
+    "verbo": "concloure",
+    "catalan": "concloguessis",
+    "valenciano": "conclogueres",
+    "morfologia": null,
+    "id": "LIMPIO_319"
+  },
+  {
+    "verbo": "concloure",
+    "catalan": "conclogui",
+    "valenciano": "concloga",
+    "morfologia": null,
+    "id": "LIMPIO_320"
+  },
+  {
+    "verbo": "concloure",
+    "catalan": "concloguin",
+    "valenciano": "concloguen",
+    "morfologia": null,
+    "id": "LIMPIO_321"
+  },
+  {
+    "verbo": "concloure",
+    "catalan": "concloguis",
+    "valenciano": "conclogues",
+    "morfologia": null,
+    "id": "LIMPIO_322"
+  },
+  {
+    "verbo": "concloure",
+    "catalan": "conclogués",
+    "valenciano": "concloguera",
+    "morfologia": null,
+    "id": "LIMPIO_323"
+  },
+  {
+    "verbo": "concloure",
+    "catalan": "concloguéssim",
+    "valenciano": "concloguérem",
+    "morfologia": null,
+    "id": "LIMPIO_324"
+  },
+  {
+    "verbo": "concloure",
+    "catalan": "concloguéssiu",
+    "valenciano": "concloguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_325"
+  },
+  {
+    "verbo": "concorrer",
+    "catalan": "concorreguessin",
+    "valenciano": "concorregueren",
+    "morfologia": null,
+    "id": "LIMPIO_326"
+  },
+  {
+    "verbo": "concorrer",
+    "catalan": "concorreguessis",
+    "valenciano": "concorregueres",
+    "morfologia": [
+      "pis",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_327"
+  },
+  {
+    "verbo": "concorrer",
+    "catalan": "concorregués",
+    "valenciano": "concorreguera",
+    "morfologia": [
+      [
+        "pis",
+        "p1",
+        "sg"
+      ],
+      [
+        "pis",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_328"
+  },
+  {
+    "verbo": "concorrer",
+    "catalan": "concorreguéssim",
+    "valenciano": "concorreguérem",
+    "morfologia": [
+      "pis",
+      "p1",
+      "pl"
+    ],
+    "id": "LIMPIO_329"
+  },
+  {
+    "verbo": "concorrer",
+    "catalan": "concorreguéssiu",
+    "valenciano": "concorreguéreu",
+    "morfologia": [
+      "pis",
+      "p2",
+      "pl"
+    ],
+    "id": "LIMPIO_330"
+  },
+  {
+    "verbo": "concorrer",
+    "catalan": "concorrem",
+    "valenciano": "concorreguem",
+    "morfologia": [
+      "prs",
+      "p1",
+      "pl"
+    ],
+    "id": "LIMPIO_331"
+  },
+  {
+    "verbo": "concorrer",
+    "catalan": "concorreu",
+    "valenciano": "concorregueu",
+    "morfologia": [
+      "prs",
+      "p2",
+      "pl"
+    ],
+    "id": "LIMPIO_332"
+  },
+  {
+    "verbo": "confondre",
+    "catalan": "confonguessin",
+    "valenciano": "confongueren",
+    "morfologia": null,
+    "id": "LIMPIO_333"
+  },
+  {
+    "verbo": "confondre",
+    "catalan": "confonguessis",
+    "valenciano": "confongueres",
+    "morfologia": null,
+    "id": "LIMPIO_334"
+  },
+  {
+    "verbo": "confondre",
+    "catalan": "confongui",
+    "valenciano": "confonga",
+    "morfologia": null,
+    "id": "LIMPIO_335"
+  },
+  {
+    "verbo": "confondre",
+    "catalan": "confonguin",
+    "valenciano": "confonguen",
+    "morfologia": null,
+    "id": "LIMPIO_336"
+  },
+  {
+    "verbo": "confondre",
+    "catalan": "confonguis",
+    "valenciano": "confongues",
+    "morfologia": null,
+    "id": "LIMPIO_337"
+  },
+  {
+    "verbo": "confondre",
+    "catalan": "confongués",
+    "valenciano": "confonguera",
+    "morfologia": null,
+    "id": "LIMPIO_338"
+  },
+  {
+    "verbo": "confondre",
+    "catalan": "confonguéssim",
+    "valenciano": "confonguérem",
+    "morfologia": null,
+    "id": "LIMPIO_339"
+  },
+  {
+    "verbo": "confondre",
+    "catalan": "confonguéssiu",
+    "valenciano": "confonguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_340"
+  },
+  {
+    "verbo": "constrènyer",
+    "catalan": "constrenyessin",
+    "valenciano": "constrenyeren",
+    "morfologia": null,
+    "id": "LIMPIO_341"
+  },
+  {
+    "verbo": "constrènyer",
+    "catalan": "constrenyessis",
+    "valenciano": "constrenyeres",
+    "morfologia": null,
+    "id": "LIMPIO_342"
+  },
+  {
+    "verbo": "constrènyer",
+    "catalan": "constrenyi",
+    "valenciano": "constrenya",
+    "morfologia": null,
+    "id": "LIMPIO_343"
+  },
+  {
+    "verbo": "constrènyer",
+    "catalan": "constrenyin",
+    "valenciano": "constrenyen",
+    "morfologia": null,
+    "id": "LIMPIO_344"
+  },
+  {
+    "verbo": "constrènyer",
+    "catalan": "constrenyis",
+    "valenciano": "constrenyes",
+    "morfologia": null,
+    "id": "LIMPIO_345"
+  },
+  {
+    "verbo": "constrènyer",
+    "catalan": "constrenyo",
+    "valenciano": "constreny",
+    "morfologia": null,
+    "id": "LIMPIO_346"
+  },
+  {
+    "verbo": "constrènyer",
+    "catalan": "constrenyés",
+    "valenciano": "constrenyera",
+    "morfologia": null,
+    "id": "LIMPIO_347"
+  },
+  {
+    "verbo": "constrènyer",
+    "catalan": "constrenyéssim",
+    "valenciano": "constrenyérem",
+    "morfologia": null,
+    "id": "LIMPIO_348"
+  },
+  {
+    "verbo": "constrènyer",
+    "catalan": "constrenyéssiu",
+    "valenciano": "constrenyéreu",
+    "morfologia": null,
+    "id": "LIMPIO_349"
+  },
+  {
+    "verbo": "contradir",
+    "catalan": "contradigues",
+    "valenciano": "contradis",
+    "morfologia": null,
+    "id": "LIMPIO_350",
+    "problematica": true
+  },
+  {
+    "verbo": "contradir",
+    "catalan": "contradiguessin",
+    "valenciano": "contradigueren",
+    "morfologia": null,
+    "id": "LIMPIO_351"
+  },
+  {
+    "verbo": "contradir",
+    "catalan": "contradiguessis",
+    "valenciano": "contradigueres",
+    "morfologia": null,
+    "id": "LIMPIO_352"
+  },
+  {
+    "verbo": "contradir",
+    "catalan": "contradigui",
+    "valenciano": "contradiga",
+    "morfologia": null,
+    "id": "LIMPIO_353"
+  },
+  {
+    "verbo": "contradir",
+    "catalan": "contradiguin",
+    "valenciano": "contradiguen",
+    "morfologia": null,
+    "id": "LIMPIO_354"
+  },
+  {
+    "verbo": "contradir",
+    "catalan": "contradiguis",
+    "valenciano": "contradigues",
+    "morfologia": null,
+    "id": "LIMPIO_355",
+    "problematica": true
+  },
+  {
+    "verbo": "contradir",
+    "catalan": "contradigués",
+    "valenciano": "contradiguera",
+    "morfologia": null,
+    "id": "LIMPIO_356"
+  },
+  {
+    "verbo": "contradir",
+    "catalan": "contradiguéssim",
+    "valenciano": "contradiguérem",
+    "morfologia": null,
+    "id": "LIMPIO_357"
+  },
+  {
+    "verbo": "contradir",
+    "catalan": "contradiguéssiu",
+    "valenciano": "contradiguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_358"
+  },
+  {
+    "verbo": "convèncer",
+    "catalan": "convencessin",
+    "valenciano": "convenceren",
+    "morfologia": null,
+    "id": "LIMPIO_359"
+  },
+  {
+    "verbo": "convèncer",
+    "catalan": "convencessis",
+    "valenciano": "convenceres",
+    "morfologia": [
+      "pis",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_360"
+  },
+  {
+    "verbo": "convèncer",
+    "catalan": "convenci",
+    "valenciano": "convença",
+    "morfologia": [
+      [
+        "imp",
+        "p3",
+        "sg"
+      ],
+      [
+        "prs",
+        "p1",
+        "sg"
+      ],
+      [
+        "prs",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_361"
+  },
+  {
+    "verbo": "convèncer",
+    "catalan": "convencin",
+    "valenciano": "convencen",
+    "morfologia": null,
+    "id": "LIMPIO_362"
+  },
+  {
+    "verbo": "convèncer",
+    "catalan": "convencis",
+    "valenciano": "convences",
+    "morfologia": [
+      "prs",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_363"
+  },
+  {
+    "verbo": "convèncer",
+    "catalan": "convencés",
+    "valenciano": "convencera",
+    "morfologia": [
+      [
+        "pis",
+        "p1",
+        "sg"
+      ],
+      [
+        "pis",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_364"
+  },
+  {
+    "verbo": "convèncer",
+    "catalan": "convencéssim",
+    "valenciano": "convencérem",
+    "morfologia": [
+      "pis",
+      "p1",
+      "pl"
+    ],
+    "id": "LIMPIO_365"
+  },
+  {
+    "verbo": "convèncer",
+    "catalan": "convencéssiu",
+    "valenciano": "convencéreu",
+    "morfologia": [
+      "pis",
+      "p2",
+      "pl"
+    ],
+    "id": "LIMPIO_366"
+  },
+  {
+    "verbo": "convèncer",
+    "catalan": "convenço",
+    "valenciano": "convenç",
+    "morfologia": [
+      "pri",
+      "p1",
+      "sg"
+    ],
+    "id": "LIMPIO_367"
+  },
+  {
+    "verbo": "convenir",
+    "catalan": "convinguessin",
+    "valenciano": "convingueren",
+    "morfologia": null,
+    "id": "LIMPIO_368"
+  },
+  {
+    "verbo": "convenir",
+    "catalan": "convinguessis",
+    "valenciano": "convingueres",
+    "morfologia": null,
+    "id": "LIMPIO_369"
+  },
+  {
+    "verbo": "convenir",
+    "catalan": "convingui",
+    "valenciano": "convinga",
+    "morfologia": null,
+    "id": "LIMPIO_370"
+  },
+  {
+    "verbo": "convenir",
+    "catalan": "convinguin",
+    "valenciano": "convinguen",
+    "morfologia": null,
+    "id": "LIMPIO_371"
+  },
+  {
+    "verbo": "convenir",
+    "catalan": "convinguis",
+    "valenciano": "convingues",
+    "morfologia": null,
+    "id": "LIMPIO_372"
+  },
+  {
+    "verbo": "convenir",
+    "catalan": "convingués",
+    "valenciano": "convinguera",
+    "morfologia": null,
+    "id": "LIMPIO_373"
+  },
+  {
+    "verbo": "convenir",
+    "catalan": "convinguéssim",
+    "valenciano": "convinguérem",
+    "morfologia": null,
+    "id": "LIMPIO_374"
+  },
+  {
+    "verbo": "convenir",
+    "catalan": "convinguéssiu",
+    "valenciano": "convinguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_375"
+  },
+  {
+    "verbo": "conviure",
+    "catalan": "convisquessin",
+    "valenciano": "convisqueren",
+    "morfologia": null,
+    "id": "LIMPIO_376"
+  },
+  {
+    "verbo": "conviure",
+    "catalan": "convisquessis",
+    "valenciano": "convisqueres",
+    "morfologia": null,
+    "id": "LIMPIO_377"
+  },
+  {
+    "verbo": "conviure",
+    "catalan": "convisqui",
+    "valenciano": "convisca",
+    "morfologia": null,
+    "id": "LIMPIO_378"
+  },
+  {
+    "verbo": "conviure",
+    "catalan": "convisquin",
+    "valenciano": "convisquen",
+    "morfologia": null,
+    "id": "LIMPIO_379"
+  },
+  {
+    "verbo": "conviure",
+    "catalan": "convisquis",
+    "valenciano": "convisques",
+    "morfologia": null,
+    "id": "LIMPIO_380"
+  },
+  {
+    "verbo": "conviure",
+    "catalan": "convisqués",
+    "valenciano": "convisquera",
+    "morfologia": null,
+    "id": "LIMPIO_381"
+  },
+  {
+    "verbo": "conviure",
+    "catalan": "convisquéssim",
+    "valenciano": "convisquérem",
+    "morfologia": null,
+    "id": "LIMPIO_382"
+  },
+  {
+    "verbo": "conviure",
+    "catalan": "convisquéssiu",
+    "valenciano": "convisquéreu",
+    "morfologia": null,
+    "id": "LIMPIO_383"
+  },
+  {
+    "verbo": "cosir",
+    "catalan": "cosissin",
+    "valenciano": "cosiren",
+    "morfologia": null,
+    "id": "LIMPIO_384"
+  },
+  {
+    "verbo": "cosir",
+    "catalan": "cosissis",
+    "valenciano": "cosires",
+    "morfologia": null,
+    "id": "LIMPIO_385"
+  },
+  {
+    "verbo": "cosir",
+    "catalan": "cosís",
+    "valenciano": "cosira",
+    "morfologia": null,
+    "id": "LIMPIO_386"
+  },
+  {
+    "verbo": "cosir",
+    "catalan": "cosíssim",
+    "valenciano": "cosírem",
+    "morfologia": null,
+    "id": "LIMPIO_387"
+  },
+  {
+    "verbo": "cosir",
+    "catalan": "cosíssiu",
+    "valenciano": "cosíreu",
+    "morfologia": null,
+    "id": "LIMPIO_388"
+  },
+  {
+    "verbo": "cosir",
+    "catalan": "cusi",
+    "valenciano": "cusa",
+    "morfologia": null,
+    "id": "LIMPIO_389"
+  },
+  {
+    "verbo": "cosir",
+    "catalan": "cusin",
+    "valenciano": "cusen",
+    "morfologia": null,
+    "id": "LIMPIO_390"
+  },
+  {
+    "verbo": "cosir",
+    "catalan": "cusis",
+    "valenciano": "cuses",
+    "morfologia": null,
+    "id": "LIMPIO_391"
+  },
+  {
+    "verbo": "cosir",
+    "catalan": "cuso",
+    "valenciano": "cus",
+    "morfologia": null,
+    "id": "LIMPIO_392"
+  },
+  {
+    "verbo": "coure",
+    "catalan": "coguessin",
+    "valenciano": "cogueren",
+    "morfologia": null,
+    "id": "LIMPIO_393"
+  },
+  {
+    "verbo": "coure",
+    "catalan": "coguessis",
+    "valenciano": "cogueres",
+    "morfologia": null,
+    "id": "LIMPIO_394"
+  },
+  {
+    "verbo": "coure",
+    "catalan": "cogui",
+    "valenciano": "coga",
+    "morfologia": null,
+    "id": "LIMPIO_395"
+  },
+  {
+    "verbo": "coure",
+    "catalan": "coguin",
+    "valenciano": "coguen",
+    "morfologia": null,
+    "id": "LIMPIO_396"
+  },
+  {
+    "verbo": "coure",
+    "catalan": "coguis",
+    "valenciano": "cogues",
+    "morfologia": null,
+    "id": "LIMPIO_397"
+  },
+  {
+    "verbo": "coure",
+    "catalan": "cogués",
+    "valenciano": "coguera",
+    "morfologia": null,
+    "id": "LIMPIO_398"
+  },
+  {
+    "verbo": "coure",
+    "catalan": "coguéssim",
+    "valenciano": "coguérem",
+    "morfologia": null,
+    "id": "LIMPIO_399"
+  },
+  {
+    "verbo": "coure",
+    "catalan": "coguéssiu",
+    "valenciano": "coguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_400"
+  },
+  {
+    "verbo": "dependre",
+    "catalan": "depenguessin",
+    "valenciano": "depengueren",
+    "morfologia": null,
+    "id": "LIMPIO_401"
+  },
+  {
+    "verbo": "dependre",
+    "catalan": "depenguessis",
+    "valenciano": "depengueres",
+    "morfologia": null,
+    "id": "LIMPIO_402"
+  },
+  {
+    "verbo": "dependre",
+    "catalan": "depengui",
+    "valenciano": "depenga",
+    "morfologia": null,
+    "id": "LIMPIO_403"
+  },
+  {
+    "verbo": "dependre",
+    "catalan": "depenguin",
+    "valenciano": "depenguen",
+    "morfologia": null,
+    "id": "LIMPIO_404"
+  },
+  {
+    "verbo": "dependre",
+    "catalan": "depenguis",
+    "valenciano": "depengues",
+    "morfologia": null,
+    "id": "LIMPIO_405"
+  },
+  {
+    "verbo": "dependre",
+    "catalan": "depengués",
+    "valenciano": "depenguera",
+    "morfologia": null,
+    "id": "LIMPIO_406"
+  },
+  {
+    "verbo": "dependre",
+    "catalan": "depenguéssim",
+    "valenciano": "depenguérem",
+    "morfologia": null,
+    "id": "LIMPIO_407"
+  },
+  {
+    "verbo": "dependre",
+    "catalan": "depenguéssiu",
+    "valenciano": "depenguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_408"
+  },
+  {
+    "verbo": "desfer",
+    "catalan": "desfaci",
+    "valenciano": "desfaça",
+    "morfologia": null,
+    "id": "LIMPIO_409"
+  },
+  {
+    "verbo": "desfer",
+    "catalan": "desfacin",
+    "valenciano": "desfacen",
+    "morfologia": null,
+    "id": "LIMPIO_410"
+  },
+  {
+    "verbo": "desfer",
+    "catalan": "desfacis",
+    "valenciano": "desfaces",
+    "morfologia": null,
+    "id": "LIMPIO_411"
+  },
+  {
+    "verbo": "desfer",
+    "catalan": "desfessin",
+    "valenciano": "desferen",
+    "morfologia": null,
+    "id": "LIMPIO_412"
+  },
+  {
+    "verbo": "desfer",
+    "catalan": "desfessis",
+    "valenciano": "desferes",
+    "morfologia": null,
+    "id": "LIMPIO_413"
+  },
+  {
+    "verbo": "desfer",
+    "catalan": "desfés",
+    "valenciano": "desfera",
+    "morfologia": null,
+    "id": "LIMPIO_414"
+  },
+  {
+    "verbo": "desfer",
+    "catalan": "desféssim",
+    "valenciano": "desférem",
+    "morfologia": null,
+    "id": "LIMPIO_415"
+  },
+  {
+    "verbo": "desfer",
+    "catalan": "desféssiu",
+    "valenciano": "desféreu",
+    "morfologia": null,
+    "id": "LIMPIO_416"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixem",
+    "valenciano": "desmeresquem",
+    "morfologia": null,
+    "id": "LIMPIO_417"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixessin",
+    "valenciano": "desmeresqueren",
+    "morfologia": null,
+    "id": "LIMPIO_418"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixessis",
+    "valenciano": "desmeresqueres",
+    "morfologia": null,
+    "id": "LIMPIO_419"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixeu",
+    "valenciano": "desmeresqueu",
+    "morfologia": null,
+    "id": "LIMPIO_420"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixi",
+    "valenciano": "desmeresca",
+    "morfologia": null,
+    "id": "LIMPIO_421"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixin",
+    "valenciano": "desmeresquen",
+    "morfologia": null,
+    "id": "LIMPIO_422"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixis",
+    "valenciano": "desmeresques",
+    "morfologia": null,
+    "id": "LIMPIO_423"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixo",
+    "valenciano": "desmeresc",
+    "morfologia": null,
+    "id": "LIMPIO_424"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixés",
+    "valenciano": "desmeresquera",
+    "morfologia": null,
+    "id": "LIMPIO_425"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixéssim",
+    "valenciano": "desmeresquérem",
+    "morfologia": null,
+    "id": "LIMPIO_426"
+  },
+  {
+    "verbo": "desmerèixer",
+    "catalan": "desmereixéssiu",
+    "valenciano": "desmeresquéreu",
+    "morfologia": null,
+    "id": "LIMPIO_427"
+  },
+  {
+    "verbo": "desoir",
+    "catalan": "desoeixi",
+    "valenciano": "desoïsca",
+    "morfologia": null,
+    "id": "LIMPIO_428"
+  },
+  {
+    "verbo": "desoir",
+    "catalan": "desoeixin",
+    "valenciano": "desoïsquen",
+    "morfologia": null,
+    "id": "LIMPIO_429"
+  },
+  {
+    "verbo": "desoir",
+    "catalan": "desoeixis",
+    "valenciano": "desoïsques",
+    "morfologia": null,
+    "id": "LIMPIO_430"
+  },
+  {
+    "verbo": "desoir",
+    "catalan": "desoeixo",
+    "valenciano": "desoïsc",
+    "morfologia": null,
+    "id": "LIMPIO_431"
+  },
+  {
+    "verbo": "desoir",
+    "catalan": "desoís",
+    "valenciano": "desoïra",
+    "morfologia": null,
+    "id": "LIMPIO_432"
+  },
+  {
+    "verbo": "desoir",
+    "catalan": "desoíssim",
+    "valenciano": "desoírem",
+    "morfologia": null,
+    "id": "LIMPIO_433"
+  },
+  {
+    "verbo": "desoir",
+    "catalan": "desoíssiu",
+    "valenciano": "desoïreu",
+    "morfologia": null,
+    "id": "LIMPIO_434"
+  },
+  {
+    "verbo": "desoir",
+    "catalan": "desoïssin",
+    "valenciano": "desoïren",
+    "morfologia": null,
+    "id": "LIMPIO_435"
+  },
+  {
+    "verbo": "desoir",
+    "catalan": "desoïssis",
+    "valenciano": "desoïres",
+    "morfologia": null,
+    "id": "LIMPIO_436"
+  },
+  {
+    "verbo": "deure",
+    "catalan": "deguessin",
+    "valenciano": "degueren",
+    "morfologia": null,
+    "id": "LIMPIO_437"
+  },
+  {
+    "verbo": "deure",
+    "catalan": "deguessis",
+    "valenciano": "degueres",
+    "morfologia": null,
+    "id": "LIMPIO_438"
+  },
+  {
+    "verbo": "deure",
+    "catalan": "degui",
+    "valenciano": "dega",
+    "morfologia": null,
+    "id": "LIMPIO_439"
+  },
+  {
+    "verbo": "deure",
+    "catalan": "deguin",
+    "valenciano": "deguen",
+    "morfologia": null,
+    "id": "LIMPIO_440"
+  },
+  {
+    "verbo": "deure",
+    "catalan": "deguis",
+    "valenciano": "degues",
+    "morfologia": null,
+    "id": "LIMPIO_441"
+  },
+  {
+    "verbo": "deure",
+    "catalan": "degués",
+    "valenciano": "deguera",
+    "morfologia": null,
+    "id": "LIMPIO_442"
+  },
+  {
+    "verbo": "deure",
+    "catalan": "deguéssim",
+    "valenciano": "deguérem",
+    "morfologia": null,
+    "id": "LIMPIO_443"
+  },
+  {
+    "verbo": "deure",
+    "catalan": "deguéssiu",
+    "valenciano": "deguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_444"
+  },
+  {
+    "verbo": "dir",
+    "catalan": "digues",
+    "valenciano": "dis",
+    "morfologia": null,
+    "id": "LIMPIO_445",
+    "problematica": true
+  },
+  {
+    "verbo": "dir",
+    "catalan": "diguessin",
+    "valenciano": "digueren",
+    "morfologia": null,
+    "id": "LIMPIO_446"
+  },
+  {
+    "verbo": "dir",
+    "catalan": "diguessis",
+    "valenciano": "digueres",
+    "morfologia": null,
+    "id": "LIMPIO_447"
+  },
+  {
+    "verbo": "dir",
+    "catalan": "digui",
+    "valenciano": "diga",
+    "morfologia": null,
+    "id": "LIMPIO_448"
+  },
+  {
+    "verbo": "dir",
+    "catalan": "diguin",
+    "valenciano": "diguen",
+    "morfologia": null,
+    "id": "LIMPIO_449"
+  },
+  {
+    "verbo": "dir",
+    "catalan": "diguis",
+    "valenciano": "digues",
+    "morfologia": null,
+    "id": "LIMPIO_450",
+    "problematica": true
+  },
+  {
+    "verbo": "dir",
+    "catalan": "digués",
+    "valenciano": "diguera",
+    "morfologia": null,
+    "id": "LIMPIO_451"
+  },
+  {
+    "verbo": "dir",
+    "catalan": "diguéssim",
+    "valenciano": "diguérem",
+    "morfologia": null,
+    "id": "LIMPIO_452"
+  },
+  {
+    "verbo": "dir",
+    "catalan": "diguéssiu",
+    "valenciano": "diguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_453"
+  },
+  {
+    "verbo": "doldre",
+    "catalan": "dolguessin",
+    "valenciano": "dolgueren",
+    "morfologia": null,
+    "id": "LIMPIO_454"
+  },
+  {
+    "verbo": "doldre",
+    "catalan": "dolguessis",
+    "valenciano": "dolgueres",
+    "morfologia": null,
+    "id": "LIMPIO_455"
+  },
+  {
+    "verbo": "doldre",
+    "catalan": "dolgui",
+    "valenciano": "dolga",
+    "morfologia": null,
+    "id": "LIMPIO_456"
+  },
+  {
+    "verbo": "doldre",
+    "catalan": "dolguin",
+    "valenciano": "dolguen",
+    "morfologia": null,
+    "id": "LIMPIO_457"
+  },
+  {
+    "verbo": "doldre",
+    "catalan": "dolguis",
+    "valenciano": "dolgues",
+    "morfologia": null,
+    "id": "LIMPIO_458"
+  },
+  {
+    "verbo": "doldre",
+    "catalan": "dolgués",
+    "valenciano": "dolguera",
+    "morfologia": null,
+    "id": "LIMPIO_459"
+  },
+  {
+    "verbo": "doldre",
+    "catalan": "dolguéssim",
+    "valenciano": "dolguérem",
+    "morfologia": null,
+    "id": "LIMPIO_460"
+  },
+  {
+    "verbo": "doldre",
+    "catalan": "dolguéssiu",
+    "valenciano": "dolguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_461"
+  },
+  {
+    "verbo": "donar",
+    "catalan": "donessin",
+    "valenciano": "donaren",
+    "morfologia": null,
+    "id": "LIMPIO_462"
+  },
+  {
+    "verbo": "donar",
+    "catalan": "donessis",
+    "valenciano": "donares",
+    "morfologia": null,
+    "id": "LIMPIO_463"
+  },
+  {
+    "verbo": "donar",
+    "catalan": "doni",
+    "valenciano": "done",
+    "morfologia": null,
+    "id": "LIMPIO_464",
+    "problematica": true
+  },
+  {
+    "verbo": "donar",
+    "catalan": "donin",
+    "valenciano": "donen",
+    "morfologia": null,
+    "id": "LIMPIO_465"
+  },
+  {
+    "verbo": "donar",
+    "catalan": "donis",
+    "valenciano": "dones",
+    "morfologia": null,
+    "id": "LIMPIO_466",
+    "problematica": true
+  },
+  {
+    "verbo": "donar",
+    "catalan": "donis",
+    "valenciano": "ónes",
+    "morfologia": null,
+    "id": "LIMPIO_467",
+    "problematica": true
+  },
+  {
+    "verbo": "donar",
+    "catalan": "dono",
+    "valenciano": "done",
+    "morfologia": null,
+    "id": "LIMPIO_468",
+    "problematica": true
+  },
+  {
+    "verbo": "donar",
+    "catalan": "donés",
+    "valenciano": "donara",
+    "morfologia": null,
+    "id": "LIMPIO_469"
+  },
+  {
+    "verbo": "donar",
+    "catalan": "donéssim",
+    "valenciano": "donàrem",
+    "morfologia": null,
+    "id": "LIMPIO_470"
+  },
+  {
+    "verbo": "donar",
+    "catalan": "donéssiu",
+    "valenciano": "donàreu",
+    "morfologia": null,
+    "id": "LIMPIO_471"
+  },
+  {
+    "verbo": "dur",
+    "catalan": "duguessin",
+    "valenciano": "dugueren",
+    "morfologia": null,
+    "id": "LIMPIO_472"
+  },
+  {
+    "verbo": "dur",
+    "catalan": "duguessis",
+    "valenciano": "dugueres",
+    "morfologia": null,
+    "id": "LIMPIO_473"
+  },
+  {
+    "verbo": "dur",
+    "catalan": "dugui",
+    "valenciano": "duga",
+    "morfologia": null,
+    "id": "LIMPIO_474"
+  },
+  {
+    "verbo": "dur",
+    "catalan": "duguin",
+    "valenciano": "duguen",
+    "morfologia": null,
+    "id": "LIMPIO_475"
+  },
+  {
+    "verbo": "dur",
+    "catalan": "duguis",
+    "valenciano": "dugues",
+    "morfologia": null,
+    "id": "LIMPIO_476"
+  },
+  {
+    "verbo": "dur",
+    "catalan": "dugués",
+    "valenciano": "duguera",
+    "morfologia": null,
+    "id": "LIMPIO_477"
+  },
+  {
+    "verbo": "dur",
+    "catalan": "duguéssim",
+    "valenciano": "duguérem",
+    "morfologia": null,
+    "id": "LIMPIO_478"
+  },
+  {
+    "verbo": "dur",
+    "catalan": "duguéssiu",
+    "valenciano": "duguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_479"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "eixim",
+    "valenciano": "isquem",
+    "morfologia": null,
+    "id": "LIMPIO_480"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "eixissin",
+    "valenciano": "isqueren",
+    "morfologia": null,
+    "id": "LIMPIO_481"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "eixissis",
+    "valenciano": "isqueres",
+    "morfologia": [
+      "pis",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_482"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "eixiu",
+    "valenciano": "isqueu",
+    "morfologia": null,
+    "id": "LIMPIO_483"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "eixís",
+    "valenciano": "isquera",
+    "morfologia": [
+      [
+        "pis",
+        "p1",
+        "sg"
+      ],
+      [
+        "pis",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_484"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "eixíssim",
+    "valenciano": "isquérem",
+    "morfologia": [
+      "pis",
+      "p1",
+      "pl"
+    ],
+    "id": "LIMPIO_485"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "eixíssiu",
+    "valenciano": "isquéreu",
+    "morfologia": [
+      "pis",
+      "p2",
+      "pl"
+    ],
+    "id": "LIMPIO_486"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "ixi",
+    "valenciano": "isca",
+    "morfologia": null,
+    "id": "LIMPIO_487"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "ixin",
+    "valenciano": "isquen",
+    "morfologia": null,
+    "id": "LIMPIO_488"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "ixis",
+    "valenciano": "isques",
+    "morfologia": null,
+    "id": "LIMPIO_489"
+  },
+  {
+    "verbo": "eixir",
+    "catalan": "ixo",
+    "valenciano": "isc",
+    "morfologia": null,
+    "id": "LIMPIO_490"
+  },
+  {
+    "verbo": "empènyer",
+    "catalan": "empenyessin",
+    "valenciano": "empenyeren",
+    "morfologia": null,
+    "id": "LIMPIO_491"
+  },
+  {
+    "verbo": "empènyer",
+    "catalan": "empenyessis",
+    "valenciano": "empenyeres",
+    "morfologia": null,
+    "id": "LIMPIO_492"
+  },
+  {
+    "verbo": "empènyer",
+    "catalan": "empenyi",
+    "valenciano": "empenya",
+    "morfologia": null,
+    "id": "LIMPIO_493"
+  },
+  {
+    "verbo": "empènyer",
+    "catalan": "empenyin",
+    "valenciano": "empenyen",
+    "morfologia": null,
+    "id": "LIMPIO_494"
+  },
+  {
+    "verbo": "empènyer",
+    "catalan": "empenyis",
+    "valenciano": "empenyes",
+    "morfologia": null,
+    "id": "LIMPIO_495"
+  },
+  {
+    "verbo": "empènyer",
+    "catalan": "empenyo",
+    "valenciano": "empeny",
+    "morfologia": null,
+    "id": "LIMPIO_496"
+  },
+  {
+    "verbo": "empènyer",
+    "catalan": "empenyés",
+    "valenciano": "empenyera",
+    "morfologia": null,
+    "id": "LIMPIO_497"
+  },
+  {
+    "verbo": "empènyer",
+    "catalan": "empenyéssim",
+    "valenciano": "empenyérem",
+    "morfologia": null,
+    "id": "LIMPIO_498"
+  },
+  {
+    "verbo": "empènyer",
+    "catalan": "empenyéssiu",
+    "valenciano": "empenyéreu",
+    "morfologia": null,
+    "id": "LIMPIO_499"
+  },
+  {
+    "verbo": "endur",
+    "catalan": "enduguessin",
+    "valenciano": "endugueren",
+    "morfologia": null,
+    "id": "LIMPIO_500"
+  },
+  {
+    "verbo": "endur",
+    "catalan": "enduguessis",
+    "valenciano": "endugueres",
+    "morfologia": null,
+    "id": "LIMPIO_501"
+  },
+  {
+    "verbo": "endur",
+    "catalan": "endugui",
+    "valenciano": "enduga",
+    "morfologia": null,
+    "id": "LIMPIO_502"
+  },
+  {
+    "verbo": "endur",
+    "catalan": "enduguin",
+    "valenciano": "enduguen",
+    "morfologia": null,
+    "id": "LIMPIO_503"
+  },
+  {
+    "verbo": "endur",
+    "catalan": "enduguis",
+    "valenciano": "endugues",
+    "morfologia": null,
+    "id": "LIMPIO_504"
+  },
+  {
+    "verbo": "endur",
+    "catalan": "endugués",
+    "valenciano": "enduguera",
+    "morfologia": null,
+    "id": "LIMPIO_505"
+  },
+  {
+    "verbo": "endur",
+    "catalan": "enduguéssim",
+    "valenciano": "enduguérem",
+    "morfologia": null,
+    "id": "LIMPIO_506"
+  },
+  {
+    "verbo": "endur",
+    "catalan": "enduguéssiu",
+    "valenciano": "enduguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_507"
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engoleix",
+    "valenciano": "engul",
+    "morfologia": null,
+    "id": "LIMPIO_508",
+    "problematica": true
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engoleixen",
+    "valenciano": "engulen",
+    "morfologia": null,
+    "id": "LIMPIO_509",
+    "problematica": true
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engoleixes",
+    "valenciano": "enguls",
+    "morfologia": [
+      "pri",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_510"
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engoleixi",
+    "valenciano": "engula",
+    "morfologia": [
+      [
+        "imp",
+        "p3",
+        "sg"
+      ],
+      [
+        "prs",
+        "p1",
+        "sg"
+      ],
+      [
+        "prs",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_511"
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engoleixin",
+    "valenciano": "engulen",
+    "morfologia": null,
+    "id": "LIMPIO_512",
+    "problematica": true
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engoleixis",
+    "valenciano": "engules",
+    "morfologia": [
+      "prs",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_513"
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engoleixo",
+    "valenciano": "engul",
+    "morfologia": null,
+    "id": "LIMPIO_514",
+    "problematica": true
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engolissin",
+    "valenciano": "engoliren",
+    "morfologia": null,
+    "id": "LIMPIO_515"
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engolissis",
+    "valenciano": "engolires",
+    "morfologia": null,
+    "id": "LIMPIO_516"
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engolís",
+    "valenciano": "engolira",
+    "morfologia": null,
+    "id": "LIMPIO_517"
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engolíssim",
+    "valenciano": "engolírem",
+    "morfologia": null,
+    "id": "LIMPIO_518"
+  },
+  {
+    "verbo": "engolir",
+    "catalan": "engolíssiu",
+    "valenciano": "engolíreu",
+    "morfologia": null,
+    "id": "LIMPIO_519"
+  },
+  {
+    "verbo": "entreveure",
+    "catalan": "entrevegi",
+    "valenciano": "entreveja",
+    "morfologia": null,
+    "id": "LIMPIO_520"
+  },
+  {
+    "verbo": "entreveure",
+    "catalan": "entrevegin",
+    "valenciano": "entrevegen",
+    "morfologia": null,
+    "id": "LIMPIO_521"
+  },
+  {
+    "verbo": "entreveure",
+    "catalan": "entrevegis",
+    "valenciano": "entreveges",
+    "morfologia": null,
+    "id": "LIMPIO_522"
+  },
+  {
+    "verbo": "entreveure",
+    "catalan": "entreveiessin",
+    "valenciano": "entreveren",
+    "morfologia": null,
+    "id": "LIMPIO_523"
+  },
+  {
+    "verbo": "entreveure",
+    "catalan": "entreveiessis",
+    "valenciano": "entreveres",
+    "morfologia": null,
+    "id": "LIMPIO_524"
+  },
+  {
+    "verbo": "entreveure",
+    "catalan": "entreveiés",
+    "valenciano": "entrevera",
+    "morfologia": null,
+    "id": "LIMPIO_525"
+  },
+  {
+    "verbo": "entreveure",
+    "catalan": "entreveiéssim",
+    "valenciano": "entrevérem",
+    "morfologia": null,
+    "id": "LIMPIO_526"
+  },
+  {
+    "verbo": "entreveure",
+    "catalan": "entreveiéssiu",
+    "valenciano": "entrevéreu",
+    "morfologia": null,
+    "id": "LIMPIO_527"
+  },
+  {
+    "verbo": "entreveure",
+    "catalan": "entrevists",
+    "valenciano": "entrevistos",
+    "morfologia": null,
+    "id": "LIMPIO_528"
+  },
+  {
+    "verbo": "equivaler",
+    "catalan": "equivaler",
+    "valenciano": "equivaldre",
+    "morfologia": null,
+    "id": "LIMPIO_529"
+  },
+  {
+    "verbo": "equivaler",
+    "catalan": "equivalguessin",
+    "valenciano": "equivalgueren",
+    "morfologia": null,
+    "id": "LIMPIO_530"
+  },
+  {
+    "verbo": "equivaler",
+    "catalan": "equivalguessis",
+    "valenciano": "equivalgueres",
+    "morfologia": null,
+    "id": "LIMPIO_531"
+  },
+  {
+    "verbo": "equivaler",
+    "catalan": "equivalgui",
+    "valenciano": "equivalga",
+    "morfologia": null,
+    "id": "LIMPIO_532"
+  },
+  {
+    "verbo": "equivaler",
+    "catalan": "equivalguin",
+    "valenciano": "equivalguen",
+    "morfologia": null,
+    "id": "LIMPIO_533"
+  },
+  {
+    "verbo": "equivaler",
+    "catalan": "equivalguis",
+    "valenciano": "equivalgues",
+    "morfologia": null,
+    "id": "LIMPIO_534"
+  },
+  {
+    "verbo": "equivaler",
+    "catalan": "equivalgués",
+    "valenciano": "equivalguera",
+    "morfologia": null,
+    "id": "LIMPIO_535"
+  },
+  {
+    "verbo": "equivaler",
+    "catalan": "equivalguéssim",
+    "valenciano": "equivalguérem",
+    "morfologia": null,
+    "id": "LIMPIO_536"
+  },
+  {
+    "verbo": "equivaler",
+    "catalan": "equivalguéssiu",
+    "valenciano": "equivalguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_537"
+  },
+  {
+    "verbo": "escopir",
+    "catalan": "escopissin",
+    "valenciano": "escopiren",
+    "morfologia": null,
+    "id": "LIMPIO_538"
+  },
+  {
+    "verbo": "escopir",
+    "catalan": "escopissis",
+    "valenciano": "escopires",
+    "morfologia": null,
+    "id": "LIMPIO_539"
+  },
+  {
+    "verbo": "escopir",
+    "catalan": "escopís",
+    "valenciano": "escopira",
+    "morfologia": null,
+    "id": "LIMPIO_540"
+  },
+  {
+    "verbo": "escopir",
+    "catalan": "escopíssim",
+    "valenciano": "escopírem",
+    "morfologia": null,
+    "id": "LIMPIO_541"
+  },
+  {
+    "verbo": "escopir",
+    "catalan": "escopíssiu",
+    "valenciano": "escopíreu",
+    "morfologia": null,
+    "id": "LIMPIO_542"
+  },
+  {
+    "verbo": "escopir",
+    "catalan": "escupi",
+    "valenciano": "escupa",
+    "morfologia": null,
+    "id": "LIMPIO_543"
+  },
+  {
+    "verbo": "escopir",
+    "catalan": "escupin",
+    "valenciano": "escupen",
+    "morfologia": null,
+    "id": "LIMPIO_544"
+  },
+  {
+    "verbo": "escopir",
+    "catalan": "escupis",
+    "valenciano": "escupes",
+    "morfologia": null,
+    "id": "LIMPIO_545"
+  },
+  {
+    "verbo": "escopir",
+    "catalan": "escupo",
+    "valenciano": "escup",
+    "morfologia": null,
+    "id": "LIMPIO_546"
+  },
+  {
+    "verbo": "estar",
+    "catalan": "estiguessin",
+    "valenciano": "estigueren",
+    "morfologia": null,
+    "id": "LIMPIO_547"
+  },
+  {
+    "verbo": "estar",
+    "catalan": "estiguessis",
+    "valenciano": "estigueres",
+    "morfologia": null,
+    "id": "LIMPIO_548"
+  },
+  {
+    "verbo": "estar",
+    "catalan": "estigui",
+    "valenciano": "estiga",
+    "morfologia": null,
+    "id": "LIMPIO_549"
+  },
+  {
+    "verbo": "estar",
+    "catalan": "estiguin",
+    "valenciano": "estiguen",
+    "morfologia": null,
+    "id": "LIMPIO_550"
+  },
+  {
+    "verbo": "estar",
+    "catalan": "estiguis",
+    "valenciano": "estigues",
+    "morfologia": null,
+    "id": "LIMPIO_551"
+  },
+  {
+    "verbo": "estar",
+    "catalan": "estigués",
+    "valenciano": "estiguera",
+    "morfologia": null,
+    "id": "LIMPIO_552"
+  },
+  {
+    "verbo": "estar",
+    "catalan": "estiguéssim",
+    "valenciano": "estiguérem",
+    "morfologia": null,
+    "id": "LIMPIO_553"
+  },
+  {
+    "verbo": "estar",
+    "catalan": "estiguéssiu",
+    "valenciano": "estiguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_554"
+  },
+  {
+    "verbo": "fer",
+    "catalan": "faci",
+    "valenciano": "faça",
+    "morfologia": null,
+    "id": "LIMPIO_555"
+  },
+  {
+    "verbo": "fer",
+    "catalan": "facin",
+    "valenciano": "facen",
+    "morfologia": null,
+    "id": "LIMPIO_556"
+  },
+  {
+    "verbo": "fer",
+    "catalan": "facis",
+    "valenciano": "faces",
+    "morfologia": null,
+    "id": "LIMPIO_557"
+  },
+  {
+    "verbo": "fer",
+    "catalan": "fes",
+    "valenciano": "fera",
+    "morfologia": null,
+    "id": "LIMPIO_558"
+  },
+  {
+    "verbo": "fer",
+    "catalan": "fessin",
+    "valenciano": "feren",
+    "morfologia": null,
+    "id": "LIMPIO_559"
+  },
+  {
+    "verbo": "fer",
+    "catalan": "fessis",
+    "valenciano": "feres",
+    "morfologia": null,
+    "id": "LIMPIO_560"
+  },
+  {
+    "verbo": "fer",
+    "catalan": "féssim",
+    "valenciano": "férem",
+    "morfologia": null,
+    "id": "LIMPIO_561"
+  },
+  {
+    "verbo": "fer",
+    "catalan": "féssiu",
+    "valenciano": "féreu",
+    "morfologia": null,
+    "id": "LIMPIO_562"
+  },
+  {
+    "verbo": "fondre",
+    "catalan": "fonguessin",
+    "valenciano": "fongueren",
+    "morfologia": null,
+    "id": "LIMPIO_563"
+  },
+  {
+    "verbo": "fondre",
+    "catalan": "fonguessis",
+    "valenciano": "fongueres",
+    "morfologia": null,
+    "id": "LIMPIO_564"
+  },
+  {
+    "verbo": "fondre",
+    "catalan": "fongui",
+    "valenciano": "fonga",
+    "morfologia": null,
+    "id": "LIMPIO_565"
+  },
+  {
+    "verbo": "fondre",
+    "catalan": "fonguin",
+    "valenciano": "fonguen",
+    "morfologia": null,
+    "id": "LIMPIO_566"
+  },
+  {
+    "verbo": "fondre",
+    "catalan": "fonguis",
+    "valenciano": "fongues",
+    "morfologia": null,
+    "id": "LIMPIO_567"
+  },
+  {
+    "verbo": "fondre",
+    "catalan": "fongués",
+    "valenciano": "fonguera",
+    "morfologia": null,
+    "id": "LIMPIO_568"
+  },
+  {
+    "verbo": "fondre",
+    "catalan": "fonguéssim",
+    "valenciano": "fonguérem",
+    "morfologia": null,
+    "id": "LIMPIO_569"
+  },
+  {
+    "verbo": "fondre",
+    "catalan": "fonguéssiu",
+    "valenciano": "fonguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_570"
+  },
+  {
+    "verbo": "fugir",
+    "catalan": "fugi",
+    "valenciano": "fuja",
+    "morfologia": null,
+    "id": "LIMPIO_571"
+  },
+  {
+    "verbo": "fugir",
+    "catalan": "fugin",
+    "valenciano": "fugen",
+    "morfologia": null,
+    "id": "LIMPIO_572"
+  },
+  {
+    "verbo": "fugir",
+    "catalan": "fugis",
+    "valenciano": "fuges",
+    "morfologia": null,
+    "id": "LIMPIO_573"
+  },
+  {
+    "verbo": "fugir",
+    "catalan": "fugissin",
+    "valenciano": "fugiren",
+    "morfologia": null,
+    "id": "LIMPIO_574"
+  },
+  {
+    "verbo": "fugir",
+    "catalan": "fugissis",
+    "valenciano": "fugires",
+    "morfologia": null,
+    "id": "LIMPIO_575"
+  },
+  {
+    "verbo": "fugir",
+    "catalan": "fugís",
+    "valenciano": "fugira",
+    "morfologia": null,
+    "id": "LIMPIO_576"
+  },
+  {
+    "verbo": "fugir",
+    "catalan": "fugíssim",
+    "valenciano": "fugírem",
+    "morfologia": null,
+    "id": "LIMPIO_577"
+  },
+  {
+    "verbo": "fugir",
+    "catalan": "fugíssiu",
+    "valenciano": "fugíreu",
+    "morfologia": null,
+    "id": "LIMPIO_578"
+  },
+  {
+    "verbo": "fugir",
+    "catalan": "fujo",
+    "valenciano": "fuig",
+    "morfologia": null,
+    "id": "LIMPIO_579"
+  },
+  {
+    "verbo": "haver",
+    "catalan": "hagi",
+    "valenciano": "haja",
+    "morfologia": null,
+    "id": "LIMPIO_580"
+  },
+  {
+    "verbo": "haver",
+    "catalan": "hagin",
+    "valenciano": "hagen",
+    "morfologia": null,
+    "id": "LIMPIO_581"
+  },
+  {
+    "verbo": "haver",
+    "catalan": "hagis",
+    "valenciano": "hages",
+    "morfologia": null,
+    "id": "LIMPIO_582"
+  },
+  {
+    "verbo": "haver",
+    "catalan": "haguessin",
+    "valenciano": "hagueren",
+    "morfologia": null,
+    "id": "LIMPIO_583"
+  },
+  {
+    "verbo": "haver",
+    "catalan": "haguessis",
+    "valenciano": "hagueres",
+    "morfologia": null,
+    "id": "LIMPIO_584"
+  },
+  {
+    "verbo": "haver",
+    "catalan": "hagués",
+    "valenciano": "haguera",
+    "morfologia": null,
+    "id": "LIMPIO_585"
+  },
+  {
+    "verbo": "haver",
+    "catalan": "haguéssim",
+    "valenciano": "haguérem",
+    "morfologia": null,
+    "id": "LIMPIO_586"
+  },
+  {
+    "verbo": "haver",
+    "catalan": "haguéssiu",
+    "valenciano": "haguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_587"
+  },
+  {
+    "verbo": "haver",
+    "catalan": "haig",
+    "valenciano": "he",
+    "morfologia": [
+      "pri",
+      "p1",
+      "sg"
+    ],
+    "id": "LIMPIO_588"
+  },
+  {
+    "verbo": "haver",
+    "catalan": "hàgim",
+    "valenciano": "hàgem",
+    "morfologia": null,
+    "id": "LIMPIO_589"
+  },
+  {
+    "verbo": "haver",
+    "catalan": "hàgiu",
+    "valenciano": "hàgeu",
+    "morfologia": null,
+    "id": "LIMPIO_590"
+  },
+  {
+    "verbo": "imprimir",
+    "catalan": "imprimeixi",
+    "valenciano": "imprimisca",
+    "morfologia": null,
+    "id": "LIMPIO_591"
+  },
+  {
+    "verbo": "imprimir",
+    "catalan": "imprimeixin",
+    "valenciano": "imprimisquen",
+    "morfologia": null,
+    "id": "LIMPIO_592"
+  },
+  {
+    "verbo": "imprimir",
+    "catalan": "imprimeixis",
+    "valenciano": "imprimisques",
+    "morfologia": null,
+    "id": "LIMPIO_593"
+  },
+  {
+    "verbo": "imprimir",
+    "catalan": "imprimeixo",
+    "valenciano": "imprimisc",
+    "morfologia": null,
+    "id": "LIMPIO_594"
+  },
+  {
+    "verbo": "imprimir",
+    "catalan": "imprimissin",
+    "valenciano": "imprimiren",
+    "morfologia": null,
+    "id": "LIMPIO_595"
+  },
+  {
+    "verbo": "imprimir",
+    "catalan": "imprimissis",
+    "valenciano": "imprimires",
+    "morfologia": null,
+    "id": "LIMPIO_596"
+  },
+  {
+    "verbo": "imprimir",
+    "catalan": "imprimís",
+    "valenciano": "imprimira",
+    "morfologia": null,
+    "id": "LIMPIO_597"
+  },
+  {
+    "verbo": "imprimir",
+    "catalan": "imprimíssim",
+    "valenciano": "imprimírem",
+    "morfologia": null,
+    "id": "LIMPIO_598"
+  },
+  {
+    "verbo": "imprimir",
+    "catalan": "imprimíssiu",
+    "valenciano": "imprimíreu",
+    "morfologia": null,
+    "id": "LIMPIO_599"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jaguessin",
+    "valenciano": "jagueren",
+    "morfologia": null,
+    "id": "LIMPIO_600"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jaguessis",
+    "valenciano": "jagueres",
+    "morfologia": null,
+    "id": "LIMPIO_601"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jagués",
+    "valenciano": "jaguera",
+    "morfologia": null,
+    "id": "LIMPIO_602"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jaguéssim",
+    "valenciano": "jaguérem",
+    "morfologia": null,
+    "id": "LIMPIO_603"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jaguéssiu",
+    "valenciano": "jaguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_604"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jec",
+    "valenciano": "jac",
+    "morfologia": null,
+    "id": "LIMPIO_605"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jegui",
+    "valenciano": "jaga",
+    "morfologia": null,
+    "id": "LIMPIO_606"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jeguin",
+    "valenciano": "jaguen",
+    "morfologia": null,
+    "id": "LIMPIO_607"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jeguis",
+    "valenciano": "jagues",
+    "morfologia": null,
+    "id": "LIMPIO_608"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jeu",
+    "valenciano": "jau",
+    "morfologia": null,
+    "id": "LIMPIO_609"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jeuen",
+    "valenciano": "jauen",
+    "morfologia": null,
+    "id": "LIMPIO_610"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jeure",
+    "valenciano": "jaure",
+    "morfologia": null,
+    "id": "LIMPIO_611"
+  },
+  {
+    "verbo": "jeure",
+    "catalan": "jeus",
+    "valenciano": "jaus",
+    "morfologia": null,
+    "id": "LIMPIO_612"
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegeix",
+    "valenciano": "llig",
+    "morfologia": null,
+    "id": "LIMPIO_613",
+    "problematica": true
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegeixen",
+    "valenciano": "lligen",
+    "morfologia": null,
+    "id": "LIMPIO_614",
+    "problematica": true
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegeixes",
+    "valenciano": "lliges",
+    "morfologia": null,
+    "id": "LIMPIO_615",
+    "problematica": true
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegeixi",
+    "valenciano": "llija",
+    "morfologia": null,
+    "id": "LIMPIO_616"
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegeixin",
+    "valenciano": "lligen",
+    "morfologia": null,
+    "id": "LIMPIO_617",
+    "problematica": true
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegeixis",
+    "valenciano": "lliges",
+    "morfologia": null,
+    "id": "LIMPIO_618",
+    "problematica": true
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegeixo",
+    "valenciano": "llig",
+    "morfologia": null,
+    "id": "LIMPIO_619",
+    "problematica": true
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegissin",
+    "valenciano": "llegiren",
+    "morfologia": null,
+    "id": "LIMPIO_620"
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegissis",
+    "valenciano": "llegires",
+    "morfologia": null,
+    "id": "LIMPIO_621"
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegís",
+    "valenciano": "llegira",
+    "morfologia": null,
+    "id": "LIMPIO_622"
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegíssim",
+    "valenciano": "llegírem",
+    "morfologia": null,
+    "id": "LIMPIO_623"
+  },
+  {
+    "verbo": "llegir",
+    "catalan": "llegíssiu",
+    "valenciano": "llegíreu",
+    "morfologia": null,
+    "id": "LIMPIO_624"
+  },
+  {
+    "verbo": "lluir",
+    "catalan": "llueixi",
+    "valenciano": "lluïsca",
+    "morfologia": null,
+    "id": "LIMPIO_625"
+  },
+  {
+    "verbo": "lluir",
+    "catalan": "llueixin",
+    "valenciano": "lluïsquen",
+    "morfologia": null,
+    "id": "LIMPIO_626"
+  },
+  {
+    "verbo": "lluir",
+    "catalan": "llueixis",
+    "valenciano": "lluïsques",
+    "morfologia": null,
+    "id": "LIMPIO_627"
+  },
+  {
+    "verbo": "lluir",
+    "catalan": "llueixo",
+    "valenciano": "lluïsc",
+    "morfologia": null,
+    "id": "LIMPIO_628"
+  },
+  {
+    "verbo": "lluir",
+    "catalan": "lluís",
+    "valenciano": "lluïra",
+    "morfologia": null,
+    "id": "LIMPIO_629"
+  },
+  {
+    "verbo": "lluir",
+    "catalan": "lluíssim",
+    "valenciano": "lluírem",
+    "morfologia": null,
+    "id": "LIMPIO_630"
+  },
+  {
+    "verbo": "lluir",
+    "catalan": "lluíssiu",
+    "valenciano": "lluíreu",
+    "morfologia": null,
+    "id": "LIMPIO_631"
+  },
+  {
+    "verbo": "lluir",
+    "catalan": "lluïssin",
+    "valenciano": "lluïren",
+    "morfologia": null,
+    "id": "LIMPIO_632"
+  },
+  {
+    "verbo": "lluir",
+    "catalan": "lluïssis",
+    "valenciano": "lluïres",
+    "morfologia": null,
+    "id": "LIMPIO_633"
+  },
+  {
+    "verbo": "malvendre",
+    "catalan": "malvenguessin",
+    "valenciano": "malvengueren",
+    "morfologia": null,
+    "id": "LIMPIO_634"
+  },
+  {
+    "verbo": "malvendre",
+    "catalan": "malvenguessis",
+    "valenciano": "malvengueres",
+    "morfologia": null,
+    "id": "LIMPIO_635"
+  },
+  {
+    "verbo": "malvendre",
+    "catalan": "malvengui",
+    "valenciano": "malvenga",
+    "morfologia": null,
+    "id": "LIMPIO_636"
+  },
+  {
+    "verbo": "malvendre",
+    "catalan": "malvenguin",
+    "valenciano": "malvenguen",
+    "morfologia": null,
+    "id": "LIMPIO_637"
+  },
+  {
+    "verbo": "malvendre",
+    "catalan": "malvenguis",
+    "valenciano": "malvengues",
+    "morfologia": null,
+    "id": "LIMPIO_638"
+  },
+  {
+    "verbo": "malvendre",
+    "catalan": "malvengués",
+    "valenciano": "malvenguera",
+    "morfologia": null,
+    "id": "LIMPIO_639"
+  },
+  {
+    "verbo": "malvendre",
+    "catalan": "malvenguéssim",
+    "valenciano": "malvenguérem",
+    "morfologia": null,
+    "id": "LIMPIO_640"
+  },
+  {
+    "verbo": "malvendre",
+    "catalan": "malvenguéssiu",
+    "valenciano": "malvenguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_641"
+  },
+  {
+    "verbo": "moldre",
+    "catalan": "molguessin",
+    "valenciano": "molgueren",
+    "morfologia": null,
+    "id": "LIMPIO_642"
+  },
+  {
+    "verbo": "moldre",
+    "catalan": "molguessis",
+    "valenciano": "molgueres",
+    "morfologia": null,
+    "id": "LIMPIO_643"
+  },
+  {
+    "verbo": "moldre",
+    "catalan": "molgui",
+    "valenciano": "molga",
+    "morfologia": null,
+    "id": "LIMPIO_644"
+  },
+  {
+    "verbo": "moldre",
+    "catalan": "molguin",
+    "valenciano": "molguen",
+    "morfologia": null,
+    "id": "LIMPIO_645"
+  },
+  {
+    "verbo": "moldre",
+    "catalan": "molguis",
+    "valenciano": "molgues",
+    "morfologia": null,
+    "id": "LIMPIO_646"
+  },
+  {
+    "verbo": "moldre",
+    "catalan": "molgués",
+    "valenciano": "molguera",
+    "morfologia": null,
+    "id": "LIMPIO_647"
+  },
+  {
+    "verbo": "moldre",
+    "catalan": "molguéssim",
+    "valenciano": "molguérem",
+    "morfologia": null,
+    "id": "LIMPIO_648"
+  },
+  {
+    "verbo": "moldre",
+    "catalan": "molguéssiu",
+    "valenciano": "molguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_649"
+  },
+  {
+    "verbo": "morir",
+    "catalan": "mori",
+    "valenciano": "muira",
+    "morfologia": null,
+    "id": "LIMPIO_650"
+  },
+  {
+    "verbo": "morir",
+    "catalan": "morin",
+    "valenciano": "moren",
+    "morfologia": null,
+    "id": "LIMPIO_651",
+    "problematica": true
+  },
+  {
+    "verbo": "morir",
+    "catalan": "morin",
+    "valenciano": "muiren",
+    "morfologia": null,
+    "id": "LIMPIO_652",
+    "problematica": true
+  },
+  {
+    "verbo": "morir",
+    "catalan": "moris",
+    "valenciano": "muires",
+    "morfologia": null,
+    "id": "LIMPIO_653"
+  },
+  {
+    "verbo": "morir",
+    "catalan": "morissin",
+    "valenciano": "moriren",
+    "morfologia": null,
+    "id": "LIMPIO_654"
+  },
+  {
+    "verbo": "morir",
+    "catalan": "morissis",
+    "valenciano": "morires",
+    "morfologia": null,
+    "id": "LIMPIO_655"
+  },
+  {
+    "verbo": "morir",
+    "catalan": "moro",
+    "valenciano": "muir",
+    "morfologia": null,
+    "id": "LIMPIO_656"
+  },
+  {
+    "verbo": "morir",
+    "catalan": "morís",
+    "valenciano": "morira",
+    "morfologia": null,
+    "id": "LIMPIO_657"
+  },
+  {
+    "verbo": "morir",
+    "catalan": "moríssim",
+    "valenciano": "morírem",
+    "morfologia": null,
+    "id": "LIMPIO_658"
+  },
+  {
+    "verbo": "morir",
+    "catalan": "moríssiu",
+    "valenciano": "moríreu",
+    "morfologia": null,
+    "id": "LIMPIO_659"
+  },
+  {
+    "verbo": "nevar",
+    "catalan": "nevi",
+    "valenciano": "neve",
+    "morfologia": null,
+    "id": "LIMPIO_660"
+  },
+  {
+    "verbo": "nevar",
+    "catalan": "nevés",
+    "valenciano": "nevara",
+    "morfologia": null,
+    "id": "LIMPIO_661"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "naixem",
+    "valenciano": "nasquem",
+    "morfologia": null,
+    "id": "LIMPIO_662"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "naixessin",
+    "valenciano": "nasqueren",
+    "morfologia": null,
+    "id": "LIMPIO_663"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "naixessis",
+    "valenciano": "nasqueres",
+    "morfologia": null,
+    "id": "LIMPIO_664"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "naixeu",
+    "valenciano": "nasqueu",
+    "morfologia": null,
+    "id": "LIMPIO_665"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "naixés",
+    "valenciano": "nasquera",
+    "morfologia": null,
+    "id": "LIMPIO_666"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "naixéssim",
+    "valenciano": "nasquérem",
+    "morfologia": null,
+    "id": "LIMPIO_667"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "naixéssiu",
+    "valenciano": "nasquéreu",
+    "morfologia": null,
+    "id": "LIMPIO_668"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "neix",
+    "valenciano": "naix",
+    "morfologia": null,
+    "id": "LIMPIO_669"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "neixen",
+    "valenciano": "naixen",
+    "morfologia": null,
+    "id": "LIMPIO_670"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "neixes",
+    "valenciano": "naixes",
+    "morfologia": null,
+    "id": "LIMPIO_671"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "neixi",
+    "valenciano": "nasca",
+    "morfologia": null,
+    "id": "LIMPIO_672"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "neixin",
+    "valenciano": "nasquen",
+    "morfologia": null,
+    "id": "LIMPIO_673"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "neixis",
+    "valenciano": "nasques",
+    "morfologia": null,
+    "id": "LIMPIO_674"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "neixo",
+    "valenciano": "nasc",
+    "morfologia": null,
+    "id": "LIMPIO_675"
+  },
+  {
+    "verbo": "néixer",
+    "catalan": "néixer",
+    "valenciano": "nàixer",
+    "morfologia": null,
+    "id": "LIMPIO_676"
+  },
+  {
+    "verbo": "obrar",
+    "catalan": "obressin",
+    "valenciano": "obraren",
+    "morfologia": null,
+    "id": "LIMPIO_677"
+  },
+  {
+    "verbo": "obrar",
+    "catalan": "obressis",
+    "valenciano": "obrares",
+    "morfologia": null,
+    "id": "LIMPIO_678"
+  },
+  {
+    "verbo": "obrar",
+    "catalan": "obri",
+    "valenciano": "obre",
+    "morfologia": null,
+    "id": "LIMPIO_679",
+    "problematica": true
+  },
+  {
+    "verbo": "obrar",
+    "catalan": "obrin",
+    "valenciano": "obren",
+    "morfologia": null,
+    "id": "LIMPIO_680",
+    "problematica": true
+  },
+  {
+    "verbo": "obrar",
+    "catalan": "obris",
+    "valenciano": "obres",
+    "morfologia": null,
+    "id": "LIMPIO_681",
+    "problematica": true
+  },
+  {
+    "verbo": "obrar",
+    "catalan": "obro",
+    "valenciano": "obre",
+    "morfologia": null,
+    "id": "LIMPIO_682",
+    "problematica": true
+  },
+  {
+    "verbo": "obrar",
+    "catalan": "obrés",
+    "valenciano": "obrara",
+    "morfologia": null,
+    "id": "LIMPIO_683"
+  },
+  {
+    "verbo": "obrar",
+    "catalan": "obréssim",
+    "valenciano": "obràrem",
+    "morfologia": null,
+    "id": "LIMPIO_684"
+  },
+  {
+    "verbo": "obrar",
+    "catalan": "obréssiu",
+    "valenciano": "obràreu",
+    "morfologia": null,
+    "id": "LIMPIO_685"
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obre",
+    "valenciano": "obri",
+    "morfologia": null,
+    "id": "LIMPIO_686",
+    "problematica": true
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obren",
+    "valenciano": "obrin",
+    "morfologia": null,
+    "id": "LIMPIO_687",
+    "problematica": true
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obres",
+    "valenciano": "obris",
+    "morfologia": null,
+    "id": "LIMPIO_688",
+    "problematica": true
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obrim",
+    "valenciano": "obriguem",
+    "morfologia": null,
+    "id": "LIMPIO_689"
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obrissin",
+    "valenciano": "obriren",
+    "morfologia": null,
+    "id": "LIMPIO_690"
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obrissis",
+    "valenciano": "obrires",
+    "morfologia": null,
+    "id": "LIMPIO_691"
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obriu",
+    "valenciano": "obrigueu",
+    "morfologia": null,
+    "id": "LIMPIO_692"
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obrís",
+    "valenciano": "obrira",
+    "morfologia": null,
+    "id": "LIMPIO_693"
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obríssim",
+    "valenciano": "obrírem",
+    "morfologia": null,
+    "id": "LIMPIO_694"
+  },
+  {
+    "verbo": "obrir",
+    "catalan": "obríssiu",
+    "valenciano": "obríreu",
+    "morfologia": null,
+    "id": "LIMPIO_695"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "ofereixi",
+    "valenciano": "oferisca",
+    "morfologia": null,
+    "id": "LIMPIO_696"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "ofereixin",
+    "valenciano": "oferisquen",
+    "morfologia": null,
+    "id": "LIMPIO_697"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "ofereixis",
+    "valenciano": "oferisques",
+    "morfologia": null,
+    "id": "LIMPIO_698"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "ofereixo",
+    "valenciano": "oferisc",
+    "morfologia": null,
+    "id": "LIMPIO_699"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "oferissin",
+    "valenciano": "oferiren",
+    "morfologia": null,
+    "id": "LIMPIO_700"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "oferissis",
+    "valenciano": "oferires",
+    "morfologia": null,
+    "id": "LIMPIO_701"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "ofert",
+    "valenciano": "oferit",
+    "morfologia": null,
+    "id": "LIMPIO_702"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "oferta",
+    "valenciano": "oferida",
+    "morfologia": null,
+    "id": "LIMPIO_703"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "ofertes",
+    "valenciano": "oferides",
+    "morfologia": null,
+    "id": "LIMPIO_704"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "oferts",
+    "valenciano": "oferits",
+    "morfologia": null,
+    "id": "LIMPIO_705"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "oferís",
+    "valenciano": "oferira",
+    "morfologia": null,
+    "id": "LIMPIO_706"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "oferíssim",
+    "valenciano": "oferírem",
+    "morfologia": null,
+    "id": "LIMPIO_707"
+  },
+  {
+    "verbo": "oferir",
+    "catalan": "oferíssiu",
+    "valenciano": "oferíreu",
+    "morfologia": null,
+    "id": "LIMPIO_708"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omple",
+    "valenciano": "ompli",
+    "morfologia": null,
+    "id": "LIMPIO_709"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplen",
+    "valenciano": "omplin",
+    "morfologia": null,
+    "id": "LIMPIO_710"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplert",
+    "valenciano": "omplit",
+    "morfologia": null,
+    "id": "LIMPIO_711"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplerta",
+    "valenciano": "omplida",
+    "morfologia": null,
+    "id": "LIMPIO_712"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplertes",
+    "valenciano": "omplides",
+    "morfologia": null,
+    "id": "LIMPIO_713"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplerts",
+    "valenciano": "omplits",
+    "morfologia": null,
+    "id": "LIMPIO_714"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omples",
+    "valenciano": "omplis",
+    "morfologia": null,
+    "id": "LIMPIO_715"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplim",
+    "valenciano": "ompliguem",
+    "morfologia": null,
+    "id": "LIMPIO_716"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplissin",
+    "valenciano": "ompliren",
+    "morfologia": null,
+    "id": "LIMPIO_717"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplissis",
+    "valenciano": "omplires",
+    "morfologia": null,
+    "id": "LIMPIO_718"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "ompliu",
+    "valenciano": "ompligueu",
+    "morfologia": null,
+    "id": "LIMPIO_719"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplís",
+    "valenciano": "omplira",
+    "morfologia": null,
+    "id": "LIMPIO_720"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplíssim",
+    "valenciano": "omplírem",
+    "morfologia": null,
+    "id": "LIMPIO_721"
+  },
+  {
+    "verbo": "omplir",
+    "catalan": "omplíssiu",
+    "valenciano": "omplíreu",
+    "morfologia": null,
+    "id": "LIMPIO_722"
+  },
+  {
+    "verbo": "pertànyer",
+    "catalan": "pertanyessin",
+    "valenciano": "pertangueren",
+    "morfologia": null,
+    "id": "LIMPIO_723"
+  },
+  {
+    "verbo": "pertànyer",
+    "catalan": "pertanyessis",
+    "valenciano": "pertangueres",
+    "morfologia": [
+      "pis",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_724"
+  },
+  {
+    "verbo": "pertànyer",
+    "catalan": "pertanyeu",
+    "valenciano": "pertangueu",
+    "morfologia": [
+      "prs",
+      "p2",
+      "pl"
+    ],
+    "id": "LIMPIO_725"
+  },
+  {
+    "verbo": "pertànyer",
+    "catalan": "pertanyi",
+    "valenciano": "pertanga",
+    "morfologia": [
+      [
+        "imp",
+        "p3",
+        "sg"
+      ],
+      [
+        "prs",
+        "p1",
+        "sg"
+      ],
+      [
+        "prs",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_726"
+  },
+  {
+    "verbo": "pertànyer",
+    "catalan": "pertanyin",
+    "valenciano": "pertanguen",
+    "morfologia": null,
+    "id": "LIMPIO_727"
+  },
+  {
+    "verbo": "pertànyer",
+    "catalan": "pertanyis",
+    "valenciano": "pertangues",
+    "morfologia": [
+      "prs",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_728"
+  },
+  {
+    "verbo": "pertànyer",
+    "catalan": "pertanyo",
+    "valenciano": "pertany",
+    "morfologia": [
+      "pri",
+      "p1",
+      "sg"
+    ],
+    "id": "LIMPIO_729"
+  },
+  {
+    "verbo": "pertànyer",
+    "catalan": "pertanyés",
+    "valenciano": "pertanguera",
+    "morfologia": [
+      [
+        "pis",
+        "p1",
+        "sg"
+      ],
+      [
+        "pis",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_730"
+  },
+  {
+    "verbo": "pertànyer",
+    "catalan": "pertanyéssim",
+    "valenciano": "pertanguérem",
+    "morfologia": [
+      "pis",
+      "p1",
+      "pl"
+    ],
+    "id": "LIMPIO_731"
+  },
+  {
+    "verbo": "pertànyer",
+    "catalan": "pertanyéssiu",
+    "valenciano": "pertanguéreu",
+    "morfologia": [
+      "pis",
+      "p2",
+      "pl"
+    ],
+    "id": "LIMPIO_732"
+  },
+  {
+    "verbo": "ploure",
+    "catalan": "plogui",
+    "valenciano": "ploga",
+    "morfologia": null,
+    "id": "LIMPIO_733"
+  },
+  {
+    "verbo": "ploure",
+    "catalan": "plogués",
+    "valenciano": "ploguera",
+    "morfologia": null,
+    "id": "LIMPIO_734"
+  },
+  {
+    "verbo": "poder",
+    "catalan": "poguessin",
+    "valenciano": "pogueren",
+    "morfologia": null,
+    "id": "LIMPIO_735"
+  },
+  {
+    "verbo": "poder",
+    "catalan": "poguessis",
+    "valenciano": "pogueres",
+    "morfologia": null,
+    "id": "LIMPIO_736"
+  },
+  {
+    "verbo": "poder",
+    "catalan": "pogués",
+    "valenciano": "poguera",
+    "morfologia": null,
+    "id": "LIMPIO_737"
+  },
+  {
+    "verbo": "poder",
+    "catalan": "poguéssim",
+    "valenciano": "poguérem",
+    "morfologia": null,
+    "id": "LIMPIO_738"
+  },
+  {
+    "verbo": "poder",
+    "catalan": "poguéssiu",
+    "valenciano": "poguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_739"
+  },
+  {
+    "verbo": "poder",
+    "catalan": "pugui",
+    "valenciano": "puga",
+    "morfologia": null,
+    "id": "LIMPIO_740"
+  },
+  {
+    "verbo": "poder",
+    "catalan": "puguin",
+    "valenciano": "puguen",
+    "morfologia": null,
+    "id": "LIMPIO_741"
+  },
+  {
+    "verbo": "poder",
+    "catalan": "puguis",
+    "valenciano": "pugues",
+    "morfologia": null,
+    "id": "LIMPIO_742"
+  },
+  {
+    "verbo": "prémer",
+    "catalan": "premessin",
+    "valenciano": "premeren",
+    "morfologia": null,
+    "id": "LIMPIO_743"
+  },
+  {
+    "verbo": "prémer",
+    "catalan": "premessis",
+    "valenciano": "premeres",
+    "morfologia": [
+      "pis",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_744"
+  },
+  {
+    "verbo": "prémer",
+    "catalan": "premi",
+    "valenciano": "prema",
+    "morfologia": [
+      [
+        "imp",
+        "p3",
+        "sg"
+      ],
+      [
+        "prs",
+        "p1",
+        "sg"
+      ],
+      [
+        "prs",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_745"
+  },
+  {
+    "verbo": "prémer",
+    "catalan": "premin",
+    "valenciano": "premen",
+    "morfologia": null,
+    "id": "LIMPIO_746"
+  },
+  {
+    "verbo": "prémer",
+    "catalan": "premis",
+    "valenciano": "premes",
+    "morfologia": [
+      "prs",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_747"
+  },
+  {
+    "verbo": "prémer",
+    "catalan": "premés",
+    "valenciano": "premera",
+    "morfologia": [
+      [
+        "pis",
+        "p1",
+        "sg"
+      ],
+      [
+        "pis",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_748"
+  },
+  {
+    "verbo": "prémer",
+    "catalan": "preméssim",
+    "valenciano": "premérem",
+    "morfologia": [
+      "pis",
+      "p1",
+      "pl"
+    ],
+    "id": "LIMPIO_749"
+  },
+  {
+    "verbo": "prémer",
+    "catalan": "preméssiu",
+    "valenciano": "preméreu",
+    "morfologia": [
+      "pis",
+      "p2",
+      "pl"
+    ],
+    "id": "LIMPIO_750"
+  },
+  {
+    "verbo": "prendre",
+    "catalan": "prenguessin",
+    "valenciano": "prengueren",
+    "morfologia": null,
+    "id": "LIMPIO_751"
+  },
+  {
+    "verbo": "prendre",
+    "catalan": "prenguessis",
+    "valenciano": "prengueres",
+    "morfologia": null,
+    "id": "LIMPIO_752"
+  },
+  {
+    "verbo": "prendre",
+    "catalan": "prengui",
+    "valenciano": "prenga",
+    "morfologia": null,
+    "id": "LIMPIO_753"
+  },
+  {
+    "verbo": "prendre",
+    "catalan": "prenguin",
+    "valenciano": "prenguen",
+    "morfologia": null,
+    "id": "LIMPIO_754"
+  },
+  {
+    "verbo": "prendre",
+    "catalan": "prenguis",
+    "valenciano": "prengues",
+    "morfologia": null,
+    "id": "LIMPIO_755"
+  },
+  {
+    "verbo": "prendre",
+    "catalan": "prengués",
+    "valenciano": "prenguera",
+    "morfologia": null,
+    "id": "LIMPIO_756"
+  },
+  {
+    "verbo": "prendre",
+    "catalan": "prenguéssim",
+    "valenciano": "prenguérem",
+    "morfologia": null,
+    "id": "LIMPIO_757"
+  },
+  {
+    "verbo": "prendre",
+    "catalan": "prenguéssiu",
+    "valenciano": "prenguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_758"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudi",
+    "valenciano": "puda",
+    "morfologia": null,
+    "id": "LIMPIO_759"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudim",
+    "valenciano": "pudiguem",
+    "morfologia": null,
+    "id": "LIMPIO_760"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudin",
+    "valenciano": "puden",
+    "morfologia": null,
+    "id": "LIMPIO_761"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudis",
+    "valenciano": "pudes",
+    "morfologia": null,
+    "id": "LIMPIO_762"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudissin",
+    "valenciano": "pudiren",
+    "morfologia": null,
+    "id": "LIMPIO_763"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudissis",
+    "valenciano": "pudires",
+    "morfologia": null,
+    "id": "LIMPIO_764"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudiu",
+    "valenciano": "pudigueu",
+    "morfologia": null,
+    "id": "LIMPIO_765"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudo",
+    "valenciano": "put",
+    "morfologia": null,
+    "id": "LIMPIO_766"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudís",
+    "valenciano": "pudira",
+    "morfologia": null,
+    "id": "LIMPIO_767"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudíssim",
+    "valenciano": "pudírem",
+    "morfologia": null,
+    "id": "LIMPIO_768"
+  },
+  {
+    "verbo": "pudir",
+    "catalan": "pudíssiu",
+    "valenciano": "pudíreu",
+    "morfologia": null,
+    "id": "LIMPIO_769"
+  },
+  {
+    "verbo": "raure",
+    "catalan": "raguessin",
+    "valenciano": "ragueren",
+    "morfologia": null,
+    "id": "LIMPIO_770"
+  },
+  {
+    "verbo": "raure",
+    "catalan": "raguessis",
+    "valenciano": "ragueres",
+    "morfologia": null,
+    "id": "LIMPIO_771"
+  },
+  {
+    "verbo": "raure",
+    "catalan": "ragui",
+    "valenciano": "raga",
+    "morfologia": null,
+    "id": "LIMPIO_772"
+  },
+  {
+    "verbo": "raure",
+    "catalan": "raguin",
+    "valenciano": "raguen",
+    "morfologia": null,
+    "id": "LIMPIO_773"
+  },
+  {
+    "verbo": "raure",
+    "catalan": "raguis",
+    "valenciano": "ragues",
+    "morfologia": null,
+    "id": "LIMPIO_774"
+  },
+  {
+    "verbo": "raure",
+    "catalan": "ragués",
+    "valenciano": "raguera",
+    "morfologia": null,
+    "id": "LIMPIO_775"
+  },
+  {
+    "verbo": "raure",
+    "catalan": "raguéssim",
+    "valenciano": "raguérem",
+    "morfologia": null,
+    "id": "LIMPIO_776"
+  },
+  {
+    "verbo": "raure",
+    "catalan": "raguéssiu",
+    "valenciano": "raguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_777"
+  },
+  {
+    "verbo": "rebre",
+    "catalan": "rebessin",
+    "valenciano": "reberen",
+    "morfologia": null,
+    "id": "LIMPIO_778"
+  },
+  {
+    "verbo": "rebre",
+    "catalan": "rebessis",
+    "valenciano": "reberes",
+    "morfologia": null,
+    "id": "LIMPIO_779"
+  },
+  {
+    "verbo": "rebre",
+    "catalan": "rebi",
+    "valenciano": "reba",
+    "morfologia": null,
+    "id": "LIMPIO_780"
+  },
+  {
+    "verbo": "rebre",
+    "catalan": "rebin",
+    "valenciano": "reben",
+    "morfologia": null,
+    "id": "LIMPIO_781"
+  },
+  {
+    "verbo": "rebre",
+    "catalan": "rebis",
+    "valenciano": "rebes",
+    "morfologia": null,
+    "id": "LIMPIO_782"
+  },
+  {
+    "verbo": "rebre",
+    "catalan": "rebés",
+    "valenciano": "rebera",
+    "morfologia": null,
+    "id": "LIMPIO_783"
+  },
+  {
+    "verbo": "rebre",
+    "catalan": "rebéssim",
+    "valenciano": "rebérem",
+    "morfologia": null,
+    "id": "LIMPIO_784"
+  },
+  {
+    "verbo": "rebre",
+    "catalan": "rebéssiu",
+    "valenciano": "rebéreu",
+    "morfologia": null,
+    "id": "LIMPIO_785"
+  },
+  {
+    "verbo": "recaure",
+    "catalan": "recaiguessin",
+    "valenciano": "recaigueren",
+    "morfologia": null,
+    "id": "LIMPIO_786"
+  },
+  {
+    "verbo": "recaure",
+    "catalan": "recaiguessis",
+    "valenciano": "recaigueres",
+    "morfologia": null,
+    "id": "LIMPIO_787"
+  },
+  {
+    "verbo": "recaure",
+    "catalan": "recaigui",
+    "valenciano": "recaiga",
+    "morfologia": null,
+    "id": "LIMPIO_788"
+  },
+  {
+    "verbo": "recaure",
+    "catalan": "recaiguin",
+    "valenciano": "recaiguen",
+    "morfologia": null,
+    "id": "LIMPIO_789"
+  },
+  {
+    "verbo": "recaure",
+    "catalan": "recaiguis",
+    "valenciano": "recaigues",
+    "morfologia": null,
+    "id": "LIMPIO_790"
+  },
+  {
+    "verbo": "recaure",
+    "catalan": "recaigués",
+    "valenciano": "recaiguera",
+    "morfologia": null,
+    "id": "LIMPIO_791"
+  },
+  {
+    "verbo": "recaure",
+    "catalan": "recaiguéssim",
+    "valenciano": "recaiguérem",
+    "morfologia": null,
+    "id": "LIMPIO_792"
+  },
+  {
+    "verbo": "recaure",
+    "catalan": "recaiguéssiu",
+    "valenciano": "recaiguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_793"
+  },
+  {
+    "verbo": "reprendre",
+    "catalan": "reprenguessin",
+    "valenciano": "reprengueren",
+    "morfologia": null,
+    "id": "LIMPIO_794"
+  },
+  {
+    "verbo": "reprendre",
+    "catalan": "reprenguessis",
+    "valenciano": "reprengueres",
+    "morfologia": null,
+    "id": "LIMPIO_795"
+  },
+  {
+    "verbo": "reprendre",
+    "catalan": "reprengui",
+    "valenciano": "reprenga",
+    "morfologia": null,
+    "id": "LIMPIO_796"
+  },
+  {
+    "verbo": "reprendre",
+    "catalan": "reprenguin",
+    "valenciano": "reprenguen",
+    "morfologia": null,
+    "id": "LIMPIO_797"
+  },
+  {
+    "verbo": "reprendre",
+    "catalan": "reprenguis",
+    "valenciano": "reprengues",
+    "morfologia": null,
+    "id": "LIMPIO_798"
+  },
+  {
+    "verbo": "reprendre",
+    "catalan": "reprengués",
+    "valenciano": "reprenguera",
+    "morfologia": null,
+    "id": "LIMPIO_799"
+  },
+  {
+    "verbo": "reprendre",
+    "catalan": "reprenguéssim",
+    "valenciano": "reprenguérem",
+    "morfologia": null,
+    "id": "LIMPIO_800"
+  },
+  {
+    "verbo": "reprendre",
+    "catalan": "reprenguéssiu",
+    "valenciano": "reprenguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_801"
+  },
+  {
+    "verbo": "revenir",
+    "catalan": "revinguessin",
+    "valenciano": "revingueren",
+    "morfologia": null,
+    "id": "LIMPIO_802"
+  },
+  {
+    "verbo": "revenir",
+    "catalan": "revinguessis",
+    "valenciano": "revingueres",
+    "morfologia": [
+      "pis",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_803"
+  },
+  {
+    "verbo": "revenir",
+    "catalan": "revingui",
+    "valenciano": "revinga",
+    "morfologia": [
+      [
+        "imp",
+        "p3",
+        "sg"
+      ],
+      [
+        "prs",
+        "p1",
+        "sg"
+      ],
+      [
+        "prs",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_804"
+  },
+  {
+    "verbo": "revenir",
+    "catalan": "revinguin",
+    "valenciano": "revinguen",
+    "morfologia": null,
+    "id": "LIMPIO_805"
+  },
+  {
+    "verbo": "revenir",
+    "catalan": "revinguis",
+    "valenciano": "revingues",
+    "morfologia": [
+      "prs",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_806"
+  },
+  {
+    "verbo": "revenir",
+    "catalan": "revingués",
+    "valenciano": "revinguera",
+    "morfologia": [
+      [
+        "pis",
+        "p1",
+        "sg"
+      ],
+      [
+        "pis",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_807"
+  },
+  {
+    "verbo": "revenir",
+    "catalan": "revinguéssim",
+    "valenciano": "revinguérem",
+    "morfologia": [
+      "pis",
+      "p1",
+      "pl"
+    ],
+    "id": "LIMPIO_808"
+  },
+  {
+    "verbo": "revenir",
+    "catalan": "revinguéssiu",
+    "valenciano": "revinguéreu",
+    "morfologia": [
+      "pis",
+      "p2",
+      "pl"
+    ],
+    "id": "LIMPIO_809"
+  },
+  {
+    "verbo": "romandre",
+    "catalan": "romanguessin",
+    "valenciano": "romangueren",
+    "morfologia": null,
+    "id": "LIMPIO_810"
+  },
+  {
+    "verbo": "romandre",
+    "catalan": "romanguessis",
+    "valenciano": "romangueres",
+    "morfologia": null,
+    "id": "LIMPIO_811"
+  },
+  {
+    "verbo": "romandre",
+    "catalan": "romangui",
+    "valenciano": "romanga",
+    "morfologia": null,
+    "id": "LIMPIO_812"
+  },
+  {
+    "verbo": "romandre",
+    "catalan": "romanguin",
+    "valenciano": "romanguen",
+    "morfologia": null,
+    "id": "LIMPIO_813"
+  },
+  {
+    "verbo": "romandre",
+    "catalan": "romanguis",
+    "valenciano": "romangues",
+    "morfologia": null,
+    "id": "LIMPIO_814"
+  },
+  {
+    "verbo": "romandre",
+    "catalan": "romangués",
+    "valenciano": "romanguera",
+    "morfologia": null,
+    "id": "LIMPIO_815"
+  },
+  {
+    "verbo": "romandre",
+    "catalan": "romanguéssim",
+    "valenciano": "romanguérem",
+    "morfologia": null,
+    "id": "LIMPIO_816"
+  },
+  {
+    "verbo": "romandre",
+    "catalan": "romanguéssiu",
+    "valenciano": "romanguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_817"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sabessin",
+    "valenciano": "saberen",
+    "morfologia": null,
+    "id": "LIMPIO_818"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sabessis",
+    "valenciano": "saberes",
+    "morfologia": null,
+    "id": "LIMPIO_819"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sabés",
+    "valenciano": "sabera",
+    "morfologia": null,
+    "id": "LIMPIO_820"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sabéssim",
+    "valenciano": "sabérem",
+    "morfologia": null,
+    "id": "LIMPIO_821"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sabéssiu",
+    "valenciano": "sabéreu",
+    "morfologia": null,
+    "id": "LIMPIO_822"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sapiguem",
+    "valenciano": "sapiem",
+    "morfologia": null,
+    "id": "LIMPIO_823"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sapigueu",
+    "valenciano": "sapieu",
+    "morfologia": null,
+    "id": "LIMPIO_824"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sàpiga",
+    "valenciano": "sàpia",
+    "morfologia": null,
+    "id": "LIMPIO_825"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sàpiguen",
+    "valenciano": "sàpien",
+    "morfologia": null,
+    "id": "LIMPIO_826"
+  },
+  {
+    "verbo": "saber",
+    "catalan": "sàpigues",
+    "valenciano": "sàpies",
+    "morfologia": null,
+    "id": "LIMPIO_827"
+  },
+  {
+    "verbo": "ser",
+    "catalan": "estat",
+    "valenciano": "sigut",
+    "morfologia": null,
+    "id": "LIMPIO_828"
+  },
+  {
+    "verbo": "ser",
+    "catalan": "ets",
+    "valenciano": "eres",
+    "morfologia": null,
+    "id": "LIMPIO_829"
+  },
+  {
+    "verbo": "ser",
+    "catalan": "fos",
+    "valenciano": "fora",
+    "morfologia": null,
+    "id": "LIMPIO_830",
+    "problematica": true
+  },
+  {
+    "verbo": "ser",
+    "catalan": "fos",
+    "valenciano": "fóra",
+    "morfologia": null,
+    "id": "LIMPIO_831",
+    "problematica": true
+  },
+  {
+    "verbo": "ser",
+    "catalan": "fossin",
+    "valenciano": "foren",
+    "morfologia": null,
+    "id": "LIMPIO_832"
+  },
+  {
+    "verbo": "ser",
+    "catalan": "fossis",
+    "valenciano": "fores",
+    "morfologia": [
+      "pis",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_833"
+  },
+  {
+    "verbo": "ser",
+    "catalan": "fóssim",
+    "valenciano": "fórem",
+    "morfologia": [
+      "pis",
+      "p1",
+      "pl"
+    ],
+    "id": "LIMPIO_834"
+  },
+  {
+    "verbo": "ser",
+    "catalan": "fóssiu",
+    "valenciano": "fóreu",
+    "morfologia": [
+      "pis",
+      "p2",
+      "pl"
+    ],
+    "id": "LIMPIO_835"
+  },
+  {
+    "verbo": "ser",
+    "catalan": "sigui",
+    "valenciano": "siga",
+    "morfologia": [
+      [
+        "imp",
+        "p3",
+        "sg"
+      ],
+      [
+        "prs",
+        "p1",
+        "sg"
+      ],
+      [
+        "prs",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_836"
+  },
+  {
+    "verbo": "ser",
+    "catalan": "siguin",
+    "valenciano": "siguen",
+    "morfologia": null,
+    "id": "LIMPIO_837"
+  },
+  {
+    "verbo": "ser",
+    "catalan": "siguis",
+    "valenciano": "sigues",
+    "morfologia": [
+      "prs",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_838"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreeixim",
+    "valenciano": "sobreisquem",
+    "morfologia": null,
+    "id": "LIMPIO_839"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreeixissin",
+    "valenciano": "sobreisqueren",
+    "morfologia": null,
+    "id": "LIMPIO_840"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreeixissis",
+    "valenciano": "sobreisqueres",
+    "morfologia": [
+      "pis",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_841"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreeixiu",
+    "valenciano": "sobreisqueu",
+    "morfologia": null,
+    "id": "LIMPIO_842"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreeixís",
+    "valenciano": "sobreisquera",
+    "morfologia": [
+      [
+        "pis",
+        "p1",
+        "sg"
+      ],
+      [
+        "pis",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_843"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreeixíssim",
+    "valenciano": "sobreisquérem",
+    "morfologia": [
+      "pis",
+      "p1",
+      "pl"
+    ],
+    "id": "LIMPIO_844"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreeixíssiu",
+    "valenciano": "sobreisquéreu",
+    "morfologia": [
+      "pis",
+      "p2",
+      "pl"
+    ],
+    "id": "LIMPIO_845"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreïxi",
+    "valenciano": "sobreisca",
+    "morfologia": null,
+    "id": "LIMPIO_846"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreïxin",
+    "valenciano": "sobreisquen",
+    "morfologia": null,
+    "id": "LIMPIO_847"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreïxis",
+    "valenciano": "sobreisques",
+    "morfologia": [
+      "prs",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_848"
+  },
+  {
+    "verbo": "sobreeixir",
+    "catalan": "sobreïxo",
+    "valenciano": "sobreisc",
+    "morfologia": [
+      "pri",
+      "p1",
+      "sg"
+    ],
+    "id": "LIMPIO_849"
+  },
+  {
+    "verbo": "sobresortir",
+    "catalan": "sobresortissin",
+    "valenciano": "sobresortiren",
+    "morfologia": null,
+    "id": "LIMPIO_850"
+  },
+  {
+    "verbo": "sobresortir",
+    "catalan": "sobresortissis",
+    "valenciano": "sobresortires",
+    "morfologia": [
+      "pis",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_851"
+  },
+  {
+    "verbo": "sobresortir",
+    "catalan": "sobresortís",
+    "valenciano": "sobresortira",
+    "morfologia": [
+      [
+        "pis",
+        "p1",
+        "sg"
+      ],
+      [
+        "pis",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_852"
+  },
+  {
+    "verbo": "sobresortir",
+    "catalan": "sobresortíssim",
+    "valenciano": "sobresortírem",
+    "morfologia": [
+      "pis",
+      "p1",
+      "pl"
+    ],
+    "id": "LIMPIO_853"
+  },
+  {
+    "verbo": "sobresortir",
+    "catalan": "sobresortíssiu",
+    "valenciano": "sobresortíreu",
+    "morfologia": [
+      "pis",
+      "p2",
+      "pl"
+    ],
+    "id": "LIMPIO_854"
+  },
+  {
+    "verbo": "sobresortir",
+    "catalan": "sobresurti",
+    "valenciano": "sobresurta",
+    "morfologia": [
+      [
+        "imp",
+        "p3",
+        "sg"
+      ],
+      [
+        "prs",
+        "p1",
+        "sg"
+      ],
+      [
+        "prs",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_855"
+  },
+  {
+    "verbo": "sobresortir",
+    "catalan": "sobresurtin",
+    "valenciano": "sobresurten",
+    "morfologia": null,
+    "id": "LIMPIO_856"
+  },
+  {
+    "verbo": "sobresortir",
+    "catalan": "sobresurtis",
+    "valenciano": "sobresurtes",
+    "morfologia": [
+      "prs",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_857"
+  },
+  {
+    "verbo": "sobresortir",
+    "catalan": "sobresurto",
+    "valenciano": "sobresurt",
+    "morfologia": [
+      "pri",
+      "p1",
+      "sg"
+    ],
+    "id": "LIMPIO_858"
+  },
+  {
+    "verbo": "sofrir",
+    "catalan": "sofert",
+    "valenciano": "sofrit",
+    "morfologia": [
+      "pp",
+      "m",
+      "sg"
+    ],
+    "id": "LIMPIO_859"
+  },
+  {
+    "verbo": "sofrir",
+    "catalan": "soferta",
+    "valenciano": "sofrida",
+    "morfologia": [
+      "pp",
+      "f",
+      "sg"
+    ],
+    "id": "LIMPIO_860"
+  },
+  {
+    "verbo": "sofrir",
+    "catalan": "sofertes",
+    "valenciano": "sofrides",
+    "morfologia": [
+      "pp",
+      "f",
+      "pl"
+    ],
+    "id": "LIMPIO_861"
+  },
+  {
+    "verbo": "sofrir",
+    "catalan": "soferts",
+    "valenciano": "sofrits",
+    "morfologia": [
+      "pp",
+      "m",
+      "pl"
+    ],
+    "id": "LIMPIO_862"
+  },
+  {
+    "verbo": "sofrir",
+    "catalan": "sofreixi",
+    "valenciano": "sofrisca",
+    "morfologia": [
+      [
+        "imp",
+        "p3",
+        "sg"
+      ],
+      [
+        "prs",
+        "p1",
+        "sg"
+      ],
+      [
+        "prs",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_863"
+  },
+  {
+    "verbo": "sofrir",
+    "catalan": "sofreixin",
+    "valenciano": "sofrisquen",
+    "morfologia": null,
+    "id": "LIMPIO_864"
+  },
+  {
+    "verbo": "sofrir",
+    "catalan": "sofreixis",
+    "valenciano": "sofrisques",
+    "morfologia": [
+      "prs",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_865"
+  },
+  {
+    "verbo": "sofrir",
+    "catalan": "sofreixo",
+    "valenciano": "sofrisc",
+    "morfologia": [
+      "pri",
+      "p1",
+      "sg"
+    ],
+    "id": "LIMPIO_866"
+  },
+  {
+    "verbo": "soler",
+    "catalan": "solguessin",
+    "valenciano": "solgueren",
+    "morfologia": null,
+    "id": "LIMPIO_867"
+  },
+  {
+    "verbo": "soler",
+    "catalan": "solguessis",
+    "valenciano": "solgueres",
+    "morfologia": null,
+    "id": "LIMPIO_868"
+  },
+  {
+    "verbo": "soler",
+    "catalan": "solgui",
+    "valenciano": "solga",
+    "morfologia": null,
+    "id": "LIMPIO_869"
+  },
+  {
+    "verbo": "soler",
+    "catalan": "solguin",
+    "valenciano": "solguen",
+    "morfologia": null,
+    "id": "LIMPIO_870"
+  },
+  {
+    "verbo": "soler",
+    "catalan": "solguis",
+    "valenciano": "solgues",
+    "morfologia": null,
+    "id": "LIMPIO_871"
+  },
+  {
+    "verbo": "soler",
+    "catalan": "solgués",
+    "valenciano": "solguera",
+    "morfologia": null,
+    "id": "LIMPIO_872"
+  },
+  {
+    "verbo": "soler",
+    "catalan": "solguéssim",
+    "valenciano": "solguérem",
+    "morfologia": null,
+    "id": "LIMPIO_873"
+  },
+  {
+    "verbo": "soler",
+    "catalan": "solguéssiu",
+    "valenciano": "solguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_874"
+  },
+  {
+    "verbo": "somriure",
+    "catalan": "somriguessin",
+    "valenciano": "somrigueren",
+    "morfologia": null,
+    "id": "LIMPIO_875"
+  },
+  {
+    "verbo": "somriure",
+    "catalan": "somriguessis",
+    "valenciano": "somrigueres",
+    "morfologia": null,
+    "id": "LIMPIO_876"
+  },
+  {
+    "verbo": "somriure",
+    "catalan": "somrigui",
+    "valenciano": "somriga",
+    "morfologia": null,
+    "id": "LIMPIO_877"
+  },
+  {
+    "verbo": "somriure",
+    "catalan": "somriguin",
+    "valenciano": "somriguen",
+    "morfologia": null,
+    "id": "LIMPIO_878"
+  },
+  {
+    "verbo": "somriure",
+    "catalan": "somriguis",
+    "valenciano": "somrigues",
+    "morfologia": null,
+    "id": "LIMPIO_879"
+  },
+  {
+    "verbo": "somriure",
+    "catalan": "somrigués",
+    "valenciano": "somriguera",
+    "morfologia": null,
+    "id": "LIMPIO_880"
+  },
+  {
+    "verbo": "somriure",
+    "catalan": "somriguéssim",
+    "valenciano": "somriguérem",
+    "morfologia": null,
+    "id": "LIMPIO_881"
+  },
+  {
+    "verbo": "somriure",
+    "catalan": "somriguéssiu",
+    "valenciano": "somriguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_882"
+  },
+  {
+    "verbo": "succeir",
+    "catalan": "succeeixi",
+    "valenciano": "succeïsca",
+    "morfologia": null,
+    "id": "LIMPIO_883"
+  },
+  {
+    "verbo": "succeir",
+    "catalan": "succeeixin",
+    "valenciano": "succeïsquen",
+    "morfologia": null,
+    "id": "LIMPIO_884"
+  },
+  {
+    "verbo": "succeir",
+    "catalan": "succeís",
+    "valenciano": "succeïra",
+    "morfologia": null,
+    "id": "LIMPIO_885"
+  },
+  {
+    "verbo": "succeir",
+    "catalan": "succeïssin",
+    "valenciano": "succeïren",
+    "morfologia": null,
+    "id": "LIMPIO_886"
+  },
+  {
+    "verbo": "teixir",
+    "catalan": "teixissin",
+    "valenciano": "teixiren",
+    "morfologia": null,
+    "id": "LIMPIO_887"
+  },
+  {
+    "verbo": "teixir",
+    "catalan": "teixissis",
+    "valenciano": "teixires",
+    "morfologia": null,
+    "id": "LIMPIO_888"
+  },
+  {
+    "verbo": "teixir",
+    "catalan": "teixís",
+    "valenciano": "teixira",
+    "morfologia": null,
+    "id": "LIMPIO_889"
+  },
+  {
+    "verbo": "teixir",
+    "catalan": "teixíssim",
+    "valenciano": "teixírem",
+    "morfologia": null,
+    "id": "LIMPIO_890"
+  },
+  {
+    "verbo": "teixir",
+    "catalan": "teixíssiu",
+    "valenciano": "teixíreu",
+    "morfologia": null,
+    "id": "LIMPIO_891"
+  },
+  {
+    "verbo": "tenir",
+    "catalan": "tinguessin",
+    "valenciano": "tingueren",
+    "morfologia": null,
+    "id": "LIMPIO_892"
+  },
+  {
+    "verbo": "tenir",
+    "catalan": "tinguessis",
+    "valenciano": "tingueres",
+    "morfologia": null,
+    "id": "LIMPIO_893"
+  },
+  {
+    "verbo": "tenir",
+    "catalan": "tingui",
+    "valenciano": "tinga",
+    "morfologia": null,
+    "id": "LIMPIO_894"
+  },
+  {
+    "verbo": "tenir",
+    "catalan": "tinguin",
+    "valenciano": "tinguen",
+    "morfologia": null,
+    "id": "LIMPIO_895"
+  },
+  {
+    "verbo": "tenir",
+    "catalan": "tinguis",
+    "valenciano": "tingues",
+    "morfologia": null,
+    "id": "LIMPIO_896"
+  },
+  {
+    "verbo": "tenir",
+    "catalan": "tingués",
+    "valenciano": "tinguera",
+    "morfologia": null,
+    "id": "LIMPIO_897"
+  },
+  {
+    "verbo": "tenir",
+    "catalan": "tinguéssim",
+    "valenciano": "tinguérem",
+    "morfologia": null,
+    "id": "LIMPIO_898"
+  },
+  {
+    "verbo": "tenir",
+    "catalan": "tinguéssiu",
+    "valenciano": "tinguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_899"
+  },
+  {
+    "verbo": "tenyir",
+    "catalan": "tenyissin",
+    "valenciano": "tenyiren",
+    "morfologia": null,
+    "id": "LIMPIO_900"
+  },
+  {
+    "verbo": "tenyir",
+    "catalan": "tenyissis",
+    "valenciano": "tenyires",
+    "morfologia": null,
+    "id": "LIMPIO_901"
+  },
+  {
+    "verbo": "tenyir",
+    "catalan": "tenyís",
+    "valenciano": "tenyira",
+    "morfologia": null,
+    "id": "LIMPIO_902"
+  },
+  {
+    "verbo": "tenyir",
+    "catalan": "tenyíssim",
+    "valenciano": "tenyírem",
+    "morfologia": null,
+    "id": "LIMPIO_903"
+  },
+  {
+    "verbo": "tenyir",
+    "catalan": "tenyíssiu",
+    "valenciano": "tenyíreu",
+    "morfologia": null,
+    "id": "LIMPIO_904"
+  },
+  {
+    "verbo": "tòrcer",
+    "catalan": "torcessin",
+    "valenciano": "torceren",
+    "morfologia": null,
+    "id": "LIMPIO_905"
+  },
+  {
+    "verbo": "tòrcer",
+    "catalan": "torcessis",
+    "valenciano": "torceres",
+    "morfologia": [
+      "pis",
+      "p2",
+      "sg"
+    ],
+    "id": "LIMPIO_906"
+  },
+  {
+    "verbo": "tòrcer",
+    "catalan": "torci",
+    "valenciano": "torça",
+    "morfologia": [
+      [
+        "imp",
+        "p3",
+        "sg"
+      ],
+      [
+        "prs",
+        "p1",
+        "sg"
+      ],
+      [
+        "prs",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_907"
+  },
+  {
+    "verbo": "tòrcer",
+    "catalan": "torcin",
+    "valenciano": "torcen",
+    "morfologia": null,
+    "id": "LIMPIO_908"
+  },
+  {
+    "verbo": "tòrcer",
+    "catalan": "torcés",
+    "valenciano": "torcera",
+    "morfologia": [
+      [
+        "pis",
+        "p1",
+        "sg"
+      ],
+      [
+        "pis",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "LIMPIO_909"
+  },
+  {
+    "verbo": "tòrcer",
+    "catalan": "torcéssim",
+    "valenciano": "torcérem",
+    "morfologia": [
+      "pis",
+      "p1",
+      "pl"
+    ],
+    "id": "LIMPIO_910"
+  },
+  {
+    "verbo": "tòrcer",
+    "catalan": "torcéssiu",
+    "valenciano": "torcéreu",
+    "morfologia": [
+      "pis",
+      "p2",
+      "pl"
+    ],
+    "id": "LIMPIO_911"
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tossissin",
+    "valenciano": "tossiren",
+    "morfologia": null,
+    "id": "LIMPIO_912"
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tossissis",
+    "valenciano": "tossires",
+    "morfologia": null,
+    "id": "LIMPIO_913"
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tossís",
+    "valenciano": "tossira",
+    "morfologia": null,
+    "id": "LIMPIO_914"
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tossíssim",
+    "valenciano": "tossírem",
+    "morfologia": null,
+    "id": "LIMPIO_915"
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tossíssiu",
+    "valenciano": "tossíreu",
+    "morfologia": null,
+    "id": "LIMPIO_916"
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tusi",
+    "valenciano": "tusa",
+    "morfologia": null,
+    "id": "LIMPIO_917"
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tusin",
+    "valenciano": "tussen",
+    "morfologia": null,
+    "id": "LIMPIO_918",
+    "problematica": true
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tusis",
+    "valenciano": "tusses",
+    "morfologia": null,
+    "id": "LIMPIO_919"
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tussi",
+    "valenciano": "tussa",
+    "morfologia": null,
+    "id": "LIMPIO_920"
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tussin",
+    "valenciano": "tussen",
+    "morfologia": null,
+    "id": "LIMPIO_921",
+    "problematica": true
+  },
+  {
+    "verbo": "tossir",
+    "catalan": "tusso",
+    "valenciano": "tus",
+    "morfologia": null,
+    "id": "LIMPIO_922"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "traguessin",
+    "valenciano": "tragueren",
+    "morfologia": null,
+    "id": "LIMPIO_923"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "traguessis",
+    "valenciano": "tragueres",
+    "morfologia": null,
+    "id": "LIMPIO_924"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "tragués",
+    "valenciano": "traguera",
+    "morfologia": null,
+    "id": "LIMPIO_925"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "traguéssim",
+    "valenciano": "traguérem",
+    "morfologia": null,
+    "id": "LIMPIO_926"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "traguéssiu",
+    "valenciano": "traguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_927"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "trec",
+    "valenciano": "trac",
+    "morfologia": null,
+    "id": "LIMPIO_928"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "tregui",
+    "valenciano": "traga",
+    "morfologia": null,
+    "id": "LIMPIO_929"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "treguin",
+    "valenciano": "traguen",
+    "morfologia": null,
+    "id": "LIMPIO_930"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "treguis",
+    "valenciano": "tragues",
+    "morfologia": null,
+    "id": "LIMPIO_931"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "treu",
+    "valenciano": "trau",
+    "morfologia": null,
+    "id": "LIMPIO_932"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "treuen",
+    "valenciano": "trauen",
+    "morfologia": null,
+    "id": "LIMPIO_933"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "treure",
+    "valenciano": "traure",
+    "morfologia": null,
+    "id": "LIMPIO_934"
+  },
+  {
+    "verbo": "treure",
+    "catalan": "treus",
+    "valenciano": "traus",
+    "morfologia": null,
+    "id": "LIMPIO_935"
+  },
+  {
+    "verbo": "vendre",
+    "catalan": "venguessin",
+    "valenciano": "vengueren",
+    "morfologia": null,
+    "id": "LIMPIO_936"
+  },
+  {
+    "verbo": "vendre",
+    "catalan": "venguessis",
+    "valenciano": "vengueres",
+    "morfologia": null,
+    "id": "LIMPIO_937"
+  },
+  {
+    "verbo": "vendre",
+    "catalan": "vengui",
+    "valenciano": "venga",
+    "morfologia": null,
+    "id": "LIMPIO_938"
+  },
+  {
+    "verbo": "vendre",
+    "catalan": "venguin",
+    "valenciano": "venguen",
+    "morfologia": null,
+    "id": "LIMPIO_939"
+  },
+  {
+    "verbo": "vendre",
+    "catalan": "venguis",
+    "valenciano": "vengues",
+    "morfologia": null,
+    "id": "LIMPIO_940"
+  },
+  {
+    "verbo": "vendre",
+    "catalan": "vengués",
+    "valenciano": "venguera",
+    "morfologia": null,
+    "id": "LIMPIO_941"
+  },
+  {
+    "verbo": "vendre",
+    "catalan": "venguéssim",
+    "valenciano": "venguérem",
+    "morfologia": null,
+    "id": "LIMPIO_942"
+  },
+  {
+    "verbo": "vendre",
+    "catalan": "venguéssiu",
+    "valenciano": "venguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_943"
+  },
+  {
+    "verbo": "venir",
+    "catalan": "vinguessin",
+    "valenciano": "vingueren",
+    "morfologia": null,
+    "id": "LIMPIO_944"
+  },
+  {
+    "verbo": "venir",
+    "catalan": "vinguessis",
+    "valenciano": "vingueres",
+    "morfologia": null,
+    "id": "LIMPIO_945"
+  },
+  {
+    "verbo": "venir",
+    "catalan": "vingui",
+    "valenciano": "vinga",
+    "morfologia": null,
+    "id": "LIMPIO_946"
+  },
+  {
+    "verbo": "venir",
+    "catalan": "vinguin",
+    "valenciano": "vinguen",
+    "morfologia": null,
+    "id": "LIMPIO_947"
+  },
+  {
+    "verbo": "venir",
+    "catalan": "vinguis",
+    "valenciano": "vingues",
+    "morfologia": null,
+    "id": "LIMPIO_948"
+  },
+  {
+    "verbo": "venir",
+    "catalan": "vingués",
+    "valenciano": "vinguera",
+    "morfologia": null,
+    "id": "LIMPIO_949"
+  },
+  {
+    "verbo": "venir",
+    "catalan": "vinguéssim",
+    "valenciano": "vinguérem",
+    "morfologia": null,
+    "id": "LIMPIO_950"
+  },
+  {
+    "verbo": "venir",
+    "catalan": "vinguéssiu",
+    "valenciano": "vinguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_951"
+  },
+  {
+    "verbo": "vesprejar",
+    "catalan": "vespregessin",
+    "valenciano": "vesprejaren",
+    "morfologia": null,
+    "id": "LIMPIO_952"
+  },
+  {
+    "verbo": "vesprejar",
+    "catalan": "vespregi",
+    "valenciano": "vesprege",
+    "morfologia": null,
+    "id": "LIMPIO_953"
+  },
+  {
+    "verbo": "vesprejar",
+    "catalan": "vespregin",
+    "valenciano": "vespregen",
+    "morfologia": null,
+    "id": "LIMPIO_954"
+  },
+  {
+    "verbo": "vesprejar",
+    "catalan": "vespregés",
+    "valenciano": "vesprejara",
+    "morfologia": null,
+    "id": "LIMPIO_955"
+  },
+  {
+    "verbo": "vestir",
+    "catalan": "vestissin",
+    "valenciano": "vestiren",
+    "morfologia": null,
+    "id": "LIMPIO_956"
+  },
+  {
+    "verbo": "vestir",
+    "catalan": "vestissis",
+    "valenciano": "vestires",
+    "morfologia": null,
+    "id": "LIMPIO_957"
+  },
+  {
+    "verbo": "vestir",
+    "catalan": "vestís",
+    "valenciano": "vestira",
+    "morfologia": null,
+    "id": "LIMPIO_958"
+  },
+  {
+    "verbo": "vestir",
+    "catalan": "vestíssim",
+    "valenciano": "vestírem",
+    "morfologia": null,
+    "id": "LIMPIO_959"
+  },
+  {
+    "verbo": "vestir",
+    "catalan": "vestíssiu",
+    "valenciano": "vestíreu",
+    "morfologia": null,
+    "id": "LIMPIO_960"
+  },
+  {
+    "verbo": "voler",
+    "catalan": "volguessin",
+    "valenciano": "volgueren",
+    "morfologia": null,
+    "id": "LIMPIO_961"
+  },
+  {
+    "verbo": "voler",
+    "catalan": "volguessis",
+    "valenciano": "volgueres",
+    "morfologia": null,
+    "id": "LIMPIO_962"
+  },
+  {
+    "verbo": "voler",
+    "catalan": "volgués",
+    "valenciano": "volguera",
+    "morfologia": null,
+    "id": "LIMPIO_963"
+  },
+  {
+    "verbo": "voler",
+    "catalan": "volguéssim",
+    "valenciano": "volguérem",
+    "morfologia": null,
+    "id": "LIMPIO_964"
+  },
+  {
+    "verbo": "voler",
+    "catalan": "volguéssiu",
+    "valenciano": "volguéreu",
+    "morfologia": null,
+    "id": "LIMPIO_965"
+  },
+  {
+    "verbo": "voler",
+    "catalan": "vulgui",
+    "valenciano": "vulga",
+    "morfologia": null,
+    "id": "LIMPIO_966"
+  },
+  {
+    "verbo": "voler",
+    "catalan": "vulguin",
+    "valenciano": "vulguen",
+    "morfologia": null,
+    "id": "LIMPIO_967"
+  },
+  {
+    "verbo": "voler",
+    "catalan": "vulguis",
+    "valenciano": "vulgues",
+    "morfologia": null,
+    "id": "LIMPIO_968"
   }
 ]

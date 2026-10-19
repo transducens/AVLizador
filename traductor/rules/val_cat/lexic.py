@@ -115,6 +115,25 @@ es va trobar el mateix problema abans amb "blanca" (adjectiu) vs. "Blanca"
 `is_proper_noun = True` (fixat per `marca_noms_propis()` abans de córrer
 cap regla).
 
+Filtre POS per a homonimia_lexica (19/10/2026): la guia oficial de
+Mauricio (`diccionarios_v1/Funcionamiento listas de palabras.pdf`)
+confirma el mecanisme de les 24 entrades `problema: "homonimia_lexica"`
+de `lexico_general.json`: quan els `lemas` tenen categories gramaticals
+DIFERENTS, es resol amb PoS (spaCy); quan són iguals/solapades, fa falta
+un LLM. `LexicRule` ara reutilitza `categoria_gramatical_lexic.json`/
+`pos_compatible()` (el mateix mecanisme ja actiu a `cat_val/lexic.py`
+des del 13/10/2026 per a "nou"/"anou") per a les entrades on l'ambigüitat
+cau de este costat (`lado: "cat"`) -- de moment "tancada"/"tancades"
+("vallado" NOUN vs "tancat/tancada" ADJ, RC144), substituint l'exclusió
+en bloc anterior. Nota: el camp `categoria` de l'entrada diu "adj" per a
+estes dos files, pero és un error de dades (`espanol: "vallado"` és nom)
+-- s'ha fet servir el sentit real dels `lemas`, no una confiança cega en
+eixe camp. Verificat amb spaCy real: detecta bé el cas ADJ sempre, i el
+cas NOUN en frases amb prou context ("La tancada del corral..."), encara
+que en frases curtes de vegades també etiqueta ADJ -- pitjor cas, mateix
+fals negatiu que ja hi havia abans amb l'exclusió en bloc, mai un fals
+positiu nou.
+
 Concordança de gènere tras substitució lèxica (afegit 08/10/2026, RC044):
 una substitució d'esta capa pot canviar el GÈNERE gramatical de la paraula
 sencera, no només la seua forma ("dacsa", femení, -> "blat de moro",
@@ -140,9 +159,12 @@ import json
 from pathlib import Path
 
 from .. import (
+    CATEGORIA_GRAMATICAL_PATH,
     Token,
     aplica_amb_prefix_elidit,
+    carrega_categoria_gramatical,
     corregeix_determinant_abans,
+    pos_compatible,
     preserva_majuscula,
     separa_prefix_elidit,
 )
@@ -181,11 +203,23 @@ CANVI_GENERE_PATH = _DATA / "canvi_genere_lexic_avl.json"
 # - "tancada"->"closa" (`problema: "homonimia_lexica"`, `lemas: ["tancada
 #   [n]", "tancat [adj]"]`): homògraf nom/adjectiu -- l'entrada és nomes
 #   per al sentit NOM ("vallado"), pero s'aplicava també a l'adjectiu
-#   (RC144, "e tancada" = "e closed", un terme lingüístic). Mauricio ja
-#   marca 24 entrades amb este mateix `problema` -- només s'exclou esta,
-#   la resta queden pendents de mesurar una a una abans de tocar-les
-#   (no generalitzar sense evidència, vore hoja de ruta).
-_BUG_DADES_CONEGUTS = {"després", "ensenyança", "alcalde", "tancada"}
+#   (RC144, "e tancada" = "e closed", un terme lingüístic).
+#   **RESOLT 19/10/2026, deixa de ser exclusió en bloc**: amb la guia
+#   oficial de Mauricio (`diccionarios_v1/Funcionamiento listas de
+#   palabras.pdf`) confirmant que `homonimia_lexica` amb categories
+#   gramaticals DIFERENTS als `lemas` es resol per PoS, es passa a
+#   `categoria_gramatical_lexic.json` (`"tancada"/"tancades": "NOUN"`) +
+#   el filtre `pos_compatible()` nou d'esta mateixa regla (vore baix) --
+#   ara només es bloqueja quan spaCy etiqueta el token ADJ, en compte de
+#   sempre. Nota: el camp `categoria` de l'entrada diu "adj" (sembla un
+#   error de dades, l'`espanol` és "vallado", nom), s'ha fet servir el
+#   sentit real (`lemas`) en compte del camp, no una confiança cega.
+#   De les 24 entrades `homonimia_lexica` en total, esta i "falaguera"/
+#   "brollador"/"carència"/"llavadora"/"exitosa"... ja tenen categories
+#   gramaticals DIFERENTS als `lemas` (POS-resolubles); "bes", "bragues",
+#   "hamaca" i "blanca" tenen categories IGUALS o solapades als dos
+#   lemas -- eixes SÍ necessiten un LLM (vore guia), es queden pendents.
+_BUG_DADES_CONEGUTS = {"després", "ensenyança", "alcalde"}
 
 # Paraules perdudes de veres migrant a `lexico_general.json` (16/10/2026,
 # vore hoja_de_ruta_migracio_diccionarios_v1.md §4ter): la font nova no
@@ -475,6 +509,24 @@ class LexicRule:
     >>> toks = LexicRule().apply(toks)
     >>> detokenize(toks)
     'Entre els cereals estan el blat i el blat de moro.'
+
+    Filtre POS per a "tancada" (homonimia_lexica, 19/10/2026 -- vore
+    docstring del mòdul): com a NOUN ("vallado") sí es toca, com a ADJ
+    ("tancat/tancada", "closed") mai:
+
+    >>> from .. import pos_tagger
+    >>> toks = tokenize("La tancada del corral es va trencar.")
+    >>> marca_noms_propis(toks)
+    >>> pos_tagger.etiqueta(toks)
+    >>> toks = LexicRule().apply(toks)
+    >>> [(t.surface, t.translated) for t in toks if t.is_translated]
+    [('tancada', 'closa')]
+    >>> toks = tokenize("La porta estava tancada.")
+    >>> marca_noms_propis(toks)
+    >>> pos_tagger.etiqueta(toks)
+    >>> toks = LexicRule().apply(toks)
+    >>> [(t.surface, t.translated) for t in toks if t.is_translated]
+    []
     """
 
     def __init__(
@@ -483,19 +535,24 @@ class LexicRule:
         flexio_genere_path: Path = FLEXIO_GENERE_PATH,
         temporal_path: Path = TEMPORAL_PATH,
         canvi_genere_path: Path = CANVI_GENERE_PATH,
+        categoria_path: Path = CATEGORIA_GRAMATICAL_PATH,
     ) -> None:
         self._lookup = carrega_lexic(mauricio_path, flexio_genere_path, temporal_path)
         self._canvis_genere = carrega_canvis_genere(canvi_genere_path)
+        self._categories = carrega_categoria_gramatical(categoria_path)
 
     def apply(self, tokens: list[Token]) -> list[Token]:
         for i, tok in enumerate(tokens):
             if tok.is_translated or tok.is_proper_noun:
                 continue
-            forma = self._lookup.get(tok.surface.lower())
+            minuscules = tok.surface.lower()
+            forma = self._lookup.get(minuscules)
             if forma is not None:
+                if not pos_compatible(tok.pos, minuscules, self._categories):
+                    continue
                 tok.translated = preserva_majuscula(tok.surface, forma)
                 tok.is_translated = True
-                genere_nou = self._canvis_genere.get(tok.surface.lower())
+                genere_nou = self._canvis_genere.get(minuscules)
                 if genere_nou is not None:
                     corregeix_determinant_abans(tokens, i, genere_nou)
                 continue
@@ -504,6 +561,8 @@ class LexicRule:
                 continue
             prefix, resta = prefix_resta
             forma = self._lookup.get(resta.lower())
+            if forma is not None and not pos_compatible(tok.pos, resta.lower(), self._categories):
+                continue
             if forma is not None:
                 aplica_amb_prefix_elidit(tokens, i, prefix, resta, forma)
                 tok.is_translated = True

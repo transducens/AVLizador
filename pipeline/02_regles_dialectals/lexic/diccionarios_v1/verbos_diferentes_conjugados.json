@@ -37,12 +37,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "telefonàrem",
-      "telefonéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "truqués per telèfon",
@@ -64,12 +60,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "telefonara",
-      "telefonés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "truquéssiu per telèfon",
@@ -86,12 +78,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "telefonàreu",
-      "telefonéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "truquessis per telèfon",
@@ -108,12 +96,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "telefonares",
-      "telefonessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "truquessin per telèfon",
@@ -130,12 +114,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "telefonaren",
-      "telefonessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "truquem per telèfon",
@@ -424,12 +404,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "abellírem",
-      "abellíssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "apetís",
@@ -451,12 +427,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "abellira",
-      "abellís"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "apetíssiu",
@@ -473,12 +445,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "abellíreu",
-      "abellíssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "apetissis",
@@ -495,12 +463,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "abellires",
-      "abellissis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "apetissin",
@@ -517,12 +481,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "abelliren",
-      "abellissin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "apetim",
@@ -715,12 +675,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "esclafàrem",
-      "esclaféssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "aixafés",
@@ -742,12 +698,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "esclafara",
-      "esclafés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "aixaféssiu",
@@ -764,12 +716,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "esclafàreu",
-      "esclaféssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "aixafessis",
@@ -786,12 +734,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "esclafares",
-      "esclafessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "aixafessin",
@@ -808,12 +752,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "esclafaren",
-      "esclafessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "aixafem",
@@ -1102,12 +1042,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "cercàrem",
-      "cerquéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "busqués",
@@ -1129,12 +1065,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "cercara",
-      "cerqués"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "busquéssiu",
@@ -1151,12 +1083,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "cercàreu",
-      "cerquéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "busquessis",
@@ -1173,12 +1101,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "cercares",
-      "cerquessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "busquessin",
@@ -1195,12 +1119,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "cercaren",
-      "cerquessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "busquem",
@@ -1510,12 +1430,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "cultivàrem",
-      "cultivéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "conreés",
@@ -1537,12 +1453,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "cultivara",
-      "cultivés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "conreéssiu",
@@ -1559,12 +1471,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "cultivàreu",
-      "cultivéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "conreessis",
@@ -1581,12 +1489,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "cultivares",
-      "cultivessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "conreessin",
@@ -1603,12 +1507,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "cultivaren",
-      "cultivessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "conreem",
@@ -1897,12 +1797,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "defenguérem",
-      "defenguéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "defensés",
@@ -1924,12 +1820,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "defenguera",
-      "defengués"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "defenséssiu",
@@ -1946,12 +1838,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "defenguéreu",
-      "defenguéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "defensessis",
@@ -1968,12 +1856,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "defengueres",
-      "defenguessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "defensessin",
@@ -1990,12 +1874,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "defengueren",
-      "defenguessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "defensem",
@@ -2251,12 +2131,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "depositàrem",
-      "depositéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "diposités",
@@ -2278,12 +2154,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "depositara",
-      "deposités"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "dipositéssiu",
@@ -2300,12 +2172,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "depositàreu",
-      "depositéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "dipositessis",
@@ -2322,12 +2190,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "depositares",
-      "depositessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "dipositessin",
@@ -2344,12 +2208,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "depositaren",
-      "depositessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "dipositem",
@@ -2638,12 +2498,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "desenrotllàrem",
-      "desenrotlléssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "desenvolupés",
@@ -2665,12 +2521,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "desenrotllara",
-      "desenrotllés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "desenvolupéssiu",
@@ -2687,12 +2539,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "desenrotllàreu",
-      "desenrotlléssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "desenvolupessis",
@@ -2709,12 +2557,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "desenrotllares",
-      "desenrotllessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "desenvolupessin",
@@ -2731,12 +2575,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "desenrotllaren",
-      "desenrotllessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "desenvolupem",
@@ -3495,16 +3335,12 @@
         "pl"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "llisquéssim",
       "rellisquéssim"
-    ],
-    "cat_traduccions_val": [
-      "esvaràrem",
-      "esvaréssim"
     ]
   },
   {
@@ -3526,16 +3362,12 @@
         "sg"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "llisqués",
       "rellisqués"
-    ],
-    "cat_traduccions_val": [
-      "esvarara",
-      "esvarés"
     ]
   },
   {
@@ -3552,16 +3384,12 @@
         "pl"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "llisquéssiu",
       "rellisquéssiu"
-    ],
-    "cat_traduccions_val": [
-      "esvaràreu",
-      "esvaréssiu"
     ]
   },
   {
@@ -3578,16 +3406,12 @@
         "sg"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "llisquessis",
       "rellisquessis"
-    ],
-    "cat_traduccions_val": [
-      "esvarares",
-      "esvaressis"
     ]
   },
   {
@@ -3604,16 +3428,12 @@
         "pl"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "llisquessin",
       "rellisquessin"
-    ],
-    "cat_traduccions_val": [
-      "esvararen",
-      "esvaressin"
     ]
   },
   {
@@ -4344,16 +4164,12 @@
         "pl"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "llisquéssim",
       "rellisquéssim"
-    ],
-    "cat_traduccions_val": [
-      "esvaràrem",
-      "esvaréssim"
     ]
   },
   {
@@ -4375,16 +4191,12 @@
         "sg"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "llisqués",
       "rellisqués"
-    ],
-    "cat_traduccions_val": [
-      "esvarara",
-      "esvarés"
     ]
   },
   {
@@ -4401,16 +4213,12 @@
         "pl"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "llisquéssiu",
       "rellisquéssiu"
-    ],
-    "cat_traduccions_val": [
-      "esvaràreu",
-      "esvaréssiu"
     ]
   },
   {
@@ -4427,16 +4235,12 @@
         "sg"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "llisquessis",
       "rellisquessis"
-    ],
-    "cat_traduccions_val": [
-      "esvarares",
-      "esvaressis"
     ]
   },
   {
@@ -4453,16 +4257,12 @@
         "pl"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "llisquessin",
       "rellisquessin"
-    ],
-    "cat_traduccions_val": [
-      "esvararen",
-      "esvaressin"
     ]
   },
   {
@@ -4775,12 +4575,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "espentàrem",
-      "espentéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "empentés",
@@ -4802,12 +4598,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "espentara",
-      "espentés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "empentéssiu",
@@ -4824,12 +4616,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "espentàreu",
-      "espentéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "empentessis",
@@ -4846,12 +4634,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "espentares",
-      "espentessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "empentessin",
@@ -4868,12 +4652,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "espentaren",
-      "espentessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "empentem",
@@ -5162,12 +4942,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "entreguéssim",
-      "entregàrem"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "lliurés",
@@ -5189,12 +4965,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "entregara",
-      "entregués"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "lliuréssiu",
@@ -5211,12 +4983,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "entreguéssiu",
-      "entregàreu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "lliuressis",
@@ -5233,12 +5001,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "entregares",
-      "entreguessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "lliuressin",
@@ -5255,12 +5019,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "entregaren",
-      "entreguessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "lliurem",
@@ -5570,12 +5330,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "firmàrem",
-      "firméssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "signés",
@@ -5597,12 +5353,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "firmara",
-      "firmés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "signéssiu",
@@ -5619,12 +5371,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "firmàreu",
-      "firméssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "signessis",
@@ -5641,12 +5389,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "firmares",
-      "firmessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "signessin",
@@ -5663,12 +5407,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "firmaren",
-      "firmessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "signem",
@@ -5957,12 +5697,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "afonàrem",
-      "afonéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "enfonsés",
@@ -5984,12 +5720,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "afonara",
-      "afonés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "enfonséssiu",
@@ -6006,12 +5738,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "afonàreu",
-      "afonéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "enfonsessis",
@@ -6028,12 +5756,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "afonares",
-      "afonessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "enfonsessin",
@@ -6050,12 +5774,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "afonaren",
-      "afonessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "enfonsem",
@@ -6344,12 +6064,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "llavàrem",
-      "llavéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "rentés",
@@ -6371,12 +6087,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "llavara",
-      "llavés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "rentéssiu",
@@ -6393,12 +6105,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "llavàreu",
-      "llavéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "rentessis",
@@ -6415,12 +6123,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "llavares",
-      "llavessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "rentessin",
@@ -6437,12 +6141,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "llavaren",
-      "llavessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "rentem",
@@ -6731,12 +6431,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "alcéssim",
-      "alçàrem"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "aixequés",
@@ -6758,12 +6454,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "alcés",
-      "alçara"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "aixequéssiu",
@@ -6780,12 +6472,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "alcéssiu",
-      "alçàreu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "aixequessis",
@@ -6802,12 +6490,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "alcessis",
-      "alçares"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "aixequessin",
@@ -6824,12 +6508,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "alcessin",
-      "alçaren"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "aixequem",
@@ -7118,12 +6798,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "mesclàrem",
-      "mescléssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "barregés",
@@ -7145,12 +6821,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "mesclara",
-      "mesclés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "barregéssiu",
@@ -7167,12 +6839,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "mesclàreu",
-      "mescléssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "barregessis",
@@ -7189,12 +6857,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "mesclares",
-      "mesclessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "barregessin",
@@ -7211,12 +6875,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "mesclaren",
-      "mesclessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "barregem",
@@ -7505,12 +7165,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "banyàrem",
-      "banyéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "mullés",
@@ -7532,12 +7188,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "banyara",
-      "banyés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "mulléssiu",
@@ -7554,12 +7206,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "banyàreu",
-      "banyéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "mullessis",
@@ -7576,12 +7224,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "banyares",
-      "banyessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "mullessin",
@@ -7598,12 +7242,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "banyaren",
-      "banyessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "mullem",
@@ -8362,16 +8002,12 @@
         "pl"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "calciguéssim",
       "trepitgéssim"
-    ],
-    "cat_traduccions_val": [
-      "xafàrem",
-      "xaféssim"
     ]
   },
   {
@@ -8393,16 +8029,12 @@
         "sg"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "calcigués",
       "trepitgés"
-    ],
-    "cat_traduccions_val": [
-      "xafara",
-      "xafés"
     ]
   },
   {
@@ -8419,16 +8051,12 @@
         "pl"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "calciguéssiu",
       "trepitgéssiu"
-    ],
-    "cat_traduccions_val": [
-      "xafàreu",
-      "xaféssiu"
     ]
   },
   {
@@ -8445,16 +8073,12 @@
         "sg"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "calciguessis",
       "trepitgessis"
-    ],
-    "cat_traduccions_val": [
-      "xafares",
-      "xafessis"
     ]
   },
   {
@@ -8471,16 +8095,12 @@
         "pl"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "calciguessin",
       "trepitgessin"
-    ],
-    "cat_traduccions_val": [
-      "xafaren",
-      "xafessin"
     ]
   },
   {
@@ -9211,16 +8831,12 @@
         "pl"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "calciguéssim",
       "trepitgéssim"
-    ],
-    "cat_traduccions_val": [
-      "xafàrem",
-      "xaféssim"
     ]
   },
   {
@@ -9242,16 +8858,12 @@
         "sg"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "calcigués",
       "trepitgés"
-    ],
-    "cat_traduccions_val": [
-      "xafara",
-      "xafés"
     ]
   },
   {
@@ -9268,16 +8880,12 @@
         "pl"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "calciguéssiu",
       "trepitgéssiu"
-    ],
-    "cat_traduccions_val": [
-      "xafàreu",
-      "xaféssiu"
     ]
   },
   {
@@ -9294,16 +8902,12 @@
         "sg"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "calciguessis",
       "trepitgessis"
-    ],
-    "cat_traduccions_val": [
-      "xafares",
-      "xafessis"
     ]
   },
   {
@@ -9320,16 +8924,12 @@
         "pl"
       ]
     ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false,
     "val_traduccions_cat": [
       "calciguessin",
       "trepitgessin"
-    ],
-    "cat_traduccions_val": [
-      "xafaren",
-      "xafessin"
     ]
   },
   {
@@ -9642,12 +9242,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "arrepleguéssim",
-      "arreplegàrem"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "recollís",
@@ -9669,12 +9265,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "arreplegara",
-      "arreplegués"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "recollíssiu",
@@ -9691,12 +9283,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "arrepleguéssiu",
-      "arreplegàreu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "recollissis",
@@ -9713,12 +9301,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "arreplegares",
-      "arrepleguessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "recollissin",
@@ -9735,12 +9319,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "arreplegaren",
-      "arrepleguessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "recollim",
@@ -11299,12 +10879,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "esguitàrem",
-      "esguitéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esquitxés",
@@ -11326,12 +10902,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "esguitara",
-      "esguités"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esquitxéssiu",
@@ -11348,12 +10920,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "esguitàreu",
-      "esguitéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esquitxessis",
@@ -11370,12 +10938,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "esguitares",
-      "esguitessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esquitxessin",
@@ -11392,12 +10956,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "esguitaren",
-      "esguitessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esquitxem",
@@ -11686,12 +11246,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "patírem",
-      "patíssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "sofrís",
@@ -11713,12 +11269,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "patira",
-      "patís"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "sofríssiu",
@@ -11735,12 +11287,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "patíreu",
-      "patíssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "sofrissis",
@@ -11757,12 +11305,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "patires",
-      "patissis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "sofrissin",
@@ -11779,12 +11323,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "patiren",
-      "patissin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "sofrim",
@@ -11977,12 +11517,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "tardàrem",
-      "tardéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "trigués",
@@ -12004,12 +11540,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "tardara",
-      "tardés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "triguéssiu",
@@ -12026,12 +11558,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "tardàreu",
-      "tardéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "triguessis",
@@ -12048,12 +11576,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "tardares",
-      "tardessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "triguessin",
@@ -12070,12 +11594,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "tardaren",
-      "tardessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "triguem",
@@ -12364,12 +11884,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "engolírem",
-      "engolíssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "empassés",
@@ -12391,12 +11907,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "engolira",
-      "engolís"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "empasséssiu",
@@ -12413,12 +11925,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "engolíreu",
-      "engolíssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "empassessis",
@@ -12435,12 +11943,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "engolires",
-      "engolissis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "empassessin",
@@ -12457,12 +11961,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "engoliren",
-      "engolissin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "empassem",
@@ -12655,12 +12155,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "acurtàrem",
-      "acurtéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "escurcés",
@@ -12682,12 +12178,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "acurtara",
-      "acurtés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "escurcéssiu",
@@ -12704,12 +12196,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "acurtàreu",
-      "acurtéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "escurcessis",
@@ -12726,12 +12214,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "acurtares",
-      "acurtessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "escurcessin",
@@ -12748,12 +12232,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "acurtaren",
-      "acurtessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "escurcem",
@@ -13042,12 +12522,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "desbaratàrem",
-      "desbaratéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "espatllés",
@@ -13069,12 +12545,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "desbaratara",
-      "desbaratés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "espatlléssiu",
@@ -13091,12 +12563,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "desbaratàreu",
-      "desbaratéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "espatllessis",
@@ -13113,12 +12581,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "desbaratares",
-      "desbaratessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "espatllessin",
@@ -13135,12 +12599,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "desbarataren",
-      "desbaratessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "espatllem",
@@ -13429,12 +12889,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "clivellàrem",
-      "clivelléssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esquerdés",
@@ -13456,12 +12912,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "clivellara",
-      "clivellés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esquerdéssiu",
@@ -13478,12 +12930,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "clivellàreu",
-      "clivelléssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esquerdessis",
@@ -13500,12 +12948,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "clivellares",
-      "clivellessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esquerdessin",
@@ -13522,12 +12966,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "clivellaren",
-      "clivellessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esquerdem",
@@ -13816,12 +13256,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "rascàrem",
-      "rasquéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "gratés",
@@ -13843,12 +13279,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "rascara",
-      "rasqués"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "gratéssiu",
@@ -13865,12 +13297,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "rascàreu",
-      "rasquéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "gratessis",
@@ -13887,12 +13315,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "rascares",
-      "rasquessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "gratessin",
@@ -13909,12 +13333,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "rascaren",
-      "rasquessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "gratem",
@@ -14224,12 +13644,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "polsàrem",
-      "polséssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "premés",
@@ -14251,12 +13667,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "polsara",
-      "polsés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "preméssiu",
@@ -14273,12 +13685,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "polsàreu",
-      "polséssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "premessis",
@@ -14295,12 +13703,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "polsares",
-      "polsessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "premessin",
@@ -14317,12 +13721,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "polsaren",
-      "polsessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "premem",
@@ -14611,12 +14011,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "generàrem",
-      "generéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "reportés",
@@ -14638,12 +14034,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "generara",
-      "generés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "reportéssiu",
@@ -14660,12 +14052,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "generàreu",
-      "generéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "reportessis",
@@ -14682,12 +14070,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "generares",
-      "generessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "reportessin",
@@ -14704,12 +14088,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "generaren",
-      "generessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "reportem",
@@ -14998,12 +14378,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "assaciàrem",
-      "assaciéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "sadollés",
@@ -15025,12 +14401,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "assaciara",
-      "assaciés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "sadolléssiu",
@@ -15047,12 +14419,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "assaciàreu",
-      "assaciéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "sadollessis",
@@ -15069,12 +14437,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "assaciares",
-      "assaciessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "sadollessin",
@@ -15091,12 +14455,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "assaciaren",
-      "assaciessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "sadollem",
@@ -15603,12 +14963,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "debilitàrem",
-      "debilitéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "afeblís",
@@ -15630,12 +14986,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "debilitara",
-      "debilités"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "afeblíssiu",
@@ -15652,12 +15004,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "debilitàreu",
-      "debilitéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "afeblissis",
@@ -15674,12 +15022,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "debilitares",
-      "debilitessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "afeblissin",
@@ -15696,12 +15040,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "debilitaren",
-      "debilitessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "afeblim",
@@ -15990,12 +15330,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "arrapàrem",
-      "arrapéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esgarrapés",
@@ -16017,12 +15353,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "arrapara",
-      "arrapés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esgarrapéssiu",
@@ -16039,12 +15371,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "arrapàreu",
-      "arrapéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esgarrapessis",
@@ -16061,12 +15389,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "arrapares",
-      "arrapessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esgarrapessin",
@@ -16083,12 +15407,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "arraparen",
-      "arrapessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esgarrapem",
@@ -16377,12 +15697,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "soltàrem",
-      "soltéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "amollés",
@@ -16404,12 +15720,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "soltara",
-      "soltés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "amolléssiu",
@@ -16426,12 +15738,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "soltàreu",
-      "soltéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "amollessis",
@@ -16448,12 +15756,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "soltares",
-      "soltessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "amollessin",
@@ -16470,12 +15774,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "soltaren",
-      "soltessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "amollem",
@@ -16764,12 +16064,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "ablanírem",
-      "ablaníssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "estovés",
@@ -16791,12 +16087,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "ablanira",
-      "ablanís"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "estovéssiu",
@@ -16813,12 +16105,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "ablaníreu",
-      "ablaníssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "estovessis",
@@ -16835,12 +16123,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "ablanires",
-      "ablanissis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "estovessin",
@@ -16857,12 +16141,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "ablaniren",
-      "ablanissin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "estovem",
@@ -17055,12 +16335,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "desbrossàrem",
-      "desbrosséssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esbrossés",
@@ -17082,12 +16358,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "desbrossara",
-      "desbrossés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esbrosséssiu",
@@ -17104,12 +16376,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "desbrossàreu",
-      "desbrosséssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esbrossessis",
@@ -17126,12 +16394,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "desbrossares",
-      "desbrossessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esbrossessin",
@@ -17148,12 +16412,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "desbrossaren",
-      "desbrossessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "esbrossem",
@@ -17442,12 +16702,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "dosificàrem",
-      "dosifiquéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "dosés",
@@ -17469,12 +16725,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "dosificara",
-      "dosifiqués"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "doséssiu",
@@ -17491,12 +16743,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "dosificàreu",
-      "dosifiquéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "dosessis",
@@ -17513,12 +16761,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "dosificares",
-      "dosifiquessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "dosessin",
@@ -17535,12 +16779,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "dosificaren",
-      "dosifiquessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "dosem",
@@ -17850,12 +17090,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "engrunsàrem",
-      "engrunséssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "gronxés",
@@ -17877,12 +17113,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "engrunsara",
-      "engrunsés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "gronxéssiu",
@@ -17899,12 +17131,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "engrunsàreu",
-      "engrunséssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "gronxessis",
@@ -17921,12 +17149,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "engrunsares",
-      "engrunsessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "gronxessin",
@@ -17943,12 +17167,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "engrunsaren",
-      "engrunsessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "gronxem",
@@ -18237,12 +17457,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "pantaixàrem",
-      "pantaixéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "panteixés",
@@ -18264,12 +17480,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "pantaixara",
-      "pantaixés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "panteixéssiu",
@@ -18286,12 +17498,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "pantaixàreu",
-      "pantaixéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "panteixessis",
@@ -18308,12 +17516,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "pantaixares",
-      "pantaixessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "panteixessin",
@@ -18330,12 +17534,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "pantaixaren",
-      "pantaixessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "panteixem",
@@ -18624,12 +17824,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "acatxàrem",
-      "acatxéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "ajupís",
@@ -18651,12 +17847,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "acatxara",
-      "acatxés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "ajupíssiu",
@@ -18673,12 +17865,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "acatxàreu",
-      "acatxéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "ajupissis",
@@ -18695,12 +17883,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "acatxares",
-      "acatxessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "ajupissin",
@@ -18717,12 +17901,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "acatxaren",
-      "acatxessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "ajupim",
@@ -19011,12 +18191,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "agranàrem",
-      "agranéssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "escombrés",
@@ -19038,12 +18214,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "agranara",
-      "agranés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "escombréssiu",
@@ -19060,12 +18232,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "agranàreu",
-      "agranéssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "escombressis",
@@ -19082,12 +18250,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "agranares",
-      "agranessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "escombressin",
@@ -19104,12 +18268,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "agranaren",
-      "agranessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "escombrem",
@@ -19398,12 +18558,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "entropessàrem",
-      "entropesséssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "ensopegués",
@@ -19425,12 +18581,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "entropessara",
-      "entropessés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "ensopeguéssiu",
@@ -19447,12 +18599,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "entropessàreu",
-      "entropesséssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "ensopeguessis",
@@ -19469,12 +18617,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "entropessares",
-      "entropessessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "ensopeguessin",
@@ -19491,12 +18635,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "entropessaren",
-      "entropessessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "ensopeguem",
@@ -20230,12 +19370,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "calfàrem",
-      "calféssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "escalfés",
@@ -20257,12 +19393,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "calfara",
-      "calfés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "escalféssiu",
@@ -20279,12 +19411,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "calfàreu",
-      "calféssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "escalfessis",
@@ -20301,12 +19429,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "calfares",
-      "calfessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "escalfessin",
@@ -20323,12 +19447,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "calfaren",
-      "calfessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "escalfades",
@@ -20973,12 +20093,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "vetlàrem",
-      "vetléssim"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "vetllés",
@@ -21000,12 +20116,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "vetlara",
-      "vetlés"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "vetlléssiu",
@@ -21022,12 +20134,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "vetlàreu",
-      "vetléssiu"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "vetllessis",
@@ -21044,12 +20152,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "vetlares",
-      "vetlessis"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "vetllessin",
@@ -21066,12 +20170,8 @@
       ]
     ],
     "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": true,
-    "ambigu": true,
-    "cat_traduccions_val": [
-      "vetlaren",
-      "vetlessin"
-    ]
+    "ambigu_cat_a_val": false,
+    "ambigu": false
   },
   {
     "catalan": "vetllades",
@@ -21479,7 +20579,7 @@
     "infinitiu_cat": "tenir",
     "infinitiu_val": "tindre"
   },
-    {
+  {
     "catalan": "venir",
     "valenciano": "vindre",
     "infinitiu_cat": "venir",

@@ -88,36 +88,52 @@ def _marca_ambigues_dins_del_mateix_fitxer(dades: list[dict]) -> list[dict]:
 
 
 _CONJUGACIONS_DESCRIPCIO = (
-    "Formes verbals valencia/catala que difereixen entre dialectes, extretes de "
-    "l'apertium bilingue catala-castella per Mauricio (equip AVLizador, 29/09/2026). "
-    "Cobrix 111 verbs on almenys una conjugacio difereix, mes 5.465 verbs addicionals "
-    "de 'conjugaciones_nuevo.json' (vore baix). El camp 'problematica' marca formes on "
+    "Formes verbals valencia/catala que difereixen entre dialectes. Des del "
+    "19/10/2026 les fonts OFICIALS (prioritat maxima) son les de "
+    "'diccionarios_v1/' de Mauricio: 'conjugaciones_general.json' (43.242 "
+    "formes, camp 'morfologia' amb el temps/mode -- descodificat amb "
+    "evidencia real, vore documentacio/hoja_de_ruta_migracio_diccionarios_v1.md: "
+    "pri=present indicatiu, prs=present subjuntiu, pii=imperfet indicatiu, "
+    "pis=imperfet subjuntiu, imp=imperatiu, pp=participi, inf=infinitiu) i "
+    "'verbos_diferentes_conjugados.json' (912 parells d'arrel verbal distinta, "
+    "p.ex. telefonar/trucar). "
+    "El camp 'problematica' marca formes on "
     "el valencia usa la mateixa paraula per al present d'indicatiu i el de subjuntiu "
     "(p.ex. abalance = jo abalanco / que jo abalanci), cosa que fa la conversio "
     "ambigua sense analisi gramatical (pos-tagging); conjugacions_dict.py exclou estes "
     "entrades del lookup automatic i les deixa documentades aci per si en el futur es "
     "pot afegir un mecanisme de desambiguacio.\n\n"
-    "PROVAT, REVERTIT, I RE-INTEGRAT A PROPOSIT (05/10/2026 i 06/10/2026): "
-    "'conjugaciones_nuevo.json' (5.465 verbs, 49.443 formes, generat sistematicament) "
-    "es va provar com a 3a font el 05/10/2026 i es va REVERTIR en trobar-se que no es "
-    "un problema d'ambiguitat puntual (eixe ja el cobreix _marca_ambigues_dins_del_mateix_fitxer) "
-    "sino de COL·LISIO HOMOGRAFA massiva -- amb tants verbs, moltes conjugacions "
-    "regulars (persones->personis, del verb 'personar'; projectes->projectis, de "
-    "'projectar'; pobles->poblis, de 'poblar'...) coincidixen amb substantius plurals "
-    "o verbs distints MOLT mes freqüents que el verb rar que els origina. Mesurat amb "
-    "el benchmark de 150 frases: 119/150 (79,3%) abans, 89/150 (59,3%) amb esta font "
-    "integrada -- 30 regressions reals, paraules comunes convertides en no-paraules "
-    "('projectis', 'personis', 'poblis', 'plomis'). No es una llista d'exclusions "
-    "curada la solucio (caldrien milers), es un problema estructural de no tindre "
-    "pos-tagging a eixa escala.\n\n"
-    "El 06/10/2026 l'usuari ha decidit RE-INTEGRAR esta font a proposit, acceptant "
-    "la baixada del benchmark (torna a 89/150): mes cobertura ara, encara que "
-    "introduisca soroll, es preferix a esperar -- el pla es afegir mes avant un "
-    "pas de postprocessat amb un LLM (vore 08_traduccio_corpus/postprocessat_llm/) "
-    "que resolga els casos ambigus/col·lisionats fent servir context real de la "
-    "frase, cosa que un lookup pla mai pot fer. Fins que eixe pas existisca, el "
-    "motor pur de regles produira mes errors d'este tipus que abans -- es un "
-    "compromis deliberat, no una regressio sense detectar."
+    "RETIRATS 19/10/2026, mesurat amb els 4 benchmarks (151 + gplsi, les dos "
+    "direccions) ZERO diferencia en cap: 'verbos_no_ambiguos.json', "
+    "'verbos_todos_anotados.json' i 'conjugaciones_nuevo.json'. Comprovat "
+    "verb a verb que els seus infinitius d'una sola paraula ja estan TOTS "
+    "coberts per les fonts oficials -- l'unica cosa que aportaven de mes "
+    "eren frases multi-paraula ('llençar la brossa', 'fer cara de'...) que "
+    "el motor mai ha pogut fer servir (no hi ha mecanisme de coincidencia "
+    "multi-paraula per a verbs). Backup a "
+    "`lexic/backup_pendent_mauricio/` per si calen en el futur.\n\n"
+    "'conjugaciones_limpio.json' (968 formes, 111 verbs, el fitxer ORIGINAL "
+    "de Mauricio, 29/09/2026) RETIRAT DEL TOT el 19/10/2026: les SEUES "
+    "968 files s'han fusionat SENCERES (no nomes un subconjunt) dins de "
+    "'conjugaciones_general.json' mateix, amb IDs 'LIMPIO_1'..'LIMPIO_968' "
+    "(per no col·lidir amb la numeracio de Mauricio), 'morfologia' derivat "
+    "a mà per a 95 formes seguint el mateix descodificat (resta null, "
+    "mateix valor que ja usa Mauricio per a formes sense classificar), i "
+    "el flag 'problematica' preservat tal qual en 55 files que ja el "
+    "portaven. **Important, apresa a cops (19/10/2026)**: la primera "
+    "temptativa va fusionar NOMES les 97 formes 'noves' (les que faltaven "
+    "al lookup val->cat), i això va trencar el doctest de "
+    "`cat_val/conjugacions_dict.py` -- 'sofrisquen'->'sofreixin' queda "
+    "exclosa del lookup val->cat pel filtre de risc de 3a plural (per aixo "
+    "no eixia com a 'forma nova' des d'eixe costat), pero SI fa falta en "
+    "brut per a que `carrega_conjugacions_invers()` detecte correctament "
+    "que 'sofreixin' es ambigua (patisquen/sofrisquen) i l'excloga. "
+    "Fusionar el fitxer SENCER evita este tipus de forat invisible des "
+    "d'una sola direccio. Backup del fitxer original sencer a "
+    "'lexic/backup_pendent_mauricio/'. **Pendent d'informar a Mauricio**: "
+    "el paradigma de present de subjuntiu del verb 'ser' seguix sent un "
+    "forat real de la seua font (nosaltres ho hem apedaçat local, pero no "
+    "soluciona l'origen)."
 )
 
 
@@ -173,43 +189,24 @@ FONTS: list[FontSpec] = [
         entrades=lambda d: d,
     ),
     FontSpec(
-        # "verbos_no_ambiguos.json" (afegit 30/09/2026, 261 formes de 45
-        # verbs FORA dels 111 originals, totes marcades "ambigu": false)
-        # va PRIMER a propòsit: 16 formes de "eixir" (isca/isquen/isc...)
-        # apareixen a totes dos fonts amb traduccions diferents (
-        # "ixi"/"ixin"/"ixo" a conjugaciones_limpio.json vs "surti"/
-        # "surtin"/"surto" ací) -- guanya "surti" per coherència amb la
-        # decisió ja presa a lexic.py (`eixir->sortir`, vore lexic_mauricio.json).
-        # "verbos_todos_anotados.json" (1.229 formes, analisi detallada de
-        # 50 verbs amb formes repetides/ambigues) va just despres dels dos
-        # fiables: te el seu propi doble-check morfologic (camp "ambigu"),
-        # encara que ac� es reconstruïx l'ambiguitat amb el mateix criteri
-        # que la resta (_marca_ambigues_dins_del_mateix_fitxer), que ja
-        # protegix el cas trobat ("faria" colisionant amb la concatenacio
-        # trencada "uncopd'ulldonaria" de l'idioma "donar un cop d'ull" ->
-        # ambdos queden marcades "problematica" perque dins d'este mateix
-        # fitxer "faria" ja te 2 traduccions catalanes distintes). Verificat
-        # 06/10/2026 que les 227 entrades dels 8 verbs amb infinitiu de mes
-        # d'una paraula (telefonar->trucar, pegar un bac->clavar una
-        # patacada...) NO son dades corruptes en general -- son expressions
-        # legitimes on el verb nucli es conjuga be; nomes "fer una ullada"/
-        # "donar un cop d'ull" produïx formes concatenades, i eixes ja
-        # queden excloses perque col·lidixen amb la forma neta dins del
-        # mateix fitxer. Decisio explicita de l'usuari: no filtrar res mes.
-        # "conjugaciones_nuevo.json" (5.465 verbs, 49.443 formes) VA DARRER
-        # a propòsit: provat i revertit 05/10/2026 per col·lisió homògrafa
-        # massiva amb substantius comuns (vore _CONJUGACIONS_DESCRIPCIO), i
-        # RE-INTEGRAT 06/10/2026 per decisió explícita de l'usuari (acceptar
-        # mes soroll ara, resoldre mes avant amb un LLM de postprocessat).
-        # Anar DARRER vol dir que si una forma ja existix a les altres
-        # fonts (mes fiables, verbs mes comuns), guanya eixa -- esta font
-        # nomes omplix els verbs que les altres no cobrixen.
+        # 19/10/2026: nomes les 2 fonts OFICIALS de diccionarios_v1/. Els
+        # 4 fitxers vells de l'equip AVLizador (29-30/09/2026) ja no fan
+        # falta cap -- vore _CONJUGACIONS_DESCRIPCIO per al detall i les
+        # xifres de cada un. Els 3 primers (verbos_no_ambiguos.json,
+        # verbos_todos_anotados.json, conjugaciones_nuevo.json) no
+        # aportaven cap infinitiu d'una sola paraula que no estiguera ja
+        # ací (mesurat amb els 4 benchmarks: zero diferencia). El 4t
+        # (conjugaciones_limpio.json) SÍ aportava cobertura real -- les
+        # seues 968 files SENCERES ja s'han fusionat dins de
+        # "diccionarios_v1/conjugaciones_general.json" (19/10/2026, IDs
+        # "LIMPIO_1".."LIMPIO_968", vore eixe fitxer i
+        # _CONJUGACIONS_DESCRIPCIO per a per què SENCERES i no nomes un
+        # subconjunt), aixina que el fitxer ja no fa falta tampoc. Els 4
+        # retirats a lexic/backup_pendent_mauricio/.
         dest="conjugacions_dialectals.json",
         font=(
-            MAURICIO / "verbos_no_ambiguos.json",
-            MAURICIO / "conjugaciones_limpio.json",
-            MAURICIO / "verbos_todos_anotados.json",
-            MAURICIO / "conjugaciones_nuevo.json",
+            MAURICIO / "diccionarios_v1" / "verbos_diferentes_conjugados.json",
+            MAURICIO / "diccionarios_v1" / "conjugaciones_general.json",
         ),
         entrades=_marca_ambigues_dins_del_mateix_fitxer,
         embolica=lambda entrades: {

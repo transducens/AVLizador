@@ -56,6 +56,24 @@ invers d'`aplica_amb_prefix_elidit`, que fa la contracció contrària
 l'adverbi "tard" (late) amb el nom "tarda" (afternoon) per l'ambigüitat
 del castellà d'origen "tarde" -- vore comentari de `_BUG_DADES_CONEGUTS_CAT`
 més avall per al detall complet.
+
+**Homonimia_lexica (19/10/2026, nou)**: la guia oficial de Mauricio
+(`diccionarios_v1/Funcionamiento listas de palabras.pdf`) confirma que
+les entrades `problema: "homonimia_lexica"` amb `lemas` de categories
+gramaticals DIFERENTS es resolen amb PoS (spaCy); amb categories
+iguals/solapades fa falta un LLM. S'amplia `categoria_gramatical_lexic.json`
+(ja actiu ací des de 13/10/2026 per a "nou"/"anou") amb 6 entrades més on
+l'ambigüitat cau d'este costat (`lado: "val"`): "exitosa(a)"/"exitoses"
+(ADJ), "carència"/"carències" (NOUN), "llavadora"/"llavadores" (NOUN).
+Cas real confirmat amb el benchmark gplsi (+2 frases): "manca" com a VERB
+("mancar", falta) mai es tocava abans d'esta correcció -- es convertia
+sempre a "carència" encara que el verb i el nom compartixen la mateixa
+grafia catalana. Les altres 4 entrades amb `lado: "val"` i categories
+DIFERENTS ("falaguera", "brollador", "brulla(es)", "panolla(es)",
+"fartada(es)") encara són `_PENDENT` (sense verificar) a
+`lexico_general.json` -- no activades, afegir-les quan deixen de ser-ho.
+Les que SÍ tenen categories iguals/solapades ("bes", "bragues"/"calces",
+"hamaca"/"gandula") es queden sense resoldre, tal com diu la guia.
 """
 
 from __future__ import annotations
@@ -407,6 +425,23 @@ class LexicInversRule:
     >>> toks = LexicInversRule().apply(toks)
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
     []
+
+    Filtre POS per a "manca" (homonimia_lexica, 19/10/2026 -- vore
+    docstring del mòdul): com a VERB ("mancar", "faltar") mai es toca,
+    com a NOUN sí ("carència"):
+
+    >>> toks = tokenize("Aquesta regió manca relativament de grans cràters.")
+    >>> marca_noms_propis(toks)
+    >>> pos_tagger.etiqueta(toks)
+    >>> toks = LexicInversRule().apply(toks)
+    >>> [(t.surface, t.translated) for t in toks if t.is_translated]
+    []
+    >>> toks = tokenize("Patix una gran manca afectiva.")
+    >>> marca_noms_propis(toks)
+    >>> pos_tagger.etiqueta(toks)
+    >>> toks = LexicInversRule().apply(toks)
+    >>> [(t.surface, t.translated) for t in toks if t.is_translated]
+    [('manca', 'carència')]
 
     Contracció "al" desfeta en "a l'" quan la paraula substituïda passa a
     començar en vocal (RC016, vore docstring del mòdul):
