@@ -549,7 +549,7 @@ autónomo.
 El motor se redujo el 30/09/2026 a puro lookup de diccionario (sin
 reconstrucción morfológica propia), basado casi enteramente en un
 diccionario diferencial de ~53.000 pares aportado por un colaborador del
-equipo ("Mauricio"): 1.471 de léxico general más ~52.000 formas verbales
+equipo (el proveedor de datos): 1.471 de léxico general más ~52.000 formas verbales
 conjugadas, además de demostrativos/posesivos/numerales. A partir de ahí,
 cada mejora se midió contra un benchmark curado de 151 frases
 (`pipeline/03_seleccio_de_model/benchmark_corpus.json`), nunca solo con

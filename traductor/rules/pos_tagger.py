@@ -17,12 +17,12 @@ atra categoria gramatical. Casos reals trobats al benchmark de 150 frases:
 
 `_marca_ambigues_dins_del_mateix_fitxer` (sync_data.py) NOMES detecta
 col·lisions INTERNES: la mateixa paraula valenciana amb >=2 traduccions
-catalanes DINS del mateix fitxer font de Mauricio (aixo es el que marca
+catalanes DINS del mateix fitxer font del proveïdor (aixo es el que marca
 `problematica: true`, p.ex. "base"/"entre"/"centre"). Els 5 casos de dalt
 NOMES tenen UNA entrada cadascun al seu fitxer font (el verb rar nomes es
 conjuga una vegada per a eixa persona), aixi que mai es marquen
 `problematica` -- la col·lisio es amb una paraula d'un fitxer QUE NI TAN
-SOLS EXISTIX, perque els lexicons de Mauricio son DIFERENCIALS (nomes
+SOLS EXISTIX, perque els lexicons del proveïdor son DIFERENCIALS (nomes
 llisten parelles que canvien d'un dialecte a l'atre; "persones", "pobles",
 "projectes"... son identiques als dos dialectes, per aixo cap fitxer les
 llista). No hi ha cap llista "de l'atra categoria gramatical" contra la

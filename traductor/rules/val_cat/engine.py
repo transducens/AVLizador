@@ -15,10 +15,10 @@ diccionari + 2 regles de sufix productives -- vore `traductor/README.md`
 per l'abast complet i el raonament del canvi):
 
     1. lexic               (lookup directe al diccionari general +
-                            accentuació, font_mauricio)
-    2. conjugacions_dict   (lookup directe de formes verbals, font_mauricio)
-    3. possessius          (lookup directe de possessius, font_mauricio)
-    4. numerals            (lookup directe de numerals, font_mauricio)
+                            accentuació, font_proveidor)
+    2. conjugacions_dict   (lookup directe de formes verbals, font_proveidor)
+    3. possessius          (lookup directe de possessius, font_proveidor)
+    4. numerals            (lookup directe de numerals, font_proveidor)
     5. concordanca_dos_dues (corregix "dos"->"dues" darrere d'un marcador
                             de femení plural -- "les"/"estes"/"eixes"...,
                             afegida 01/10/2026, vore docstring del mòdul)
@@ -26,7 +26,7 @@ per l'abast complet i el raonament del canvi):
                             locatiu, afegida 02/10/2026, vore docstring
                             del mòdul)
     7. demostratius        (lookup directe de demostratius, AVL-only --
-                            recreada 30/09/2026, cap fitxer de Mauricio
+                            recreada 30/09/2026, cap fitxer del proveïdor
                             llista un paradigma gramatical tancat com est)
     8. accentuacio         (sufix -és->-ès i -éixer->-èixer, patró
                             productiu, afegida 30/09/2026)
@@ -55,7 +55,7 @@ Les capes 1-4 i 7 són lookups exactes; 5-6 són regles de CONCORDANÇA/PATRÓ
 (miren els tokens veïns, no un diccionari) i 8-9 són regles de SUFIX
 (patró productiu, no llista tancada) -- per això van DESPRÉS de les de
 diccionari: si una forma ja es coneix amb exactitud (p.ex. "francés" ja
-és a `lexic_acentuacio_mauricio.json`), no té sentit deixar que una regla
+és a `lexic_acentuacio_general.json`), no té sentit deixar que una regla
 de sufix més feble la reprocesse. Cada capa salta qualsevol token ja
 marcat `is_translated` per una capa anterior.
 

@@ -74,7 +74,7 @@ LLM puede decidir el modo correcto mirando el contexto de la frase.
 
 ### Datos: 3.004 formas ambiguas, filtrado de falsos positivos nominales
 
-`identifica_ambigues.py` calcula, desde las 4 fuentes de Mauricio, todas
+`identifica_ambigues.py` calcula, desde las 4 fuentes del proveedor de datos, todas
 las formas valencianas con EXACTAMENTE 2 traducciones catalanas
 candidatas que comparten raíz y difieren solo en la vocal final (-o
 indicativo / -i subjuntivo): **3.004 formas**. Buscarlas tal cual en un

@@ -2,14 +2,19 @@
 possessius.py -- Possessius àtons febles i femenins: meua/teua/seua
 (occidental) -> meva/teva/seva (oriental).
 
-Font de dades (30/09/2026): `traductor/data/possessius_mauricio.json`,
-còpia de `posesivos_cat_val.json` (equip AVLizador). El fitxer font és un
-producte cartesià sense filtrar (per cada arrel dona les 4 combinacions
-singular/plural, incloent les 2 que barregen números: "meua"->"meves"),
-així que `_carrega_possessius` es queda només amb els parells on singular
-casa amb singular i plural amb plural (esta mateixa taula ja s'havia
-confirmat abans a `regles_dialectals_amb_evidencia.md` §2 i a
-`lexic_paula_guerrero.json` per a "seua/seues" -- ara ve tota de Mauricio).
+Font de dades (19/10/2026): `traductor/data/lexic_general.json` (còpia
+de `lexico_general.json`), el MATEIX fitxer que fa servir `lexic.py` --
+l'usuari va enganxar les 12 files de l'antic `posesivos_cat_val.json`
+dins de `lexico_general.json` directament (`categoria: "det"`,
+`tipo: "v:lexic_val_avl"`, `fuente: "avl_equip"`). **Esta regla filtra
+expressament per `fuente == "avl_equip"`**, no només per `categoria ==
+"det"`: la categoria "det" també la fan servir els demostratius dins del
+mateix fitxer, i `lexic.py` els deixa fora expressament (cada un amb el
+seu propi mòdul) -- confondre'ls ací tornaria a barrejar les dos coses.
+El fitxer és un producte cartesià sense filtrar (per cada arrel dona les
+4 combinacions singular/plural, incloent les 2 que barregen números:
+"meua"->"meves"), així que `_carrega_possessius` es queda només amb els
+parells on singular casa amb singular i plural amb plural.
 
 Només afecta les formes FEBLES FEMENINES (meua, teua, seua i els seus
 plurals). Les formes masculines (meu, teu, seu, meus, teus, seus) i les
@@ -26,17 +31,19 @@ from pathlib import Path
 
 from .. import Token, preserva_majuscula
 
-MAURICIO_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "possessius_mauricio.json"
+LEXIC_GENERAL_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "lexic_general.json"
 
 
 def _mateix_nombre(valenciano: str, catalan: str) -> bool:
     return valenciano.endswith("es") == catalan.endswith("es")
 
 
-def _carrega_possessius(path: Path = MAURICIO_PATH) -> dict[str, str]:
+def _carrega_possessius(path: Path = LEXIC_GENERAL_PATH) -> dict[str, str]:
     dades = json.loads(Path(path).read_text(encoding="utf-8"))
     lookup: dict[str, str] = {}
     for entrada in dades:
+        if entrada.get("fuente") != "avl_equip":
+            continue
         valenciano = entrada["valenciano"].strip().lower()
         catalan = entrada["catalan"].strip()
         if not _mateix_nombre(valenciano, catalan):
@@ -58,7 +65,7 @@ class PossessiusRule:
     [('meua', 'meva'), ('seua', 'seva')]
     """
 
-    def __init__(self, path: Path = MAURICIO_PATH) -> None:
+    def __init__(self, path: Path = LEXIC_GENERAL_PATH) -> None:
         self._lookup = _carrega_possessius(path)
 
     def apply(self, tokens: list[Token]) -> list[Token]:

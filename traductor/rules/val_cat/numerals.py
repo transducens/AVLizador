@@ -1,7 +1,7 @@
 """
 numerals.py -- Lookup exacte dels CARDINALS (categoria "num" de
-`traductor/data/lexic_mauricio.json`, còpia de `lexico_general.json`
-de Mauricio, 16/10/2026): huit->vuit, huitanta->vuitanta,
+`traductor/data/lexic_general.json`, còpia de `lexico_general.json`
+del proveïdor oficial, 16/10/2026): huit->vuit, huitanta->vuitanta,
 dènou->dinou... Els ORDINALS (categoria "adj": huitena, huitens...) ja
 els agafa `LexicRule` ABANS que esta regla córrega (vore engine.py) --
 esta capa nomes necessita cobrir els cardinals purs.
@@ -9,7 +9,7 @@ esta capa nomes necessita cobrir els cardinals purs.
 Inclou "díhuit"->"divuit" sense necessitat de cap cas especial, perquè
 és lookup exacte, no substitució de subcadena.
 
-Migrat 16/10/2026 des de `numerals_mauricio.json` (vore
+Migrat 16/10/2026 des de `numerals_general.json` (vore
 documentacio/hoja_de_ruta_migracio_diccionarios_v1.md): mesurat abans de
 canviar -- de les 176 formes antigues, 153 ja coincidixen via
 `LexicRule` (categoria "adj", ordinals) + esta regla (categoria "num",
@@ -31,10 +31,10 @@ from pathlib import Path
 
 from .. import Token, preserva_majuscula
 
-MAURICIO_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "lexic_mauricio.json"
+LEXIC_GENERAL_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "lexic_general.json"
 
 
-def carrega_numerals(path: Path = MAURICIO_PATH) -> dict[str, str]:
+def carrega_numerals(path: Path = LEXIC_GENERAL_PATH) -> dict[str, str]:
     """
     >>> lookup = carrega_numerals()
     >>> lookup["huitanta"]
@@ -71,7 +71,7 @@ class NumeralsRule:
     [('huitanta', 'vuitanta'), ('díhuit', 'divuit')]
     """
 
-    def __init__(self, path: Path = MAURICIO_PATH) -> None:
+    def __init__(self, path: Path = LEXIC_GENERAL_PATH) -> None:
         self._lookup = carrega_numerals(path)
 
     def apply(self, tokens: list[Token]) -> list[Token]:

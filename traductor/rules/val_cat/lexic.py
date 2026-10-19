@@ -8,9 +8,9 @@ definix una paraula guanya):
        existix (ja fusionat i esborrat), esta font simplement no aporta
        res -- no cal llevar la crida a mà.
     1. flexio_genere_avl.json         -- derivació de gènere/nombre per a
-       un grapat de paraules CURADES A MÀ (no cap fitxer de Mauricio),
+       un grapat de paraules CURADES A MÀ (no cap fitxer del proveïdor),
        vore docstring de `_carrega_flexio_genere`.
-    2. lexic_mauricio.json            -- lèxic general (còpia de
+    2. lexic_general.json             -- lèxic general (còpia de
        `lexico_general.json` des de 16/10/2026, abans `unificado.json`),
        filtrat: descarta entrades "_PENDENT" (sense verificar), topònims
        (`tipo: "v:top_gva"`, el motor mai els aplicaria -- protegix noms
@@ -27,7 +27,7 @@ definix una paraula guanya):
        d'una traducció possible, prioritza la marcada `canonica: true`;
        si cap ho és o n'hi ha més d'una, es queda la primera trobada.
 
-**Capa d'accentuació RETIRADA (16/10/2026)**: `lexic_acentuacio_mauricio.json`
+**Capa d'accentuació RETIRADA (16/10/2026)**: `lexic_acentuacio_general.json`
 (695 parelles, còpia de `acentuacion_limpio.json`) ja no es carrega a
 banda -- mesurat que 681 de les 682 parelles reals (després de filtres)
 ja ixen be NOMÉS amb la categoria "adj" de `lexico_general.json` (p.ex.
@@ -37,19 +37,19 @@ real. A més, el patró productiu de sufix "-és"->"-ès" ja el cobrix
 `accentuacio.py` de forma general (qualsevol paraula, no nomes les
 enumerades), independentment d'este fitxer -- vore eixe mòdul.
 
-DECISIÓ (30/09/2026): esta capa és sobretot diccionari de Mauricio --
-s'han llevat les fonts Apertium-368, Paula Guerrero i els parells AVL-only
-originals (`vos/vindre/valdre`, `tindre/obtindre/vore`, `últim/darrer`...),
-junt amb totes les regles morfològiques/de sufix generalitzades
-(`gentilicis.py`, `morfologia_verbal.py`, `perfet.py`, `locucions.py`,
-`elisio.py`, encara retirades). `demostratius.py` es va recrear el mateix
-dia (vore eixe mòdul), i `flexio_genere_avl.json` (vore baix) és la segona
-peça no-Mauricio que torna, per la mateixa raó: un diccionari diferencial
-mai llista totes les formes de gènere/nombre d'una paraula, només la que
-algú va confirmar.
+DECISIÓ (30/09/2026): esta capa és sobretot diccionari del proveïdor
+oficial -- s'han llevat les fonts Apertium-368, Paula Guerrero i els
+parells AVL-only originals (`vos/vindre/valdre`, `tindre/obtindre/vore`,
+`últim/darrer`...), junt amb totes les regles morfològiques/de sufix
+generalitzades (`gentilicis.py`, `morfologia_verbal.py`, `perfet.py`,
+`locucions.py`, `elisio.py`, encara retirades). `demostratius.py` es va
+recrear el mateix dia (vore eixe mòdul), i `flexio_genere_avl.json` (vore
+baix) és la segona peça que no ve del proveïdor que torna, per la mateixa
+raó: un diccionari diferencial mai llista totes les formes de gènere/
+nombre d'una paraula, només la que algú va confirmar.
 
 Gènere i nombre (`flexio_genere_avl.json`, afegit 30/09/2026): es va
-provar ESCANEJAR tot `lexic_mauricio.json` buscant paraules acabades en
+provar ESCANEJAR tot `lexic_general.json` buscant paraules acabades en
 consonant "segura" (t/l/m/n/r) per a derivar automàticament fem/plural, i
 la majoria eren GARBAGE -- la immensa majoria del lèxic són verbs
 infinitius o adverbis sense gènere ("cercar"->"buscar" hauria donat
@@ -68,7 +68,8 @@ categories:
     regulars ("petita", no "petida").
 
 De pas, esta font resol la regressió que s'havia documentat ahí baix
-sobre "xiquet" (abans guanyava "noi" per ambigüitat a Mauricio): ara
+sobre "xiquet" (abans guanyava "noi" per ambigüitat al lèxic del
+proveïdor): ara
 "xiquet"->"nen" ve explícitament confirmat en esta llista, amb prioritat
 màxima.
 
@@ -115,8 +116,8 @@ es va trobar el mateix problema abans amb "blanca" (adjectiu) vs. "Blanca"
 `is_proper_noun = True` (fixat per `marca_noms_propis()` abans de córrer
 cap regla).
 
-Filtre POS per a homonimia_lexica (19/10/2026): la guia oficial de
-Mauricio (`diccionarios_v1/Funcionamiento listas de palabras.pdf`)
+Filtre POS per a homonimia_lexica (19/10/2026): la guia oficial del
+proveïdor (`diccionarios/Funcionamiento listas de palabras.pdf`)
 confirma el mecanisme de les 24 entrades `problema: "homonimia_lexica"`
 de `lexico_general.json`: quan els `lemas` tenen categories gramaticals
 DIFERENTS, es resol amb PoS (spaCy); quan són iguals/solapades, fa falta
@@ -138,7 +139,7 @@ Concordança de gènere tras substitució lèxica (afegit 08/10/2026, RC044):
 una substitució d'esta capa pot canviar el GÈNERE gramatical de la paraula
 sencera, no només la seua forma ("dacsa", femení, -> "blat de moro",
 masculí) -- `canvi_genere_lexic_avl.json` llista a mà els pocs casos
-coneguts (cap font de Mauricio documenta gènere). Quan n'hi ha un, es
+coneguts (cap font del proveïdor documenta gènere). Quan n'hi ha un, es
 corregix NOMÉS el determinant IMMEDIATAMENT anterior (un token arrere,
 saltant espais) amb una taula tancada la/el, una/un, esta/este... --
 s'accepta com a límit conegut que un adjectiu posposat o un determinant
@@ -170,7 +171,7 @@ from .. import (
 )
 
 _DATA = Path(__file__).resolve().parent.parent.parent / "data"
-MAURICIO_PATH = _DATA / "lexic_mauricio.json"
+LEXIC_GENERAL_PATH = _DATA / "lexic_general.json"
 FLEXIO_GENERE_PATH = _DATA / "flexio_genere_avl.json"
 TEMPORAL_PATH = _DATA / "TEMPORAL_hui_avui_pendent_fusio.json"
 CANVI_GENERE_PATH = _DATA / "canvi_genere_lexic_avl.json"
@@ -205,7 +206,7 @@ CANVI_GENERE_PATH = _DATA / "canvi_genere_lexic_avl.json"
 #   per al sentit NOM ("vallado"), pero s'aplicava també a l'adjectiu
 #   (RC144, "e tancada" = "e closed", un terme lingüístic).
 #   **RESOLT 19/10/2026, deixa de ser exclusió en bloc**: amb la guia
-#   oficial de Mauricio (`diccionarios_v1/Funcionamiento listas de
+#   oficial del proveïdor (`diccionarios/Funcionamiento listas de
 #   palabras.pdf`) confirmant que `homonimia_lexica` amb categories
 #   gramaticals DIFERENTS als `lemas` es resol per PoS, es passa a
 #   `categoria_gramatical_lexic.json` (`"tancada"/"tancades": "NOUN"`) +
@@ -245,7 +246,7 @@ _LEXIC_PERDUT_RESTAURAT = {
 
 # Ordinals masculins singulars en "-è" (16/10/2026, vore docstring de
 # `numerals.py`): únic patró real que falta a `lexico_general.json`
-# (categoria "adj") respecte a `numerals_mauricio.json` -- mesurat
+# (categoria "adj") respecte a `numerals_general.json` -- mesurat
 # exhaustivament (153/176 ja coincidixen, nomes estos 25 falten). Van
 # ací, no a `numerals.py`, perquè per categoria gramatical real són
 # ADJECTIUS (ordinals), igual que la resta que ja agafa esta capa.
@@ -336,10 +337,11 @@ def _carrega_flexio_genere(path: Path) -> dict[str, str]:
     return lookup
 
 
-def _resol_mauricio(entries: list[dict]) -> str:
-    """Tria quina forma catalana usar quan una paraula valenciana de
-    Mauricio té més d'una entrada (polisèmia): la marcada `canonica: true`
-    si n'hi ha exactament una, si no la primera trobada al fitxer."""
+def _resol_polisemia(entries: list[dict]) -> str:
+    """Tria quina forma catalana usar quan una paraula valenciana del
+    lèxic general té més d'una entrada (polisèmia): la marcada
+    `canonica: true` si n'hi ha exactament una, si no la primera trobada
+    al fitxer."""
     canoniques = [e for e in entries if e.get("canonica") is True]
     triada = canoniques[0] if len(canoniques) == 1 else entries[0]
     return triada["catalan"].strip()
@@ -362,7 +364,7 @@ _CATEGORIES_LEXIC_GENERAL = {"n", "adj", "adv", "cnjadv", "pr", "ij", "prn"}
 _CANONICA_OVERRIDES = {"xicotet": "petit"}
 
 
-def _carrega_mauricio_lexic(path: Path) -> dict[str, str]:
+def _carrega_lexic_general(path: Path) -> dict[str, str]:
     demostratius_coneguts = _formes_demostratius_conegudes()
     dades = json.loads(path.read_text(encoding="utf-8"))
     per_paraula: dict[str, list[dict]] = {}
@@ -384,7 +386,7 @@ def _carrega_mauricio_lexic(path: Path) -> dict[str, str]:
         if valenciano.lower() in demostratius_coneguts:
             continue
         per_paraula.setdefault(valenciano.lower(), []).append(entrada)
-    lookup = {val: _resol_mauricio(entries) for val, entries in per_paraula.items()}
+    lookup = {val: _resol_polisemia(entries) for val, entries in per_paraula.items()}
     for val, cat in _CANONICA_OVERRIDES.items():
         if val in lookup:
             lookup[val] = cat
@@ -404,7 +406,7 @@ def carrega_canvis_genere(path: Path = CANVI_GENERE_PATH) -> dict[str, str]:
 
 
 def carrega_lexic(
-    mauricio_path: Path = MAURICIO_PATH,
+    lexic_general_path: Path = LEXIC_GENERAL_PATH,
     flexio_genere_path: Path = FLEXIO_GENERE_PATH,
     temporal_path: Path = TEMPORAL_PATH,
 ) -> dict[str, str]:
@@ -445,7 +447,7 @@ def carrega_lexic(
     for carregador, path in (
         (_carrega_temporal, temporal_path),
         (_carrega_flexio_genere, flexio_genere_path),
-        (_carrega_mauricio_lexic, mauricio_path),
+        (_carrega_lexic_general, lexic_general_path),
     ):
         for val, cat in carregador(path).items():
             lookup.setdefault(val, cat)
@@ -531,13 +533,13 @@ class LexicRule:
 
     def __init__(
         self,
-        mauricio_path: Path = MAURICIO_PATH,
+        lexic_general_path: Path = LEXIC_GENERAL_PATH,
         flexio_genere_path: Path = FLEXIO_GENERE_PATH,
         temporal_path: Path = TEMPORAL_PATH,
         canvi_genere_path: Path = CANVI_GENERE_PATH,
         categoria_path: Path = CATEGORIA_GRAMATICAL_PATH,
     ) -> None:
-        self._lookup = carrega_lexic(mauricio_path, flexio_genere_path, temporal_path)
+        self._lookup = carrega_lexic(lexic_general_path, flexio_genere_path, temporal_path)
         self._canvis_genere = carrega_canvis_genere(canvi_genere_path)
         self._categories = carrega_categoria_gramatical(categoria_path)
 

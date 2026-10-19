@@ -9,8 +9,8 @@ cada regla està ben formulada.
 > **Nota d'arquitectura (30/09/2026)**: este document descriu regles
 > morfològiques i de sufix (demostratius, gentilicis, incoatius, pretèrit
 > perfet, locucions, elisió) que YA NO estan implementades a
-> `traductor/rules/` -- eixe paquet es va reduir a pur lookup de
-> diccionari de Mauricio (`lexic.py`, `conjugacions_dict.py`,
+> `traductor/rules/` -- eixe paquet es va reduir a pur lookup del
+> diccionari del proveïdor de dades (`lexic.py`, `conjugacions_dict.py`,
 > `possessius.py`, `numerals.py`), sense regles de sufix ni reconstrucció
 > algorítmica. Este document seguix sent vàlid com a EVIDÈNCIA LINGÜÍSTICA
 > (les regles ací descrites són correctes), però moltes ja no tenen cap
@@ -103,7 +103,7 @@ ve de *tindre*) — veure secció 5.
 
 Implementat (29/09/2026): `traure→treure` via
 `traductor/rules/conjugacions_dict.py` (ve del diccionari de conjugacions
-de Mauricio, que ja el confirmava); la resta (`tindre`, `vindre`, `vore`,
+del proveïdor de dades, que ja el confirmava); la resta (`tindre`, `vindre`, `vore`,
 `eixir`, `valdre`) a `traductor/data/lexico_fiable.json`, com a parells
 solts (mateix criteri que `vosté/vostés`, vore A.2).
 
@@ -156,7 +156,7 @@ anterior i no toca "siga" quan ve just darrere de "o".
 "recuperar", verb REGULAR de 1a conjugació) hauria de donar "recuperi" en
 oriental, patró que sembla el mateix "-e final → -i final" que la taula
 de dalt però aplicat a qualsevol verb regular, no només als 6 verbs
-irregulars llistats. El diccionari de conjugacions de Mauricio (secció
+irregulars llistats. El diccionari de conjugacions del proveïdor de dades (secció
 A.4) NO inclou "recuperar" perquè només cobrix verbs amb alguna
 irregularitat — no confirma ni descarta la generalització. NO
 implementat: cal contrastar-ho contra Apertium abans de generalitzar per
@@ -207,7 +207,7 @@ cobertura: l'accent tancat (é) de l'occidental correspon a l'accent obert
 | sigut | estat |
 
 Implementat (29/09/2026) via `traductor/rules/conjugacions_dict.py` — ve
-del diccionari de conjugacions de Mauricio, que ja el confirmava dins de
+del diccionari de conjugacions del proveïdor de dades, que ja el confirmava dins de
 les formes del verb "ser".
 
 ### 5.6 Verbs incoatius (-ix / -eix)
@@ -261,7 +261,7 @@ ordinals...):
 paraula pròpia, no un compost amb guionet, així que cal una entrada a part
 en lloc de dependre del patró huit→vuit.
 
-**Ampliació (29/09/2026, diccionari de numerals de Mauricio, vore A.4)**:
+**Ampliació (29/09/2026, diccionari de numerals del proveïdor de dades, vore A.4)**:
 les arrels "dinou"/"disset" segueixen el mateix fenomen dialectal (accent
 tancat en occidental, obert en oriental) però **no comparteixen cap
 subcadena** amb la seua forma oriental, així que no poden generalitzar-se
@@ -275,7 +275,7 @@ amb una substitució com huit→vuit:
 | dessetena, dessetens, dessetenes, desseté | dissetena, dissetens, dissetenes, dissetè |
 
 Implementat a `traductor/rules/numerals.py` com a taula tancada de 10
-formes (mecanisme 4 del mòdul). La resta del diccionari de Mauricio per a
+formes (mecanisme 4 del mòdul). La resta del diccionari del proveïdor de dades per a
 numerals (166 entrades, tota la família huit/vuit) ja quedava coberta
 correctament per la substitució de subcadena existent, comprovat una a
 una — no calia cap canvi ahí.
@@ -689,7 +689,7 @@ quatre fonts, totes confirmades, cap inventada:
   originals, dels quals 73 ja coincidien als dos dialectes i uns altres es
   van descartar per estar ja coberts per una regla general — numerals,
   possessius, "vesprada"... — o per reduir-se a una paraula ja inclosa).
-- 150 parelles del diccionari de Mauricio (29/09/2026, vore A.4), més 3
+- 150 parelles del diccionari del proveïdor de dades (29/09/2026, vore A.4), més 3
   parells solts que ja estaven documentats a les seccions 3/4 d'este
   document però encara no implementats (`vos→us`, `tindre→tenir`,
   `vindre→venir`, `vore→veure`, `eixir→sortir`, `valdre→valer`).
@@ -697,9 +697,9 @@ quatre fonts, totes confirmades, cap inventada:
 Vore `../documentacio/metodologia_i_resultats.md` per al detall complet del procés i dels
 bugs trobats en auditar el corpus generat amb este lèxic.
 
-### A.4 Diccionari de Mauricio (equip AVLizador, 29/09/2026)
+### A.4 Diccionari del proveïdor de dades (equip AVLizador, 29/09/2026)
 
-Mauricio (company d'equip) va compartir un diccionari català-valencià en
+El proveïdor de dades, membre de l'equip, va compartir un diccionari català-valencià en
 4 fitxers, basat majoritàriament en l'apertium bilingüe català-castellà,
 guardats a `lexic/` (vore el README d'eixa carpeta per al
 detall exacte de què es va incorporar i què no, fitxer per fitxer). Resum:

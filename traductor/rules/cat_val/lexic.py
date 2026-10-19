@@ -1,6 +1,6 @@
 """
 cat_val/lexic.py -- Lookup invers de lèxic general: el MATEIX
-`traductor/data/lexic_mauricio.json` que fa servir `rules/val_cat/lexic.py`,
+`traductor/data/lexic_general.json` que fa servir `rules/val_cat/lexic.py`,
 ara indexat per `catalan`.
 
 Verificat contra les dades reals abans d'escriure codi (vore
@@ -10,7 +10,7 @@ candidat valencià real (p.ex. "noi" -> "xiquet"/"xic") -- s'exclouen,
 mateix criteri que `conjugacions_dict.py`.
 
 **Lèxic multi-paraula català (implementat 13/10/2026)**: 8 entrades reals
-de `lexic_mauricio.json` tenen el català en 2-3 paraules i el valencià
+de `lexic_general.json` tenen el català en 2-3 paraules i el valencià
 en una ("blat de moro"->"dacsa", "demà passat"->"despús-demà", "trucar
 per telèfon"->"telefonar", "cop de porta"->"portada", "cop de puny"->
 "punyada", "gall dindi"->"polit", "pioc salvatge"->"avitarda",
@@ -52,13 +52,13 @@ d'"A l'eixir...". Corregit cridant `corregeix_contraccio_al_abans`
 invers d'`aplica_amb_prefix_elidit`, que fa la contracció contrària
 (DESFÀ "l'" quan la paraula deixa de començar en vocal).
 
-**"tard" excluit (13/10/2026, RC067)**: `lexic_mauricio.json` confon
+**"tard" excluit (13/10/2026, RC067)**: `lexic_general.json` confon
 l'adverbi "tard" (late) amb el nom "tarda" (afternoon) per l'ambigüitat
 del castellà d'origen "tarde" -- vore comentari de `_BUG_DADES_CONEGUTS_CAT`
 més avall per al detall complet.
 
-**Homonimia_lexica (19/10/2026, nou)**: la guia oficial de Mauricio
-(`diccionarios_v1/Funcionamiento listas de palabras.pdf`) confirma que
+**Homonimia_lexica (19/10/2026, nou)**: la guia oficial del proveïdor
+(`diccionarios/Funcionamiento listas de palabras.pdf`) confirma que
 les entrades `problema: "homonimia_lexica"` amb `lemas` de categories
 gramaticals DIFERENTS es resolen amb PoS (spaCy); amb categories
 iguals/solapades fa falta un LLM. S'amplia `categoria_gramatical_lexic.json`
@@ -95,7 +95,7 @@ from .. import (
 )
 
 _DATA = Path(__file__).resolve().parent.parent.parent / "data"
-MAURICIO_PATH = _DATA / "lexic_mauricio.json"
+LEXIC_GENERAL_PATH = _DATA / "lexic_general.json"
 FLEXIO_GENERE_PATH = _DATA / "flexio_genere_avl.json"
 CANVI_GENERE_PATH = _DATA / "canvi_genere_lexic_avl.json"
 
@@ -103,7 +103,7 @@ CANVI_GENERE_PATH = _DATA / "canvi_genere_lexic_avl.json"
 # excepció dialectal, és un error de transcripció del fitxer font) --
 # s'exclou pel costat català ("desprès"), equivalent invers.
 #
-# "ensenyament" (afegit 13/10/2026, trobat mesurant): `lexic_mauricio.json`
+# "ensenyament" (afegit 13/10/2026, trobat mesurant): `lexic_general.json`
 # té {"valenciano": "ensenyança", "catalan": "ensenyament"}, tècnicament
 # un parell dialectal real. Pero mesurant les 6 aparicions reals de
 # "ensenyament" al benchmark invertit, 5 de 6 volen la paraula SENSE
@@ -114,7 +114,7 @@ CANVI_GENERE_PATH = _DATA / "canvi_genere_lexic_avl.json"
 # toques res" en compte de "tria un valor per defecte").
 #
 # "què" (afegit 13/10/2026, trobat mesurant -- RC053/RC057/RC094):
-# `lexic_acentuacio_mauricio.json` té {"valenciano": "qué", "catalan":
+# `lexic_acentuacio_general.json` té {"valenciano": "qué", "catalan":
 # "què"}, seguint el mateix patró general que francés/francès. Pero
 # comptant totes les aparicions reals de "qué"/"què" al costat valencià
 # del benchmark: 7 de 9 fan servir "què" (accent OBERT, com el català),
@@ -160,7 +160,7 @@ _LEXIC_PERDUT_RESTAURAT_CAT = {
 # Ordinals bàsics 5é/7é/9é/10é en sentit adjectiu (16/10/2026, RC144):
 # `lexico_general.json` SÍ te l'entrada correcta ("cinqué"->"cinquè" amb
 # `canonica: true`, colisionant amb una altra entrada "cinqué"->"cinqué"
-# sentit nom, `canonica: false`) -- `_carrega_mauricio_lexic` (val->cat)
+# sentit nom, `canonica: false`) -- `_carrega_lexic_general` (val->cat)
 # la resol be triant la `canonica`, pero `_invertix_sense_ambiguitat`
 # (agrupa per CATALAN) exclou "cinquè" sencer perque, mirat des d'eixe
 # costat, hi ha mes d'un candidat valencià real. Mateix patró de
@@ -220,7 +220,7 @@ def _invertix_sense_ambiguitat(entrades: list[tuple[str, str]]) -> dict[str, str
     return {cat: next(iter(vals)) for cat, vals in candidats.items() if len(vals) == 1}
 
 
-def _carrega_mauricio_lexic_invers(path: Path) -> dict[str, str]:
+def _carrega_lexic_general_invers(path: Path) -> dict[str, str]:
     demostratius_coneguts = _formes_demostratius_coneguts_cat()
     dades = json.loads(path.read_text(encoding="utf-8"))
     entrades: list[tuple[str, str]] = []
@@ -247,8 +247,8 @@ def _carrega_mauricio_lexic_invers(path: Path) -> dict[str, str]:
     return _invertix_sense_ambiguitat(entrades)
 
 
-def carrega_frases_invers(path: Path = MAURICIO_PATH) -> dict[tuple[str, ...], str]:
-    """Llig `lexic_mauricio.json` quedant-se NOMÉS amb les entrades on el
+def carrega_frases_invers(path: Path = LEXIC_GENERAL_PATH) -> dict[tuple[str, ...], str]:
+    """Llig `lexic_general.json` quedant-se NOMÉS amb les entrades on el
     català és 2-3 paraules i el valencià UNA -- vore docstring del mòdul.
     Torna `{(paraula1, paraula2, ...): forma_valenciana}`, totes en
     minúscules.
@@ -329,7 +329,7 @@ def _carrega_flexio_genere_invers(path: Path = FLEXIO_GENERE_PATH) -> dict[str, 
 
 
 def carrega_lexic_invers(
-    mauricio_path: Path = MAURICIO_PATH,
+    lexic_general_path: Path = LEXIC_GENERAL_PATH,
     flexio_genere_path: Path = FLEXIO_GENERE_PATH,
 ) -> dict[str, str]:
     """Fusiona el lèxic general i la flexió de gènere en sentit invers
@@ -360,7 +360,7 @@ def carrega_lexic_invers(
     lookup: dict[str, str] = {}
     for carregador, path in (
         (_carrega_flexio_genere_invers, flexio_genere_path),
-        (_carrega_mauricio_lexic_invers, mauricio_path),
+        (_carrega_lexic_general_invers, lexic_general_path),
     ):
         for cat, val in carregador(path).items():
             lookup.setdefault(cat, val)
@@ -463,13 +463,13 @@ class LexicInversRule:
 
     def __init__(
         self,
-        mauricio_path: Path = MAURICIO_PATH,
+        lexic_general_path: Path = LEXIC_GENERAL_PATH,
         flexio_genere_path: Path = FLEXIO_GENERE_PATH,
-        frases_path: Path = MAURICIO_PATH,
+        frases_path: Path = LEXIC_GENERAL_PATH,
         canvi_genere_path: Path = CANVI_GENERE_PATH,
         categoria_path: Path = CATEGORIA_GRAMATICAL_PATH,
     ) -> None:
-        self._lookup = carrega_lexic_invers(mauricio_path, flexio_genere_path)
+        self._lookup = carrega_lexic_invers(lexic_general_path, flexio_genere_path)
         self._categories = carrega_categoria_gramatical(categoria_path)
         frases = carrega_frases_invers(frases_path)
         self._canvis_genere = carrega_canvis_genere_invers(frases, canvi_genere_path)

@@ -2,14 +2,14 @@
 demostratius.py -- Pronoms/adjectius demostratius: este/eixe/aqueix
 (occidental) -> aquest (oriental), tots tres col·lapsats a la mateixa
 forma, més el neutre açò->això. Recreat 30/09/2026 (s'havia llevat del
-tot en passar a "pur diccionari de Mauricio" el mateix dia, però cap
-diccionari pot cobrir un paradigma gramatical tancat que Mauricio
+tot en passar a "pur diccionari del proveïdor" el mateix dia, però cap
+diccionari pot cobrir un paradigma gramatical tancat que el proveïdor
 senzillament no llista -- vore `traductor/README.md`, secció "DECISIÓ
 D'ARQUITECTURA").
 
 Font de dades: `traductor/data/demostratius_avl.json`, sourced de
 `regles_dialectals_amb_evidencia.md` §1 + coneixement dialectològic
-general (cap fitxer de Mauricio llista estes formes -- són paraules
+general (cap fitxer del proveïdor llista estes formes -- són paraules
 gramaticals tancades, no lèxic obert).
 
 DECISIÓ (heretada, confirmada): el sistema de 3 graus este/eixe/aquell ->

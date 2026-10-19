@@ -1,6 +1,6 @@
 """
 cat_val/numerals.py -- Lookup invers dels CARDINALS (categoria "num" de
-`traductor/data/lexic_mauricio.json`, el MATEIX fitxer que fa servir
+`traductor/data/lexic_general.json`, el MATEIX fitxer que fa servir
 `rules/val_cat/numerals.py`, ara indexat per `catalan`). Cobrix
 vuitanta->huitanta, divuit->díhuit, dinou->dènou... Els ORDINALS
 (categoria "adj") ja els agafa `LexicInversRule` abans que esta regla
@@ -15,10 +15,10 @@ from pathlib import Path
 
 from .. import Token, preserva_majuscula
 
-MAURICIO_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "lexic_mauricio.json"
+LEXIC_GENERAL_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "lexic_general.json"
 
 
-def carrega_numerals_invers(path: Path = MAURICIO_PATH) -> dict[str, str]:
+def carrega_numerals_invers(path: Path = LEXIC_GENERAL_PATH) -> dict[str, str]:
     """
     >>> lookup = carrega_numerals_invers()
     >>> lookup["vuitanta"]
@@ -55,7 +55,7 @@ class NumeralsInversRule:
     [('vuitanta', 'huitanta'), ('divuit', 'díhuit')]
     """
 
-    def __init__(self, path: Path = MAURICIO_PATH) -> None:
+    def __init__(self, path: Path = LEXIC_GENERAL_PATH) -> None:
         self._lookup = carrega_numerals_invers(path)
 
     def apply(self, tokens: list[Token]) -> list[Token]:

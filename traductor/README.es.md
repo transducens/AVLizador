@@ -37,18 +37,18 @@ Hasta el 29/09/2026 este paquete tenía 10 capas: lookup de diccionario
 (demostrativos, gentilicios, incoativos, pretérito perfecto, locuciones,
 elisión). Esas reglas cubrían más casos, pero mezclaban datos de varias
 fuentes (Apertium, Paula Guerrero, tablas escritas a mano) con la fuente
-de Mauricio.
+del proveedor de datos.
 
 Ese mismo día, por la tarde, se redujo el traductor a **SOLO lookup exacto
 de diccionario, y SOLO con datos de `pipeline/02_regles_dialectals/lexic/`**
 (equipo AVLizador) — ninguna regla de sufijo, patrón morfológico ni
-reconstrucción algorítmica, y ninguna fuente que no sea Mauricio.
+reconstrucción algorítmica, y ninguna fuente que no sea el proveedor de datos.
 
 **Consecuencia, medida, no asumida**: el benchmark de 150 frases pasó de
 **89/150 (59,3%)** con la arquitectura de 10 capas a **27/150 (18,0%)**
 con la arquitectura pura de diccionario. La pérdida venía sobre todo de:
 demostrativos (`este/eixe→aquest`, la conversión más frecuente del
-corpus, sin fuente en Mauricio), posesivos masculinos/tónicos (nunca
+corpus, sin fuente en el proveedor de datos), posesivos masculinos/tónicos (nunca
 tuvieron regla, no cambian), el patrón general de gentilicios `-és→-ès`
 (solo cubría las 695 palabras literales de acentuación, no cualquier
 gentilicio), los incoativos `-ix→-eix` (solo los verbos concretos que ya
@@ -71,8 +71,8 @@ patrones ya estaban cubiertos por el diccionario de acentuación.
 **Recreado el mismo día, aún más tarde**: `demostratius.py`
 (`este/eixe/aqueix→aquest`, `açò→això`) -- la eliminación del 30/09/2026
 había sido un error, no un patrón que "no hacía falta" como los demás: es
-el paradigma gramatical MÁS FRECUENTE del corpus, y ningún diccionario de
-Mauricio lo lista (es una lista cerrada, no léxico abierto). Con esto el
+el paradigma gramatical MÁS FRECUENTE del corpus, y ningún diccionario
+del proveedor de datos lo lista (es una lista cerrada, no léxico abierto). Con esto el
 benchmark subió de golpe a **83/150 (55,3%)** -- el salto más grande de
 todos los cambios de esta sesión, confirmando que los demostrativos eran
 la pieza que más faltaba.
@@ -94,7 +94,7 @@ directa y conocida de la decisión, no un bug.
 Pérdida ya documentada desde el 30/09/2026 (ver docstring de
 `numerals.py`): la concordancia de género `dos/dues` se había quitado al
 pasar a puro lookup de diccionario, porque "dos"/"dues" se escriben igual
-en ambos dialectos (no es una sustitución léxica Mauricio) -- el motor
+en ambos dialectos (no es una sustitución léxica del proveedor de datos) -- el motor
 simplemente no corregía el desacuerdo cuando el valenciano coloquial usa
 "dos" invariable delante de un nombre femenino ("tinc dos germanes" en
 vez de "dues germanes").
@@ -170,7 +170,7 @@ suficiente seguridad -- como para merecer una regla.
 
 ## DECISIÓN DE ARQUITECTURA (05/10/2026): nuevo léxico unificado, y conjugaciones masivas probadas y revertidas
 
-Mauricio compartió 3 ficheros nuevos en `lexic/`. Cada uno se
+El proveedor de datos compartió 3 ficheros nuevos en `lexic/`. Cada uno se
 evaluó por separado antes de integrarlo (mismo método de siempre:
 comparar contra los datos existentes y el benchmark, no confiar a ciegas
 en un volumen grande de datos nuevos).
@@ -181,7 +181,7 @@ nuevas). Introdujo 2 regresiones puntuales al integrarlo, las dos
 corregidas:
 - `eixa→aqueixa`: la entrada nueva es técnicamente válida pero ignora la
   decisión ya tomada de colapsar este/eixe/aqueix hacia "aquest" --
-  `lexic.py` ahora excluye de `lexic_mauricio.json` cualquier forma que
+  `lexic.py` ahora excluye de `lexic_general.json` cualquier forma que
   ya cubra `demostratius.py` con autoridad propia.
 - `"después"` reaparecía (bug de datos ya conocido, ver `lexic.py`) por
   una vía distinta a la original -- la exclusión `_BUG_DADES_CONEGUTS`
@@ -289,8 +289,8 @@ palabras MUY frecuentes de otra categoría gramatical ("persones" →
 "poblar"). Ninguno de estos casos lo detecta
 `_marca_ambigues_dins_del_mateix_fitxer` porque cada uno solo tiene una
 entrada en su fichero fuente — la colisión es con una palabra de OTRA
-categoría que ningún diccionario diferencial lista (los diccionarios de
-Mauricio son diferenciales: solo listan pares que cambian, nunca
+categoría que ningún diccionario diferencial lista (los diccionarios
+del proveedor de datos son diferenciales: solo listan pares que cambian, nunca
 palabras que se quedan igual). Confirmado con spaCy (`ca_core_news_sm`):
 etiqueta correctamente estos 5 casos como NOUN en su frase real, sin
 romper ningún caso ya conocido. **Resultado, medido**: 89/151 (58,9%) →
@@ -459,9 +459,9 @@ palabra del texto nunca se detecta.
 
 - **`lexic.py`** — lookup de léxico general + acentuación + género/número.
   Fusiona `flexio_genere_avl.json` (prioridad máxima, ver abajo),
-  `lexic_mauricio.json` (copia de `lexico_general_limpio.json`, filtrado:
+  `lexic_general.json` (copia de `lexico_general_limpio.json`, filtrado:
   excluye `_PENDENT`, topónimos, multi-palabra, resuelve `canonica`) y
-  `lexic_acentuacio_mauricio.json` (copia de `acentuacion_limpio.json`,
+  `lexic_acentuacio_general.json` (copia de `acentuacion_limpio.json`,
   695 parejas). Excluye a mano "después" (bug de datos confirmado en el
   fichero fuente: lo lista como si siguiera el patrón de acentuación,
   pero no cambia nunca en ninguno de los dos dialectos).
@@ -475,7 +475,7 @@ palabra del texto nunca se detecta.
   -- irregularidad participial que no se puede generalizar con seguridad,
   ya que "petit" acaba igual pero es regular: "petita", no "petida"). De
   paso resuelve la regresión que había con "xiquet" (antes ganaba "noi"
-  por ambigüedad en Mauricio sin fuente externa que desempatara).
+  por ambigüedad en el proveedor de datos sin fuente externa que desempatara).
 - **`conjugacions_dict.py`** — lookup de formas verbales. Fusiona
   `conjugaciones_limpio.json` (969 formas, 111 verbos) y
   `verbos_no_ambiguos.json` (261 formas más, 45 verbos, añadido
@@ -487,21 +487,21 @@ palabra del texto nunca se detecta.
   no se confunda con el verbo "ser" en subjuntivo.
 - **`possessius.py`** — lookup de posesivos débiles femeninos
   (`meua/teua/seua` + plurales → `meva/teva/seva`). Fuente:
-  `possessius_mauricio.json` (copia de `posesivos_cat_val.json`), un
+  `possessius_general.json` (copia de `posesivos_cat_val.json`), un
   producto cartesiano sin filtrar del que solo se quedan los 6 pares
   donde el número (singular/plural) casa a ambos lados.
 - **`demostratius.py`** — lookup de demostrativos: `este/eixe/aqueix`
   (los tres colapsan hacia `aquest`, misma familia + plurales) y el
   neutro `açò→això`. **Recreado 30/09/2026** (se había quitado del todo
-  al pasar a "puro diccionario de Mauricio" y fue un error: ningún
-  diccionario puede cubrir un paradigma gramatical cerrado que Mauricio
-  no lista). Fuente: `demostratius_avl.json` (paradigma sourced de
+  al pasar a "puro diccionario del proveedor de datos" y fue un error: ningún
+  diccionario puede cubrir un paradigma gramatical cerrado que el proveedor
+  de datos no lista). Fuente: `demostratius_avl.json` (paradigma sourced de
   `regles_dialectals_amb_evidencia.md` §1). `aquell`/`allò` son
   idénticos en ambos dialectos y no tienen entrada. La tabla INVERSA
   (`aqueix→eixe`, para un hipotético traductor oriental→occidental) se
   queda documentada en el mismo fichero sin implementarse -- este motor
   solo traduce en un sentido.
-- **`numerals.py`** — lookup exacto contra `numerals_mauricio.json`
+- **`numerals.py`** — lookup exacto contra `numerals_general.json`
   (copia de `numerales_limpio.json`, 180 filas): toda la familia
   huit/vuit, "dinou"/"disset" + derivados, y "díhuit"→"divuit" sin ningún
   caso especial (es lookup exacto, no sustitución de subcadena). Excluye
@@ -525,7 +525,7 @@ palabra del texto nunca se detecta.
 - **`accentuacio.py`** — 2 reglas de SUFIJO productivas (añadidas
   30/09/2026, tarde, ver "DECISIÓN DE ARQUITECTURA"): `-és→-ès`
   (`francés→francès`, mismo patrón que 695 palabras literales de
-  `lexic_acentuacio_mauricio.json` pero ahora generalizado a CUALQUIER
+  `lexic_acentuacio_general.json` pero ahora generalizado a CUALQUIER
   palabra) y `-éixer→-èixer` (`conéixer→conèixer`). Excepciones del
   primer patrón (`és`/`més`, y 7 más encontradas empíricamente: `només`,
   `després`, `procés`, `congrés`, `accés`, `progrés`, `través`): set de

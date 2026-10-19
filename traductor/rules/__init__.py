@@ -631,7 +631,7 @@ def marca_noms_propis(tokens: list[Token]) -> None:
 
 
 # Camp OBERT (13/10/2026, vore documentacio/hoja_de_ruta_traductor_invers.md):
-# categoria gramatical curada a mà de les entrades de `lexic_mauricio.json`
+# categoria gramatical curada a mà de les entrades de `lexic_general.json`
 # que SÍ necessiten comprovar `tok.pos` abans d'aplicar-se (homògrafs entre
 # categories, p.ex. català "nou" = new/ADJ, nine/NUM, walnut/NOUN). Pensat
 # per a reemplaçar les llistes d'excepció soltes per paraula

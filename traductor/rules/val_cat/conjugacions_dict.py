@@ -1,7 +1,7 @@
 """
 conjugacions_dict.py -- Capa 2 del pipeline (justa despres de lexic.py):
 lookup exacte de formes verbals a `traductor/data/conjugacions_dialectals.json`,
-que fusiona dos fonts de Mauricio (equip AVLizador): `conjugaciones_limpio.json`
+que fusiona dos fonts de l'equip AVLizador: `conjugaciones_limpio.json`
 (969 formes, 111 verbs, 29/09/2026) i `verbos_no_ambiguos.json` (261 formes
 mes, 45 verbs FORA dels 111 originals, 30/09/2026, totes explicitament
 marcades com a no ambigues). `verbos_no_ambiguos.json` va PRIMER en la
@@ -26,7 +26,7 @@ hi ha verbs on la mateixa forma escrita servix per al present d'indicatiu
 I al de subjuntiu ("abalance" = "jo abalanco" en indicatiu / "que jo
 abalanci" en subjuntiu), mentre que en catala son formes diferents
 ("abalanco" / "abalanci"). Sense pos-tagging no hi ha manera fiable de
-saber quin dels dos toca -- Mauricio mateix ho documenta com "hara falta
+saber quin dels dos toca -- el proveïdor mateix ho documenta com "hara falta
 un mecanisme de desambiguacio". Esta capa, seguint el mateix criteri
 conservador que la resta del projecte (preferir un fals negatiu -- deixar
 la paraula sense traduir -- abans que un fals positiu), EXCLOU del lookup
@@ -62,7 +62,7 @@ benchmark. El mateix problema és MOLT mes ampli -- "persones", "pares",
 "projectes", "pobles", "plomes"... cada un amb una unica entrada al seu
 fitxer font (per aixo `_marca_ambigues_dins_del_mateix_fitxer` mai els
 marca `problematica`) que coincidix amb un substantiu ultra-comú que cap
-lexicó llista (els lexicons de Mauricio son diferencials: no canvien entre
+lexicó llista (els lexicons del proveïdor son diferencials: no canvien entre
 dialectes, per això no hi ha cap fitxer que els continga). Curar-los un a
 un no escala (42.625 entrades sense esta proteccio, vore
 `sync_data.py`). En compte d'una llista, `apply()` consulta ara
@@ -308,7 +308,7 @@ class ConjugacionsDictRule:
 
     Filtre POS (07/10/2026, nomes actiu si spaCy esta instal·lat -- vore
     `pos_tagger.py`): "persones" té una entrada neta a les dades de
-    Mauricio ("personis", del verb rar "personar"), però ací funciona com
+    del proveïdor ("personis", del verb rar "personar"), però ací funciona com
     a substantiu -- `pos_tagger.etiqueta()` ho detecta ("NOUN") i esta capa
     no l'toca:
 

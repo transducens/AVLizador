@@ -3,7 +3,7 @@ concordanca_dos_dues.py -- Corregix "dos" -> "dues" quan el token
 immediatament anterior és un article o demostratiu que ja marca per si
 mateix femení plural ("les", "estes", "eixes", "aqueixes", "aquelles",
 "unes"). "dos"/"dues" s'escriuen igual als dos dialectes (no és una
-substitució lèxica Mauricio), però el valencià col·loquial sovint fa
+substitució lèxica del proveïdor), però el valencià col·loquial sovint fa
 servir "dos" invariable també davant de femení -- este mòdul corregix
 eixe desacord de gènere, NO traduïx cap paraula nova.
 

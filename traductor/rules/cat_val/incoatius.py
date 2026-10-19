@@ -13,7 +13,7 @@ distingix les dos classes ortogràficament (ix/eix), pero el català les
 fon totes dos en "eix" -- la distinció és LÈXICA (quin verb és en
 concret), no detectable per cap patró ortogràfic. Confirmat: cap d'estos
 verbs apareix a `conjugacions_dialectals.json` (és un patró PRODUCTIU,
-Mauricio no el llista, mateix motiu que l'original és una regla de sufix
+el proveïdor no el llista, mateix motiu que l'original és una regla de sufix
 i no un diccionari).
 
 **Arrels incloses (13/10/2026), NOMÉS les trobades amb evidència real al

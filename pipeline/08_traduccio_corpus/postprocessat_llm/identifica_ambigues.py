@@ -5,7 +5,7 @@ postprocessat LLM (vía C) decidisca mirant el context real de la frase:
 
 1. **1a persona singular, present** (06/10/2026): "plantege" -> "plantejo"
    indicatiu / "plantegi" subjuntiu. Calculat a `calcula_ambiguitats_1a_persona()`
-   a partir de les 4 fonts crues de Mauricio (dos candidats catalans que
+   a partir de les 4 fonts crues del proveïdor (dos candidats catalans que
    comparteixen arrel i acaben en "-o"/"-i").
 2. **3a plural, present i imperfet** (08/10/2026): "creuen" -> "creuen"
    indicatiu (no canvia, per aixo no hi ha fila a les dades) / "creuin"
@@ -69,7 +69,7 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 _AVLIZADOR_ROOT_ENV = os.environ.get("AVLIZADOR_ROOT")
 ARREL = Path(_AVLIZADOR_ROOT_ENV) if _AVLIZADOR_ROOT_ENV else Path(__file__).resolve().parent.parent.parent.parent
 _DIR_02 = ARREL / "02_regles_dialectals" if _AVLIZADOR_ROOT_ENV else ARREL / "pipeline" / "02_regles_dialectals"
-MAURICIO = _DIR_02 / "lexic"  # font_mauricio/ aplanada dins de lexic/ el 14/10/2026
+LEXIC_FONT = _DIR_02 / "lexic"  # font_proveidor/ aplanada dins de lexic/ el 14/10/2026
 CORPUS_PATH = ARREL / "dades" / "boe_net" / "corpus_entrenamiento_net.jsonl"
 SALIDA_AMBIGUITATS = Path(__file__).resolve().parent / "ambiguitats_indicatiu_subjuntiu.json"
 SALIDA_MOSTRA = Path(__file__).resolve().parent / "mostra_casos_ambigues.json"
@@ -84,13 +84,13 @@ FONTS = (
 
 def calcula_ambiguitats_1a_persona() -> dict[str, dict[str, str]]:
     """Torna {forma_valenciana: {"indicatiu": ..., "subjuntiu": ...}} per a
-    totes les formes on, entre les 4 fonts de Mauricio, hi ha EXACTAMENT 2
+    totes les formes on, entre les 4 fonts del proveïdor, hi ha EXACTAMENT 2
     traduccions catalanes candidates que comparteixen arrel i difereixen
     només en la vocal final -o (indicatiu) / -i (subjuntiu) -- 1a persona
     singular."""
     per_valencia: dict[str, set[str]] = defaultdict(set)
     for nom_font in FONTS:
-        dades = json.loads((MAURICIO / nom_font).read_text(encoding="utf-8"))
+        dades = json.loads((LEXIC_FONT / nom_font).read_text(encoding="utf-8"))
         for entrada in dades:
             v = entrada.get("valenciano", "").strip().lower()
             c = entrada.get("catalan", "").strip()
@@ -280,7 +280,7 @@ def main() -> None:
     parser.add_argument("--salida", type=Path, default=SALIDA_MOSTRA)
     args = parser.parse_args()
 
-    print("Calculant ambigüitats indicatiu/subjuntiu (1a persona) des de font_mauricio...")
+    print("Calculant ambigüitats indicatiu/subjuntiu (1a persona) des de font_proveidor...")
     ambiguitats = calcula_ambiguitats()
     print(f"  {len(ambiguitats)} formes valencianes ambigües trobades")
     SALIDA_AMBIGUITATS.write_text(json.dumps(ambiguitats, ensure_ascii=False, indent=2), encoding="utf-8")

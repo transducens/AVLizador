@@ -2,7 +2,7 @@
 accentuacio.py -- Dos patrons de sufix PRODUCTIUS (no llista tancada, a
 diferència de les 4 capes de diccionari que van abans en el pipeline --
 vore engine.py): qualsevol paraula valenciana que acabe així es convertix,
-encara que no estiga enumerada a cap fitxer de Mauricio. Afegit 30/09/2026
+encara que no estiga enumerada a cap fitxer del proveïdor. Afegit 30/09/2026
 a petició explícita, després de constatar que el pur lookup de diccionari
 (decisió del mateix dia, vore traductor/README.md) no pot cobrir mai un
 patró obert i productiu -- un diccionari només conté les paraules que algú
@@ -10,7 +10,7 @@ ja hi ha ficat.
 
     1. -és (agut, occidental) -> -ès (obert, oriental): francés->francès,
        interés->interès, comités->comitès... Mateix patró que ja cobria
-       `lexic_acentuacio_mauricio.json` per a les 695 paraules literals,
+       `lexic_acentuacio_general.json` per a les 695 paraules literals,
        però ara generalitzat a QUALSEVOL paraula -- inclosos gentilicis i
        noms no enumerats a eixe fitxer.
     2. -éixer (infinitiu, occidental) -> -èixer (oriental): conéixer->
@@ -24,7 +24,7 @@ benchmarks reals abans de retirar `gentilicis.py` el 30/09/2026, vore
 "és" (verb "ser") i "més" (quantitat) són l'excepció explícita de la font;
 "només", "després", "procés", "congrés", "accés", "progrés", "través" es
 van trobar empíricament -- són diccionaris DIFERENCIALS (com els de
-Mauricio) que mai poden confirmar per si sols que una paraula NO canvia,
+el proveïdor) que mai poden confirmar per si sols que una paraula NO canvia,
 així que esta llista es queda com a set de Python, no com a fitxer font.
 
 Cap excepció coneguda per al patró 2 -- "-éixer" és una terminació

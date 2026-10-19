@@ -36,19 +36,19 @@ Fins al 29/09/2026 este paquet tenia 10 capes: lookup de diccionari
 (lèxic, conjugacions) + regles morfològiques i de sufix generalitzades
 (demostratius, gentilicis, incoatius, pretèrit perfet, locucions, elisió).
 Eixes regles cobrien més casos, però barrejaven dades de diverses fonts
-(Apertium, Paula Guerrero, taules escrites a mà) amb la font de Mauricio.
+(Apertium, Paula Guerrero, taules escrites a mà) amb la font del proveïdor de dades.
 
 El mateix dia 30/09/2026, a la vesprada, es va reduir el traductor a
 **NOMÉS lookup exacte de diccionari, i NOMÉS amb dades de
 `pipeline/02_regles_dialectals/lexic/`** (equip AVLizador) — cap
 regla de sufix, patró morfològic ni reconstrucció algorítmica, i cap font
-que no siga Mauricio.
+que no siga el proveïdor de dades.
 
 **Conseqüència, mesurada, no assumida**: el benchmark de 150 frases va
 passar de **89/150 (59,3%)** amb l'arquitectura de 10 capes a **27/150
 (18,0%)** amb l'arquitectura pura de diccionari. La pèrdua venia sobretot
 de: demostratius (`este/eixe→aquest`, la conversió més freqüent del
-corpus, sense font a Mauricio), possessius masculins/tònics (mai van
+corpus, sense font al proveïdor de dades), possessius masculins/tònics (mai van
 tindre regla, no canvien), el patró general de gentilicis `-és→-ès`
 (només cobria les 695 paraules literals d'accentuació, no qualsevol
 gentilici),
@@ -72,7 +72,7 @@ diccionari d'accentuació.
 (`este/eixe/aqueix→aquest`, `açò→això`) -- l'eliminació del 30/09/2026
 havia sigut un error, no un patró que "no calia" com els altres: és el
 paradigma gramatical MÉS FREQÜENT del corpus, i cap diccionari de
-Mauricio el llista (és una llista tancada, no lèxic obert). Amb això el
+el proveïdor de dades el llista (és una llista tancada, no lèxic obert). Amb això el
 benchmark va pujar de cop a **83/150 (55,3%)** -- el salt més gran de tots
 els canvis d'esta sessió, confirmant que els demostratius eren la peça
 que més faltava.
@@ -94,7 +94,7 @@ conseqüència directa i coneguda de la decisió, no un bug.
 Pèrdua ja documentada des del 30/09/2026 (vore docstring de
 `numerals.py`): la concordança de gènere `dos/dues` s'havia llevat en
 passar a pur lookup de diccionari, perquè "dos"/"dues" s'escriuen igual
-als dos dialectes (no és una substitució lèxica Mauricio) -- el motor
+als dos dialectes (no és una substitució lèxica del proveïdor de dades) -- el motor
 simplement no corregia el desacord quan el valencià col·loquial usa "dos"
 invariable davant d'un nom femení ("tinc dos germanes" en compte de "dues
 germanes").
@@ -166,7 +166,7 @@ a merèixer una regla.
 
 ## DECISIÓ D'ARQUITECTURA (05/10/2026): nou lèxic unificat, i conjugacions massives provades i revertides
 
-Mauricio va compartir 3 fitxers nous a `lexic/`. Cada un es va
+El proveïdor de dades va compartir 3 fitxers nous a `lexic/`. Cada un es va
 avaluar per separat abans d'integrar-lo (mateix mètode de sempre:
 comparar contra les dades existents i el benchmark, no confiar a cegues
 en volum gran de dades noves).
@@ -177,7 +177,7 @@ noves). Va introduir 2 regressions puntuals en integrar-lo, totes dos
 corregides:
 - `eixa→aqueixa`: l'entrada nova és tècnicament vàlida pero ignora la
   decisió ja presa de col·lapsar este/eixe/aqueix cap a "aquest" --
-  `lexic.py` ara exclou de `lexic_mauricio.json` qualsevol forma que ja
+  `lexic.py` ara exclou de `lexic_general.json` qualsevol forma que ja
   cobrisca `demostratius.py` amb autoritat pròpia.
 - `"després"` reapareixia (bug de dades ja conegut, vore `lexic.py`) per
   una via distinta de l'original -- l'exclusió `_BUG_DADES_CONEGUTS` ara
@@ -279,11 +279,11 @@ amb confiança total a "personis", "paris", "projectis", "poblis", "plomis"
 plomar) que col·lidixen per casualitat amb un substantiu MOLT mes
 freqüent. `_marca_ambigues_dins_del_mateix_fitxer` (vore `sync_data.py`)
 nomes detecta col·lisions INTERNES (la mateixa paraula amb >=2 traduccions
-DINS del mateix fitxer font de Mauricio -- aixina es com es marca
+DINS del mateix fitxer font del proveïdor de dades -- aixina es com es marca
 `problematica` "base"/"entre"/"centre"). Estos 5 casos nomes tenen UNA
 entrada cadascun al seu fitxer font, aixina que mai es marquen
 `problematica` -- la col·lisió és EXTERNA, amb una paraula que cap fitxer
-de Mauricio llista (els lexicons son diferencials: "persones" no canvia
+del proveïdor de dades llista (els lexicons son diferencials: "persones" no canvia
 entre dialectes, per això no hi ha cap fitxer que la continga). Curar-ho
 a mà, paraula a paraula (com `EXCLUSIONS_HOMOGRAF`), no escala: 42.625 de
 les 51.901 entrades de `conjugacions_dialectals.json` no tenen cap
@@ -608,9 +608,9 @@ context concret és, de veres, una atra categoria gramatical.
 
 - **`lexic.py`** — lookup de lèxic general + accentuació + gènere/nombre.
   Fusiona `flexio_genere_avl.json` (prioritat màxima, vore baix),
-  `lexic_mauricio.json` (còpia de `lexico_general_limpio.json`, filtrat:
+  `lexic_general.json` (còpia de `lexico_general_limpio.json`, filtrat:
   exclou `_PENDENT`, topònims, multi-paraula, resol `canonica`) i
-  `lexic_acentuacio_mauricio.json` (còpia de `acentuacion_limpio.json`,
+  `lexic_acentuacio_general.json` (còpia de `acentuacion_limpio.json`,
   695 parelles). Exclou a mà "després" (bug de dades confirmat al fitxer
   font: el llista com si seguira el patró d'accentuació, però no canvia
   mai en cap dels dos dialectes).
@@ -624,7 +624,7 @@ context concret és, de veres, una atra categoria gramatical.
   irregularitat participial que no es pot generalizar amb seguretat, ja
   que "petit" acaba igual però és regular: "petita", no "petida"). De pas
   resol la regressió que hi havia amb "xiquet" (abans guanyava "noi" per
-  ambigüitat a Mauricio sense font externa que ho desempatara).
+  ambigüitat al proveïdor de dades sense font externa que ho desempatara).
 - **`conjugacions_dict.py`** — lookup de formes verbals. Fusiona
   `conjugaciones_limpio.json` (969 formes, 111 verbs) i
   `verbos_no_ambiguos.json` (261 formes més, 45 verbs, afegit 30/09/2026,
@@ -636,21 +636,21 @@ context concret és, de veres, una atra categoria gramatical.
   en subjuntiu.
 - **`possessius.py`** — lookup de possessius febles femenins
   (`meua/teua/seua` + plurals → `meva/teva/seva`). Font:
-  `possessius_mauricio.json` (còpia de `posesivos_cat_val.json`), un
+  `possessius_general.json` (còpia de `posesivos_cat_val.json`), un
   producte cartesià sense filtrar del qual només es queden els 6 parells
   on el número (singular/plural) casa als dos costats.
 - **`demostratius.py`** — lookup de demostratius: `este/eixe/aqueix`
   (tots tres col·lapsen cap a `aquest`, mateixa família + plurals) i el
   neutre `açò→això`. **Recreat 30/09/2026** (s'havia llevat del tot en
-  passar a "pur diccionari de Mauricio" i era un error: cap diccionari
-  pot cobrir un paradigma gramatical tancat que Mauricio no llista).
+  passar a "pur diccionari del proveïdor de dades" i era un error: cap diccionari
+  pot cobrir un paradigma gramatical tancat que el proveïdor de dades no llista).
   Font: `demostratius_avl.json` (paradigma sourced de
   `regles_dialectals_amb_evidencia.md` §1). `aquell`/`allò` són idèntics
   als dos dialectes i no tenen entrada. La taula INVERSA (`aqueix→eixe`,
   per a un hipotètic traductor oriental→occidental) es queda documentada
   al mateix fitxer sense implementar-se -- este motor només tradueix en
   un sentit.
-- **`numerals.py`** — lookup exacte contra `numerals_mauricio.json` (còpia
+- **`numerals.py`** — lookup exacte contra `numerals_general.json` (còpia
   de `numerales_limpio.json`, 180 files): tota la família huit/vuit,
   "dinou"/"disset" + derivats, i "díhuit"→"divuit" sense cap cas especial
   (és lookup exacte, no substitució de subcadena). Exclou 4 files de
@@ -674,7 +674,7 @@ context concret és, de veres, una atra categoria gramatical.
 - **`accentuacio.py`** — 2 regles de SUFIX productives (afegides
   30/09/2026, vesprada, vore "DECISIÓ D'ARQUITECTURA"): `-és→-ès`
   (`francés→francès`, mateix patró que 695 paraules literals de
-  `lexic_acentuacio_mauricio.json` però ara generalitzat a QUALSEVOL
+  `lexic_acentuacio_general.json` però ara generalitzat a QUALSEVOL
   paraula) i `-éixer→-èixer` (`conéixer→conèixer`). Excepcions del primer
   patró (`és`/`més`, i 7 més trobades empíricament: `només`, `després`,
   `procés`, `congrés`, `accés`, `progrés`, `través`): set de Python, no

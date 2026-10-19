@@ -152,7 +152,7 @@ patró correcte, pero revisant els marcadors paraula a paraula van eixir
 mateix usuari -- és una errata real del text català d'origen, sense
 tilde, no un bug de l'IPD):
 
-1. **"petit"/"menut" mal emparellat** a `lexic_mauricio.json` -- despres
+1. **"petit"/"menut" mal emparellat** a `lexic_general.json` -- despres
    confirmat també com a bug real del traductor (no nomes de l'IPD) amb
    el corpus gplsi de baix.
 2. **"què" es cola com a marcador oriental en text valencià** perquè

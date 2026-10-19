@@ -112,7 +112,7 @@ def formes_cobertes_per_demostratius_invers(path: Path = AVL_PATH) -> set[str]:
     invertit -- RC021/RC047/RC066/RC079/RC086/RC087/RC088/RC090/RC093/
     RC114/RC121/RC125/RC130/RC138/RC139, ~15 frases): esta funció nomes
     tornava les formes de `invers_pendent_no_implementat` (el grup
-    "aqueix", segur). Pero `lexic_mauricio.json` te 4 entrades directes
+    "aqueix", segur). Pero `lexic_general.json` te 4 entrades directes
     {"valenciano": "este", "catalan": "aquest"} (i esta/estos/estes) que
     `rules/val_cat/lexic.py` ja excloïa pel costat valencia (son el
     costat actiu del paradigma, gestionat per `demostratius.py` amb

@@ -1,6 +1,6 @@
 """
 regenera_palabras_traducidas.py -- Reconstruye `palabras_traducidas.json`
-a partir de la fuente OFICIAL (`diccionarios_v1/lexico_general.json`,
+a partir de la fuente OFICIAL (`diccionarios/lexico_general.json`,
 19/10/2026), en vez del glosario viejo basado en Apertium
 catala-castella (29/09/2026 i anteriors).
 
@@ -31,7 +31,7 @@ import sys
 from pathlib import Path
 
 LEXIC = Path(__file__).resolve().parent
-LEXICO_GENERAL = LEXIC / "diccionarios_v1" / "lexico_general.json"
+LEXICO_GENERAL = LEXIC / "diccionarios" / "lexico_general.json"
 DESTINO = LEXIC / "palabras_traducidas.json"
 
 

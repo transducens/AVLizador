@@ -72,7 +72,7 @@ un LLM pot decidir el mode correcte mirant el context de la frase.
 
 ### Dades: 3.004 formes ambigües, filtrat de falsos positius nominals
 
-`identifica_ambigues.py` calcula, des de les 4 fonts de Mauricio, totes
+`identifica_ambigues.py` calcula, des de les 4 fonts del proveïdor de dades, totes
 les formes valencianes amb EXACTAMENT 2 traduccions catalanes candidates
 que comparteixen arrel i difereixen només en la vocal final (-o
 indicatiu / -i subjuntiu): **3.004 formes**. Busca-les tal qual en un

@@ -14,7 +14,7 @@
 #
 # IMPORTANT -- este script NOMÉS fa el pas 2 (comparar A/B/C): el pas 1
 # (`identifica_ambigues.py`, que necessita el corpus COMPLET del BOE,
-# ~126 MB, i els 4 fitxers font de Mauricio) s'executa en LOCAL/repo
+# ~126 MB, i els 4 fitxers font del proveïdor de dades) s'executa en LOCAL/repo
 # complet, NO en Abaco -- Abaco (vore `~/scrapeo/` al servidor) no té la
 # resta de l'estructura del projecte (`traductor/`, `02_regles_dialectals/`,
 # `dades/boe_net/`), nomes els scripts de generació de corpus sintètic i

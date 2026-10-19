@@ -9,7 +9,7 @@ Verificat contra les dades reals (08/10/2026, vore
 línia de codi: de 50.526 formes catalanes úniques a tot el fitxer, NOMÉS
 346 (0,68%) tenen més d'un candidat valencià real -- es calcula
 directament ací (agrupant per `catalan`), no es confia nomes en el camp
-`ambigu_cat_a_val` de Mauricio (verificar les dades, no el nom del camp).
+`ambigu_cat_a_val` del proveïdor (verificar les dades, no el nom del camp).
 Eixes 346 (sinònims que convergixen en català, p.ex. "sofreixin" podria
 vindre de "sofrisquen" o de "patisquen") s'EXCLOUEN del lookup -- mateix
 criteri de sempre, preferix fals negatiu.

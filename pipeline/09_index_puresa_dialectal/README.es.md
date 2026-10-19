@@ -154,7 +154,7 @@ patrón correcto, pero revisando los marcadores palabra a palabra salieron
 propio usuario — es una errata real del texto catalán de origen, sin
 tilde, no un bug del IPD):
 
-1. **"petit"/"menut" mal emparejado** en `lexic_mauricio.json` — después
+1. **"petit"/"menut" mal emparejado** en `lexic_general.json` — después
    confirmado también como bug real del traductor (no solo del IPD) con
    el corpus gplsi de abajo.
 2. **"què" se cuela como marcador oriental en texto valenciano** porque

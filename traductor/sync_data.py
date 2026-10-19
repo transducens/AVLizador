@@ -1,10 +1,10 @@
 """
 sync_data.py -- Sincronitza les còpies de `traductor/data/` amb els
 fitxers font reals de `pipeline/02_regles_dialectals/lexic/` (equip
-AVLizador; abans dins d'una subcarpeta `font_mauricio/`, aplanada el
+AVLizador; abans dins d'una subcarpeta `font_proveidor/`, aplanada el
 14/10/2026 en no quedar-hi cap altra font al costat). Des del 30/09/2026
 el traductor és pur lookup de
-diccionari de Mauricio -- ja no hi ha fonts Apertium/Paula Guerrero.
+diccionari del proveïdor oficial -- ja no hi ha fonts Apertium/Paula Guerrero.
 
 Per què cal esta sincronització manual: `traductor/rules/*.py` mai llig
 `pipeline/02_regles_dialectals/` en temps d'execució -- llig NOMÉS còpies pròpies
@@ -36,8 +36,9 @@ subjuntiu que col·lapsen en la mateixa forma valenciana) de "dos fonts que
 prioritzen traduccions distintes per a la mateixa forma" (com "eixir",
 vore comentari a FONTS) -- una volta fusionat tot en una sola llista
 "entradas", eixa distinció es perd. Equival a l'anotació `problematica`
-que Mauricio ja posa a mà a les seues fonts, només que automatitzada i
-nomes aplicada quan el propi fitxer font ho confirma interiorment.
+que el proveïdor oficial ja posa a mà a les seues fonts, només que
+automatitzada i nomes aplicada quan el propi fitxer font ho confirma
+interiorment.
 """
 
 from __future__ import annotations
@@ -51,7 +52,6 @@ from typing import Callable
 
 ARREL = Path(__file__).resolve().parent.parent
 LEXICO = ARREL / "pipeline" / "02_regles_dialectals" / "lexic"
-MAURICIO = LEXICO  # font_mauricio/ aplanada dins de lexic/ el 14/10/2026
 DATA = Path(__file__).resolve().parent / "data"
 
 def _marca_ambigues_dins_del_mateix_fitxer(dades: list[dict]) -> list[dict]:
@@ -90,7 +90,8 @@ def _marca_ambigues_dins_del_mateix_fitxer(dades: list[dict]) -> list[dict]:
 _CONJUGACIONS_DESCRIPCIO = (
     "Formes verbals valencia/catala que difereixen entre dialectes. Des del "
     "19/10/2026 les fonts OFICIALS (prioritat maxima) son les de "
-    "'diccionarios_v1/' de Mauricio: 'conjugaciones_general.json' (43.242 "
+    "'diccionarios/' del proveïdor oficial (renombrada des de 'diccionarios_v1/' el "
+    "19/10/2026): 'conjugaciones_general.json' (43.242 "
     "formes, camp 'morfologia' amb el temps/mode -- descodificat amb "
     "evidencia real, vore documentacio/hoja_de_ruta_migracio_diccionarios_v1.md: "
     "pri=present indicatiu, prs=present subjuntiu, pii=imperfet indicatiu, "
@@ -110,15 +111,18 @@ _CONJUGACIONS_DESCRIPCIO = (
     "coberts per les fonts oficials -- l'unica cosa que aportaven de mes "
     "eren frases multi-paraula ('llençar la brossa', 'fer cara de'...) que "
     "el motor mai ha pogut fer servir (no hi ha mecanisme de coincidencia "
-    "multi-paraula per a verbs). Backup a "
-    "`lexic/backup_pendent_mauricio/` per si calen en el futur.\n\n"
+    "multi-paraula per a verbs). Es van guardar primer a "
+    "`lexic/backup_pendent/` com a xarxa de seguretat, pero "
+    "eixa carpeta ja s'ha esborrat del tot (mateix dia, confirmat que no "
+    "quedava res pendent) -- el contingut es conserva a l'historial de "
+    "git si mai calguera.\n\n"
     "'conjugaciones_limpio.json' (968 formes, 111 verbs, el fitxer ORIGINAL "
-    "de Mauricio, 29/09/2026) RETIRAT DEL TOT el 19/10/2026: les SEUES "
+    "de l'equip AVLizador, 29/09/2026) RETIRAT DEL TOT el 19/10/2026: les SEUES "
     "968 files s'han fusionat SENCERES (no nomes un subconjunt) dins de "
     "'conjugaciones_general.json' mateix, amb IDs 'LIMPIO_1'..'LIMPIO_968' "
-    "(per no col·lidir amb la numeracio de Mauricio), 'morfologia' derivat "
+    "(per no col·lidir amb la numeracio del proveïdor), 'morfologia' derivat "
     "a mà per a 95 formes seguint el mateix descodificat (resta null, "
-    "mateix valor que ja usa Mauricio per a formes sense classificar), i "
+    "mateix valor que ja usa el proveïdor per a formes sense classificar), i "
     "el flag 'problematica' preservat tal qual en 55 files que ja el "
     "portaven. **Important, apresa a cops (19/10/2026)**: la primera "
     "temptativa va fusionar NOMES les 97 formes 'noves' (les que faltaven "
@@ -129,8 +133,9 @@ _CONJUGACIONS_DESCRIPCIO = (
     "brut per a que `carrega_conjugacions_invers()` detecte correctament "
     "que 'sofreixin' es ambigua (patisquen/sofrisquen) i l'excloga. "
     "Fusionar el fitxer SENCER evita este tipus de forat invisible des "
-    "d'una sola direccio. Backup del fitxer original sencer a "
-    "'lexic/backup_pendent_mauricio/'. **Pendent d'informar a Mauricio**: "
+    "d'una sola direccio. El fitxer original es va guardar primer a "
+    "'lexic/backup_pendent/', ja esborrada del tot (conservada a "
+    "l'historial de git). **Pendent d'informar al proveïdor**: "
     "el paradigma de present de subjuntiu del verb 'ser' seguix sent un "
     "forat real de la seua font (nosaltres ho hem apedaçat local, pero no "
     "soluciona l'origen)."
@@ -161,8 +166,8 @@ class FontSpec:
 
 FONTS: list[FontSpec] = [
     FontSpec(
-        # 16/10/2026: "diccionarios_v1/lexico_general.json" substituix
-        # "unificado.json" -- primera entrega de Mauricio amb categoria
+        # 16/10/2026: "diccionarios/lexico_general.json" substituix
+        # "unificado.json" -- primera entrega del proveïdor amb categoria
         # gramatical real (camp "categoria") i resolucio de colisions
         # explicita (camp "canonica", "problema", "id_colision"). Mesurat
         # abans de canviar (vore documentacio/hoja_de_ruta_migracio_diccionarios_v1.md):
@@ -175,21 +180,24 @@ FONTS: list[FontSpec] = [
         # "num") i l'antiga capa d'accentuació (categoria "adj"/"n",
         # retirada com a font a banda -- vore docstring de
         # `rules/val_cat/lexic.py`): ja NO fan falta
-        # "numerals_mauricio.json" ni "lexic_acentuacio_mauricio.json"
-        # com a còpies separades. Possessius (0 cobertura a la font nova)
-        # es queden fora d'esta llista fins que arriben en una entrega
-        # futura -- vore `posesivos_cat_val.json` baix.
-        dest="lexic_mauricio.json",
-        font=MAURICIO / "diccionarios_v1" / "lexico_general.json",
+        # "numerals_general.json" ni "lexic_acentuacio_general.json"
+        # com a còpies separades.
+        #
+        # Possessius (19/10/2026): l'usuari ha enganxat les 12 files de
+        # l'antic "posesivos_cat_val.json" (equip AVLizador) DINS d'este
+        # mateix fitxer (`categoria: "det"`, `fuente: "avl_equip"`), aixina
+        # que ja no fa falta cap FontSpec a banda ni cap
+        # "possessius_general.json" -- `rules/val_cat/possessius.py` i
+        # `rules/cat_val/possessius.py` llegixen directament
+        # "lexic_general.json" (el dest d'esta font), filtrant per
+        # `fuente == "avl_equip"` per no barrejar-se amb els demostratius
+        # (que també fan servir `categoria: "det"` dins del mateix fitxer).
+        dest="lexic_general.json",
+        font=LEXICO / "diccionarios" / "lexico_general.json",
         entrades=lambda d: d,
     ),
     FontSpec(
-        dest="possessius_mauricio.json",
-        font=MAURICIO / "posesivos_cat_val.json",
-        entrades=lambda d: d,
-    ),
-    FontSpec(
-        # 19/10/2026: nomes les 2 fonts OFICIALS de diccionarios_v1/. Els
+        # 19/10/2026: nomes les 2 fonts OFICIALS de diccionarios/. Els
         # 4 fitxers vells de l'equip AVLizador (29-30/09/2026) ja no fan
         # falta cap -- vore _CONJUGACIONS_DESCRIPCIO per al detall i les
         # xifres de cada un. Els 3 primers (verbos_no_ambiguos.json,
@@ -198,15 +206,16 @@ FONTS: list[FontSpec] = [
         # ací (mesurat amb els 4 benchmarks: zero diferencia). El 4t
         # (conjugaciones_limpio.json) SÍ aportava cobertura real -- les
         # seues 968 files SENCERES ja s'han fusionat dins de
-        # "diccionarios_v1/conjugaciones_general.json" (19/10/2026, IDs
+        # "diccionarios/conjugaciones_general.json" (19/10/2026, IDs
         # "LIMPIO_1".."LIMPIO_968", vore eixe fitxer i
         # _CONJUGACIONS_DESCRIPCIO per a per què SENCERES i no nomes un
         # subconjunt), aixina que el fitxer ja no fa falta tampoc. Els 4
-        # retirats a lexic/backup_pendent_mauricio/.
+        # es van guardar primer a lexic/backup_pendent/, ja
+        # esborrada del tot (conservats a l'historial de git).
         dest="conjugacions_dialectals.json",
         font=(
-            MAURICIO / "diccionarios_v1" / "verbos_diferentes_conjugados.json",
-            MAURICIO / "diccionarios_v1" / "conjugaciones_general.json",
+            LEXICO / "diccionarios" / "verbos_diferentes_conjugados.json",
+            LEXICO / "diccionarios" / "conjugaciones_general.json",
         ),
         entrades=_marca_ambigues_dins_del_mateix_fitxer,
         embolica=lambda entrades: {
@@ -305,8 +314,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if calen_canvis:
         print(
-            "\nSincronitzat. Recorda: si has canviat lexic_mauricio.json o "
-            "lexic_acentuacio_mauricio.json, torna a córrer el benchmark per "
+            "\nSincronitzat. Recorda: si has canviat lexic_general.json o "
+            "lexic_acentuacio_general.json, torna a córrer el benchmark per "
             "confirmar que no s'ha introduït cap regressió (vore traductor/README.md)."
         )
     else:
