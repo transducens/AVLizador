@@ -150,10 +150,6 @@ DEFAULT_CONJUGACIONS_PATH = (
     Path(__file__).resolve().parent.parent.parent / "data" / "conjugacions_dialectals.json"
 )
 
-# Vore docstring del modul: formes conjugades RARES que coincidixen per
-# casualitat amb una paraula comuna d'una altra categoria gramatical.
-EXCLUSIONS_HOMOGRAF = {"germanes"}
-
 # Vore docstring del modul ("Les 4 regressions restants..."): formes
 # verbals SENSE cap col·lisio coneguda que spaCy (ca_core_news_sm,
 # entrenat en català central) etiqueta de manera no fiable com a "PROPN"
@@ -213,9 +209,15 @@ def es_risc_mode_3a_plural(valenciano: str, catalan: str) -> bool:
 def carrega_conjugacions(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[str, str]:
     """Llig el JSON de conjugacions i el converteix en un diccionari pla
     `{forma_valenciana_en_minuscules: forma_catalana}`, descartant les
-    entrades `problematica: true`, les de `EXCLUSIONS_HOMOGRAF`, i les
-    que col·lidixen de mode en 3a plural (`es_risc_mode_3a_plural`, vore
-    docstring del modul -- 08/10/2026).
+    entrades `problematica: true` i les que col·lidixen de mode en 3a
+    plural (`es_risc_mode_3a_plural`, vore docstring del modul --
+    08/10/2026).
+
+    19/10/2026: `EXCLUSIONS_HOMOGRAF` (nomes tenia "germanes") retirada a
+    petició explícita de l'usuari -- vore CLAUDE.md, "Pendent per a la
+    propera sessió". Regressió coneguda i acceptada mentre no s'arregle
+    en origen: "germanes" (substantiu, "hermanas") ara es tradueix com
+    "germanis" (2a persona present subjuntiu del verb rar "germanar").
 
     >>> lookup = carrega_conjugacions()
     >>> lookup["oferisca"]
@@ -224,8 +226,8 @@ def carrega_conjugacions(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[str, st
     'treure'
     >>> "abalance" in lookup
     False
-    >>> "germanes" in lookup
-    False
+    >>> lookup["germanes"]
+    'germanis'
     >>> "tinguen" in lookup
     False
     >>> "creuen" in lookup
@@ -239,8 +241,6 @@ def carrega_conjugacions(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[str, st
         valenciano = (entrada.get("valenciano") or "").strip().lower()
         catalan = (entrada.get("catalan") or "").strip()
         if not valenciano or not catalan:
-            continue
-        if valenciano in EXCLUSIONS_HOMOGRAF:
             continue
         if valenciano not in SEMPRE_VERB and es_risc_mode_3a_plural(valenciano, catalan):
             continue

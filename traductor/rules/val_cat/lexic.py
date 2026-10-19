@@ -103,7 +103,15 @@ real (RC055: `translate("Qué fas?")` ja dona bé "Què fas?" hui), "qué" NO
 s'afig a `_BUG_DADES_CONEGUTS` encara que sí estiga exclòs al costat
 cat->val (`_BUG_DADES_CONEGUTS_CAT`) -- els dos costats filtren camps
 distints de la mateixa taula (`valenciano` ací, `catalan` allà) per motius
-distints, no són el mateix set mirat del revés.
+distints, no són el mateix set mirat del revés. **Confirmat per normativa
+(19/10/2026)**: no és nomes que el benchmark preferisca "què" -- el GNV
+(`docs_gramatica/gnv_complet.txt`, §5.1.2.1) fa una excepció EXPLÍCITA per
+a esta paraula exacta ("què" i "perquè" porten accent greu en valencià
+normatiu "a fi d'evitar una excessiva discrepància entre les diferents
+varietats de la llengua", encara que es pronuncien amb e tancada) --
+convertir "qué"->"què" ací no és un parell dialectal, és corregir una
+grafia no normativa cap a l'única grafia correcta als dos dialectes. Vore
+el mateix comentari, mes extens, a `cat_val/lexic.py::_BUG_DADES_CONEGUTS_CAT`.
 
 Esta és la ÚNICA capa que fa lookup en un diccionari en compte d'aplicar una
 regla morfològica -- cobrix paraules que canvien de forma per motius
@@ -220,7 +228,17 @@ CANVI_GENERE_PATH = _DATA / "canvi_genere_lexic_avl.json"
 #   gramaticals DIFERENTS als `lemas` (POS-resolubles); "bes", "bragues",
 #   "hamaca" i "blanca" tenen categories IGUALS o solapades als dos
 #   lemas -- eixes SÍ necessiten un LLM (vore guia), es queden pendents.
-_BUG_DADES_CONEGUTS = {"després", "ensenyança", "alcalde"}
+#
+# RETIRAT 19/10/2026 a petició explícita de l'usuari (vore CLAUDE.md,
+# "Pendent per a la propera sessió" -- no vol llistes d'exclusió a mà,
+# vol que el dato font es corregisca ell mateix amb el seu permís).
+# Regressions conegudes i acceptades mentre no s'arreglen en origen:
+# "després" tornarà a eixir "desprès" (error de transcripció al fitxer
+# font, mai canvia de veres entre dialectes); "ensenyança" tornarà a
+# perdre la concordança de gènere amb "ensenyament"; "alcalde" (`canonica:
+# true` cap a "batlle") tornarà a convertir-se encara que este registre
+# formal/institucional preferisca la paraula compartida (mateix patró que
+# "qué"/RC055). Abans: `_BUG_DADES_CONEGUTS = {"després", "ensenyança", "alcalde"}`.
 
 # Paraules perdudes de veres migrant a `lexico_general.json` (16/10/2026,
 # vore hoja_de_ruta_migracio_diccionarios_v1.md §4ter): la font nova no
@@ -381,8 +399,6 @@ def _carrega_lexic_general(path: Path) -> dict[str, str]:
             continue
         if valenciano.lower() == catalan.lower():
             continue
-        if valenciano.lower() in _BUG_DADES_CONEGUTS:
-            continue
         if valenciano.lower() in demostratius_coneguts:
             continue
         per_paraula.setdefault(valenciano.lower(), []).append(entrada)
@@ -424,12 +440,8 @@ def carrega_lexic(
     'signant'
     >>> lookup["acetilé"]
     'acetilè'
-    >>> "després" in lookup
-    False
     >>> lookup["vesprada"]
     'tarda'
-    >>> "ensenyança" in lookup
-    False
     >>> lookup["xicotet"]
     'petit'
     >>> lookup["qué"]
@@ -438,10 +450,22 @@ def carrega_lexic(
     'avui'
     >>> lookup["llavar"]
     'rentar'
-    >>> "alcalde" in lookup
-    False
     >>> lookup["huitè"]
     'vuitè'
+
+    19/10/2026: `_BUG_DADES_CONEGUTS` retirada a petició de l'usuari (vore
+    CLAUDE.md, "Pendent per a la propera sessió"). Regressions conegudes i
+    acceptades mentre no s'arreglen en origen -- "després" (mai hauria de
+    canviar) i "ensenyança" (perd la concordança de gènere) tornen a
+    convertir-se, i "alcalde" torna a "batlle" encara que este registre
+    preferisca la paraula compartida:
+
+    >>> lookup["després"]
+    'desprès'
+    >>> lookup["ensenyança"]
+    'ensenyament'
+    >>> lookup["alcalde"]
+    'batlle'
     """
     lookup: dict[str, str] = {}
     for carregador, path in (

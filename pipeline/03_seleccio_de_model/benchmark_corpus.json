@@ -123,6 +123,12 @@
     "id": "RC021",
     "corpus_id": "AVL-001341",
     "occidental": "I encara s’usa amb eixe mateix sentit en l’expressió tindre faena, és a dir, ‘tindre coses pendents de fer’, usada sovint per a excusar-se davant d’altres requeriments.",
+    "oriental": "I encara s'usa amb aqueix mateix sentit en l'expressió tindre feina, és a dir, ‘tindre coses pendents de fer’, usada sovint per a excusar-se davant d’altres requeriments."
+  },
+    {
+    "id": "RC0212",
+    "corpus_id": "AVL-001341",
+    "occidental": "I encara s’usa amb este mateix sentit en l’expressió tindre faena, és a dir, ‘tindre coses pendents de fer’, usada sovint per a excusar-se davant d’altres requeriments.",
     "oriental": "I encara s'usa amb aquest mateix sentit en l'expressió tindre feina, és a dir, ‘tindre coses pendents de fer’, usada sovint per a excusar-se davant d’altres requeriments."
   },
   {
@@ -159,7 +165,7 @@
     "id": "RC027",
     "corpus_id": "AVL-000002",
     "occidental": "Des de finals de la dècada de 1990 està vinculat a esta universitat, de la qual forma part com a professor titular.",
-    "oriental": "Des de finals de la dècada de 1990 està vinculat en aquesta universitat, de la qual forma part com a professor titular."
+    "oriental": "Des de finals de la dècada de 1990 està vinculat a aquesta universitat, de la qual forma part com a professor titular."
   },
   {
     "id": "RC028",
@@ -224,7 +230,7 @@
   {
     "id": "RC038",
     "corpus_id": "AVL-000484",
-    "occidental": "El primer component del tàxon llatí (Caprimulgus) és el resultat de combinar els termes llatins capra, ‘cabra’, i mulgere, ‘munyir’, que fa referència a la creença que estos pardals mamaven la llet de les cabres.",
+    "occidental": "El primer component del tàxon llatí (Caprimulgus) és el resultat de combinar els termes llatins capra, ‘cabra’, i mulgere, ‘munyir’, que fa referència a la creença que estos teuladins mamaven la llet de les cabres.",
     "oriental": "El primer component del tàxon llatí (Caprimulgus) és el resultat de combinar els termes llatins capra, ‘cabra’, i mulgere, ‘munyir’, que fa referència a la creença que aquests pardals mamaven la llet de les cabres."
   },
   {
@@ -279,6 +285,12 @@
     "id": "RC047",
     "corpus_id": "AVL-000120",
     "occidental": "En esta ocasió volem centrar la nostra atenció en una paraula no tan coneguda, però que també expressa eixa idea de quantitat gran o de grau considerable.",
+    "oriental": "En aquesta ocasió volem centrar la nostra atenció en una paraula no tan coneguda, però que també expressa aqueixa idea de quantitat gran o de grau considerable."
+  },
+  {
+    "id": "RC047",
+    "corpus_id": "AVL-000120",
+    "occidental": "En esta ocasió volem centrar la nostra atenció en una paraula no tan coneguda, però que també expressa esta idea de quantitat gran o de grau considerable.",
     "oriental": "En aquesta ocasió volem centrar la nostra atenció en una paraula no tan coneguda, però que també expressa aquesta idea de quantitat gran o de grau considerable."
   },
   {
@@ -417,7 +429,7 @@
       "subjuntiu_ga"
     ],
     "occidental": "La menció de l’article a «la seua llengua habitual, ja siga esta el valencià o el castellà» deixa fora un percentatge considerable de la població, que no fa servir habitualment cap de les dos llengües oficials.",
-    "oriental": "La menció de l'article a «la seva llengua habitual, ja sigui aquesta el valencià o el castellà» deixa fos un percentatge considerable de la població, que no fa servir habitualment cap de les dues llengües oficials."
+    "oriental": "La menció de l'article a «la seva llengua habitual, ja sigui aquesta el valencià o el castellà» deixa fora un percentatge considerable de la població, que no fa servir habitualment cap de les dues llengües oficials."
   },
   {
     "id": "RC065",
@@ -444,7 +456,7 @@
       "gentilici",
       "preterit_simple"
     ],
-    "occidental": "Abraham és considerat el primer hebreu, paraula que en arameu significava ‘de l’altra banda del riu’. I eixe era el cas d’Abraham, que deixà la seua Caldea natal i, després de travessar el riu Èufrates, s’establí a Canaan.",
+    "occidental": "Abraham és considerat el primer hebreu, paraula que en arameu significava ‘de l’altra banda del riu’. I este era el cas d’Abraham, que deixà la seua Caldea natal i, després de travessar el riu Èufrates, s’establí a Canaan.",
     "oriental": "Abraham és considerat el primer hebreu, paraula que en arameu significava ‘de l'altra banda del riu’. I aquest era el cas d'Abraham, que deixà la seva Caldea natal i, després de travessar el riu Èufrates, s’establí a Canaan."
   },
   {
@@ -458,7 +470,7 @@
       "preterit_simple",
       "subjuntiu_ga"
     ],
-    "occidental": "En l’antic calendari romà, este dia extra es corresponia al 25 de març; però, més tard, en 1582, el papa Gregori XIII feu una nova reforma del calendari, i traslladà eixe dia extra al final del mes per a simplificar el recompte, o siga, el 29 de febrer.",
+    "occidental": "En l’antic calendari romà, este dia extra es corresponia al 25 de març; però, més tard, en 1582, el papa Gregori XIII feu una nova reforma del calendari, i traslladà este dia extra al final del mes per a simplificar el recompte, o siga, el 29 de febrer.",
     "oriental": "En l'antic calendari romà, aquest dia extra es corresponia al 25 de març; però, més tard, en 1582, el papa Gregori XIII feu una nova reforma del calendari, i traslladà aquest dia extra al final del mes per a simplificar el recompte, o sigui, el 29 de febrer."
   },
   {
@@ -486,7 +498,7 @@
       "preterit_simple",
       "subjuntiu_ga"
     ],
-    "occidental": "En fi, disfruten vostés, tant com puguen, d’estes festes de Nadal i procuren ser clements durant tot l’any amb tots aquells que s’esforcen per parlar valencià tan bé com saben.",
+    "occidental": "En fi, gaudisquen vostés, tant com puguen, d’estes festes de Nadal i procuren ser clements durant tot l’any amb tots aquells que s’esforcen per parlar valencià tan bé com saben.",
     "oriental": "En fi, gaudeixin vostès, tant com puguin, d'aquestes festes de Nadal i procuren ser clements durant tot l'any amb tots aquells que s'esforcen per parlar valencià tan bé com saben."
   },
   {
@@ -500,7 +512,7 @@
       "gentilici",
       "preterit_simple"
     ],
-    "occidental": "Cypraea; per eixe motiu passaren a denominar este mol·lusc amb el nom de porcellana, que després aplicaren al nou producte ceràmic per la semblança amb el color i la textura de la conquilla.",
+    "occidental": "Cypraea; per este motiu passaren a denominar este mol·lusc amb el nom de porcellana, que després aplicaren al nou producte ceràmic per la semblança amb el color i la textura de la conquilla.",
     "oriental": "Cypraea; per aquest motiu passaren a denominar aquest mol·lusc amb el nom de porcellana, que després aplicaren al nou producte ceràmic per la semblança amb el color i la textura de la conquilla."
   },
   {
@@ -627,7 +639,7 @@
       "preterit_simple"
     ],
     "occidental": "L’aplicació d’este ungüent a la seua pròpia carn generà uns gasos que, fins i tot en eixes condicions tan penoses, estimularen la seua curiositat científica.",
-    "oriental": "L'aplicació d'aquest ungüent a la seva pròpia carn generà uns gasos que, fins i tot en aquestes condicions tan penoses, estimularen la seva curiositat científica."
+    "oriental": "L'aplicació d'aquest ungüent a la seva pròpia carn generà uns gasos que, fins i tot en aqueixes condicions tan penoses, estimularen la seva curiositat científica."
   },
   {
     "id": "RC080",
@@ -724,7 +736,7 @@
       "gentilici",
       "preterit_simple"
     ],
-    "occidental": "Una dissertació centrada en ‘Les pobles de la Plana dels segles XIII i XIV’. En eixe període, segons el professor Guinot, en el cas valencià, estes fundacions s’emmarquen en el procés de repoblament i colonització de les terres valencianes arran de la conquesta de Jaume I.",
+    "occidental": "Una dissertació centrada en ‘Les pobles de la Plana dels segles XIII i XIV’. En este període, segons el professor Guinot, en el cas valencià, estes fundacions s’emmarquen en el procés de repoblament i colonització de les terres valencianes arran de la conquesta de Jaume I.",
     "oriental": "Una dissertació centrada en ‘Les pobles de la Plana dels segles XIII i XIV’. En aquest període, segons el professor Guinot, en el cas valencià, aquestes fundacions s'emmarquen en el procés de repoblament i colonització de les terres valencianes arran de la conquesta de Jaume I."
   },
   {
@@ -739,7 +751,7 @@
       "subjuntiu_ga"
     ],
     "occidental": "Que els membres inicials siguen elegits per les Corts Valencianes per una majoria de dos terços, i que almenys dos terços d'eixos membres siguen experts en valencià amb una acreditada competència científica i acadèmica, segons criteris d'avaluació objectiva.",
-    "oriental": "Que els membres inicials siguin elegits per les Corts Valencianes per una majoria de dos terços, i que almenys dos terços d'aquests membres siguin experts en valencià amb una acreditada competència científica i acadèmica, segons criteris d'avaluació objectiva."
+    "oriental": "Que els membres inicials siguin elegits per les Corts Valencianes per una majoria de dos terços, i que almenys dos terços d'aqueixos membres siguin experts en valencià amb una acreditada competència científica i acadèmica, segons criteris d'avaluació objectiva."
   },
   {
     "id": "RC088",
@@ -752,7 +764,7 @@
       "preterit_simple",
       "subjuntiu_ga"
     ],
-    "occidental": "Valencianes per una majoria de dos terços, i que almenys dos terços d’eixos membres siguen experts en valencià amb una acreditada competència científica i acadèmica, segons criteris d’avaluació objectiva.",
+    "occidental": "Valencianes per una majoria de dos terços, i que almenys dos terços d’estos membres siguen experts en valencià amb una acreditada competència científica i acadèmica, segons criteris d’avaluació objectiva.",
     "oriental": "Valencianes per una majoria de dos terços, i que almenys dos terços d'aquests membres siguin experts en valencià amb una acreditada competència científica i acadèmica, segons criteris d'avaluació objectiva."
   },
   {
@@ -781,7 +793,7 @@
       "locucions"
     ],
     "occidental": "Este ha sigut precisament el tenor que ha guiat el treball de l’Acadèmia, i en eixe sentit s’han fet les recomanacions que deriven de les seues obres, tant les normatives com les purament orientatives.",
-    "oriental": "Aquest ha estat precisament el tenor que ha guiat el treball de l'Acadèmia, i en aquest sentit s'han fet les recomanacions que deriven de les seves obres, tant les normatives com les purament orientatives."
+    "oriental": "Aquest ha estat precisament el tenor que ha guiat el treball de l'Acadèmia, i en aqueix sentit s'han fet les recomanacions que deriven de les seves obres, tant les normatives com les purament orientatives."
   },
   {
     "id": "RC091",
@@ -823,7 +835,7 @@
       "subjuntiu_ga"
     ],
     "occidental": "15. Dotar els centres de Secundària, Batxillerat i cicles formatius amb el professorat suficient per a cobrir l’ensenyança en valencià, i que eixe procés tinga continuïtat en la universitat, a fi que els alumnes que opten a estudiar-hi en valencià ho puguen fer efectiu.",
-    "oriental": "15. Dotar els centres de Secundària, Batxillerat i cicles formatius amb el professorat suficient per a cobrir l'ensenyament en valencià, i que aquest procés tingui continuïtat en la universitat, a fi que els alumnes que opten a estudiar-hi en valencià ho puguin fer efectiu."
+    "oriental": "15. Dotar els centres de Secundària, Batxillerat i cicles formatius amb el professorat suficient per a cobrir l'ensenyament en valencià, i que aqueix procés tingui continuïtat en la universitat, a fi que els alumnes que opten a estudiar-hi en valencià ho puguin fer efectiu."
   },
   {
     "id": "RC094",
@@ -1071,8 +1083,8 @@
       "preterit_simple",
       "subjuntiu_ga"
     ],
-    "occidental": "Per acabar: tenim dos llengues oficials en la nostra Comunitat, el valencià i el castellà, ambdós realment usades pels ciutadans encara que siga d'una manera descompensada entre elles.",
-    "oriental": "Per a acabar: tenim dos llengues oficials en la nostra Comunitat, el valencià i el castellà, ambdós realment usades pels ciutadans encara que sigui d'una manera descompensada entre elles."
+    "occidental": "Per a acabar: tenim dos llengues oficials en la nostra Comunitat, el valencià i el castellà, ambdós realment usades pels ciutadans encara que siga d'una manera descompensada entre elles.",
+    "oriental": "Per a acabar: tenim dues llengues oficials en la nostra Comunitat, el valencià i el castellà, ambdós realment usades pels ciutadans encara que sigui d'una manera descompensada entre elles."
   },
   {
     "id": "RC113",
@@ -1097,7 +1109,7 @@
       "preterit_simple",
       "locucions"
     ],
-    "occidental": "El Consell Valencià de Cultura reivindica l'esperit de l'acord que les féu possibles l'any 32 i entén que eixes normes han sigut el punt de partida, compartit pels valencians, per a la normativització consolidada de la nostra llengua pròpia.",
+    "occidental": "El Consell Valencià de Cultura reivindica l'esperit de l'acord que les féu possibles l'any 32 i entén que estes normes han sigut el punt de partida, compartit pels valencians, per a la normativització consolidada de la nostra llengua pròpia.",
     "oriental": "El Consell Valencià de Cultura reivindica l'esperit de l'acord que les féu possibles l'any 32 i entén que aquestes normes han estat el punt de partida, compartit pels valencians, per a la normativització consolidada de la nostra llengua pròpia."
   },
   {
@@ -1188,7 +1200,7 @@
       "gentilici",
       "preterit_simple"
     ],
-    "occidental": "La gramàtica valenciana meua té un pròleg, de Francesc de B. Moll, on diu textualment que després d’aquesta gramàtica ningú no podrà mai negar la unitat lingüística de",
+    "occidental": "La gramàtica valenciana meua té un pròleg, de Francesc de B. Moll, on diu textualment que després d’esta gramàtica ningú no podrà mai negar la unitat lingüística de",
     "oriental": "La gramàtica valenciana meva té un pròleg, de Francesc de B. Moll, on diu textualment que després d'aquesta gramàtica ningú no podrà mai negar la unitat lingüística de"
   },
   {
@@ -1240,7 +1252,7 @@
       "gentilici",
       "preterit_simple"
     ],
-    "occidental": "I en eixe sentit, cal agrair l’esforç pràctic i constant dels sectors editorials i dels ensenyants que, dins el sistema educatiu valencià, han provat d’aplicar eixos actius metodològics, que han resultat importants en el procés de redreçament lingüístic.",
+    "occidental": "I en este sentit, cal agrair l’esforç pràctic i constant dels sectors editorials i dels ensenyants que, dins el sistema educatiu valencià, han provat d’aplicar estos actius metodològics, que han resultat importants en el procés de redreçament lingüístic.",
     "oriental": "I en aquest sentit, cal agrair l'esforç pràctic i constant dels sectors editorials i dels ensenyants que, dins el sistema educatiu valencià, han provat d'aplicar aquests actius metodològics, que han resultat importants en el procés de redreçament lingüístic."
   },
   {
@@ -1254,7 +1266,7 @@
       "preterit_simple"
     ],
     "occidental": "Ensenyament del Valencià». Una bona manera de celebrar este aniversari és reivindicar la vigència d’eixe pacte, tractar d’implicar totes les forces polítiques i culturals, i demanar a l’Administració que complisca tots els compromisos que se signaren.",
-    "oriental": "Ensenyament del Valencià». Una bona manera de celebrar aquest aniversari és reivindicar la vigència d'aquest pacte, tractar d'implicar totes les forces polítiques i culturals, i demanar a l'Administració que complisca tots els compromisos que se signaren."
+    "oriental": "Ensenyament del Valencià». Una bona manera de celebrar aquest aniversari és reivindicar la vigència d'aqueix pacte, tractar d'implicar totes les forces polítiques i culturals, i demanar a l'Administració que complisca tots els compromisos que se signaren."
   },
   {
     "id": "RC127",
@@ -1305,7 +1317,7 @@
       "numeral_dos_dues",
       "preterit_simple"
     ],
-    "occidental": "Com a exemples d’eixe esperit, cita que l’IAE es podrà pagar en quatre terminis, i l’impost de circulació, guals i fem, en dos terminis.",
+    "occidental": "Com a exemples d’este esperit, cita que l’IAE es podrà pagar en quatre terminis, i l’impost de circulació, guals i fem, en dos terminis.",
     "oriental": "Com a exemples d'aquest esperit, cita que l'IAE es podrà pagar en quatre terminis, i l'impost de circulació, guals i fem, en dos terminis."
   },
   {
@@ -1345,7 +1357,7 @@
       "locucions"
     ],
     "occidental": "ha sigut declarat Bé d’Interés Cultural informe per a la declaració com a Bé de Rellevància Local és Monument Històric Nacional el Parc Natural de la Serra d’Espadà el Llistat d’Espècies Silvestres en Règim de Protecció Especial",
-    "oriental": "ha estat declarat Bé d'Interès Cultural informe per a la declaració com Bé de Rellevància Local és Monument Històric Nacional el Parc Natural de la Serra d'Espadà el Llistat d'Espècies Silvestres en Règim de Protecció Especial"
+    "oriental": "ha estat declarat Bé d'Interès Cultural informe per a la declaració com a Bé de Rellevància Local és Monument Històric Nacional el Parc Natural de la Serra d'Espadà el Llistat d'Espècies Silvestres en Règim de Protecció Especial"
   },
   {
     "id": "RC134",
@@ -1397,7 +1409,7 @@
       "preterit_simple"
     ],
     "occidental": "En este context cal situar també la competència d'elaborar i elevar al Consell de la Generalitat i a les Corts Valencianes les observacions i consells pertinents per a l'ús normal del valencià en qualsevol de les seues manifestacions, com arreplega la Llei de",
-    "oriental": "En aquest context cal situar també la competència d'elaborar i elevar al Consell de la Generalitat i en les Corts Valencianes les observacions i consells pertinents per a l'ús normal del valencià en qualsevol de les seves manifestacions, com recull la Llei de"
+    "oriental": "En aquest context cal situar també la competència d'elaborar i elevar al Consell de la Generalitat i a les Corts Valencianes les observacions i consells pertinents per a l'ús normal del valencià en qualsevol de les seves manifestacions, com recull la Llei de"
   },
   {
     "id": "RC138",
@@ -1410,7 +1422,7 @@
       "preterit_simple"
     ],
     "occidental": "Aproximadament dos terceres parts (67%) dels residents tota la vida a la Comunitat Valenciana diuen que saben parlar prou bé o perfectament valencià, mentres que només el 5% de la població arribada durant els últims 10 anys es manifesta en eixe sentit.",
-    "oriental": "Aproximadament dues terceres parts (67%) dels residents tota la vida a la Comunitat Valenciana diuen que saben parlar prou bé o perfectament valencià, mentre que només el 5% de la població arribada durant els últims 10 anys es manifesta en aquest sentit."
+    "oriental": "Aproximadament dues terceres parts (67%) dels residents tota la vida a la Comunitat Valenciana diuen que saben parlar prou bé o perfectament valencià, mentre que només el 5% de la població arribada durant els últims 10 anys es manifesta en aqueix sentit."
   },
   {
     "id": "RC139",
@@ -1422,7 +1434,7 @@
       "numeral_huit",
       "gentilici"
     ],
-    "occidental": "56%), tot i que la formació autodidacta també resulta molt significativa (el 19%). Així mateix, són rellevants les proporcions de població que han arribat a eixe coneixement a través del medi familiar: aproximadament un de cada huit casos (12%).",
+    "occidental": "56%), tot i que la formació autodidacta també resulta molt significativa (el 19%). Així mateix, són rellevants les proporcions de població que han arribat a este coneixement a través del medi familiar: aproximadament un de cada huit casos (12%).",
     "oriental": "56%), tot i que la formació autodidacta també resulta molt significativa (el 19%). Així mateix, són rellevants les proporcions de població que han arribat a aquest coneixement a través del medi familiar: aproximadament un de cada vuit casos (12%)."
   },
   {
@@ -1567,5 +1579,15 @@
     ],
     "occidental": "Jo em centre en que el partit isca bé.",
     "oriental": "Jo em centro en que el partit surti bé."
+  },
+  {
+    "id": "RC152",
+    "doc_id": "777",
+    "doc_type": "manual_creada",
+    "source_url": "https://www.avl.gva.es/gnv/buscador.jsp?gramatica=GNV&index=GNV#capitol_7",
+    "categories_detectadas": [
+    ],
+    "occidental": "Si jo fóra alcalde, proposaria que les dos solucions es debateren amb deteniment abans de decidir.",
+    "oriental": "Si jo fos alcalde, proposaria que les dues solucions es debateren amb deteniment abans de decidir."
   }
 ]

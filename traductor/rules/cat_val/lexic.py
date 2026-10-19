@@ -125,13 +125,41 @@ CANVI_GENERE_PATH = _DATA / "canvi_genere_lexic_avl.json"
 # casualitat, convertint-ho SEMPRE). Net +3 (+4 casos majoritaris, -1
 # minoritari) -- mateixa filosofia que "aquest"->"este" (77/23).
 #
+# CONFIRMAT PER NORMATIVA (19/10/2026, GNV -- Gramàtica Normativa
+# Valenciana de l'AVL, `docs_gramatica/gnv_complet.txt`, §5.1.2.1,
+# "Observacions sobre l'accentuació de les ee"): el comptatge de dalt NO
+# és nomes majoria empírica, és la regla oficial. La norma general
+# valenciana és accent AGUT per a qualsevol "e" tancada tònica (cinqué,
+# francés, comprés...), pero el text normatiu fa una EXCEPCIÓ EXPLÍCITA
+# justa per a dos paraules: "A fi d'evitar una excessiva discrepància
+# entre les diferents varietats de la llengua, també porten accent greu
+# -- tot i pronunciar-se habitualment amb e tancada en valencià -- dos
+# paraules gramaticals d'ús freqüent (el pronom relatiu i interrogatiu
+# tònic QUÈ i la conjunció PERQUÈ)". És a dir: "què" amb accent greu NO
+# és un catalanisme ni una preferència del corpus, és l'ortografia
+# normativa valenciana en si mateixa -- "qué" (accent agut) és la grafia
+# NO normativa, encara que es pronuncie aixina. Per això esta exclusió es
+# queda encara que algun text (com RC055) faça servir "qué" de manera
+# informal/fonètica.
+#
 # "tard" ELIMINAT d'esta llista (16/10/2026): la nova font
 # (`lexico_general.json`, vore hoja_de_ruta_migracio_diccionarios_v1.md)
 # ja no porta cap entrada amb catalan=="tard" -- el bug "vesprada"/"tard"
 # ve corregit en origen ("vesprada"->"tarda" ara), confirmat que cap
 # entrada col·lidix ja amb "tard". Es queda documentat ací per
 # l'historial (RC067 original) pero ja no cal excloure'l.
-_BUG_DADES_CONEGUTS_CAT = {"desprès", "ensenyament", "què"}
+#
+# RETIRADA SENCERA 19/10/2026 a petició explícita de l'usuari (vore
+# CLAUDE.md, "Pendent per a la propera sessió" -- no vol llistes
+# d'exclusió a mà, vol que el dato font es corregisca ell mateix amb el
+# seu permís). Regressions conegudes i acceptades mentre no s'arreglen en
+# origen: "desprès" tornarà a eixir "després" (mateix error de
+# transcripció que l'altre costat); "ensenyament" tornarà a perdre la
+# concordança de gènere amb "ensenyança"; "què" tornarà a convertir-se en
+# "qué" encara que el GNV (§5.1.2.1, vore dalt) confirme "què" com
+# l'ortografia normativa valenciana -- este últim és la regressió que més
+# pes té, ja no és nomes majoria de corpus sinó normativa oficial.
+# Abans: `_BUG_DADES_CONEGUTS_CAT = {"desprès", "ensenyament", "què"}`.
 
 # Categories de `lexico_general.json` (16/10/2026, mateix criteri que
 # `rules/val_cat/lexic.py` -- vore hoja_de_ruta_migracio_diccionarios_v1.md):
@@ -239,8 +267,6 @@ def _carrega_lexic_general_invers(path: Path) -> dict[str, str]:
             continue
         if valenciano.lower() == catalan.lower():
             continue
-        if catalan.lower() in _BUG_DADES_CONEGUTS_CAT:
-            continue
         if catalan.lower() in demostratius_coneguts:
             continue
         entrades.append((valenciano.lower(), catalan.lower()))
@@ -346,8 +372,6 @@ def carrega_lexic_invers(
     'firmant'
     >>> lookup["acetilè"]
     'acetilé'
-    >>> "desprès" in lookup
-    False
     >>> lookup["avui"]
     'hui'
     >>> "menuda" in lookup
@@ -356,6 +380,21 @@ def carrega_lexic_invers(
     'espentar'
     >>> lookup["vuitè"]
     'huitè'
+
+    19/10/2026: `_BUG_DADES_CONEGUTS_CAT` retirada a petició de l'usuari
+    (vore CLAUDE.md, "Pendent per a la propera sessió"). Regressions
+    conegudes i acceptades mentre no s'arreglen en origen -- "desprès"
+    (mai hauria de canviar) i "ensenyament" (perd la concordança de
+    gènere) tornen a convertir-se, i "què" torna a "qué" encara que el
+    GNV confirme "què" com l'ortografia normativa valenciana (vore
+    comentari ampliat dalt):
+
+    >>> lookup["desprès"]
+    'després'
+    >>> lookup["ensenyament"]
+    'ensenyança'
+    >>> lookup["què"]
+    'qué'
     """
     lookup: dict[str, str] = {}
     for carregador, path in (
