@@ -86,6 +86,7 @@ from .. import (
     Token,
     aplica_amb_prefix_elidit,
     carrega_categoria_gramatical,
+    corregeix_article_abans,
     corregeix_contraccio_al_abans,
     corregeix_determinant_abans,
     paraules_segudents_son,
@@ -238,20 +239,38 @@ def _formes_demostratius_coneguts_cat() -> set[str]:
     return formes_cobertes_per_demostratius_invers()
 
 
-def _invertix_sense_ambiguitat(entrades: list[tuple[str, str]]) -> dict[str, str]:
-    """Agrupa parells `(valenciano, catalan)` per `catalan` i es queda
-    NOMÉS amb els que tenen un únic candidat valencià real -- mateixa
-    tècnica, verificada contra les dades, que `conjugacions_dict.py`."""
+def _invertix_sense_ambiguitat(entrades: list[tuple[str, str, bool]]) -> dict[str, str]:
+    """Agrupa parells `(valenciano, catalan, canonica)` per `catalan`. Si hi
+    ha un únic candidat valencià, es queda amb ell. Si n'hi ha més d'un,
+    REGLA FIXA de l'usuari (20/10/2026): en cas de dubte mana el camp
+    `canonica` del proveïdor -- es tria el candidat marcat `canonica: true`
+    si n'hi ha exactament un; si no n'hi ha cap (o n'hi ha més d'un),
+    s'exclou igual que abans (preferix fals negatiu).
+
+    >>> _invertix_sense_ambiguitat([("xic", "noi", True), ("xiquet", "noi", False)])
+    {'noi': 'xic'}
+    >>> _invertix_sense_ambiguitat([("a", "x", False), ("b", "x", False)])
+    {}
+    """
     candidats: dict[str, set[str]] = {}
-    for valenciano, catalan in entrades:
+    canoniques: dict[str, set[str]] = {}
+    for valenciano, catalan, canonica in entrades:
         candidats.setdefault(catalan, set()).add(valenciano)
-    return {cat: next(iter(vals)) for cat, vals in candidats.items() if len(vals) == 1}
+        if canonica:
+            canoniques.setdefault(catalan, set()).add(valenciano)
+    resultat: dict[str, str] = {}
+    for cat, vals in candidats.items():
+        if len(vals) == 1:
+            resultat[cat] = next(iter(vals))
+        elif len(canoniques.get(cat, ())) == 1:
+            resultat[cat] = next(iter(canoniques[cat]))
+    return resultat
 
 
 def _carrega_lexic_general_invers(path: Path) -> dict[str, str]:
     demostratius_coneguts = _formes_demostratius_coneguts_cat()
     dades = json.loads(path.read_text(encoding="utf-8"))
-    entrades: list[tuple[str, str]] = []
+    entrades: list[tuple[str, str, bool]] = []
     for entrada in dades:
         if "PENDENT" in (entrada.get("tipo") or ""):
             continue
@@ -269,7 +288,7 @@ def _carrega_lexic_general_invers(path: Path) -> dict[str, str]:
             continue
         if catalan.lower() in demostratius_coneguts:
             continue
-        entrades.append((valenciano.lower(), catalan.lower()))
+        entrades.append((valenciano.lower(), catalan.lower(), bool(entrada.get("canonica"))))
     return _invertix_sense_ambiguitat(entrades)
 
 
@@ -286,7 +305,7 @@ def carrega_frases_invers(path: Path = LEXIC_GENERAL_PATH) -> dict[tuple[str, ..
     'polit'
     """
     dades = json.loads(Path(path).read_text(encoding="utf-8"))
-    candidats: dict[tuple[str, ...], set[str]] = {}
+    entrades: list[tuple[str, tuple[str, ...], bool]] = []
     for entrada in dades:
         if "PENDENT" in (entrada.get("tipo") or ""):
             continue
@@ -299,8 +318,8 @@ def carrega_frases_invers(path: Path = LEXIC_GENERAL_PATH) -> dict[tuple[str, ..
         if not valenciano or not catalan or " " in valenciano or " " not in catalan:
             continue
         paraules = tuple(p.lower() for p in catalan.split())
-        candidats.setdefault(paraules, set()).add(valenciano.lower())
-    return {k: next(iter(v)) for k, v in candidats.items() if len(v) == 1}
+        entrades.append((valenciano.lower(), paraules, bool(entrada.get("canonica"))))
+    return _invertix_sense_ambiguitat(entrades)
 
 
 def carrega_canvis_genere_invers(
@@ -405,10 +424,13 @@ def carrega_lexic_invers(
             lookup.setdefault(cat, val)
     for cat, val in _LEXIC_PERDUT_RESTAURAT_CAT.items():
         lookup.setdefault(cat, val)
-    for cat, val in _ORDINALS_PERDUTS_CAT.items():
-        lookup.setdefault(cat, val)
-    for cat, val in _ORDINALS_BASICS_PERDUTS_CAT.items():
-        lookup.setdefault(cat, val)
+    # Els ordinals de l'usuari SOBREESCRIUEN (20/10/2026): des que les
+    # col·lisions es resolen per `canonica`, "cinquè" ja tindria valor
+    # ("quint", la forma culta canònica) i `setdefault` no el canviaria --
+    # pero el corpus real vol la forma popular ("cinqué"). Decisió explícita
+    # de l'usuari: mantindre estes llistes per damunt de la canònica.
+    lookup.update(_ORDINALS_PERDUTS_CAT)
+    lookup.update(_ORDINALS_BASICS_PERDUTS_CAT)
     return lookup
 
 
@@ -555,6 +577,7 @@ class LexicInversRule:
                 tok.translated = preserva_majuscula(tok.surface, forma)
                 tok.is_translated = True
                 corregeix_contraccio_al_abans(tokens, i)
+                corregeix_article_abans(tokens, i)
                 continue
             prefix_resta = separa_prefix_elidit(tok.surface)
             if prefix_resta is None:

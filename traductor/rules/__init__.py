@@ -67,6 +67,12 @@ class Token:
     Fem), per això nomes s'actua quan diu Fem explícitament -- si diu Masc,
     buit, o spaCy no està disponible, no es toca "dos" (preferix fals
     negatiu, vore `pos_tagger.py`).
+
+    `lemma` (afegit 20/10/2026, mateix mecanisme opcional que `pos`): el
+    lema d'spaCy en minúscules ("serveix" -> "servir"). El consulta
+    `cat_val/incoatius.py`, sempre validat contra els infinitius reals de
+    `conjugacions_dialectals.json` (spaCy s'inventa lemes per a verbs que
+    no coneix: "apareix" -> "aparir").
     """
 
     surface: str
@@ -74,6 +80,7 @@ class Token:
     pos: str = ""
     mood: str = ""
     gender: str = ""
+    lemma: str = ""
     is_translated: bool = False
     is_proper_noun: bool = False
     start: int = 0
@@ -422,6 +429,83 @@ def corregeix_contraccio_al_abans(tokens: list[Token], index: int) -> None:
     anterior.translated = preserva_majuscula(anterior.surface, preposicio)
     anterior.is_translated = True
     tok.translated = "l'" + tok.translated
+
+
+# "la" NO s'apostrofa davant de i/u àtones (amb h o sense): "la universitat",
+# "la idea", "la humitat" -- norma ortogràfica general, igual als dos
+# dialectes. Davant de í/ú tòniques (accentuades) sí: "l'última".
+_I_U_ATONES_RE = re.compile(r"^[hH]?[iuïüIUÏÜ]")
+
+
+def corregeix_article_abans(tokens: list[Token], index: int) -> None:
+    """Germana de `corregeix_contraccio_al_abans` per a l'article solt: si
+    `tokens[index]` ha passat a començar en vocal/h muda per una
+    substitució, i el token real anterior és l'article "el"/"la", l'apostrofa
+    ("el darrer" -> "el últim" -> "l'últim").
+
+    Casos reals trobats (20/10/2026, gplsi cat->val, ~15 aparicions): "el
+    darrer"->"l'últim", "la darrera"->"l'última", "el batlle"->"l'alcalde",
+    "la sortida"->"l'eixida".
+
+    >>> toks = tokenize("Va ser el darrer viatge.")
+    >>> toks[6].translated = "últim"
+    >>> corregeix_article_abans(toks, 6)
+    >>> detokenize(toks)
+    "Va ser l'últim viatge."
+
+    Majúscula de l'article conservada:
+
+    >>> toks = tokenize("El batlle parla.")
+    >>> toks[2].translated = "alcalde"
+    >>> corregeix_article_abans(toks, 2)
+    >>> detokenize(toks)
+    "L'alcalde parla."
+
+    "la" davant d'i/u àtona no s'apostrofa, davant de tònica sí:
+
+    >>> toks = tokenize("la cosa")
+    >>> toks[2].translated = "universitat"
+    >>> corregeix_article_abans(toks, 2)
+    >>> detokenize(toks)
+    'la universitat'
+    >>> toks = tokenize("la darrera")
+    >>> toks[2].translated = "última"
+    >>> corregeix_article_abans(toks, 2)
+    >>> detokenize(toks)
+    "l'última"
+
+    Si la forma traduïda seguix començant en consonant, no fa res:
+
+    >>> toks = tokenize("el noi")
+    >>> toks[2].translated = "xic"
+    >>> corregeix_article_abans(toks, 2)
+    >>> detokenize(toks)
+    'el xic'
+    """
+    tok = tokens[index]
+    if not _COMENCA_EN_VOCAL_O_H_MUDA_RE.match(tok.translated):
+        return
+    i_anterior = None
+    for i in range(index - 1, -1, -1):
+        if tokens[i].surface.isspace():
+            continue
+        i_anterior = i
+        break
+    if i_anterior is None:
+        return
+    anterior = tokens[i_anterior]
+    article = anterior.translated.lower()
+    if article not in ("el", "la"):
+        return
+    if article == "la" and _I_U_ATONES_RE.match(tok.translated):
+        return
+    apostrof = "L'" if anterior.translated[:1].isupper() else "l'"
+    anterior.translated = ""
+    anterior.is_translated = True
+    for espai in tokens[i_anterior + 1 : index]:
+        espai.translated = ""
+        espai.is_translated = True
+    tok.translated = apostrof + tok.translated
 
 
 # Determinants femenins i el seu parell masculí -- mateixes formes ja

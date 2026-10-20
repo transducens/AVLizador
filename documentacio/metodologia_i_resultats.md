@@ -624,6 +624,77 @@ coincidir con la salida del motor en ese momento — ver nota de
 transparencia en la sección 16) → **116/151 hoy**, tras la misma
 retirada de reglas sin generalizar que afectó a val→cat.
 
+### Verbos incoativos: spaCy propone, los diccionarios validan (20/10/2026)
+
+Los verbos incoativos de la tercera conjugación (servir, oferir,
+produir…) intercalan un incremento entre la raíz y la terminación del
+presente: "-eix-" en catalán central (serveix, serveixes, serveixen) y
+"-ix-" en valenciano (servix, servixes, servixen). Es el patrón de fallo
+más frecuente de esta dirección: en las 2.109 frases de los dos corpus,
+el valenciano de referencia usa "-ix" en 198 de 198 casos reales.
+
+El fallo tiene dos causas que se suman. La primera está en los datos: la
+AVL admite las dos formas en valenciano, así que el proveedor no las
+trata como par dialectal. Su diccionario de conjugaciones trae de
+"servir" la primera persona ("serveixo"→"servisc") y todo el subjuntivo,
+pero no "serveix"/"serveixes"/"serveixen", que son justo las formas más
+usadas. Ningún lookup puede encontrarlas. La segunda es lingüística: en
+catalán la terminación "-eix" no identifica un incoativo. Acaban igual
+los incoativos en "-ir" (serveix, que sí cambia), los verbos en "-èixer"
+(apareix, coneix, creix, que nunca cambian) y palabras que ni siquiera
+son verbos (mateix, peix). El valenciano distingue las dos clases de
+verbos por escrito; el catalán las funde. La diferencia es léxica, y por
+eso la primera versión de la regla dependía de una lista cerrada de
+siete raíces escrita a mano, con la cobertura limitada que eso implica.
+
+La solución actual no tiene ninguna lista. Un verbo terminado en "-eix",
+"-eixes" o "-eixen" pasa a "-ix" solo si se cumplen tres condiciones:
+(1) spaCy lo etiqueta como verbo, lo que descarta "mateix" o "peix";
+(2) el lema que propone spaCy acaba en "-ir", lo que descarta "créixer"
+o "conèixer"; y (3) ese lema existe como infinitivo en el diccionario de
+conjugaciones del proveedor. La tercera condición es la decisiva. spaCy,
+entrenado en catalán central, se inventa lemas para los verbos que no
+reconoce ("apareix"→*aparir*, "coneix"→*conir*, "neix"→*nir*); como esos
+infinitivos no existen en nuestros datos, se descartan solos. Además, la
+palabra debe ser exactamente raíz del lema + "eix" + terminación, y la
+diéresis se aplica cuando la raíz acaba en vocal sonora ("produïx",
+"posseïx", pero "aconseguix"). Es el mismo principio que guía el resto
+del motor: **el modelo estadístico propone y los diccionarios validan**,
+de modo que un error de spaCy nunca llega por sí solo a la traducción.
+
+Resultado: el banco de 151 frases se mantiene en 136/154 (recupera los
+mismos ocho casos que cubría la lista) y gplsi pasa de 1.337 a 1.505
+frases exactas de 1.958 (BLEU 90,14→93,05). Frente a no tener la regla,
+gana 185 frases y pierde una ("conquereix", que la referencia deja
+igual). Quedan fuera, por diseño, los casos en que spaCy no da una
+etiqueta fiable: un verbo a principio de frase etiquetado como nombre
+propio ("Floreix…") o con un pronombre enclítico pegado ("Serveix-li").
+
+En la misma jornada se fijaron otras dos piezas de esta dirección:
+
+- **Regla de la forma canónica.** Cuando una palabra catalana tiene
+  varios candidatos valencianos en el léxico (batlle→alcalde/batle,
+  noi→xic/xiquet, llimona→llima/llimó), se elige el marcado
+  `canonica: true` por el proveedor, en lugar de dejar la palabra sin
+  traducir. La única excepción son los ordinales básicos, donde la
+  canónica es la forma culta (quint, sext) y el uso real prefiere la
+  popular (cinqué, sisé). Las conjugaciones no traen este campo, así que
+  sus 49 formas ambiguas siguen sin traducirse.
+- **Artículo apostrofado tras una sustitución.** Si la palabra
+  traducida pasa a empezar por vocal, el artículo se apostrofa ("el
+  darrer"→"l'últim", "el batlle"→"l'alcalde", "la sortida"→"l'eixida"),
+  respetando que "la" no se apostrofa ante *i/u* átonas.
+
+También se comprobó si spaCy podía resolver la otra ambigüedad verbal de
+esta dirección: formas como "busqueu" o "sortim", que en catalán se
+escriben igual en indicativo, subjuntivo e imperativo mientras el
+valenciano las distingue ("cercau"/"cerqueu"). La respuesta es no. El
+rasgo `Mood` de spaCy devuelve "indicativo" casi siempre (10 de 35
+aciertos con el modelo pequeño, 8 de 35 con el mediano), y decidir el
+modo exige entender el verbo principal ("vull que sortim" frente a
+"diuen que sortim"). Esos casos, unos 19 en 2.112 frases, se reservan
+para la capa de LLM.
+
 ## 13. Postprocesado con modelo de lenguaje ("vía C")
 
 ### El problema que el motor deja sin resolver a propósito
@@ -842,6 +913,13 @@ completa, carpeta por carpeta:
 
 ¹ Cifra anterior a la limpieza de reglas de hoy, pendiente de
 reconfirmar — se espera un resultado similar.
+
+**Actualización 20/10/2026 (cat→val).** Desde esta fecha el trabajo se
+centra solo en la dirección catalán→valenciano. Tras la migración a los
+diccionarios del proveedor y los cambios descritos en la sección 12
+(incoativos validados contra los diccionarios, forma canónica, artículo
+apostrofado), cat→val está en **136/154** en el banco curado y
+**1.505/1.958 (76,9%)** en gplsi, frente a 1.212/1.958 el 14/10/2026.
 
 Pendiente, por orden sugerido:
 1. Corregir los 4 bugs de diccionario de la sección 15.

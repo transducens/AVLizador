@@ -168,6 +168,14 @@ def etiqueta(tokens: list[Token]) -> None:
     >>> etiqueta(toks)
     >>> [(t.surface, t.gender) for t in toks if t.surface == "entitats"]
     [('entitats', 'Fem')]
+
+    `lemma` (afegit 20/10/2026, vore `cat_val/incoatius.py`):
+
+    >>> toks = tokenize("Aquest servei serveix per a tot.")
+    >>> marca_noms_propis(toks)
+    >>> etiqueta(toks)
+    >>> [(t.surface, t.lemma) for t in toks if t.surface == "serveix"]
+    [('serveix', 'servir')]
     """
     nlp = _carrega_spacy()
     if nlp is None:
@@ -187,6 +195,7 @@ def etiqueta(tokens: list[Token]) -> None:
                 tok.mood = mood[0] if mood else ""
                 gender = dt.morph.get("Gender")
                 tok.gender = gender[0] if gender else ""
+                tok.lemma = dt.lemma_.lower()
                 break
 
 

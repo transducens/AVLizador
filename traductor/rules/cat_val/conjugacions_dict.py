@@ -72,6 +72,7 @@ from pathlib import Path
 from .. import (
     Token,
     aplica_amb_prefix_elidit,
+    corregeix_article_abans,
     corregeix_contraccio_al_abans,
     preserva_majuscula,
     separa_prefix_elidit,
@@ -262,6 +263,7 @@ class ConjugacionsDictInversRule:
                 if prefix is None:
                     tok.translated = preserva_majuscula(arrel, forma) + (sufix or "")
                     corregeix_contraccio_al_abans(tokens, i)
+                    corregeix_article_abans(tokens, i)
                 else:
                     aplica_amb_prefix_elidit(tokens, i, prefix, arrel, forma)
                     if sufix:

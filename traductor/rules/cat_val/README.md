@@ -73,6 +73,15 @@ català ("blat de moro"->"dacsa" i 6 parells mes, amb concordança de
 gènere invertida), exclusió d'"ensenyament" (5/6 casos reals el volien
 sense tocar), i la locució "per a acabar"->"per acabar".
 
+**20/10/2026**: `incoatius.py` invers REESCRIT sense llista d'arrels a mà:
+decidix spaCy (VERB + lema en "-ir") validat contra els infinitius de
+`conjugacions_dialectals.json` (vore el docstring del mòdul per al problema
+complet). gplsi 1337->1505/1958. Col·lisions del lèxic
+resoltes amb el camp `canonica` del proveïdor (regla fixa: en cas de dubte,
+la canònica; els ordinals de l'usuari mantenen prioritat). Nova
+`corregeix_article_abans()` (`rules/__init__.py`): "el darrer"->"l'últim",
+"el batlle"->"l'alcalde".
+
 **Deliberadament sense implementar encara**:
 - Fase 3 de veres: desambiguació assistida per LLM d'"aquest" per damunt
   del 77% (candidats tancats "este"/"eixe", mateix patró que

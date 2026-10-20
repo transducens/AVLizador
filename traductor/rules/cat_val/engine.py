@@ -4,14 +4,14 @@ Mirall de `rules/val_cat/engine.py`, pero NO amb el mateix conjunt de capes --
 vore `documentacio/hoja_de_ruta_traductor_invers.md` per al perquè de
 cada diferència.
 
-`incoatius.py` i `relatiu_on.py` SÍ s'han implementat (13/10/2026):
-- `incoatius.py`: llista TANCADA de 7 arrels verbals amb evidència real
-  (establir/servir/aconseguir/requerir/oferir/exhaurir/coincidir) -- NO
-  una regla de sufix general, perquè en català "estableix" (ha de
-  canviar) i "apareix" (mai canvia) acaben IGUAL, i la distinció és
-  LÈXICA, no ortogràfica (a diferència de l'original val->cat, on mirar
-  la lletra abans d'"ix" sí que distingix els dos grups). Vore
-  `incoatius.py` per al detall.
+**`incoatius.py` REESCRIT sense llista a mà (20/10/2026)**: abans era
+una llista TANCADA de 7 arrels verbals (establir/servir/aconseguir/
+requerir/oferir/exhaurir/coincidir). Ara decidix spaCy (VERB + lema en
+"-ir") validat contra els infinitius reals de
+`conjugacions_dialectals.json` -- cap verb escrit a mà. Vore
+`incoatius.py` per a l'explicació completa del problema.
+
+`relatiu_on.py` SÍ s'ha implementat (13/10/2026):
 - `relatiu_on.py`: 8 casos reals al benchmark invertit, els 8 volen
   "on"->"a on", amb 2 excepcions conegudes (construccions d'èmfasi
   temporal "és on"/"ha sigut...on") acceptades sense heurística nova
