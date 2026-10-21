@@ -15,7 +15,7 @@ capa: sin Ollama todo funciona igual que antes.
 
 | Tipo | Forma catalana | Opciones | Motor por defecto |
 |---|---|---|---|
-| `demostratiu` | aquest, aquesta, aquests, aquestes | `este` (1r grado) / `eixe` (2º grado) | `este` |
+| `demostratiu` (**desactivado por defecto**) | aquest, aquesta, aquests, aquestes | `este` (1r grado) / `eixe` (2º grado) | `este` |
 | `b4` | l'hi, la hi, les hi, els hi, -l'hi, -la-hi, -les-hi, -los-hi | `datiu` (li'l, li la…) / `neutre` (li ho) / `plural` (los el) / `lloc` (igual) | `lloc` (no tocar) |
 
 ## val→cat (`val_cat.py`)
@@ -49,3 +49,10 @@ solo cuenta los puntos sin llamar al modelo.
 benchmark completo: sin LLM, "este" ya acierta el 100% en el benchmark de
 151 y el 94,5% en el BOE, así que el margen es pequeño y el riesgo real (la
 Fase 3 de octubre empeoró el resultado).
+
+**21/10/2026, prueba en Abaco (qwen3:8b, 20 frases):** `demostratiu` empeoró
+(1/5 frente a 5/5 del motor) y queda **desactivado por defecto** (solo `b4`
+activo en cat→val; se prueba con `tipus={"demostratiu"}` o `--tipus`). El
+prompt de modo verbal se restauró **literalmente** desde la vía C original
+(la primera versión lo había acortado y salió sesgada al subjuntivo).
+

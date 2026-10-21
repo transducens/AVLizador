@@ -37,7 +37,7 @@ from ..rules.val_cat.conjugacions_dict import (
     es_risc_mode_3a_plural,
 )
 from ..rules.val_cat.engine import RuleEngine
-from .punts import PuntAmbigu, marca_en_frase, resol
+from .punts import PuntAmbigu, resol
 
 _AMBIGUITATS: dict[str, dict[str, str]] | None = None
 
@@ -111,54 +111,19 @@ def detecta_punts(tokens: list[Token]) -> list[PuntAmbigu]:
     return punts
 
 
-# Mateix criteri que `pipeline/08_traduccio_corpus/postprocessat_llm/compara_postprocessat.py`
-# (CRITERI_MODE_VERBAL + via C), el que va donar 129/151 amb qwen3:8b.
-CRITERI_MODE_VERBAL = """
-CRITERI PER A DECIDIR INDICATIU VS. SUBJUNTIU:
-- SUBJUNTIU si la paraula va en una oracio subordinada introduïda per "que"
-  depenent d'un verb de voluntat, necessitat, dubte, sentiment o valoracio
-  ("vull que", "cal que", "és necessari que", "sempre que", "a fi que"), o
-  darrere de "perquè" amb valor final, o en frases de relatiu amb valor
-  hipotetic/indefinit ("qualsevol que...", "el que siga que...").
-- INDICATIU si expressa un fet asseverat (en qualsevol persona, singular
-  o plural), normalment en oracio principal o subordinada completiva
-  sense eixe matís de voluntat/dubte ("jo declare que...", "els experts
-  creuen que...", "molts pares poden quedar...").
-ATENCIO -- NO confongues la paraula marcada amb el verb de la SEUA PROPIA
-subordinada: en "jo em centre en que el partit isca bé", la paraula
-marcada ("centre") es el verb PRINCIPAL, que assevera un fet -> INDICATIU.
-Mira SEMPRE si la paraula marcada es la que GOVERNA el "que" (verb
-principal -> INDICATIU) o la que ve DESPRES del "que" depenent d'un verb
-de voluntat/dubte/valoracio (-> SUBJUNTIU).
-ATENCIO -- frases de relatiu REALS (antecedent concret i existent) son
-INDICATIU: "els alumnes que opten a estudiar-hi", "les persones que creuen
-aixo". Son SUBJUNTIU NOMES les HIPOTETIQUES o INDEFINIDES ("qualsevol que
-vinga", "no hi ha ningu que ho sapia").
-ATENCIO -- "quan": INDICATIU si introduïx un fet REAL, HABITUAL o ja
-ocorregut ("quan plou, no ixc"); SUBJUNTIU si introduïx una condicio
-FUTURA o HIPOTETICA no verificada, frequent en textos legals ("Quan el
-tractament es base en el consentiment, [...]" = "en el cas que es base").
-"""
+# Còpia LITERAL de `pipeline/08_traduccio_corpus/postprocessat_llm/compara_postprocessat.py`
+# (CRITERI_MODE_VERBAL + system i prompt de `via_c`), el que va donar 129/151
+# amb qwen3:8b. Restaurada el 21/10/2026: la primera versió d'este mòdul
+# l'havia escurçada i havia posat la paraula entre claudàtors dins de la
+# frase, i la prova en Abaco (qwen3:8b, 20 frases) va eixir esbiaixada cap
+# al subjuntiu. No canviar sense tornar a mesurar contra el benchmark.
+CRITERI_MODE_VERBAL = '\nCRITERI PER A DECIDIR INDICATIU VS. SUBJUNTIU (la guia de dialectologia no\ncobrix mode verbal, nomes determinants/pronoms/preposicions -- este criteri\nes general, no ve d\'eixe document):\n- SUBJUNTIU si la paraula va en una oracio subordinada introduïda per "que"\n  depenent d\'un verb de voluntat, necessitat, dubte, sentiment o valoracio\n  ("vull que", "cal que", "és necessari que", "sempre que", "a fi que"), o\n  darrere de "perquè" amb valor final, o en frases de relatiu amb valor\n  hipotetic/indefinit ("qualsevol que...", "el que siga que...").\n- INDICATIU si expressa un fet asseverat (en qualsevol persona, singular\n  o plural), normalment en oracio principal o subordinada completiva\n  sense eixe matís de voluntat/dubte ("jo declare que...", "per la\n  present jo autorize...", "els experts creuen que...", "molts pares\n  poden quedar...").\nATENCIO -- NO confongues la paraula marcada en el verb de la SEUA PROPIA\nsubordinada: en "jo em centre en que el partit isca bé", la paraula\nmarcada ("centre") es el verb PRINCIPAL, que asseverA un fet ("centrar-se\nen" = fixar l\'atencio en), encara que vaja seguit de "que" i encara que el\nverb DINS d\'eixa subordinada ("isca") siga, ell si, subjuntiu de veres.\nVerbs assertius/factuals seguits de "en que"/"que" com "centrar-se en\nque", "basar-se en que", "fixar-se en que", "constatar que" son INDICATIU\nencara que hi haja un "que" immediatament darrere -- NO es el mateix\npatro que "vull que" (ahi el verb marcat seria "vull", no el verb de la\nsubordinada). Mira SEMPRE si la paraula marcada es la que GOVERNA el\n"que" (verb principal, asseveratiu -> INDICATIU) o la que ve DESPRES del\n"que" depenent d\'un verb de voluntat/dubte/valoracio (-> SUBJUNTIU).\nATENCIO -- frases de relatiu REALS (amb antecedent concret, conegut,\nexistent) son INDICATIU, encara que hi haja un "que" de relatiu: "els\nalumnes que opten a estudiar-hi" (uns alumnes reals i concrets que, de\nfet, trien aixo -> opten, INDICATIU), "les persones que creuen aixo"\n(persones reals que, de fet, ho creuen -> creuen, INDICATIU). Son\nSUBJUNTIU NOMES les frases de relatiu HIPOTETIQUES o INDEFINIDES, on\nl\'antecedent NO es cap persona/cosa concreta coneguda sino "qualsevol\nque complisca la condicio" ("qualsevol que vinga", "el primer que\narribe", "no hi ha ningu que ho sapia"). La prova: si pots substituir\n"que" per "qui de fet" o afegir "en concret" sense que la frase perda\nsentit (p.ex. "els alumnes que, en concret, opten..."), es relatiu REAL\n-> INDICATIU; si nomes te sentit amb "siga qui siga" o "qualsevol que",\nes relatiu HIPOTETIC -> SUBJUNTIU.\nATENCIO -- "quan" NO sempre es el mateix mode: si introduïx un fet REAL,\nHABITUAL o ja ocorregut ("quan vaig arribar, plovia", "quan plou, no\nixc", "quan el tractament es base de fet en X" parlant d\'un cas concret\nja establit) es INDICATIU. Es SUBJUNTIU quan "quan" (igual que "sempre\nque", "fins que", "a fi que") introduïx una condicio FUTURA o\nHIPOTETICA encara NO verificada -- patro molt comu en textos legals/\nnormatius: "Quan el tractament es base en el seu consentiment, [...]"\nvol dir "en el cas que / sempre que es base" (una condicio que pot\ncomplir-se o no en el futur, no un fet ja establit), per tant SUBJUNTIU\n("basi"), encara que no hi haja cap verb de voluntat/dubte explicit\ndavant. La prova: si pots substituir "quan" per "sempre que" o "en el\ncas que" sense que la frase perda sentit, es la lectura condicional/\nhipotetica -> SUBJUNTIU; si nomes te sentit com "en el moment en que,\nde fet," (un moment concret, real o habitual), es INDICATIU.\n'
 
-SYSTEM_MODE_VERBAL = (
-    "Ets un expert en gramatica catalana/valenciana. " + CRITERI_MODE_VERBAL + "\n"
-    "Se't dona una frase en valencia i una paraula marcada que pot ser una "
-    "forma verbal ambigua entre indicatiu (present o pretèrit perfet simple) "
-    "i el corresponent de subjuntiu (present o imperfet). ATENCIO: la mateixa "
-    "forma pot ser en realitat un substantiu o una altra categoria sense "
-    "relacio amb el verb (p.ex. \"base\", \"entre\", \"poble\"). Classifica "
-    "EIXA PARAULA EN EIXE CONTEXT:\n"
-    "- 'indicatiu' si ahi funciona com a indicatiu del verb (fet asseverat).\n"
-    "- 'subjuntiu' si ahi funciona com a subjuntiu (voluntat, dubte, "
-    "condicio hipotetica...).\n"
-    "- 'cap' si la paraula NO es este verb ahi (si es el verb en indicatiu, "
-    "la resposta es 'indicatiu', mai 'cap').\n"
-    "Respon amb UNA SOLA PARAULA: 'indicatiu', 'subjuntiu' o 'cap'."
-)
+SYSTEM_MODE_VERBAL = 'Ets un expert en gramatica catalana/valenciana. {CRITERI}\nSe\'t dona una frase en valencia i una paraula marcada que, segons les dades, POT ser una forma verbal ambigua entre un mode d\'indicatiu (present o pretèrit perfet simple) i el corresponent de subjuntiu (present o imperfet), en qualsevol persona (singular o plural) d\'un verb rar. ATENCIO: la mateixa forma sovint es en realitat un substantiu, preposicio o un atra categoria gramatical NO relacionada amb eixe verb (p.ex. "base", "entre", "poble") -- mira el context amb cura. Classifica EIXA PARAULA EN EIXE CONTEXT concret:\n- \'indicatiu\' si ahi funciona com un mode d\'indicatiu del verb (present o pretèrit perfet simple -- expressa un fet asseverat).\n- \'subjuntiu\' si ahi funciona com el corresponent de subjuntiu (present o imperfet -- voluntat, dubte, concessio...).\n- \'cap\' si la paraula marcada NO es en absolut este verb ahi (es un substantiu, preposicio, una atra categoria gramatical sense relacio -- NO triga \'cap\' nomes perque has descartat subjuntiu; si es este verb pero en mode indicatiu, la resposta es \'indicatiu\', mai \'cap\').\nRespon amb UNA SOLA PARAULA: \'indicatiu\', \'subjuntiu\' o \'cap\'. Sense cap explicacio ni raonament, nomes la paraula.'.replace("{CRITERI}", CRITERI_MODE_VERBAL)
 
 
 def _prompt(text: str, punt: PuntAmbigu) -> str:
-    return f'Frase: "{marca_en_frase(text, punt.marcada)}"\n\nParaula marcada: {punt.marcada}'
+    return f'Frase: "{text}"\n\nParaula marcada: {punt.marcada}'
 
 
 PROMPTS = {"mode_verbal": (SYSTEM_MODE_VERBAL, _prompt)}

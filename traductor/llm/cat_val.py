@@ -172,9 +172,20 @@ PROMPTS = {"demostratiu": (SYSTEM_DEMOSTRATIU, _prompt), "b4": (SYSTEM_B4, _prom
 _MOTOR: RuleEngineInvers | None = None
 
 
+# "demostratiu" NO s'activa per defecte (21/10/2026): provat en Abaco amb
+# qwen3:8b (20 frases del benchmark de 151), el LLM va canviar 4 de 5
+# "este" per "eixe" i en va encertar 1, quan el motor encertava els 5. Al
+# BOE l'"eixe" també és anafòric ("en eixe cas", "eixe termini") igual que
+# l'"este" del benchmark de 151 ("d'estes estades"): és una elecció
+# d'estil sense senyal a la frase, i "este" per defecte ja encerta el 94,5%
+# (BOE) i el 100% (151). Es pot provar a mà amb tipus={"demostratiu"}.
+TIPUS_PER_DEFECTE = frozenset({"b4"})
+
+
 def tradueix_cat_val(text: str, client=None, tipus: set[str] | None = None) -> tuple[str, list[PuntAmbigu]]:
     """Traducció cat->val amb la capa de LLM. `tipus` limita quins punts es
-    consulten ({"demostratiu"}, {"b4"}...); per defecte tots.
+    consulten ({"demostratiu"}, {"b4"}...); per defecte `TIPUS_PER_DEFECTE`
+    (només "b4").
 
     Sense client, el text és idèntic al del motor:
 
@@ -185,5 +196,6 @@ def tradueix_cat_val(text: str, client=None, tipus: set[str] | None = None) -> t
     if _MOTOR is None:
         _MOTOR = RuleEngineInvers()
     tokens = _MOTOR.tradueix_tokens(text)
-    punts = [p for p in detecta_punts(tokens) if tipus is None or p.tipus in tipus]
+    actius = TIPUS_PER_DEFECTE if tipus is None else tipus
+    punts = [p for p in detecta_punts(tokens) if p.tipus in actius]
     return resol(text, tokens, punts, PROMPTS, client)

@@ -58,7 +58,9 @@ def main() -> None:
     ap.add_argument("--model", default="qwen3:8b")
     ap.add_argument("--ollama-url", default="http://localhost:11434")
     ap.add_argument("--timeout", type=int, default=120)
-    ap.add_argument("--tipus", default=None, help="cat-val: 'demostratiu', 'b4' o tots dos separats per coma")
+    ap.add_argument("--tipus", default=None,
+                    help="cat-val: 'demostratiu', 'b4' o tots dos separats per coma "
+                         "(per defecte només 'b4'; 'demostratiu' es va desactivar el 21/10/2026)")
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--sense-llm", action="store_true", help="només detecta i compta punts")
     ap.add_argument("--verbose", action="store_true")
