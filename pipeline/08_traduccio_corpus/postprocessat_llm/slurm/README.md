@@ -44,7 +44,7 @@ Paquet a pujar (estructura plana d'Abaco, generat en local a
 `dades/abaco/capa_llm_abaco.tar.gz`, fora de git): `traductor/` sencer,
 `avalua_capa_llm.py`, `slurm/avalua_capa_llm.sh`,
 `03_seleccio_de_model/{evalua_models.py,benchmark_corpus.json}` i
-`dades/boe/benchmark_boe_mostra_2000.json`.
+`dades/boe/benchmarks/benchmark_boe_mostra_2000.json`.
 
     scp dades/abaco/capa_llm_abaco.tar.gz nmartin@abaco:~/scrapeo/
     ssh nmartin@abaco

@@ -577,3 +577,13 @@ texto oficial, traducido dos veces por equipos distintos). Ver
   minutos antes de un último intento; si ese intento también falla, se
   descarta ese elemento (queda registrado en el log) y se continúa con el
   siguiente, sin abortar toda la ejecución.
+
+## Benchmarks del BOE (21/10/2026)
+
+`construeix_boe_dialectal.py` genera, en `dades/boe/benchmarks/` (fuera de git), los tres benchmarks del BOE para el traductor:
+
+- `benchmark_boe_mostra_2000.json`: muestra general de 2.000 líneas, sin filtrar.
+- `benchmark_boe_dialectal_estricte.json`: pares en los que todas las diferencias son dialectales seguras (regresiones).
+- `benchmark_boe_dialectal_ampli.json`: pares idénticos o con solo sustituciones palabra por palabra (huecos).
+
+Criterio, uso y resultados en el README de esa carpeta (`dades/boe/benchmarks/README.es.md`) y en la cabecera del script.

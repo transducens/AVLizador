@@ -10,9 +10,9 @@
 #       nmartin@abaco:~/scrapeo/postprocesado_llm/
 #   scp pipeline/08_traduccio_corpus/postprocessat_llm/slurm/avalua_capa_llm.sh \
 #       nmartin@abaco:~/scrapeo/postprocesado_llm/slurm/
-#   ssh nmartin@abaco "mkdir -p ~/scrapeo/postprocesado_llm/dades/boe"
-#   scp dades/boe/benchmark_boe_mostra_2000.json \
-#       nmartin@abaco:~/scrapeo/postprocesado_llm/dades/boe/
+#   ssh nmartin@abaco "mkdir -p ~/scrapeo/postprocesado_llm/dades/boe/benchmarks"
+#   scp dades/boe/benchmarks/benchmark_boe_mostra_2000.json \
+#       nmartin@abaco:~/scrapeo/postprocesado_llm/dades/boe/benchmarks/
 #   (03_seleccio_de_model/evalua_models.py i benchmark_corpus.json ja hi són)
 #
 # Llançar-ho (des de ~/scrapeo/postprocesado_llm/slurm):
@@ -58,8 +58,9 @@ else
     echo "Mode estructura plana: $BASE_DIR"
 fi
 # El benchmark del BOE no està a git (dades/ s'ignora): cal pujar-lo a mà a
-# dades/boe/ dins de BASE_DIR.
-BENCH_BOE="dades/boe/benchmark_boe_mostra_2000.json"
+# dades/boe/benchmarks/ dins de BASE_DIR (o regenerar-lo amb
+# pipeline/05_corpus_boe/construeix_boe_dialectal.py).
+BENCH_BOE="dades/boe/benchmarks/benchmark_boe_mostra_2000.json"
 
 export CUDA_VISIBLE_DEVICES="0"
 export OLLAMA_VULKAN=0

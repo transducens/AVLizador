@@ -496,7 +496,7 @@ Hecho, con permiso del usuario:
 
 Las bajadas en 151 y gplsi son de estilo, no errores: esos corpus no
 siguen la norma oficial en estos tres puntos. La muestra del BOE quedó
-guardada como benchmark nuevo en `dades/boe/benchmark_boe_mostra_2000.json`
+guardada como benchmark nuevo en `dades/boe/benchmarks/benchmark_boe_mostra_2000.json`
 (mismo formato `id`/`occidental`/`oriental`; `dades/` no está en git).
 Nota: el número de frases exactas en el BOE es bajo (~18%) en parte porque
 la referencia usa el apóstrofo tipográfico (’) y el motor el recto (');
@@ -633,3 +633,141 @@ de modo verbal restaurado literal):
   largas (17).
 - El trabajo vuelve a centrarse solo en cat→val.
 
+## 21/10/2026 (tarde) — Conflictos creados por nuestras filas `LIMPIO_` en las conjugaciones
+
+Investigando por qué fallaban RC152 ("fos" → "fóra") y RC107 ("ofertes" →
+"oferides") se vio que **29 de las 49 formas ambiguas de cat→val las
+creaban nuestras propias filas `LIMPIO_`** (las 968 que fusionamos el
+19/10/2026 desde `conjugaciones_limpio.json` dentro de
+`diccionarios/conjugaciones_general.json`). En las 29 el proveedor daba un
+único candidato y nuestra fila añadía un segundo, así que la forma se
+quedaba sin traducir. Principio acordado con el usuario: **la base de
+código son los diccionarios**; los errores se corrigen ahí, no con código
+ni listas.
+
+**Grupo 1 — error nuestro, BORRADO (6 filas, con permiso del usuario):**
+`LIMPIO_830`/`831` ("fos" → "fora"/"fóra", el segundo duplicado del
+proveedor), `LIMPIO_466`/`467` ("donis" → "dones"/"ónes", esta última no
+existe), `LIMPIO_651`/`652` ("morin" → "moren"/"muiren", duplicado).
+Efecto: "fos" → "fóra" (RC152 correcto; en gplsi tres "fos" → "fóra",
+cuya referencia escribe "fora"), "morin" → "muiren". "donis" ya está bien
+en datos; solo falla cuando spaCy lo toma por nombre ("li donis res").
+Grafía oficial confirmada: el BOE valenciano escribe "fóra" 154 veces
+frente a ~13 "fora" verbal.
+
+**Grupo 2 — sinónimo dialectal frente al mismo verbo, MARCADO (26 filas):**
+"sofrir", "prémer", "ajupir", "tòrcer", "sobresortir". El proveedor elige
+el sinónimo dialectal ("sofreixi" → "patisca", "premi" → "polse",
+"ajupi" → "acatxe", "torci" → "torce", "sobresurti" → "sobreisca") y
+nuestra fila conservaba el mismo verbo ("sofrisca", "prema"...). Las
+filas se quedan porque son valenciano válido y hacen falta en val→cat
+("sofrisca" → "sofreixi"), pero se marcan como no preferidas con el mismo
+esquema que el proveedor usa en el léxico: `canonica: false`,
+`problema: "colision"`, `id_colision` = la fila del proveedor. Las filas
+del proveedor no se tocan.
+
+**Código:** `cat_val/conjugacions_dict.py::carrega_conjugacions_invers`
+aplica ahora la regla de la canónica también a las conjugaciones: si una
+forma catalana tiene varios candidatos, descarta los que solo vienen de
+filas `canonica: false`. Sin ninguna marca, la forma se sigue excluyendo
+("busqueu" → "cercau"/"cerqueu" no se toca). 617/617 doctests; 0 cambios
+en los tres benchmarks (las formas no aparecen) y 0 regresiones.
+
+Quedan 20 formas ambiguas en cat→val, todas de los datos del proveedor
+(modo verbal: "busqueu", "sortim", "defensa"...).
+
+**APLICADO (21/10/2026):** dejar pasar por el filtro de
+categoría los participios que spaCy etiqueta `ADJ` con `VerbForm=Part`
+("informacions ofertes" → "oferides"). Medido: 151 +1 (RC107), gplsi
++1/−1, BOE +5 exactas con 41 cambios, 37 confirmados por la referencia
+("establert" → "establit"...). Descartado (medido): que cat→val ignore
+las filas `problematica` (perdía 8.454 formas; 151 −4, gplsi −6, BOE −21).
+
+**Benchmark de 151 editado por el usuario (21/10/2026)**: 20 cambios
+deliberados en `benchmark_corpus.json` ("a on" → "on", "per"/"per a" +
+infinitivo, "ensenyament" → "ensenyança", "qué" → "què", "desenvolupament"
+→ "desenrotllament", "en" → "a"...), para que la referencia siga la norma
+("era lo que se debe hacer bien"). Con ellos el 151 pasa de 130 a 150/154
+exactas (BLEU 98,61 → 99,78) sin que cambie el motor: las cifras del 151
+anteriores al 21/10 no son comparables con las de después.
+
+**Participios aplicados** (`cat_val/conjugacions_dict.py`): el filtro de
+categoría deja pasar `ADJ` con `VerbForm=Part`. Resultado: 151 150 → **151/154**
+(RC107 "ofertes" → "oferides"), gplsi 1.486 igual (2 cambios: "sobresurt"
+→ "sobreïx", "escalfat" → "calfat"), BOE 453 → **458** (BLEU 77,02 →
+77,14; 41 cambios, los 3 no confirmados son frases donde la referencia
+reformula). Limitación: si spaCy pone `ADJ` sin `VerbForm` ("Les
+informacions ofertes són orientatives."), no se toca. 621/621 doctests.
+
+## 21/10/2026 (cierre) — Dos benchmarks "BOE dialectal"
+
+**Por qué**: en la muestra de 2.000 líneas del BOE, el 56,5% de los pares
+son reformulaciones del traductor humano ("Pel que fa a" → "Quant a",
+presente → futuro), y en ellas el motor acierta el 1% de las frases. No
+es un fallo dialectal: es estilo. Estos dos benchmarks separan ese ruido
+de lo que queremos medir. Script:
+`pipeline/05_corpus_boe/construeix_boe_dialectal.py`, sobre el BOE completo
+(267.963 pares). Ficheros en `dades/boe/benchmarks/` (fuera de git), con un README que explica cada uno; el mismo script regenera también la muestra general `benchmark_boe_mostra_2000.json`, idéntica a la original.
+
+| Benchmark | Criterio | Pares | Fichero (muestra de 2.000, semilla 21) |
+|---|---|---|---|
+| **Amplio** | Pares idénticos o con solo sustituciones palabra por palabra (bloques 1:1 de hasta 2 palabras, más la "a" de "per a"). Criterio estructural, sin diccionario. | 73.705 | `benchmark_boe_dialectal_ampli.json` |
+| **Estricto** | Al menos una diferencia, y **todas** dialectales seguras (lista de abajo). | 9.453 | `benchmark_boe_dialectal_estricte.json` |
+
+Los conjuntos enteros están en `*_complet.json`. Filtro previo, igual que
+la muestra anterior: longitud de 30 a 300 caracteres y ratio de longitud
+de 0,85 a 1,15.
+
+**Una diferencia cuenta como dialectal segura si cumple una de estas
+condiciones:**
+- (a) el par catalán/valenciano está en los diccionarios (léxico,
+  conjugaciones, demostrativos): 7.906 pares;
+- (b) spaCy da el mismo lema y los mismos rasgos de tiempo, modo,
+  persona, número y forma verbal, con el mismo prefijo elidido y el
+  mismo enclítico; el género no se compara, para que entre "dues"/"dos";
+- (c) solo cambia el acento ("entès"/"entés");
+- (d) es la "a" de "per a" + infinitivo;
+- (e) es un incoativo, con la misma transformación que aplica
+  `cat_val/incoatius.py`.
+
+Los criterios (b) a (e) aportan 1.547 pares más. Fuera del estricto
+quedan los pares con diferencias de mayúsculas (7.895) y los que tienen
+alguna diferencia sin clasificar (24.278).
+
+**Dos versiones previas descartadas por fugas reales:**
+- con solo "mismo lema", entraban cambios de tiempo verbal ("pot" →
+  "podrà", "és" → "serà");
+- sin exigir los mismos clíticos, entraban cambios de estructura
+  ("acords" → "d'acords", "s'ha" → "ha").
+
+**Ojo:** el criterio (a) usa el propio diccionario, así que el estricto
+mide lo que el motor **debería** saber. Sirve para detectar regresiones,
+no para descubrir huecos; para eso está el amplio.
+
+**Motor cat→val** (JSON en
+`resultats/benchmark_traductor_cat-val_boe_dialectal_{estricte,ampli}_20261021.json`):
+
+| Benchmark | Exactas | BLEU | chrF |
+|---|---|---|---|
+| Estricto | **1.677/2.000 (83,9%)** | 96,87 | 98,80 |
+| Amplio | **1.177/2.000 (58,9%)** | 87,91 | 95,39 |
+| Muestra anterior del BOE (referencia) | 458/2.000 | ~77 | — |
+
+**Fallos más frecuentes en el estricto (errores reales del motor o de
+los datos, sin arreglar):**
+- "anous" en lugar de "nous" (18): homógrafo en plural;
+- "durada" → "duració" (19+4): el par existe en el BOE pero el motor no lo aplica;
+- "Servei(s)"/"SERVEIS" → "Servici(s)" (44): el par está en los datos, pero
+  falla en mayúsculas y en plural;
+- pérdida de mayúsculas ("Decret Llei", "Orgànica", "Llei" en minúscula: ~30);
+- "interesos" en lugar de "interessos" (10);
+- "recerca" → "investigació" (21);
+- "Desenvolupament" → "Desenrotllament" (8): falla en mayúscula;
+- "este" en lugar de "eixe" (13): el valor por defecto de los demostrativos;
+- "Comitè"/"comprèn" sin acento valenciano (10);
+- "Tingui" → "Tinga" (4);
+- ordinales "cinqué" en lugar de "quint" (4): la lista del usuario sobrescribe la canónica.
+
+**En el amplio dominan las diferencias de estilo**: el presente pasa a
+futuro ("és" → "serà" 57, "pot" → "podrà" 52), "a" → "en" (59) y
+mayúsculas. Ninguna de ellas es dialectal.

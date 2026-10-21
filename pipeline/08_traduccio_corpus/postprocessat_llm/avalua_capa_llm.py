@@ -13,7 +13,7 @@ l'encerta el LLM i si l'encertava el motor.
 Ús (des de l'arrel del repo; en Abaco, exporta AVLIZADOR_ROOT):
 
     python pipeline/08_traduccio_corpus/postprocessat_llm/avalua_capa_llm.py \\
-        --direccio val-cat --benchmark dades/boe/benchmark_boe_mostra_2000.json \\
+        --direccio val-cat --benchmark dades/boe/benchmarks/benchmark_boe_mostra_2000.json \\
         --model qwen3:8b
 
     # Només comptar punts, sense cridar cap model:
