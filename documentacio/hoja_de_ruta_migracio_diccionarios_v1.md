@@ -1,4 +1,4 @@
-# Hoja de ruta: migración a `diccionarios_v1/` (Mauricio, 16/10/2026)
+# Hoja de ruta: migración a `diccionarios_v1/` (proveedor de datos, 16/10/2026)
 
 Documento vivo. Objetivo final (pedido explícito del usuario): sustituir
 todos los JSON de `pipeline/02_regles_dialectals/lexic/` por los 3
@@ -24,14 +24,14 @@ nuevo gana siempre".
 
 | Fichero/mecanismo actual | Origen actual (`sync_data.py`) | Sustituto en `diccionarios_v1/` |
 |---|---|---|
-| `lexic_mauricio.json` | `unificado.json` | `lexico_general.json` (categorías n/adj/adv/cnjadv/pr/ij) |
-| `numerals_mauricio.json` | `numerales_limpio.json` | `lexico_general.json`, `categoria: "num"` (77 entradas, más completo: compuestos hasta decenas de miles) |
-| `possessius_mauricio.json` | `posesivos_cat_val.json` | probablemente `lexico_general.json`, `categoria: "prn"` — **pendiente confirmar cobertura completa**, solo 6 entradas en `prn` vistas, parece insuficiente para posesivos completos (meu/meua/meus/meues...) |
+| `lexic_general.json` | `unificado.json` | `lexico_general.json` (categorías n/adj/adv/cnjadv/pr/ij) |
+| `numerals_general.json` | `numerales_limpio.json` | `lexico_general.json`, `categoria: "num"` (77 entradas, más completo: compuestos hasta decenas de miles) |
+| `possessius_general.json` | `posesivos_cat_val.json` | probablemente `lexico_general.json`, `categoria: "prn"` — **pendiente confirmar cobertura completa**, solo 6 entradas en `prn` vistas, parece insuficiente para posesivos completos (meu/meua/meus/meues...) |
 | `demostratius_avl.json` (val_cat, hardcoded "aquest" default) | curado a mano | `lexico_general.json`, `categoria: "det"` (8 entradas: este/esta/estos/estes/eixe/eixa/eixos/eixes) — **⚠️ ver sección 4, conflicto real** |
-| `conjugacions_dialectals.json` | 4 fuentes fusionadas (`verbos_no_ambiguos.json` + `conjugaciones_limpio.json` + `verbos_todos_anotados.json` + `conjugaciones_nuevo.json`, con lógica de orden/colisión en `sync_data.py`) | `conjugaciones_general.json` — **posible simplificación grande**: si este fichero ya es el consolidado de Mauricio, buena parte de la lógica de fusión/orden actual de `sync_data.py` podría quedar obsoleta. Falta confirmar que es un superconjunto real antes de borrar esa lógica. |
+| `conjugacions_dialectals.json` | 4 fuentes fusionadas (`verbos_no_ambiguos.json` + `conjugaciones_limpio.json` + `verbos_todos_anotados.json` + `conjugaciones_nuevo.json`, con lógica de orden/colisión en `sync_data.py`) | `conjugaciones_general.json` — **posible simplificación grande**: si este fichero ya es el consolidado del proveedor, buena parte de la lógica de fusión/orden actual de `sync_data.py` podría quedar obsoleta. Falta confirmar que es un superconjunto real antes de borrar esa lógica. |
 | Verbos de raíz distinta (ya integrados dentro de `conjugacions_dialectals.json` hoy, causaban el bug de locuciones "digues adéu" en el IPD) | mezclados en las mismas 4 fuentes de arriba | `verbos_diferentes_conjugados.json`, ahora SEPARADO — esto probablemente arregla solo, de raíz, el bug de locuciones multi-palabra que encontramos ayer en el IPD (ya no estarán mezcladas con las conjugaciones de raíz única). |
 | `categoria_gramatical_lexic.json` (hoy solo `"anou": "NOUN"`, a mano) | curado a mano, 1 sola entrada | el campo `categoria` de `lexico_general.json` ya lo da para TODO el léxico (no solo "anou") — esto es lo que más impacto puede tener: resolvería de raíz el hueco que encontramos el 16/10 con "nou" en el IPD. |
-| `canvi_genere_lexic_avl.json`, `flexio_genere_avl.json` | curados a mano | sin equivalente visto todavía en los 3 ficheros nuevos — **pendiente de confirmar si Mauricio los cubre en otra entrega o si se quedan como están** |
+| `canvi_genere_lexic_avl.json`, `flexio_genere_avl.json` | curados a mano | sin equivalente visto todavía en los 3 ficheros nuevos — **pendiente de confirmar si el proveedor los cubre en otra entrega o si se quedan como están** |
 
 ## 3. Qué hay que seguir filtrando (igual disciplina que siempre)
 
@@ -63,7 +63,7 @@ del fichero, podría resolver ese pendiente de forma natural al migrar.
 ## 4bis. Fase 1 hecha (numerales) — hallazgo real: el fichero nuevo pierde cobertura
 
 Comparado `lexico_general.json` (`categoria: "num"`, 77 entradas) contra
-`numerals_mauricio.json` actual (176 entradas): **0 entradas ganadas, 99
+`numerals_general.json` actual (176 entradas): **0 entradas ganadas, 99
 perdidas** — todas formas ORDINALES ("cinquanta-huitena"→"cinquanta-vuitena",
 "denovena"→"dinovena", "dessetena"→"dissetena"...). Donde coinciden, dicen
 lo mismo (0 conflictos). El fichero nuevo solo cubre cardinales.
@@ -71,8 +71,8 @@ lo mismo (0 conflictos). El fichero nuevo solo cubre cardinales.
 **Decisión del usuario (16/10/2026): dejarlo como pendiente, no bloquear
 el resto de la migración por esto.** Se extrajeron las 99 entradas
 faltantes a un fichero aparte, `pipeline/02_regles_dialectals/lexic/numerals_ordinals_pendent.json`
-(mismo esquema que `numerals_mauricio.json`: `valenciano`/`catalan`/`revision`),
-para no perder el dato mientras se decide qué hacer (¿Mauricio lo añade
+(mismo esquema que `numerals_general.json`: `valenciano`/`catalan`/`revision`),
+para no perder el dato mientras se decide qué hacer (¿el proveedor lo añade
 en una próxima entrega? ¿se fusiona a mano con `lexico_general.json`?).
 **No incorporado todavía a ningún loader** — es solo la pieza guardada,
 la decisión de cómo encajarla queda abierta.
@@ -80,8 +80,8 @@ la decisión de cómo encajarla queda abierta.
 ## 4ter. Fase 3 — léxico general: revisado a fondo, resultado positivo, 3 huecos documentados
 
 Comparado `lexico_general.json` (categorías n/adj/adv/cnjadv/pr/ij) contra
-`lexic_mauricio.json` actual, replicando la MISMA lógica de resolución
-`canonica` que usa hoy `_resol_mauricio()` (no una comparación ingenua):
+`lexic_general.json` actual, replicando la MISMA lógica de resolución
+`canonica` que usa hoy `_resol_polisemia()` (no una comparación ingenua):
 
 - **1.027 → 1.202 entradas (+175 netas)**: 253 ganadas, 78 aparentemente
   perdidas.
@@ -111,7 +111,7 @@ Comparado `lexico_general.json` (categorías n/adj/adv/cnjadv/pr/ij) contra
 
 **Hueco nuevo encontrado, mismo tipo que numerales-ordinales y
 posesivos**: la capa de ACENTUACIÓN (695 pares tipo "francés"(val,
-tancat)/"francès"(cat, obert), hoy en `lexic_acentuacio_mauricio.json`)
+tancat)/"francès"(cat, obert), hoy en `lexic_acentuacio_general.json`)
 **no parece estar en la entrega nueva** — "francés" y "qué" aparecen con
 el MISMO accent als dos costats en `lexico_general.json`, no l'alternança
 que fa falta. Pendiente de confirmar si ve en una entrega futura.
@@ -127,9 +127,9 @@ posesivos... nos quedamos con las entradas nuevas". Implementado para
 val→cat (cat→val pendiente, siguiente paso natural):
 
 **Cambios aplicados**:
-- `sync_data.py`: `lexic_mauricio.json` ahora sincroniza desde
+- `sync_data.py`: `lexic_general.json` ahora sincroniza desde
   `diccionarios_v1/lexico_general.json` (antes `unificado.json`).
-- `val_cat/lexic.py::_carrega_mauricio_lexic()`: filtra por
+- `val_cat/lexic.py::_carrega_lexic_general()`: filtra por
   `categoria in {n,adj,adv,cnjadv,pr,ij,prn}` (deja `num`/`det` a sus
   propios módulos).
 - `_CANONICA_OVERRIDES = {"xicotet": "petit"}`: el bug de "xicotet"→"menut"
@@ -138,7 +138,7 @@ val→cat (cat→val pendiente, siguiente paso natural):
 - `_BUG_DADES_CONEGUTS`: quitado "vesprada" (ya viene bien, "tarda"),
   añadidos **"alcalde"** (→"batlle", regresión real RC136, mismo patrón
   de registro que "qué"/"ensenyament") y **"tancada"** (→"closa",
-  regresión real RC144 — Mauricio mismo lo marca `problema:
+  regresión real RC144 — el proveedor mismo lo marca `problema:
   "homonimia_lexica"`, nombre "vallado" vs. adjectiu "tancat/da", la
   entrada solo vale para el sentido nombre). Hay **24 entradas con este
   mismo flag `homonimia_lexica`** en total — solo se excluyó la
@@ -177,7 +177,7 @@ compensa de sobra el único caso que empeoró en el benchmark de 151
 
 Mismo enfoque que val→cat, aplicado a `cat_val/lexic.py`:
 
-- Mismo filtro `categoria` en `_carrega_mauricio_lexic_invers()` y
+- Mismo filtro `categoria` en `_carrega_lexic_general_invers()` y
   `carrega_frases_invers()` (léxico multi-paraula).
 - "tard" quitado de `_BUG_DADES_CONEGUTS_CAT` -- confirmado que ninguna
   entrada nueva colisiona ya con "tard" (el bug "vesprada"/"tard" viene
@@ -242,9 +242,9 @@ deberían bastar los 3 ficheros nuevos?" y al remedir con rigor
   las categorías — siguen con 0/6 cobertura real, genuinamente ausentes.
 
 **Migración ejecutada**: `numerals.py` (las dos direcciones) ahora lee
-directamente `lexic_mauricio.json` filtrando `categoria == "num"` — ya
-no existen `numerals_mauricio.json` ni su fuente `numerales_limpio.json`.
-La capa de acentuación a banda (`lexic_acentuacio_mauricio.json` /
+directamente `lexic_general.json` filtrando `categoria == "num"` — ya
+no existen `numerals_general.json` ni su fuente `numerales_limpio.json`.
+La capa de acentuación a banda (`lexic_acentuacio_general.json` /
 `acentuacion_limpio.json`) se **retiró por completo** — el patrón
 productivo de sufijo en `accentuacio.py` (que no depende de ningún
 fichero, cubre CUALQUIER palabra con ese sufijo) sigue intacto como red
@@ -253,7 +253,7 @@ de seguridad independiente.
 **Bug real encontrado de paso** (RC144, cat→val): "cinquè"→"cinqué" SÍ
 existe en `lexico_general.json` con `canonica: true` (colisionando con
 otra entrada "cinqué"→"cinqué" de sentido nombre, `canonica: false`) —
-`_carrega_mauricio_lexic()` (val→cat) la resuelve bien con `canonica`,
+`_carrega_lexic_general()` (val→cat) la resuelve bien con `canonica`,
 pero `_invertix_sense_ambiguitat` (cat→val, agrupa por catalán) la
 excluye por tener más de un candidato valenciano real visto desde ese
 lado — mismo criterio conservador de siempre (prefiere falso negativo),
@@ -295,20 +295,166 @@ hasta la explicación de `morfologia`), y `palabras_traducidas.json`
 (dependencia real de `05_corpus_boe/analizar_corpus.py`, sin relación
 con el traductor).
 
-## 5. Pendiente de la explicación prometida (NO adivinar mientras tanto)
+## 5. Códigos de `morfologia` — DESCIFRADOS CON EVIDENCIA (19/10/2026, ya no bloquea nada)
 
-`conjugaciones_general.json` trae 150 combinaciones distintas de
-`morfologia`. Cuando es una lista simple (p.ej. `['pis','p2','pl']`) es
-una forma sin ambigüedad; cuando es una LISTA DE LISTAS (p.ej.
-`[['imp','p3','pl'], ['prs','p3','pl']]` o `[['n','m','sg'], ['prs','p1','sg']]`)
-la forma tiene más de una lectura posible — potencialmente la misma
-información que hoy calculamos nosotros mismos con
-`es_risc_mode_3a_plural()` y el filtro de POS de spaCy (incluyendo el
-caso "estat"/"recull" que dejamos aparcado ayer). **No descifrar los
-códigos (`pis`, `pri`, `prs`, `imp`, `pp`, `inf`, `n`...) por prueba y
-error** — el riesgo de interpretar mal justo la distinción indicativo/
-subjuntivo es demasiado alto para adivinar; esperar la explicación
-prometida antes de tocar `conjugacions_dict.py` o `es_risc_mode_3a_plural`.
+**Resuelto sin esperar la explicación prometida.** Al revisar con calma
+qué haría falta para integrar `conjugaciones_general.json` de forma
+segura, se vio que el riesgo real (interpretar mal indicatiu/subjuntiu)
+no dependía de decodificar `morfologia` en absoluto: el lookup de
+`conjugacions_dict.py` es un diccionario plano `valenciano->catalan`, y
+**nunca ha usado el campo de tiempo/modo para elegir una traducción** —
+es puramente informativo. La seguridad real viene de otro sitio, que ya
+existía: el proveedor marca las filas peligrosas con los mismos campos que
+ya usan los 4 ficheros viejos (`problematica`/`problema: colision` en
+`conjugaciones_general.json`; `ambigu`/`ambigu_cat_a_val` en
+`verbos_diferentes_conjugados.json`, mismo esquema que
+`verbos_no_ambiguos.json`/`verbos_todos_anotados.json`), y las dos
+direcciones del motor YA recalculan la ambigüedad real directamente
+sobre los datos (nunca confiando en el nombre de un campo) — ver
+`conjugacions_dict.py::_marca_ambigues_dins_del_mateix_fitxer` (val→cat)
+y `cat_val/conjugacions_dict.py::carrega_conjugacions_invers` (cat→val,
+comentario explícito: "no es confia nomes en el camp
+ambigu_cat_a_val del proveedor").
+
+Aun así, se descifraron los códigos de tiempo/modo con evidencia real
+(cruzando las formas catalanas/valencianas contra la gramática conocida,
+y validando contra el caso ya documentado en el propio código,
+`es_risc_mode_3a_plural("creuen", "creuin")`):
+
+| Código | Significado | Evidencia |
+|---|---|---|
+| `pri` | Present d'indicatiu | `abaixar`: cat "abaixo" / val "abaixe" — 1a sg present, forma corriente |
+| `prs` | Present de subjuntiu | Colisiona con `imp` en 3a persona (ambigüitat real del català: "abaixin" = imperatiu formal O present subjuntiu) |
+| `pii` | Pretèrit imperfet d'indicatiu | Rarísimo (12/43.242) — coherente: el imperfet d'indicatiu casi nunca difiere entre dialectos |
+| `pis` | Pretèrit imperfet de subjuntiu | El más frecuente (28.484) — coherente: el imperfet de subjuntiu SIEMPRE difiere (-ra valenciano / -és català) |
+| `imp` | Imperatiu | — |
+| `pp` | Participi (passat) | `acomplir`: cat "acomplertes" (irregular) / val "acomplides" (regular) |
+| `inf` | Infinitiu | Fila sin persona/nombre (`['inf']` solo) |
+| `vbmod`/`vbhaver`/`:haver<vaux` | Marca de classe verbal (modal/auxiliar), no de temps | Antepuesto al código de tiempo normal en verbos especiales (`caldre`, `haver`) |
+| `n`/`adj`/`adv`/`prn`/`ij` (+ `sup`/`m`/`f`/`mf`) | Col·lisió amb una altra categoria gramatical | Siempre acompañado de `problematica: true`, `problema: "colision"` — ya excluido por el filtro existente |
+| `fti` | Sin decodificar con confianza | 1 sola aparición en todo el fichero (<0,01%) — irrelevante en la práctica |
+
+Estos 7 códigos principales cubren el 99,7% de las 43.242 filas. Detalle
+completo de la verificación (tally por posición, ejemplos cruzados) en
+el historial de la sesión del 19/10/2026.
+
+**Conclusión: `conjugaciones_general.json` y `verbos_diferentes_conjugados.json`
+ya NO están bloqueados.** Se integraron el 19/10/2026 como fuentes
+OFICIALES (máxima prioridad) en `sync_data.py::FONTS`, delante de los 4
+ficheros viejos. Medido con doctests + benchmark 151 + gplsi completo,
+las dos direcciones:
+
+| | val→cat 151 | val→cat gplsi | cat→val 151 | cat→val gplsi |
+|---|---|---|---|---|
+| Antes (solo 4 ficheros viejos) | 115/151 | 1330/1958 | 116/151 | 1267/1958 |
+| Después (oficiales + 4 viejos de red de seguridad) | 114/151 | **1408/1958 (+78)** | 116/151 | **1341/1958 (+74)** |
+| Solo oficiales, SIN los 4 viejos | 106/151 | 1399/1958 | 107/151 | 1328/1958 |
+
+La única "regresión" del benchmark de 151 (RC021, val→cat) no es un bug:
+la referencia catalana mantiene literalmente "tindre" sin traducir
+porque la frase ES una cita metalingüística de la propia expresión
+valenciana ("l'expressió tindre faena, és a dir..."), no un uso verbal
+normal — mismo patrón ya documentado para "rentar" en RC002. El resto es
+mejora neta clara, especialmente a escala (gplsi).
+
+**Los 4 ficheros viejos NO se pueden retirar todavía** (fila "Solo
+oficiales" de la tabla): sin ellos como red de seguridad se pierden -8/-9
+frases del benchmark de 151 y -9/-13 de gplsi — cubren formas/verbos
+reales que `diccionarios_v1` aún no trae. Se quedan con prioridad más
+baja hasta que una entrega futura los haga innecesarios de veras.
+
+## 5bis. El usuario preguntó por qué los 4 ficheros viejos siguen haciendo falta — investigado a fondo, solo 1 de 4 aporta algo real (19/10/2026)
+
+Pregunta del usuario: "en teoría `conjugaciones_general` debería ser el
+`conjugaciones_limpio` y/o `nuevo`". Tenía razón en parte — diferencia
+verbo a verbo (no solo contar frases del benchmark) entre
+`conjugaciones_general.json` + `verbos_diferentes_conjugados.json`
+(combinados) contra cada uno de los 4 ficheros viejos:
+
+- `verbos_no_ambiguos.json` (261 formas/45 verbos): **0 infinitivos de
+  una sola palabra sin cubrir** en las fuentes oficiales.
+- `verbos_todos_anotados.json` (1.311 formas/50 verbos): **0 infinitivos
+  de una sola palabra sin cubrir**.
+- `conjugaciones_nuevo.json` (49.443 formas/5.465 verbos): **0
+  infinitivos de una sola palabra sin cubrir** — de los 722 "verbos" que
+  parecían faltar, todos resultaron ser frases multi-palabra
+  ("llençar la brossa", "fer cara de", "estar al corrent"...), no verbos
+  reales, y el motor no tiene ningún mecanismo para aplicar una entrada
+  de conjugación multi-palabra de todas formas.
+- `conjugaciones_limpio.json` (968 formas/111 verbos, el original de
+  el proveedor, 29/09/2026): **12 verbos de una sola palabra SÍ ausentes**
+  ("pertànyer", "apareixer", "acréixer", "prémer", "sofrir",
+  "concórrer", "sobresortir", "revenir", "ajupir", "adeqüar" + 2 que
+  parecen ruido del fichero origen). Pero el hallazgo importante no es
+  este: es que el verbo **"ser" SÍ está en la lista de verbos de
+  `conjugaciones_general.json`, pero con solo 3 formas** (`eres`/`ets`,
+  `fóra`/`fos`, `sigut`/`estat`) — **falta TODO el paradigma de present
+  de subjuntiu** (siga/sigues/siga/siguem/sigueu/siguen →
+  sigui/siguis/sigui/siguem/sigueu/siguin).
+
+Diferenciando qué frases exactas regresaban al quitar los 4 ficheros
+viejos (no solo contar cuántas): **8 de las 9 regresiones de cada
+dirección eran "siga"/"sigui" sin convertir** (RC033, RC067, RC078,
+RC085, RC089, RC095, RC127, RC131, RC136 según dirección); la 9ª era
+"pertany"/"pertanyo". Ninguna otra causa.
+
+**Conclusión y acción**: se retiraron a `backup_pendent/`
+`verbos_no_ambiguos.json`, `verbos_todos_anotados.json` y
+`conjugaciones_nuevo.json` — confirmado con los 4 benchmarks completos
+(151 + gplsi, las dos direcciones) que dan EXACTAMENTE los mismos
+números que con los 4 ficheros viejos puestos (114/151, 116/151,
+1408/1958, 1343/1958).
+
+## 5ter. `conjugaciones_limpio.json` fusionado ENTERO dentro de `conjugaciones_general.json` y retirado también (19/10/2026)
+
+El usuario pidió generar las formas que faltaban en formato
+`conjugaciones_general.json` para fusionarlas a mano. Se generaron las 97
+formas "nuevas" (vistas desde el lookup val→cat) con `morfologia`
+derivada a mano siguiendo el mismo descodificado de la sección 5, se
+fusionaron, y se retiró `conjugaciones_limpio.json` del todo.
+
+**Esto rompió un doctest** (`cat_val/conjugacions_dict.py`,
+`"sofreixin" in lookup` esperaba `False`, dio `True`). Investigado: el
+fichero completo (968 filas, no 97) tenía una entrada
+`sofrisquen→sofreixin` que **nunca aparecía como "forma nueva" en la
+comparación val→cat** porque el motor la excluye de ese lookup por el
+filtro de riesgo de colisión indicatiu/subjuntiu de 3ª plural
+(`es_risc_mode_3a_plural`, mismo patrón que protege "creuen"/"siguen").
+Pero esa misma fila SÍ hacía falta en bruto para la dirección cat→val:
+`carrega_conjugacions_invers()` agrupa por forma catalana y excluye
+cualquiera con más de un candidato valenciano real — sin la fila
+"sofrisquen", "sofreixin" se quedaba con un solo candidato
+("patisquen", de `verbos_diferentes_conjugados.json`) y dejaba de
+detectarse como ambigua.
+
+Repitiendo la comparación a nivel de PARES CRUDOS (`(valenciano,
+catalan)`, no del lookup ya filtrado de una sola dirección) aparecieron
+**55 pares más** en la misma situación — casi todos formas de 3ª plural
+que el filtro de riesgo ya protegía del lado val→cat pero que hacían
+falta en bruto para el lado cat→val. **Conclusión: la única comparación
+realmente segura es a nivel de fila cruda, nunca sobre el resultado ya
+filtrado de una sola dirección** — un filtro de una dirección puede
+ocultar que una fila todavía hace falta para la otra.
+
+**Acción final**: se fusionaron las 968 filas COMPLETAS de
+`conjugaciones_limpio.json` dentro de `conjugaciones_general.json`
+(IDs `LIMPIO_1`..`LIMPIO_968`, `morfologia` derivada a mano para 95
+formas con evidencia real — ver tabla de códigos de la sección 5 —,
+`null` en el resto como ya hace el proveedor con formas sin clasificar,
+`problematica` preservado tal cual en 55 filas que ya lo traían). El
+fichero original se retiró entero a `backup_pendent/`.
+Confirmado con los 4 benchmarks: **resultados idénticos** a cuando
+convivían los 2+1 ficheros (114/151, 116/151, 1408/1958, 1343/1958), y
+el doctest roto vuelve a pasar. `traductor/data/conjugacions_dialectals.json`
+pasó de 96.137 a 45.122 entradas, mismo contenido real.
+
+**Pendiente de acción fuera de este repo**: informar al proveedor de que
+`conjugaciones_general.json` parece tener un hueco real de datos en el
+paradigma de present de subjuntiu del verbo "ser" (y probablemente de
+otros verbos irregulares muy comunes — no se ha comprobado exhaustivamente
+cada verbo irregular, solo "ser" porque es el que explicaba las
+regresiones reales). No es un problema de filtrado de este lado del
+proyecto.
 
 ## 6. Próximos pasos (fases ya acordadas con el usuario, sin empezar todavía)
 
@@ -316,6 +462,6 @@ prometida antes de tocar `conjugacions_dict.py` o `es_risc_mode_3a_plural`.
 2. Fase 1: construir loaders nuevos en paralelo, sin tocar los actuales.
 3. Fase 2: comprobar una por una las decisiones ya validadas con evidencia (empezando por la de la sección 4) contra los datos nuevos.
 4. Fase 3: migrar módulo a módulo (numerals primero, demostratius el último), doctests + benchmark 151 + gplsi en cada paso.
-5. Fase 4: evaluar si `morfologia` sustituye `es_risc_mode_3a_plural`/filtro spaCy — **bloqueada hasta tener la explicación de los códigos**.
+5. Fase 4: evaluar si `morfologia` (ya descifrado, ver sección 5) puede sustituir la heurística de sufijo de `es_risc_mode_3a_plural`/el filtro spaCy por un chequeo directo sobre los datos — mejora posible, no urgente, no empezada.
 6. Fase 5: repuntar `sync_data.py` e `ipd.py`.
 7. Fase 6: verificación final completa y limpieza (borrar JSON viejos, mover los 3 nuevos a `lexic/`, borrar `diccionarios_v1/`).

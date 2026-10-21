@@ -799,6 +799,45 @@ Validado de forma consistente contra tres corpus independientes (ver
 tabla en la sección 15): el lado valenciano puntúa siempre entre 0,87 y
 0,93 de pureza, el catalán entre 0,01 y 0,05.
 
+### Homógrafos: spaCy solo decide los que declara el diccionario (21/10/2026)
+
+Al retirar las listas de exclusión del traductor (19/10/2026), algunos
+pares reales empezaron a colarse como marcadores falsos porque la forma
+tiene un homógrafo común a los dos dialectos. El caso tipo es "després":
+el diccionario empareja correctamente el adjetivo catalán "desprès" (que
+se desprende de lo que tiene) con el adjetivo valenciano "després", pero
+el adverbio "després" (más tarde) se escribe igual y es compartido.
+
+La primera idea fue un filtro general: que ningún marcador contara si
+spaCy le daba una categoría distinta de la del diccionario. Se descartó
+tras medirlo, incluso con un umbral de seguridad: spaCy, entrenado en
+catalán central, no conoce muchas formas valencianas ("hui", "faena",
+"seua") y les inventa la etiqueta, a veces con mucha seguridad, así que
+el filtro eliminaba marcadores buenos.
+
+La solución final consulta a spaCy **solo para los homógrafos que el
+propio diccionario declara**. Las entradas `homonimia_lexica` del
+proveedor traen la forma homógrafa (`forma_problematica`), la categoría
+de cada lectura (`lemas`, por ejemplo "manc [adj]" y "manca [n]") y la
+de la lectura dialectal (`categoria`). Si ninguna otra lectura comparte
+esa categoría, la forma cuenta como marcador solo cuando spaCy se la da
+("manca" nombre sí, "manca" adjetivo no). Si otra lectura la comparte
+("bes": be [n] / bes [n]), spaCy no puede decidir y la forma no cuenta
+nunca. El resto de palabras no pasa por spaCy.
+
+| Corpus | Lado valenciano | Lado catalán |
+|---|---|---|
+| Banco curado (151) | 0,9647 → **0,9749** | 0,1135 → **0,1115** |
+| gplsi (1.958) | 0,9341 → **0,9387** | 0,0685 → **0,0632** |
+
+El lado catalán apenas mejora porque "després" (17 casos en cada corpus)
+y "tancat" no están declarados como homógrafos en el diccionario; el
+mecanismo los filtrará en cuanto se marquen en origen, sin tocar código.
+Con "després" declarado, el lado catalán bajaría a alrededor de 0,05 en
+los dos corpus. Tampoco se resuelven las palabras compartidas por
+registro ("estat", "avui", "últim", "alcalde") ni el par "petit"/"menut",
+mal emparejado en los datos.
+
 ## 15. Validación contra corpus reales, más allá del banco curado
 
 El banco de 151 frases está diseñado para ilustrar un fenómeno dialectal

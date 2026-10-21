@@ -17,7 +17,7 @@
 
 **Fase 1 — Esqueleto**: estructura `traductor/rules/cat_val/` simétrica
 a `val_cat/`, reutilizando los mismos ficheros de datos
-(`conjugacions_dialectals.json`, `lexic_mauricio.json`, etc.) indexados
+(`conjugacions_dialectals.json`, `lexic_general.json`, etc.) indexados
 al revés.
 
 **Fase 2 — Casos curados pequeños**: posesivos (fix de número),
@@ -113,7 +113,7 @@ no gramatical.
 por palabra (tipo `_EXIGEIX_NOUN_CAT`) por un mecanismo único y
 extensible, igual para las dos direcciones. De momento solo tiene
 `"anou": "NOUN"` — el usuario clasificará la categoría gramatical de
-`lexic_mauricio.json` a mano, a su ritmo. Confirmado que el problema
+`lexic_general.json` a mano, a su ritmo. Confirmado que el problema
 distinto de "spaCy se equivoca con esta grafía valenciana concreta"
 (`SEMPRE_VERB` en `val_cat/conjugacions_dict.py`) NO aplica a cat→val —
 la entrada siempre es catalán genuino (`EXCLUSIONS_HOMOGRAF_INVERS`/
@@ -192,3 +192,76 @@ ya estaban hechos tras la Fase 2. Quedaba:
 > BLOC C de preposiciones de la guía gramatical) — ver `CLAUDE.md` para
 > el detalle completo y actualizado, que es la fuente más fiable a
 > partir de esa fecha.
+
+## 20/10/2026 — Incoativos sin lista a mano, artículo apostrofado y canónica
+
+### El problema de los incoativos
+
+Los verbos incoativos de la 3ª conjugación (servir, oferir, produir...)
+llevan un incremento en el presente: "-eix-" en catalán central (serveix,
+serveixes, serveixen) y "-ix-" en valenciano (servix, servixes, servixen).
+
+**Por qué fallaba el lookup**: la AVL acepta las dos formas en valenciano,
+así que el proveedor no las trata como par dialectal.
+`conjugacions_dialectals.json` trae de "servir" la 1ª persona
+("serveixo"→"servisc") y todo el subjuntivo ("serveixi"→"servisca"), pero
+**no** "serveix"/"serveixes"/"serveixen". Ningún JSON tiene esas formas, y
+son las más frecuentes: en el corpus (151 + gplsi), el valenciano de
+referencia usa "-ix" en 198 de 198 casos reales.
+
+**Por qué no basta una regla de sufijo**: en catalán "-eix" no identifica
+un incoativo. Acaban igual los incoativos en "-ir" (serveix, cambia), los
+verbos en "-èixer" (apareix, coneix, creix, nunca cambian) y palabras que
+no son verbos (mateix, peix, aqueix). El valenciano separa las dos clases
+de verbos por escrito; el catalán las funde. La diferencia es léxica, y por
+eso la versión del 13/10/2026 usaba una lista cerrada de 7 raíces a mano.
+
+### La solución (sin listas a mano)
+
+`cat_val/incoatius.py` cambia "-eix"→"-ix" solo si:
+
+1. spaCy etiqueta el token como VERB/AUX;
+2. el lema de spaCy acaba en "-ir";
+3. ese lema existe como infinitivo en `conjugacions_dialectals.json`
+   (campos `verbo`, `infinitiu_cat`, `infinitiu_val`);
+
+y además la palabra es exactamente raíz del lema + "eix" + ("", "es", "en").
+La condición 3 es la clave: spaCy se inventa lemas para los verbos que no
+conoce ("apareix"→*aparir*, "coneix"→*conir*, "neix"→*nir*), y esos
+"infinitivos" no están en nuestros datos. Diéresis cuando la raíz acaba en
+vocal sonora ("produeix"→"produïx", "posseeix"→"posseïx"), no tras "gu"/"qu"
+("aconsegueix"→"aconseguix"). Nuevo campo `Token.lemma`, rellenado por
+`pos_tagger.etiqueta()`.
+
+Limitaciones conocidas (se prefiere falso negativo): verbo etiquetado
+PROPN a principio de frase ("Floreix..."), verbo con enclítico pegado
+("Serveix-li", spaCy lo parte en dos tokens), y sin spaCy instalado la
+regla no hace nada.
+
+### Resultados (cat→val)
+
+| | Benchmark 151 | gplsi (1.958) | BLEU gplsi |
+|---|---|---|---|
+| Mañana (lista de 7 raíces) | 136/154 | 1337 | 90,14 |
+| Sin incoativos (paso intermedio) | 128/154 | 1321 | 90,02 |
+| **Incoativos spaCy + JSON** | **136/154** | **1505** | **93,05** |
+
+Frente a no tener la regla: +185 frases en gplsi y 1 pérdida
+("conquereix", la referencia lo deja igual). Dos referencias escriben
+"conduixen"/"fluixen" sin diéresis (no normativo); el motor da
+"conduïxen"/"fluïxen".
+
+### Otros cambios del mismo día
+
+- **Artículo delante de vocal** (`corregeix_article_abans()`,
+  `rules/__init__.py`): tras una sustitución que deja la palabra empezando
+  por vocal, "el"/"la" se apostrofan ("el darrer"→"l'últim",
+  "el batlle"→"l'alcalde"). "la" no se apostrofa ante i/u átonas. +15 en
+  gplsi; −3 referencias que escriben "La última" (no normativo, sin
+  excepción).
+- **Regla fija: en caso de duda, `canonica: true`**
+  (`cat_val/lexic.py::_invertix_sense_ambiguitat`). Las listas de
+  ordinales del usuario sobrescriben la canónica. +3 en gplsi (llimona→llima).
+- **spaCy `Mood` descartado también en catalán** (sm 10/35, md 8/35): el
+  modo verbal ambiguo irá al LLM.
+
