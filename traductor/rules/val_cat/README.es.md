@@ -12,3 +12,8 @@ queda como la documentación de referencia de esta dirección.
 
 Comparte con `cat_val/` todo lo que vive en `rules/__init__.py`
 (`Token`, `tokenize`/`detokenize`, helpers) y `rules/pos_tagger.py`.
+
+**21/10/2026**: nueva regla `combinacio_li.py` (B4 de la guía de traducción
+dialectal): "li'l" -> "l'hi", "li la" -> "la hi", "-li-la" -> "-la-hi"...
+Determinista por gramática (un "li" suelto es proclítico y nunca va
+seguido de artículo); spaCy no servía. Ver el docstring del módulo.

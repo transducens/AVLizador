@@ -695,6 +695,42 @@ modo exige entender el verbo principal ("vull que sortim" frente a
 "diuen que sortim"). Esos casos, unos 19 en 2.112 frases, se reservan
 para la capa de LLM.
 
+### La guía de traducción contrastada con los corpus oficiales (21/10/2026)
+
+Antes de construir una capa de postprocesado con LLM a partir de la guía
+de traducción dialectal (pronombres débiles, preposiciones, adverbios de
+lugar), se midió cada regla en los dos corpus oficiales: la AVL (2.233
+documentos en valenciano) y el BOE (268.000 líneas alineadas catalán y
+valenciano). La medida es un porcentaje: cuántas veces el texto oficial
+usa la forma que dice la guía cuando aparece el contexto de la regla.
+
+Solo tres reglas tienen evidencia clara, y las tres se pueden aplicar
+sin modelo: "per" + infinitivo → "per a" (92% en la AVL, 95% en el BOE;
+salvo "per haver", que es causal), "aquí" → "ací" (83% y 100%) y el
+relativo "on" sin "a" (80% y 99,6%), lo que obliga a retirar el "a on"
+que el motor añadía siguiendo el estilo del banco curado. En cambio, el
+valenciano oficial no sigue la guía en los pronombres débiles: escribe
+"el", "els" y "en" igual que el catalán ("lo", "los" y "ne" aparecen
+entre el 0% y el 2%), y tampoco sustituye "quan" por "en" + infinitivo
+(1-11%). Las dos reglas que dependen del significado, "a" → "en" de lugar
+(13,9% en el BOE) y "l'hi" → "li'l" (muy rara), son las únicas candidatas
+a LLM, con poco volumen. La lección es la misma que con el bloque de
+preposiciones del 14/10/2026: una guía normativa describe la lengua en
+general, y el registro escrito oficial solo manifiesta una parte; se
+mide antes de implementar.
+
+Las tres reglas con evidencia se implementaron el mismo día: "aquí" →
+"ací" como un par más del diccionario (sin código), "per a" + infinitivo
+como regla nueva que reconoce el infinitivo con spaCy, y la retirada del
+"a on". En una muestra de 2.000 líneas del BOE, las frases idénticas a la
+referencia oficial pasan de 360 a 368. Los dos bancos no oficiales bajan
+(151: 137 → 130; gplsi: 1.524 → 1.486) porque sus traductores siguen otro
+estilo en estos puntos ("a on", "per" + infinitivo). Se optó por la norma
+oficial. La combinación "l'hi" → "li'l" se descartó como regla: leídos
+uno a uno, los casos del BOE muestran cuatro lecturas distintas del
+catalán "l'hi" (con "li" + acusativo, con "ho", con "hi" de lugar, con
+dativo plural) que solo distingue el significado.
+
 ## 13. Postprocesado con modelo de lenguaje ("vía C")
 
 ### El problema que el motor deja sin resolver a propósito
@@ -767,6 +803,23 @@ criterio se calibró con una muestra de solo 6 casos sesgada al caso
 minoritario, y se validó contra esa misma muestra en vez del benchmark
 completo. Queda aparcado, a retomar con `qwen3` y un criterio más
 exigente, no descartado por imposibilidad de fondo.
+
+### Dos capas de LLM, una por dirección (21/10/2026)
+
+La capa de LLM pasó a vivir dentro de `traductor/llm/`, separada por
+dirección. El motor marca los puntos ambiguos con opciones cerradas y el
+modelo solo elige una etiqueta; si no responde bien, se queda la salida
+del motor, así que no puede inventar texto. En catalán a valenciano
+resuelve "aquest" (este o eixe) y la combinación "l'hi" (cuatro
+lecturas posibles); en valenciano a catalán, el modo verbal que el
+valenciano escribe igual en indicativo y subjuntivo. Sin llamar al
+modelo ya se ve dónde está el margen: en el BOE, "este" por defecto
+acierta el 94,5%, mientras que el modo verbal por defecto solo acierta el
+20%, porque en los textos legales el 80% de esas formas son subjuntivo.
+La versión anterior de la vía C había dejado de funcionar al retirar los
+ficheros de conjugaciones antiguos; la nueva calcula las ambigüedades
+solo con los datos del traductor. La evaluación con qwen3 queda pendiente
+en el clúster.
 
 ## 14. Índice de Pureza Dialectal (IPD)
 

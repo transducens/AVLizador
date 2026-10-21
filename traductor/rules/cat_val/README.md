@@ -89,3 +89,10 @@ la canònica; els ordinals de l'usuari mantenen prioritat). Nova
   subjuntiu).
 - Homògraf "nou"/"anou" (nou/nou en català, 3 casos) — sense senyal de
   context comprovada encara.
+
+**21/10/2026 — regles de la guia de traducció dialectal** (mesurades als
+corpus oficials AVL + BOE, vore `documentacio/hoja_de_ruta_traductor_invers.md`):
+nou `per_a_infinitiu.py` (C2, "per" + infinitiu -> "per a", excepte "per
+haver"); "aquí" -> "ací" (D1) és un parell nou del diccionari (E1648, sense
+codi); `relatiu_on.py` RETIRAT (C3: el valencià oficial usa "on" sense "a").
+BOE (mostra de 2.000 línies) 360 -> 368 frases exactes.

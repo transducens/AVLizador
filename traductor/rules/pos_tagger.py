@@ -86,7 +86,7 @@ projecte.
 
 from __future__ import annotations
 
-from . import Token, separa_prefix_elidit
+from . import Token, separa_prefix_elidit, separa_sufix_elidit
 
 _NLP = None
 _CARREGAT = False
@@ -176,6 +176,16 @@ def etiqueta(tokens: list[Token]) -> None:
     >>> etiqueta(toks)
     >>> [(t.surface, t.lemma) for t in toks if t.surface == "serveix"]
     [('serveix', 'servir')]
+
+    `verb_form` (afegit 21/10/2026, vore `cat_val/per_a_infinitiu.py`), i
+    verb amb pronom enclític enganxat: spaCy el partix en dos ("fer", "-ho")
+    i abans no es trobava; ara es busca la part sense el pronom:
+
+    >>> toks = tokenize("Cal temps per fer-ho bé.")
+    >>> marca_noms_propis(toks)
+    >>> etiqueta(toks)
+    >>> [(t.surface, t.pos, t.verb_form) for t in toks if t.surface == "fer-ho"]
+    [('fer-ho', 'VERB', 'Inf')]
     """
     nlp = _carrega_spacy()
     if nlp is None:
@@ -187,16 +197,24 @@ def etiqueta(tokens: list[Token]) -> None:
             continue
         prefix_resta = separa_prefix_elidit(tok.surface)
         buscada = prefix_resta[1] if prefix_resta else tok.surface
-        buscada_min = buscada.lower()
-        for dt in doc:
-            if dt.text.lower() == buscada_min:
-                tok.pos = dt.pos_
-                mood = dt.morph.get("Mood")
-                tok.mood = mood[0] if mood else ""
-                gender = dt.morph.get("Gender")
-                tok.gender = gender[0] if gender else ""
-                tok.lemma = dt.lemma_.lower()
-                break
+        candidates = [buscada.lower()]
+        sufix_resta = separa_sufix_elidit(buscada)
+        if sufix_resta is not None:
+            candidates.append(sufix_resta[0].lower())
+        dt = next(
+            (d for buscada_min in candidates for d in doc if d.text.lower() == buscada_min),
+            None,
+        )
+        if dt is None:
+            continue
+        tok.pos = dt.pos_
+        mood = dt.morph.get("Mood")
+        tok.mood = mood[0] if mood else ""
+        gender = dt.morph.get("Gender")
+        tok.gender = gender[0] if gender else ""
+        verb_form = dt.morph.get("VerbForm")
+        tok.verb_form = verb_form[0] if verb_form else ""
+        tok.lemma = dt.lemma_.lower()
 
 
 if __name__ == "__main__":

@@ -1,3 +1,9 @@
+> **⚠️ 21/10/2026**: la capa de LLM viu ara dins de `traductor/llm/` (una
+> per direcció). `identifica_ambigues.py`/`benchmark_integrat.py` d'esta
+> carpeta **ja no funcionen** (lligen fitxers de conjugacions retirats el
+> 19/10/2026). Per a avaluar: `avalua_capa_llm.py` i
+> `slurm/avalua_capa_llm.sh`. Vore `traductor/llm/README.md`.
+
 *[Llegeix-ho en castellà](README.es.md)*
 
 # Post-processat amb LLM dels casos marcats

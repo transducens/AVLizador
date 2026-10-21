@@ -73,6 +73,9 @@ class Token:
     `cat_val/incoatius.py`, sempre validat contra els infinitius reals de
     `conjugacions_dialectals.json` (spaCy s'inventa lemes per a verbs que
     no coneix: "apareix" -> "aparir").
+
+    `verb_form` (afegit 21/10/2026): el tret `VerbForm` d'spaCy ("Inf",
+    "Fin", "Part", "Ger"). El consulta `cat_val/per_a_infinitiu.py`.
     """
 
     surface: str
@@ -81,6 +84,7 @@ class Token:
     mood: str = ""
     gender: str = ""
     lemma: str = ""
+    verb_form: str = ""
     is_translated: bool = False
     is_proper_noun: bool = False
     start: int = 0

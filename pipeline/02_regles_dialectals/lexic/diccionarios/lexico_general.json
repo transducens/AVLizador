@@ -13208,5 +13208,31 @@
     "fuente": "avl_equip",
     "id": "POS012",
     "categoria": "det"
+  },
+  {
+    "espanol": "aquí",
+    "catalan": "aquí",
+    "valenciano": "ací",
+    "tipo": "v:lexic_val",
+    "fuente": "corpus_oficial",
+    "id": "E1648",
+    "categoria": "adv",
+    "problema": "colision",
+    "canonica": true,
+    "lado": "val",
+    "id_colision": "E1649"
+  },
+  {
+    "espanol": "ahí",
+    "catalan": "aquí",
+    "valenciano": "ahí",
+    "tipo": "v:lexic_val",
+    "fuente": "corpus_oficial",
+    "id": "E1649",
+    "categoria": "adv",
+    "problema": "colision",
+    "canonica": false,
+    "lado": "val",
+    "id_colision": "E1648"
   }
 ]
