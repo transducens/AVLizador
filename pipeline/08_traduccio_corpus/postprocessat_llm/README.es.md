@@ -1,6 +1,6 @@
 > **⚠️ 21/10/2026**: la capa de LLM vive ahora dentro de `traductor/llm/`
-> (una por dirección: cat→val con "aquest" y B4, val→cat con el modo
-> verbal). `identifica_ambigues.py`/`benchmark_integrat.py` de esta carpeta
+> (solo val→cat, modo verbal, congelada; la de cat→val se retiró el mismo
+> día tras evaluarla). `identifica_ambigues.py`/`benchmark_integrat.py` de esta carpeta
 > **ya no funcionan**: leen ficheros de conjugaciones retirados el
 > 19/10/2026. Para evaluar, usar `avalua_capa_llm.py` (aquí) y
 > `slurm/avalua_capa_llm.sh`. Ver `traductor/llm/README.es.md`.

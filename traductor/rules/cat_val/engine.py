@@ -82,8 +82,9 @@ class RuleEngineInvers:
 
     def tradueix_tokens(self, text: str) -> list[Token]:
         """Com `translate`, pero torna els tokens abans de detokenitzar --
-        la capa de LLM (`traductor/llm/cat_val.py`) els necessita per a
-        trobar els punts ambigus que el motor ha resolt per defecte."""
+        útil per a inspeccionar què ha fet cada regla abans d'ajuntar el
+        text. (La capa de LLM de cat->val que el va motivar es va retirar el
+        21/10/2026: no canviava cap frase.)"""
         tokens: list[Token] = tokenize(text)
         marca_noms_propis(tokens)
         pos_tagger.etiqueta(tokens)

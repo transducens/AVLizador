@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Avalua les capes de LLM de `traductor/llm/` (21/10/2026) contra un
-benchmark (`id`/`occidental`/`oriental`): motor sol vs. motor + LLM, amb
+"""Avalua la capa de LLM de `traductor/llm/` (val->cat, mode verbal;
+21/10/2026) contra un benchmark (`id`/`occidental`/`oriental`): motor sol
+vs. motor + LLM, amb
 les mateixes mètriques que `evalua_models.py`, i l'encert del LLM punt a
 punt comparat amb el valor per defecte del motor.
 
@@ -12,11 +13,14 @@ l'encerta el LLM i si l'encertava el motor.
 Ús (des de l'arrel del repo; en Abaco, exporta AVLIZADOR_ROOT):
 
     python pipeline/08_traduccio_corpus/postprocessat_llm/avalua_capa_llm.py \\
-        --direccio cat-val --benchmark dades/boe/benchmark_boe_mostra_2000.json \\
-        --model qwen3:8b --tipus demostratiu,b4
+        --direccio val-cat --benchmark dades/boe/benchmark_boe_mostra_2000.json \\
+        --model qwen3:8b
 
     # Només comptar punts, sense cridar cap model:
     python .../avalua_capa_llm.py --direccio val-cat --sense-llm
+
+La capa de cat->val es va retirar el 21/10/2026 (no canviava cap frase):
+`--direccio` només admet "val-cat".
 """
 
 from __future__ import annotations
@@ -37,7 +41,7 @@ DIR_03 = ARREL / "03_seleccio_de_model" if _ENV else ARREL / "pipeline" / "03_se
 sys.path.insert(0, str(ARREL))
 sys.path.insert(0, str(DIR_03))
 
-from traductor.llm import ClientLLM, tradueix_cat_val, tradueix_val_cat  # noqa: E402
+from traductor.llm import ClientLLM, tradueix_val_cat  # noqa: E402
 from evalua_models import calcula_metriques  # noqa: E402
 
 
@@ -53,14 +57,11 @@ def veritat(punt, referencia: str) -> set[str]:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--direccio", choices=["cat-val", "val-cat"], required=True)
+    ap.add_argument("--direccio", choices=["val-cat"], default="val-cat")
     ap.add_argument("--benchmark", type=Path, default=DIR_03 / "benchmark_corpus.json")
     ap.add_argument("--model", default="qwen3:8b")
     ap.add_argument("--ollama-url", default="http://localhost:11434")
     ap.add_argument("--timeout", type=int, default=120)
-    ap.add_argument("--tipus", default=None,
-                    help="cat-val: 'demostratiu', 'b4' o tots dos separats per coma "
-                         "(per defecte només 'b4'; 'demostratiu' es va desactivar el 21/10/2026)")
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--sense-llm", action="store_true", help="només detecta i compta punts")
     ap.add_argument("--verbose", action="store_true")
@@ -68,9 +69,8 @@ def main() -> None:
     args = ap.parse_args()
 
     dades = json.loads(args.benchmark.read_text(encoding="utf-8"))[: args.limit]
-    entrada, ref_camp = ("oriental", "occidental") if args.direccio == "cat-val" else ("occidental", "oriental")
+    entrada, ref_camp = "occidental", "oriental"
     client = None if args.sense_llm else ClientLLM(args.model, args.ollama_url, args.timeout, args.verbose)
-    tipus = set(args.tipus.split(",")) if args.tipus else None
 
     resultats = []
     estad = collections.defaultdict(collections.Counter)
@@ -78,12 +78,8 @@ def main() -> None:
     t0 = time.perf_counter()
     for n, reg in enumerate(dades, 1):
         text, ref = reg[entrada], reg[ref_camp]
-        if args.direccio == "cat-val":
-            base, _ = tradueix_cat_val(text, None, tipus)
-            final, punts = tradueix_cat_val(text, client, tipus)
-        else:
-            base, _ = tradueix_val_cat(text, None)
-            final, punts = tradueix_val_cat(text, client)
+        base, _ = tradueix_val_cat(text, None)
+        final, punts = tradueix_val_cat(text, client)
         mb, mf = calcula_metriques(base, ref), calcula_metriques(final, ref)
         exactes_base += mb["exacte"]
         exactes_llm += mf["exacte"]

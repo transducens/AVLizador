@@ -804,22 +804,30 @@ minoritario, y se validó contra esa misma muestra en vez del benchmark
 completo. Queda aparcado, a retomar con `qwen3` y un criterio más
 exigente, no descartado por imposibilidad de fondo.
 
-### Dos capas de LLM, una por dirección (21/10/2026)
+### La capa de LLM tras la evaluación completa (21/10/2026)
 
-La capa de LLM pasó a vivir dentro de `traductor/llm/`, separada por
-dirección. El motor marca los puntos ambiguos con opciones cerradas y el
-modelo solo elige una etiqueta; si no responde bien, se queda la salida
-del motor, así que no puede inventar texto. En catalán a valenciano
-resuelve "aquest" (este o eixe) y la combinación "l'hi" (cuatro
-lecturas posibles); en valenciano a catalán, el modo verbal que el
-valenciano escribe igual en indicativo y subjuntivo. Sin llamar al
-modelo ya se ve dónde está el margen: en el BOE, "este" por defecto
-acierta el 94,5%, mientras que el modo verbal por defecto solo acierta el
-20%, porque en los textos legales el 80% de esas formas son subjuntivo.
-La versión anterior de la vía C había dejado de funcionar al retirar los
-ficheros de conjugaciones antiguos; la nueva calcula las ambigüedades
-solo con los datos del traductor. La evaluación con qwen3 queda pendiente
-en el clúster.
+Se construyeron dos capas de LLM, una por dirección, dentro de
+`traductor/llm/`: el motor marca los puntos ambiguos con opciones
+cerradas y el modelo solo elige una etiqueta, así que no puede inventar
+texto. Evaluadas en el clúster con qwen3:8b sobre el banco curado y 2.000
+líneas del BOE, el resultado fue muy distinto en cada dirección.
+
+En catalán a valenciano la capa no cambió ninguna frase. El demostrativo
+"aquest" se desactivó porque el modelo empeoraba el valor por defecto
+("este" acierta el 94,5% en el BOE y el 100% en el banco curado: en los
+textos oficiales "este" y "eixe" anafóricos alternan por estilo, sin una
+señal en la frase), y la combinación "l'hi" no aparece en esas muestras.
+La capa se retiró: la herramienta de catalán a valenciano funciona sin
+modelo de lenguaje, lo que encaja con su destino, equipos solo con CPU.
+
+En valenciano a catalán la capa sí aporta. En el BOE, el modo verbal que
+el valenciano escribe igual en indicativo y subjuntivo pasa de acertarse
+un 20% de las veces (motor solo) a un 71%; en el banco curado, las frases
+exactas suben de 100 a 109. La capa se queda congelada, con sus errores
+catalogados: sobre todo, distinguir el relativo normativo de los textos
+legales ("trabajadores que tengan…") del relativo real, y dos fallos que
+no necesitarían modelo (la primera persona sin sujeto "jo" y el
+subjuntivo detrás de "si").
 
 ## 14. Índice de Pureza Dialectal (IPD)
 

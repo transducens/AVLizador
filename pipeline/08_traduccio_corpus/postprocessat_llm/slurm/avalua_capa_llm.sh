@@ -1,8 +1,8 @@
 #!/bin/bash
-# avalua_capa_llm.sh -- Job de SLURM (GPU) per a avaluar les DOS capes de
-# LLM de `traductor/llm/` (21/10/2026): cat->val ("aquest" -> "este"/"eixe"
-# i B4 "l'hi"...) i val->cat (mode verbal). Corre `avalua_capa_llm.py` en
-# les dos direccions sobre el benchmark de 151 i la mostra del BOE.
+# avalua_capa_llm.sh -- Job de SLURM (GPU) per a avaluar la capa de
+# LLM de `traductor/llm/` (val->cat, mode verbal; 21/10/2026) sobre el
+# benchmark de 151 i la mostra del BOE. La capa de cat->val es va retirar
+# el mateix dia (avaluada aci: no canviava cap frase).
 #
 # FITXERS A PUJAR (estructura plana d'Abaco, vore CLAUDE.md):
 #   scp -r traductor nmartin@abaco:~/scrapeo/postprocesado_llm/
@@ -89,7 +89,7 @@ mkdir -p "$OUT_DIR"
 LIMIT_ARGS=()
 [ -n "$LIMIT" ] && LIMIT_ARGS=(--limit "$LIMIT")
 
-for DIRECCIO in cat-val val-cat; do
+for DIRECCIO in val-cat; do   # la capa cat-val es va retirar el 21/10/2026
     for BENCH in "$BENCH_151" "$BENCH_BOE"; do
         if [ ! -f "$BENCH" ]; then
             echo "AVÍS: no existix $BENCH en $BASE_DIR -- se salta"

@@ -34,18 +34,6 @@ class PuntAmbigu:
             tokens[index].is_translated = True
 
 
-def marca_en_frase(text: str, marcada: str) -> str:
-    """Frase amb la paraula marcada entre claudàtors, per al prompt.
-
-    >>> marca_en_frase("Aquest llibre és bo.", "Aquest")
-    '[Aquest] llibre és bo.'
-    """
-    posicio = text.find(marcada)
-    if posicio < 0:
-        return text
-    return text[:posicio] + "[" + marcada + "]" + text[posicio + len(marcada):]
-
-
 def resol(text: str, tokens: list[Token], punts: list[PuntAmbigu], prompts: dict, client) -> tuple[str, list[PuntAmbigu]]:
     """Per a cada punt, demana al LLM (si n'hi ha) una etiqueta de les
     opcions i l'aplica. Si no hi ha client, o el model no tria una opció
