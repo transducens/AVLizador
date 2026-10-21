@@ -444,8 +444,8 @@ def carrega_lexic(
     'tarda'
     >>> lookup["xicotet"]
     'petit'
-    >>> lookup["qué"]
-    'què'
+    >>> "qué" in lookup  # parell retirat de les dades al merge del 21/10/2026
+    False
     >>> lookup["hui"]
     'avui'
     >>> lookup["llavar"]

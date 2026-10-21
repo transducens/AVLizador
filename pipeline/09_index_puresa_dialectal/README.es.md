@@ -189,6 +189,28 @@ retirados el 30/09/2026 (~25% de los fallos val→cat), `incoatius.py`
 sin cubrir el plural "-ixen", y el plural "servicis"/"serveis" sin
 derivar — ver `CLAUDE.md` para el detalle y el estado de cada uno.
 
+## Homógrafos: spaCy solo decide los que declaran los datos (21/10/2026)
+
+spaCy se consulta SOLO para las formas que el proveedor declara como
+homógrafas (entradas `problema: "homonimia_lexica"`, campos
+`forma_problematica`, `lemas`, `categoria`). Si la lectura dialectal tiene
+una categoría que ninguna otra lectura comparte ("manca": n vs. adj), la
+forma cuenta solo cuando spaCy le da esa categoría; si la comparte ("bes",
+"blanca", "calces"), no cuenta nunca. El resto de palabras no pasa por
+spaCy: se probó un filtro general por categoría (con y sin umbral de
+seguridad) y se descartó porque spaCy no conoce muchas formas valencianas
+("hui", "faena") y les inventa la etiqueta.
+
+| Corpus | Lado valenciano | Lado catalán |
+|---|---|---|
+| Benchmark 151 | 0,9647 → 0,9749 | 0,1135 → 0,1115 |
+| gplsi | 0,9341 → 0,9387 | 0,0685 → 0,0632 |
+
+"després" (E0977, adjetivo "desprès"/"després" frente al adverbio
+compartido) y "tancat" siguen contando como marcador falso porque los
+datos no los declaran como homógrafos: se resuelve marcándolos en origen.
+Detalle en el docstring de `ipd.py` ("HOMÒGRAFS ENTRE CATEGORIES").
+
 ## Relación con el resto del proyecto
 
 Pendiente documentado en `CLAUDE.md` (sección "Pendiente") y detallado en

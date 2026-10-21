@@ -284,12 +284,15 @@ def _carrega_lexic_general_invers(path: Path) -> dict[str, str]:
             continue
         if " " in valenciano or " " in catalan:
             continue
-        if valenciano.lower() == catalan.lower():
-            continue
         if catalan.lower() in demostratius_coneguts:
             continue
         entrades.append((valenciano.lower(), catalan.lower(), bool(entrada.get("canonica"))))
-    return _invertix_sense_ambiguitat(entrades)
+    # Les entrades IDÈNTIQUES als dos costats (21/10/2026) participen en la
+    # tria per `canonica` i es lleven DESPRÉS: si la canònica d'un grup és
+    # "mentre"->"mentre" (E1647, en col·lisió amb E0040 "mentres"->"mentre"),
+    # vol dir "no traduïsques", i "mentre" no ha d'acabar en "mentres" per
+    # ser l'únic candidat que quedava. Abans es descartaven ABANS de triar.
+    return {cat: val for cat, val in _invertix_sense_ambiguitat(entrades).items() if cat != val}
 
 
 def carrega_frases_invers(path: Path = LEXIC_GENERAL_PATH) -> dict[tuple[str, ...], str]:
@@ -401,19 +404,23 @@ def carrega_lexic_invers(
     'huitè'
 
     19/10/2026: `_BUG_DADES_CONEGUTS_CAT` retirada a petició de l'usuari
-    (vore CLAUDE.md, "Pendent per a la propera sessió"). Regressions
-    conegudes i acceptades mentre no s'arreglen en origen -- "desprès"
-    (mai hauria de canviar) i "ensenyament" (perd la concordança de
-    gènere) tornen a convertir-se, i "què" torna a "qué" encara que el
-    GNV confirme "què" com l'ortografia normativa valenciana (vore
-    comentari ampliat dalt):
+    (vore CLAUDE.md). "desprès" (adjectiu català) -> "després" (adjectiu
+    valencià) és un parell real; "ensenyament" perd la concordança de
+    gènere mentre no s'arregle en origen:
 
     >>> lookup["desprès"]
     'després'
     >>> lookup["ensenyament"]
     'ensenyança'
-    >>> lookup["què"]
-    'qué'
+
+    Dades corregides al merge del 21/10/2026: "qué"/"què" ja no és un
+    parell ("què" és normatiu als dos dialectes), i la canònica
+    "mentre"->"mentre" vol dir que "mentre" no es toca:
+
+    >>> "què" in lookup
+    False
+    >>> "mentre" in lookup
+    False
     """
     lookup: dict[str, str] = {}
     for carregador, path in (

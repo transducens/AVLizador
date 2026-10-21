@@ -330,7 +330,11 @@
     "tipo": "v:lexic_val_gva",
     "fuente": "unificado",
     "id": "E0040",
-    "categoria": "adv"
+    "categoria": "adv",
+    "problema": "colision",
+    "canonica": false,
+    "lado": "val",
+    "id_colision": "E1647"
   },
   {
     "espanol": "de golpe y porrazo",
@@ -1042,15 +1046,6 @@
     "tipo": "v:lexic_val_PENDENT",
     "fuente": "unificado",
     "id": "E0124",
-    "categoria": "adv"
-  },
-  {
-    "espanol": "más bien",
-    "catalan": "ans",
-    "valenciano": "abans",
-    "tipo": "v:lexic_val",
-    "fuente": "unificado",
-    "id": "E0125",
     "categoria": "adv"
   },
   {
@@ -2989,7 +2984,7 @@
   {
     "espanol": "vivienda",
     "catalan": "habitatges",
-    "valenciano": "vivendans",
+    "valenciano": "vivendes",
     "tipo": "v:lexic_val_gva",
     "fuente": "unificado",
     "id": "E0321",
@@ -13096,11 +13091,15 @@
     "categoria": "adj"
   },
   {
-    "catalan": "què",
-    "valenciano": "qué",
+    "catalan": "mentre",
+    "valenciano": "mentre",
     "fuente": "unificado",
     "id": "E1647",
-    "categoria": "prn"
+    "categoria": "adv",
+    "problema": "colision",
+    "canonica": true,
+    "lado": "val",
+    "id_colision": "E0040"
   },
   {
     "espanol": "mía",

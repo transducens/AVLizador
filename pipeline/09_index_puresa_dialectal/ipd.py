@@ -63,6 +63,37 @@ alimenta la TRADUCCIÓ de veres (`carrega_lexic()`), i ja es va mesurar
 Els dos mecanismes són independents a propòsit: l'IPD pot decidir que
 una paraula no és un bon marcador sense que això canvie com es traduïx.
 
+HOMÒGRAFS ENTRE CATEGORIES I FORMES AMBIGÜES (21/10/2026, sense cap
+llista a mà -- només camps de les dades + spaCy). Des que es van retirar
+les llistes d'exclusió del traductor (19/10/2026), alguns parells reals
+es colaven com a marcadors falsos perquè la forma té un HOMÒGRAF comú
+als dos dialectes. Cas tipus: E0977 empareja l'ADJECTIU català "desprès"
+(que es desprèn del que té) amb l'adjectiu valencià "després" -- parell
+correcte --, pero l'ADVERBI "després" (més tard) s'escriu igual i és
+compartit; sense filtre, qualsevol text català amb "després" sumava
+marcadors valencians.
+
+Solució (vore `_carrega_homografs`): spaCy es consulta NOMÉS per als
+homògrafs que el proveïdor ja declara -- entrades `problema:
+"homonimia_lexica"`, que porten `forma_problematica` (la grafia
+homògrafa), `lemas` (la categoria de cada lectura, p.ex. "manc [adj]",
+"manca [n]") i `categoria` (la de la lectura dialectal). Si la lectura
+dialectal té una categoria que cap altra lectura comparteix ("manca": n
+vs. adj; "nou": n vs. adj/num), la forma compta com a marcador NOMÉS quan
+spaCy li dona eixa categoria. Si la comparteix ("bes": be [n] / bes [n];
+"blanca"), spaCy no pot decidir i la forma no compta mai. Totes les
+altres paraules no passen per spaCy: spaCy (català central) no coneix
+moltes formes valencianes ("hui", "faena", "seua") i n'inventa
+l'etiqueta, fins i tot amb seguretat alta -- un filtre general per
+categoria (provat i descartat 21/10/2026, amb i sense llindar de
+seguretat) perdia marcadors bons.
+
+Conseqüència: un homògraf només es filtra si les dades el declaren. Hui
+"després" (E0977) i "tancat" no ho estan, i seguixen comptant com a
+marcador fals -- es resol marcant-los `homonimia_lexica` a l'origen, no
+amb una llista ací. Tampoc es resolen les paraules compartides per
+registre ("estat", "avui", "últim").
+
 Mateixa mesura feta sobre uns atres candidats del BOE que NO entren en
 esta categoria, per contrast: "estat" i "recull" són col·lisions
 d'homògraf (participi/verb vs. nom, mateix problema que ja cobrix el
@@ -110,7 +141,7 @@ if _ARREL_PROJECTE not in sys.path:
 
 from traductor.rules import Token, marca_noms_propis, pos_tagger, separa_prefix_elidit, tokenize
 from traductor.rules.cat_val.demostratius import carrega_demostratius_invers
-from traductor.rules.cat_val.lexic import carrega_lexic_invers
+from traductor.rules.cat_val.lexic import LEXIC_GENERAL_PATH, carrega_lexic_invers
 from traductor.rules.cat_val.numerals import carrega_numerals_invers
 from traductor.rules.cat_val.possessius import carrega_possessius_invers
 from traductor.rules.val_cat.conjugacions_dict import (
@@ -137,6 +168,64 @@ _CACHE: "Formes | None" = None
 # convertint-los bé.
 _MARCADORS_NO_FIABLES_REGISTRE = {"qué", "què", "açò", "això"}
 
+# Categoria del proveïdor -> etiqueta(es) POS d'spaCy, NOMÉS per a
+# resoldre els homògrafs declarats (vore `_carrega_homografs`). Categories
+# fines (nom i adjectiu separats): estes formes són paraules catalanes que
+# spaCy coneix bé ("manca", "nou", "tancada").
+_POS_PER_CATEGORIA = {
+    "n": frozenset({"NOUN", "PROPN"}),
+    "adj": frozenset({"ADJ"}),
+    "adv": frozenset({"ADV"}),
+    "pr": frozenset({"ADP"}),
+    "num": frozenset({"NUM"}),
+    "v": frozenset({"VERB", "AUX"}),
+}
+_CATEGORIES_LEMA_RE = re.compile(r"\[([^\]]*)\]")
+
+
+def _carrega_homografs(
+    path: Path = LEXIC_GENERAL_PATH,
+) -> tuple[dict[str, frozenset[str]], frozenset[str]]:
+    """Homògrafs declarats pel proveïdor (entrades `problema:
+    "homonimia_lexica"`, vore "HOMÒGRAFS ENTRE CATEGORIES" al docstring del
+    mòdul). Torna:
+
+    - `resolubles`: `{forma_problematica: etiquetes spaCy de la lectura
+      dialectal}` quan cap altra lectura dels `lemas` comparteix la
+      categoria de l'entrada -- spaCy pot decidir;
+    - `irresolubles`: formes on la categoria dialectal la comparteix una
+      altra lectura -- spaCy no pot decidir i no compten mai.
+
+    >>> resolubles, irresolubles = _carrega_homografs()
+    >>> sorted(resolubles["nou"]), sorted(resolubles["manca"])
+    (['NOUN', 'PROPN'], ['NOUN', 'PROPN'])
+    >>> "bes" in irresolubles, "blanca" in irresolubles
+    (True, True)
+    """
+    dades = json.loads(Path(path).read_text(encoding="utf-8"))
+    resolubles: dict[str, frozenset[str]] = {}
+    irresolubles: set[str] = set()
+    for entrada in dades:
+        if entrada.get("problema") != "homonimia_lexica":
+            continue
+        forma = (entrada.get("forma_problematica") or "").strip().lower()
+        categoria = entrada.get("categoria")
+        if not forma:
+            continue
+        lectures = [
+            {c.strip() for c in m.group(1).split(",")}
+            for lema in entrada.get("lemas") or []
+            for m in [_CATEGORIES_LEMA_RE.search(lema)]
+            if m
+        ]
+        amb_categoria = sum(1 for cats in lectures if categoria in cats)
+        if categoria in _POS_PER_CATEGORIA and amb_categoria == 1:
+            resolubles[forma] = _POS_PER_CATEGORIA[categoria]
+        else:
+            irresolubles.add(forma)
+    irresolubles -= set(resolubles)
+    return resolubles, frozenset(irresolubles)
+
 
 class Formes:
     """Les formes dialectals carregades, separades en dos grups perquè
@@ -144,8 +233,7 @@ class Formes:
     `calcula_ipd` i "BUG REAL" al docstring del mòdul):
 
     - `occ_simple`/`or_simple`: paraules de lèxic/demostratius/numerals/
-      possessius -- lookup directe, sense ambigüitat de categoria
-      gramatical coneguda.
+      possessius -- lookup directe.
     - `occ_verbal`/`or_verbal`: formes que vénen de `conjugacions_dialectals.json`
       -- moltes són formes RARES d'un verb que per casualitat coincidixen
       amb una paraula comuna d'una altra categoria ("entre" preposició vs.
@@ -154,15 +242,18 @@ class Formes:
       el token com a VERB/AUX en eixe context -- exactament el mateix
       filtre que ja fa servir `ConjugacionsDictRule`/`ConjugacionsDictInversRule`
       per a traduir, reaprofitat ací.
+    - `homografs`: `{forma: etiquetes spaCy de la lectura dialectal}`, els
+      homògrafs resolubles declarats pel proveïdor (vore `_carrega_homografs`).
     """
 
-    __slots__ = ("occ_simple", "or_simple", "occ_verbal", "or_verbal")
+    __slots__ = ("occ_simple", "or_simple", "occ_verbal", "or_verbal", "homografs")
 
-    def __init__(self, occ_simple, or_simple, occ_verbal, or_verbal):
+    def __init__(self, occ_simple, or_simple, occ_verbal, or_verbal, homografs=None):
         self.occ_simple = occ_simple
         self.or_simple = or_simple
         self.occ_verbal = occ_verbal
         self.or_verbal = or_verbal
+        self.homografs = homografs or {}
 
 
 def _carrega_conjugacions_pures(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[str, str]:
@@ -290,7 +381,18 @@ def carrega_formes_dialectals(forcar_recarrega: bool = False) -> Formes:
     occ -= _MARCADORS_NO_FIABLES_REGISTRE
     orr -= _MARCADORS_NO_FIABLES_REGISTRE
 
-    _CACHE = Formes(frozenset(occ), frozenset(orr), frozenset(occ_verbal), frozenset(or_verbal))
+    # Homògrafs declarats pel proveïdor (vore `_carrega_homografs`): els
+    # irresolubles no compten mai; els resolubles els decidix spaCy a
+    # `_classifica_token`.
+    homografs, irresolubles = _carrega_homografs()
+    occ -= irresolubles
+    orr -= irresolubles
+    occ_verbal -= irresolubles
+    or_verbal -= irresolubles
+
+    _CACHE = Formes(
+        frozenset(occ), frozenset(orr), frozenset(occ_verbal), frozenset(or_verbal), homografs
+    )
     return _CACHE
 
 
@@ -350,6 +452,14 @@ def _classifica_token(tok: Token, formes: Formes) -> str | None:
     baix = paraula.lower()
     es_verb_segur = not tok.pos or tok.pos in ("VERB", "AUX")
 
+    # Homògraf declarat pel proveïdor (vore "HOMÒGRAFS ENTRE CATEGORIES" al
+    # docstring del mòdul): només compta si spaCy li dona la categoria de
+    # la lectura dialectal ("manca" NOUN = carència; "manca" VERB/ADJ no).
+    # Sense etiqueta d'spaCy, no compta (preferix fals negatiu).
+    lectura_dialectal = formes.homografs.get(baix)
+    if lectura_dialectal is not None and tok.pos not in lectura_dialectal:
+        return None
+
     if baix in formes.occ_simple or (baix in formes.occ_verbal and es_verb_segur):
         return "occ"
     if baix in formes.or_simple or (baix in formes.or_verbal and es_verb_segur):
@@ -382,9 +492,14 @@ def calcula_ipd(text: str, formes: Formes | None = None) -> dict:
        UN SOL token per al tokenitzador de veres, així que mai casava
        amb l'entrada "aquestes".
 
+    "vindre" compta des de la integració de `conjugaciones_general.json`
+    (19/10/2026), que porta els infinitius:
+
     >>> r = calcula_ipd("Este xiquet vol vindre hui.")
     >>> r["total_occidentals"], r["total_orientals"], r["ipd"]
-    (3, 0, 1.0)
+    (4, 0, 1.0)
+    >>> r["marcadors_occidentals"]
+    ['este', 'xiquet', 'vindre', 'hui']
 
     >>> r = calcula_ipd("El xiquet jugava amb el nen del veí.")
     >>> r["total_occidentals"], r["total_orientals"], r["ipd"]
@@ -406,6 +521,17 @@ def calcula_ipd(text: str, formes: Formes | None = None) -> dict:
     >>> r = calcula_ipd("En el decurs d'aquestes estades.")
     >>> r["marcadors_orientals"]
     ['aquestes']
+
+    Homògrafs declarats (vore "HOMÒGRAFS ENTRE CATEGORIES" al docstring
+    del mòdul): només compta la lectura dialectal. "nou" adjectiu no
+    compta (spaCy tampoc reconeix mai el nom "nou" = nuez, l'etiqueta NUM,
+    així que eixa lectura es perd: fals negatiu acceptat); "manca" nom
+    (lectura dialectal, "carència") sí compta:
+
+    >>> calcula_ipd("Hem comprat un cotxe nou.")["total_marcades"]
+    0
+    >>> calcula_ipd("Hi ha una manca de recursos.")["marcadors_orientals"]
+    ['manca']
     """
     if formes is None:
         formes = carrega_formes_dialectals()
