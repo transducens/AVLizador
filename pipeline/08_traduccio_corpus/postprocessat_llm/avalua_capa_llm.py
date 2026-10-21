@@ -94,7 +94,8 @@ def main() -> None:
                 v = set()
             e = estad[p.tipus]
             e["punts"] += 1
-            e["canviats pel LLM"] += p.decisio != p.per_defecte
+            # "canviat" = el TEXT canvia (en 3a plural "indicatiu" i "cap" donen el mateix text)
+            e["canviats pel LLM"] += "".join(p.opcions[p.decisio]) != "".join(p.opcions[p.per_defecte])
             e["sense resposta vàlida"] += client is not None and not p.resposta_llm.strip()
             if v:
                 e["amb veritat a la referència"] += 1
