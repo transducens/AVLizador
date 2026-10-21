@@ -1,5 +1,5 @@
 {
-  "total_entradas": 45122,
+  "total_entradas": 45116,
   "descripcio": "Formes verbals valencia/catala que difereixen entre dialectes. Des del 19/10/2026 les fonts OFICIALS (prioritat maxima) son les de 'diccionarios/' del proveïdor oficial (renombrada des de 'diccionarios_v1/' el 19/10/2026): 'conjugaciones_general.json' (43.242 formes, camp 'morfologia' amb el temps/mode -- descodificat amb evidencia real, vore documentacio/hoja_de_ruta_migracio_diccionarios_v1.md: pri=present indicatiu, prs=present subjuntiu, pii=imperfet indicatiu, pis=imperfet subjuntiu, imp=imperatiu, pp=participi, inf=infinitiu) i 'verbos_diferentes_conjugados.json' (912 parells d'arrel verbal distinta, p.ex. telefonar/trucar). El camp 'problematica' marca formes on el valencia usa la mateixa paraula per al present d'indicatiu i el de subjuntiu (p.ex. abalance = jo abalanco / que jo abalanci), cosa que fa la conversio ambigua sense analisi gramatical (pos-tagging); conjugacions_dict.py exclou estes entrades del lookup automatic i les deixa documentades aci per si en el futur es pot afegir un mecanisme de desambiguacio.\n\nRETIRATS 19/10/2026, mesurat amb els 4 benchmarks (151 + gplsi, les dos direccions) ZERO diferencia en cap: 'verbos_no_ambiguos.json', 'verbos_todos_anotados.json' i 'conjugaciones_nuevo.json'. Comprovat verb a verb que els seus infinitius d'una sola paraula ja estan TOTS coberts per les fonts oficials -- l'unica cosa que aportaven de mes eren frases multi-paraula ('llençar la brossa', 'fer cara de'...) que el motor mai ha pogut fer servir (no hi ha mecanisme de coincidencia multi-paraula per a verbs). Es van guardar primer a `lexic/backup_pendent/` com a xarxa de seguretat, pero eixa carpeta ja s'ha esborrat del tot (mateix dia, confirmat que no quedava res pendent) -- el contingut es conserva a l'historial de git si mai calguera.\n\n'conjugaciones_limpio.json' (968 formes, 111 verbs, el fitxer ORIGINAL de l'equip AVLizador, 29/09/2026) RETIRAT DEL TOT el 19/10/2026: les SEUES 968 files s'han fusionat SENCERES (no nomes un subconjunt) dins de 'conjugaciones_general.json' mateix, amb IDs 'LIMPIO_1'..'LIMPIO_968' (per no col·lidir amb la numeracio del proveïdor), 'morfologia' derivat a mà per a 95 formes seguint el mateix descodificat (resta null, mateix valor que ja usa el proveïdor per a formes sense classificar), i el flag 'problematica' preservat tal qual en 55 files que ja el portaven. **Important, apresa a cops (19/10/2026)**: la primera temptativa va fusionar NOMES les 97 formes 'noves' (les que faltaven al lookup val->cat), i això va trencar el doctest de `cat_val/conjugacions_dict.py` -- 'sofrisquen'->'sofreixin' queda exclosa del lookup val->cat pel filtre de risc de 3a plural (per aixo no eixia com a 'forma nova' des d'eixe costat), pero SI fa falta en brut per a que `carrega_conjugacions_invers()` detecte correctament que 'sofreixin' es ambigua (patisquen/sofrisquen) i l'excloga. Fusionar el fitxer SENCER evita este tipus de forat invisible des d'una sola direccio. El fitxer original es va guardar primer a 'lexic/backup_pendent/', ja esborrada del tot (conservada a l'historial de git). **Pendent d'informar al proveïdor**: el paradigma de present de subjuntiu del verb 'ser' seguix sent un forat real de la seua font (nosaltres ho hem apedaçat local, pero no soluciona l'origen).",
   "entradas": [
     {
@@ -661750,14 +661750,20 @@
           "sg"
         ]
       ],
-      "id": "LIMPIO_177"
+      "id": "LIMPIO_177",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_1130"
     },
     {
       "verbo": "ajupir",
       "catalan": "ajupin",
       "valenciano": "ajupen",
       "morfologia": null,
-      "id": "LIMPIO_178"
+      "id": "LIMPIO_178",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_1128"
     },
     {
       "verbo": "ajupir",
@@ -661768,14 +661774,20 @@
         "p2",
         "sg"
       ],
-      "id": "LIMPIO_179"
+      "id": "LIMPIO_179",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_1135"
     },
     {
       "verbo": "ajupir",
       "catalan": "ajupissin",
       "valenciano": "ajupiren",
       "morfologia": null,
-      "id": "LIMPIO_180"
+      "id": "LIMPIO_180",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_1121"
     },
     {
       "verbo": "ajupir",
@@ -661786,7 +661798,10 @@
         "p2",
         "sg"
       ],
-      "id": "LIMPIO_181"
+      "id": "LIMPIO_181",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_1120"
     },
     {
       "verbo": "ajupir",
@@ -661804,7 +661819,10 @@
           "sg"
         ]
       ],
-      "id": "LIMPIO_182"
+      "id": "LIMPIO_182",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_1117"
     },
     {
       "verbo": "ajupir",
@@ -661815,7 +661833,10 @@
         "p1",
         "pl"
       ],
-      "id": "LIMPIO_183"
+      "id": "LIMPIO_183",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_1116"
     },
     {
       "verbo": "ajupir",
@@ -661826,7 +661847,10 @@
         "p2",
         "pl"
       ],
-      "id": "LIMPIO_184"
+      "id": "LIMPIO_184",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_1119"
     },
     {
       "verbo": "anar",
@@ -663925,22 +663949,6 @@
     },
     {
       "verbo": "donar",
-      "catalan": "donis",
-      "valenciano": "dones",
-      "morfologia": null,
-      "id": "LIMPIO_466",
-      "problematica": true
-    },
-    {
-      "verbo": "donar",
-      "catalan": "donis",
-      "valenciano": "ónes",
-      "morfologia": null,
-      "id": "LIMPIO_467",
-      "problematica": true
-    },
-    {
-      "verbo": "donar",
       "catalan": "dono",
       "valenciano": "done",
       "morfologia": null,
@@ -665284,22 +665292,6 @@
     },
     {
       "verbo": "morir",
-      "catalan": "morin",
-      "valenciano": "moren",
-      "morfologia": null,
-      "id": "LIMPIO_651",
-      "problematica": true
-    },
-    {
-      "verbo": "morir",
-      "catalan": "morin",
-      "valenciano": "muiren",
-      "morfologia": null,
-      "id": "LIMPIO_652",
-      "problematica": true
-    },
-    {
-      "verbo": "morir",
       "catalan": "moris",
       "valenciano": "muires",
       "morfologia": null,
@@ -665991,7 +665983,10 @@
       "catalan": "premessin",
       "valenciano": "premeren",
       "morfologia": null,
-      "id": "LIMPIO_743"
+      "id": "LIMPIO_743",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_729"
     },
     {
       "verbo": "prémer",
@@ -666002,7 +665997,10 @@
         "p2",
         "sg"
       ],
-      "id": "LIMPIO_744"
+      "id": "LIMPIO_744",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_728"
     },
     {
       "verbo": "prémer",
@@ -666025,14 +666023,20 @@
           "sg"
         ]
       ],
-      "id": "LIMPIO_745"
+      "id": "LIMPIO_745",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_738"
     },
     {
       "verbo": "prémer",
       "catalan": "premin",
       "valenciano": "premen",
       "morfologia": null,
-      "id": "LIMPIO_746"
+      "id": "LIMPIO_746",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_736"
     },
     {
       "verbo": "prémer",
@@ -666043,7 +666047,10 @@
         "p2",
         "sg"
       ],
-      "id": "LIMPIO_747"
+      "id": "LIMPIO_747",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_743"
     },
     {
       "verbo": "prémer",
@@ -666061,7 +666068,10 @@
           "sg"
         ]
       ],
-      "id": "LIMPIO_748"
+      "id": "LIMPIO_748",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_725"
     },
     {
       "verbo": "prémer",
@@ -666072,7 +666082,10 @@
         "p1",
         "pl"
       ],
-      "id": "LIMPIO_749"
+      "id": "LIMPIO_749",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_724"
     },
     {
       "verbo": "prémer",
@@ -666083,7 +666096,10 @@
         "p2",
         "pl"
       ],
-      "id": "LIMPIO_750"
+      "id": "LIMPIO_750",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_727"
     },
     {
       "verbo": "prendre",
@@ -666683,22 +666699,6 @@
     },
     {
       "verbo": "ser",
-      "catalan": "fos",
-      "valenciano": "fora",
-      "morfologia": null,
-      "id": "LIMPIO_830",
-      "problematica": true
-    },
-    {
-      "verbo": "ser",
-      "catalan": "fos",
-      "valenciano": "fóra",
-      "morfologia": null,
-      "id": "LIMPIO_831",
-      "problematica": true
-    },
-    {
-      "verbo": "ser",
       "catalan": "fossin",
       "valenciano": "foren",
       "morfologia": null,
@@ -666965,14 +666965,20 @@
           "sg"
         ]
       ],
-      "id": "LIMPIO_855"
+      "id": "LIMPIO_855",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_808"
     },
     {
       "verbo": "sobresortir",
       "catalan": "sobresurtin",
       "valenciano": "sobresurten",
       "morfologia": null,
-      "id": "LIMPIO_856"
+      "id": "LIMPIO_856",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_806"
     },
     {
       "verbo": "sobresortir",
@@ -667061,14 +667067,20 @@
           "sg"
         ]
       ],
-      "id": "LIMPIO_863"
+      "id": "LIMPIO_863",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_574"
     },
     {
       "verbo": "sofrir",
       "catalan": "sofreixin",
       "valenciano": "sofrisquen",
       "morfologia": null,
-      "id": "LIMPIO_864"
+      "id": "LIMPIO_864",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "REP_572"
     },
     {
       "verbo": "sofrir",
@@ -667363,7 +667375,10 @@
       "catalan": "torcessin",
       "valenciano": "torceren",
       "morfologia": null,
-      "id": "LIMPIO_905"
+      "id": "LIMPIO_905",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "41221"
     },
     {
       "verbo": "tòrcer",
@@ -667374,7 +667389,10 @@
         "p2",
         "sg"
       ],
-      "id": "LIMPIO_906"
+      "id": "LIMPIO_906",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "41220"
     },
     {
       "verbo": "tòrcer",
@@ -667397,7 +667415,10 @@
           "sg"
         ]
       ],
-      "id": "LIMPIO_907"
+      "id": "LIMPIO_907",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "41216"
     },
     {
       "verbo": "tòrcer",
@@ -667422,7 +667443,10 @@
           "sg"
         ]
       ],
-      "id": "LIMPIO_909"
+      "id": "LIMPIO_909",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "41218"
     },
     {
       "verbo": "tòrcer",
@@ -667433,7 +667457,10 @@
         "p1",
         "pl"
       ],
-      "id": "LIMPIO_910"
+      "id": "LIMPIO_910",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "41217"
     },
     {
       "verbo": "tòrcer",
@@ -667444,7 +667471,10 @@
         "p2",
         "pl"
       ],
-      "id": "LIMPIO_911"
+      "id": "LIMPIO_911",
+      "canonica": false,
+      "problema": "colision",
+      "id_colision": "41219"
     },
     {
       "verbo": "tossir",
