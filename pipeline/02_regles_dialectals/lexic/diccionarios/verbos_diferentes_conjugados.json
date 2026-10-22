@@ -20584,5 +20584,17 @@
     "valenciano": "vindre",
     "infinitiu_cat": "venir",
     "infinitiu_val": "vindre"
+  },
+  {
+    "catalan": "obtenir",
+    "valenciano": "obtindre",
+    "infinitiu_cat": "obtenir",
+    "infinitiu_val": "obtindre"
+  },
+  {
+    "catalan": "mantenir",
+    "valenciano": "mantindre",
+    "infinitiu_cat": "mantenir",
+    "infinitiu_val": "mantindre"
   }
 ]
