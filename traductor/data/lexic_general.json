@@ -36,15 +36,6 @@
     "categoria": "adv"
   },
   {
-    "espanol": "a la mayor brevedad posible",
-    "catalan": "com més aviat millor",
-    "valenciano": "com més prompte millor",
-    "tipo": "v:lexic_val",
-    "fuente": "unificado",
-    "id": "E0005",
-    "categoria": "adv"
-  },
-  {
     "espanol": "trabajo de investigación",
     "catalan": "treball de recerca",
     "valenciano": "treball d'investigació",
@@ -702,15 +693,6 @@
     "categoria": "adv"
   },
   {
-    "espanol": "lo más pronto",
-    "catalan": "al més aviat",
-    "valenciano": "al més prompte",
-    "tipo": "v:lexic_val",
-    "fuente": "unificado",
-    "id": "E0086",
-    "categoria": "adv"
-  },
-  {
     "espanol": "albañilería",
     "catalan": "obra de paleta",
     "valenciano": "construcció",
@@ -814,15 +796,6 @@
     "categoria": "adj"
   },
   {
-    "espanol": "hasta pronto",
-    "catalan": "fins aviat",
-    "valenciano": "fins prompte",
-    "tipo": "v:lexic_val",
-    "fuente": "unificado",
-    "id": "E0099",
-    "categoria": "ij"
-  },
-  {
     "espanol": "a no ser que",
     "catalan": "tret que",
     "valenciano": "llevat que",
@@ -871,15 +844,6 @@
     "fuente": "numerales",
     "id": "E0105",
     "categoria": "num"
-  },
-  {
-    "espanol": "tan pronto",
-    "catalan": "tan aviat",
-    "valenciano": "tan prompte",
-    "tipo": "v:lexic_val",
-    "fuente": "unificado",
-    "id": "E0106",
-    "categoria": "adv"
   },
   {
     "espanol": "con tino",
@@ -1401,171 +1365,38 @@
   },
   {
     "espanol": "pequeñito",
-    "catalan": "petitet",
+    "catalan": "petit",
     "valenciano": "xicotet",
     "tipo": "v:lexic_val",
-    "canonica": false,
     "fuente": "unificado",
-    "id": "E0167",
-    "categoria": "adj",
-    "lado": "cat",
-    "problema": "colision",
-    "id_colision": "E0171"
+    "id": "E0167"
   },
   {
     "espanol": "pequeñito",
-    "catalan": "petitetes",
+    "catalan": "petites",
     "valenciano": "xicotetes",
     "tipo": "v:lexic_val",
-    "canonica": false,
     "fuente": "unificado",
     "id": "E0168",
-    "categoria": "adj",
-    "lado": "cat",
-    "problema": "colision",
-    "id_colision": "E0172"
+    "categoria": "adj"
   },
   {
     "espanol": "pequeñito",
-    "catalan": "petiteta",
+    "catalan": "petita",
     "valenciano": "xicoteta",
     "tipo": "v:lexic_val",
-    "canonica": false,
     "fuente": "unificado",
     "id": "E0169",
-    "categoria": "adj",
-    "lado": "cat",
-    "problema": "colision",
-    "id_colision": "E0173"
+    "categoria": "adj"
   },
   {
     "espanol": "pequeñito",
-    "catalan": "petitets",
+    "catalan": "petits",
     "valenciano": "xicotets",
     "tipo": "v:lexic_val",
-    "canonica": false,
     "fuente": "unificado",
     "id": "E0170",
-    "categoria": "adj",
-    "lado": "cat",
-    "problema": "colision",
-    "id_colision": "E0174"
-  },
-  {
-    "espanol": "pequeño",
-    "catalan": "menut",
-    "valenciano": "xicotet",
-    "tipo": "v:lexic_val",
-    "canonica": true,
-    "fuente": "unificado",
-    "id": "E0171",
-    "categoria": "adj",
-    "lado": "ambos",
-    "problema": "colision",
-    "id_colision": [
-      "E0167",
-      "E0175"
-    ]
-  },
-  {
-    "espanol": "pequeño",
-    "catalan": "menudes",
-    "valenciano": "xicotetes",
-    "tipo": "v:lexic_val",
-    "canonica": true,
-    "fuente": "unificado",
-    "id": "E0172",
-    "categoria": "adj",
-    "lado": "ambos",
-    "problema": "colision",
-    "id_colision": [
-      "E0168",
-      "E0176"
-    ]
-  },
-  {
-    "espanol": "pequeño",
-    "catalan": "menuda",
-    "valenciano": "xicoteta",
-    "tipo": "v:lexic_val",
-    "canonica": true,
-    "fuente": "unificado",
-    "id": "E0173",
-    "categoria": "adj",
-    "lado": "ambos",
-    "problema": "colision",
-    "id_colision": [
-      "E0169",
-      "E0177"
-    ]
-  },
-  {
-    "espanol": "pequeño",
-    "catalan": "menuts",
-    "valenciano": "xicotets",
-    "tipo": "v:lexic_val",
-    "canonica": true,
-    "fuente": "unificado",
-    "id": "E0174",
-    "categoria": "adj",
-    "lado": "ambos",
-    "problema": "colision",
-    "id_colision": [
-      "E0170",
-      "E0178"
-    ]
-  },
-  {
-    "espanol": "pequeño",
-    "catalan": "menut",
-    "valenciano": "petit",
-    "tipo": "v:lexic_val",
-    "canonica": true,
-    "fuente": "unificado",
-    "id": "E0175",
-    "categoria": "n",
-    "lado": "val",
-    "problema": "colision",
-    "id_colision": "E0171"
-  },
-  {
-    "espanol": "pequeño",
-    "catalan": "menudes",
-    "valenciano": "petites",
-    "tipo": "v:lexic_val",
-    "canonica": true,
-    "fuente": "unificado",
-    "id": "E0176",
-    "categoria": "n",
-    "lado": "val",
-    "problema": "colision",
-    "id_colision": "E0172"
-  },
-  {
-    "espanol": "pequeño",
-    "catalan": "menuda",
-    "valenciano": "petida",
-    "tipo": "v:lexic_val",
-    "canonica": true,
-    "fuente": "unificado",
-    "id": "E0177",
-    "categoria": "n",
-    "lado": "val",
-    "problema": "colision",
-    "id_colision": "E0173"
-  },
-  {
-    "espanol": "pequeño",
-    "catalan": "menuts",
-    "valenciano": "petits",
-    "tipo": "v:lexic_val",
-    "canonica": true,
-    "fuente": "unificado",
-    "id": "E0178",
-    "categoria": "n",
-    "lado": "val",
-    "problema": "colision",
-    "id_colision": "E0174"
+    "categoria": "adj"
   },
   {
     "espanol": "perezoso",
@@ -2522,7 +2353,7 @@
   {
     "espanol": "enseñanza",
     "catalan": "ensenyaments",
-    "valenciano": "ensenyançans",
+    "valenciano": "ensenyancens",
     "tipo": "v:lexic_val_gva",
     "fuente": "unificado",
     "id": "E0274",
@@ -6155,7 +5986,11 @@
     "valenciano": "colp",
     "fuente": "unificado",
     "id": "E0667",
-    "categoria": "n"
+    "categoria": "n",
+    "lado": "val",
+    "problema": "colision_homonima",
+    "forma_problematica": "cop",
+    "id_colision": "E1656"
   },
   {
     "catalan": "cops",
@@ -6970,17 +6805,6 @@
     "fuente": "unificado",
     "id": "E0781",
     "categoria": "n"
-  },
-  {
-    "catalan": "batllessa",
-    "valenciano": "batlessa",
-    "fuente": "unificado",
-    "id": "E0782",
-    "categoria": "n",
-    "problema": "colision",
-    "canonica": false,
-    "lado": "cat",
-    "id_colision": "E1638"
   },
   {
     "catalan": "exbatllessa",
@@ -13018,11 +12842,7 @@
     "valenciano": "alcaldessa",
     "fuente": "unificado",
     "id": "E1638",
-    "categoria": "n",
-    "problema": "colision",
-    "canonica": true,
-    "lado": "cat",
-    "id_colision": "E0782"
+    "categoria": "n"
   },
   {
     "catalan": "batlles",
@@ -13228,5 +13048,81 @@
     "canonica": false,
     "lado": "val",
     "id_colision": "E1648"
+  },
+  {
+    "valenciano": "rebolica",
+    "catalan": "revoltim",
+    "tipo": "v:lexic_val",
+    "fuente": "gplsi",
+    "id": "E1650",
+    "categoria": "n"
+  },
+  {
+    "valenciano": "reboliques",
+    "catalan": "revoltims",
+    "tipo": "v:lexic_val",
+    "fuente": "gplsi",
+    "id": "E1651",
+    "categoria": "n"
+  },
+  {
+    "valenciano": "camiseta",
+    "catalan": "samarreta",
+    "tipo": "v:lexic_val",
+    "fuente": "les_nostres",
+    "id": "E1652",
+    "categoria": "n"
+  },
+  {
+    "valenciano": "camisetes",
+    "catalan": "samarretes",
+    "tipo": "v:lexic_val",
+    "fuente": "les_nostres",
+    "id": "E1653",
+    "categoria": "n"
+  },
+  {
+    "valenciano": "alcaldia",
+    "catalan": "batllia",
+    "tipo": "v:lexic_val",
+    "fuente": "gplsi",
+    "id": "E1654",
+    "categoria": "n"
+  },
+  {
+    "valenciano": "alcaldies",
+    "catalan": "batllies",
+    "tipo": "v:lexic_val",
+    "fuente": "gplsi",
+    "id": "E1655",
+    "categoria": "n"
+  },
+  {
+    "valenciano": "vegada",
+    "catalan": "cop",
+    "tipo": "v:lexic_val",
+    "fuente": "gplsi",
+    "id": "E1656",
+    "categoria": "n",
+    "lado": "val",
+    "problema": "colision_homonima",
+    "forma_problematica": "cop",
+    "id_colision": "E0667"
+  },
+  {
+    "valenciano": "roja",
+    "catalan": "vermella",
+    "tipo": "v:lexic_val",
+    "fuente": "unificado",
+    "id": "E1657",
+    "categoria": "adj"
+  },
+  {
+    "catalan": "aviat",
+    "valenciano": "prompte",
+    "tipo": "v:lexic_val",
+    "fuente": "unificado",
+    "id": "E1658",
+    "categoria": "adv"
   }
 ]

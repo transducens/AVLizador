@@ -13,6 +13,15 @@
 > els punts sense Ollama, `--model`, `--verbose`). Sense avaluar encara: als
 > corpus només hi ha 3 casos.
 >
+> **Estat al tancament del 22/10/2026: APARCADA.** Amb models locals
+> menuts (qwen2.5:7b, qwen3:8b, qwen3:4b) dona 7/14 a
+> `frases_prova_cat_val.json`, el mateix que el motor sol: no coneixen les
+> paraules. Següent enfocament acordat: spaCy quan puga separar les
+> lectures ("gandula") i, només per a homògrafs de la mateixa categoria
+> (`colision_homonima` "cop": colp/vegada; "calces"), **perplexitat**: el
+> motor construïx les dos frases valencianes i guanya la més probable segons
+> un model de llenguatge (vore `CLAUDE.md`, "TRABAJO PARA MAÑANA").
+>
 > El de baix descriu la capa de val→cat (congelada).
 
 Capa **opcional** només per a valencià→català. Des del 21/10/2026 està
