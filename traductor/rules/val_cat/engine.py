@@ -95,7 +95,7 @@ class RuleEngine:
     >>> engine.translate("Vull conéixer qui establix esta norma.")
     'Vull conèixer qui estableix aquesta norma.'
     >>> engine.translate("Este xiquet i eixa dona i aquella casa.")
-    'Aquest nen i aquesta dona i aquella casa.'
+    'Aquest noi i aqueixa dona i aquella casa.'
     >>> engine.translate("Estes dos germanes i les dos institucions.")
     'Aquestes dues germanes i les dues institucions.'
     >>> engine.translate("La casa a on vivia era menuda.")

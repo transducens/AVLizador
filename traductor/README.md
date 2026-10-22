@@ -32,7 +32,13 @@ mà, i el que diu este README sobre ells és històric:
   `categoria: "det"` del lèxic, igual que `possessius.py`.
 A més, les entrades `_PENDENT` del lèxic s'usen com les altres
 (l'etiqueta és metadada del proveïdor) i a `cat_val/lexic.py` ja no queda
-cap llista a mà (ordinals, rentar/empentar).
+cap llista a mà (ordinals, rentar/empentar); a `val_cat/lexic.py`
+tampoc (`_LEXIC_PERDUT_RESTAURAT`, `_ORDINALS_PERDUTS`,
+`_CANONICA_OVERRIDES`).
+
+**Model d'spaCy (22/10/2026)**: `ca_core_news_md` (`python -m spacy
+download ca_core_news_md`); si no hi és, s'usa `ca_core_news_sm`. Mateixa
+velocitat, ~190 MB més de RAM, millor gènere i morfologia.
 
 ## Per què existix açò
 

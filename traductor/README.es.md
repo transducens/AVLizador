@@ -32,7 +32,13 @@ mano, y lo que dice este README sobre ellos es histórico:
   `categoria: "det"` del léxico, igual que `possessius.py`.
 Además, las entradas `_PENDENT` del léxico se usan como las demás (la
 etiqueta es metadato del proveedor) y en `cat_val/lexic.py` ya no queda
-ninguna lista a mano (ordinales, rentar/empentar).
+ninguna lista a mano (ordinales, rentar/empentar); en `val_cat/lexic.py`
+tampoco (`_LEXIC_PERDUT_RESTAURAT`, `_ORDINALS_PERDUTS`,
+`_CANONICA_OVERRIDES`).
+
+**Modelo de spaCy (22/10/2026)**: `ca_core_news_md` (`python -m spacy
+download ca_core_news_md`); si no está, se usa `ca_core_news_sm`. Misma
+velocidad, ~190 MB más de RAM, mejor género y morfología.
 
 ## Por qué existe esto
 

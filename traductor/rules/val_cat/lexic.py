@@ -1,6 +1,16 @@
 """
 lexic.py -- Capa 1 del pipeline: substitució directa per lèxic diferencial.
-Fusiona 3 fonts, per orde de prioritat quan es contradiuen (la primera que
+
+**22/10/2026**: es retiren `flexio_genere_avl.json`,
+`canvi_genere_lexic_avl.json` i `categoria_gramatical_lexic.json` (llistes
+fetes a mà). Els homògrafs els decidix ara el propi lèxic
+(`homonimia_lexica`, vore `rules/__init__.py::carrega_homografs`), el
+gènere del determinant spaCy (`pos_tagger.genere_tras_substitucio`), i les
+entrades `_PENDENT` s'usen igual que les altres (l'etiqueta és metadada del
+proveïdor). Els demostratius també ixen del lèxic (`demostratius.py`). La
+descripció històrica de baix es conserva com a registre.
+
+Fusionava 3 fonts, per orde de prioritat quan es contradiuen (la primera que
 definix una paraula guanya):
 
     0. TEMPORAL_hui_avui_pendent_fusio.json -- PEGAT TEMPORAL, no una font
@@ -168,21 +178,20 @@ import json
 from pathlib import Path
 
 from .. import (
-    CATEGORIA_GRAMATICAL_PATH,
     Token,
     aplica_amb_prefix_elidit,
-    carrega_categoria_gramatical,
+    carrega_homografs,
+    corregeix_article_abans,
+    corregeix_contraccio_al_abans,
     corregeix_determinant_abans,
-    pos_compatible,
+    homograf_compatible,
     preserva_majuscula,
     separa_prefix_elidit,
 )
+from ..pos_tagger import genere_tras_substitucio
 
 _DATA = Path(__file__).resolve().parent.parent.parent / "data"
 LEXIC_GENERAL_PATH = _DATA / "lexic_general.json"
-FLEXIO_GENERE_PATH = _DATA / "flexio_genere_avl.json"
-TEMPORAL_PATH = _DATA / "TEMPORAL_hui_avui_pendent_fusio.json"
-CANVI_GENERE_PATH = _DATA / "canvi_genere_lexic_avl.json"
 
 # Bug de dades conegut al fitxer font (vore docstring del mòdul): "després"
 # no és una excepció dialectal, és un error de transcripció confirmat.
@@ -240,119 +249,12 @@ CANVI_GENERE_PATH = _DATA / "canvi_genere_lexic_avl.json"
 # formal/institucional preferisca la paraula compartida (mateix patró que
 # "qué"/RC055). Abans: `_BUG_DADES_CONEGUTS = {"després", "ensenyança", "alcalde"}`.
 
-# Paraules perdudes de veres migrant a `lexico_general.json` (16/10/2026,
-# vore hoja_de_ruta_migracio_diccionarios_v1.md §4ter): la font nova no
-# les porta per cap categoria ni com a verb d'arrel distinta -- es
-# restauren a mà des de la font vella (`unificado.json`) per no perdre
-# cobertura real mentre no arriben en una entrega futura. "llavar" i
-# "espentar" confirmats amb regressió real de benchmark (RC002/RC022/RC025);
-# la resta no tenien cap cas al benchmark pero es restauren igual per
-# coherència (podrien aparéixer en gplsi/BOE).
-_LEXIC_PERDUT_RESTAURAT = {
-    "llavar": "rentar",
-    "espentar": "empentar",
-    "encollir": "encongir",
-    "enllandar": "enllaunar",
-    "bollir": "bullir",
-    "solejar": "assolellar",
-    "amprar": "manllevar",
-    "subdesenrotllar": "subdesenvolupar",
-    "invadir": "envair",
-    "i+d": "R+D",
-    "i+d+i": "R+D+I",
-}
-
-# Ordinals masculins singulars en "-è" (16/10/2026, vore docstring de
-# `numerals.py`): únic patró real que falta a `lexico_general.json`
-# (categoria "adj") respecte a `numerals_general.json` -- mesurat
-# exhaustivament (153/176 ja coincidixen, nomes estos 25 falten). Van
-# ací, no a `numerals.py`, perquè per categoria gramatical real són
-# ADJECTIUS (ordinals), igual que la resta que ja agafa esta capa.
-_ORDINALS_PERDUTS = {
-    "dihuitè": "divuitè",
-    "huitens": "vuitens",
-    "huitè": "vuitè",
-    "vint-i-huitè": "vint-i-vuitè",
-    "trenta-huitè": "trenta-vuitè",
-    "quaranta-huitè": "quaranta-vuitè",
-    "cinquanta-huitè": "cinquanta-vuitè",
-    "seixanta-huitè": "seixanta-vuitè",
-    "setanta-huitè": "setanta-vuitè",
-    "noranta-huitè": "noranta-vuitè",
-    "huitanta-unè": "vuitanta-unè",
-    "huitanta-dosè": "vuitanta-dosè",
-    "huitanta-tresè": "vuitanta-tresè",
-    "huitanta-quatrè": "vuitanta-quatrè",
-    "huitanta-cinquè": "vuitanta-cinquè",
-    "huitanta-sisè": "vuitanta-sisè",
-    "huitanta-setè": "vuitanta-setè",
-    "huitanta-huitè": "vuitanta-vuitè",
-    "huitanta-novè": "vuitanta-novè",
-    "huitantenes": "vuitantenes",
-    "huit-centè": "vuit-centè",
-    "huitantena": "vuitantena",
-    "huitantè": "vuitantè",
-    "denovè": "dinovè",
-    "dessetè": "dissetè",
-}
-
-
-def _formes_demostratius_conegudes() -> set[str]:
-    """Formes font (valencià) que ja cobrix `demostratius.py` amb
-    autoritat pròpia -- este lèxic general les ha d'ignorar encara que
-    aparega una entrada per a elles en una font nova (bug real trobat
-    05/10/2026: "unificado.json" porta `eixa->aqueixa`, una traducció
-    "correcta" en abstracte pero que ignora la decisió ja presa de
-    col·lapsar este/eixe/aqueix tots cap a "aquest" -- vore
-    `demostratius.py` per al raonament complet). Import diferit (no al
-    nivell de mòdul) per a evitar cap problema d'orde d'importació."""
-    from .demostratius import carrega_demostratius
-
-    return set(carrega_demostratius().keys())
-
-
-def _deriva_genere_nombre(masc_val: str, masc_cat: str) -> dict[str, str]:
-    """Deriva fem singular (+a), plural masculí (+s) i plural femení (+es
-    sobre l'arrel, mai "+as") a partir d'un parell masculí singular. Només
-    seria correcte per a paraules on el patró "+a" no xoca amb cap
-    irregularitat -- per això `_carrega_flexio_genere` només l'invoca
-    sobre la llista curada `regulars`, mai sobre tot el lèxic.
-
-    >>> _deriva_genere_nombre("xiquet", "nen")
-    {'xiqueta': 'nena', 'xiquets': 'nens', 'xiquetes': 'nenes'}
-    """
-    return {
-        masc_val + "a": masc_cat + "a",
-        masc_val + "s": masc_cat + "s",
-        masc_val + "es": masc_cat + "es",
-    }
-
-
-def _carrega_temporal(path: Path) -> dict[str, str]:
-    """Carrega el pegat TEMPORAL (vore docstring del mòdul). Si el fitxer
-    no existix -- s'ha fusionat a una font permanent i s'ha esborrat, tal
-    com indica el seu propi `descripcio` -- torna buit sense error, perquè
-    esta funció no haja de llevar-se a mà de `carrega_lexic()`.
-    """
-    if not path.exists():
-        return {}
-    dades = json.loads(path.read_text(encoding="utf-8"))
-    return {val: cat for val, cat in dades.items() if val != "descripcio"}
-
-
-def _carrega_flexio_genere(path: Path) -> dict[str, str]:
-    dades = json.loads(path.read_text(encoding="utf-8"))
-    lookup: dict[str, str] = {}
-    for masc_val, masc_cat in dades["regulars"].items():
-        if masc_val == "descripcio":
-            continue
-        lookup[masc_val] = masc_cat
-        lookup.update(_deriva_genere_nombre(masc_val, masc_cat))
-    for val, cat in dades["irregulars"].items():
-        if val == "descripcio":
-            continue
-        lookup[val] = cat
-    return lookup
+# 22/10/2026: retirades a petició de l'usuari les llistes fetes a mà
+# `_LEXIC_PERDUT_RESTAURAT` (llavar, espentar, encollir... restaurades de
+# la font vella), `_ORDINALS_PERDUTS` (25 ordinals en "-è"),
+# `_CANONICA_OVERRIDES` ("xicotet"->"petit" per damunt de la canònica
+# "menut") i el pegat `TEMPORAL_hui_avui_pendent_fusio.json` (el fitxer ja
+# no existia). Ara només mana `lexic_general.json`.
 
 
 def _resol_polisemia(entries: list[dict]) -> str:
@@ -373,22 +275,10 @@ def _resol_polisemia(entries: list[dict]) -> str:
 # cada un amb el seu propi mòdul/font.
 _CATEGORIES_LEXIC_GENERAL = {"n", "adj", "adv", "cnjadv", "pr", "ij", "prn"}
 
-# Bug de dades conegut, sense corregir a l'origen encara (16/10/2026,
-# vore hoja_de_ruta_migracio_diccionarios_v1.md §4ter): "xicotet" ve
-# marcat `canonica: true` cap a "menut", pero mesurat contra 1.958
-# frases reals de gplsi (14/10/2026) la traducció real és SEMPRE
-# "petit". Override explícit per a no perdre eixa evidència mentre la
-# font no ho corregisca.
-_CANONICA_OVERRIDES = {"xicotet": "petit"}
-
-
 def _carrega_lexic_general(path: Path) -> dict[str, str]:
-    demostratius_coneguts = _formes_demostratius_conegudes()
     dades = json.loads(path.read_text(encoding="utf-8"))
     per_paraula: dict[str, list[dict]] = {}
     for entrada in dades:
-        if "PENDENT" in (entrada.get("tipo") or ""):
-            continue
         if entrada.get("tipo") == "v:top_gva":
             continue
         if entrada.get("categoria") not in _CATEGORIES_LEXIC_GENERAL:
@@ -399,87 +289,43 @@ def _carrega_lexic_general(path: Path) -> dict[str, str]:
             continue
         if valenciano.lower() == catalan.lower():
             continue
-        if valenciano.lower() in demostratius_coneguts:
-            continue
         per_paraula.setdefault(valenciano.lower(), []).append(entrada)
-    lookup = {val: _resol_polisemia(entries) for val, entries in per_paraula.items()}
-    for val, cat in _CANONICA_OVERRIDES.items():
-        if val in lookup:
-            lookup[val] = cat
-    return lookup
+    return {val: _resol_polisemia(entries) for val, entries in per_paraula.items()}
 
 
-def carrega_canvis_genere(path: Path = CANVI_GENERE_PATH) -> dict[str, str]:
-    """Llig `canvi_genere_lexic_avl.json`: `{forma_valenciana: "m"|"f"}`
-    per a les poques paraules on `LexicRule` canvia el gènere gramatical
-    sencer (vore docstring del mòdul).
-
-    >>> carrega_canvis_genere()["dacsa"]
-    'm'
-    """
-    dades = json.loads(Path(path).read_text(encoding="utf-8"))
-    return dict(dades.get("canvis", {}))
-
-
-def carrega_lexic(
-    lexic_general_path: Path = LEXIC_GENERAL_PATH,
-    flexio_genere_path: Path = FLEXIO_GENERE_PATH,
-    temporal_path: Path = TEMPORAL_PATH,
-) -> dict[str, str]:
-    """Fusiona les 3 fonts documentades al mòdul, per orde de prioritat
-    (la primera font que definix una paraula guanya sobre les següents).
+def carrega_lexic(lexic_general_path: Path = LEXIC_GENERAL_PATH) -> dict[str, str]:
+    """`{forma valenciana: forma catalana}` d'una sola paraula, només des de
+    `lexic_general.json`.
 
     >>> lookup = carrega_lexic()
-    >>> lookup["xiquet"]
-    'nen'
+    >>> lookup["xiquet"]  # cap canònica: la primera entrada (E0260)
+    'noi'
     >>> lookup["xiqueta"], lookup["xiquets"], lookup["xiquetes"]
-    ('nena', 'nens', 'nenes')
-    >>> lookup["xicoteta"]
-    'menuda'
-    >>> lookup["firmant"]
-    'signant'
-    >>> lookup["acetilé"]
-    'acetilè'
-    >>> lookup["vesprada"]
-    'tarda'
-    >>> lookup["xicotet"]
-    'petit'
+    ('noia', 'nois', 'noies')
+    >>> lookup["duració"]  # entrada `_PENDENT`, s'usa igual
+    'durada'
+    >>> lookup["xicoteta"], lookup["xicotet"]  # mana la canònica
+    ('menuda', 'menut')
+    >>> lookup["firmant"], lookup["acetilé"], lookup["vesprada"], lookup["hui"]
+    ('signant', 'acetilè', 'tarda', 'avui')
     >>> "qué" in lookup  # parell retirat de les dades al merge del 21/10/2026
     False
-    >>> lookup["hui"]
-    'avui'
-    >>> lookup["llavar"]
-    'rentar'
-    >>> lookup["huitè"]
-    'vuitè'
 
-    19/10/2026: `_BUG_DADES_CONEGUTS` retirada a petició de l'usuari (vore
-    CLAUDE.md, "Pendent per a la propera sessió"). Regressions conegudes i
-    acceptades mentre no s'arreglen en origen -- "després" (mai hauria de
-    canviar) i "ensenyança" (perd la concordança de gènere) tornen a
-    convertir-se, i "alcalde" torna a "batlle" encara que este registre
-    preferisca la paraula compartida:
+    Sense les llistes a mà (22/10/2026), el que no porta el lèxic ja no es
+    tradueix:
 
-    >>> lookup["després"]
-    'desprès'
-    >>> lookup["ensenyança"]
-    'ensenyament'
-    >>> lookup["alcalde"]
-    'batlle'
+    >>> "llavar" in lookup, "huitè" in lookup
+    (False, False)
+
+    19/10/2026: `_BUG_DADES_CONEGUTS` retirada a petició de l'usuari.
+    Regressions conegudes mentre no s'arreglen en origen -- "després" (mai
+    hauria de canviar) i "ensenyança" (perd la concordança de gènere) es
+    convertixen, i "alcalde" torna a "batlle":
+
+    >>> lookup["després"], lookup["ensenyança"], lookup["alcalde"]
+    ('desprès', 'ensenyament', 'batlle')
     """
-    lookup: dict[str, str] = {}
-    for carregador, path in (
-        (_carrega_temporal, temporal_path),
-        (_carrega_flexio_genere, flexio_genere_path),
-        (_carrega_lexic_general, lexic_general_path),
-    ):
-        for val, cat in carregador(path).items():
-            lookup.setdefault(val, cat)
-    for val, cat in _LEXIC_PERDUT_RESTAURAT.items():
-        lookup.setdefault(val, cat)
-    for val, cat in _ORDINALS_PERDUTS.items():
-        lookup.setdefault(val, cat)
-    return lookup
+    return _carrega_lexic_general(lexic_general_path)
 
 
 class LexicRule:
@@ -527,45 +373,45 @@ class LexicRule:
     >>> detokenize(toks)
     'Han penjat el mirall a la paret.'
 
-    Concordança de gènere tras substitució (RC044 -- vore docstring del
-    mòdul i `canvi_genere_lexic_avl.json`):
-
-    >>> toks = tokenize("Entre els cereals estan el blat i la dacsa.")
-    >>> marca_noms_propis(toks)
-    >>> toks = LexicRule().apply(toks)
-    >>> detokenize(toks)
-    'Entre els cereals estan el blat i el blat de moro.'
-
-    Filtre POS per a "tancada" (homonimia_lexica, 19/10/2026 -- vore
-    docstring del mòdul): com a NOUN ("vallado") sí es toca, com a ADJ
-    ("tancat/tancada", "closed") mai:
+    Concordança de gènere tras substitució (des del 22/10/2026 el gènere
+    el dona spaCy, vore `pos_tagger.genere_tras_substitucio`), amb
+    l'apòstrof corregit després:
 
     >>> from .. import pos_tagger
-    >>> toks = tokenize("La tancada del corral es va trencar.")
-    >>> marca_noms_propis(toks)
-    >>> pos_tagger.etiqueta(toks)
-    >>> toks = LexicRule().apply(toks)
-    >>> [(t.surface, t.translated) for t in toks if t.is_translated]
-    [('tancada', 'closa')]
+    >>> def tradueix(text):
+    ...     toks = tokenize(text)
+    ...     marca_noms_propis(toks)
+    ...     pos_tagger.etiqueta(toks)
+    ...     return detokenize(LexicRule().apply(toks))
+    >>> tradueix("Parla de la vivenda.")
+    "Parla de l'habitatge."
+
+    RC044 ("la dacsa" -> "el blat de moro", abans resolt amb
+    `canvi_genere_lexic_avl.json`): amb `ca_core_news_md` spaCy ja sap que
+    "dacsa" és femení dins de la frase i que "blat" és masculí:
+
+    >>> tradueix("Entre els cereals estan el blat i la dacsa.")
+    'Entre els cereals estan el blat i el blat de moro.'
+    >>> tradueix("La menció del cas.")
+    "L'esment del cas."
+
+    Homògrafs del lèxic (`homonimia_lexica`, 22/10/2026): mana la
+    `categoria` de l'entrada. "tancada" porta `categoria: "adj"` (error de
+    dades: l'`espanol` és "vallado", un nom), així que ara es tradueix
+    l'adjectiu i no el nom -- pendent de corregir-se en origen:
+
+    >>> from .. import pos_tagger
     >>> toks = tokenize("La porta estava tancada.")
     >>> marca_noms_propis(toks)
     >>> pos_tagger.etiqueta(toks)
     >>> toks = LexicRule().apply(toks)
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
-    []
+    [('tancada', 'closa')]
     """
 
-    def __init__(
-        self,
-        lexic_general_path: Path = LEXIC_GENERAL_PATH,
-        flexio_genere_path: Path = FLEXIO_GENERE_PATH,
-        temporal_path: Path = TEMPORAL_PATH,
-        canvi_genere_path: Path = CANVI_GENERE_PATH,
-        categoria_path: Path = CATEGORIA_GRAMATICAL_PATH,
-    ) -> None:
-        self._lookup = carrega_lexic(lexic_general_path, flexio_genere_path, temporal_path)
-        self._canvis_genere = carrega_canvis_genere(canvi_genere_path)
-        self._categories = carrega_categoria_gramatical(categoria_path)
+    def __init__(self, lexic_general_path: Path = LEXIC_GENERAL_PATH) -> None:
+        self._lookup = carrega_lexic(lexic_general_path)
+        self._homografs, _ = carrega_homografs(lexic_general_path)
 
     def apply(self, tokens: list[Token]) -> list[Token]:
         for i, tok in enumerate(tokens):
@@ -574,22 +420,24 @@ class LexicRule:
             minuscules = tok.surface.lower()
             forma = self._lookup.get(minuscules)
             if forma is not None:
-                if not pos_compatible(tok.pos, minuscules, self._categories):
+                if not homograf_compatible(tok.pos, minuscules, self._homografs):
                     continue
                 tok.translated = preserva_majuscula(tok.surface, forma)
                 tok.is_translated = True
-                genere_nou = self._canvis_genere.get(minuscules)
-                if genere_nou is not None:
-                    corregeix_determinant_abans(tokens, i, genere_nou)
+                genere, canvia = genere_tras_substitucio(tok, forma)
+                if canvia:
+                    corregeix_determinant_abans(tokens, i, genere)
+                corregeix_contraccio_al_abans(tokens, i)
+                corregeix_article_abans(tokens, i)
                 continue
             prefix_resta = separa_prefix_elidit(tok.surface)
             if prefix_resta is None:
                 continue
             prefix, resta = prefix_resta
             forma = self._lookup.get(resta.lower())
-            if forma is not None and not pos_compatible(tok.pos, resta.lower(), self._categories):
+            if forma is None or not homograf_compatible(tok.pos, resta.lower(), self._homografs):
                 continue
-            if forma is not None:
-                aplica_amb_prefix_elidit(tokens, i, prefix, resta, forma)
-                tok.is_translated = True
+            genere, _ = genere_tras_substitucio(tok, forma, resta)
+            aplica_amb_prefix_elidit(tokens, i, prefix, resta, forma, genere)
+            tok.is_translated = True
         return tokens

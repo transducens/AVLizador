@@ -1,33 +1,15 @@
 """
-demostratius.py -- Pronoms/adjectius demostratius: este/eixe/aqueix
-(occidental) -> aquest (oriental), tots tres col·lapsats a la mateixa
-forma, més el neutre açò->això. Recreat 30/09/2026 (s'havia llevat del
-tot en passar a "pur diccionari del proveïdor" el mateix dia, però cap
-diccionari pot cobrir un paradigma gramatical tancat que el proveïdor
-senzillament no llista -- vore `traductor/README.md`, secció "DECISIÓ
-D'ARQUITECTURA").
+demostratius.py -- Pronoms/adjectius demostratius: este -> aquest,
+eixe -> aqueix (i les formes de femení i plural).
 
-Font de dades: `traductor/data/demostratius_avl.json`, sourced de
-`regles_dialectals_amb_evidencia.md` §1 + coneixement dialectològic
-general (cap fitxer del proveïdor llista estes formes -- són paraules
-gramaticals tancades, no lèxic obert).
-
-DECISIÓ (heretada, confirmada): el sistema de 3 graus este/eixe/aquell ->
-aquest/aqueix/aquell és el que admeten totes dos normatives (AVL i IEC)
-sobre el paper, però l'ús real de l'oriental contemporani ha col·lapsat el
-2n grau cap al 1r: "aqueix" es percep com a forma arcaica/literària, rara
-fora de registre molt formal, mentre que "aquest" cobrix en la pràctica
-els dos usos. Per coherència, si "aqueix" mateix apareix en un text
-occidental (l'AVL també l'admet com a forma culta), es tradueix igual cap
-a "aquest" -- no té sentit tractar-lo distint d'"eixe" si el resultat
-oriental real és el mateix.
-
-"aqueix" NO desapareix del tot: seguix sent la forma normativa i encara
-apareix (rar) en textos orientals formals/literaris. Si mai es fa
-traducció en sentit invers (oriental -> occidental), la taula inversa
-("aqueix"->"eixe", no ->"este") ja es queda documentada al fitxer de
-dades, sense implementar-se -- este motor només tradueix occidental ->
-oriental.
+**Font: el lèxic del proveïdor (22/10/2026)**, igual que `possessius.py`:
+es lligen les entrades de `traductor/data/lexic_general.json` amb
+`categoria: "det"` que no són possessius (`fuente: "avl_equip"`, vore
+`possessius.py`). Substituïx `demostratius_avl.json`, un paradigma fet a
+mà (30/09/2026) que col·lapsava este/eixe/aqueix cap a "aquest" i
+convertia el neutre "açò" -> "això". Amb el lèxic, "eixe" passa a
+"aqueix" (la forma normativa del 2n grau) i "açò" es queda sense tocar,
+perquè el proveïdor no porta cap d'estes dos decisions.
 """
 
 from __future__ import annotations
@@ -37,35 +19,42 @@ from pathlib import Path
 
 from .. import Token, aplica_amb_prefix_elidit, preserva_majuscula, separa_prefix_elidit
 
-AVL_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "demostratius_avl.json"
+LEXIC_GENERAL_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "lexic_general.json"
 
 
-def carrega_demostratius(path: Path = AVL_PATH) -> dict[str, str]:
+def carrega_demostratius(path: Path = LEXIC_GENERAL_PATH) -> dict[str, str]:
+    """`{demostratiu valencià: català}` des del lèxic general.
+
+    >>> lookup = carrega_demostratius()
+    >>> lookup["este"], lookup["estes"], lookup["eixa"]
+    ('aquest', 'aquestes', 'aqueixa')
+    >>> "meua" in lookup
+    False
+    """
     dades = json.loads(Path(path).read_text(encoding="utf-8"))
-    return dict(dades["entrades_actives_occidental_a_oriental"])
+    lookup: dict[str, str] = {}
+    for entrada in dades:
+        if entrada.get("categoria") != "det" or entrada.get("fuente") == "avl_equip":
+            continue
+        valenciano = (entrada.get("valenciano") or "").strip().lower()
+        catalan = (entrada.get("catalan") or "").strip().lower()
+        if valenciano and catalan and valenciano != catalan:
+            lookup[valenciano] = catalan
+    return lookup
 
 
 class DemostratiusRule:
-    """Substitueix demostratius occidentals (este/eixe/aqueix + el
-    neutre açò) per la seua forma oriental.
+    """Substitueix els demostratius valencians per la forma catalana del
+    lèxic.
 
     >>> from .. import tokenize, marca_noms_propis
-    >>> toks = tokenize("Este xiquet i eixes xiquetes i aqueixa dona.")
+    >>> toks = tokenize("Este xiquet i eixes xiquetes.")
     >>> marca_noms_propis(toks)
     >>> toks = DemostratiusRule().apply(toks)
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
-    [('Este', 'Aquest'), ('eixes', 'aquestes'), ('aqueixa', 'aquesta')]
+    [('Este', 'Aquest'), ('eixes', 'aqueixes')]
 
-    El neutre "açò" -> "això":
-
-    >>> toks = tokenize("Açò és molt important.")
-    >>> marca_noms_propis(toks)
-    >>> toks = DemostratiusRule().apply(toks)
-    >>> [(t.surface, t.translated) for t in toks if t.is_translated]
-    [('Açò', 'Això')]
-
-    "aquell" (i el neutre "allò") mai canvien -- són idèntics als dos
-    dialectes, per això no tenen entrada a la taula:
+    "aquell" i "allò" mai canvien:
 
     >>> toks = tokenize("Aquell home i allò que vas dir.")
     >>> marca_noms_propis(toks)
@@ -73,22 +62,13 @@ class DemostratiusRule:
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
     []
 
-    Nom propi protegit encara que coincidisca amb un demostratiu (exemple
-    sintètic -- cap topònim real es diu així, però la protecció ha de
-    funcionar igual):
+    Nom propi protegit i prefix elidit:
 
     >>> toks = tokenize("Anem a visitar Estos, un poble menut.")
     >>> marca_noms_propis(toks)
     >>> toks = DemostratiusRule().apply(toks)
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
     []
-
-    Demostratiu enganxat a un prefix elidit ("d'este", "d'eixe"...): sense
-    això es queda sense traduir, perquè el token sencer ("d'este") mai
-    casa amb l'entrada del diccionari ("este") -- vore
-    `separa_prefix_elidit` a rules/__init__.py. Bug real ja trobat una
-    vegada (29/09/2026), recreat ací junt amb la resta del mòdul:
-
     >>> toks = tokenize("Sé que d'este poble és bo.")
     >>> marca_noms_propis(toks)
     >>> toks = DemostratiusRule().apply(toks)
@@ -96,7 +76,7 @@ class DemostratiusRule:
     [("d'este", "d'aquest")]
     """
 
-    def __init__(self, path: Path = AVL_PATH) -> None:
+    def __init__(self, path: Path = LEXIC_GENERAL_PATH) -> None:
         self._lookup = carrega_demostratius(path)
 
     def apply(self, tokens: list[Token]) -> list[Token]:
