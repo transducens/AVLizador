@@ -72,6 +72,7 @@ from pathlib import Path
 from .. import (
     Token,
     aplica_amb_prefix_elidit,
+    corregeix_article_abans,
     corregeix_contraccio_al_abans,
     preserva_majuscula,
     separa_prefix_elidit,
@@ -105,18 +106,42 @@ def carrega_conjugacions_invers(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[
     'traure'
     >>> lookup["creuin"]
     'creuen'
-    >>> "sofreixin" in lookup
+
+    REGLA DE LA CANÒNICA també a les conjugacions (21/10/2026, decisió de
+    l'usuari): si una forma catalana té diversos candidats, es descarten
+    els marcats `canonica: false`. "sofreixin" tenia dos candidats,
+    "patisquen" (proveïdor, `verbos_diferentes_conjugados.json`) i
+    "sofrisquen" (fila LIMPIO_864, nostra, ara `canonica: false`); guanya
+    la preferència del proveïdor. La fila nostra es queda per a val->cat
+    ("sofrisquen" -> "sofreixin"):
+
+    >>> lookup["sofreixin"]
+    'patisquen'
+
+    Una forma amb diversos candidats SENSE cap `canonica: false` es
+    continua excloent (preferix fals negatiu):
+
+    >>> "busqueu" in lookup
     False
     """
     dades = json.loads(Path(path).read_text(encoding="utf-8"))
     candidats: dict[str, set[str]] = {}
+    admesos: dict[str, set[str]] = {}  # candidats d'alguna fila que NO és `canonica: false`
     for entrada in dades.get("entradas", []):
         valenciano = (entrada.get("valenciano") or "").strip().lower()
         catalan = (entrada.get("catalan") or "").strip().lower()
         if not valenciano or not catalan:
             continue
         candidats.setdefault(catalan, set()).add(valenciano)
-    return {cat: next(iter(vals)) for cat, vals in candidats.items() if len(vals) == 1}
+        if entrada.get("canonica") is not False:
+            admesos.setdefault(catalan, set()).add(valenciano)
+    lookup: dict[str, str] = {}
+    for cat, vals in candidats.items():
+        if len(vals) > 1 and admesos.get(cat):
+            vals = vals & admesos[cat]
+        if len(vals) == 1:
+            lookup[cat] = next(iter(vals))
+    return lookup
 
 
 def _descompon(surface: str) -> list[tuple[str | None, str, str | None]]:
@@ -178,13 +203,17 @@ class ConjugacionsDictInversRule:
     'Vull que creuen aixo, encara que molts ja creuen aixo.'
 
     Formes amb mes d'un candidat valencià real no es toquen (sinònims que
-    convergixen en català, vore docstring del mòdul):
+    convergixen en català, vore docstring del mòdul), llevat que les dades
+    marquen la no preferida amb `canonica: false` (21/10/2026): "sofreixin"
+    tenia "patisquen" (proveïdor) i "sofrisquen" (fila nostra, no
+    canònica), i guanya la del proveïdor. "busqueu" (cercau/cerqueu, sense
+    cap marca) es continua sense tocar:
 
-    >>> toks = tokenize("Vull que sofreixin poc.")
+    >>> toks = tokenize("Vull que sofreixin poc i que busqueu la clau.")
     >>> marca_noms_propis(toks)
     >>> toks = ConjugacionsDictInversRule().apply(toks)
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
-    []
+    [('sofreixin', 'patisquen')]
 
     Prefix elidit sol ("s'ofereixi" -> "s'oferisca"):
 
@@ -212,6 +241,28 @@ class ConjugacionsDictInversRule:
     >>> pos_tagger.etiqueta(toks)
     >>> toks = ConjugacionsDictInversRule().apply(toks)
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
+    []
+
+    Participi usat com a adjectiu (21/10/2026, RC107): spaCy etiqueta
+    "ofertes" com a ADJ en "les informacions ofertes", pero amb
+    `VerbForm=Part`; el filtre el deixa passar. Mesurat: benchmark de 151
+    +1 (RC107), BOE +5 frases exactes amb 41 canvis, 37 confirmats per la
+    referència ("establert" -> "establit", "establertes" -> "establides"):
+
+    >>> toks = tokenize("Les condicions establertes per la llei.")
+    >>> marca_noms_propis(toks)
+    >>> pos_tagger.etiqueta(toks)
+    >>> [(t.surface, t.translated) for t in ConjugacionsDictInversRule().apply(toks) if t.is_translated]
+    [('establertes', 'establides')]
+
+    Només quan spaCy marca el participi. Amb `ca_core_news_md` (des del
+    22/10/2026) "ofertes" en la frase de RC107 ja ix ADJ sense `VerbForm` i
+    no es toca (fals negatiu acceptat; amb `sm` sí que es traduïa):
+
+    >>> toks = tokenize("Les informacions ofertes a través d'aquest mitjà tenen caràcter il·lustratiu.")
+    >>> marca_noms_propis(toks)
+    >>> pos_tagger.etiqueta(toks)
+    >>> [(t.surface, t.translated) for t in ConjugacionsDictInversRule().apply(toks) if t.is_translated]
     []
 
     "sigui" dins d'"o sigui" (marcador discursiu, RC067) es tradueix igual
@@ -247,9 +298,14 @@ class ConjugacionsDictInversRule:
             if tok.is_translated or tok.is_proper_noun:
                 continue
             minuscules = tok.surface.lower()
+            # Participi usat com a adjectiu ("les informacions ofertes"):
+            # spaCy l'etiqueta ADJ pero amb VerbForm=Part -- sí que és la
+            # forma verbal (21/10/2026, vore docstring de la classe).
+            es_participi = tok.pos == "ADJ" and tok.verb_form == "Part"
             if (
                 tok.pos
                 and tok.pos not in ("VERB", "AUX")
+                and not es_participi
                 and minuscules not in SEMPRE_VERB_INVERS
             ):
                 continue
@@ -262,6 +318,7 @@ class ConjugacionsDictInversRule:
                 if prefix is None:
                     tok.translated = preserva_majuscula(arrel, forma) + (sufix or "")
                     corregeix_contraccio_al_abans(tokens, i)
+                    corregeix_article_abans(tokens, i)
                 else:
                     aplica_amb_prefix_elidit(tokens, i, prefix, arrel, forma)
                     if sufix:

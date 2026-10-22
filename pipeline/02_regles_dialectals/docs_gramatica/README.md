@@ -102,3 +102,15 @@ Els documents derivats (`guia_dialectal_morfologia.md`,
 `guia_traduccio_dialectal.md`) són treball d'anàlisi manual sobre les
 dos gramàtiques consolidades -- no hi ha cap script que els regenere
 automàticament.
+
+## Contrast de la guia amb els corpus oficials (21/10/2026)
+
+`mesura_guia_corpus_oficials.py` mesura, regla per regla, quin percentatge
+de vegades el valencià oficial (AVL i BOE) seguix `guia_traduccio_dialectal.md`,
+i què fa el BOE alineat quan el català té el patró. Resultat a
+`mesura_guia_corpus_oficials_resultats_20261021.txt`. **Avís important**:
+el BLOC B (pronoms febles "lo/los/ne") i C4 ("en + infinitiu") de la guia
+NO es complixen en el valencià escrit oficial (0-11%); només C2 ("per a" +
+infinitiu), C3 ("on" sense "a") i D1 ("ací") tenen evidència forta.
+Conclusions completes a `documentacio/hoja_de_ruta_traductor_invers.md`.
+

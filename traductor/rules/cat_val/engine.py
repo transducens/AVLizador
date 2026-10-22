@@ -4,19 +4,23 @@ Mirall de `rules/val_cat/engine.py`, pero NO amb el mateix conjunt de capes --
 vore `documentacio/hoja_de_ruta_traductor_invers.md` per al perquè de
 cada diferència.
 
-`incoatius.py` i `relatiu_on.py` SÍ s'han implementat (13/10/2026):
-- `incoatius.py`: llista TANCADA de 7 arrels verbals amb evidència real
-  (establir/servir/aconseguir/requerir/oferir/exhaurir/coincidir) -- NO
-  una regla de sufix general, perquè en català "estableix" (ha de
-  canviar) i "apareix" (mai canvia) acaben IGUAL, i la distinció és
-  LÈXICA, no ortogràfica (a diferència de l'original val->cat, on mirar
-  la lletra abans d'"ix" sí que distingix els dos grups). Vore
-  `incoatius.py` per al detall.
-- `relatiu_on.py`: 8 casos reals al benchmark invertit, els 8 volen
-  "on"->"a on", amb 2 excepcions conegudes (construccions d'èmfasi
-  temporal "és on"/"ha sigut...on") acceptades sense heurística nova
-  (massa poca evidència) -- vore `relatiu_on.py` per a l'evidència
-  completa.
+**`incoatius.py` REESCRIT sense llista a mà (20/10/2026)**: abans era
+una llista TANCADA de 7 arrels verbals (establir/servir/aconseguir/
+requerir/oferir/exhaurir/coincidir). Ara decidix spaCy (VERB + lema en
+"-ir") validat contra els infinitius reals de
+`conjugacions_dialectals.json` -- cap verb escrit a mà. Vore
+`incoatius.py` per a l'explicació completa del problema.
+
+**Regles de la guia de traducció dialectal (21/10/2026)**, mesurades als
+corpus oficials (AVL + BOE, vore `documentacio/hoja_de_ruta_traductor_invers.md`):
+- C2: `per_a_infinitiu.py` ("per" + infinitiu -> "per a", excepte "per
+  haver"; 92-97% als corpus oficials).
+- D1: "aquí" -> "ací" és un parell del diccionari (`lexico_general.json`,
+  E1648), el fa `lexic.py` sense codi nou.
+- C3: `relatiu_on.py` ("on" -> "a on") **RETIRAT**: només el recolzava el
+  benchmark de 151 (estil propi d'eixos textos); la AVL usa "on" sense
+  "a" el 79,7%, el BOE el 99,6%, i la guia diu que el registre formal
+  preferix "on". La regla de val->cat ("a on" -> "on") es manté.
 
 Pos_tagger (spaCy) es crida igual que en `rules/val_cat/engine.py` -- i ací amb
 MES fiabilitat, perquè l'entrada ja és català real (vore hoja de ruta,
@@ -45,8 +49,8 @@ from .demostratius import DemostratiusInversRule
 from .incoatius import IncoatiusInversRule
 from .lexic import LexicInversRule
 from .numerals import NumeralsInversRule
+from .per_a_infinitiu import PerAInfinitiuInversRule
 from .possessius import PossessiusInversRule
-from .relatiu_on import RelatiuOnInversRule
 
 
 class RuleEngineInvers:
@@ -73,13 +77,20 @@ class RuleEngineInvers:
             DemostratiusInversRule(),
             IncoatiusInversRule(),
             AccentuacioInversRule(),
-            RelatiuOnInversRule(),
+            PerAInfinitiuInversRule(),
         ]
 
-    def translate(self, text: str) -> str:
+    def tradueix_tokens(self, text: str) -> list[Token]:
+        """Com `translate`, pero torna els tokens abans de detokenitzar --
+        útil per a inspeccionar què ha fet cada regla abans d'ajuntar el
+        text. (La capa de LLM de cat->val que el va motivar es va retirar el
+        21/10/2026: no canviava cap frase.)"""
         tokens: list[Token] = tokenize(text)
         marca_noms_propis(tokens)
         pos_tagger.etiqueta(tokens)
         for regla in self._regles:
             tokens = regla.apply(tokens)
-        return detokenize(tokens)
+        return tokens
+
+    def translate(self, text: str) -> str:
+        return detokenize(self.tradueix_tokens(text))

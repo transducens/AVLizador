@@ -16,6 +16,30 @@ per a l'estat, l'abast actual i el raonament complet. Esta direcció
 original (`translate`, val→cat) es queda exactament igual, sense cap
 canvi.
 
+**22/10/2026 — `data/` només té ja els dos fitxers del proveïdor**
+(`lexic_general.json` i `conjugacions_dialectals.json`, còpies de
+`diccionarios/` via `sync_data.py`). Es van retirar els fitxers fets a
+mà, i el que diu este README sobre ells és històric:
+- `flexio_genere_avl.json` → res: el lèxic ja porta les formes de femení
+  i plural (i el fitxer tapava "xiques" amb "xices").
+- `canvi_genere_lexic_avl.json` → spaCy dona el gènere de la paraula nova
+  i es corregix el determinant i l'apòstrof
+  (`rules/pos_tagger.py::genere_tras_substitucio`).
+- `categoria_gramatical_lexic.json` → els homògrafs els decidix el propi
+  lèxic (`problema: "homonimia_lexica"`, `categoria`, `lemas`) amb spaCy
+  (`rules/__init__.py::carrega_homografs`, el mateix mecanisme que l'IPD).
+- `demostratius_avl.json` → `demostratius.py` llig les entrades
+  `categoria: "det"` del lèxic, igual que `possessius.py`.
+A més, les entrades `_PENDENT` del lèxic s'usen com les altres
+(l'etiqueta és metadada del proveïdor) i a `cat_val/lexic.py` ja no queda
+cap llista a mà (ordinals, rentar/empentar); a `val_cat/lexic.py`
+tampoc (`_LEXIC_PERDUT_RESTAURAT`, `_ORDINALS_PERDUTS`,
+`_CANONICA_OVERRIDES`).
+
+**Model d'spaCy (22/10/2026)**: `ca_core_news_md` (`python -m spacy
+download ca_core_news_md`); si no hi és, s'usa `ca_core_news_sm`. Mateixa
+velocitat, ~190 MB més de RAM, millor gènere i morfologia.
+
 ## Per què existix açò
 
 Les etapes 1-4 usen un LLM (qwen2.5:14b) amb un system prompt de regles +

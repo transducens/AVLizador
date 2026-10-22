@@ -49,8 +49,6 @@ def carrega_numerals(path: Path = LEXIC_GENERAL_PATH) -> dict[str, str]:
     for entrada in dades:
         if entrada.get("categoria") != "num":
             continue
-        if "PENDENT" in (entrada.get("tipo") or ""):
-            continue
         valenciano = (entrada.get("valenciano") or "").strip().lower()
         catalan = (entrada.get("catalan") or "").strip()
         if not valenciano or not catalan:

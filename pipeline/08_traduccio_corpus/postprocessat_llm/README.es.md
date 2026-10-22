@@ -1,3 +1,10 @@
+> **⚠️ 21/10/2026**: la capa de LLM vive ahora dentro de `traductor/llm/`
+> (solo val→cat, modo verbal, congelada; la de cat→val se retiró el mismo
+> día tras evaluarla). `identifica_ambigues.py`/`benchmark_integrat.py` de esta carpeta
+> **ya no funcionan**: leen ficheros de conjugaciones retirados el
+> 19/10/2026. Para evaluar, usar `avalua_capa_llm.py` (aquí) y
+> `slurm/avalua_capa_llm.sh`. Ver `traductor/llm/README.es.md`.
+
 *[Read it in Catalan](README.md)*
 
 # Post-procesado con LLM de los casos marcados

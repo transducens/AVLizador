@@ -34,3 +34,26 @@ de vías A/B/C, baseline de 3 modelos en paralelo) -- se conservan por si
 hace falta repetir ese tipo de comparación, pero no son el flujo normal.
 
 `logs/` guarda los `.out`/`.err` de jobs ya lanzados.
+
+## `avalua_capa_llm.sh` — capes de LLM de `traductor/llm/` (21/10/2026)
+
+Avalua les dos capes (cat->val: "aquest" i B4; val->cat: mode verbal) sobre
+el benchmark de 151 i la mostra del BOE, motor sol vs. motor + LLM.
+
+Paquet a pujar (estructura plana d'Abaco, generat en local a
+`dades/abaco/capa_llm_abaco.tar.gz`, fora de git): `traductor/` sencer,
+`avalua_capa_llm.py`, `slurm/avalua_capa_llm.sh`,
+`03_seleccio_de_model/{evalua_models.py,benchmark_corpus.json}` i
+`dades/boe/benchmarks/benchmark_boe_mostra_2000.json`.
+
+    scp dades/abaco/capa_llm_abaco.tar.gz nmartin@abaco:~/scrapeo/
+    ssh nmartin@abaco
+    cd ~/scrapeo
+    mv postprocesado_llm/traductor postprocesado_llm/traductor_vell_20261021   # còpia de l'antic
+    tar xzf capa_llm_abaco.tar.gz
+    cd postprocesado_llm/slurm
+    sbatch avalua_capa_llm.sh qwen3:8b 20    # prova curta
+    sbatch avalua_capa_llm.sh                # complet (qwen3:8b)
+
+Resultats a `~/scrapeo/postprocesado_llm/resultats_capa_llm_<model>_<data>/`
+(4 JSON: direcció x benchmark).

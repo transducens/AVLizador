@@ -624,6 +624,113 @@ coincidir con la salida del motor en ese momento — ver nota de
 transparencia en la sección 16) → **116/151 hoy**, tras la misma
 retirada de reglas sin generalizar que afectó a val→cat.
 
+### Verbos incoativos: spaCy propone, los diccionarios validan (20/10/2026)
+
+Los verbos incoativos de la tercera conjugación (servir, oferir,
+produir…) intercalan un incremento entre la raíz y la terminación del
+presente: "-eix-" en catalán central (serveix, serveixes, serveixen) y
+"-ix-" en valenciano (servix, servixes, servixen). Es el patrón de fallo
+más frecuente de esta dirección: en las 2.109 frases de los dos corpus,
+el valenciano de referencia usa "-ix" en 198 de 198 casos reales.
+
+El fallo tiene dos causas que se suman. La primera está en los datos: la
+AVL admite las dos formas en valenciano, así que el proveedor no las
+trata como par dialectal. Su diccionario de conjugaciones trae de
+"servir" la primera persona ("serveixo"→"servisc") y todo el subjuntivo,
+pero no "serveix"/"serveixes"/"serveixen", que son justo las formas más
+usadas. Ningún lookup puede encontrarlas. La segunda es lingüística: en
+catalán la terminación "-eix" no identifica un incoativo. Acaban igual
+los incoativos en "-ir" (serveix, que sí cambia), los verbos en "-èixer"
+(apareix, coneix, creix, que nunca cambian) y palabras que ni siquiera
+son verbos (mateix, peix). El valenciano distingue las dos clases de
+verbos por escrito; el catalán las funde. La diferencia es léxica, y por
+eso la primera versión de la regla dependía de una lista cerrada de
+siete raíces escrita a mano, con la cobertura limitada que eso implica.
+
+La solución actual no tiene ninguna lista. Un verbo terminado en "-eix",
+"-eixes" o "-eixen" pasa a "-ix" solo si se cumplen tres condiciones:
+(1) spaCy lo etiqueta como verbo, lo que descarta "mateix" o "peix";
+(2) el lema que propone spaCy acaba en "-ir", lo que descarta "créixer"
+o "conèixer"; y (3) ese lema existe como infinitivo en el diccionario de
+conjugaciones del proveedor. La tercera condición es la decisiva. spaCy,
+entrenado en catalán central, se inventa lemas para los verbos que no
+reconoce ("apareix"→*aparir*, "coneix"→*conir*, "neix"→*nir*); como esos
+infinitivos no existen en nuestros datos, se descartan solos. Además, la
+palabra debe ser exactamente raíz del lema + "eix" + terminación, y la
+diéresis se aplica cuando la raíz acaba en vocal sonora ("produïx",
+"posseïx", pero "aconseguix"). Es el mismo principio que guía el resto
+del motor: **el modelo estadístico propone y los diccionarios validan**,
+de modo que un error de spaCy nunca llega por sí solo a la traducción.
+
+Resultado: el banco de 151 frases se mantiene en 136/154 (recupera los
+mismos ocho casos que cubría la lista) y gplsi pasa de 1.337 a 1.505
+frases exactas de 1.958 (BLEU 90,14→93,05). Frente a no tener la regla,
+gana 185 frases y pierde una ("conquereix", que la referencia deja
+igual). Quedan fuera, por diseño, los casos en que spaCy no da una
+etiqueta fiable: un verbo a principio de frase etiquetado como nombre
+propio ("Floreix…") o con un pronombre enclítico pegado ("Serveix-li").
+
+En la misma jornada se fijaron otras dos piezas de esta dirección:
+
+- **Regla de la forma canónica.** Cuando una palabra catalana tiene
+  varios candidatos valencianos en el léxico (batlle→alcalde/batle,
+  noi→xic/xiquet, llimona→llima/llimó), se elige el marcado
+  `canonica: true` por el proveedor, en lugar de dejar la palabra sin
+  traducir. La única excepción son los ordinales básicos, donde la
+  canónica es la forma culta (quint, sext) y el uso real prefiere la
+  popular (cinqué, sisé). Las conjugaciones no traen este campo, así que
+  sus 49 formas ambiguas siguen sin traducirse.
+- **Artículo apostrofado tras una sustitución.** Si la palabra
+  traducida pasa a empezar por vocal, el artículo se apostrofa ("el
+  darrer"→"l'últim", "el batlle"→"l'alcalde", "la sortida"→"l'eixida"),
+  respetando que "la" no se apostrofa ante *i/u* átonas.
+
+También se comprobó si spaCy podía resolver la otra ambigüedad verbal de
+esta dirección: formas como "busqueu" o "sortim", que en catalán se
+escriben igual en indicativo, subjuntivo e imperativo mientras el
+valenciano las distingue ("cercau"/"cerqueu"). La respuesta es no. El
+rasgo `Mood` de spaCy devuelve "indicativo" casi siempre (10 de 35
+aciertos con el modelo pequeño, 8 de 35 con el mediano), y decidir el
+modo exige entender el verbo principal ("vull que sortim" frente a
+"diuen que sortim"). Esos casos, unos 19 en 2.112 frases, se reservan
+para la capa de LLM.
+
+### La guía de traducción contrastada con los corpus oficiales (21/10/2026)
+
+Antes de construir una capa de postprocesado con LLM a partir de la guía
+de traducción dialectal (pronombres débiles, preposiciones, adverbios de
+lugar), se midió cada regla en los dos corpus oficiales: la AVL (2.233
+documentos en valenciano) y el BOE (268.000 líneas alineadas catalán y
+valenciano). La medida es un porcentaje: cuántas veces el texto oficial
+usa la forma que dice la guía cuando aparece el contexto de la regla.
+
+Solo tres reglas tienen evidencia clara, y las tres se pueden aplicar
+sin modelo: "per" + infinitivo → "per a" (92% en la AVL, 95% en el BOE;
+salvo "per haver", que es causal), "aquí" → "ací" (83% y 100%) y el
+relativo "on" sin "a" (80% y 99,6%), lo que obliga a retirar el "a on"
+que el motor añadía siguiendo el estilo del banco curado. En cambio, el
+valenciano oficial no sigue la guía en los pronombres débiles: escribe
+"el", "els" y "en" igual que el catalán ("lo", "los" y "ne" aparecen
+entre el 0% y el 2%), y tampoco sustituye "quan" por "en" + infinitivo
+(1-11%). Las dos reglas que dependen del significado, "a" → "en" de lugar
+(13,9% en el BOE) y "l'hi" → "li'l" (muy rara), son las únicas candidatas
+a LLM, con poco volumen. La lección es la misma que con el bloque de
+preposiciones del 14/10/2026: una guía normativa describe la lengua en
+general, y el registro escrito oficial solo manifiesta una parte; se
+mide antes de implementar.
+
+Las tres reglas con evidencia se implementaron el mismo día: "aquí" →
+"ací" como un par más del diccionario (sin código), "per a" + infinitivo
+como regla nueva que reconoce el infinitivo con spaCy, y la retirada del
+"a on". En una muestra de 2.000 líneas del BOE, las frases idénticas a la
+referencia oficial pasan de 360 a 368. Los dos bancos no oficiales bajan
+(151: 137 → 130; gplsi: 1.524 → 1.486) porque sus traductores siguen otro
+estilo en estos puntos ("a on", "per" + infinitivo). Se optó por la norma
+oficial. La combinación "l'hi" → "li'l" se descartó como regla: leídos
+uno a uno, los casos del BOE muestran cuatro lecturas distintas del
+catalán "l'hi" (con "li" + acusativo, con "ho", con "hi" de lugar, con
+dativo plural) que solo distingue el significado.
+
 ## 13. Postprocesado con modelo de lenguaje ("vía C")
 
 ### El problema que el motor deja sin resolver a propósito
@@ -697,6 +804,31 @@ minoritario, y se validó contra esa misma muestra en vez del benchmark
 completo. Queda aparcado, a retomar con `qwen3` y un criterio más
 exigente, no descartado por imposibilidad de fondo.
 
+### La capa de LLM tras la evaluación completa (21/10/2026)
+
+Se construyeron dos capas de LLM, una por dirección, dentro de
+`traductor/llm/`: el motor marca los puntos ambiguos con opciones
+cerradas y el modelo solo elige una etiqueta, así que no puede inventar
+texto. Evaluadas en el clúster con qwen3:8b sobre el banco curado y 2.000
+líneas del BOE, el resultado fue muy distinto en cada dirección.
+
+En catalán a valenciano la capa no cambió ninguna frase. El demostrativo
+"aquest" se desactivó porque el modelo empeoraba el valor por defecto
+("este" acierta el 94,5% en el BOE y el 100% en el banco curado: en los
+textos oficiales "este" y "eixe" anafóricos alternan por estilo, sin una
+señal en la frase), y la combinación "l'hi" no aparece en esas muestras.
+La capa se retiró: la herramienta de catalán a valenciano funciona sin
+modelo de lenguaje, lo que encaja con su destino, equipos solo con CPU.
+
+En valenciano a catalán la capa sí aporta. En el BOE, el modo verbal que
+el valenciano escribe igual en indicativo y subjuntivo pasa de acertarse
+un 20% de las veces (motor solo) a un 71%; en el banco curado, las frases
+exactas suben de 100 a 109. La capa se queda congelada, con sus errores
+catalogados: sobre todo, distinguir el relativo normativo de los textos
+legales ("trabajadores que tengan…") del relativo real, y dos fallos que
+no necesitarían modelo (la primera persona sin sujeto "jo" y el
+subjuntivo detrás de "si").
+
 ## 14. Índice de Pureza Dialectal (IPD)
 
 El 13/10/2026 se implementó una métrica propia, reutilizable sobre
@@ -727,6 +859,45 @@ reutilizando la misma función que ya resuelve esto en el motor.
 Validado de forma consistente contra tres corpus independientes (ver
 tabla en la sección 15): el lado valenciano puntúa siempre entre 0,87 y
 0,93 de pureza, el catalán entre 0,01 y 0,05.
+
+### Homógrafos: spaCy solo decide los que declara el diccionario (21/10/2026)
+
+Al retirar las listas de exclusión del traductor (19/10/2026), algunos
+pares reales empezaron a colarse como marcadores falsos porque la forma
+tiene un homógrafo común a los dos dialectos. El caso tipo es "després":
+el diccionario empareja correctamente el adjetivo catalán "desprès" (que
+se desprende de lo que tiene) con el adjetivo valenciano "després", pero
+el adverbio "després" (más tarde) se escribe igual y es compartido.
+
+La primera idea fue un filtro general: que ningún marcador contara si
+spaCy le daba una categoría distinta de la del diccionario. Se descartó
+tras medirlo, incluso con un umbral de seguridad: spaCy, entrenado en
+catalán central, no conoce muchas formas valencianas ("hui", "faena",
+"seua") y les inventa la etiqueta, a veces con mucha seguridad, así que
+el filtro eliminaba marcadores buenos.
+
+La solución final consulta a spaCy **solo para los homógrafos que el
+propio diccionario declara**. Las entradas `homonimia_lexica` del
+proveedor traen la forma homógrafa (`forma_problematica`), la categoría
+de cada lectura (`lemas`, por ejemplo "manc [adj]" y "manca [n]") y la
+de la lectura dialectal (`categoria`). Si ninguna otra lectura comparte
+esa categoría, la forma cuenta como marcador solo cuando spaCy se la da
+("manca" nombre sí, "manca" adjetivo no). Si otra lectura la comparte
+("bes": be [n] / bes [n]), spaCy no puede decidir y la forma no cuenta
+nunca. El resto de palabras no pasa por spaCy.
+
+| Corpus | Lado valenciano | Lado catalán |
+|---|---|---|
+| Banco curado (151) | 0,9647 → **0,9749** | 0,1135 → **0,1115** |
+| gplsi (1.958) | 0,9341 → **0,9387** | 0,0685 → **0,0632** |
+
+El lado catalán apenas mejora porque "després" (17 casos en cada corpus)
+y "tancat" no están declarados como homógrafos en el diccionario; el
+mecanismo los filtrará en cuanto se marquen en origen, sin tocar código.
+Con "després" declarado, el lado catalán bajaría a alrededor de 0,05 en
+los dos corpus. Tampoco se resuelven las palabras compartidas por
+registro ("estat", "avui", "últim", "alcalde") ni el par "petit"/"menut",
+mal emparejado en los datos.
 
 ## 15. Validación contra corpus reales, más allá del banco curado
 
@@ -842,6 +1013,13 @@ completa, carpeta por carpeta:
 
 ¹ Cifra anterior a la limpieza de reglas de hoy, pendiente de
 reconfirmar — se espera un resultado similar.
+
+**Actualización 20/10/2026 (cat→val).** Desde esta fecha el trabajo se
+centra solo en la dirección catalán→valenciano. Tras la migración a los
+diccionarios del proveedor y los cambios descritos en la sección 12
+(incoativos validados contra los diccionarios, forma canónica, artículo
+apostrofado), cat→val está en **136/154** en el banco curado y
+**1.505/1.958 (76,9%)** en gplsi, frente a 1.212/1.958 el 14/10/2026.
 
 Pendiente, por orden sugerido:
 1. Corregir los 4 bugs de diccionario de la sección 15.

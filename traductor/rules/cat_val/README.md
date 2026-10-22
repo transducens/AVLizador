@@ -73,6 +73,15 @@ català ("blat de moro"->"dacsa" i 6 parells mes, amb concordança de
 gènere invertida), exclusió d'"ensenyament" (5/6 casos reals el volien
 sense tocar), i la locució "per a acabar"->"per acabar".
 
+**20/10/2026**: `incoatius.py` invers REESCRIT sense llista d'arrels a mà:
+decidix spaCy (VERB + lema en "-ir") validat contra els infinitius de
+`conjugacions_dialectals.json` (vore el docstring del mòdul per al problema
+complet). gplsi 1337->1505/1958. Col·lisions del lèxic
+resoltes amb el camp `canonica` del proveïdor (regla fixa: en cas de dubte,
+la canònica; els ordinals de l'usuari mantenen prioritat). Nova
+`corregeix_article_abans()` (`rules/__init__.py`): "el darrer"->"l'últim",
+"el batlle"->"l'alcalde".
+
 **Deliberadament sense implementar encara**:
 - Fase 3 de veres: desambiguació assistida per LLM d'"aquest" per damunt
   del 77% (candidats tancats "este"/"eixe", mateix patró que
@@ -80,3 +89,10 @@ sense tocar), i la locució "per a acabar"->"per acabar".
   subjuntiu).
 - Homògraf "nou"/"anou" (nou/nou en català, 3 casos) — sense senyal de
   context comprovada encara.
+
+**21/10/2026 — regles de la guia de traducció dialectal** (mesurades als
+corpus oficials AVL + BOE, vore `documentacio/hoja_de_ruta_traductor_invers.md`):
+nou `per_a_infinitiu.py` (C2, "per" + infinitiu -> "per a", excepte "per
+haver"); "aquí" -> "ací" (D1) és un parell nou del diccionari (E1648, sense
+codi); `relatiu_on.py` RETIRAT (C3: el valencià oficial usa "on" sense "a").
+BOE (mostra de 2.000 línies) 360 -> 368 frases exactes.

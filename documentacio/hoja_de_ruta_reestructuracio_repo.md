@@ -70,16 +70,16 @@ código (`from traductor...` en decenas de ficheros) sin ganar nada real.
 reestructura esta carpeta.
 
 **Se queda, es la fuente real** (confirmado por `traductor/rules/val_cat/lexic.py`,
-docstring "DECISIÓ 30/09/2026": el motor ya es sobre todo diccionario de
-Mauricio):
+docstring "DECISIÓ 30/09/2026": el motor ya es sobre todo diccionario
+del proveedor de datos):
 ```
-lexic/font_mauricio/
+lexic/font_proveidor/
   README.md
-  acentuacion_limpio.json      -> copiado a traductor/data/lexic_acentuacio_mauricio.json
+  acentuacion_limpio.json      -> copiado a traductor/data/lexic_acentuacio_general.json
   conjugaciones_nuevo.json     -> copiado a traductor/data/conjugacions_dialectals.json
-  lexico_general_limpio.json   -> copiado a traductor/data/lexic_mauricio.json (via unificado.json)
-  numerales_limpio.json        -> copiado a traductor/data/numerals_mauricio.json
-  posesivos_cat_val.json       -> copiado a traductor/data/possessius_mauricio.json
+  lexico_general_limpio.json   -> copiado a traductor/data/lexic_general.json (via unificado.json)
+  numerales_limpio.json        -> copiado a traductor/data/numerals_general.json
+  posesivos_cat_val.json       -> copiado a traductor/data/possessius_general.json
   unificado.json
   conjugaciones_limpio.json
   verbos_no_ambiguos.json
@@ -91,17 +91,17 @@ retirados el 30/09/2026 según `val_cat/lexic.py`):
 - `lexic/apertium_368_val_cat.json`
 - `lexic/contrastius_paula_guerrero.json`
 - `lexic/lexico_fiable.json` (el "revisado a mano" que fusionaba todo,
-  sustituido por Mauricio puro)
+  sustituido por el proveedor de datos puro)
 - `lexic/palabras_traducidas.json`
 - `fonts/apertium-cat.cat.dix`, `fonts/palabras_traducidas.txt`,
   `fonts/paralelos.txt` (extracciones crudas/intermedias, ya
-  superadas por las versiones JSON de `font_mauricio/`)
+  superadas por las versiones JSON de `font_proveidor/`)
 - `fonts/palabras_val.json` — pendiente de revisar contenido antes de
   decidir (no se ha inspeccionado todavía)
 
 **Ejecutado 14/10/2026** — respuestas del usuario y resultado:
-- [x] Aplanar `lexic/font_mauricio/*` → `lexic/*` (elegido). Hecho con
-      `git mv`, carpeta `font_mauricio/` eliminada.
+- [x] Aplanar `lexic/font_proveidor/*` → `lexic/*` (elegido). Hecho con
+      `git mv`, carpeta `font_proveidor/` eliminada.
 - [x] `fonts/regles_cat_val.md` → **eliminarlo, pero se encontró un
       CONFLICTO REAL antes de hacerlo**: `pipeline/05_corpus_boe/analizar_corpus.py`
       lo lee con ruta fija (`cargar_materiales()`, el núcleo del script
@@ -130,9 +130,9 @@ vacías (no revienta) — solo degrada el modelo "regles" (baseline antiguo
 de solo substituciones, ya no es el que se usa de verdad). Confirmado sin
 impacto en `--model traductor`, que es el que importa.
 
-**Actualizado tras aplanar**: `traductor/sync_data.py` (`MAURICIO =
+**Actualizado tras aplanar**: `traductor/sync_data.py` (`PROVEEDOR =
 LEXICO`) y `postprocessat_llm/identifica_ambigues.py` (mismo cambio), más
-las menciones de `font_mauricio/` en los README de `02_regles_dialectals/`
+las menciones de `font_proveidor/` en los README de `02_regles_dialectals/`
 y de `traductor/` (valencià/català y castellano).
 
 **Verificado después**: 536/536 doctests, val→cat 115/151, cat→val

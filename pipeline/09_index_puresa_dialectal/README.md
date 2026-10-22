@@ -187,6 +187,28 @@ AVL-only "tindre/vore/obtindre/mantindre" i "últim/darrer" retirats el
 plural "-ixen", i el plural "servicis"/"serveis" sense derivar -- vore
 `CLAUDE.md` per al detall i l'estat de cada un.
 
+## Homògrafs: spaCy només decidix els que declaren les dades (21/10/2026)
+
+spaCy es consulta NOMÉS per a les formes que el proveïdor declara com a
+homògrafes (entrades `problema: "homonimia_lexica"`, camps
+`forma_problematica`, `lemas`, `categoria`). Si la lectura dialectal té
+una categoria que cap altra lectura comparteix ("manca": n vs. adj), la
+forma compta només quan spaCy li dona eixa categoria; si la comparteix
+("bes", "blanca", "calces"), no compta mai. La resta de paraules no passa
+per spaCy: es va provar un filtre general per categoria (amb i sense
+llindar de seguretat) i es va descartar perquè spaCy no coneix moltes
+formes valencianes ("hui", "faena") i n'inventa l'etiqueta.
+
+| Corpus | Costat valencià | Costat català |
+|---|---|---|
+| Benchmark 151 | 0,9647 → 0,9749 | 0,1135 → 0,1115 |
+| gplsi | 0,9341 → 0,9387 | 0,0685 → 0,0632 |
+
+"després" (E0977, adjectiu "desprès"/"després" vs. l'adverbi compartit) i
+"tancat" seguixen comptant com a marcador fals perquè les dades no els
+declaren com a homògrafs: es resol marcant-los a l'origen. Detall al
+docstring d'`ipd.py` ("HOMÒGRAFS ENTRE CATEGORIES").
+
 ## Relació amb la resta del projecte
 
 Pendent documentat a `CLAUDE.md` (secció "Pendiente") i detallat a

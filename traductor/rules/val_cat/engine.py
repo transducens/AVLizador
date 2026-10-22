@@ -70,6 +70,7 @@ from __future__ import annotations
 from .. import Token, detokenize, marca_noms_propis, tokenize
 from .. import pos_tagger
 from .accentuacio import AccentuacioRule
+from .combinacio_li import CombinacioLiRule
 from .concordanca_dos_dues import ConcordancaDosDuesRule
 from .conjugacions_dict import ConjugacionsDictRule
 from .demostratius import DemostratiusRule
@@ -94,7 +95,7 @@ class RuleEngine:
     >>> engine.translate("Vull conéixer qui establix esta norma.")
     'Vull conèixer qui estableix aquesta norma.'
     >>> engine.translate("Este xiquet i eixa dona i aquella casa.")
-    'Aquest nen i aquesta dona i aquella casa.'
+    'Aquest noi i aqueixa dona i aquella casa.'
     >>> engine.translate("Estes dos germanes i les dos institucions.")
     'Aquestes dues germanes i les dues institucions.'
     >>> engine.translate("La casa a on vivia era menuda.")
@@ -112,12 +113,19 @@ class RuleEngine:
             DemostratiusRule(),
             AccentuacioRule(),
             IncoatiusRule(),
+            CombinacioLiRule(),
         ]
 
-    def translate(self, text: str) -> str:
+    def tradueix_tokens(self, text: str) -> list[Token]:
+        """Com `translate`, pero torna els tokens abans de detokenitzar --
+        la capa de LLM (`traductor/llm/val_cat.py`) els necessita per a
+        trobar els punts ambigus que el motor ha deixat sense traduir."""
         tokens: list[Token] = tokenize(text)
         marca_noms_propis(tokens)
         pos_tagger.etiqueta(tokens)
         for regla in self._regles:
             tokens = regla.apply(tokens)
-        return detokenize(tokens)
+        return tokens
+
+    def translate(self, text: str) -> str:
+        return detokenize(self.tradueix_tokens(text))

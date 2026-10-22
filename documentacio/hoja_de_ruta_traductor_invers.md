@@ -17,7 +17,7 @@
 
 **Fase 1 — Esqueleto**: estructura `traductor/rules/cat_val/` simétrica
 a `val_cat/`, reutilizando los mismos ficheros de datos
-(`conjugacions_dialectals.json`, `lexic_mauricio.json`, etc.) indexados
+(`conjugacions_dialectals.json`, `lexic_general.json`, etc.) indexados
 al revés.
 
 **Fase 2 — Casos curados pequeños**: posesivos (fix de número),
@@ -113,7 +113,7 @@ no gramatical.
 por palabra (tipo `_EXIGEIX_NOUN_CAT`) por un mecanismo único y
 extensible, igual para las dos direcciones. De momento solo tiene
 `"anou": "NOUN"` — el usuario clasificará la categoría gramatical de
-`lexic_mauricio.json` a mano, a su ritmo. Confirmado que el problema
+`lexic_general.json` a mano, a su ritmo. Confirmado que el problema
 distinto de "spaCy se equivoca con esta grafía valenciana concreta"
 (`SEMPRE_VERB` en `val_cat/conjugacions_dict.py`) NO aplica a cat→val —
 la entrada siempre es catalán genuino (`EXCLUSIONS_HOMOGRAF_INVERS`/
@@ -192,3 +192,582 @@ ya estaban hechos tras la Fase 2. Quedaba:
 > BLOC C de preposiciones de la guía gramatical) — ver `CLAUDE.md` para
 > el detalle completo y actualizado, que es la fuente más fiable a
 > partir de esa fecha.
+
+## 20/10/2026 — Incoativos sin lista a mano, artículo apostrofado y canónica
+
+### El problema de los incoativos
+
+Los verbos incoativos de la 3ª conjugación (servir, oferir, produir...)
+llevan un incremento en el presente: "-eix-" en catalán central (serveix,
+serveixes, serveixen) y "-ix-" en valenciano (servix, servixes, servixen).
+
+**Por qué fallaba el lookup**: la AVL acepta las dos formas en valenciano,
+así que el proveedor no las trata como par dialectal.
+`conjugacions_dialectals.json` trae de "servir" la 1ª persona
+("serveixo"→"servisc") y todo el subjuntivo ("serveixi"→"servisca"), pero
+**no** "serveix"/"serveixes"/"serveixen". Ningún JSON tiene esas formas, y
+son las más frecuentes: en el corpus (151 + gplsi), el valenciano de
+referencia usa "-ix" en 198 de 198 casos reales.
+
+**Por qué no basta una regla de sufijo**: en catalán "-eix" no identifica
+un incoativo. Acaban igual los incoativos en "-ir" (serveix, cambia), los
+verbos en "-èixer" (apareix, coneix, creix, nunca cambian) y palabras que
+no son verbos (mateix, peix, aqueix). El valenciano separa las dos clases
+de verbos por escrito; el catalán las funde. La diferencia es léxica, y por
+eso la versión del 13/10/2026 usaba una lista cerrada de 7 raíces a mano.
+
+### La solución (sin listas a mano)
+
+`cat_val/incoatius.py` cambia "-eix"→"-ix" solo si:
+
+1. spaCy etiqueta el token como VERB/AUX;
+2. el lema de spaCy acaba en "-ir";
+3. ese lema existe como infinitivo en `conjugacions_dialectals.json`
+   (campos `verbo`, `infinitiu_cat`, `infinitiu_val`);
+
+y además la palabra es exactamente raíz del lema + "eix" + ("", "es", "en").
+La condición 3 es la clave: spaCy se inventa lemas para los verbos que no
+conoce ("apareix"→*aparir*, "coneix"→*conir*, "neix"→*nir*), y esos
+"infinitivos" no están en nuestros datos. Diéresis cuando la raíz acaba en
+vocal sonora ("produeix"→"produïx", "posseeix"→"posseïx"), no tras "gu"/"qu"
+("aconsegueix"→"aconseguix"). Nuevo campo `Token.lemma`, rellenado por
+`pos_tagger.etiqueta()`.
+
+Limitaciones conocidas (se prefiere falso negativo): verbo etiquetado
+PROPN a principio de frase ("Floreix..."), verbo con enclítico pegado
+("Serveix-li", spaCy lo parte en dos tokens), y sin spaCy instalado la
+regla no hace nada.
+
+### Resultados (cat→val)
+
+| | Benchmark 151 | gplsi (1.958) | BLEU gplsi |
+|---|---|---|---|
+| Mañana (lista de 7 raíces) | 136/154 | 1337 | 90,14 |
+| Sin incoativos (paso intermedio) | 128/154 | 1321 | 90,02 |
+| **Incoativos spaCy + JSON** | **136/154** | **1505** | **93,05** |
+
+Frente a no tener la regla: +185 frases en gplsi y 1 pérdida
+("conquereix", la referencia lo deja igual). Dos referencias escriben
+"conduixen"/"fluixen" sin diéresis (no normativo); el motor da
+"conduïxen"/"fluïxen".
+
+### Otros cambios del mismo día
+
+- **Artículo delante de vocal** (`corregeix_article_abans()`,
+  `rules/__init__.py`): tras una sustitución que deja la palabra empezando
+  por vocal, "el"/"la" se apostrofan ("el darrer"→"l'últim",
+  "el batlle"→"l'alcalde"). "la" no se apostrofa ante i/u átonas. +15 en
+  gplsi; −3 referencias que escriben "La última" (no normativo, sin
+  excepción).
+- **Regla fija: en caso de duda, `canonica: true`**
+  (`cat_val/lexic.py::_invertix_sense_ambiguitat`). Las listas de
+  ordinales del usuario sobrescriben la canónica. +3 en gplsi (llimona→llima).
+- **spaCy `Mood` descartado también en catalán** (sm 10/35, md 8/35): el
+  modo verbal ambiguo irá al LLM.
+
+## 21/10/2026 — Guía de traducción dialectal: qué reglas tienen evidencia en cat→val
+
+Objetivo del usuario: usar `pipeline/02_regles_dialectals/docs_gramatica/guia_traduccio_dialectal.md`
+(BLOC B pronombres débiles, BLOC C preposiciones, BLOC D adverbios de
+lugar) para una posible capa de postprocesado con LLM (qwen3) en
+cat→val, preferiblemente con reglas fijas cuando no haga falta un LLM.
+Antes de construir nada se midió cada regla contra traducciones humanas
+reales, nunca contra la salida del motor.
+
+### Primera medición: benchmark 151 + gplsi, y por qué no basta
+
+Sobre los 2.112 pares de 151 + gplsi casi ninguna regla aparece: los
+pronombres débiles (BLOC B) salen 21 veces y no cambian nunca; "quan"
+21 veces y no cambia nunca; "aquí" una vez ("vet aquí", expresión fija).
+Además, **los tres corpus tienen estilos distintos**: "on"→"a on" se da
+10 de 14 veces en el 151, 0 de 8 en gplsi y 0 de 558 en el BOE; "per" +
+infinitivo pasa a "per a" en el BOE, pero gplsi lo deja en "per" (0 de
+64). Medir solo con el 151 había llevado a una regla (`relatiu_on.py`)
+que reproduce el estilo de ese corpus, no la norma.
+
+### Medición sobre los corpus oficiales (AVL y BOE)
+
+Decisión del usuario: tomar como referencia los dos corpus oficiales y
+dar **porcentajes**, no recuentos. Script y salida completa en
+`pipeline/02_regles_dialectals/docs_gramatica/mesura_guia_corpus_oficials.py`
+y `..._resultats_20261021.txt`. Dos medidas:
+
+- **Cumplimiento** en valencià oficial: de cada vez que aparece el
+  contexto de la regla, porcentaje de veces que el texto usa la forma
+  que dice la guía. AVL entera (`dades/avl/final/unified.jsonl`, 2.233
+  documentos, solo valenciano) y 80.000 líneas aleatorias del BOE
+  valenciano.
+- **Conversión** en el BOE alineado: cuando la línea catalana tiene el
+  patrón, porcentaje de veces que la valenciana lo cambia (sin contar
+  las frases reformuladas).
+
+| Regla de la guía | Cumplimiento AVL | Cumplimiento BOE | Conversión BOE cat→val | Veredicto |
+|---|---|---|---|---|
+| B1 "el" → "lo" (proclítico ante consonante) | 2,0% | 0,0% | 0% | **No**: el valenciano oficial escribe "el" |
+| B1/B2 "els" → "los" (proclítico) | 0,4–0,7% | 0,0–0,2% | 0% | **No** |
+| B3 "en" → "ne" (partitivo proclítico) | 1,4% | 0,0% | 0% | **No** |
+| B1/B3 enclíticos "-lo/-los/-ne" tras consonante | 99,6% / 98,9% | 99,8% / 100% | — | **Nada que hacer**: el catalán escrito ya usa las mismas formas ("fer-lo", "fer-ne") |
+| B4 "l'hi/la hi…" → "li'l/li la…" | ~~83,3%~~ (medida inflada, ver B4 abajo) | 100% (n=13) | 62,5% (n=8) | Real, pero **muy poco frecuente** y ambiguo (cuatro lecturas): solo LLM |
+| C1 "a" + artículo → "en" (lugar) | 61,4%* | 58,9%* | 13,9% | **No como regla fija**: depende del significado; candidata a LLM |
+| C2 "per" + infinitivo → "per a" | 91,8% | 94,7% | **96,7%** | **Sí, regla fija** (excepción: "per haver", causal, 100% "per") |
+| C3 relativo "on" sin "a" | 79,7% | 99,6% | **100%** se queda "on" | **Sí: quitar el "a on"** que añade `relatiu_on.py` |
+| C4 "quan" → "en" + infinitivo | 10,8% | 1,1% | 0,4% | **No** |
+| D1 "aquí" → "ací" | 82,7% (aquí 11,8%, ahí 5,5%) | 100% | **100%** (n=25) | **Sí, regla fija** "ací" por defecto ("ahí" es contextual y poco frecuente) |
+
+\* C1 cuenta todos los usos de preposición + artículo, no solo los de
+lugar, así que no mide la regla directamente; la medida fiable es la
+conversión alineada (13,9%).
+
+### Conclusiones
+
+1. **Regla fija, sin LLM, con evidencia en los dos corpus oficiales:**
+   - **C2**: "per" + infinitivo → "per a" + infinitivo, salvo "per haver".
+   - **D1**: "aquí" → "ací".
+   - **C3**: "on" se queda sin "a". Eso significa **retirar** el "a on"
+     de `cat_val/relatiu_on.py`: solo lo respalda el benchmark de 151
+     (estilo propio de esos textos); la AVL lo usa un 20% y el BOE un 0,4%.
+2. **La guía no se corresponde con el valenciano escrito oficial en el
+   BLOC B (B1, B2, B3) ni en C4.** El valenciano formal de la AVL y del
+   BOE escribe "el", "els", "en" y "quan", igual que el catalán. Las
+   formas "lo", "los", "ne" y "en + infinitivo" de la guía son de la
+   lengua oral o de registros menos formales.
+3. **Candidatas a LLM, pero con poco volumen o poca evidencia:** C1 (lugar
+   abstracto, "a la llei" → "en la llei", 13,9% en el BOE) y B4 ("l'hi" →
+   "li'l", muy raro). Lo que de verdad justificaría una capa de LLM en
+   cat→val sigue siendo lo que ya se sabía: "aquest" → "este"/"eixe" y el
+   modo verbal ambiguo.
+4. **Consecuencia práctica para los benchmarks:** C2 y C3 harán bajar el
+   benchmark de 151 o gplsi en algunos casos, porque esos corpus tienen un
+   estilo distinto del oficial. Habrá que decidir si se prioriza la
+   norma oficial (AVL/BOE) sobre esos benchmarks.
+
+Estado: **medido y documentado, nada implementado todavía**.
+
+### Reglas definidas a partir de la evidencia (21/10/2026)
+
+Decisión del usuario: implementar en cat→val las tres reglas con
+evidencia fuerte en los corpus oficiales (C2, D1, C3), dejarlas pensadas
+para val→cat aunque de momento no se apliquen allí, y razonar aparte B4.
+
+#### D1 — "aquí" → "ací" (dato, no código)
+
+Se resuelve **en el diccionario**, no con una regla Python: una entrada
+nueva en `pipeline/02_regles_dialectals/lexic/diccionarios/lexico_general.json`
+(fuente oficial, añadida con permiso explícito del usuario):
+
+```json
+{"espanol": "aquí", "catalan": "aquí", "valenciano": "ací", "tipo": "v:lexic_val",
+ "fuente": "corpus_oficial", "id": "E1648", "categoria": "adv"}
+```
+
+**Justificación (medida el 21/10/2026, `mesura_guia_corpus_oficials.py`):**
+
+- En la AVL, cuando aparece un adverbio de 1r/2º grado, el 82,7% es
+  "ací", el 5,5% "ahí" y solo el 11,8% "aquí".
+- En el BOE valenciano, el 100% es "ací" (n=38): ni "aquí" ni "ahí".
+- En el BOE alineado, cada vez que el catalán dice "aquí", el valenciano
+  dice "ací" (100% de los casos no reformulados, n=25).
+- La guía (D1 y E4) indica "ací" como forma por defecto cuando el
+  contexto no permite distinguir el grado.
+- `fuente: "corpus_oficial"` (nueva) marca que la entrada viene de la
+  medición en corpus y no del proveedor; se evita `avl_equip`, que
+  `possessius.py` usa como filtro de posesivos.
+
+Al ser un par del diccionario, sirve **en las dos direcciones sin código
+nuevo**: cat→val "aquí" → "ací" y val→cat "ací" → "aquí". "ahí" (2º
+grado, 5,5% en la AVL, dependiente del contexto) queda fuera: añadirlo
+como segundo candidato exigiría marcar "ací" como `canonica: true` para
+cat→val y solo aportaría val→cat "ahí" → "aquí". Pendiente de decisión.
+
+#### C2 — "per" + infinitivo → "per a" + infinitivo (regla nueva)
+
+Módulo nuevo `traductor/rules/cat_val/per_a_infinitiu.py`. Se convierte
+"per" en "per a" cuando la palabra siguiente es un **infinitivo según
+spaCy** (`VerbForm=Inf`; el catalán de entrada es la lengua que spaCy
+conoce bien) y no es "haver". No usa listas de verbos.
+
+**Justificación:** cumplimiento de "per a" + infinitivo de 91,8% en la
+AVL y 94,7% en el BOE; en el BOE alineado, el catalán "per" + infinitivo
+pasa a "per a" en el 96,7% de los casos. La excepción "per haver"
+(infinitivo compuesto, valor causal: "per haver estat condemnat") se
+mantiene "per" en el 100% (n=29). Coincide con la guía (C2, "regla
+d'or": finalidad o destino → "per a").
+
+**Límites conocidos:** el ~3% restante son verbos que rigen "per"
+("optar per mantenir", "caracteritzar-se per ser") o causales sin
+"haver"; distinguirlos exige entender la frase (candidato a LLM si algún
+día compensa). "per no" + infinitivo ("per a no incórrer") no se toca.
+
+**val→cat:** la dirección inversa ("per a" + infinitivo → "per") **no es
+una regla dialectal sino de estilo**: el catalán del BOE escribe "per",
+el del benchmark de 151 escribe "per a" (27 casos), y la norma catalana
+admite las dos. Si se activa algún día en val→cat, debe ser una opción de
+registro, no un cambio por defecto.
+
+#### C3 — retirar el "a on" (se borra `cat_val/relatiu_on.py`)
+
+La regla añadía "a" delante de "on" relativo/interrogativo siempre.
+Solo la respaldaba el benchmark de 151 (10 de 14 casos, estilo propio de
+esos textos). En los corpus oficiales:
+
+- AVL: "on" sin "a" en el 79,7% (n=1.465).
+- BOE valenciano: 99,6% (n=512).
+- BOE alineado: el "on" catalán se queda "on" el 100% de las veces (n=431).
+- La guía (C3) dice explícitamente que en registro formal los dos
+  estándares prefieren "on" sin "a".
+
+Se elimina el módulo de cat→val. **val→cat:** `val_cat/relatiu_on.py`
+hace lo contrario (quita la "a" de "a on") y **es coherente con esta
+evidencia** (el catalán nunca escribe "a on"), así que se mantiene.
+
+#### B4 — análisis (no implementado)
+
+**Corrección de la medida de la AVL:** el 83,3% de la primera tabla
+estaba inflado. La expresión regular contaba como "li la" / "li les"
+casos donde "la"/"les" son artículos ("facilitar-li les coses",
+"donar-li la resposta"), no combinaciones de pronombres. Los casos reales
+de la AVL son casi todos explicaciones normativas de la GNV ("L'hi he
+donat (per Li l'he donat)", "li'l posaré, li la duré"), que confirman la
+norma pero no dan un porcentaje de uso.
+
+**Los 25 casos del BOE, leídos uno a uno.** El catalán "l'hi", "la hi",
+"les hi", "els hi" (y sus enclíticos "-l'hi", "-la-hi", "-los-hi") no es
+una sola cosa, sino cuatro:
+
+| Lectura | Ejemplo (catalán → valenciano BOE) | Valenciano |
+|---|---|---|
+| "li" + acusativo masc./fem. | "una altra persona l'hi causi" → "li'l cause"; "la hi ha transmès" → "li l'haja transmés"; "lliurar-la-hi" → "entregar-li-la"; "a qui les hi va donar" → "a qui li les va donar" | li'l / li la / li les |
+| "li" + "ho" (neutro) | "comunicar-l'hi" → "comunicar-li-ho"; "l'hi ha de notificar" → "notificar-li-ho" | li ho |
+| acusativo + "hi" de lugar | "transportar-los-hi" → "transportar-los per esta xarxa"; "les hi hagin posat" → "haver-les posades" | igual que en catalán |
+| dativo plural + acusativo | "sense enviar-l'hi" → "sense enviar-los-el" | los el |
+
+Además, casi la mitad de los casos vienen reformulados en pasiva
+("les hi ha d'abonar" → "li seran abonades"), así que no sirven para
+medir.
+
+**Conclusión:** no hay ninguna forma de B4 que se pueda convertir con una
+regla fija. Ni siquiera "la hi" o "-la-hi" son seguras (pueden llevar "hi"
+de lugar). spaCy no ayuda: las cuatro lecturas tienen las mismas
+categorías gramaticales; lo que cambia es el significado (a quién se da
+algo, o dónde se pone). Es un caso de **LLM con candidatos cerrados**: el
+motor detecta la forma y ofrece las 3-4 salidas posibles, y el modelo
+solo elige una. Pero el volumen es mínimo: unos 25 casos en 268.000
+líneas del BOE (1 por cada ~10.000 líneas). Prioridad baja frente a
+"aquest" → "este"/"eixe" y el modo verbal.
+
+**val→cat (para el futuro):** la dirección contraria sí es casi
+determinista. "li'l", "li'ls", "li l'" son inequívocos ("li" + el/els) →
+catalán central "l'hi"/"els hi". "li la"/"li les" exigen comprobar con
+spaCy que "la"/"les" son pronombre y no artículo ("donar-li la resposta"
+no se toca); en catalán spaCy lo distingue bien. Aun así, el catalán
+normativo actual admite también "li la" como variante, así que sería
+otra opción de registro.
+
+#### Pensando en val→cat
+
+| Regla | ¿Sirve en val→cat? |
+|---|---|
+| D1 | Sí, automáticamente: es un par del diccionario ("ací" → "aquí") |
+| C2 | No por defecto: el catalán admite "per" y "per a" + infinitivo; solo como opción de registro |
+| C3 | Ya existe y es correcta (`val_cat/relatiu_on.py`, "a on" → "on") |
+| B4 | Inverso determinista ("li'l" → "l'hi" en catalán central); a decidir con B4 |
+
+### Implementación y resultados (21/10/2026)
+
+Hecho, con permiso del usuario:
+
+- **D1:** entrada `E1648` en `diccionarios/lexico_general.json`
+  ("aquí" → "ací", `fuente: "corpus_oficial"`), sincronizada. Sin código.
+- **C2:** módulo nuevo `cat_val/per_a_infinitiu.py`. Para reconocer el
+  infinitivo se añadió `Token.verb_form` (rasgo `VerbForm` de spaCy). De
+  paso, `pos_tagger.etiqueta()` ahora encuentra los verbos con pronombre
+  enclítico pegado ("fer-ho"), que spaCy parte en dos y antes quedaban sin
+  etiqueta.
+- **C3:** borrado `cat_val/relatiu_on.py` (el de val→cat se mantiene).
+
+595/595 doctests (los 6 que faltan respecto a antes eran de
+`relatiu_on.py`).
+
+| Benchmark cat→val | Antes | Después | Por qué |
+|---|---|---|---|
+| **BOE, muestra de 2.000 líneas** (oficial) | 360 | **368** | C2: 97 frases más cerca de la referencia, 8 más lejos. C3: 15 más cerca, 0 más lejos |
+| Benchmark 151 | 137 | 130 | C3: −9 / +3 (sus textos usan "a on"); C2: −2 ("per fer", "per parlar") |
+| gplsi | 1.524 | 1.486 | C2: ~−42 (su traductor escribe "per" + infinitivo); C3: +7; D1: −2 ("vet aquí", "d'aquí") |
+
+Las bajadas en 151 y gplsi son de estilo, no errores: esos corpus no
+siguen la norma oficial en estos tres puntos. La muestra del BOE quedó
+guardada como benchmark nuevo en `dades/boe/benchmarks/benchmark_boe_mostra_2000.json`
+(mismo formato `id`/`occidental`/`oriental`; `dades/` no está en git).
+Nota: el número de frases exactas en el BOE es bajo (~18%) en parte porque
+la referencia usa el apóstrofo tipográfico (’) y el motor el recto (');
+no afecta a la comparación antes/después.
+
+## 21/10/2026 (tarde) — "ahí", B4 en val→cat y las dos capas de LLM
+
+### "ahí" como segundo candidato
+
+Con permiso del usuario, entrada nueva `E1649` en `lexico_general.json`
+("aquí" → "ahí", `canonica: false`), en colisión con `E1648` ("aquí" →
+"ací", ahora `canonica: true`). cat→val no cambia ("aquí" → "ací" por la
+regla de la canónica); val→cat gana "ahí" → "aquí" además de "ací" → "aquí".
+
+### B4 en val→cat: regla fija (`val_cat/combinacio_li.py`)
+
+"li'l" → "l'hi", "li'ls" → "els hi", "li l'he" → "l'hi he", "li la" → "la
+hi", "li les" → "les hi", y enclíticos "-li'l" → "-l'hi", "-li-la" →
+"-la-hi", "-li-les" → "-les-hi", "-li'ls" → "'ls-hi"/"-los-hi". "li ho" y
+"li'n" no cambian.
+
+**Cambio respecto al plan:** se pensó comprobar con spaCy que "la"/"les"
+fueran pronombre y no artículo ("donar-li la resposta"). Probado: **spaCy
+no sirve** (en "Ja li la donaré" etiqueta "la" como artículo y "donaré"
+como nombre; no conoce la construcción). Lo resuelve la gramática: el
+artículo solo puede ir detrás de un "li" **enclítico** ("exposar-li la
+meua queixa"), que el tokenizador ya une al verbo y la regla no toca; un
+"li" **suelto** siempre es proclítico y detrás solo puede venir otro
+pronombre o el verbo. Comprobado en la AVL y el BOE: todos los "li la"/"li
+les" con "li" suelto son pronombre + pronombre. La regla no cambia ninguna
+frase de los tres benchmarks (la construcción no aparece) y no rompe nada.
+
+### Las dos capas de LLM (`traductor/llm/`)
+
+Decisión del usuario: dos capas distintas, una por dirección, preparadas
+ya para B4 y "aquest" (cat→val) y para el modo verbal (val→cat).
+
+- El motor marca **puntos ambiguos** con opciones cerradas; el LLM solo
+  elige una etiqueta (`client.py`, Ollama, temperatura 0); si falla, se
+  queda la opción del motor. `traductor.translate*()` no cambian.
+- **cat→val** (`cat_val.py`): `demostratiu` ("este"/"eixe", por defecto
+  "este", criterio conservador: "eixe" solo si es claro) y `b4`
+  (`datiu`/`neutre`/`plural`/`lloc`, por defecto `lloc` = no tocar; el
+  prompt usa los casos reales del BOE como ejemplos).
+- **val→cat** (`val_cat.py`): `mode_verbal` (`indicatiu`/`subjuntiu`/`cap`),
+  la "vía C" que dio 129/151 con `qwen3:8b`, traída dentro de `traductor/`.
+  **La versión de `pipeline/08` estaba rota**: `identifica_ambigues.py`
+  leía cuatro ficheros de conjugaciones retirados el 19/10/2026 y una
+  lista (`EXCLUSIONS_HOMOGRAF`) retirada el mismo día. Ahora las
+  ambigüedades salen de `traductor/data/conjugacions_dialectals.json`:
+  12.224 formas (3.003 de 1ª singular, 9.221 de 3ª plural).
+- Los dos motores exponen `tradueix_tokens()`.
+- Evaluación: `pipeline/08_traduccio_corpus/postprocessat_llm/avalua_capa_llm.py`
+  y `slurm/avalua_capa_llm.sh` (Abaco, `qwen3:8b`, las dos direcciones
+  sobre 151 y BOE).
+
+**Puntos detectados sin llamar al modelo** (`--sense-llm`):
+
+| Capa | Benchmark | Puntos | Con verdad en la referencia | Acierta el motor por defecto |
+|---|---|---|---|---|
+| cat→val `demostratiu` | 151 | 102 | 100 | 100 (100%) |
+| cat→val `demostratiu` | BOE 2.000 | 521 | 256 | 242 (94,5%) |
+| cat→val `b4` | 151 y BOE | 0 | — | — |
+| val→cat `mode_verbal` | 151 | 47 | 44 | 27 (61%) |
+| val→cat `mode_verbal` | BOE 2.000 | 508 | 416 | 82 (20%) |
+
+Lectura: en cat→val, "este" por defecto ya acierta casi siempre en estos
+corpus (el LLM solo puede ganar los ~14 "eixe" del BOE y puede estropear
+más); en val→cat, el 80% de las formas ambiguas del BOE son subjuntivo
+(textos legales), así que ahí está el mayor margen del LLM.
+
+**Prueba rápida en local** (`qwen2.5:7b`, sin GPU): B4 "l'hi presenta" →
+"li'l presenta" (datiu) y "comunicar-l'hi" → "comunicar-li-ho" (neutre),
+correctos; modo verbal "Vull que… creuen" → "creuin" y "Els experts
+creuen" → igual, correctos; "Aquest llibre que tens a les mans" → "este"
+(debería ser "eixe"). La evaluación real queda para Abaco con `qwen3:8b`.
+
+621/621 doctests (incluidos los nuevos de `traductor/llm/`).
+
+### Primera prueba en Abaco (qwen3:8b, 20 frases, 21/10/2026)
+
+Abaco ya trabaja con un clon del repositorio (`~/scrapeo/AVLizador`,
+`git pull` para actualizar; el script SLURM detecta el modo repo y guarda en
+`dades/abaco/`). La antigua carpeta plana se archivó como
+`~/scrapeo/postprocesado_llm_arxiu_20261021`.
+
+| Capa | Benchmark 151 (20 frases) | Lectura |
+|---|---|---|
+| cat→val `demostratiu` | motor 5/5, LLM 1/5 (cambia 4 a "eixe") | El modelo toma la anáfora ("d'aquestes estades", "aquests que hem comentat") por 2º grado |
+| val→cat `mode_verbal` | motor 5/6, LLM 3/6 | Sesgo al subjuntivo: "poden quedar", "creuen que", "per la qual es regulen" |
+
+Dos decisiones a partir de esto:
+
+1. **`demostratiu` desactivado por defecto** (`cat_val.py::TIPUS_PER_DEFECTE`
+   = solo `b4`). En el BOE el "eixe" también es anafórico ("en eixe cas",
+   "dins d'eixe termini", "eixe apartat": 19 frases de la muestra), igual
+   que el "este" del 151 ("d'estes estades"). Es una elección de estilo sin
+   señal en la frase, y "este" por defecto ya acierta el 94,5% (BOE) y el
+   100% (151). Se puede probar a mano con `--tipus demostratiu`.
+2. **Prompt de modo verbal restaurado literalmente** desde
+   `compara_postprocessat.py` (criterio + system + formato de consulta de
+   la vía C, verificado idéntico por código). La primera versión de
+   `val_cat.py` lo había acortado y ponía la palabra entre corchetes dentro
+   de la frase; así no era comparable con el récord de 129/151.
+
+También se corrigió la métrica "canviats pel LLM" de `avalua_capa_llm.py`:
+contaba como cambio elegir "indicatiu" en 3ª plural, que da el mismo texto.
+
+### Evaluación completa en Abaco y retirada de la capa de LLM de cat→val (21/10/2026)
+
+Ejecución completa de `slurm/avalua_capa_llm.sh` (`qwen3:8b`, commit
+`9b6180b`), con los dos ajustes ya aplicados ("aquest" desactivado, prompt
+de modo verbal restaurado literal):
+
+| Dirección | Benchmark | Frases exactas | Acierto en los puntos |
+|---|---|---|---|
+| cat→val | 151 | 130 → 130 | sin puntos |
+| cat→val | BOE 2.000 | 453 → 453 | sin puntos |
+| val→cat | 151 | 100 → 109 | motor 27/44 → LLM 37/44 |
+| val→cat | BOE 2.000 | 396 → 406 | motor 82/416 → LLM 294/416 |
+
+**Decisión del usuario:**
+
+- **cat→val: capa de LLM RETIRADA** (`traductor/llm/cat_val.py` borrado).
+  No cambiaba ninguna de las 2.154 frases. La herramienta cat→val que se
+  entrega va sin LLM. El análisis de B4 y de "aquest" sigue arriba como
+  registro.
+- **val→cat: capa CONGELADA.** Se queda tal cual (mejora al motor), pero
+  no se sigue mejorando. Su catálogo de errores, con ejemplos y el tipo de
+  solución posible de cada uno, está en `traductor/llm/README.es.md`:
+  relativos normativos/reales confundidos (81 de 122 errores del BOE), 1ª
+  persona con "indicatiu" sin sujeto "jo" que genera formas agramaticales
+  (18), "quan" de condición futura (6), "si" + subjuntivo (2), frases
+  largas (17).
+- El trabajo vuelve a centrarse solo en cat→val.
+
+## 21/10/2026 (tarde) — Conflictos creados por nuestras filas `LIMPIO_` en las conjugaciones
+
+Investigando por qué fallaban RC152 ("fos" → "fóra") y RC107 ("ofertes" →
+"oferides") se vio que **29 de las 49 formas ambiguas de cat→val las
+creaban nuestras propias filas `LIMPIO_`** (las 968 que fusionamos el
+19/10/2026 desde `conjugaciones_limpio.json` dentro de
+`diccionarios/conjugaciones_general.json`). En las 29 el proveedor daba un
+único candidato y nuestra fila añadía un segundo, así que la forma se
+quedaba sin traducir. Principio acordado con el usuario: **la base de
+código son los diccionarios**; los errores se corrigen ahí, no con código
+ni listas.
+
+**Grupo 1 — error nuestro, BORRADO (6 filas, con permiso del usuario):**
+`LIMPIO_830`/`831` ("fos" → "fora"/"fóra", el segundo duplicado del
+proveedor), `LIMPIO_466`/`467` ("donis" → "dones"/"ónes", esta última no
+existe), `LIMPIO_651`/`652` ("morin" → "moren"/"muiren", duplicado).
+Efecto: "fos" → "fóra" (RC152 correcto; en gplsi tres "fos" → "fóra",
+cuya referencia escribe "fora"), "morin" → "muiren". "donis" ya está bien
+en datos; solo falla cuando spaCy lo toma por nombre ("li donis res").
+Grafía oficial confirmada: el BOE valenciano escribe "fóra" 154 veces
+frente a ~13 "fora" verbal.
+
+**Grupo 2 — sinónimo dialectal frente al mismo verbo, MARCADO (26 filas):**
+"sofrir", "prémer", "ajupir", "tòrcer", "sobresortir". El proveedor elige
+el sinónimo dialectal ("sofreixi" → "patisca", "premi" → "polse",
+"ajupi" → "acatxe", "torci" → "torce", "sobresurti" → "sobreisca") y
+nuestra fila conservaba el mismo verbo ("sofrisca", "prema"...). Las
+filas se quedan porque son valenciano válido y hacen falta en val→cat
+("sofrisca" → "sofreixi"), pero se marcan como no preferidas con el mismo
+esquema que el proveedor usa en el léxico: `canonica: false`,
+`problema: "colision"`, `id_colision` = la fila del proveedor. Las filas
+del proveedor no se tocan.
+
+**Código:** `cat_val/conjugacions_dict.py::carrega_conjugacions_invers`
+aplica ahora la regla de la canónica también a las conjugaciones: si una
+forma catalana tiene varios candidatos, descarta los que solo vienen de
+filas `canonica: false`. Sin ninguna marca, la forma se sigue excluyendo
+("busqueu" → "cercau"/"cerqueu" no se toca). 617/617 doctests; 0 cambios
+en los tres benchmarks (las formas no aparecen) y 0 regresiones.
+
+Quedan 20 formas ambiguas en cat→val, todas de los datos del proveedor
+(modo verbal: "busqueu", "sortim", "defensa"...).
+
+**APLICADO (21/10/2026):** dejar pasar por el filtro de
+categoría los participios que spaCy etiqueta `ADJ` con `VerbForm=Part`
+("informacions ofertes" → "oferides"). Medido: 151 +1 (RC107), gplsi
++1/−1, BOE +5 exactas con 41 cambios, 37 confirmados por la referencia
+("establert" → "establit"...). Descartado (medido): que cat→val ignore
+las filas `problematica` (perdía 8.454 formas; 151 −4, gplsi −6, BOE −21).
+
+**Benchmark de 151 editado por el usuario (21/10/2026)**: 20 cambios
+deliberados en `benchmark_corpus.json` ("a on" → "on", "per"/"per a" +
+infinitivo, "ensenyament" → "ensenyança", "qué" → "què", "desenvolupament"
+→ "desenrotllament", "en" → "a"...), para que la referencia siga la norma
+("era lo que se debe hacer bien"). Con ellos el 151 pasa de 130 a 150/154
+exactas (BLEU 98,61 → 99,78) sin que cambie el motor: las cifras del 151
+anteriores al 21/10 no son comparables con las de después.
+
+**Participios aplicados** (`cat_val/conjugacions_dict.py`): el filtro de
+categoría deja pasar `ADJ` con `VerbForm=Part`. Resultado: 151 150 → **151/154**
+(RC107 "ofertes" → "oferides"), gplsi 1.486 igual (2 cambios: "sobresurt"
+→ "sobreïx", "escalfat" → "calfat"), BOE 453 → **458** (BLEU 77,02 →
+77,14; 41 cambios, los 3 no confirmados son frases donde la referencia
+reformula). Limitación: si spaCy pone `ADJ` sin `VerbForm` ("Les
+informacions ofertes són orientatives."), no se toca. 621/621 doctests.
+
+## 21/10/2026 (cierre) — Dos benchmarks "BOE dialectal"
+
+**Por qué**: en la muestra de 2.000 líneas del BOE, el 56,5% de los pares
+son reformulaciones del traductor humano ("Pel que fa a" → "Quant a",
+presente → futuro), y en ellas el motor acierta el 1% de las frases. No
+es un fallo dialectal: es estilo. Estos dos benchmarks separan ese ruido
+de lo que queremos medir. Script:
+`pipeline/05_corpus_boe/construeix_boe_dialectal.py`, sobre el BOE completo
+(267.963 pares). Ficheros en `dades/boe/benchmarks/` (fuera de git), con un README que explica cada uno; el mismo script regenera también la muestra general `benchmark_boe_mostra_2000.json`, idéntica a la original.
+
+| Benchmark | Criterio | Pares | Fichero (muestra de 2.000, semilla 21) |
+|---|---|---|---|
+| **Amplio** | Pares idénticos o con solo sustituciones palabra por palabra (bloques 1:1 de hasta 2 palabras, más la "a" de "per a"). Criterio estructural, sin diccionario. | 73.705 | `benchmark_boe_dialectal_ampli.json` |
+| **Estricto** | Al menos una diferencia, y **todas** dialectales seguras (lista de abajo). | 9.453 | `benchmark_boe_dialectal_estricte.json` |
+
+Los conjuntos enteros están en `*_complet.json`. Filtro previo, igual que
+la muestra anterior: longitud de 30 a 300 caracteres y ratio de longitud
+de 0,85 a 1,15.
+
+**Una diferencia cuenta como dialectal segura si cumple una de estas
+condiciones:**
+- (a) el par catalán/valenciano está en los diccionarios (léxico,
+  conjugaciones, demostrativos): 7.906 pares;
+- (b) spaCy da el mismo lema y los mismos rasgos de tiempo, modo,
+  persona, número y forma verbal, con el mismo prefijo elidido y el
+  mismo enclítico; el género no se compara, para que entre "dues"/"dos";
+- (c) solo cambia el acento ("entès"/"entés");
+- (d) es la "a" de "per a" + infinitivo;
+- (e) es un incoativo, con la misma transformación que aplica
+  `cat_val/incoatius.py`.
+
+Los criterios (b) a (e) aportan 1.547 pares más. Fuera del estricto
+quedan los pares con diferencias de mayúsculas (7.895) y los que tienen
+alguna diferencia sin clasificar (24.278).
+
+**Dos versiones previas descartadas por fugas reales:**
+- con solo "mismo lema", entraban cambios de tiempo verbal ("pot" →
+  "podrà", "és" → "serà");
+- sin exigir los mismos clíticos, entraban cambios de estructura
+  ("acords" → "d'acords", "s'ha" → "ha").
+
+**Ojo:** el criterio (a) usa el propio diccionario, así que el estricto
+mide lo que el motor **debería** saber. Sirve para detectar regresiones,
+no para descubrir huecos; para eso está el amplio.
+
+**Motor cat→val** (JSON en
+`resultats/benchmark_traductor_cat-val_boe_dialectal_{estricte,ampli}_20261021.json`):
+
+| Benchmark | Exactas | BLEU | chrF |
+|---|---|---|---|
+| Estricto | **1.677/2.000 (83,9%)** | 96,87 | 98,80 |
+| Amplio | **1.177/2.000 (58,9%)** | 87,91 | 95,39 |
+| Muestra anterior del BOE (referencia) | 458/2.000 | ~77 | — |
+
+**Fallos más frecuentes en el estricto (errores reales del motor o de
+los datos, sin arreglar):**
+- "anous" en lugar de "nous" (18): homógrafo en plural;
+- "durada" → "duració" (19+4): el par existe en el BOE pero el motor no lo aplica;
+- "Servei(s)"/"SERVEIS" → "Servici(s)" (44): el par está en los datos, pero
+  falla en mayúsculas y en plural;
+- pérdida de mayúsculas ("Decret Llei", "Orgànica", "Llei" en minúscula: ~30);
+- "interesos" en lugar de "interessos" (10);
+- "recerca" → "investigació" (21);
+- "Desenvolupament" → "Desenrotllament" (8): falla en mayúscula;
+- "este" en lugar de "eixe" (13): el valor por defecto de los demostrativos;
+- "Comitè"/"comprèn" sin acento valenciano (10);
+- "Tingui" → "Tinga" (4);
+- ordinales "cinqué" en lugar de "quint" (4): la lista del usuario sobrescribe la canónica.
+
+**En el amplio dominan las diferencias de estilo**: el presente pasa a
+futuro ("és" → "serà" 57, "pot" → "podrà" 52), "a" → "en" (59) y
+mayúsculas. Ninguna de ellas es dialectal.

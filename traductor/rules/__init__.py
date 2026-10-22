@@ -67,6 +67,15 @@ class Token:
     Fem), per això nomes s'actua quan diu Fem explícitament -- si diu Masc,
     buit, o spaCy no està disponible, no es toca "dos" (preferix fals
     negatiu, vore `pos_tagger.py`).
+
+    `lemma` (afegit 20/10/2026, mateix mecanisme opcional que `pos`): el
+    lema d'spaCy en minúscules ("serveix" -> "servir"). El consulta
+    `cat_val/incoatius.py`, sempre validat contra els infinitius reals de
+    `conjugacions_dialectals.json` (spaCy s'inventa lemes per a verbs que
+    no coneix: "apareix" -> "aparir").
+
+    `verb_form` (afegit 21/10/2026): el tret `VerbForm` d'spaCy ("Inf",
+    "Fin", "Part", "Ger"). El consulta `cat_val/per_a_infinitiu.py`.
     """
 
     surface: str
@@ -74,6 +83,8 @@ class Token:
     pos: str = ""
     mood: str = ""
     gender: str = ""
+    lemma: str = ""
+    verb_form: str = ""
     is_translated: bool = False
     is_proper_noun: bool = False
     start: int = 0
@@ -240,7 +251,9 @@ def _token_anterior_real(tokens: list[Token], index: int) -> Token | None:
     return None
 
 
-def aplica_amb_prefix_elidit(tokens: list[Token], index: int, prefix: str, resta: str, forma: str) -> None:
+def aplica_amb_prefix_elidit(
+    tokens: list[Token], index: int, prefix: str, resta: str, forma: str, genere: str = ""
+) -> None:
     """Aplica `forma` (ja trobada al diccionari per a `resta`) al token
     `tokens[index]`, que originalment portava el prefix elidit `prefix`
     (p.ex. "l'" a "l'eixir"). Encapsula el cas normal (`forma` seguix
@@ -278,6 +291,19 @@ def aplica_amb_prefix_elidit(tokens: list[Token], index: int, prefix: str, resta
     >>> aplica_amb_prefix_elidit(toks, idx, "l'", "eixir", "sortir")
     >>> detokenize(toks)
     'Vaig vore el sortir de la lluna.'
+
+    Amb `genere="f"` (22/10/2026, el gènere de la paraula nova segons
+    spaCy), "l'" es desfà en "la" i no es contrau:
+
+    >>> toks = tokenize("Agafa l'escombra.")
+    >>> aplica_amb_prefix_elidit(toks, 2, "l'", "escombra", "granera", "f")
+    >>> detokenize(toks)
+    'Agafa la granera.'
+    >>> toks = tokenize("Parla de l'escombra.")
+    >>> idx = [t.surface for t in toks].index("l'escombra")
+    >>> aplica_amb_prefix_elidit(toks, idx, "l'", "escombra", "granera", "f")
+    >>> detokenize(toks)
+    'Parla de la granera.'
     """
     tok = tokens[index]
     forma_cap = preserva_majuscula(resta, forma)
@@ -287,6 +313,8 @@ def aplica_amb_prefix_elidit(tokens: list[Token], index: int, prefix: str, resta
 
     lletra = prefix[0].lower()
     complet = _PREFIX_COMPLET.get(lletra, prefix)
+    if lletra == "l" and genere == "f":
+        complet = "la"
 
     if complet == "el":
         anterior = _token_anterior_real(tokens, index)
@@ -424,6 +452,83 @@ def corregeix_contraccio_al_abans(tokens: list[Token], index: int) -> None:
     tok.translated = "l'" + tok.translated
 
 
+# "la" NO s'apostrofa davant de i/u àtones (amb h o sense): "la universitat",
+# "la idea", "la humitat" -- norma ortogràfica general, igual als dos
+# dialectes. Davant de í/ú tòniques (accentuades) sí: "l'última".
+_I_U_ATONES_RE = re.compile(r"^[hH]?[iuïüIUÏÜ]")
+
+
+def corregeix_article_abans(tokens: list[Token], index: int) -> None:
+    """Germana de `corregeix_contraccio_al_abans` per a l'article solt: si
+    `tokens[index]` ha passat a començar en vocal/h muda per una
+    substitució, i el token real anterior és l'article "el"/"la", l'apostrofa
+    ("el darrer" -> "el últim" -> "l'últim").
+
+    Casos reals trobats (20/10/2026, gplsi cat->val, ~15 aparicions): "el
+    darrer"->"l'últim", "la darrera"->"l'última", "el batlle"->"l'alcalde",
+    "la sortida"->"l'eixida".
+
+    >>> toks = tokenize("Va ser el darrer viatge.")
+    >>> toks[6].translated = "últim"
+    >>> corregeix_article_abans(toks, 6)
+    >>> detokenize(toks)
+    "Va ser l'últim viatge."
+
+    Majúscula de l'article conservada:
+
+    >>> toks = tokenize("El batlle parla.")
+    >>> toks[2].translated = "alcalde"
+    >>> corregeix_article_abans(toks, 2)
+    >>> detokenize(toks)
+    "L'alcalde parla."
+
+    "la" davant d'i/u àtona no s'apostrofa, davant de tònica sí:
+
+    >>> toks = tokenize("la cosa")
+    >>> toks[2].translated = "universitat"
+    >>> corregeix_article_abans(toks, 2)
+    >>> detokenize(toks)
+    'la universitat'
+    >>> toks = tokenize("la darrera")
+    >>> toks[2].translated = "última"
+    >>> corregeix_article_abans(toks, 2)
+    >>> detokenize(toks)
+    "l'última"
+
+    Si la forma traduïda seguix començant en consonant, no fa res:
+
+    >>> toks = tokenize("el noi")
+    >>> toks[2].translated = "xic"
+    >>> corregeix_article_abans(toks, 2)
+    >>> detokenize(toks)
+    'el xic'
+    """
+    tok = tokens[index]
+    if not _COMENCA_EN_VOCAL_O_H_MUDA_RE.match(tok.translated):
+        return
+    i_anterior = None
+    for i in range(index - 1, -1, -1):
+        if tokens[i].surface.isspace():
+            continue
+        i_anterior = i
+        break
+    if i_anterior is None:
+        return
+    anterior = tokens[i_anterior]
+    article = anterior.translated.lower()
+    if article not in ("el", "la"):
+        return
+    if article == "la" and _I_U_ATONES_RE.match(tok.translated):
+        return
+    apostrof = "L'" if anterior.translated[:1].isupper() else "l'"
+    anterior.translated = ""
+    anterior.is_translated = True
+    for espai in tokens[i_anterior + 1 : index]:
+        espai.translated = ""
+        espai.is_translated = True
+    tok.translated = apostrof + tok.translated
+
+
 # Determinants femenins i el seu parell masculí -- mateixes formes ja
 # documentades a `concordanca_dos_dues.py` (`_MARCADORS_FEMENI_PLURAL`)
 # mes les singulars. Taula tancada, curada a mà. Compartida entre les dos
@@ -447,14 +552,30 @@ DET_FEM_A_MASC = {
 }
 DET_MASC_A_FEM = {masc: fem for fem, masc in DET_FEM_A_MASC.items()}
 
+# Contraccions preposició + article masculí i la seua forma desfeta en
+# femení (22/10/2026): "del blat de moro" -> "de la dacsa".
+_CONTRACCIO_A_FEMENI = {
+    "al": "a la", "del": "de la", "pel": "per la",
+    "als": "a les", "dels": "de les", "pels": "per les",
+}
+_PREPOSICIO_ARTICLE_A_CONTRACCIO = {
+    (desfeta.split()[0], "el" if contr.endswith("l") else "els"): contr
+    for contr, desfeta in _CONTRACCIO_A_FEMENI.items()
+}
+
+
+def _index_anterior_real(tokens: list[Token], index: int) -> int | None:
+    for i in range(index - 1, -1, -1):
+        if not tokens[i].surface.isspace():
+            return i
+    return None
+
 
 def corregeix_determinant_abans(tokens: list[Token], index: int, genere_nou: str) -> None:
-    """Corregix el determinant IMMEDIATAMENT anterior (un token arrere,
-    saltant espais) perquè concorde amb `genere_nou` ("m" o "f"). Si no hi
-    ha determinant conegut just davant (p.ex. ja concordava, o hi ha una
-    altra paraula), no fa res -- preferix fals negatiu (vore `lexic.py`,
-    secció "Concordança de gènere tras substitució lèxica", per al cas
-    real que ho va motivar: "la dacsa" -> "el blat de moro").
+    """Corregix el determinant IMMEDIATAMENT anterior (saltant espais)
+    perquè concorde amb `genere_nou` ("m" o "f"). Si no hi ha determinant
+    conegut just davant, no fa res (preferix fals negatiu). L'apòstrof
+    ("la eixida" -> "l'eixida") el posa després `corregeix_article_abans`.
 
     >>> toks = tokenize("la dacsa")
     >>> corregeix_determinant_abans(toks, 2, "m")
@@ -465,22 +586,61 @@ def corregeix_determinant_abans(tokens: list[Token], index: int, genere_nou: str
     >>> corregeix_determinant_abans(toks, 2, "f")
     >>> [t.translated for t in toks]
     ['la', ' ', 'blat', ' ', 'de', ' ', 'moro']
+
+    Contraccions, en els dos sentits:
+
+    >>> toks = tokenize("Pel blat")
+    >>> toks[2].translated = "dacsa"
+    >>> corregeix_determinant_abans(toks, 2, "f")
+    >>> detokenize(toks)
+    'Per la dacsa'
+    >>> toks = tokenize("de les despeses")
+    >>> toks[4].translated = "gastos"
+    >>> corregeix_determinant_abans(toks, 4, "m")
+    >>> detokenize(toks)
+    'dels gastos'
+
+    Davant de vocal la preposició no es contrau (l'apòstrof el posa
+    `corregeix_article_abans`):
+
+    >>> toks = tokenize("de la sortida")
+    >>> toks[4].translated = "eixit"
+    >>> corregeix_determinant_abans(toks, 4, "m")
+    >>> detokenize(toks)
+    'de el eixit'
     """
-    i_anterior = None
-    for i in range(index - 1, -1, -1):
-        if tokens[i].surface.isspace():
-            continue
-        i_anterior = i
-        break
+    i_anterior = _index_anterior_real(tokens, index)
     if i_anterior is None:
         return
     anterior = tokens[i_anterior]
+    actual = anterior.translated.lower()
+    if genere_nou == "f" and actual in _CONTRACCIO_A_FEMENI:
+        anterior.translated = preserva_majuscula(anterior.surface, _CONTRACCIO_A_FEMENI[actual])
+        anterior.is_translated = True
+        return
     taula = DET_FEM_A_MASC if genere_nou == "m" else DET_MASC_A_FEM
-    nova_forma = taula.get(anterior.translated.lower())
+    nova_forma = taula.get(actual)
     if nova_forma is None:
         return
-    anterior.translated = preserva_majuscula(anterior.surface, nova_forma)
+    anterior.translated = preserva_majuscula(anterior.translated, nova_forma)
     anterior.is_translated = True
+    if genere_nou != "m" or _COMENCA_EN_VOCAL_O_H_MUDA_RE.match(tokens[index].translated):
+        return
+    i_prep = _index_anterior_real(tokens, i_anterior)
+    if i_prep is None:
+        return
+    prep = tokens[i_prep]
+    contraccio = _PREPOSICIO_ARTICLE_A_CONTRACCIO.get((prep.translated.lower(), nova_forma))
+    if contraccio is None:
+        return
+    prep.translated = preserva_majuscula(prep.translated, contraccio)
+    prep.is_translated = True
+    anterior.translated = ""
+    for espai in tokens[i_prep + 1 : index]:
+        if espai.surface.isspace():
+            espai.translated = ""
+            espai.is_translated = True
+    tokens[i_prep + 1].translated = " "
 
 
 # Pronoms febles enclítics reals de valencià/català, enganxats al final
@@ -630,57 +790,86 @@ def marca_noms_propis(tokens: list[Token]) -> None:
         paraula_trobada = True
 
 
-# Camp OBERT (13/10/2026, vore documentacio/hoja_de_ruta_traductor_invers.md):
-# categoria gramatical curada a mà de les entrades de `lexic_general.json`
-# que SÍ necessiten comprovar `tok.pos` abans d'aplicar-se (homògrafs entre
-# categories, p.ex. català "nou" = new/ADJ, nine/NUM, walnut/NOUN). Pensat
-# per a reemplaçar les llistes d'excepció soltes per paraula
-# (`_EXIGEIX_NOUN_CAT` a `cat_val/lexic.py`...) per un mecanisme ÚNIC i
-# compartit entre les dos direccions -- la clau sempre és la forma
-# VALENCIANA (la identitat canònica), encara que qui ho consulte estiga
-# mirant el costat català (cat_val) o el valencià (val_cat).
-CATEGORIA_GRAMATICAL_PATH = Path(__file__).resolve().parent.parent / "data" / "categoria_gramatical_lexic.json"
+# Homògrafs entre categories (22/10/2026): substituïx
+# `categoria_gramatical_lexic.json`, una llista feta a mà, pel que ja diu
+# el propi lèxic del proveïdor. Les entrades `problema: "homonimia_lexica"`
+# porten `forma_problematica` (la forma ambigua), `categoria` (la de la
+# lectura dialectal) i `lemas` (totes les lectures possibles amb la seua
+# categoria: "nou [adj]", "nou [n]", "nou [num]"). Segons la guia del
+# proveïdor, si cap altra lectura comparteix la categoria de l'entrada,
+# spaCy pot decidir; si la comparteix, no (caldria un LLM). Mateix criteri
+# que l'IPD des del 21/10/2026, que ara el reutilitza d'ací.
+LEXIC_GENERAL_PATH = Path(__file__).resolve().parent.parent / "data" / "lexic_general.json"
+
+# Categoria del proveïdor -> etiquetes POS d'spaCy.
+_POS_PER_CATEGORIA = {
+    "n": frozenset({"NOUN", "PROPN"}),
+    "adj": frozenset({"ADJ"}),
+    "adv": frozenset({"ADV"}),
+    "pr": frozenset({"ADP"}),
+    "num": frozenset({"NUM"}),
+    "v": frozenset({"VERB", "AUX"}),
+}
+_CATEGORIES_LEMA_RE = re.compile(r"\[([^\]]*)\]")
 
 
-def carrega_categoria_gramatical(path: Path = CATEGORIA_GRAMATICAL_PATH) -> dict[str, set[str]]:
-    """Llig `categoria_gramatical_lexic.json`, tornant
-    `{forma_valenciana_en_minuscules: {categories_POS_valides}}`. Nomes
-    conté les poques paraules classificades fins ara -- es queda OBERT,
-    s'amplia poc a poc (vore docstring del fitxer de dades).
+def carrega_homografs(
+    path: Path = LEXIC_GENERAL_PATH,
+) -> tuple[dict[str, frozenset[str]], frozenset[str]]:
+    """Homògrafs declarats pel proveïdor. Torna:
 
-    >>> categories = carrega_categoria_gramatical()
-    >>> categories["anou"]
-    {'NOUN'}
+    - `resolubles`: `{forma_problematica: etiquetes spaCy de la lectura
+      dialectal}` quan cap altra lectura dels `lemas` comparteix la
+      categoria de l'entrada -- spaCy pot decidir;
+    - `irresolubles`: formes on la categoria dialectal la comparteix una
+      altra lectura -- spaCy no pot decidir.
+
+    >>> resolubles, irresolubles = carrega_homografs()
+    >>> sorted(resolubles["nou"]), sorted(resolubles["manca"])
+    (['NOUN', 'PROPN'], ['NOUN', 'PROPN'])
+    >>> "bes" in irresolubles, "blanca" in irresolubles
+    (True, True)
     """
     dades = json.loads(Path(path).read_text(encoding="utf-8"))
-    resultat: dict[str, set[str]] = {}
-    for paraula, categoria in dades.get("categories", {}).items():
-        resultat[paraula.lower()] = {categoria} if isinstance(categoria, str) else set(categoria)
-    return resultat
+    resolubles: dict[str, frozenset[str]] = {}
+    irresolubles: set[str] = set()
+    for entrada in dades:
+        if entrada.get("problema") != "homonimia_lexica":
+            continue
+        forma = (entrada.get("forma_problematica") or "").strip().lower()
+        categoria = entrada.get("categoria")
+        if not forma:
+            continue
+        lectures = [
+            {c.strip() for c in m.group(1).split(",")}
+            for lema in entrada.get("lemas") or []
+            for m in [_CATEGORIES_LEMA_RE.search(lema)]
+            if m
+        ]
+        amb_categoria = sum(1 for cats in lectures if categoria in cats)
+        if categoria in _POS_PER_CATEGORIA and amb_categoria == 1:
+            resolubles[forma] = _POS_PER_CATEGORIA[categoria]
+        else:
+            irresolubles.add(forma)
+    irresolubles -= set(resolubles)
+    return resolubles, frozenset(irresolubles)
 
 
-def pos_compatible(tok_pos: str, paraula_valenciana: str, categories: dict[str, set[str]]) -> bool:
-    """Torna `True` si no hi ha cap restricció coneguda per a
-    `paraula_valenciana` (la majoria del lèxic -- preferix fals negatiu,
-    mai bloquejar per defecte), o si `tok_pos` hi és compatible. Si
-    `tok_pos` és buit (spaCy no disponible o no ha trobat la paraula),
-    també torna `True` -- el filtre nomes actua quan spaCy SÍ dona una
-    resposta clara que contradiu la categoria esperada.
+def homograf_compatible(tok_pos: str, paraula: str, resolubles: dict[str, frozenset[str]]) -> bool:
+    """`True` si `paraula` no és un homògraf resoluble, o si spaCy li dona
+    la categoria de la lectura dialectal. Sense etiqueta d'spaCy, `False`
+    (preferix fals negatiu: sense spaCy "nou" mai es tradueix a "anou").
 
-    >>> cats = {"anou": {"NOUN"}}
-    >>> pos_compatible("NOUN", "anou", cats)
-    True
-    >>> pos_compatible("ADJ", "anou", cats)
-    False
-    >>> pos_compatible("", "anou", cats)
-    True
-    >>> pos_compatible("ADJ", "casa", cats)
-    True
+    >>> res = {"nou": frozenset({"NOUN"})}
+    >>> homograf_compatible("NOUN", "nou", res), homograf_compatible("ADJ", "nou", res)
+    (True, False)
+    >>> homograf_compatible("", "nou", res), homograf_compatible("ADJ", "casa", res)
+    (False, True)
     """
-    requerides = categories.get(paraula_valenciana.lower())
-    if not requerides or not tok_pos:
+    lectura = resolubles.get(paraula.lower())
+    if lectura is None:
         return True
-    return tok_pos in requerides
+    return tok_pos in lectura
 
 
 if __name__ == "__main__":

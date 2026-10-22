@@ -16,6 +16,8 @@ CLAUDE_HISTORIAL.md
 # se deriva del BOE, así que corre la misma suerte.
 dades/avl/
 dades/boe/
+# Paquets per a pujar a Abaco i resultats que es baixen d'allà (21/10/2026)
+dades/abaco/
 dades/dataset_entrenament/boe_eval.jsonl
 # Muestras de trabajo intermedias (comparaciones de modelos en bruto, con logs)
 dades/sintetic/muestra_comparativa_20260922_1254/
