@@ -29,7 +29,13 @@ Tres eixides (a `dades/boe/benchmarks/`):
 2. `benchmark_boe_dialectal_estricte.json` -- parells amb almenys una
    diferència on TOTES les diferències són dialectals segures:
      (a) el parell català/valencià és als diccionaris del traductor
-         (lèxic, conjugacions, demostratius, possessius, numerals);
+         (`lexic_general.json`, que inclou possessius, demostratius i
+         numerals, i `conjugacions_dialectals.json`). Fins al 22/10/2026
+         també es carregava `demostratius_avl.json` (retirat), que
+         admetia els creuaments "aquest"/"eixe" i "aqueix"/"este": els
+         benchmarks del 21/10/2026 es van construir amb ell, i
+         regenerar-los ara deixaria fora els parells que només
+         s'explicaven per eixos creuaments;
      (b) spaCy dona el MATEIX LEMA i els MATEIXOS TRETS (temps, mode,
          persona, nombre, forma verbal; el gènere no, per "dues"/"dos") als
          dos costats i la forma canvia ("serveix"/"servix", que el proveïdor
@@ -132,13 +138,6 @@ def carrega_parells_diccionari() -> set[tuple[str, str]]:
         c, v = (e.get("catalan") or "").strip().lower(), (e.get("valenciano") or "").strip().lower()
         if c and v and " " not in c and " " not in v:
             parells.add((c, v))
-    dem = json.loads((DATA / "demostratius_avl.json").read_text(encoding="utf-8"))
-    graus = dem.get("graus", {})
-    oriental = [f for g in graus.values() for k, fs in g.items() if k.startswith("oriental") for f in fs]
-    occidental = [f for g in graus.values() for k, fs in g.items() if k.startswith("occidental") for f in fs]
-    for c in oriental:
-        for v in occidental:
-            parells.add((c.lower(), v.lower()))
     return parells
 
 

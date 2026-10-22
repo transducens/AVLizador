@@ -6555,7 +6555,15 @@
     "valenciano": "anous",
     "fuente": "unificado",
     "id": "E0723",
-    "categoria": "n"
+    "categoria": "n",
+    "forma_problematica": "nous",
+    "lado": "val",
+    "problema": "homonimia_lexica",
+    "lemas": [
+      "nou [adj]",
+      "nou [n]",
+      "nou [num]"
+    ]
   },
   {
     "catalan": "ordre",
@@ -8316,13 +8324,6 @@
     "categoria": "n"
   },
   {
-    "catalan": "desinteressos",
-    "valenciano": "desinteresos",
-    "fuente": "unificado",
-    "id": "E0976",
-    "categoria": "n"
-  },
-  {
     "catalan": "desprès",
     "valenciano": "després",
     "fuente": "unificado",
@@ -9076,13 +9077,6 @@
     "valenciano": "interés",
     "fuente": "unificado",
     "id": "E1084",
-    "categoria": "n"
-  },
-  {
-    "catalan": "interessos",
-    "valenciano": "interesos",
-    "fuente": "unificado",
-    "id": "E1085",
     "categoria": "n"
   },
   {

@@ -86,30 +86,48 @@ projecte.
 
 from __future__ import annotations
 
+from difflib import SequenceMatcher
+from functools import lru_cache
+
 from . import Token, separa_prefix_elidit, separa_sufix_elidit
 
 _NLP = None
 _CARREGAT = False
 
 
+# Models en orde de preferència (22/10/2026): `md` encerta més el gènere i
+# la morfologia ("gastos" masculí, subjuntius), a la mateixa velocitat que
+# `sm` (264 frente a 257 frases/s, cat->val, 1 nucli) pero amb ~190 MB més
+# de RAM (696 frente a 503 MB el procés sencer). Si `md` no està
+# instal·lat, es fa servir `sm`.
+MODELS_SPACY = ("ca_core_news_md", "ca_core_news_sm")
+
+
 def _carrega_spacy():
-    """Carrega `ca_core_news_sm` una sola vegada per procés. Si `spacy` no
-    esta instal·lat o el model no esta descarregat, torna `None` en
-    silenci (vore docstring del modul -- dependencia opcional)."""
+    """Carrega el primer model de `MODELS_SPACY` que estiga instal·lat,
+    una sola vegada per procés. Si `spacy` no esta instal·lat o no hi ha
+    cap model, torna `None` en silenci (vore docstring del modul --
+    dependencia opcional)."""
     global _NLP, _CARREGAT
     if _CARREGAT:
         return _NLP
     _CARREGAT = True
+    _NLP = None
     try:
         import spacy
-
-        # Sense "parser" ni "ner": cap regla usa dependencies (`.dep_`,
-        # `.head`), entitats (`.ents`) ni oracions (`.sents`), nomes POS,
-        # morfologia i lema. Mesurat 21/10/2026: 79->147 frases/s en CPU i
-        # traduccions identiques a les 4.112 frases de 151+gplsi+BOE.
-        _NLP = spacy.load("ca_core_news_sm", exclude=["parser", "ner"])
     except Exception:
-        _NLP = None
+        return None
+    for model in MODELS_SPACY:
+        try:
+            # Sense "parser" ni "ner": cap regla usa dependencies (`.dep_`,
+            # `.head`), entitats (`.ents`) ni oracions (`.sents`), nomes
+            # POS, morfologia i lema. Mesurat 21/10/2026: 79->147 frases/s
+            # en CPU i traduccions identiques a les 4.112 frases de
+            # 151+gplsi+BOE.
+            _NLP = spacy.load(model, exclude=["parser", "ner"])
+            break
+        except Exception:
+            continue
     return _NLP
 
 
@@ -219,6 +237,87 @@ def etiqueta(tokens: list[Token]) -> None:
         verb_form = dt.morph.get("VerbForm")
         tok.verb_form = verb_form[0] if verb_form else ""
         tok.lemma = dt.lemma_.lower()
+
+
+_GENERE_CURT = {"Masc": "m", "Fem": "f"}
+
+
+@lru_cache(maxsize=4096)
+def genere_de(paraula: str) -> str:
+    """Gènere ("m"/"f") d'un nom segons spaCy, o "" si no és segur.
+    Substituïx `canvi_genere_lexic_avl.json` (22/10/2026, llista feta a mà
+    amb una sola paraula): ni el lèxic del proveïdor ni cap altra font
+    porta gènere.
+
+    La paraula soltada sola no val (mesurat sobre els noms del lèxic:
+    "xiquet" eixia femení), així que s'etiqueta dins de dos frases, una
+    amb article masculí i una amb femení ("Veig el X ara." / "Veig la X
+    ara.", o "els"/"les" si acaba en -s), i només es dona per bo si spaCy
+    diu el mateix gènere a les dos: si es deixa portar per l'article, no
+    en sap prou.
+
+    >>> genere_de("vivenda"), genere_de("gastos"), genere_de("granera")
+    ('f', 'm', 'f')
+
+    Límits mesurats (22/10/2026, `ca_core_news_md`): de 27 noms de control,
+    15 encerts, 2 errors (variants gràfiques, que no es consulten mai: vore
+    `_es_variant_grafica`) i 10 sense resposta. Sense resposta, el
+    determinant no es toca ("dacsa", "gasto", "bresquilla"). Amb `sm`
+    eren 12 encerts i 7 errors ("dacsa" eixia masculí):
+
+    >>> genere_de("dacsa"), genere_de("gasto"), genere_de("bresquilla")
+    ('', '', '')
+    """
+    nlp = _carrega_spacy()
+    if nlp is None or not paraula:
+        return ""
+    articles = ("els", "les") if paraula.lower().endswith("s") else ("el", "la")
+    generes = set()
+    for article in articles:
+        doc = nlp(f"Veig {article} {paraula} ara.")
+        trobat = next((t for t in doc if t.text.lower() == paraula.lower()), None)
+        if trobat is None:
+            return ""
+        gender = trobat.morph.get("Gender")
+        generes.add(gender[0] if gender else "")
+    if len(generes) != 1:
+        return ""
+    return _GENERE_CURT.get(generes.pop(), "")
+
+
+def _es_variant_grafica(a: str, b: str) -> bool:
+    """Dos formes quasi iguals ("ametlla"/"ametla", "dipòsit"/"depòsit")
+    són la mateixa paraula escrita diferent: mai canvien de gènere.
+    Mesurat 22/10/2026 sobre els noms del lèxic: entre estos parells
+    (ràtio >= 0,8) spaCy veia 11 canvis de gènere i només un era real
+    ("joguines"/"joguets", que es perd)."""
+    return SequenceMatcher(None, a.lower(), b.lower()).ratio() >= 0.8
+
+
+def genere_tras_substitucio(tok: Token, forma: str, original: str = "") -> tuple[str, bool]:
+    """Per a un nom `tok` que es tradueix per `forma`: torna `(gènere de
+    la forma nova, si ha canviat respecte de l'original)`. El gènere
+    original és el que spaCy dona a `tok` dins de la frase (etiquetat
+    abans de les regles); el nou, `genere_de(forma)`. Sense dades segures
+    de les dos bandes, no hi ha canvi. `original` és la paraula sense
+    prefix elidit, si en portava ("l'escombra" -> "escombra").
+
+    >>> t = Token("despeses", "despeses", pos="NOUN", gender="Fem")
+    >>> genere_tras_substitucio(t, "gastos")
+    ('m', True)
+    >>> t = Token("dipòsit", "dipòsit", pos="NOUN", gender="Masc")
+    >>> genere_tras_substitucio(t, "depòsit")
+    ('m', False)
+    """
+    if tok.pos not in ("NOUN", "PROPN"):
+        return "", False
+    genere_original = _GENERE_CURT.get(tok.gender, "")
+    if _es_variant_grafica(original or tok.surface, forma):
+        return genere_original, False
+    nou = genere_de(forma.lower().split()[0])  # "blat de moro" -> "blat"
+    if not nou:
+        return genere_original, False
+    return nou, bool(genere_original) and nou != genere_original
 
 
 if __name__ == "__main__":

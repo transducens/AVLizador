@@ -97,9 +97,9 @@ registre ("estat", "avui", "últim").
 Mateixa mesura feta sobre uns atres candidats del BOE que NO entren en
 esta categoria, per contrast: "estat" i "recull" són col·lisions
 d'homògraf (participi/verb vs. nom, mateix problema que ja cobrix el
-mecanisme de categoria gramatical de `rules/__init__.py::pos_compatible`,
-pero encara sense entrada per a estes dos formes -- pendent de la
-classificació manual del lèxic, no d'este fitxer). "afecte"/"carinyo"
+mecanisme d'homògrafs de `rules/__init__.py::carrega_homografs`,
+pero el lèxic encara no les marca com a `homonimia_lexica` -- pendent
+de les dades, no d'este fitxer). "afecte"/"carinyo"
 sembla un error de dades del lexicó (el mateix patró que "vesprada"/"tard"),
 pendent de confirmar -- cap dels dos es toca ací.
 
@@ -139,7 +139,7 @@ _ARREL_PROJECTE = str(Path(__file__).resolve().parent.parent.parent)
 if _ARREL_PROJECTE not in sys.path:
     sys.path.insert(0, _ARREL_PROJECTE)
 
-from traductor.rules import Token, marca_noms_propis, pos_tagger, separa_prefix_elidit, tokenize
+from traductor.rules import Token, carrega_homografs, marca_noms_propis, pos_tagger, separa_prefix_elidit, tokenize
 from traductor.rules.cat_val.demostratius import carrega_demostratius_invers
 from traductor.rules.cat_val.lexic import LEXIC_GENERAL_PATH, carrega_lexic_invers
 from traductor.rules.cat_val.numerals import carrega_numerals_invers
@@ -168,63 +168,10 @@ _CACHE: "Formes | None" = None
 # convertint-los bé.
 _MARCADORS_NO_FIABLES_REGISTRE = {"qué", "què", "açò", "això"}
 
-# Categoria del proveïdor -> etiqueta(es) POS d'spaCy, NOMÉS per a
-# resoldre els homògrafs declarats (vore `_carrega_homografs`). Categories
-# fines (nom i adjectiu separats): estes formes són paraules catalanes que
-# spaCy coneix bé ("manca", "nou", "tancada").
-_POS_PER_CATEGORIA = {
-    "n": frozenset({"NOUN", "PROPN"}),
-    "adj": frozenset({"ADJ"}),
-    "adv": frozenset({"ADV"}),
-    "pr": frozenset({"ADP"}),
-    "num": frozenset({"NUM"}),
-    "v": frozenset({"VERB", "AUX"}),
-}
-_CATEGORIES_LEMA_RE = re.compile(r"\[([^\]]*)\]")
-
-
-def _carrega_homografs(
-    path: Path = LEXIC_GENERAL_PATH,
-) -> tuple[dict[str, frozenset[str]], frozenset[str]]:
-    """Homògrafs declarats pel proveïdor (entrades `problema:
-    "homonimia_lexica"`, vore "HOMÒGRAFS ENTRE CATEGORIES" al docstring del
-    mòdul). Torna:
-
-    - `resolubles`: `{forma_problematica: etiquetes spaCy de la lectura
-      dialectal}` quan cap altra lectura dels `lemas` comparteix la
-      categoria de l'entrada -- spaCy pot decidir;
-    - `irresolubles`: formes on la categoria dialectal la comparteix una
-      altra lectura -- spaCy no pot decidir i no compten mai.
-
-    >>> resolubles, irresolubles = _carrega_homografs()
-    >>> sorted(resolubles["nou"]), sorted(resolubles["manca"])
-    (['NOUN', 'PROPN'], ['NOUN', 'PROPN'])
-    >>> "bes" in irresolubles, "blanca" in irresolubles
-    (True, True)
-    """
-    dades = json.loads(Path(path).read_text(encoding="utf-8"))
-    resolubles: dict[str, frozenset[str]] = {}
-    irresolubles: set[str] = set()
-    for entrada in dades:
-        if entrada.get("problema") != "homonimia_lexica":
-            continue
-        forma = (entrada.get("forma_problematica") or "").strip().lower()
-        categoria = entrada.get("categoria")
-        if not forma:
-            continue
-        lectures = [
-            {c.strip() for c in m.group(1).split(",")}
-            for lema in entrada.get("lemas") or []
-            for m in [_CATEGORIES_LEMA_RE.search(lema)]
-            if m
-        ]
-        amb_categoria = sum(1 for cats in lectures if categoria in cats)
-        if categoria in _POS_PER_CATEGORIA and amb_categoria == 1:
-            resolubles[forma] = _POS_PER_CATEGORIA[categoria]
-        else:
-            irresolubles.add(forma)
-    irresolubles -= set(resolubles)
-    return resolubles, frozenset(irresolubles)
+# Homògrafs declarats pel proveïdor: el mecanisme viu des del 22/10/2026 a
+# `traductor/rules/__init__.py::carrega_homografs`, compartit amb el
+# traductor (abans era una còpia local d'este fitxer).
+_carrega_homografs = carrega_homografs
 
 
 class Formes:

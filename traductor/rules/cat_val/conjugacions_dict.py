@@ -249,15 +249,21 @@ class ConjugacionsDictInversRule:
     +1 (RC107), BOE +5 frases exactes amb 41 canvis, 37 confirmats per la
     referència ("establert" -> "establit", "establertes" -> "establides"):
 
+    >>> toks = tokenize("Les condicions establertes per la llei.")
+    >>> marca_noms_propis(toks)
+    >>> pos_tagger.etiqueta(toks)
+    >>> [(t.surface, t.translated) for t in ConjugacionsDictInversRule().apply(toks) if t.is_translated]
+    [('establertes', 'establides')]
+
+    Només quan spaCy marca el participi. Amb `ca_core_news_md` (des del
+    22/10/2026) "ofertes" en la frase de RC107 ja ix ADJ sense `VerbForm` i
+    no es toca (fals negatiu acceptat; amb `sm` sí que es traduïa):
+
     >>> toks = tokenize("Les informacions ofertes a través d'aquest mitjà tenen caràcter il·lustratiu.")
     >>> marca_noms_propis(toks)
     >>> pos_tagger.etiqueta(toks)
     >>> [(t.surface, t.translated) for t in ConjugacionsDictInversRule().apply(toks) if t.is_translated]
-    [('ofertes', 'oferides')]
-
-    Només quan spaCy marca el participi: en "Les informacions ofertes són
-    orientatives." l'etiqueta ADJ sense `VerbForm` i no es toca (fals
-    negatiu acceptat, igual que la resta de la regla).
+    []
 
     "sigui" dins d'"o sigui" (marcador discursiu, RC067) es tradueix igual
     encara que spaCy l'etiquete NOUN en este context (vore docstring del

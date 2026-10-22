@@ -135,7 +135,7 @@ def tradueix_val_cat(text: str, client=None) -> tuple[str, list[PuntAmbigu]]:
     """Traducció val->cat amb la capa de LLM. Sense client, idèntica al motor.
 
     >>> tradueix_val_cat("Este xiquet vol vindre hui.")[0]
-    'Aquest nen vol venir avui.'
+    'Aquest noi vol venir avui.'
     """
     global _MOTOR
     if _MOTOR is None:

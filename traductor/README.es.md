@@ -16,6 +16,24 @@ para el estado, el alcance actual y el razonamiento completo. Esta
 dirección original (`translate`, val→cat) se queda exactamente igual,
 sin ningún cambio.
 
+**22/10/2026 — `data/` solo tiene ya los dos ficheros del proveedor**
+(`lexic_general.json` y `conjugacions_dialectals.json`, copias de
+`diccionarios/` vía `sync_data.py`). Se retiraron los ficheros hechos a
+mano, y lo que dice este README sobre ellos es histórico:
+- `flexio_genere_avl.json` → nada: el léxico ya trae las formas de
+  femenino y plural (y el fichero tapaba "xiques" con "xices").
+- `canvi_genere_lexic_avl.json` → spaCy da el género de la palabra nueva
+  y se corrige el determinante y el apóstrofo
+  (`rules/pos_tagger.py::genere_tras_substitucio`).
+- `categoria_gramatical_lexic.json` → los homógrafos los decide el propio
+  léxico (`problema: "homonimia_lexica"`, `categoria`, `lemas`) con spaCy
+  (`rules/__init__.py::carrega_homografs`, el mismo mecanismo que el IPD).
+- `demostratius_avl.json` → `demostratius.py` lee las entradas
+  `categoria: "det"` del léxico, igual que `possessius.py`.
+Además, las entradas `_PENDENT` del léxico se usan como las demás (la
+etiqueta es metadato del proveedor) y en `cat_val/lexic.py` ya no queda
+ninguna lista a mano (ordinales, rentar/empentar).
+
 ## Por qué existe esto
 
 Las etapas 1-4 usan un LLM (qwen2.5:14b) con un system prompt de reglas +
