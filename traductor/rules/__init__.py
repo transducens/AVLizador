@@ -109,7 +109,7 @@ class Token:
 # paraula tal com està escrita", sencera.
 _TOKEN_RE = re.compile(
     r"[0-9]+(?:[.,][0-9]+)*"
-    r"|[A-Za-zÀ-ÖØ-öø-ÿ·]+(?:['’-][A-Za-zÀ-ÖØ-öø-ÿ·]+)*"
+    r"|[A-Za-zÀ-ÖØ-öø-ÿ·]+(?:['’ʼ-][A-Za-zÀ-ÖØ-öø-ÿ·]+)*"
     r"|\s+"
     r"|.",
     re.UNICODE | re.DOTALL,
@@ -129,6 +129,12 @@ def tokenize(text: str) -> list[Token]:
 
     >>> [t.surface for t in tokenize("Vine't-en, dir-li-ho")]
     ["Vine't-en", ',', ' ', 'dir-li-ho']
+
+    L'apòstrof "ʼ" (U+02BC, 1.589 vegades al BOE català) també compta
+    (22/10/2026; abans "lʼEstat" es partia en "lʼ" + "Estat"):
+
+    >>> [t.surface for t in tokenize("de lʼEstat")]
+    ['de', ' ', 'lʼEstat']
 
     >>> detokenize(tokenize("Té 18,5 €.")) == "Té 18,5 €."
     True
@@ -176,7 +182,18 @@ def preserva_majuscula(original: str, nova: str) -> str:
     'Aquest'
     >>> preserva_majuscula("este", "aquest")
     'aquest'
+
+    Paraula sencera en majúscules (22/10/2026, títols del BOE: "SERVEIS"
+    -> "SERVICIS", abans "Servicis"). Es compten només les lletres, i en
+    fan falta almenys dos: un prefix elidit "L’" no és una paraula en
+    majúscules.
+
+    >>> preserva_majuscula("SERVEIS", "servicis"), preserva_majuscula("L’", "la")
+    ('SERVICIS', 'La')
     """
+    lletres = [c for c in original if c.isalpha()]
+    if len(lletres) >= 2 and all(c.isupper() for c in lletres):
+        return nova.upper()
     if original[:1].isupper():
         return nova[:1].upper() + nova[1:]
     return nova
@@ -187,7 +204,7 @@ def preserva_majuscula(original: str, nova: str) -> str:
 # "qu'" (de "que") s'exclou a propòsit: no és un cas real d'este projecte
 # (el corpus real no l'ha mostrat mai) i afegiria un fals positiu segur
 # amb "qu'" seguit d'una paraula que casualment estiga al diccionari.
-_PREFIX_ELIDIT_RE = re.compile(r"^([dlsmtn])['’](.+)$", re.IGNORECASE)
+_PREFIX_ELIDIT_RE = re.compile(r"^([dlsmtn])['’ʼ](.+)$", re.IGNORECASE)
 
 
 def separa_prefix_elidit(surface: str) -> tuple[str, str] | None:
@@ -326,6 +343,8 @@ def aplica_amb_prefix_elidit(
                 tok.translated = forma_cap
                 return
 
+    if resta.isupper() and len(resta) > 1:
+        complet = complet.upper()  # "L’HABITATGE" -> "LA VIVENDA"
     tok.translated = preserva_majuscula(prefix, complet) + " " + forma_cap
 
 
@@ -651,7 +670,7 @@ def corregeix_determinant_abans(tokens: list[Token], index: int, genere_nou: str
 # coberts perque encara no hi ha cap cas real que ho necessite; s'amplia
 # nomes amb evidencia, com la resta de llistes d'este projecte.
 _SUFIX_ELIDIT_RE = re.compile(
-    r"^(.+?)(['’-])(me|te|se|nos|vos|los|les|la|lo|li|ho|hi|ne|ls|ns|m|t|s|n|l)$",
+    r"^(.+?)(['’ʼ-])(me|te|se|nos|vos|los|les|la|lo|li|ho|hi|ne|ls|ns|m|t|s|n|l)$",
     re.IGNORECASE,
 )
 
@@ -738,7 +757,7 @@ def paraules_segudents_son(tokens: list[Token], index: int, paraules: list[str])
     True
     """
     def _normalitza(s: str) -> str:
-        return s.replace("’", "'")
+        return s.replace("’", "'").replace("ʼ", "'")
 
     trobades: list[str] = []
     for tok in tokens[index + 1 :]:

@@ -212,13 +212,15 @@ def etiqueta(tokens: list[Token]) -> None:
     nlp = _carrega_spacy()
     if nlp is None:
         return
-    text = "".join(t.surface for t in tokens)
+    # "ʼ" (U+02BC) -> "’": spaCy només partix "l’Estat" amb l'apòstrof
+    # habitual; el canvi no mou cap posició (un caràcter per un altre).
+    text = "".join(t.surface for t in tokens).replace("ʼ", "’")
     doc = nlp(text)
     for tok in tokens:
         if not tok.surface[:1].isalpha():
             continue
         prefix_resta = separa_prefix_elidit(tok.surface)
-        buscada = prefix_resta[1] if prefix_resta else tok.surface
+        buscada = (prefix_resta[1] if prefix_resta else tok.surface).replace("ʼ", "’")
         candidates = [buscada.lower()]
         sufix_resta = separa_sufix_elidit(buscada)
         if sufix_resta is not None:

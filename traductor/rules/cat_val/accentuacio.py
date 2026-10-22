@@ -74,7 +74,7 @@ class AccentuacioInversRule:
             if tok.is_translated or tok.is_proper_noun:
                 continue
             minuscules = tok.surface.lower()
-            paraula = re.split(r"['’]", minuscules)[-1]
+            paraula = re.split(r"['’ʼ]", minuscules)[-1]
 
             if paraula.endswith("èixer"):
                 nova = _SUFIX_EIXER_RE.sub("éixer", minuscules)

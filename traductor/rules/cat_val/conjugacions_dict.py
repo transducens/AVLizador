@@ -36,10 +36,30 @@ context real, i spaCy (`ca_core_news_sm`) els etiqueta "NOUN" correctament
 (verificat un a un abans d'escriure este filtre). Per això SÍ cal el
 mateix filtre POS que `rules/val_cat/conjugacions_dict.py` -- i ara amb MES
 fiabilitat, perquè l'entrada ja és català real (spaCy entrenat en català,
-vore la hoja de ruta). `EXCLUSIONS_HOMOGRAF_INVERS`/`SEMPRE_VERB_INVERS`
-es queden buits de moment (cap cas trobat encara on spaCy s'equivoque en
-esta direcció) -- s'amplien només amb evidència, com la resta del
-projecte.
+vore la hoja de ruta).
+
+**Homògrafs segons el diccionari (22/10/2026, decisió de l'usuari)**: el
+filtre POS ja no s'aplica a totes les formes. `conjugaciones_general.json`
+porta dins de `morfologia` les lectures no verbals de cada forma ("estat":
+`['n','m','sg']` + `['pp','m','sg']`; "través", "obres", "moro"...; vore
+`carrega_homografs_conjugacions`). Una forma AMB lectura no verbal només es
+tradueix si spaCy diu verb (o participi); una forma SENSE, sempre, llevat
+que spaCy diga nom propi (PROPN: "París", "Mano", "Camino" -- noms i
+castellà que coincidixen amb formes verbals). Substituïx les llistes a mà
+`SEMPRE_VERB_INVERS = {"sigui"}` i `EXCLUSIONS_HOMOGRAF_INVERS` (buida):
+"sigui", "sapigueu", "disposo"... ja es tradueixen encara que spaCy els
+etiquete NOUN.
+
+Excepció per fitxer d'origen: les files de `verbos_diferentes_conjugados.json`
+(verbs d'arrel distinta, signar->firmar, prémer->polsar, espatllar->
+desbaratar; es reconeixen pel camp `infinitiu_cat`) sempre necessiten que
+spaCy diga verb. Este fitxer no marca cap homògraf a `morfologies`, i un
+error ahí canvia la paraula sencera ("els premis" -> "les polses", "els
+signes" -> "les firmes", "l'espatlla" -> "desbarata"). Mesurat 22/10/2026:
+amb la marca només per a `conjugaciones_general.json` el 151 baixava de
+147 a 143 i gplsi de 1479 a 1470; amb esta excepció, 146 i 1479 (BOE
+estricte 8857, +13 sobre la llista "sigui"). L'única pèrdua és una cita
+llatina ("del llatí confinis... finis").
 
 **"sigui" dins d'"o sigui" (13/10/2026, RC067)**: spaCy etiqueta "sigui"
 com a NOUN (no VERB/AUX) quan funciona com a marcador discursiu ("o
@@ -50,9 +70,8 @@ en l'altra direcció**: `rules/val_cat/conjugacions_dict.py` tenia una
 protecció que assumia que "o siga" era una locució CONGELADA (mai
 canviava als dos dialectes) -- fals, l'únic cas real del benchmark
 (RC067) mostra que és un parell dialectal normal ("o siga"/"o sigui").
-Corregit afegint "sigui" ací a `SEMPRE_VERB_INVERS` (perquè spaCy
-l'etiqueta malament) i retirant la protecció equivocada de l'altra
-banda (perquè `SEMPRE_VERB` ja cobria "siga" per la mateixa raó).
+Es va corregir amb una llista a mà (`SEMPRE_VERB_INVERS`), retirada el
+22/10/2026: ara el resol la marca d'homògraf del diccionari (vore dalt).
 
 **Elisió combinada** (cas real trobat al propi benchmark invertit,
 RC032): "d'escalfar-nos" (català, UN sol token amb prefix elidit "d'" I
@@ -74,6 +93,7 @@ from .. import (
     aplica_amb_prefix_elidit,
     corregeix_article_abans,
     corregeix_contraccio_al_abans,
+    corregeix_elisio_de_abans,
     preserva_majuscula,
     separa_prefix_elidit,
     separa_sufix_elidit,
@@ -83,14 +103,51 @@ DEFAULT_CONJUGACIONS_PATH = (
     Path(__file__).resolve().parent.parent.parent / "data" / "conjugacions_dialectals.json"
 )
 
-# Vore docstring del mòdul ("Correcció important 08/10/2026" i "'sigui'
-# dins d''o sigui'" 13/10/2026): "sigui" és l'únic cas conegut on calga
-# ignorar `tok.pos` -- spaCy l'etiqueta NOUN en el marcador discursiu "o
-# sigui". La resta de `EXCLUSIONS_HOMOGRAF_INVERS` es queda buida fins
-# que n'hi haja evidència real, mateix patró que `EXCLUSIONS_HOMOGRAF`/
-# `SEMPRE_VERB` de `rules/val_cat/conjugacions_dict.py`.
-EXCLUSIONS_HOMOGRAF_INVERS: set[str] = set()
-SEMPRE_VERB_INVERS: set[str] = {"sigui"}
+# Codis de `morfologia` que NO són d'una forma verbal: les categories del
+# lèxic ("n", "adj", "adv", "prn", "ij"...) i els prefixos (":mini<adj").
+# "vbmod"/"vbhaver"/":haver<vaux" són verbs (modals i auxiliars).
+_CATEGORIES_NO_VERBALS = {"n", "adj", "adv", "prn", "ij", "pr", "num", "det", "cnj"}
+
+
+def _es_lectura_no_verbal(codi: str) -> bool:
+    return codi in _CATEGORIES_NO_VERBALS or codi.endswith(("<n", "<adj"))
+
+
+def carrega_formes_arrel_distinta(path: Path = DEFAULT_CONJUGACIONS_PATH) -> frozenset[str]:
+    """Formes catalanes de les files de `verbos_diferentes_conjugados.json`
+    (camp `infinitiu_cat`), que sempre passen pel filtre POS (vore
+    docstring del mòdul).
+
+    >>> a = carrega_formes_arrel_distinta()
+    >>> sorted(w for w in ("premis", "signes", "espatlla", "sigui", "ofereixi") if w in a)
+    ['espatlla', 'premis', 'signes']
+    """
+    dades = json.loads(Path(path).read_text(encoding="utf-8"))
+    return frozenset(
+        (entrada.get("catalan") or "").strip().lower()
+        for entrada in dades.get("entradas", [])
+        if "infinitiu_cat" in entrada
+    )
+
+
+def carrega_homografs_conjugacions(path: Path = DEFAULT_CONJUGACIONS_PATH) -> frozenset[str]:
+    """Formes catalanes que el diccionari de conjugacions marca també amb
+    una lectura no verbal dins de `morfologia`.
+
+    >>> h = carrega_homografs_conjugacions()
+    >>> sorted(w for w in ("estat", "través", "obres", "moro", "sigui", "hagi", "pugui") if w in h)
+    ['estat', 'moro', 'obres', 'través']
+    """
+    dades = json.loads(Path(path).read_text(encoding="utf-8"))
+    homografs: set[str] = set()
+    for entrada in dades.get("entradas", []):
+        # `morfologia` (conjugaciones_general.json) o `morfologies`
+        # (verbos_diferentes_conjugados.json, sempre llista de llistes).
+        morfologia = entrada.get("morfologia") or entrada.get("morfologies") or []
+        lectures = morfologia if morfologia and isinstance(morfologia[0], list) else [morfologia]
+        if any(lectura and _es_lectura_no_verbal(lectura[0]) for lectura in lectures):
+            homografs.add((entrada.get("catalan") or "").strip().lower())
+    return frozenset(homografs)
 
 
 def carrega_conjugacions_invers(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[str, str]:
@@ -209,8 +266,10 @@ class ConjugacionsDictInversRule:
     canònica), i guanya la del proveïdor. "busqueu" (cercau/cerqueu, sense
     cap marca) es continua sense tocar:
 
+    >>> from .. import pos_tagger
     >>> toks = tokenize("Vull que sofreixin poc i que busqueu la clau.")
     >>> marca_noms_propis(toks)
+    >>> pos_tagger.etiqueta(toks)  # "sofreixin" és d'arrel distinta: cal spaCy
     >>> toks = ConjugacionsDictInversRule().apply(toks)
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
     [('sofreixin', 'patisquen')]
@@ -265,16 +324,25 @@ class ConjugacionsDictInversRule:
     >>> [(t.surface, t.translated) for t in ConjugacionsDictInversRule().apply(toks) if t.is_translated]
     []
 
-    "sigui" dins d'"o sigui" (marcador discursiu, RC067) es tradueix igual
-    encara que spaCy l'etiquete NOUN en este context (vore docstring del
-    mòdul):
+    "sigui" (RC067) no és homògraf al diccionari: es tradueix encara que
+    spaCy l'etiquete NOUN. "l'Estat" i "través" sí que ho són (nom) i no
+    es toquen; un nom propi que coincidix amb una forma verbal tampoc:
 
     >>> toks = tokenize("el recompte, o sigui, el 29 de febrer.")
-    >>> marca_noms_propis(toks)
     >>> pos_tagger.etiqueta(toks)
-    >>> toks = ConjugacionsDictInversRule().apply(toks)
-    >>> [(t.surface, t.translated) for t in toks if t.is_translated]
-    [('sigui', 'siga')]
+    >>> [(t.surface, t.pos, t.translated) for t in ConjugacionsDictInversRule().apply(toks) if t.surface == "sigui"]
+    [('sigui', 'NOUN', 'siga')]
+    >>> toks = tokenize("Ho paga l'Estat, a través de la seua delegació a París.")
+    >>> pos_tagger.etiqueta(toks)
+    >>> [(t.surface, t.translated) for t in ConjugacionsDictInversRule().apply(toks) if t.is_translated]
+    []
+
+    Verbs d'arrel distinta: només si spaCy diu verb ("premis" nom es queda):
+
+    >>> toks = tokenize("Els premis i els signes. Vull que sofreixin poc.")
+    >>> pos_tagger.etiqueta(toks)
+    >>> [(t.surface, t.translated) for t in ConjugacionsDictInversRule().apply(toks) if t.is_translated]
+    [('sofreixin', 'patisquen')]
 
     Prefix I sufix alhora -- el cas real del benchmark invertit (RC032):
     "escalfar" (vocal inicial en català) torna "calfar" (consonant
@@ -285,6 +353,7 @@ class ConjugacionsDictInversRule:
     >>> from .. import detokenize
     >>> toks = tokenize("La manera d'escalfar-nos.")
     >>> marca_noms_propis(toks)
+    >>> pos_tagger.etiqueta(toks)
     >>> toks = ConjugacionsDictInversRule().apply(toks)
     >>> detokenize(toks)
     'La manera de calfar-nos.'
@@ -292,33 +361,34 @@ class ConjugacionsDictInversRule:
 
     def __init__(self, path: Path = DEFAULT_CONJUGACIONS_PATH) -> None:
         self._lookup = carrega_conjugacions_invers(path)
+        # Formes que només es tradueixen si spaCy diu verb: homògrafs marcats
+        # al diccionari + totes les de verbs d'arrel distinta.
+        self._amb_filtre_pos = carrega_homografs_conjugacions(path) | carrega_formes_arrel_distinta(path)
+
+    def _pos_admet(self, tok: Token, arrel: str) -> bool:
+        """Vore "Homògrafs segons el diccionari" al docstring del mòdul."""
+        if arrel.lower() in self._amb_filtre_pos:
+            # Participi usat com a adjectiu ("les condicions establertes"):
+            # spaCy l'etiqueta ADJ amb VerbForm=Part (21/10/2026).
+            es_participi = tok.pos == "ADJ" and tok.verb_form == "Part"
+            return tok.pos in ("VERB", "AUX") or es_participi
+        return tok.pos != "PROPN"
 
     def apply(self, tokens: list[Token]) -> list[Token]:
         for i, tok in enumerate(tokens):
             if tok.is_translated or tok.is_proper_noun:
                 continue
-            minuscules = tok.surface.lower()
-            # Participi usat com a adjectiu ("les informacions ofertes"):
-            # spaCy l'etiqueta ADJ pero amb VerbForm=Part -- sí que és la
-            # forma verbal (21/10/2026, vore docstring de la classe).
-            es_participi = tok.pos == "ADJ" and tok.verb_form == "Part"
-            if (
-                tok.pos
-                and tok.pos not in ("VERB", "AUX")
-                and not es_participi
-                and minuscules not in SEMPRE_VERB_INVERS
-            ):
-                continue
             for prefix, arrel, sufix in _descompon(tok.surface):
-                if arrel.lower() in EXCLUSIONS_HOMOGRAF_INVERS:
-                    continue
                 forma = self._lookup.get(arrel.lower())
                 if forma is None:
                     continue
+                if not self._pos_admet(tok, arrel):
+                    break
                 if prefix is None:
                     tok.translated = preserva_majuscula(arrel, forma) + (sufix or "")
                     corregeix_contraccio_al_abans(tokens, i)
                     corregeix_article_abans(tokens, i)
+                    corregeix_elisio_de_abans(tokens, i)  # "de sortir" -> "d'eixir"
                 else:
                     aplica_amb_prefix_elidit(tokens, i, prefix, arrel, forma)
                     if sufix:

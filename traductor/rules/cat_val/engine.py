@@ -40,7 +40,7 @@ fitxer nou a banda, no ressuscitar este.
 
 from __future__ import annotations
 
-from .. import Token, detokenize, marca_noms_propis, tokenize
+from .. import Token, detokenize, tokenize
 from .. import pos_tagger
 from .accentuacio import AccentuacioInversRule
 from .concordanca_dos_dues import ConcordancaDosDuesInversRule
@@ -86,7 +86,14 @@ class RuleEngineInvers:
         text. (La capa de LLM de cat->val que el va motivar es va retirar el
         21/10/2026: no canviava cap frase.)"""
         tokens: list[Token] = tokenize(text)
-        marca_noms_propis(tokens)
+        # Sense `marca_noms_propis` (22/10/2026, decisió de l'usuari): el BOE
+        # posa en majúscula moltes paraules comunes ("Servei de Salut",
+        # "Comitè de...", "Despeses de personal") i el valencià les tradueix;
+        # protegir-les per la majúscula deixava 439 frases mal al BOE
+        # estricte (8442 -> 8844 sense la protecció). Decidixen el diccionari
+        # i spaCy, com a la resta. Límit conegut: noms de lloc que
+        # coincidixen amb paraules comunes ("les Garrigues", "la Noguera",
+        # "Maó") i títols ("Cementiri Britànic") es tradueixen.
         pos_tagger.etiqueta(tokens)
         for regla in self._regles:
             tokens = regla.apply(tokens)

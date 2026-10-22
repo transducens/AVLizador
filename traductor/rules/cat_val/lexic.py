@@ -54,6 +54,7 @@ from .. import (
     corregeix_article_abans,
     corregeix_contraccio_al_abans,
     corregeix_determinant_abans,
+    corregeix_elisio_de_abans,
     homograf_compatible,
     paraules_segudents_son,
     preserva_majuscula,
@@ -217,10 +218,21 @@ class LexicInversRule:
     >>> tradueix("Patix una gran manca afectiva.")
     'Patix una gran carència afectiva.'
 
-    Contracció "al" desfeta en "a l'" quan la paraula nova comença en vocal:
+    Contracció "al" desfeta en "a l'" quan la paraula nova comença en vocal,
+    i "de" apostrofat (22/10/2026; abans "de investigació"):
 
     >>> tradueix("Es va mirar al mirall.")
     "Es va mirar a l'espill."
+    >>> tradueix("Un projecte de recerca.")
+    "Un projecte d'investigació."
+
+    Majúscules: les paraules comunes en majúscula es tradueixen (el motor
+    ja no les protegix com a nom propi, vore `engine.py`), i una paraula
+    sencera en majúscules es queda en majúscules, article inclòs:
+
+    >>> from .engine import RuleEngineInvers
+    >>> RuleEngineInvers().translate("El Servei de Salut i L’HABITATGE.")
+    'El Servici de Salut i LA VIVENDA.'
     """
 
     def __init__(
@@ -265,6 +277,7 @@ class LexicInversRule:
             corregeix_determinant_abans(tokens, i, genere)
         corregeix_contraccio_al_abans(tokens, i)
         corregeix_article_abans(tokens, i)
+        corregeix_elisio_de_abans(tokens, i)
 
     def apply(self, tokens: list[Token]) -> list[Token]:
         for i, tok in enumerate(tokens):

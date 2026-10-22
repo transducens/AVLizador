@@ -101,7 +101,7 @@ class AccentuacioRule:
             # "d'accés"/"l'interés" arriben com un sol token (l'apòstrof
             # és part de la paraula, vore rules/__init__.py) -- cal
             # comprovar les excepcions sobre la part real de la paraula.
-            paraula = re.split(r"['’]", minuscules)[-1]
+            paraula = re.split(r"['’ʼ]", minuscules)[-1]
 
             if paraula not in _EXCEPCIONS_ES and paraula.endswith("és"):
                 nova = _SUFIX_ES_RE.sub("ès", minuscules)

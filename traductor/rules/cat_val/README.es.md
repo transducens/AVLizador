@@ -55,6 +55,49 @@ colisiones con verbos normales (no raros): "moro" (catalán, "jo moro" de
 una forma de "travar"; "signes" con "tu signes" de "signar". El filtro
 POS sí hace falta — implementado en `conjugacions_dict.py`.
 
+**22/10/2026 — el filtro POS ya no se aplica a todas las formas**: lo
+decide el propio diccionario. Las formas de `conjugaciones_general.json`
+que traen una lectura no verbal en `morfologia` ("estat" nombre, "través",
+"obres", "moro"…) solo se traducen si spaCy dice verbo; las demás, siempre
+salvo que spaCy diga nombre propio ("París", "Mano"). Las 900 formas de
+`verbos_diferentes_conjugados.json` (raíz distinta: signar→firmar,
+prémer→polsar) siempre exigen verbo, porque ese fichero no marca
+homógrafos y un error cambia la palabra entera ("els premis" → "les
+polses"). Sustituye la lista a mano `SEMPRE_VERB_INVERS = {"sigui"}`.
+Benchmarks: 151 146, gplsi 1479, BOE estricto 8857/9453, amplio 1200
+(con la lista: 147 / 1479 / 8844 / 1199; la única frase perdida es una
+cita latina, "confinis"/"finis").
+
+**22/10/2026 — Mayúsculas y nombres propios (decisión del usuario)**: en
+cat→val se traducen TODAS las palabras, también las que van en
+mayúscula. No hace falta protegerlas: el diccionario no contiene
+traducciones de nombres propios (los topónimos `v:top_gva` no se aplican
+nunca), así que un nombre solo cambia si coincide por casualidad con una
+palabra común del léxico. Revisado contra el BOE catalán completo, gplsi
+y el 151, y contra una lista de nombres, apellidos y topónimos catalanes
+frecuentes, los únicos casos encontrados son:
+- topónimos: "les Garrigues" → "coscollars" (15 veces en el BOE, siempre
+  en mayúscula), "la Noguera" → "anouer" (7), "Maó" → "rajola", "la
+  Riba" → "vora", "Toro" → "bou";
+- nombres de persona: "Estrella" → "Estrela", "Nen" → "Xiquet";
+- nombres de instituciones y títulos que contienen palabras comunes
+  ("Cementiri Britànic", "Llei d'Ús i Ensenyament").
+Ningún nombre coincide con una forma verbal que se traduzca sin spaCy (las
+formas verbales que no son homógrafas se frenan si spaCy dice PROPN:
+"París", "Mano"). Si se quiere arreglar, lo limpio es que el proveedor
+marque esos topónimos en el léxico, como ya hace con los valencianos.
+
+**22/10/2026 — Homógrafos de cat→val**: de las entradas
+`homonimia_lexica` del léxico, las que afectan a esta dirección son las
+que tienen la forma ambigua en el lado catalán. Las resuelve spaCy (las
+lecturas tienen categorías distintas): deu, nou/nous, manca/manques,
+panotxa(es), recuita(es), reeixida(es), fartanera(es), rentadora(es)
+("sota" no se aplica: el valenciano tiene dos palabras). Solo tres tienen
+lecturas de la misma categoría y necesitarían un LLM: "calces" (bragues
+o calces de pantaló), "gandula" y "gandules" (hamaca o dona gandula). En
+los tres corpus aparecen 3 veces ("calces", en listas de aranceles del
+BOE) y "gandula(es)" ninguna: hoy el motor las traduce siempre.
+
 **"aquest"→"este"/"eixe" (resuelto parcialmente, 13/10/2026)**: se probó
 primero dejarlo sin tocar (preferir falso negativo) — el benchmark se
 HUNDIÓ de 92 a 44/151 (107 apariciones, la mayoría del corpus). Medido

@@ -1,0 +1,21 @@
+{
+  "descripcio": "Frases de prova de la capa de LLM de cat->val (llm/cat_val.py), escrites per a la prova, no tretes de cap corpus. `esperat`: 'si' si la paraula té el sentit del lèxic (es queda la traducció del motor), 'no' si en té un altre (es deixa la paraula catalana), null si la frase no té cap homògraf (no s'ha de cridar el model). Ús: python -m traductor.llm.prova_cat_val --avalua --model M --prompt P",
+  "frases": [
+    {"text": "Aquest estiu he comprat una gandula per a la terrassa.", "paraula": "gandula", "esperat": "si"},
+    {"text": "Es va estirar a la gandula de la piscina tota la tarda.", "paraula": "gandula", "esperat": "si"},
+    {"text": "L'hotel lloga gandules i para-sols a la platja.", "paraula": "gandules", "esperat": "si"},
+    {"text": "Vam plegar les gandules abans que comencés a ploure.", "paraula": "gandules", "esperat": "si"},
+    {"text": "Aquesta noia és molt gandula i no vol sortir de casa.", "paraula": "gandula", "esperat": "no"},
+    {"text": "No siguis gandula i ajuda'ns a recollir la taula.", "paraula": "gandula", "esperat": "no"},
+    {"text": "Les meves cosines són una mica gandules per estudiar.", "paraula": "gandules", "esperat": "no"},
+    {"text": "La gata és tan gandula que dorm tot el dia.", "paraula": "gandula", "esperat": "no"},
+    {"text": "Les calces de la nena estan brutes.", "paraula": "calces", "esperat": "si"},
+    {"text": "Ha comprat unes calces de cotó al mercat.", "paraula": "calces", "esperat": "si"},
+    {"text": "Porta les calces i el sostenidor a la bossa del gimnàs.", "paraula": "calces", "esperat": "si"},
+    {"text": "A la botiga venen calces i mitges de llana.", "paraula": "calces", "esperat": "no"},
+    {"text": "Els cavallers medievals portaven calces de seda fins als genolls.", "paraula": "calces", "esperat": "no"},
+    {"text": "Les calces dels soldats del segle XVI eren de colors vius.", "paraula": "calces", "esperat": "no"},
+    {"text": "El Servei de Salut ha publicat les despeses de l'any.", "paraula": null, "esperat": null},
+    {"text": "La Blanca va trobar una nou nova sota la branca blanca on cantava la blanca.", "paraula": null, "esperat": null}
+  ]
+}

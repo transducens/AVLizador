@@ -2,6 +2,19 @@
 
 *[Léelo en castellano](README.es.md)*
 
+> **22/10/2026 — nova capa cat→val (`cat_val.py`)**, també opcional:
+> homògrafs de la **mateixa categoria** que spaCy no pot resoldre, trets del
+> lèxic (`homonimia_lexica` amb la forma ambigua al costat català): hui
+> "calces" (bragues / calces de pantaló), "gandula" i "gandules" (hamaca /
+> dona gandula). El motor tradueix sempre; el LLM només respon `si` (es
+> queda la traducció) o `no` (es deixa la paraula catalana). Una frase
+> sense eixes paraules no crida el model. Prova en local:
+> `python -m traductor.llm.prova_cat_val "frase"` (`--sense-llm` per a vore
+> els punts sense Ollama, `--model`, `--verbose`). Sense avaluar encara: als
+> corpus només hi ha 3 casos.
+>
+> El de baix descriu la capa de val→cat (congelada).
+
 Capa **opcional** només per a valencià→català. Des del 21/10/2026 està
 **congelada**: funciona i millora el motor, pero no es continua millorant.
 `traductor.translate()` i `traductor.translate_cat_val()` **no la usen**;
