@@ -1,0 +1,122 @@
+{
+  "descripcio": "Frases catalanes per al benchmark d'homògrafs de cat->val (23/10/2026), escrites per a la prova, no tretes de cap corpus. `paraula`: la forma catalana ambigua; `esperat`: el candidat correcte (un valencià del lèxic, o la mateixa paraula catalana si no s'ha de traduir). `genera_benchmark.py` en fa `benchmark_homografs_cat_val.json` amb el motor. Els tipus (colisio/irresoluble/resoluble) els posa el generador a partir del lèxic.",
+  "frases": [
+    {"text": "Li va donar un cop al cap amb un bastó.", "paraula": "cop", "esperat": "colp"},
+    {"text": "El cop d'estat va fracassar en poques hores.", "paraula": "cop", "esperat": "colp"},
+    {"text": "La porta es va tancar de cop.", "paraula": "cop", "esperat": "colp"},
+    {"text": "Amb un cop de martell va clavar el clau.", "paraula": "cop", "esperat": "colp"},
+    {"text": "El cotxe va rebre un cop fort al lateral.", "paraula": "cop", "esperat": "colp"},
+    {"text": "La mort del seu pare va ser un cop molt dur per a la família.", "paraula": "cop", "esperat": "colp"},
+    {"text": "Un cop de sort li va canviar la vida.", "paraula": "cop", "esperat": "colp"},
+    {"text": "Es va fer un cop al genoll jugant a futbol.", "paraula": "cop", "esperat": "colp"},
+    {"text": "Els lladres van preparar un últim cop al banc.", "paraula": "cop", "esperat": "colp"},
+    {"text": "L'actriu no es va recuperar mai d'aquell cop.", "paraula": "cop", "esperat": "colp"},
+    {"text": "Aquest primer intent de cop va ser un fracàs com es va narrar anteriorment.", "paraula": "cop", "esperat": "colp", "font": "gplsi"},
+
+    {"text": "Un cop acabada la reunió, vam marxar.", "paraula": "cop", "esperat": "vegada"},
+    {"text": "Cada cop hi ha més gent a la platja.", "paraula": "cop", "esperat": "vegada"},
+    {"text": "Ho he intentat un cop i no ha funcionat.", "paraula": "cop", "esperat": "vegada"},
+    {"text": "Un altre cop has arribat tard.", "paraula": "cop", "esperat": "vegada"},
+    {"text": "Un cop transcorregut el termini, es resoldrà la sol·licitud.", "paraula": "cop", "esperat": "vegada"},
+    {"text": "Aquest cop no em deixaré enganyar.", "paraula": "cop", "esperat": "vegada"},
+    {"text": "Per primer cop, l'equip ha guanyat la lliga.", "paraula": "cop", "esperat": "vegada"},
+    {"text": "Cada cop que el veig, em saluda.", "paraula": "cop", "esperat": "vegada"},
+    {"text": "Un cop més, el govern ha ajornat la decisió.", "paraula": "cop", "esperat": "vegada"},
+    {"text": "Recordo un cop que vam anar a la muntanya.", "paraula": "cop", "esperat": "vegada"},
+
+    {"text": "Va sentir uns cops forts a la porta.", "paraula": "cops", "esperat": "colps"},
+    {"text": "El boxejador va rebre molts cops a la cara.", "paraula": "cops", "esperat": "colps"},
+    {"text": "Els cops de vent van tombar diversos arbres.", "paraula": "cops", "esperat": "colps"},
+    {"text": "Li van donar cops amb un pal.", "paraula": "cops", "esperat": "colps"},
+    {"text": "La fruita tenia cops i no es podia vendre.", "paraula": "cops", "esperat": "colps"},
+    {"text": "A cops de destral van obrir la porta.", "paraula": "cops", "esperat": "colps"},
+
+    {"text": "Hi hem anat tres cops aquest any.", "paraula": "cops", "esperat": "vegades"},
+    {"text": "Molts cops no sabem què fer.", "paraula": "cops", "esperat": "vegades"},
+    {"text": "Ens veiem dos cops per setmana.", "paraula": "cops", "esperat": "vegades"},
+    {"text": "Alguns cops arriba tard a la feina.", "paraula": "cops", "esperat": "vegades"},
+    {"text": "Ho he repetit diversos cops.", "paraula": "cops", "esperat": "vegades"},
+    {"text": "Quants cops t'ho he de dir?", "paraula": "cops", "esperat": "vegades"},
+
+    {"text": "Les calces de la nena estan brutes.", "paraula": "calces", "esperat": "bragues"},
+    {"text": "Ha comprat unes calces de cotó al mercat.", "paraula": "calces", "esperat": "bragues"},
+    {"text": "Porta les calces i el sostenidor a la bossa del gimnàs.", "paraula": "calces", "esperat": "bragues"},
+    {"text": "Es va posar unes calces netes després de la dutxa.", "paraula": "calces", "esperat": "bragues"},
+    {"text": "Al calaix guarda les calces i els mitjons.", "paraula": "calces", "esperat": "bragues"},
+
+    {"text": "Els cavallers medievals portaven calces de seda fins als genolls.", "paraula": "calces", "esperat": "calces"},
+    {"text": "Les calces dels soldats del segle XVI eren de colors vius.", "paraula": "calces", "esperat": "calces"},
+    {"text": "Al segle XV els homes portaven calces ajustades a les cames.", "paraula": "calces", "esperat": "calces"},
+    {"text": "El sastre cosia calces i gipons per als nobles.", "paraula": "calces", "esperat": "calces"},
+    {"text": "Els patges duien calces de dos colors.", "paraula": "calces", "esperat": "calces"},
+
+    {"text": "Aquest estiu he comprat una gandula per a la terrassa.", "paraula": "gandula", "esperat": "hamaca"},
+    {"text": "Es va estirar a la gandula de la piscina tota la tarda.", "paraula": "gandula", "esperat": "hamaca"},
+    {"text": "La gandula plegable cap al maleter del cotxe.", "paraula": "gandula", "esperat": "hamaca"},
+    {"text": "Va deixar la tovallola damunt de la gandula.", "paraula": "gandula", "esperat": "hamaca"},
+
+    {"text": "Aquesta noia és molt gandula i no vol sortir de casa.", "paraula": "gandula", "esperat": "gandula"},
+    {"text": "No siguis gandula i ajuda'ns a recollir la taula.", "paraula": "gandula", "esperat": "gandula"},
+    {"text": "La gata és tan gandula que dorm tot el dia.", "paraula": "gandula", "esperat": "gandula"},
+    {"text": "És una gandula: mai fa els deures.", "paraula": "gandula", "esperat": "gandula"},
+
+    {"text": "L'hotel lloga gandules i para-sols a la platja.", "paraula": "gandules", "esperat": "hamaces"},
+    {"text": "Vam plegar les gandules abans que comencés a ploure.", "paraula": "gandules", "esperat": "hamaces"},
+    {"text": "Han posat gandules al voltant de la piscina.", "paraula": "gandules", "esperat": "hamaces"},
+
+    {"text": "Les meves cosines són una mica gandules per estudiar.", "paraula": "gandules", "esperat": "gandules"},
+    {"text": "Aquelles alumnes eren gandules i no estudiaven.", "paraula": "gandules", "esperat": "gandules"},
+    {"text": "No sigueu gandules i aneu a treballar.", "paraula": "gandules", "esperat": "gandules"},
+
+    {"text": "Va trencar una nou amb les dents.", "paraula": "nou", "esperat": "anou"},
+    {"text": "El pastís porta nou i panses.", "paraula": "nou", "esperat": "anou"},
+    {"text": "Es va menjar una nou del calaix.", "paraula": "nou", "esperat": "anou"},
+    {"text": "La closca de la nou és molt dura.", "paraula": "nou", "esperat": "anou"},
+    {"text": "Hem comprat un cotxe nou.", "paraula": "nou", "esperat": "nou"},
+    {"text": "Tinc nou germans.", "paraula": "nou", "esperat": "nou"},
+    {"text": "És un projecte nou de l'ajuntament.", "paraula": "nou", "esperat": "nou"},
+    {"text": "Arribarem a les nou del matí.", "paraula": "nou", "esperat": "nou"},
+
+    {"text": "Les nous d'aquest arbre són molt bones.", "paraula": "nous", "esperat": "anous"},
+    {"text": "Ha collit un sac de nous.", "paraula": "nous", "esperat": "anous"},
+    {"text": "Els llibres nous són a la taula.", "paraula": "nous", "esperat": "nous"},
+    {"text": "Hi ha nous casos de grip.", "paraula": "nous", "esperat": "nous"},
+
+    {"text": "Hi ha una manca greu de personal.", "paraula": "manca", "esperat": "carència"},
+    {"text": "La manca de pluja afecta els cultius.", "paraula": "manca", "esperat": "carència"},
+    {"text": "Pateix una gran manca afectiva.", "paraula": "manca", "esperat": "carència"},
+    {"text": "Li manca experiència per a aquesta feina.", "paraula": "manca", "esperat": "manca"},
+    {"text": "Encara manca una setmana per a les vacances.", "paraula": "manca", "esperat": "manca"},
+    {"text": "Aquesta regió manca de grans ciutats.", "paraula": "manca", "esperat": "manca"},
+
+    {"text": "Les manques del sistema educatiu són evidents.", "paraula": "manques", "esperat": "carències"},
+    {"text": "L'informe detalla les manques del servei.", "paraula": "manques", "esperat": "carències"},
+    {"text": "Tu manques de paciència.", "paraula": "manques", "esperat": "manques"},
+    {"text": "Si manques a la reunió, avisa'ns.", "paraula": "manques", "esperat": "manques"},
+
+    {"text": "Van beure aigua de la deu del bosc.", "paraula": "deu", "esperat": "brollador"},
+    {"text": "La deu de la font s'ha assecat.", "paraula": "deu", "esperat": "brollador"},
+    {"text": "A la muntanya hi ha una deu d'aigua freda.", "paraula": "deu", "esperat": "brollador"},
+    {"text": "Tinc deu euros a la butxaca.", "paraula": "deu", "esperat": "deu"},
+    {"text": "Ell em deu diners des de fa mesos.", "paraula": "deu", "esperat": "deu"},
+    {"text": "Són les deu de la nit.", "paraula": "deu", "esperat": "deu"},
+
+    {"text": "Va ser una campanya molt reeixida.", "paraula": "reeixida", "esperat": "exitosa"},
+    {"text": "L'exposició ha estat molt reeixida.", "paraula": "reeixida", "esperat": "exitosa"},
+    {"text": "La reeixida del projecte depèn de tots.", "paraula": "reeixida", "esperat": "reeixida"},
+    {"text": "Celebren la reeixida de la missió.", "paraula": "reeixida", "esperat": "reeixida"},
+
+    {"text": "Per postres hi havia recuita amb mel.", "paraula": "recuita", "esperat": "brulla"},
+    {"text": "La recuita es fa amb llet d'ovella.", "paraula": "recuita", "esperat": "brulla"},
+    {"text": "La carn recuita no té bon gust.", "paraula": "recuita", "esperat": "recuita"},
+    {"text": "Aquesta salsa està recuita.", "paraula": "recuita", "esperat": "recuita"},
+
+    {"text": "Ens vam fer una fartanera de marisc.", "paraula": "fartanera", "esperat": "fartada"},
+    {"text": "Després de la fartanera de Nadal, toca fer dieta.", "paraula": "fartanera", "esperat": "fartada"},
+    {"text": "La seva germana és molt fartanera.", "paraula": "fartanera", "esperat": "fartanera"},
+    {"text": "Aquesta gossa és molt fartanera.", "paraula": "fartanera", "esperat": "fartanera"},
+
+    {"text": "El Servei de Salut ha publicat les despeses de l'any.", "paraula": null, "esperat": null},
+    {"text": "Demà anirem a la platja amb els amics.", "paraula": null, "esperat": null}
+  ]
+}
