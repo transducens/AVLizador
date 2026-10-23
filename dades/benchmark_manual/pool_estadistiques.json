@@ -1,0 +1,42 @@
+{
+ "avl": {
+  "document_del_151": 51,
+  "total": 32504,
+  "ipd_valencia": 7059,
+  "qualitat": 11583,
+  "acceptades": 760,
+  "duplicada": 241,
+  "metalinguistica": 5692,
+  "max_document": 7140,
+  "semblant_151": 29
+ },
+ "avl_taula": {
+  "frases": 760,
+  "per_fenomen": {
+   "DEM": 411,
+   "LEX_NOM": 286,
+   "POS": 193,
+   "CONJ_SUBJ": 144,
+   "LEX_ADJ": 128,
+   "CONJ_ARREL": 88,
+   "CONJ_IND": 68,
+   "LEX_ADV": 61,
+   "CONJ_PART": 35,
+   "CONJ_IMP": 15,
+   "CONJ_INF": 11,
+   "LEX_ALTRES": 11,
+   "NUM": 6
+  },
+  "per_doc_type": {
+   "glossari": 558,
+   "nota-de-premsa": 98,
+   "acord-normatiu": 34,
+   "butlleti": 28,
+   "gramatica_normativa": 16,
+   "pagina": 12,
+   "publicacions": 9,
+   "legislacio": 5
+  },
+  "amb_homograf": 69
+ }
+}
