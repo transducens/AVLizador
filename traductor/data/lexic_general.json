@@ -5295,7 +5295,7 @@
   {
     "espanol": "tumbona",
     "catalan": "gandules",
-    "valenciano": "hamaces",
+    "valenciano": "hamaques",
     "tipo": "v:lexic_val_gva",
     "fuente": "unificado",
     "id": "E0592",
@@ -5997,7 +5997,11 @@
     "valenciano": "colps",
     "fuente": "unificado",
     "id": "E0668",
-    "categoria": "n"
+    "categoria": "n",
+    "problema": "colision_homonima",
+    "lado": "val",
+    "forma_problematica": "cops",
+    "id_colision": "E1659"
   },
   {
     "catalan": "copet",
@@ -13108,6 +13112,18 @@
     "problema": "colision_homonima",
     "forma_problematica": "cop",
     "id_colision": "E0667"
+  },
+  {
+    "valenciano": "vegades",
+    "catalan": "cops",
+    "tipo": "v:lexic_val",
+    "fuente": "gplsi",
+    "id": "E1659",
+    "categoria": "n",
+    "lado": "val",
+    "problema": "colision_homonima",
+    "forma_problematica": "cops",
+    "id_colision": "E0668"
   },
   {
     "valenciano": "roja",

@@ -80,12 +80,23 @@ class RuleEngineInvers:
             PerAInfinitiuInversRule(),
         ]
 
-    def tradueix_tokens(self, text: str) -> list[Token]:
+    def tradueix_tokens(self, text: str, protegits: frozenset[int] = frozenset()) -> list[Token]:
         """Com `translate`, pero torna els tokens abans de detokenitzar --
         útil per a inspeccionar què ha fet cada regla abans d'ajuntar el
         text. (La capa de LLM de cat->val que el va motivar es va retirar el
-        21/10/2026: no canviava cap frase.)"""
+        21/10/2026: no canviava cap frase.)
+
+        `protegits` (23/10/2026, per a `traductor/model_llengua/`): índexs
+        de tokens que cap regla toca; la resta de la frase es tradueix
+        igual.
+
+        >>> toks = RuleEngineInvers().tradueix_tokens("La meva nou.", protegits=frozenset({4}))
+        >>> detokenize(toks)
+        'La meua nou.'
+        """
         tokens: list[Token] = tokenize(text)
+        for i in protegits:
+            tokens[i].is_translated = True
         # Sense `marca_noms_propis` (22/10/2026, decisió de l'usuari): el BOE
         # posa en majúscula moltes paraules comunes ("Servei de Salut",
         # "Comitè de...", "Despeses de personal") i el valencià les tradueix;

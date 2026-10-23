@@ -1060,6 +1060,26 @@ def tradueix_traductor_invers(frase: str) -> str:
     return translate_cat_val(frase)
 
 
+MODEL_LLENGUA_ID = None  # --model-llengua (None = el per defecte de traductor/model_llengua)
+MODEL_IRRESOLUBLES = True  # per defecte, com `Criteri()`; --sense-model-irresolubles el posa a False
+
+
+def tradueix_traductor_ml(frase: str) -> str:
+    """Adaptador cap al SISTEMA FINAL de cat->val (23/10/2026): motor +
+    model de llengua per als homògrafs (`traductor.model_llengua`, vore el
+    seu README). Necessita `torch` i `transformers`; el model es carrega la
+    primera vegada. Mateix import peresós que els adaptadors d'abans."""
+    import sys
+    from pathlib import Path
+
+    arrel_projecte = str(Path(__file__).resolve().parent.parent.parent)
+    if arrel_projecte not in sys.path:
+        sys.path.insert(0, arrel_projecte)
+
+    from traductor.model_llengua import Criteri, translate_cat_val_ml
+    return translate_cat_val_ml(frase, MODEL_LLENGUA_ID, Criteri(model_irresolubles=MODEL_IRRESOLUBLES))
+
+
 # ─── Pipeline d'avaluació ─────────────────────────────────────────────────────
 
 def avalua_model(
@@ -1287,16 +1307,34 @@ def genera_informe_comparatiu(resultats_models: list[dict]) -> str:
 def main():
     # cal declarar-ho abans de qualsevol ús de OLLAMA_URL en esta funció
     # (p.ex. el default= de --ollama-url una mica més avall)
-    global LEXIC_LOOKUP, LEXIC_ENTRADES, OLLAMA_URL
+    global LEXIC_LOOKUP, LEXIC_ENTRADES, OLLAMA_URL, MODEL_LLENGUA_ID, MODEL_IRRESOLUBLES
 
     parser = argparse.ArgumentParser(
         description="Benchmark de traducció occidental↔oriental"
     )
     parser.add_argument(
         "--model",
-        choices=["claude", "ollama", "regles", "traductor", "nllb", "openai", "tots"],
+        choices=["claude", "ollama", "regles", "traductor", "traductor_ml", "nllb", "openai", "tots"],
         required=True,
-        help="Model a avaluar"
+        help="Model a avaluar. 'traductor_ml' (només --direccio cat-val, "
+             "23/10/2026): el sistema final, motor + model de llengua per als "
+             "homògrafs (traductor/model_llengua/)."
+    )
+    parser.add_argument(
+        "--model-llengua", default=None,
+        help="Només per a --model traductor_ml: model de Hugging Face "
+             "(per defecte projecte-aina/FLOR-760M)."
+    )
+    parser.add_argument(
+        "--sense-model-irresolubles", action="store_true",
+        help="Només per a --model traductor_ml: els homògrafs irresolubles "
+             "(calces, gandula...) només amb spaCy + motor, sense el model de "
+             "llengua (per a comparar; per defecte SÍ s'usa el model)."
+    )
+    parser.add_argument(
+        "--amb-model-irresolubles", action="store_true",
+        help="Ja és el comportament per defecte; es manté perquè les ordres "
+             "antigues continuen funcionant."
     )
     parser.add_argument(
         "--direccio",
@@ -1496,6 +1534,16 @@ def main():
             models_a_avaluar.append(("Traductor_Invers", tradueix_traductor_invers, 0.0))
         else:
             models_a_avaluar.append(("Traductor_Nou", tradueix_traductor_nou, 0.0))
+
+    if args.model == "traductor_ml":
+        if args.direccio != "cat-val":
+            print("ERROR: --model traductor_ml només existix per a --direccio cat-val.")
+            sys.exit(1)
+        MODEL_LLENGUA_ID = args.model_llengua
+        MODEL_IRRESOLUBLES = not args.sense_model_irresolubles
+        nom_ml = (args.model_llengua or "FLOR-760M").split("/")[-1]
+        sufix = "_sense_ML_irresolubles" if args.sense_model_irresolubles else ""
+        models_a_avaluar.append((f"Traductor_Invers_ML_{nom_ml}{sufix}", tradueix_traductor_ml, 0.0))
 
     if not models_a_avaluar:
         print("No hi ha models per avaluar.")

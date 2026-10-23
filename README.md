@@ -10,6 +10,29 @@ actua com a **pont** per a aprofitar eixos recursos en tasques que en
 valencià serien inviables per falta de dades (p. ex. alinear anglés↔valencià
 passant pel català).
 
+## Què s'entrega (estat del 23/10/2026)
+
+Dos eines, per a la Conselleria, en equips amb pocs recursos i només CPU.
+La resta del repositori és la infraestructura que les construïx i les
+valida.
+
+1. **El traductor català → valencià** ([`traductor/`](traductor/), la
+   direcció prioritària):
+   - el **motor de regles** (`translate_cat_val`): diccionaris del
+     proveïdor + spaCy, determinista, sense GPU ni LLM;
+   - una **capa opcional** ([`traductor/model_llengua/`](traductor/model_llengua/),
+     `translate_cat_val_ml`): un model de llengua menut (FLOR-760M) que
+     només decidix unes poques paraules ambigües del lèxic ("cop" → colp o
+     vegada; "gandula" → hamaca o gandula), triant entre les frases que
+     construïx el motor.
+2. **L'Índex de Puresa Dialectal (IPD)**
+   ([`pipeline/09_index_puresa_dialectal/`](pipeline/09_index_puresa_dialectal/)).
+
+L'estat i l'estructura actuals del traductor són al principi de
+[`traductor/README.md`](traductor/README.md). La direcció valencià → català
+existix ([`traductor/rules/val_cat/`](traductor/rules/val_cat/)) però està
+aparcada des del 20/10/2026.
+
 ## Comença per ací
 
 **[`documentacio/metodologia_i_resultats.md`](documentacio/metodologia_i_resultats.md)**
@@ -29,6 +52,11 @@ les dades (`dades/`). `boe/` (abans solt en l'arrel, sense número) ara és
 
 ```
 traductor/              # el motor real -- el PRODUCTE, no una etapa
+  rules/cat_val/          # motor català -> valencià (el que s'entrega)
+  rules/val_cat/          # motor valencià -> català (aparcat)
+  model_llengua/          # capa opcional cat->val: homògrafs amb un model de llengua
+  llm/                    # capes de LLM per preguntes (aparcades)
+  data/                   # només les còpies dels dos diccionaris del proveïdor
 pipeline/
   01_extraccio_i_neteja/
   02_regles_dialectals/
@@ -45,10 +73,10 @@ documentacio/            # transversal
 
 | Carpeta | Què és |
 |---|---|
-| [`traductor/`](traductor/) | El motor de regles determinista (sense LLM) — el producte del projecte, per això viu fora de `pipeline/`; veure `traductor/README.md` |
+| [`traductor/`](traductor/) | El motor de regles determinista — el producte del projecte, per això viu fora de `pipeline/`; amb una capa opcional de model de llengua per als homògrafs (`model_llengua/`). Veure `traductor/README.md` |
 | [`pipeline/01_extraccio_i_neteja/`](pipeline/01_extraccio_i_neteja/) | Etapa 1 — scraping de la web de l'AVL i neteja/classificació dialectal |
 | [`pipeline/02_regles_dialectals/`](pipeline/02_regles_dialectals/) | Etapa 2 — regles dialectals i lèxic diferencial valencià↔català |
-| [`pipeline/03_seleccio_de_model/`](pipeline/03_seleccio_de_model/) | Etapa 3 — benchmark i selecció del model de traducció |
+| [`pipeline/03_seleccio_de_model/`](pipeline/03_seleccio_de_model/) | Etapa 3 — benchmark i selecció del model de traducció; hui, sobretot, `evalua_models.py`, amb què es mesuren el motor i el sistema final |
 | [`pipeline/04_corpus_sintetic/`](pipeline/04_corpus_sintetic/) | Etapa 4 — generació del corpus sintètic complet |
 | [`pipeline/05_corpus_boe/`](pipeline/05_corpus_boe/) | Etapa 5 — scripts del corpus real i alineat del BOE (abans `boe/`, sense número) |
 | [`pipeline/06_dades_entrenament/`](pipeline/06_dades_entrenament/) | Etapa 6 — prepara el dataset final (train/dev/test) per al finetuning |
@@ -62,7 +90,8 @@ documentacio/            # transversal
 | Carpeta | Què és |
 |---|---|
 | `dades/avl/` | Eixida crua i neta del scraping de l'AVL (raw/clean/final) — entrada de l'etapa 4 |
-| `dades/boe/` | Corpus real del BOE: PDFs descarregats, extracció i alineació (`corpus_entrenamiento.jsonl`) |
+| `dades/boe/` | Corpus real del BOE: PDFs descarregats, extracció i alineació (`corpus_entrenamiento.jsonl`); a `dades/boe/benchmarks/`, els benchmarks "BOE dialectal" estricte i ampli |
+| `dades/gplsi_ca_va_alignment_test/` | Dataset públic gplsi (1.958 parells català/valencià, CC BY 4.0), usat com a benchmark |
 | `dades/sintetic/` | El corpus sintètic generat (etapa 4): `corpus_sintetic_val_cat.jsonl`, `parallel_val_cat.jsonl`... |
 | `dades/dataset_entrenament/` | El dataset final ja partit (etapa 6): `train.jsonl`/`dev.jsonl`/`test.jsonl`/`boe_eval.jsonl` |
 

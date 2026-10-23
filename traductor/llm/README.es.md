@@ -2,6 +2,13 @@
 
 *[Llegeix-ho en valencià](README.md)*
 
+> **23/10/2026 — la capa cat→val de este paquete está APARCADA y la
+> sustituye [`traductor/model_llengua/`](../model_llengua/README.es.md)**: en
+> lugar de preguntar a un LLM, un modelo de lenguaje pequeño (FLOR-760M)
+> puntúa las frases que construye el motor para cada candidato. Resuelve
+> "cop/cops" y "gandula/gandules"; "calces", no. Lo de abajo queda como
+> registro y banco de pruebas.
+
 > **22/10/2026 — nueva capa cat→val (`cat_val.py`)**, también opcional:
 > homógrafos de la **misma categoría** que spaCy no puede resolver, sacados
 > del léxico (`homonimia_lexica` con la forma ambigua en el lado catalán):

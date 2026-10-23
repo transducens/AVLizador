@@ -9,6 +9,37 @@ tocar. Ver `documentacio/hoja_de_ruta_traductor_invers.md` (raíz del
 repositorio) para el razonamiento completo, las cifras reales que
 justifican cada decisión, y el estado de cada fase.
 
+## Capas actuales (23/10/2026)
+
+`engine.py` (`RuleEngineInvers`) etiqueta la frase con spaCy una vez y
+aplica estas 9 capas en este orden; cada una salta los tokens que ya ha
+traducido otra:
+
+| capa | fichero | qué hace | usa spaCy |
+|---|---|---|---|
+| 1 | `lexic.py` | pares del léxico (una palabra y frases de 2-3); `canonica` en caso de duda; homógrafos resolubles; artículo, contracción y apóstrofo | homógrafos y género |
+| 2 | `conjugacions_dict.py` | formas verbales; las que tienen lectura no verbal, solo si spaCy dice verbo | sí |
+| 3 | `possessius.py` | meva → meua | no |
+| 4 | `numerals.py` | cardinales (vuitanta → huitanta); los ordinales van por el léxico | no |
+| 5 | `concordanca_dos_dues.py` | les dues → les dos | no |
+| 6 | `demostratius.py` | aquest → este, aqueix → eixe (entradas `det` del léxico) | no |
+| 7 | `incoatius.py` | serveix → servix (sin lista: lema en -ir validado contra el diccionario) | sí |
+| 8 | `accentuacio.py` | francès → francés | no |
+| 9 | `per_a_infinitiu.py` | per + infinitivo → per a (salvo "per haver") | sí |
+
+Datos: solo `traductor/data/lexic_general.json` y
+`conjugacions_dialectals.json` (copias de `diccionarios/`). Ninguna lista
+de palabras a mano.
+
+**Homógrafos de la misma categoría** ("calces", "gandula", "gandules") y
+**colisiones** ("cop", "cops", dos traducciones sin canónica): los
+resuelve la capa opcional `traductor/model_llengua/` (spaCy por categoría
+de los `lemas` + modelo de lenguaje FLOR-760M). El motor solo, sin esa
+capa, traduce siempre los irresolubles y deja "cop/cops" sin traducir.
+Ver `traductor/model_llengua/README.es.md`.
+
+Las secciones de abajo son el historial de cómo se llegó aquí.
+
 ## Por qué existe como paquete aparte, no como un flag
 
 Invertir la dirección NO es "la misma regla al revés" en la mayoría de
@@ -37,7 +68,9 @@ regla de aquí es un fichero propio, auditable de forma independiente.
 explica en su docstring si "copia" el patrón del equivalente val→cat o
 si la lógica es genuinamente distinta): `engine.py`, `lexic.py`,
 `conjugacions_dict.py`, `possessius.py`, `numerals.py`, `demostratius.py`,
-`accentuacio.py`, `concordanca_dos_dues.py`, `preposicions_locucions.py`.
+`accentuacio.py`, `concordanca_dos_dues.py`, `incoatius.py`,
+`per_a_infinitiu.py` (`preposicions_locucions.py` y `relatiu_on.py` se
+retiraron el 14/10 y el 21/10/2026).
 
 ## Estado actual (13/10/2026) — Fase 2 de la hoja de ruta
 
@@ -96,7 +129,11 @@ panotxa(es), recuita(es), reeixida(es), fartanera(es), rentadora(es)
 lecturas de la misma categoría y necesitarían un LLM: "calces" (bragues
 o calces de pantaló), "gandula" y "gandules" (hamaca o dona gandula). En
 los tres corpus aparecen 3 veces ("calces", en listas de aranceles del
-BOE) y "gandula(es)" ninguna: hoy el motor las traduce siempre.
+BOE) y "gandula(es)" ninguna: el motor las traduce siempre.
+**23/10/2026**: resueltas en `traductor/model_llengua/` sin LLM por
+preguntas (spaCy por categoría de los `lemas` + modelo de lenguaje):
+irresolubles 12 → 18/24 en el benchmark de homógrafos. De paso se corrigió
+E0592 ("hamaces" → "hamaques").
 
 **"aquest"→"este"/"eixe" (resuelto parcialmente, 13/10/2026)**: se probó
 primero dejarlo sin tocar (preferir falso negativo) — el benchmark se

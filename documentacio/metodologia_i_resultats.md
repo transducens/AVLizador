@@ -14,7 +14,12 @@ que el propio código.
 sintético a partir del scraping de la AVL — etapas 1-4 del proyecto.
 **Secciones 11 en adelante** (a partir del 02/10/2026): el motor de
 reglas deterministas (`traductor/`), que ha sido el foco real de trabajo
-desde entonces, en las dos direcciones, más su validación.
+desde entonces, en las dos direcciones, más su validación. Desde el
+20/10/2026 el trabajo se centra solo en **catalán → valenciano**, una de
+las dos herramientas que se entregan a la Conselleria (la otra es el IPD,
+sección 14), para equipos con pocos recursos y sin GPU. El estado actual
+de esa dirección está en la sección 12 (motor), la 13 (capa opcional con
+modelo de lenguaje para los homógrafos) y la 17 (resumen de cifras).
 
 ## 1. Origen del texto (el lado "valenciano")
 
@@ -521,28 +526,40 @@ expresamente no actuar, nunca para reescribir la frase.
 
 ### Arquitectura
 
-El motor tokeniza el texto, marca los nombres propios (para no tocarlos
-nunca) y, si spaCy está instalado, etiqueta cada token con su categoría
-gramatical (capa opcional: sin spaCy el motor funciona igual, solo pierde
-algunas protecciones finas). Después encadena 9 capas fijas, cada una
-`.apply()` sobre los tokens, saltando cualquiera ya marcado por una capa
-anterior:
+El motor tokeniza el texto y etiqueta cada token con spaCy
+(`ca_core_news_md`, o `ca_core_news_sm` si no está): categoría, género,
+lema y forma verbal. Después encadena capas fijas, cada una `.apply()`
+sobre los tokens, saltando cualquiera ya marcado por una capa anterior.
+Cada dirección tiene su propio paquete y su propio orden de capas
+(estado del 23/10/2026):
 
-1. `lexic` — lookup directo de léxico general y acentuación
-2. `conjugacions_dict` — lookup directo de formas verbales conjugadas
-3. `possessius` — lookup directo de posesivos
-4. `numerals` — lookup directo de numerales
-5. `concordanca_dos_dues` — concordancia de género tras un marcador explícito o, en su defecto, el género que da spaCy del sustantivo siguiente
-6. `relatiu_on` — "a on"/"on" como relativo locativo
-7. `demostratius` — paradigma demostrativo (este/estos/aquest/aquests...)
-8. `accentuacio` — patrón de sufijo productivo (-és/-ès)
-9. `incoatius` — patrón de sufijo productivo (-ix/-eix)
+| | valenciano → catalán (`rules/val_cat/`, aparcado) | catalán → valenciano (`rules/cat_val/`) |
+|---|---|---|
+| 1 | `lexic` — léxico general | `lexic` — léxico general, frases de 2-3 palabras, homógrafos resolubles con spaCy, artículo y apóstrofo |
+| 2 | `conjugacions_dict` — formas verbales | `conjugacions_dict` — formas verbales, con spaCy en las que tienen lectura no verbal |
+| 3 | `possessius` | `possessius` |
+| 4 | `numerals` | `numerals` |
+| 5 | `concordanca_dos_dues` | `concordanca_dos_dues` |
+| 6 | `relatiu_on` — "a on" → "on" | `demostratius` — aquest → este, aqueix → eixe |
+| 7 | `demostratius` | `incoatius` — -eix → -ix, propuesto por spaCy y validado por el diccionario |
+| 8 | `accentuacio` | `accentuacio` — -ès → -és |
+| 9 | `incoatius` | `per_a_infinitiu` — per + infinitivo → per a |
+| 10 | `combinacio_li` — li'l → l'hi | — |
 
-Todos los datos vienen de `traductor/data/*.json`, copias propias
-sincronizadas desde `pipeline/02_regles_dialectals/lexic/` con
-`traductor/sync_data.py` — `traductor/` nunca lee esa carpeta en tiempo
-de ejecución, solo sus propias copias, para poder funcionar como módulo
-autónomo.
+En valenciano → catalán, además, se protegen las palabras en mayúscula
+que no inician la frase (posibles nombres propios); en catalán →
+valenciano ya no (22/10/2026, ver sección 12).
+
+Todos los datos vienen de **dos ficheros**, `traductor/data/lexic_general.json`
+y `conjugacions_dialectals.json`, copias sincronizadas con
+`traductor/sync_data.py` desde las fuentes del proveedor
+(`pipeline/02_regles_dialectals/lexic/diccionarios/`). `traductor/` nunca
+lee esa carpeta en tiempo de ejecución, solo sus propias copias, para poder
+funcionar como módulo autónomo. Desde el 22/10/2026 no queda ningún fichero
+de datos hecho a mano, y en catalán → valenciano tampoco ninguna lista de
+palabras en el código (sección 12); en valenciano → catalán quedan tres
+listas de excepciones gramaticales (`SEMPRE_VERB` en `conjugacions_dict`,
+`_EXCEPCIONS` en `incoatius` y `_EXCEPCIONS_ES` en `accentuacio`).
 
 ### Evolución y hallazgos reales, valenciano → catalán
 
@@ -614,7 +631,9 @@ aplica "este" por defecto — un valor medido, no una suposición — con
 ese 23% de error conocido y aceptado. Es, con diferencia, el bucket más
 grande de fallos residuales de esta dirección.
 
-### Progreso medido
+### Progreso medido (histórico, hasta el 14/10/2026)
+
+Las cifras actuales están al final de esta sección y en la sección 17.
 
 92/151 → 118/151 (Fase 2: reconstrucción del paradigma demostrativo,
 `relatiu_on`/`incoatius` invertidos, léxico multi-palabra catalán,
@@ -731,6 +750,60 @@ uno a uno, los casos del BOE muestran cuatro lecturas distintas del
 catalán "l'hi" (con "li" + acusativo, con "ho", con "hi" de lugar, con
 dativo plural) que solo distingue el significado.
 
+### Todo desde los diccionarios, sin listas a mano (22/10/2026)
+
+El 22/10/2026 se retiraron, por decisión del usuario, todos los ficheros y
+listas de palabras hechos a mano. Había dos motivos: algunas listas tapaban
+errores de datos en lugar de arreglarlos, y otras tapaban el propio léxico
+(el fichero de flexión de género convertía "noies" en "xices" en lugar de
+"xiques"). Desde entonces `traductor/data/` solo contiene los dos ficheros
+del proveedor, y cada pieza que hacían las listas sale del propio dato:
+
+- **Homógrafos del léxico**: las entradas `problema: "homonimia_lexica"`
+  dicen qué forma es ambigua y qué lecturas tiene (`lemas`, con su
+  categoría). Si la lectura dialectal tiene una categoría que no comparte
+  ninguna otra, el motor solo traduce cuando spaCy le da esa categoría
+  ("manca" nombre → "carència"; "manca" verbo, no). Es el mismo mecanismo
+  que usa el IPD.
+- **Homógrafos de las conjugaciones**: el diccionario de conjugaciones ya
+  marca en `morfologia` las formas que también son nombre o adjetivo
+  ("estat", "través", "obres"); esas solo se traducen si spaCy dice verbo.
+  Las de raíz distinta (signar → firmar), que el fichero no marca, siempre
+  exigen verbo.
+- **Género tras una sustitución**: spaCy da el género de la palabra nueva,
+  etiquetándola en dos frases de prueba ("Veig el X ara." / "Veig la X
+  ara.") y aceptándolo solo si coinciden. Con él se corrigen el
+  determinante, las contracciones y el apóstrofo ("les despeses" → "els
+  gastos", "l'habitatge" → "la vivenda").
+- **Demostrativos y posesivos**: salen de las entradas `det` del léxico.
+- **Regla fija de la forma canónica**: si hay varios candidatos, manda
+  `canonica: true`, también en los ordinales (cinquè → quint). Las entradas
+  marcadas `_PENDENT` se usan como las demás: es un metadato del proveedor.
+
+El mismo día se cambió a `ca_core_news_md` (misma velocidad, unos 190 MB
+más de memoria, mejor género y morfología) y se dejó de proteger las
+palabras en mayúscula en esta dirección: el BOE escribe en mayúscula
+muchos nombres comunes ("Servei de Salut", "Despeses de personal"), y el
+valenciano oficial los traduce. Proteger la mayúscula dejaba mal 439
+frases del BOE estricto. El límite aceptado son los topónimos que
+coinciden con palabras comunes ("les Garrigues", "la Noguera", "Maó"),
+pendientes de que el proveedor los marque.
+
+### Estado del motor catalán → valenciano (22-23/10/2026)
+
+| benchmark | qué mide | frases exactas |
+|---|---|---|
+| 151 (banco curado; referencia editada por el usuario el 21/10 para seguir la norma) | estilo de un texto concreto | 146/154 |
+| BOE estricto completo (9.453 pares con solo diferencias dialectales seguras) | regresiones | 8.857 |
+| BOE amplio (muestra de 2.000) | huecos de cobertura | 1.200 |
+| gplsi (1.958 frases, dos traductores independientes) | variación real | 1.479 |
+
+Los dos benchmarks "BOE dialectal" se construyeron el 21/10/2026 a partir
+del BOE completo alineado (`dades/boe/benchmarks/`, con su README). Desde
+entonces son la referencia principal de esta dirección: el estricto
+detecta regresiones y el amplio, huecos. Rendimiento en un solo núcleo de
+CPU: unas 250 frases por segundo, con unos 700 MB de memoria.
+
 ## 13. Postprocesado con modelo de lenguaje ("vía C")
 
 ### El problema que el motor deja sin resolver a propósito
@@ -819,6 +892,9 @@ textos oficiales "este" y "eixe" anafóricos alternan por estilo, sin una
 señal en la frase), y la combinación "l'hi" no aparece en esas muestras.
 La capa se retiró: la herramienta de catalán a valenciano funciona sin
 modelo de lenguaje, lo que encaja con su destino, equipos solo con CPU.
+(Para los homógrafos se añadió después una capa opcional distinta, con un
+modelo de lenguaje pequeño que solo puntúa frases: ver el último apartado
+de esta sección.)
 
 En valenciano a catalán la capa sí aporta. En el BOE, el modo verbal que
 el valenciano escribe igual en indicativo y subjuntivo pasa de acertarse
@@ -828,6 +904,104 @@ catalogados: sobre todo, distinguir el relativo normativo de los textos
 legales ("trabajadores que tengan…") del relativo real, y dos fallos que
 no necesitarían modelo (la primera persona sin sujeto "jo" y el
 subjuntivo detrás de "si").
+
+### Homógrafos de catalán a valenciano: de las preguntas a la perplejidad (22-23/10/2026)
+
+Retirada la capa de catalán a valenciano, quedaban dos tipos de palabra
+que el motor no puede resolver con reglas ni con spaCy:
+
+- **Colisiones** (`problema: "colision_homonima"`): una palabra catalana
+  con dos traducciones valencianas igual de válidas y ninguna canónica.
+  Hoy son "cop" (colp / vegada) y su plural "cops" (colps / vegades). El
+  motor no las traduce.
+- **Homógrafos irresolubles** (`homonimia_lexica` cuyas lecturas comparten
+  categoría): "calces" (bragues / la prenda histórica), "gandula" y
+  "gandules" (tumbona / persona vaga). El motor las traduce siempre.
+
+**Primer intento, 22/10/2026: preguntar a un LLM.** Se le preguntaba si la
+palabra tenía tal sentido (sí/no) o se le pedía traducirla al castellano.
+Con qwen2.5:7b, qwen3:8b y qwen3:4b el resultado fue el mismo que sin
+modelo (7/14): los modelos no conocían estas palabras, y la pregunta de
+sí/no los sesgaba hacia el "no". qwen2.5:14b acertaba, pero tardaba unos
+12 segundos por respuesta en CPU. La capa (`traductor/llm/cat_val.py`)
+quedó aparcada.
+
+**Método adoptado, 23/10/2026: perplejidad con un modelo de lenguaje
+pequeño.** En lugar de preguntar, el motor construye la frase valenciana
+**completa** de cada candidato, con el artículo y la concordancia ya
+corregidos ("Una vegada acabada la reunió…" / "Un colp acabada la
+reunió…"), y un modelo de lenguaje calcula la probabilidad de cada frase:
+la suma de los logaritmos de la probabilidad de cada trozo dado lo
+anterior. Gana la más probable. El modelo no genera texto ni recibe
+instrucciones: solo puede elegir entre candidatos del diccionario, y con
+la misma entrada da siempre el mismo resultado. Es la diferencia con un
+LLM usado como asistente: la tecnología es la misma, pero aquí solo se
+aprovecha lo que sabe hacer cualquier modelo de lenguaje, notar qué frase
+suena natural.
+
+Piezas del método (`traductor/model_llengua/`):
+
+- **Base neutra**: el motor vuelve a traducir la frase con la palabra
+  ambigua protegida (`RuleEngineInvers.tradueix_tokens(protegits=…)`), y
+  cada candidato se coloca encima; si no, el apóstrofo que el motor mete
+  dentro de la palabra ("la gandula" → "l'hamaca") impedía construir bien
+  las alternativas.
+- **Concordancia por variantes**: el motor solo corrige el determinante
+  inmediatamente anterior. Para "molts cops", "un altre cop" o "per primer
+  cop" se generan, con las terminaciones regulares del femenino, las
+  variantes de las dos palabras anteriores ("moltes", "altra", "primera"),
+  y el modelo elige también entre ellas.
+- **PMI (λ = 0,5)**: a la puntuación de cada frase se le resta la mitad de
+  la log-probabilidad de la palabra sola, para que la frecuencia general
+  de una palabra no se imponga al contexto. Decide un caso real casi
+  empatado ("Li van donar cops amb un pal").
+- **Margen (5 puntos)**: cuando el motor ya ha traducido (irresolubles),
+  el modelo solo cambia esa decisión si gana por más de 5 puntos.
+- **Capa de spaCy para los irresolubles**: los `lemas` dicen qué
+  categorías tiene cada lectura. Si spaCy da una categoría que solo tiene
+  la otra lectura ("molt gandula": adjetivo, y la lectura "hamaca" solo
+  es nombre), se deja la palabra catalana sin consultar al modelo.
+
+**Modelos comparados**, en CPU: FLOR-760M (projecte-aina, 1,5 GB) y
+Salamandra-2B (BSC, 4,5 GB). FLOR fue mejor en todo y el doble de rápido
+(1,5 s frente a 3,3 s por frase con palabra ambigua), y es el que se usa.
+También se probó puntuar solo el contexto que sigue a la palabra, que
+empeoró las colisiones (28/32), y se descartó.
+
+**Un error de datos disfrazado de límite del modelo.** En la primera
+medida, el modelo parecía incapaz de separar "gandules" tumbona de
+"gandules" persona: elegía siempre dejar la palabra catalana. La causa
+era la entrada E0592 del léxico, que daba "hamaces" en lugar de la forma
+correcta "hamaques" (como vaca → vaques). El modelo castigaba esa palabra
+mal escrita fuera cual fuera el sentido. Corregido el dato, con permiso
+del usuario, los dos sentidos quedan separados: diferencia traducir − dejar
+de −2,9 a +4,8 en las tumbonas y de −7,1 a −11,7 en las personas, con el
+margen de 5 en medio. El modelo sirve así también para encontrar formas
+sospechosas del léxico. "calces" sigue sin separarse: el modelo no conoce
+el sentido histórico, y queda como el motor ("bragues").
+
+**Resultados** (benchmark de homógrafos: 98 frases escritas para la
+prueba con los dos sentidos de cada palabra, más una frase real de gplsi;
+referencias = motor + candidato correcto, revisadas a mano):
+
+| tipo | motor solo | con la capa |
+|---|---|---|
+| colisión (cop, cops) | 0/33 | 31/33 |
+| irresoluble (calces, gandula, gandules) | 12/24 | 18/24 |
+| resoluble (nou, manca…; decide spaCy en los dos) | 30/40 | 30/40 |
+
+Errores que quedan en las colisiones: "un últim cop al banc" (golpe en
+el sentido de robo) y "intent de cop" (golpe de estado sin "d'estat").
+En el BOE "cop" aparece en 428 líneas y la referencia valenciana nunca
+usa "colp": 117 veces "vegada" y el resto reformula la frase.
+
+**Decisión** (usuario, 23/10/2026): el modelo actúa en las colisiones y en
+los irresolubles (con la capa de spaCy delante y el margen); los
+homógrafos resolubles siguen con spaCy dentro del motor, aunque con
+margen 5 el modelo los mejoraba en la prueba (35/40 frente a 31/40). La
+capa es opcional: `translate_cat_val_ml(text)` frente a
+`translate_cat_val(text)`, y se evalúa con `evalua_models.py --model
+traductor_ml --direccio cat-val`.
 
 ## 14. Índice de Pureza Dialectal (IPD)
 
@@ -1004,29 +1178,46 @@ completa, carpeta por carpeta:
   retirada de una regla que no generalizaba más allá del propio
   benchmark).
 
-## 17. Estado actual (14/10/2026) y próximos pasos
+## 17. Estado actual (23/10/2026) y próximos pasos
 
-| | val→cat | cat→val |
+**Catalán → valenciano** (la dirección que se entrega):
+
+| benchmark | motor solo | motor + modelo de lenguaje |
 |---|---|---|
-| Motor solo | 115/151 (76,2%) | 116/151 (76,8%) |
-| Motor + LLM | 129/151 (85,4%)¹ | — (aparcado) |
+| 151 (banco curado) | 146/154 | 146/154 (ningún cambio) |
+| 151 + homógrafos (`benchmark_sistema_final_cat_val.json`, 253 frases) | 190/253 (BLEU 91,5) | **227/253** (BLEU 96,5) |
+| BOE estricto completo (9.453) | 8.857 | — |
+| BOE amplio (muestra de 2.000) | 1.200 | 1.206 |
+| gplsi (1.958) | 1.479 | — |
 
-¹ Cifra anterior a la limpieza de reglas de hoy, pendiente de
-reconfirmar — se espera un resultado similar.
+Las cifras del motor solo en el BOE y gplsi son del 22/10/2026; desde
+entonces solo han cambiado datos que esos corpus apenas contienen ("cops",
+numerales marcados `revision`, "hamaques").
 
-**Actualización 20/10/2026 (cat→val).** Desde esta fecha el trabajo se
-centra solo en la dirección catalán→valenciano. Tras la migración a los
-diccionarios del proveedor y los cambios descritos en la sección 12
-(incoativos validados contra los diccionarios, forma canónica, artículo
-apostrofado), cat→val está en **136/154** en el banco curado y
-**1.505/1.958 (76,9%)** en gplsi, frente a 1.212/1.958 el 14/10/2026.
+Cómo se entrega:
+
+- **Motor** (`translate_cat_val`): reglas + diccionarios + spaCy. Solo CPU,
+  unos 700 MB de memoria y unas 250 frases por segundo en un núcleo. Es la
+  pieza principal y funciona sin nada más.
+- **Capa opcional** (`translate_cat_val_ml`): añade `torch`,
+  `transformers` y FLOR-760M (1,5 GB). Solo se activa en las frases con
+  "cop", "cops", "calces", "gandula" o "gandules" (en el BOE, unas 428 de
+  268.000 líneas), y solo elige entre candidatos del diccionario.
+- **IPD** (sección 14): la segunda herramienta.
+
+**Valenciano → catalán**: aparcado desde el 20/10/2026. Última medida: 151
+95/154 y gplsi 1.403/1.958 con el motor (22/10); con la capa de LLM
+congelada (sección 13, medida del 21/10), 151 109 y BOE 406/2.000.
 
 Pendiente, por orden sugerido:
-1. Corregir los 4 bugs de diccionario de la sección 15.
-2. Retomar la vía C para cat→val (desambiguación de "aquest") con
-   `qwen3` y un criterio más exigente, corrigiendo los dos fallos
-   metodológicos ya identificados en la sección 13.
-3. Repetir la validación a escala completa del corpus del BOE (~268.000
-   frases; hasta ahora solo probado con muestras de 200-5.000).
-4. Decidir y ejecutar el commit definitivo del trabajo acumulado y
-   fusionar la reestructuración del repositorio a la rama principal.
+1. Commit del trabajo del 22-23/10/2026.
+2. Homógrafos que el léxico no marca: la entrada E0251 ("afecta" →
+   "carinya", correcta como adjetivo) se aplica también al verbo
+   "afectar", igual que el caso conocido de "escombra". Propuesta para el
+   proveedor: marcarlas `homonimia_lexica`.
+3. Revisar con el modelo de lenguaje las formas valencianas del léxico que
+   le resulten muy improbables, para encontrar errores como "hamaces".
+4. Numerales: el BOE usa "octava", "dèsset", "dènou" y "díhuit" donde el
+   léxico pone "huitena", "dessetena", "denovena" y "dihuitena".
+5. Empaquetado para la Conselleria (instalación, línea de órdenes o
+   servicio).

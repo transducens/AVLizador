@@ -2,6 +2,13 @@
 
 *[Léelo en castellano](README.es.md)*
 
+> **23/10/2026 — la capa cat→val d'este paquet està APARCADA i la
+> substituïx [`traductor/model_llengua/`](../model_llengua/README.md)**: en
+> compte de preguntar a un LLM, un model de llengua menut (FLOR-760M)
+> puntua les frases que construïx el motor per a cada candidat. Resol
+> "cop/cops" i "gandula/gandules"; "calces", no. El que hi ha baix queda com
+> a registre i banc de proves.
+
 > **22/10/2026 — nova capa cat→val (`cat_val.py`)**, també opcional:
 > homògrafs de la **mateixa categoria** que spaCy no pot resoldre, trets del
 > lèxic (`homonimia_lexica` amb la forma ambigua al costat català): hui

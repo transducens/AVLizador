@@ -8,6 +8,102 @@ paquete Python que se importa por el nombre (`import traductor`) desde
 otras partes del código — un nombre de módulo no puede empezar por un
 dígito en Python. Conceptualmente es la etapa 5 del proyecto.
 
+## Estructura y estado actual (23/10/2026)
+
+**Esta sección describe el paquete tal como está hoy.** Todo lo que
+viene después ("DECISIÓN DE ARQUITECTURA", "Las 9 capas"…) es el registro
+histórico de cómo se llegó aquí: nombra ficheros y capas que ya no existen.
+
+**Prioridad: catalán → valenciano** (decisión del usuario, 20/10/2026). Es
+una de las dos herramientas que se entregan a la Conselleria (la otra es
+el IPD, `pipeline/09_index_puresa_dialectal/`), en equipos solo con CPU.
+
+### Qué hay en el paquete
+
+```
+traductor/
+├── __init__.py, translate.py, translate_invers.py   API: translate (val→cat), translate_cat_val (cat→val)
+├── cli.py                    python -m traductor.cli [--direccio val-cat|cat-val] "texto"
+├── sync_data.py              único puente con pipeline/02_regles_dialectals/lexic/diccionarios/
+├── data/                     SOLO los dos ficheros del proveedor (copias, no editar a mano):
+│   ├── lexic_general.json          léxico, numerales, posesivos, demostrativos, homógrafos
+│   └── conjugacions_dialectals.json  formas verbales
+├── rules/
+│   ├── __init__.py           Token, tokenize/detokenize, apóstrofos, concordancia, homógrafos
+│   ├── pos_tagger.py         spaCy (ca_core_news_md, si no sm): categoría, género, lema, forma verbal
+│   ├── cat_val/              motor catalán → valenciano (9 capas, ver abajo)
+│   └── val_cat/              motor valenciano → catalán (10 capas; aparcado desde el 20/10)
+├── model_llengua/            OPCIONAL cat→val: homógrafos con un modelo de lenguaje (FLOR-760M)
+└── llm/                      OPCIONAL, aparcado: capas de LLM por preguntas (Ollama)
+```
+
+### El sistema catalán → valenciano
+
+```
+texto catalán
+  │
+  ├─ 1. tokenize() + pos_tagger.etiqueta() — spaCy una sola vez por frase
+  │      (sin marca_noms_propis: en cat→val las palabras en mayúscula también se traducen)
+  │
+  ├─ 2. MOTOR (rules/cat_val/engine.py, RuleEngineInvers) — cada capa salta lo ya traducido:
+  │      LexicInversRule ............ pares del léxico; `canonica` en caso de duda; frases de 2-3
+  │                                   palabras ("blat de moro" → dacsa); homógrafos resolubles con
+  │                                   spaCy; concordancia y apóstrofo del artículo
+  │      ConjugacionsDictInversRule . formas verbales; con lectura no verbal, solo si spaCy dice verbo
+  │      PossessiusInversRule ....... meva → meua
+  │      NumeralsInversRule ......... vuitanta → huitanta
+  │      ConcordancaDosDuesInversRule les dues → les dos
+  │      DemostratiusInversRule ..... aquest → este, aqueix → eixe
+  │      IncoatiusInversRule ........ serveix → servix (spaCy propone, el diccionario valida)
+  │      AccentuacioInversRule ...... francès → francés
+  │      PerAInfinitiuInversRule .... per fer → per a fer
+  │
+  └─ 3. OPCIONAL: model_llengua (translate_cat_val_ml) — solo si hay una palabra ambigua del léxico:
+         cop / cops (colision_homonima) ........ FLOR puntúa "Una vegada…" frente a "Un colp…"
+         calces / gandula / gandules (irresolub.) spaCy por categoría de los `lemas`; si no, FLOR
+                                                   con margen 5
+```
+
+Detalle de la capa 3: `model_llengua/README.es.md`. Detalle de las capas
+del motor: `rules/cat_val/README.es.md`.
+
+### Uso
+
+```python
+from traductor import translate_cat_val
+translate_cat_val("Aquest xiquet és molt bo.")      # motor solo (spaCy, sin modelo)
+
+from traductor.model_llengua import translate_cat_val_ml
+translate_cat_val_ml("Un cop acabada la reunió.")    # sistema final: + FLOR-760M (torch + transformers)
+```
+
+```bash
+python -m traductor.cli --direccio cat-val "Aquest xiquet és molt bo."
+```
+
+### Resultados actuales (cat→val)
+
+| benchmark | motor solo | sistema final (+ modelo) |
+|---|---|---|
+| 151 (banco curado, `benchmark_corpus.json`) | 146/154 | 146/154 (cero cambios) |
+| homógrafos + 151 (`benchmark_sistema_final_cat_val.json`) | 190/253 | **227/253** |
+| BOE estricto completo (regresiones) | 8.857/9.453 (22/10) | — |
+| BOE amplio, muestra 2.000 (huecos) | 1.200/2.000 (22/10) | 1.206/2.000 |
+| gplsi (1.958) | 1.479 (22/10) | — |
+
+Recursos: motor ~700 MB de RAM con `ca_core_news_md`, ~250 frases/s en 1
+núcleo; la capa de modelo añade 1,5 GB y ~1,5 s por frase con "cop".
+
+### Reglas de trabajo vigentes
+
+- Los datos solo salen de `diccionarios/` vía `python -m traductor.sync_data`;
+  nada de listas de palabras a mano. Las fuentes del proveedor solo se
+  editan con permiso explícito, caso a caso.
+- En caso de duda entre candidatos, manda `canonica: true`. Las entradas
+  `_PENDENT` se usan como las demás.
+- Toda regla o dato nuevo se valida con los doctests y con los benchmarks
+  (151, BOE estricto y amplio, gplsi), nunca solo con uno.
+
 **Dirección inversa (catalán→valenciano, en construcción desde el
 08/10/2026)**: `from traductor import translate_cat_val` — ver
 `traductor/rules/cat_val/README.es.md` y
@@ -637,11 +733,14 @@ Python no encuentra ahí un paquete que vive en la carpeta de al lado.
 ```bash
 python -m traductor.cli "Tinc huitanta anys i el meu amic francés parla."
 # -> Tinc vuitanta anys i el meu amic francès parla.
+python -m traductor.cli --direccio cat-val "Tinc vuitanta anys."
+# -> Tinc huitanta anys.
 ```
 
 ```python
-from traductor import translate
-translate("Tinc huitanta anys.")  # -> "Tinc vuitanta anys."
+from traductor import translate, translate_cat_val
+translate("Tinc huitanta anys.")          # -> "Tinc vuitanta anys."
+translate_cat_val("Tinc vuitanta anys.")  # -> "Tinc huitanta anys."
 ```
 
 ## Testing
@@ -649,20 +748,33 @@ translate("Tinc huitanta anys.")  # -> "Tinc vuitanta anys."
 No hay una carpeta `tests/` — cada regla lleva sus propios doctests
 reales (no solo ejemplos ilustrativos) en el docstring de su clase, y se
 verifican con `doctest.testmod()`, no a ojo. Para correr los de todo el
-paquete de una vez:
+paquete de una vez (estructura de hoy: `rules/`, `rules/cat_val/`,
+`rules/val_cat/`, `model_llengua/`):
 
 ```bash
 python -c "
-import doctest, importlib
-modulos = [
-    'traductor.rules', 'traductor.rules.lexic', 'traductor.rules.conjugacions_dict',
-    'traductor.rules.possessius', 'traductor.rules.numerals', 'traductor.rules.concordanca_dos_dues',
-    'traductor.rules.relatiu_on', 'traductor.rules.demostratius', 'traductor.rules.accentuacio',
-    'traductor.rules.incoatius', 'traductor.rules.engine', 'traductor.translate',
-]
+import doctest, importlib, pkgutil
+import traductor.rules, traductor.rules.cat_val, traductor.rules.val_cat
+modulos = ['traductor.rules', 'traductor.rules.pos_tagger', 'traductor.translate', 'traductor.translate_invers',
+           'traductor.model_llengua', 'traductor.model_llengua.punts']
+for paquet in (traductor.rules.cat_val, traductor.rules.val_cat):
+    modulos += [paquet.__name__ + '.' + m.name for m in pkgutil.iter_modules(paquet.__path__)]
+fallades = 0
 for nom in modulos:
-    m = importlib.import_module(nom)
-    r = doctest.testmod(m)
+    r = doctest.testmod(importlib.import_module(nom))
+    fallades += r.failed
     print(nom, r)
+print('FALLADES:', fallades)
 "
+```
+
+Y después, siempre, los benchmarks (cat→val):
+
+```bash
+cd pipeline/03_seleccio_de_model
+python evalua_models.py --model traductor --direccio cat-val                       # 151
+python evalua_models.py --model traductor --direccio cat-val --benchmark ../../dades/boe/benchmarks/benchmark_boe_dialectal_estricte_complet.json
+python evalua_models.py --model traductor --direccio cat-val --benchmark ../../dades/boe/benchmarks/benchmark_boe_dialectal_ampli.json
+python evalua_models.py --model traductor --direccio cat-val --benchmark ../../dades/gplsi_ca_va_alignment_test/benchmark_gplsi.json
+python evalua_models.py --model traductor_ml --direccio cat-val --benchmark benchmark_sistema_final_cat_val.json   # sistema final
 ```

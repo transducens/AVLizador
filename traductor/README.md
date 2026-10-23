@@ -8,6 +8,98 @@ Python que s'importa pel nom (`import traductor`) des d'altres parts del
 codi — un nom de mòdul no pot començar per un dígit en Python.
 Conceptualment és l'etapa 5 del projecte.
 
+## Estructura i estat actual (23/10/2026)
+
+**Esta secció descriu el paquet tal com està hui.** Tot el que ve després
+("DECISIÓ D'ARQUITECTURA", "Les 9 capes"…) és el registre històric de com
+s'hi va arribar: nomena fitxers i capes que ja no existixen.
+
+**Prioritat: català → valencià** (decisió de l'usuari, 20/10/2026). És una
+de les dos eines que s'entreguen a la Conselleria (l'altra és l'IPD,
+`pipeline/09_index_puresa_dialectal/`), en equips només amb CPU.
+
+### Què hi ha al paquet
+
+```
+traductor/
+├── __init__.py, translate.py, translate_invers.py   API: translate (val→cat), translate_cat_val (cat→val)
+├── cli.py                    python -m traductor.cli [--direccio val-cat|cat-val] "text"
+├── sync_data.py              únic pont amb pipeline/02_regles_dialectals/lexic/diccionarios/
+├── data/                     NOMÉS els dos fitxers del proveïdor (còpies, no editar a mà):
+│   ├── lexic_general.json          lèxic, numerals, possessius, demostratius, homògrafs
+│   └── conjugacions_dialectals.json  formes verbals
+├── rules/
+│   ├── __init__.py           Token, tokenize/detokenize, apòstrofs, concordança, homògrafs
+│   ├── pos_tagger.py         spaCy (ca_core_news_md, si no sm): categoria, gènere, lema, forma verbal
+│   ├── cat_val/              motor català → valencià (9 capes, vore baix)
+│   └── val_cat/              motor valencià → català (10 capes; aparcat des del 20/10)
+├── model_llengua/            OPCIONAL cat→val: homògrafs amb un model de llengua (FLOR-760M)
+└── llm/                      OPCIONAL, aparcat: capes de LLM per preguntes (Ollama)
+```
+
+### El sistema català → valencià
+
+```
+text català
+  │
+  ├─ 1. tokenize() + pos_tagger.etiqueta() — spaCy una sola vegada per frase
+  │      (sense marca_noms_propis: en cat→val les paraules en majúscula també es tradueixen)
+  │
+  ├─ 2. MOTOR (rules/cat_val/engine.py, RuleEngineInvers) — cada capa salta el que ja està traduït:
+  │      LexicInversRule ............ parells del lèxic; `canonica` en cas de dubte; frases de 2-3
+  │                                   paraules ("blat de moro" → dacsa); homògrafs resolubles amb
+  │                                   spaCy; concordança i apòstrof de l'article
+  │      ConjugacionsDictInversRule . formes verbals; amb lectura no verbal, només si spaCy diu verb
+  │      PossessiusInversRule ....... meva → meua
+  │      NumeralsInversRule ......... vuitanta → huitanta
+  │      ConcordancaDosDuesInversRule les dues → les dos
+  │      DemostratiusInversRule ..... aquest → este, aqueix → eixe
+  │      IncoatiusInversRule ........ serveix → servix (spaCy proposa, el diccionari valida)
+  │      AccentuacioInversRule ...... francès → francés
+  │      PerAInfinitiuInversRule .... per fer → per a fer
+  │
+  └─ 3. OPCIONAL: model_llengua (translate_cat_val_ml) — només si hi ha una paraula ambigua del lèxic:
+         cop / cops (colision_homonima) ........ FLOR puntua "Una vegada…" davant "Un colp…"
+         calces / gandula / gandules (irresol.)  spaCy per categoria dels `lemas`; si no, FLOR
+                                                   amb marge 5
+```
+
+Detall de la capa 3: `model_llengua/README.md`. Detall de les capes del
+motor: `rules/cat_val/README.md`.
+
+### Ús
+
+```python
+from traductor import translate_cat_val
+translate_cat_val("Aquest xiquet és molt bo.")      # motor sol (spaCy, sense model)
+
+from traductor.model_llengua import translate_cat_val_ml
+translate_cat_val_ml("Un cop acabada la reunió.")    # sistema final: + FLOR-760M (torch + transformers)
+```
+
+### Resultats actuals (cat→val)
+
+| benchmark | motor sol | sistema final (+ model) |
+|---|---|---|
+| 151 (banc curat, `benchmark_corpus.json`) | 146/154 | 146/154 (cap canvi) |
+| homògrafs + 151 (`benchmark_sistema_final_cat_val.json`) | 190/253 | **227/253** |
+| BOE estricte complet (regressions) | 8.857/9.453 (22/10) | — |
+| BOE ampli, mostra 2.000 (forats) | 1.200/2.000 (22/10) | 1.206/2.000 |
+| gplsi (1.958) | 1.479 (22/10) | — |
+
+Recursos: motor ~700 MB de RAM amb `ca_core_news_md`, ~250 frases/s en 1
+nucli; la capa de model hi afig 1,5 GB i ~1,5 s per frase amb "cop".
+
+### Regles de treball vigents
+
+- Les dades només ixen de `diccionarios/` via `python -m traductor.sync_data`;
+  res de llistes de paraules a mà. Les fonts del proveïdor només s'editen
+  amb permís explícit, cas a cas.
+- En cas de dubte entre candidats, mana `canonica: true`. Les entrades
+  `_PENDENT` s'usen com les altres.
+- Tota regla o dada nova es valida amb els doctests i amb els benchmarks
+  (151, BOE estricte i ampli, gplsi), mai només amb un.
+
 **Direcció inversa (català→valencià, en construcció des del 08/10/2026)**:
 `from traductor import translate_cat_val` — vore
 `traductor/rules/cat_val/README.md` i
@@ -788,8 +880,13 @@ python -m traductor.cli "Tinc huitanta anys i el meu amic francés parla."
 ```
 
 ```python
-from traductor import translate
-translate("Tinc huitanta anys.")  # -> "Tinc vuitanta anys."
+from traductor import translate, translate_cat_val
+translate("Tinc huitanta anys.")          # -> "Tinc vuitanta anys."
+translate_cat_val("Tinc vuitanta anys.")  # -> "Tinc huitanta anys."
+```
+
+```bash
+python -m traductor.cli --direccio cat-val "Tinc vuitanta anys."
 ```
 
 ## Testing
@@ -797,23 +894,35 @@ translate("Tinc huitanta anys.")  # -> "Tinc vuitanta anys."
 No hi ha una carpeta `tests/` — cada regla porta els seus propis doctests
 reals (no només exemples il·lustratius) en el docstring de la seua
 classe, i es verifiquen amb `doctest.testmod()`, no a ull. Per a córrer
-els de tot el paquet d'una vegada:
+els de tot el paquet d'una vegada (estructura de hui: `rules/`,
+`rules/cat_val/`, `rules/val_cat/`, `model_llengua/`):
 
 ```bash
 python -c "
-import doctest, importlib
-modulos = [
-    'traductor.rules', 'traductor.rules.lexic', 'traductor.rules.conjugacions_dict',
-    'traductor.rules.possessius', 'traductor.rules.numerals', 'traductor.rules.concordanca_dos_dues',
-    'traductor.rules.relatiu_on', 'traductor.rules.demostratius', 'traductor.rules.accentuacio',
-    'traductor.rules.incoatius', 'traductor.rules.pos_tagger', 'traductor.rules.engine',
-    'traductor.translate',
-]
+import doctest, importlib, pkgutil
+import traductor.rules, traductor.rules.cat_val, traductor.rules.val_cat
+modulos = ['traductor.rules', 'traductor.rules.pos_tagger', 'traductor.translate', 'traductor.translate_invers',
+           'traductor.model_llengua', 'traductor.model_llengua.punts']
+for paquet in (traductor.rules.cat_val, traductor.rules.val_cat):
+    modulos += [paquet.__name__ + '.' + m.name for m in pkgutil.iter_modules(paquet.__path__)]
+fallades = 0
 for nom in modulos:
-    m = importlib.import_module(nom)
-    r = doctest.testmod(m)
+    r = doctest.testmod(importlib.import_module(nom))
+    fallades += r.failed
     print(nom, r)
+print('FALLADES:', fallades)
 "
 ```
 
-Estat actual (07/10/2026): **246 tests, 0 fallos**. `traductor.rules.pos_tagger` s'afig a la llista des que existix (vore "DECISIÓ D'ARQUITECTURA (07/10/2026)" dalt) -- els seus doctests criden spaCy de veres (no el simulen), així que requerixen `pip install spacy && python -m spacy download ca_core_news_sm` instal·lat per a passar; si no ho està, els doctests de `pos_tagger.py` i els 2 nous de `conjugacions_dict.py` que usen `etiqueta()` fallarien en l'assert concret (no amb una excepció), perquè `tok.pos` es quedaria `""` -- **esta és l'única part de la suite que depén d'spaCy instal·lat; la resta del paquet (i la seua pròpia execució normal) mai en depén** (dependència opcional, vore `pos_tagger.py`).
+I després, sempre, els benchmarks (cat→val):
+
+```bash
+cd pipeline/03_seleccio_de_model
+python evalua_models.py --model traductor --direccio cat-val                       # 151
+python evalua_models.py --model traductor --direccio cat-val --benchmark ../../dades/boe/benchmarks/benchmark_boe_dialectal_estricte_complet.json
+python evalua_models.py --model traductor --direccio cat-val --benchmark ../../dades/boe/benchmarks/benchmark_boe_dialectal_ampli.json
+python evalua_models.py --model traductor --direccio cat-val --benchmark ../../dades/gplsi_ca_va_alignment_test/benchmark_gplsi.json
+python evalua_models.py --model traductor_ml --direccio cat-val --benchmark benchmark_sistema_final_cat_val.json   # sistema final
+```
+
+Estat històric (07/10/2026): **246 tests, 0 fallos**. `traductor.rules.pos_tagger` s'afig a la llista des que existix (vore "DECISIÓ D'ARQUITECTURA (07/10/2026)" dalt) -- els seus doctests criden spaCy de veres (no el simulen), així que requerixen `pip install spacy && python -m spacy download ca_core_news_sm` instal·lat per a passar; si no ho està, els doctests de `pos_tagger.py` i els 2 nous de `conjugacions_dict.py` que usen `etiqueta()` fallarien en l'assert concret (no amb una excepció), perquè `tok.pos` es quedaria `""` -- **esta és l'única part de la suite que depén d'spaCy instal·lat; la resta del paquet (i la seua pròpia execució normal) mai en depén** (dependència opcional, vore `pos_tagger.py`).

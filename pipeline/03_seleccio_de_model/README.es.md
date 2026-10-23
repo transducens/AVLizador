@@ -40,3 +40,36 @@ en vez de mejorar al añadirle más reglas explícitas.
 Ver `../documentacio/metodologia_i_resultats.md` secciones 3, 5 y 6 para la evolución
 completa, la comparativa detallada y los problemas encontrados con cada
 modelo.
+
+## Uso actual: medir el traductor catalán → valenciano (23/10/2026)
+
+Desde octubre, `evalua_models.py` se usa sobre todo para medir el motor de
+`traductor/`. En catalán → valenciano el benchmark se lee al revés: el
+campo `oriental` es la entrada y `occidental`, la referencia.
+
+| opción | qué evalúa |
+|---|---|
+| `--model traductor --direccio cat-val` | el motor solo (`translate_cat_val`) |
+| `--model traductor_ml --direccio cat-val` | el sistema final: motor + modelo de lenguaje para los homógrafos (`traductor/model_llengua/`; necesita `torch` y `transformers`) |
+| `--sense-model-irresolubles` | con `traductor_ml`: el modelo solo para "cop/cops" (para comparar) |
+| `--model-llengua ID` | con `traductor_ml`: otro modelo de Hugging Face (por defecto FLOR-760M) |
+
+Benchmarks:
+
+| fichero | qué mide |
+|---|---|
+| `benchmark_corpus.json` (el "151", 154 frases; por defecto) | banco curado; referencia editada por el usuario el 21/10/2026 |
+| `benchmark_sistema_final_cat_val.json` (253 frases) | el 151 + 98 frases de homógrafos + 1 de gplsi; se reconstruye con `construeix_benchmark_sistema_final.py` |
+| `../../dades/boe/benchmarks/benchmark_boe_dialectal_estricte_complet.json` | regresiones (9.453 pares del BOE con solo diferencias dialectales) |
+| `../../dades/boe/benchmarks/benchmark_boe_dialectal_ampli.json` | huecos (2.000 pares del BOE) |
+| `../../dades/gplsi_ca_va_alignment_test/benchmark_gplsi.json` | 1.958 pares de dos traductores independientes |
+
+```bash
+python evalua_models.py --model traductor --direccio cat-val --benchmark benchmark_sistema_final_cat_val.json
+python evalua_models.py --model traductor_ml --direccio cat-val --benchmark benchmark_sistema_final_cat_val.json
+```
+
+Los resultados se guardan en `resultats/`, con el desglose por el campo
+`categoria` de cada frase. **Atención**: si el traductor lanza una
+excepción en una frase, el script escribe `ERROR:` y cuenta la frase
+original sin traducir; hay que mirar siempre si aparece.
