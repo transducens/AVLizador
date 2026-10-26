@@ -4,7 +4,7 @@ Este documento resume todo el proceso del proyecto, de principio a fin:
 de dónde sale el texto fuente, cómo se decidieron las reglas dialectales,
 qué modelos se usaron y por qué, cómo se construyó el motor de
 traducción determinista y su dirección inversa, la capa de postprocesado
-con modelo de lenguaje, la métrica propia de pureza dialectal, la
+con modelo de lenguaje, la métrica propia de grado dialectal (GD), la
 validación contra corpus reales, y la reorganización final del
 repositorio — qué problemas se encontraron por el camino y cómo se
 corrigieron. Pensado para quien reciba este repositorio sin más contexto
@@ -16,7 +16,7 @@ sintético a partir del scraping de la AVL — etapas 1-4 del proyecto.
 reglas deterministas (`traductor/`), que ha sido el foco real de trabajo
 desde entonces, en las dos direcciones, más su validación. Desde el
 20/10/2026 el trabajo se centra solo en **catalán → valenciano**, una de
-las dos herramientas que se entregan a la Conselleria (la otra es el IPD,
+las dos herramientas que se entregan a la Conselleria (la otra es el GD,
 sección 14), para equipos con pocos recursos y sin GPU. El estado actual
 de esa dirección está en la sección 12 (motor), la 13 (capa opcional con
 modelo de lenguaje para los homógrafos) y la 17 (resumen de cifras).
@@ -764,7 +764,7 @@ del proveedor, y cada pieza que hacían las listas sale del propio dato:
   categoría). Si la lectura dialectal tiene una categoría que no comparte
   ninguna otra, el motor solo traduce cuando spaCy le da esa categoría
   ("manca" nombre → "carència"; "manca" verbo, no). Es el mismo mecanismo
-  que usa el IPD.
+  que usa el GD.
 - **Homógrafos de las conjugaciones**: el diccionario de conjugaciones ya
   marca en `morfologia` las formas que también son nombre o adjetivo
   ("estat", "través", "obres"); esas solo se traducen si spaCy dice verbo.
@@ -1003,19 +1003,19 @@ capa es opcional: `translate_cat_val_ml(text)` frente a
 `translate_cat_val(text)`, y se evalúa con `evalua_models.py --model
 traductor_ml --direccio cat-val`.
 
-## 14. Índice de Pureza Dialectal (IPD)
+## 14. Grado Dialectal (GD)
 
 El 13/10/2026 se implementó una métrica propia, reutilizable sobre
 cualquier texto: qué porcentaje de sus palabras dialectalmente marcadas
 son formas occidentales (valencianas) frente a orientales (catalanas).
 
 ```
-IPD = total_palabras_occidentales / (total_occidentales + total_orientales)
+GD = total_palabras_occidentales / (total_occidentales + total_orientales)
 ```
 
 Una métrica parecida (`ratio_occ`) ya existía en `estudi_dialectal.py`
 (sección 1), pero contra dos listas curadas a mano de ~70 palabras cada
-una. El IPD reutiliza en cambio el índice de ~53.000 pares que
+una. El GD reutiliza en cambio el índice de ~53.000 pares que
 `traductor/` ya mantiene para traducir de verdad — mismos datos, sin
 inventar nada nuevo, y aplicable a cualquier corpus, no solo a los
 documentos ya cargados del scraping de la AVL.
@@ -1032,7 +1032,7 @@ reutilizando la misma función que ya resuelve esto en el motor.
 
 Validado de forma consistente contra tres corpus independientes (ver
 tabla en la sección 15): el lado valenciano puntúa siempre entre 0,87 y
-0,93 de pureza, el catalán entre 0,01 y 0,05.
+0,93 de GD, el catalán entre 0,01 y 0,05.
 
 ### Homógrafos: spaCy solo decide los que declara el diccionario (21/10/2026)
 
@@ -1073,40 +1073,40 @@ los dos corpus. Tampoco se resuelven las palabras compartidas por
 registro ("estat", "avui", "últim", "alcalde") ni el par "petit"/"menut",
 mal emparejado en los datos.
 
-### Textos sin marcadores, IPDV e IPDC (26/10/2026)
+### Textos sin marcadores, GDV e GDC (26/10/2026)
 
 Un texto sin ninguna palabra marcada no dice nada sobre su dialecto, y
 el valor que conviene darle depende de la tarea. Se probó 0,5 y se
 descartó, porque se confunde con un texto mezclado a partes iguales.
 Por decisión del usuario quedan dos soluciones:
 
-- **`ipd.py`** (IPD único, 1 = valenciano, 0 = catalán) tiene tres
-  modos con el parámetro `dialecte`. Sin él, el IPD de esos textos es
+- **`gd.py`** (GD único, 1 = valenciano, 0 = catalán) tiene tres
+  modos con el parámetro `dialecte`. Sin él, el GD de esos textos es
   `None` (medida neutra, que no entra en las medias). Con `"val"` vale
   1,0 y con `"cat"` vale 0,0: el texto cuenta como puro en el dialecto
   que se evalúa.
-- **`ipdv.py` e `ipdc.py`** son dos índices simétricos que van los dos
-  de 0 (nada puro) a 1 (puro): el IPDV es la proporción de marcadores
-  valencianos y el IPDC la de catalanes. Un texto sin marcadores cuenta
-  como puro en los dos (1 y 1). Reutilizan `calcula_ipd`. Para un corpus
+- **`gdv.py` e `gdc.py`** son dos índices simétricos que van los dos
+  de 0 (nada puro) a 1 (puro): el GDV es la proporción de marcadores
+  valencianos y el GDC la de catalanes. Un texto sin marcadores cuenta
+  como puro en los dos (1 y 1). Reutilizan `calcula_gd`. Para un corpus
   dan la cifra global (suma de marcadores) y la media por frase, que es
-  donde pesan los textos sin marcadores. En el benchmark de 151: IPDV
+  donde pesan los textos sin marcadores. En el benchmark de 151: GDV
   del lado valenciano 0,9863 global / 0,9930 media (14 frases sin
-  marcadores); IPDC del lado catalán 0,8733 / 0,8937 (15).
+  marcadores); GDC del lado catalán 0,8733 / 0,8937 (15).
 
 ## 15. Validación contra corpus reales, más allá del banco curado
 
 El banco de 151 frases está diseñado para ilustrar un fenómeno dialectal
 cada una — es una buena prueba de que cada regla es correcta, pero no
 dice cómo se comporta el motor sobre miles de frases reales sin
-seleccionar. Dos validaciones a mayor escala, ambas con el IPD y con el
+seleccionar. Dos validaciones a mayor escala, ambas con el GD y con el
 propio motor:
 
 ### Corpus del Boletín Oficial del Estado (BOE)
 
 Textos legales reales con traducción oficial a los dos idiomas.
-Confirmó el mismo patrón del IPD a escala mucho mayor (5.000 frases:
-IPD catalán 0,0181; muestra de 200 frases: 0,0127 catalán / 0,8661
+Confirmó el mismo patrón del GD a escala mucho mayor (5.000 frases:
+GD catalán 0,0181; muestra de 200 frases: 0,0127 catalán / 0,8661
 valenciano) y aportó la evidencia más fuerte hasta ahora de un patrón ya
 sospechado: el diccionario aplica sinónimos valencianos "populares"
 (cerquen, arreplega, desenrotllament, mentres) en un registro
@@ -1126,12 +1126,12 @@ fallo del motor.
 
 | | val→cat | cat→val |
 |---|---|---|
-| IPD | 0,9039 valenciano | 0,0533 catalán |
+| GD | 0,9039 valenciano | 0,0533 catalán |
 | Traducción, 1.958 frases completas | 65,4% (BLEU 89,20) | 61,9% (BLEU 88,08) |
-| Traducción, filtrado por IPD (1.139 frases, 58,2%) | **88,9%** (BLEU 97,00) | **87,9%** (BLEU 96,67) |
+| Traducción, filtrado por GD (1.139 frases, 58,2%) | **88,9%** (BLEU 97,00) | **87,9%** (BLEU 96,67) |
 
-El filtro se queda solo con las frases donde el IPD confirma 1,0 de
-pureza occidental y 0,0 de pureza oriental a la vez — sobre ese
+El filtro se queda solo con las frases donde el GD confirma 1,0 en
+el lado valenciano y 0,0 en el catalán a la vez — sobre ese
 subconjunto, la precisión sube a niveles muy cercanos al benchmark de
 151, confirmando que gran parte de la caída inicial es sinonimia entre
 los dos traductores independientes, no el motor fallando más.
@@ -1146,7 +1146,7 @@ caso) destapó, con causa raíz confirmada en cada caso:
    marcado como canónico es el que casi nunca aparece en 1.958 frases
    reales, donde la traducción real es siempre "petit") — ~75 fallos
    combinados en las dos direcciones, y la causa raíz exacta de un falso
-   positivo que el propio IPD ya había señalado sobre texto real del
+   positivo que el propio GD ya había señalado sobre texto real del
    equipo.
 2. **Pares léxicos retirados el 30/09/2026** ("tindre/vore/obtindre/
    mantindre", "últim/darrer") al centralizar el diccionario en una
@@ -1186,7 +1186,7 @@ completa, carpeta por carpeta:
 - **Advertencia de transparencia**: durante este trabajo se encontró que
   dos ficheros reales del proyecto, nunca comiteados a git
   (`documentacio/hoja_de_ruta_traductor_invers.md`,
-  `documentacio/hoja_de_ruta_ipd_y_proxima_fase.md`) se habían borrado
+  `documentacio/hoja_de_ruta_gd_y_proxima_fase.md`) se habían borrado
   por accidente, y un tercero (`documentacio/informes/`, el informe
   semanal anterior) se perdió del todo sin dejar ningún rastro
   recuperable. Los dos primeros se reconstruyeron con fidelidad parcial
@@ -1224,7 +1224,7 @@ Cómo se entrega:
   `transformers` y FLOR-760M (1,5 GB). Solo se activa en las frases con
   "cop", "cops", "calces", "gandula" o "gandules" (en el BOE, unas 428 de
   268.000 líneas), y solo elige entre candidatos del diccionario.
-- **IPD** (sección 14): la segunda herramienta.
+- **GD** (sección 14): la segunda herramienta.
 
 **Valenciano → catalán**: aparcado desde el 20/10/2026. Última medida: 151
 95/154 y gplsi 1.403/1.958 con el motor (22/10); con la capa de LLM

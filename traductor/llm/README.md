@@ -34,7 +34,7 @@
 Capa **opcional** només per a valencià→català. Des del 21/10/2026 està
 **congelada**: funciona i millora el motor, pero no es continua millorant.
 `traductor.translate()` i `traductor.translate_cat_val()` **no la usen**;
-les eines que s'entreguen (traductor cat→val i IPD, només CPU) no la
+les eines que s'entreguen (traductor cat→val i GD, només CPU) no la
 necessiten.
 
 - `val_cat.py`: mode verbal (indicatiu / subjuntiu / cap) en 3a persona

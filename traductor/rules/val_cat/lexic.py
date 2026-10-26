@@ -96,7 +96,7 @@ erroni pel costat del lèxic general -- un bug de dades el pot reintroduir
 qualsevol font nova, així que l'exclusió ha de ser global, no lligada a
 un sol fitxer.
 
-Dos bugs de dades més (15/10/2026, trobats validant l'IPD contra textos
+Dos bugs de dades més (15/10/2026, trobats validant el GD contra textos
 reals de l'usuari, vore `cat_val/lexic.py` per als mateixos bugs mirats
 des de l'altre costat): "vesprada" (el nom, "afternoon") ve llistat a
 `unificado.json` amb `catalan: "tard"`, confonent el nom amb l'adverbi
@@ -200,7 +200,7 @@ LEXIC_GENERAL_PATH = _DATA / "lexic_general.json"
 # via distinta -- vore conversa 05/10/2026.
 #
 # "vesprada" i "ensenyança" (15/10/2026, vore docstring del mòdul): dos bugs
-# de dades més trobats validant l'IPD, confirmats per traducció directa
+# de dades més trobats validant el GD, confirmats per traducció directa
 # (cap benchmark conté cap de les dos paraules). "qué" es queda FORA
 # d'esta llista a propòsit -- ahí sí hi ha evidència de benchmark (RC055)
 # que excloure'l és una regressió real en este sentit, encara que estiga

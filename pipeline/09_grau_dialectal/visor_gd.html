@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Visor de resultats de l'IPD</title>
+<title>Visor de resultats del GD</title>
 <style>
   :root {
     --bg: #f7f7f8;
@@ -105,8 +105,8 @@
 </head>
 <body>
 
-  <h1>Visor de resultats de l'IPD</h1>
-  <p class="subt">Carrega un fitxer JSON generat amb <code>python ipd.py --corpus ... --sortida resultat.json</code> per a explorar-lo frase a frase, amb les paraules ressaltades.</p>
+  <h1>Visor de resultats del GD</h1>
+  <p class="subt">Carrega un fitxer JSON generat amb <code>python gd.py --corpus ... --sortida resultat.json</code> per a explorar-lo frase a frase, amb les paraules ressaltades.</p>
 
   <div id="dropzone">
     <div><strong>Arrossega ací el fitxer .json</strong> o fes clic per a seleccionar-lo</div>
@@ -153,7 +153,7 @@
       reader.onload = () => {
         try {
           const data = JSON.parse(reader.result);
-          if (!Array.isArray(data.documents)) throw new Error('No té un camp "documents" -- no sembla un JSON de ipd.py --sortida.');
+          if (!Array.isArray(data.documents)) throw new Error('No té un camp "documents" -- no sembla un JSON de gd.py --sortida.');
           fitxers.push({ nombre: f.name, data });
           actiu = fitxers.length - 1;
           render();
@@ -181,22 +181,22 @@
 
   // Text sense cap paraula marcada, en gris: `null` (sense --dialecte) o
   // 1.0/0.0 (amb --dialecte val/cat; `senseMarcadors` ho detecta).
-  function colorIpd(v, senseMarcadors) {
+  function colorGd(v, senseMarcadors) {
     if (senseMarcadors || v === null || v === undefined || Number.isNaN(v)) return 'var(--text-dim)';
     if (v >= 0.8) return 'var(--good)';
     if (v >= 0.5) return 'var(--mid)';
     return 'var(--bad)';
   }
 
-  function fmtIpd(v) {
+  function fmtGd(v) {
     return (v === null || v === undefined) ? '—' : Number(v).toFixed(4);
   }
 
   // Ressaltat aproximat: parteix el text en paraules (conservant separadors)
   // i marca-les si la seua forma en minúscules apareix als marcadors
   // coneguts d'eixe document -- mateix criteri visual que l'informe
-  // generat per ipd.py (--html), però calculat al navegador a partir dels
-  // marcadors ja calculats pel propi ipd.py, no d'una re-tokenització.
+  // generat per gd.py (--html), però calculat al navegador a partir dels
+  // marcadors ja calculats pel propi gd.py, no d'una re-tokenització.
   function ressalta(text, marcadorsOcc, marcadorsOr) {
     if (!text) return '';
     const occ = new Set((marcadorsOcc || []).map(w => w.toLowerCase()));
@@ -250,11 +250,11 @@
 
     const targetes = `
       <div class="cards">
-        <div class="card"><div class="label">IPD global "${esc(camp)}"</div>
-          <div class="value" style="color:${colorIpd(data.ipd_global)}">${fmtIpd(data.ipd_global)}</div></div>
+        <div class="card"><div class="label">GD global "${esc(camp)}"</div>
+          <div class="value" style="color:${colorGd(data.gd_global)}">${fmtGd(data.gd_global)}</div></div>
         ${campAlt ? `
-        <div class="card"><div class="label">IPD global "${esc(campAlt)}"</div>
-          <div class="value" style="color:${colorIpd(data.ipd_global_alt)}">${fmtIpd(data.ipd_global_alt)}</div></div>
+        <div class="card"><div class="label">GD global "${esc(campAlt)}"</div>
+          <div class="value" style="color:${colorGd(data.gd_global_alt)}">${fmtGd(data.gd_global_alt)}</div></div>
         ` : ''}
         <div class="card"><div class="label">Documents</div><div class="value">${docs.length}</div></div>
       </div>
@@ -263,8 +263,8 @@
       <div style="overflow-x:auto">
       <table id="taula">
         <thead><tr>
-          <th>ID</th><th>${esc(camp)}</th><th>IPD</th>
-          ${campAlt ? `<th>${esc(campAlt)}</th><th>IPD</th>` : ''}
+          <th>ID</th><th>${esc(camp)}</th><th>GD</th>
+          ${campAlt ? `<th>${esc(campAlt)}</th><th>GD</th>` : ''}
         </tr></thead>
         <tbody>${docs.map(filaDoc(campAlt)).join('')}</tbody>
       </table>
@@ -287,10 +287,10 @@
       const cercaText = [doc.text, doc.text_alt].filter(Boolean).join(' ').toLowerCase();
       let fila = `<tr data-cerca="${esc(cercaText)}"><td class="mono">${id}</td>`;
       fila += `<td class="txt">${ressalta(doc.text, doc.marcadors_occidentals, doc.marcadors_orientals)}</td>`;
-      fila += `<td class="score" style="color:${colorIpd(doc.ipd, !(doc.total_occidentals + doc.total_orientals))}">${fmtIpd(doc.ipd)}</td>`;
+      fila += `<td class="score" style="color:${colorGd(doc.gd, !(doc.total_occidentals + doc.total_orientals))}">${fmtGd(doc.gd)}</td>`;
       if (campAlt) {
         fila += `<td class="txt">${ressalta(doc.text_alt, doc.marcadors_occidentals_alt, doc.marcadors_orientals_alt)}</td>`;
-        fila += `<td class="score" style="color:${colorIpd(doc.ipd_alt, !(doc.total_occidentals_alt + doc.total_orientals_alt))}">${fmtIpd(doc.ipd_alt)}</td>`;
+        fila += `<td class="score" style="color:${colorGd(doc.gd_alt, !(doc.total_occidentals_alt + doc.total_orientals_alt))}">${fmtGd(doc.gd_alt)}</td>`;
       }
       fila += '</tr>';
       return fila;

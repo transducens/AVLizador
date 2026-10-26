@@ -1,6 +1,6 @@
 *[Llig-ho en castellà](README.es.md)*
 
-# `pipeline/09_index_puresa_dialectal/` — Índex de Puresa Dialectal (IPD)
+# `pipeline/09_grau_dialectal/` — Grau Dialectal (GD)
 
 Novena etapa del projecte AVLizador (vore `README.es.md` de l'arrel):
 mètrica per a saber, de qualsevol text, quin percentatge de les seues
@@ -8,10 +8,14 @@ paraules dialectalment marcades són formes **occidentals** (valencianes)
 en compte de **orientals** (catalanes).
 
 ```
-IPD = total_paraules_occidentals / (total_occidentals + total_orientals)
+GD = total_paraules_occidentals / (total_occidentals + total_orientals)
 ```
 
-Un IPD d'1,0 vol dir que cap paraula catalana marcada apareix al text;
+Fins al 26/10/2026 esta mètrica es deia **Índex de Puresa Dialectal
+(IPD)**, i els seus germans IPDV/IPDC. Els documents antics (informes
+setmanals, historial) conserven eixe nom.
+
+Un GD d'1,0 vol dir que cap paraula catalana marcada apareix al text;
 0,0 vol dir el contrari.
 
 **Text sense cap paraula marcada (decisió del 26/10/2026)**: un text
@@ -21,49 +25,49 @@ tasca. Per això hi ha tres modes, triats amb el paràmetre `dialecte`
 (`--dialecte` per a `--text`/`--fitxer`/`--camp`, `--dialecte-alt` per a
 `--camp-alt` a la CLI):
 
-| `dialecte` | IPD sense marcadors | per a què |
+| `dialecte` | GD sense marcadors | per a què |
 |---|---|---|
 | sense posar (per defecte) | `None` (buit) | mesura neutra: el text no entra a les mitjanes i no afavorix cap dialecte |
 | `"val"` | **1,0** | comprovar que un text (o una traducció cat→val) és valencià pur: el que no té res que el desmentisca compta com a pur |
 | `"cat"` | **0,0** | el mateix per a un text que ha de ser català |
 
 Amb `"val"`/`"cat"` el resultat queda condicionat per la tasca (els
-textos sense marcadors pugen la puresa del costat que s'avalua), així
+textos sense marcadors afavorixen el costat que s'avalua), així
 que no servix per a comparar dialectes. Es va provar 0,5 i es va
 descartar: es confon amb un text mesclat a parts iguals. Amb qualsevol
-mode, `total_marcades == 0` diu que l'IPD no ve de cap marcador, i a
-l'informe HTML eixos textos apareixen en gris. L'IPD global d'un corpus
+mode, `total_marcades == 0` diu que el GD no ve de cap marcador, i a
+l'informe HTML eixos textos apareixen en gris. El GD global d'un corpus
 es calcula amb la suma de marcadors, així que només canvia si el corpus
 sencer no en té cap.
 
-## IPDV i IPDC: dos índexs simètrics (26/10/2026)
+## GDV i GDC: dos índexs simètrics (26/10/2026)
 
-A banda de l'IPD, hi ha dos mesures germanes, cada una en el seu fitxer,
+A banda del GD, hi ha dos mesures germanes, cada una en el seu fitxer,
 que van totes dos de **0 (gens pur) a 1 (pur)**:
 
 | fitxer | mesura | fórmula | 1,0 vol dir |
 |---|---|---|---|
-| `ipdv.py` | **IPDV**, Índex de Puresa Dialectal Valenciana | occidentals / marcades | valencià pur |
-| `ipdc.py` | **IPDC**, Índex de Puresa Dialectal Catalana | orientals / marcades | català pur |
+| `gdv.py` | **GDV**, Grau Dialectal Valencià | occidentals / marcades | valencià pur |
+| `gdc.py` | **GDC**, Grau Dialectal Català | orientals / marcades | català pur |
 
-Amb marcadors, IPDC = 1 − IPDV. **Un text sense cap paraula marcada
-compta com a pur en tots dos (IPDV = 1 i IPDC = 1)**: no té res que el
+Amb marcadors, GDC = 1 − GDV. **Un text sense cap paraula marcada
+compta com a pur en tots dos (GDV = 1 i GDC = 1)**: no té res que el
 desmentisca. `total_marcades == 0` diu que el valor no ve de cap
-marcador. No reimplementen res: criden `ipd.py::calcula_ipd`, que es
+marcador. No reimplementen res: criden `gd.py::calcula_gd`, que es
 queda tal qual.
 
-Per a un corpus donen dos xifres: `ipdv_global`/`ipdc_global` (suma de
+Per a un corpus donen dos xifres: `gdv_global`/`gdc_global` (suma de
 marcadors, les frases sense marcadors no hi pesen) i
-`ipdv_mitjana`/`ipdc_mitjana` (mitjana per frase, les frases sense
-marcadors hi compten com a 1,0). Benchmark de 151 (26/10/2026): IPDV
+`gdv_mitjana`/`gdc_mitjana` (mitjana per frase, les frases sense
+marcadors hi compten com a 1,0). Benchmark de 151 (26/10/2026): GDV
 del costat valencià 0,9863 global / 0,9930 mitjana (14 frases sense
-marcadors); IPDC del costat català 0,8733 / 0,8937 (15).
+marcadors); GDC del costat català 0,8733 / 0,8937 (15).
 
 ```bash
-python ipdv.py --text "Este xiquet vol vindre hui."
-python ipdc.py --text "Aquest nen vol venir avui."
-python ipdv.py --corpus ../03_seleccio_de_model/benchmark_corpus.json --camp occidental --sortida ipdv.json
-python ipdc.py --corpus ../03_seleccio_de_model/benchmark_corpus.json --camp oriental --sortida ipdc.json
+python gdv.py --text "Este xiquet vol vindre hui."
+python gdc.py --text "Aquest nen vol venir avui."
+python gdv.py --corpus ../03_seleccio_de_model/benchmark_corpus.json --camp occidental --sortida gdv.json
+python gdc.py --corpus ../03_seleccio_de_model/benchmark_corpus.json --camp oriental --sortida gdc.json
 ```
 
 ## Per què un mòdul nou, si ja hi havia una mètrica pareguda
@@ -75,7 +79,7 @@ curades a mà d'una huitantena de paraules cadascuna
 Este mòdul calcula el mateix índex, pero contra l'índex de parells
 dialectals que `traductor/` ja manté per a traduir de veres:
 
-| | Llistes antigues (`estudi_dialectal.py`) | Índex de l'IPD (`traductor/data/*.json`) |
+| | Llistes antigues (`estudi_dialectal.py`) | Índex del GD (`traductor/data/*.json`) |
 |---|---|---|
 | Grandària | ~70 paraules per dialecte | ~53.000 parells (1.471 de lèxic general + ~52.000 formes verbals conjugades + demostratius/possessius/numerals) |
 | Font de veritat | Llista a banda, mantinguda a mà | La MATEIXA que fa servir el traductor per a traduir |
@@ -104,49 +108,49 @@ documentat com a ampliació pendent, no com un oblit.
 Com a script:
 
 ```bash
-python ipd.py --text "Este xiquet vol vindre hui."
-python ipd.py --text "Aquest nen vol venir avui." --dialecte cat
-python ipd.py --fitxer un_document.txt
-python ipd.py --corpus ../../dades/avl/final/unified.jsonl --camp text --sortida resultat.json
+python gd.py --text "Este xiquet vol vindre hui."
+python gd.py --text "Aquest nen vol venir avui." --dialecte cat
+python gd.py --fitxer un_document.txt
+python gd.py --corpus ../../dades/avl/final/unified.jsonl --camp text --sortida resultat.json
 
 # Informe HTML per a vore i depurar frase a frase (paraules ressaltades
 # en verd=occidental/taronja=oriental), amb les dos columnes del
 # benchmark del projecte una al costat de l'atra (afegiu
 # --dialecte val --dialecte-alt cat per a comptar com a purs els textos
 # sense marcadors):
-python ipd.py --corpus ../03_seleccio_de_model/benchmark_corpus.json \
+python gd.py --corpus ../03_seleccio_de_model/benchmark_corpus.json \
     --camp occidental --camp-alt oriental --html informe.html
 
 # Corpus grans (p.ex. el del BOE, ~268.000 linies): --limit per a provar
 # amb una mostra abans de llançar-ho sencer (cada frase es tokenitza amb
 # spaCy, aixina que tot el fitxer pot tardar ~30 minuts):
-python ipd.py --corpus ../../dades/boe/corpus_entrenamiento.jsonl \
+python gd.py --corpus ../../dades/boe/corpus_entrenamiento.jsonl \
     --camp texto_catalan --limit 5000
 ```
 
 Accepta tant un fitxer JSONL (un document per linia) com un JSON normal
 amb un array d'objectes (com `benchmark_corpus.json`) — es detecta sol.
 
-### `visor_ipd.html` — revisar resultats sense tornar a executar res (14/10/2026)
+### `visor_gd.html` — revisar resultats sense tornar a executar res (14/10/2026)
 
 En compte de generar un informe HTML nou per a cada corpus que es prova
 (que s'acumulava com a fitxers solts al repo, regenerables però pesats —
 vore `CLAUDE_HISTORIAL.md`), `--sortida` (el JSON, no el `--html`) ara és
 l'eixida recomanada per a revisar resultats: inclou el mateix detall per
-document (text, IPD, marcadors) i, si es dona `--camp-alt`, també les
-dades de la segona columna (`text_alt`, `ipd_alt`, `marcadors_*_alt`) —
+document (text, GD, marcadors) i, si es dona `--camp-alt`, també les
+dades de la segona columna (`text_alt`, `gd_alt`, `marcadors_*_alt`) —
 tot el que fa falta per a reconstruir la comparativa de dos columnes
-sense tornar a executar `ipd.py`.
+sense tornar a executar `gd.py`.
 
-`visor_ipd.html` és un visor genèric i reutilitzable (sense dependències,
+`visor_gd.html` és un visor genèric i reutilitzable (sense dependències,
 tot el processament al navegador, cap dada ix d'ahí) que carrega eixe
 JSON i el mostra amb el text ressaltat i un cercador, igual que l'informe
 `--html` pero sense generar un fitxer nou per cada corpus:
 
 ```bash
-python ipd.py --corpus ../03_seleccio_de_model/benchmark_corpus.json \
+python gd.py --corpus ../03_seleccio_de_model/benchmark_corpus.json \
     --camp occidental --camp-alt oriental --sortida resultat.json
-# despres, obri visor_ipd.html al navegador i arrossega resultat.json
+# despres, obri visor_gd.html al navegador i arrossega resultat.json
 ```
 
 Admet carregar diversos JSON alhora (en pestanyes), per a comparar p.ex.
@@ -155,9 +159,9 @@ el benchmark i gplsi un al costat de l'altre sense generar res nou.
 Com a mòdul, des d'un atre script del projecte:
 
 ```python
-from ipd import calcula_ipd
+from gd import calcula_gd
 
-calcula_ipd("Este xiquet vol vindre hui.")["ipd"]  # -> 1.0
+calcula_gd("Este xiquet vol vindre hui.")["gd"]  # -> 1.0
 ```
 
 ## Dos bugs reals trobats i corregits (13/10/2026, a petició de l'usuari)
@@ -179,15 +183,15 @@ marcador oriental) van aparéixer dos problemes reals:
 ## Validació feta (13/10/2026)
 
 Contra el benchmark de 151 frases de `pipeline/03_seleccio_de_model/benchmark_corpus.json`
-(despres dels dos fixes): el costat valencià dona **IPD 0,9339** (240
-marcadors occidentals, 17 orientals) i el costat català **IPD 0,0153** (4
+(despres dels dos fixes): el costat valencià dona **GD 0,9339** (240
+marcadors occidentals, 17 orientals) i el costat català **GD 0,0153** (4
 occidentals, 258 orientals).
 
 **Confirmat a mes escala amb el corpus del BOE** (`dades/boe/`,
 `dades/boe_net/`): el costat català es queda igual de pur en mostres molt
 mes grans i d'un domini distint (5.000 frases de
-`corpus_entrenamiento.jsonl`: IPD 0,0181; 200 frases de
-`muestra_test_dialectal.json`: IPD 0,0127) — el mateix patró es repetix
+`corpus_entrenamiento.jsonl`: GD 0,0181; 200 frases de
+`muestra_test_dialectal.json`: GD 0,0127) — el mateix patró es repetix
 en tres corpus independents. La mostra del BOE també va aportar evidència
 molt mes forta sobre "què" (29 aparicions reals sense tocar en valencià,
 front a només 4 al benchmark menut) i dos candidats nous al mateix tipus
@@ -199,40 +203,40 @@ quan és el substantiu "l'Estat").
 ## Validació addicional (14/10/2026): text propi de l'usuari i el corpus gplsi
 
 **Sobre dos notícies reals de l'usuari** (`proves/noticia_val.txt`
-valencià, `proves/noticia_cat.txt` català): IPD 0,7308 / 0,1111 —
+valencià, `proves/noticia_cat.txt` català): GD 0,7308 / 0,1111 —
 patró correcte, pero revisant els marcadors paraula a paraula van eixir
 3 casos reals a investigar (un 4t, "estes"/"estès", el va descartar el
 mateix usuari -- és una errata real del text català d'origen, sense
-tilde, no un bug de l'IPD):
+tilde, no un bug del GD):
 
 1. **"petit"/"menut" mal emparellat** a `lexic_general.json` -- despres
-   confirmat també com a bug real del traductor (no nomes de l'IPD) amb
+   confirmat també com a bug real del traductor (no nomes del GD) amb
    el corpus gplsi de baix.
 2. **"què" es cola com a marcador oriental en text valencià** perquè
    l'exclusió `_BUG_DADES_CONEGUTS_CAT` (que ja exclou "què"/"tard"/
    "ensenyament") només existix a `cat_val/lexic.py`, i `val_cat/lexic.py`
    té la seua pròpia `_BUG_DADES_CONEGUTS = {"després"}` sense espellar
    les altres 3 -- pendent d'arreglar (no trenca cap traducció hui,
-   només contamina l'IPD, que fusiona les dos direccions).
+   només contamina el GD, que fusiona les dos direccions).
 3. **"acull" per col·lisió de persona** (1a "jo acull" vs. 3a persona
    compartida) -- confirmat que NO afecta cap traducció real (la clau de
    lookup sempre és la forma exacta d'una sola persona), nomes contamina
-   l'IPD per ser un recompte agregat sense context.
+   el GD per ser un recompte agregat sense context.
 
 **Amb el dataset `gplsi/CA-VA_alignment_test`** (Hugging Face, CC BY 4.0,
-1.958 frases catalán/valencià traduïdes independentment): IPD global
+1.958 frases catalán/valencià traduïdes independentment): GD global
 0,9039 valencià / 0,0533 català -- confirma el mateix patró que el
 benchmark de 151 i el BOE, a una escala i domini distints, tercera
 confirmació independent.
 
-**Filtrat per IPD per a separar sinonímia de fallos reals del motor**:
-de les 1.958, 1.139 (58,2%) tenen IPD occidental=1,0 I oriental=0,0 a la
+**Filtrat per GD per a separar sinonímia de fallos reals del motor**:
+de les 1.958, 1.139 (58,2%) tenen GD occidental=1,0 I oriental=0,0 a la
 vegada -- sobre eixe subconjunt "net", el motor de traducció puja de
 65,4%/61,9% a 88,9%/87,9% (val→cat/cat→val), molt a prop del benchmark
 de 151. Confirma que gran part de la caiguda a escala era sinonímia
 entre dos traductors independents, no el motor fallant més.
 
-**L'anàlisi de fallos del motor sobre gplsi** (no de l'IPD, pero trobat
+**L'anàlisi de fallos del motor sobre gplsi** (no del GD, pero trobat
 gràcies a esta validació) va destapar 4 bugs reals al traductor --
 "xicotet"/"menut"/"petit" mal etiquetat `canonica`, els parells
 AVL-only "tindre/vore/obtindre/mantindre" i "últim/darrer" retirats el
@@ -260,12 +264,12 @@ formes valencianes ("hui", "faena") i n'inventa l'etiqueta.
 "després" (E0977, adjectiu "desprès"/"després" vs. l'adverbi compartit) i
 "tancat" seguixen comptant com a marcador fals perquè les dades no els
 declaren com a homògrafs: es resol marcant-los a l'origen. Detall al
-docstring d'`ipd.py` ("HOMÒGRAFS ENTRE CATEGORIES").
+docstring d'`gd.py` ("HOMÒGRAFS ENTRE CATEGORIES").
 
 ## Relació amb la resta del projecte
 
 Pendent documentat a `CLAUDE.md` (secció "Pendiente") i detallat a
-`documentacio/hoja_de_ruta_ipd_y_proxima_fase.md`: este era el primer
+`documentacio/hoja_de_ruta_gd_y_proxima_fase.md`: este era el primer
 pas a fer abans de seguir ampliant el motor de regles amb mes casos del
 benchmark, i abans d'intentar una capa de model (LLM) nova per a
 cat→val o de provar amb un corpus distint (el BOE, ja començat ací).

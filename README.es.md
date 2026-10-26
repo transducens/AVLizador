@@ -25,10 +25,10 @@ y las valida.
      solo decide unas pocas palabras ambiguas del léxico ("cop" → colp o
      vegada; "gandula" → hamaca o gandula), eligiendo entre las frases que
      construye el motor.
-2. **El Índice de Pureza Dialectal (IPD)**
-   ([`pipeline/09_index_puresa_dialectal/`](pipeline/09_index_puresa_dialectal/)),
-   con dos índices simétricos hermanos: el IPDV (pureza valenciana) y el
-   IPDC (pureza catalana), los dos de 0 a 1.
+2. **El Grado Dialectal (GD)**
+   ([`pipeline/09_grau_dialectal/`](pipeline/09_grau_dialectal/)),
+   con dos índices simétricos hermanos: el GDV (Grado Dialectal Valenciano) y
+   el GDC (Grado Dialectal Catalán), los dos de 0 a 1.
 
 El estado y la estructura actuales del traductor están al principio de
 [`traductor/README.es.md`](traductor/README.es.md). La dirección valenciano
@@ -69,7 +69,7 @@ pipeline/
   06_dades_entrenament/
   07_entrenament_de_models/
   08_traduccio_corpus/
-  09_index_puresa_dialectal/
+  09_grau_dialectal/
 dades/                   # transversal, lo consumen varias etapas
 documentacio/            # transversal
 ```
@@ -85,7 +85,7 @@ documentacio/            # transversal
 | [`pipeline/06_dades_entrenament/`](pipeline/06_dades_entrenament/) | Etapa 6 — prepara el dataset final (train/dev/test) para el finetuning |
 | [`pipeline/07_entrenament_de_models/`](pipeline/07_entrenament_de_models/) | Etapa 7 — finetuning, baselines y comparación de modelos |
 | [`pipeline/08_traduccio_corpus/`](pipeline/08_traduccio_corpus/) | Etapa 8 — aplica el motor de reglas a un corpus completo (no solo al benchmark); postprocesado con LLM de los casos ambiguos |
-| [`pipeline/09_index_puresa_dialectal/`](pipeline/09_index_puresa_dialectal/) | Etapa 9 — Índice de Pureza Dialectal (IPD): métrica reutilizable para medir qué porcentaje de un texto es occidental vs. oriental, basada en el índice de pares de `traductor/` |
+| [`pipeline/09_grau_dialectal/`](pipeline/09_grau_dialectal/) | Etapa 9 — Grado Dialectal (GD): métrica reutilizable para medir qué porcentaje de un texto es occidental vs. oriental, basada en el índice de pares de `traductor/` |
 | [`documentacio/`](documentacio/) | La metodología completa del proyecto |
 
 **Datos** (todo agrupado en [`dades/`](dades/), separado del código):

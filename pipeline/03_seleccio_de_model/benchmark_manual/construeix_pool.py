@@ -1,7 +1,7 @@
 """
 benchmark_manual/construeix_pool.py -- Passos 2-4 de
 documentacio/hoja_de_ruta_benchmark_manual.md: extrau les frases candidates
-del BOE i de l'AVL, aplica els filtres de qualitat, l'IPD i les exclusions,
+del BOE i de l'AVL, aplica els filtres de qualitat, el GD i les exclusions,
 detecta els fenòmens dels diccionaris i escriu:
 
     dades/benchmark_manual/pool_boe.jsonl
@@ -25,10 +25,10 @@ from pathlib import Path
 
 AQUI = Path(__file__).resolve().parent
 ARREL = AQUI.parents[2]
-sys.path.insert(0, str(ARREL / "pipeline" / "09_index_puresa_dialectal"))
+sys.path.insert(0, str(ARREL / "pipeline" / "09_grau_dialectal"))
 sys.path.insert(0, str(AQUI))
 
-import ipd  # noqa: E402
+import gd  # noqa: E402
 from fenomens import (carrega_index, detecta_parell, detecta_regles_parell, detecta_regles_valencia,  # noqa: E402
                       detecta_valencia, paraules)
 
@@ -122,19 +122,19 @@ class Exclusions:
         return False
 
 
-def _resum_ipd(r: dict) -> dict:
-    return {"ipd": r["ipd"], "occ": r["marcadors_occidentals"], "ori": r["marcadors_orientals"]}
+def _resum_gd(r: dict) -> dict:
+    return {"gd": r["gd"], "occ": r["marcadors_occidentals"], "ori": r["marcadors_orientals"]}
 
 
 # --- BOE -------------------------------------------------------------------
-MOSTRA_BOE = 50000  # màxim de candidates (després dels filtres barats) que passen a l'IPD; hui hi caben totes (28.429, ~2 min)
+MOSTRA_BOE = 50000  # màxim de candidates (després dels filtres barats) que passen al GD; hui hi caben totes (28.429, ~2 min)
 LLAVOR_BOE = 23
 
 
 def pool_boe(index, formes, excl: Exclusions, estad: dict) -> list[dict]:
     """Dos fases: (1) filtres barats sobre tot el BOE; (2) sobre una mostra
     aleatòria fixa de `MOSTRA_BOE` candidates, la semblança amb el 151 i
-    l'IPD amb spaCy a les dues llengües (el pas car)."""
+    el GD amb spaCy a les dues llengües (el pas car)."""
     c = collections.Counter()
     candidates = []
     t0 = time.time()
@@ -168,7 +168,7 @@ def pool_boe(index, formes, excl: Exclusions, estad: dict) -> list[dict]:
     if len(candidates) > MOSTRA_BOE:
         c["fora_de_mostra"] = len(candidates) - MOSTRA_BOE
         candidates = candidates[:MOSTRA_BOE]
-    print(f"  BOE fase 1 acabada: {c['candidates_fase1']} candidates, {len(candidates)} a l'IPD ({time.time() - t0:.0f}s)", flush=True)
+    print(f"  BOE fase 1 acabada: {c['candidates_fase1']} candidates, {len(candidates)} al GD ({time.time() - t0:.0f}s)", flush=True)
 
     pool = []
     t1 = time.time()
@@ -178,18 +178,18 @@ def pool_boe(index, formes, excl: Exclusions, estad: dict) -> list[dict]:
         if excl.massa_semblant_151(cat) or excl.massa_semblant_151(val):
             c["semblant_151"] += 1
             continue
-        i_val = ipd.calcula_ipd(val, formes)
-        if not (i_val["ipd"] == 1.0 and i_val["total_occidentals"] >= 2):
-            c["ipd_valencia"] += 1
+        i_val = gd.calcula_gd(val, formes)
+        if not (i_val["gd"] == 1.0 and i_val["total_occidentals"] >= 2):
+            c["gd_valencia"] += 1
             continue
-        i_cat = ipd.calcula_ipd(cat, formes, dialecte="cat")
-        if not (i_cat["ipd"] == 0.0 and i_cat["total_orientals"] >= 2):
-            c["ipd_catala"] += 1
+        i_cat = gd.calcula_gd(cat, formes, dialecte="cat")
+        if not (i_cat["gd"] == 0.0 and i_cat["total_orientals"] >= 2):
+            c["gd_catala"] += 1
             continue
         pool.append({
             "font": "boe", "id_origen": r["id"], "document": r["documento_id"], "data": r.get("fecha"),
             "doc_type": "boe", "oriental": cat, "occidental": val,
-            "fenomens": fen, "ipd_val": _resum_ipd(i_val), "ipd_cat": _resum_ipd(i_cat),
+            "fenomens": fen, "gd_val": _resum_gd(i_val), "gd_cat": _resum_gd(i_cat),
         })
         c["acceptades"] += 1
     estad["boe"] = dict(c)
@@ -244,9 +244,9 @@ def pool_avl(index, formes, excl: Exclusions, estad: dict) -> list[dict]:
             if excl.massa_semblant_151(frase):
                 c["semblant_151"] += 1
                 continue
-            i_val = ipd.calcula_ipd(frase, formes)
-            if not (i_val["ipd"] == 1.0 and i_val["total_occidentals"] >= 2):
-                c["ipd_valencia"] += 1
+            i_val = gd.calcula_gd(frase, formes)
+            if not (i_val["gd"] == 1.0 and i_val["total_occidentals"] >= 2):
+                c["gd_valencia"] += 1
                 continue
             fen = detecta_valencia(i_val["marcadors_occidentals"], index)
             fen += detecta_regles_valencia(frase, fen)
@@ -259,7 +259,7 @@ def pool_avl(index, formes, excl: Exclusions, estad: dict) -> list[dict]:
                 "titol": d.get("title"), "data": d.get("date_published"), "doc_type": d.get("doc_type"),
                 "origen_frase": origen, "url": d.get("source_url"),
                 "oriental": None, "occidental": frase,
-                "fenomens": fen, "ipd_val": _resum_ipd(i_val),
+                "fenomens": fen, "gd_val": _resum_gd(i_val),
             })
             c["acceptades"] += 1
     estad["avl"] = dict(c)
@@ -279,7 +279,7 @@ def main() -> None:
     ap.add_argument("--font", choices=["boe", "avl", "totes"], default="totes")
     args = ap.parse_args()
     EIXIDA.mkdir(parents=True, exist_ok=True)
-    index, formes, excl = carrega_index(), ipd.carrega_formes_dialectals(), Exclusions()
+    index, formes, excl = carrega_index(), gd.carrega_formes_dialectals(), Exclusions()
     estad: dict = {}
     fonts = ["avl", "boe"] if args.font == "totes" else [args.font]
     for font in fonts:

@@ -148,8 +148,8 @@ def _registre(p: dict, num: int, index) -> dict:
             + ("" if convertits is None or (x["fenomen"], x["val"]) in convertits else " [l'esborrany no ho ha convertit]")
             for x in fenomens
         ],
-        "ipd_valencia": p["ipd_val"]["ipd"], "marcadors_valencians": p["ipd_val"]["occ"],
-        "ipd_catala": p.get("ipd_cat", {}).get("ipd"), "marcadors_catalans": p.get("ipd_cat", {}).get("ori"),
+        "gd_valencia": p["gd_val"]["gd"], "marcadors_valencians": p["gd_val"]["occ"],
+        "gd_catala": p.get("gd_cat", {}).get("gd"), "marcadors_catalans": p.get("gd_cat", {}).get("ori"),
         "doc_type": p["doc_type"], "document": p["document"], "titol": p.get("titol"),
         "url": p.get("url"), "data": p.get("data"), "id_origen": p["id_origen"],
     }

@@ -20,7 +20,7 @@ Detecció, sempre sobre el text de REFERÈNCIA (no sobre l'eixida del motor):
 
 - parell (BOE): el fenomen hi és si la forma catalana apareix al text català
   I la seua forma valenciana al text valencià;
-- només valencià (AVL): cada marcador occidental de l'IPD (que ja filtra
+- només valencià (AVL): cada marcador occidental del GD (que ja filtra
   homògrafs amb spaCy) es busca a l'índex valencià.
 """
 
@@ -144,7 +144,7 @@ def detecta_parell(cat: str, val: str, index: tuple[dict, dict]) -> list[dict]:
 
 def detecta_valencia(marcadors: list[str], index: tuple[dict, dict]) -> list[dict]:
     """Fenòmens d'un text només valencià a partir dels marcadors
-    occidentals de l'IPD."""
+    occidentals del GD."""
     _, per_val = index
     trobats = {}
     for forma in marcadors:
