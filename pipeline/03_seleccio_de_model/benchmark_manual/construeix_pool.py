@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import collections
 import json
+import random
 import re
 import sys
 import time
@@ -28,7 +29,8 @@ sys.path.insert(0, str(ARREL / "pipeline" / "09_index_puresa_dialectal"))
 sys.path.insert(0, str(AQUI))
 
 import ipd  # noqa: E402
-from fenomens import carrega_index, detecta_parell, detecta_valencia, paraules  # noqa: E402
+from fenomens import (carrega_index, detecta_parell, detecta_regles_parell, detecta_regles_valencia,  # noqa: E402
+                      detecta_valencia, paraules)
 
 BOE = ARREL / "dades" / "boe" / "corpus_entrenamiento.jsonl"
 AVL = ARREL / "dades" / "avl" / "final" / "dialectal" / "corpus_occidental_net.jsonl"
@@ -36,7 +38,7 @@ B151 = ARREL / "pipeline" / "03_seleccio_de_model" / "benchmark_corpus.json"
 EIXIDA = ARREL / "dades" / "benchmark_manual"
 
 MIN_PARAULES, MAX_PARAULES = 8, 40
-MAX_PER_DOCUMENT_POOL = 3
+MAX_PER_DOCUMENT_POOL = 3  # només AVL; al BOE no hi ha màxim (decisió de l'usuari, 26/10)
 
 # --- filtres de qualitat ---------------------------------------------------
 _INICI_LLISTA = re.compile(r"^\s*(\d+[\.\)º]|[a-zA-Z]\s?\)|[-–—•·*]|[IVXLC]+\.)\s")
@@ -125,15 +127,23 @@ def _resum_ipd(r: dict) -> dict:
 
 
 # --- BOE -------------------------------------------------------------------
+MOSTRA_BOE = 50000  # màxim de candidates (després dels filtres barats) que passen a l'IPD; hui hi caben totes (28.429, ~2 min)
+LLAVOR_BOE = 23
+
+
 def pool_boe(index, formes, excl: Exclusions, estad: dict) -> list[dict]:
+    """Dos fases: (1) filtres barats sobre tot el BOE; (2) sobre una mostra
+    aleatòria fixa de `MOSTRA_BOE` candidates, la semblança amb el 151 i
+    l'IPD amb spaCy a les dues llengües (el pas car)."""
     c = collections.Counter()
-    per_doc = collections.Counter()
-    pool = []
+    candidates = []
     t0 = time.time()
     with BOE.open(encoding="utf-8") as fh:
         for linia in fh:
             r = json.loads(linia)
             c["total"] += 1
+            if c["total"] % 50000 == 0:
+                print(f"  BOE fase 1: {c['total']} llegides, {len(candidates)} candidates ({time.time() - t0:.0f}s)", flush=True)
             cat, val = r["texto_catalan"].strip(), r["texto_valenciano"].strip()
             if cat == val:
                 c["identiques"] += 1
@@ -145,34 +155,43 @@ def pool_boe(index, formes, excl: Exclusions, estad: dict) -> list[dict]:
                 c["alineacio"] += 1
                 continue
             fen = detecta_parell(cat, val, index)
+            fen += detecta_regles_parell(cat, val, fen)
             if not fen:
                 c["sense_fenomen"] += 1
-                continue
-            if per_doc[r["documento_id"]] >= MAX_PER_DOCUMENT_POOL:
-                c["max_document"] += 1
                 continue
             if excl.duplicada(cat):
                 c["duplicada"] += 1
                 continue
-            if excl.massa_semblant_151(cat) or excl.massa_semblant_151(val):
-                c["semblant_151"] += 1
-                continue
-            i_val, i_cat = ipd.calcula_ipd(val, formes), ipd.calcula_ipd(cat, formes)
-            if not (i_val["ipd"] == 1.0 and i_val["total_occidentals"] >= 2):
-                c["ipd_valencia"] += 1
-                continue
-            if not (i_cat["ipd"] == 0.0 and i_cat["total_orientals"] >= 2):
-                c["ipd_catala"] += 1
-                continue
-            per_doc[r["documento_id"]] += 1
-            pool.append({
-                "font": "boe", "id_origen": r["id"], "document": r["documento_id"], "data": r.get("fecha"),
-                "doc_type": "boe", "oriental": cat, "occidental": val,
-                "fenomens": fen, "ipd_val": _resum_ipd(i_val), "ipd_cat": _resum_ipd(i_cat),
-            })
-            c["acceptades"] += 1
-            if c["acceptades"] % 2000 == 0:
-                print(f"  BOE: {c['acceptades']} acceptades ({c['total']} llegides, {time.time() - t0:.0f}s)", flush=True)
+            candidates.append((r, cat, val, fen))
+    c["candidates_fase1"] = len(candidates)
+    random.Random(LLAVOR_BOE).shuffle(candidates)
+    if len(candidates) > MOSTRA_BOE:
+        c["fora_de_mostra"] = len(candidates) - MOSTRA_BOE
+        candidates = candidates[:MOSTRA_BOE]
+    print(f"  BOE fase 1 acabada: {c['candidates_fase1']} candidates, {len(candidates)} a l'IPD ({time.time() - t0:.0f}s)", flush=True)
+
+    pool = []
+    t1 = time.time()
+    for i, (r, cat, val, fen) in enumerate(candidates, 1):
+        if i % 1000 == 0:
+            print(f"  BOE fase 2: {i}/{len(candidates)}, {len(pool)} acceptades ({time.time() - t1:.0f}s)", flush=True)
+        if excl.massa_semblant_151(cat) or excl.massa_semblant_151(val):
+            c["semblant_151"] += 1
+            continue
+        i_val = ipd.calcula_ipd(val, formes)
+        if not (i_val["ipd"] == 1.0 and i_val["total_occidentals"] >= 2):
+            c["ipd_valencia"] += 1
+            continue
+        i_cat = ipd.calcula_ipd(cat, formes, dialecte="cat")
+        if not (i_cat["ipd"] == 0.0 and i_cat["total_orientals"] >= 2):
+            c["ipd_catala"] += 1
+            continue
+        pool.append({
+            "font": "boe", "id_origen": r["id"], "document": r["documento_id"], "data": r.get("fecha"),
+            "doc_type": "boe", "oriental": cat, "occidental": val,
+            "fenomens": fen, "ipd_val": _resum_ipd(i_val), "ipd_cat": _resum_ipd(i_cat),
+        })
+        c["acceptades"] += 1
     estad["boe"] = dict(c)
     return pool
 
@@ -230,6 +249,7 @@ def pool_avl(index, formes, excl: Exclusions, estad: dict) -> list[dict]:
                 c["ipd_valencia"] += 1
                 continue
             fen = detecta_valencia(i_val["marcadors_occidentals"], index)
+            fen += detecta_regles_valencia(frase, fen)
             if not fen:
                 c["sense_fenomen"] += 1
                 continue

@@ -18,13 +18,17 @@
    "POS": 193,
    "CONJ_SUBJ": 144,
    "LEX_ADJ": 128,
+   "PER_A": 117,
    "CONJ_ARREL": 88,
    "CONJ_IND": 68,
    "LEX_ADV": 61,
    "CONJ_PART": 35,
+   "INC": 25,
    "CONJ_IMP": 15,
+   "ACC": 13,
    "CONJ_INF": 11,
    "LEX_ALTRES": 11,
+   "DOS_DUES": 8,
    "NUM": 6
   },
   "per_doc_type": {
@@ -38,5 +42,44 @@
    "legislacio": 5
   },
   "amb_homograf": 69
+ },
+ "boe": {
+  "total": 267962,
+  "identiques": 81929,
+  "qualitat": 120043,
+  "sense_fenomen": 20283,
+  "alineacio": 9473,
+  "duplicada": 4279,
+  "candidates_fase1": 31955,
+  "acceptades": 5970,
+  "ipd_valencia": 23798,
+  "ipd_catala": 2187
+ },
+ "boe_taula": {
+  "frases": 5970,
+  "per_fenomen": {
+   "DEM": 3458,
+   "LEX_NOM": 2582,
+   "CONJ_SUBJ": 2447,
+   "POS": 1507,
+   "CONJ_IND": 1010,
+   "INC": 627,
+   "PER_A": 462,
+   "CONJ_ARREL": 400,
+   "CONJ_PART": 397,
+   "CONJ_ALTRES": 113,
+   "LEX_ADV": 106,
+   "ACC": 73,
+   "LEX_ADJ": 72,
+   "NUM": 38,
+   "CONJ_IMP": 25,
+   "LEX_ALTRES": 25,
+   "DOS_DUES": 23,
+   "CONJ_INF": 16
+  },
+  "per_doc_type": {
+   "boe": 5970
+  },
+  "amb_homograf": 9
  }
 }

@@ -1,0 +1,103 @@
+{
+ "boe": {
+  "frases": 250,
+  "per_fenomen": {
+   "LEX_NOM": 95,
+   "LEX_ADJ": 20,
+   "LEX_ADV": 20,
+   "LEX_ALTRES": 10,
+   "DEM": 123,
+   "POS": 63,
+   "NUM": 10,
+   "CONJ_IND": 37,
+   "CONJ_SUBJ": 177,
+   "CONJ_IMP": 10,
+   "CONJ_INF": 10,
+   "CONJ_PART": 21,
+   "CONJ_ARREL": 26,
+   "HOM": 8,
+   "PER_A": 24,
+   "DOS_DUES": 10,
+   "INC": 55,
+   "ACC": 16
+  },
+  "quotes": {
+   "LEX_NOM": 40,
+   "LEX_ADJ": 20,
+   "LEX_ADV": 20,
+   "LEX_ALTRES": 10,
+   "DEM": 30,
+   "POS": 20,
+   "NUM": 10,
+   "CONJ_IND": 20,
+   "CONJ_SUBJ": 25,
+   "CONJ_IMP": 10,
+   "CONJ_INF": 10,
+   "CONJ_PART": 15,
+   "CONJ_ARREL": 20,
+   "HOM": 10,
+   "PER_A": 15,
+   "DOS_DUES": 10,
+   "INC": 20,
+   "ACC": 15
+  },
+  "parells_distints": 448,
+  "per_doc_type": {
+   "boe": 250
+  }
+ },
+ "avl": {
+  "frases": 219,
+  "per_fenomen": {
+   "LEX_NOM": 86,
+   "LEX_ADJ": 44,
+   "LEX_ADV": 21,
+   "LEX_ALTRES": 10,
+   "DEM": 93,
+   "POS": 48,
+   "NUM": 6,
+   "CONJ_IND": 35,
+   "CONJ_SUBJ": 47,
+   "CONJ_IMP": 11,
+   "CONJ_INF": 10,
+   "CONJ_PART": 18,
+   "CONJ_ARREL": 33,
+   "HOM": 18,
+   "PER_A": 31,
+   "DOS_DUES": 8,
+   "INC": 22,
+   "ACC": 13
+  },
+  "quotes": {
+   "LEX_NOM": 40,
+   "LEX_ADJ": 20,
+   "LEX_ADV": 20,
+   "LEX_ALTRES": 10,
+   "DEM": 30,
+   "POS": 20,
+   "NUM": 10,
+   "CONJ_IND": 20,
+   "CONJ_SUBJ": 25,
+   "CONJ_IMP": 10,
+   "CONJ_INF": 10,
+   "CONJ_PART": 15,
+   "CONJ_ARREL": 20,
+   "HOM": 10,
+   "PER_A": 15,
+   "DOS_DUES": 10,
+   "INC": 20,
+   "ACC": 15
+  },
+  "parells_distints": 218,
+  "per_doc_type": {
+   "glossari": 85,
+   "nota-de-premsa": 59,
+   "butlleti": 24,
+   "acord-normatiu": 23,
+   "gramatica_normativa": 13,
+   "pagina": 7,
+   "publicacions": 6,
+   "legislacio": 2
+  }
+ }
+}

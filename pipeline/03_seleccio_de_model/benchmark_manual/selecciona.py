@@ -11,8 +11,9 @@ revisió, un per persona:
 Criteris (decisions de l'usuari, 23/10/2026):
 - fenòmens = els dels diccionaris (vore `fenomens.py`), amb un mínim per
   fenomen (`QUOTES`); una frase compta per a tots els que conté;
-- varietat: com a màxim `MAX_PER_PARELL` frases per parell concret
-  ("aquesta->esta"), i a igualtat guanya la frase que afig parells nous;
+- varietat: una frase entra només si algun dels seus parells concrets
+  ("aquesta->esta") té menys de `MAX_PER_PARELL` frases
+  i a igualtat guanya la frase que afig parells nous;
 - AVL: quotes per tipus de text (`QUOTES_DOC_TYPE_AVL`);
 - màxim 2 frases per document;
 - el català de les frases de l'AVL és un ESBORRANY del motor valencià->català
@@ -36,7 +37,7 @@ ARREL = AQUI.parents[2]
 sys.path.insert(0, str(ARREL))
 sys.path.insert(0, str(AQUI))
 
-from fenomens import carrega_index, detecta_parell  # noqa: E402
+from fenomens import carrega_index, detecta_parell, detecta_regles_parell  # noqa: E402
 
 DIR = ARREL / "dades" / "benchmark_manual"
 
@@ -48,6 +49,8 @@ QUOTES = {
     "CONJ_IND": 20, "CONJ_SUBJ": 25, "CONJ_IMP": 10, "CONJ_INF": 10,
     "CONJ_PART": 15, "CONJ_ARREL": 20,
     "HOM": 10,
+    # Regles del motor (usuari, 26/10: que estiga representat quasi tot)
+    "PER_A": 15, "DOS_DUES": 10, "INC": 20, "ACC": 15,
 }
 QUOTES_DOC_TYPE_AVL = {
     "nota-de-premsa": 70, "glossari": 85, "acord-normatiu": 30, "butlleti": 25,
@@ -89,7 +92,9 @@ def selecciona(pool: list[dict], n: int, llavor: int, quotes_doc: dict | None = 
             if quotes_doc and per_tipus[p["doc_type"]] >= quotes_doc.get(p["doc_type"], 0):
                 continue
             parells = _parells(p)
-            if any(per_parell[x] >= MAX_PER_PARELL for x in parells):
+            # Només es descarta si no afig res: tots els seus parells ja
+            # tenen el màxim ("aquest->este" ix a quasi totes les frases).
+            if all(per_parell[x] >= MAX_PER_PARELL for x in parells):
                 continue
             nous_restants.append(p)
             puntuacio = sum(pes[f] * 10 for f in _fenomens_frase(p) if falten.get(f, 0) > 0)
@@ -120,7 +125,9 @@ def _registre(p: dict, num: int, index) -> dict:
         oriental = translate(p["occidental"])
         esborrany = True
         # Fenòmens que l'esborrany ja ha convertit (els altres, a corregir a mà)
-        convertits = {(x["fenomen"], x["val"]) for x in detecta_parell(oriental, p["occidental"], index)}
+        trobats = detecta_parell(oriental, p["occidental"], index)
+        trobats += detecta_regles_parell(oriental, p["occidental"], trobats)
+        convertits = {(x["fenomen"], x["val"]) for x in trobats}
     else:
         convertits = None
     return {

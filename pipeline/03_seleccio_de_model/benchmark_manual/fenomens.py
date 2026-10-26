@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from collections import defaultdict
 from pathlib import Path
 
@@ -149,4 +150,108 @@ def detecta_valencia(marcadors: list[str], index: tuple[dict, dict]) -> list[dic
     for forma in marcadors:
         for fenomen, altra, hom in per_val.get(forma.lower(), ()):
             trobats[(fenomen, forma)] = {"fenomen": fenomen, "cat": altra, "val": forma, "hom": hom}
+    return list(trobats.values())
+
+
+# --- Fenòmens de les regles del motor (no del diccionari) -------------------
+# PER_A ("per" + infinitiu -> "per a"), DOS_DUES, INC (incoatius) i ACC
+# (accentuació). Es fan servir les MATEIXES regles del traductor, aplicades
+# soles: proposen el canvi i el text de referència el confirma.
+# - parell (BOE): regles cat->val sobre el català; compta si la forma
+#   proposada és al valencià (i no al català).
+# - només valencià (AVL): regles val->cat sobre el valencià (incoatius,
+#   dos/dues amb el gènere d'spaCy, accentuació); "per a" + infinitiu
+#   segons spaCy (val->cat no té eixa regla: el català admet les dues).
+_PISTES_REGLES = re.compile(r"\bper\b|\bdues\b|\bdos\b|i[xs]|[èéò]", re.IGNORECASE)
+_regles_cache: dict = {}
+
+
+def _regles():
+    if not _regles_cache:
+        sys.path.insert(0, str(ARREL))
+        from traductor.rules import detokenize, marca_noms_propis, pos_tagger, tokenize
+        from traductor.rules.cat_val.accentuacio import AccentuacioInversRule
+        from traductor.rules.cat_val.concordanca_dos_dues import ConcordancaDosDuesInversRule
+        from traductor.rules.cat_val.incoatius import IncoatiusInversRule
+        from traductor.rules.cat_val.per_a_infinitiu import PerAInfinitiuInversRule
+        from traductor.rules.val_cat.accentuacio import AccentuacioRule
+        from traductor.rules.val_cat.concordanca_dos_dues import ConcordancaDosDuesRule
+        from traductor.rules.val_cat.incoatius import IncoatiusRule
+
+        _regles_cache.update(
+            tokenize=tokenize, detokenize=detokenize, marca=marca_noms_propis, pos=pos_tagger,
+            cat_val=[("PER_A", PerAInfinitiuInversRule()), ("DOS_DUES", ConcordancaDosDuesInversRule()),
+                     ("INC", IncoatiusInversRule()), ("ACC", AccentuacioInversRule())],
+            val_cat=[("DOS_DUES", ConcordancaDosDuesRule()), ("INC", IncoatiusRule()),
+                     ("ACC", AccentuacioRule())],
+        )
+    return _regles_cache
+
+
+def _aplica(regla, text: str, noms_propis: bool) -> list[tuple[str, str]]:
+    """(forma original, forma proposada) de cada token que canvia la regla."""
+    r = _regles()
+    toks = r["tokenize"](text)
+    if noms_propis:
+        r["marca"](toks)
+    r["pos"].etiqueta(toks)
+    regla.apply(toks)
+    return [(t.surface, t.translated) for t in toks if t.is_translated and t.translated != t.surface]
+
+
+def detecta_regles_parell(cat: str, val: str, ja: list[dict] | None = None) -> list[dict]:
+    """Fenòmens de les regles amb el canvi confirmat al valencià.
+
+    >>> sorted((f["fenomen"], f["cat"], f["val"]) for f in detecta_regles_parell(
+    ...     "Les dues entitats tenen competència per subscriure el conveni que ofereix.",
+    ...     "Les dos entitats tenen competència per a subscriure el conveni que oferix."))
+    [('DOS_DUES', 'dues', 'dos'), ('INC', 'ofereix', 'oferix'), ('PER_A', 'per', 'per a')]
+    """
+    if not _PISTES_REGLES.search(cat):
+        return []
+    previs = {(x["cat"], x["val"]) for x in ja or ()}
+    g_cat, g_val = _ngrames(paraules(cat)), _ngrames(paraules(val))
+    t_cat, t_val = f" {' '.join(paraules(cat))} ", f" {' '.join(paraules(val))} "
+    trobats = {}
+    for fenomen, regla in _regles()["cat_val"]:
+        for orig, nova in _aplica(regla, cat, noms_propis=False):
+            if fenomen == "PER_A":
+                o, n = "per", "per a"
+                # El valencià ha de tindre més "per a" que el català.
+                confirmat = t_val.count(" per a ") > t_cat.count(" per a ")
+            else:
+                o, n = paraules(orig)[-1], paraules(nova)[-1]
+                confirmat = n in g_val and n not in g_cat
+            if (o, n) in previs:
+                continue
+            if confirmat:
+                trobats[(fenomen, o, n)] = {"fenomen": fenomen, "cat": o, "val": n, "hom": False}
+    return list(trobats.values())
+
+
+def detecta_regles_valencia(val: str, ja: list[dict] | None = None) -> list[dict]:
+    """Fenòmens de les regles en un text només valencià.
+
+    >>> sorted((f["fenomen"], f["cat"], f["val"]) for f in detecta_regles_valencia(
+    ...     "Les dos entitats tenen competència per a subscriure el conveni que oferix."))
+    [('DOS_DUES', 'dues', 'dos'), ('INC', 'ofereix', 'oferix'), ('PER_A', 'per', 'per a')]
+    """
+    if not _PISTES_REGLES.search(val):
+        return []
+    previs = {(x["cat"], x["val"]) for x in ja or ()}
+    r = _regles()
+    trobats = {}
+    for fenomen, regla in r["val_cat"]:
+        for orig, nova in _aplica(regla, val, noms_propis=True):
+            o, n = paraules(orig)[-1], paraules(nova)[-1]
+            if (n, o) not in previs:
+                trobats[(fenomen, o)] = {"fenomen": fenomen, "cat": n, "val": o, "hom": False}
+    if re.search(r"\bper a\b", val, re.IGNORECASE):
+        toks = r["tokenize"](val)
+        r["pos"].etiqueta(toks)
+        paraules_toks = [t for t in toks if t.surface[:1].isalpha()]
+        for a, b, c in zip(paraules_toks, paraules_toks[1:], paraules_toks[2:]):
+            if a.surface.lower() == "per" and b.surface.lower() == "a" and c.verb_form == "Inf" \
+                    and not c.surface.lower().startswith("haver"):
+                trobats[("PER_A", "per a")] = {"fenomen": "PER_A", "cat": "per", "val": "per a", "hom": False}
     return list(trobats.values())
