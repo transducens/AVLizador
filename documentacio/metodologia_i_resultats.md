@@ -1073,6 +1073,27 @@ los dos corpus. Tampoco se resuelven las palabras compartidas por
 registro ("estat", "avui", "últim", "alcalde") ni el par "petit"/"menut",
 mal emparejado en los datos.
 
+### Textos sin marcadores, IPDV e IPDC (26/10/2026)
+
+Un texto sin ninguna palabra marcada no dice nada sobre su dialecto, y
+el valor que conviene darle depende de la tarea. Se probó 0,5 y se
+descartó, porque se confunde con un texto mezclado a partes iguales.
+Por decisión del usuario quedan dos soluciones:
+
+- **`ipd.py`** (IPD único, 1 = valenciano, 0 = catalán) tiene tres
+  modos con el parámetro `dialecte`. Sin él, el IPD de esos textos es
+  `None` (medida neutra, que no entra en las medias). Con `"val"` vale
+  1,0 y con `"cat"` vale 0,0: el texto cuenta como puro en el dialecto
+  que se evalúa.
+- **`ipdv.py` e `ipdc.py`** son dos índices simétricos que van los dos
+  de 0 (nada puro) a 1 (puro): el IPDV es la proporción de marcadores
+  valencianos y el IPDC la de catalanes. Un texto sin marcadores cuenta
+  como puro en los dos (1 y 1). Reutilizan `calcula_ipd`. Para un corpus
+  dan la cifra global (suma de marcadores) y la media por frase, que es
+  donde pesan los textos sin marcadores. En el benchmark de 151: IPDV
+  del lado valenciano 0,9863 global / 0,9930 media (14 frases sin
+  marcadores); IPDC del lado catalán 0,8733 / 0,8937 (15).
+
 ## 15. Validación contra corpus reales, más allá del banco curado
 
 El banco de 151 frases está diseñado para ilustrar un fenómeno dialectal

@@ -26,7 +26,9 @@ y las valida.
      vegada; "gandula" → hamaca o gandula), eligiendo entre las frases que
      construye el motor.
 2. **El Índice de Pureza Dialectal (IPD)**
-   ([`pipeline/09_index_puresa_dialectal/`](pipeline/09_index_puresa_dialectal/)).
+   ([`pipeline/09_index_puresa_dialectal/`](pipeline/09_index_puresa_dialectal/)),
+   con dos índices simétricos hermanos: el IPDV (pureza valenciana) y el
+   IPDC (pureza catalana), los dos de 0 a 1.
 
 El estado y la estructura actuales del traductor están al principio de
 [`traductor/README.es.md`](traductor/README.es.md). La dirección valenciano

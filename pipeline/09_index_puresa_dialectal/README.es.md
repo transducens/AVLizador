@@ -12,9 +12,59 @@ IPD = total_palabras_occidentales / (total_occidentales + total_orientales)
 ```
 
 Un IPD de 1,0 significa que ninguna palabra catalana marcada aparece en
-el texto; 0,0 significa lo contrario; y `None` (sin resultado) significa
-que el texto no contiene ninguna palabra dialectalmente marcada de las
-que conoce el índice — no se puede calcular un porcentaje sobre cero.
+el texto; 0,0 significa lo contrario.
+
+**Texto sin ninguna palabra marcada (decisión del 26/10/2026)**: un
+texto sin ninguna palabra dialectalmente marcada de las que conoce el
+índice no dice nada sobre su dialecto, y el valor que conviene darle
+depende de la tarea. Por eso hay tres modos, elegidos con el parámetro
+`dialecte` (`--dialecte` para `--text`/`--fitxer`/`--camp`,
+`--dialecte-alt` para `--camp-alt` en la CLI):
+
+| `dialecte` | IPD sin marcadores | para qué |
+|---|---|---|
+| sin poner (por defecto) | `None` (vacío) | medida neutra: el texto no entra en las medias y no favorece a ningún dialecto |
+| `"val"` | **1,0** | comprobar que un texto (o una traducción cat→val) es valenciano puro: lo que no tiene nada que lo desmienta cuenta como puro |
+| `"cat"` | **0,0** | lo mismo para un texto que debe ser catalán |
+
+Con `"val"`/`"cat"` el resultado queda condicionado por la tarea (los
+textos sin marcadores suben la pureza del lado que se evalúa), así que
+no sirve para comparar dialectos. Se probó 0,5 y se descartó: se
+confunde con un texto mezclado a partes iguales. En cualquier modo,
+`total_marcades == 0` dice que el IPD no viene de ningún marcador, y en
+el informe HTML esos textos salen en gris. El IPD global de un corpus
+se calcula con la suma de marcadores, así que solo cambia si el corpus
+entero no tiene ninguno.
+
+## IPDV e IPDC: dos índices simétricos (26/10/2026)
+
+Además del IPD, hay dos medidas hermanas, cada una en su fichero, que
+van las dos de **0 (nada puro) a 1 (puro)**:
+
+| fichero | medida | fórmula | 1,0 significa |
+|---|---|---|---|
+| `ipdv.py` | **IPDV**, Índice de Pureza Dialectal Valenciana | occidentales / marcadas | valenciano puro |
+| `ipdc.py` | **IPDC**, Índice de Pureza Dialectal Catalana | orientales / marcadas | catalán puro |
+
+Con marcadores, IPDC = 1 − IPDV. **Un texto sin ninguna palabra marcada
+cuenta como puro en los dos (IPDV = 1 e IPDC = 1)**: no tiene nada que
+lo desmienta. `total_marcades == 0` dice que el valor no viene de ningún
+marcador. No reimplementan nada: llaman a `ipd.py::calcula_ipd`, que se
+queda tal cual.
+
+Para un corpus dan dos cifras: `ipdv_global`/`ipdc_global` (suma de
+marcadores, las frases sin marcadores no pesan) e
+`ipdv_mitjana`/`ipdc_mitjana` (media por frase, las frases sin
+marcadores cuentan como 1,0). Benchmark de 151 (26/10/2026): IPDV del
+lado valenciano 0,9863 global / 0,9930 media (14 frases sin
+marcadores); IPDC del lado catalán 0,8733 / 0,8937 (15).
+
+```bash
+python ipdv.py --text "Este xiquet vol vindre hui."
+python ipdc.py --text "Aquest nen vol venir avui."
+python ipdv.py --corpus ../03_seleccio_de_model/benchmark_corpus.json --camp occidental --sortida ipdv.json
+python ipdc.py --corpus ../03_seleccio_de_model/benchmark_corpus.json --camp oriental --sortida ipdc.json
+```
 
 ## Por qué un módulo nuevo, si ya existía una métrica parecida
 
@@ -55,12 +105,14 @@ Como script:
 
 ```bash
 python ipd.py --text "Este xiquet vol vindre hui."
+python ipd.py --text "Aquest nen vol venir avui." --dialecte cat
 python ipd.py --fitxer un_document.txt
 python ipd.py --corpus ../../dades/avl/final/unified.jsonl --camp text --sortida resultat.json
 
 # Informe HTML para ver y depurar frase a frase (palabras resaltadas en
 # verde=occidental/naranja=oriental), con las dos columnas del benchmark
-# del proyecto una al lado de la otra:
+# del proyecto una al lado de la otra (añadid --dialecte val
+# --dialecte-alt cat para contar como puros los textos sin marcadores):
 python ipd.py --corpus ../03_seleccio_de_model/benchmark_corpus.json \
     --camp occidental --camp-alt oriental --html informe.html
 

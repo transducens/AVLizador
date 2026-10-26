@@ -26,7 +26,9 @@ valida.
      vegada; "gandula" → hamaca o gandula), triant entre les frases que
      construïx el motor.
 2. **L'Índex de Puresa Dialectal (IPD)**
-   ([`pipeline/09_index_puresa_dialectal/`](pipeline/09_index_puresa_dialectal/)).
+   ([`pipeline/09_index_puresa_dialectal/`](pipeline/09_index_puresa_dialectal/)),
+   amb dos índexs simètrics germans: l'IPDV (puresa valenciana) i l'IPDC
+   (puresa catalana), tots dos de 0 a 1.
 
 L'estat i l'estructura actuals del traductor són al principi de
 [`traductor/README.md`](traductor/README.md). La direcció valencià → català

@@ -179,8 +179,10 @@
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
-  function colorIpd(v) {
-    if (v === null || v === undefined || Number.isNaN(v)) return 'var(--text-dim)';
+  // Text sense cap paraula marcada, en gris: `null` (sense --dialecte) o
+  // 1.0/0.0 (amb --dialecte val/cat; `senseMarcadors` ho detecta).
+  function colorIpd(v, senseMarcadors) {
+    if (senseMarcadors || v === null || v === undefined || Number.isNaN(v)) return 'var(--text-dim)';
     if (v >= 0.8) return 'var(--good)';
     if (v >= 0.5) return 'var(--mid)';
     return 'var(--bad)';
@@ -285,10 +287,10 @@
       const cercaText = [doc.text, doc.text_alt].filter(Boolean).join(' ').toLowerCase();
       let fila = `<tr data-cerca="${esc(cercaText)}"><td class="mono">${id}</td>`;
       fila += `<td class="txt">${ressalta(doc.text, doc.marcadors_occidentals, doc.marcadors_orientals)}</td>`;
-      fila += `<td class="score" style="color:${colorIpd(doc.ipd)}">${fmtIpd(doc.ipd)}</td>`;
+      fila += `<td class="score" style="color:${colorIpd(doc.ipd, !(doc.total_occidentals + doc.total_orientals))}">${fmtIpd(doc.ipd)}</td>`;
       if (campAlt) {
         fila += `<td class="txt">${ressalta(doc.text_alt, doc.marcadors_occidentals_alt, doc.marcadors_orientals_alt)}</td>`;
-        fila += `<td class="score" style="color:${colorIpd(doc.ipd_alt)}">${fmtIpd(doc.ipd_alt)}</td>`;
+        fila += `<td class="score" style="color:${colorIpd(doc.ipd_alt, !(doc.total_occidentals_alt + doc.total_orientals_alt))}">${fmtIpd(doc.ipd_alt)}</td>`;
       }
       fila += '</tr>';
       return fila;

@@ -7,9 +7,24 @@ paraules dialectalment marcades d'un text son formes OCCIDENTALS
     IPD = total_paraules_occidentals / (total_occidentals + total_orientals)
 
 Un IPD d'1.0 vol dir "cap paraula catalana marcada en tot el text", 0.0
-vol dir el contrari, i `None` vol dir que no s'ha trobat cap paraula
-dialectalment marcada (el text no diu res sobre quin dialecte és -- no
-es pot calcular un percentatge sobre zero).
+vol dir el contrari.
+
+TEXT SENSE CAP PARAULA MARCADA (decisió de l'usuari, 26/10/2026): què
+val l'IPD depén de la tasca, així que el tria el paràmetre `dialecte`:
+
+  - sense `dialecte` (per defecte, `None`): l'IPD és `None` -- el text no
+    diu res sobre el dialecte i no entra en cap mitjana. És la mesura
+    neutra, la que no afavorix cap dels dos dialectes.
+  - `dialecte="val"`: 1.0 -- el text s'avalua com a valencià i, com que
+    no té res que el desmentisca, compta com a valencià pur.
+  - `dialecte="cat"`: 0.0 -- el mateix, avaluat com a català.
+
+Amb `"val"`/`"cat"` el resultat queda condicionat per la tasca (un text
+sense marcadors puja la puresa del costat que s'avalua): servix per a
+comprovar que un text o una traducció és pur en el dialecte esperat, no
+per a comparar dialectes. 0.5 es va provar i es va descartar perquè es
+confon amb un text mesclat a parts iguals. Amb qualsevol mode,
+`total_marcades == 0` diu que l'IPD no ve de cap marcador.
 
 ORIGEN (13/10/2026, vore `documentacio/hoja_de_ruta_ipd_y_proxima_fase.md`):
 `pipeline/01_extraccio_i_neteja/estudi_dialectal.py` ja calculava una mètrica molt
@@ -106,13 +121,16 @@ pendent de confirmar -- cap dels dos es toca ací.
 ÚS com a script:
 
     python ipd.py --text "Este xiquet vol vindre hui."
+    python ipd.py --text "Aquest nen vol venir avui." --dialecte cat
     python ipd.py --fitxer un_document.txt
     python ipd.py --corpus ../../dades/avl/final/unified.jsonl --camp text
 
     # Informe HTML per a VORE i depurar frase a frase (paraules
     # ressaltades, verd=occidental/taronja=oriental), amb dos columnes
     # una al costat de l'altra quan el corpus en té (com el benchmark
-    # del projecte, "occidental"/"oriental"):
+    # del projecte, "occidental"/"oriental"; afegiu `--dialecte val
+    # --dialecte-alt cat` per a comptar com a purs els textos sense
+    # marcadors):
     python ipd.py --corpus ../03_seleccio_de_model/benchmark_corpus.json \
         --camp occidental --camp-alt oriental --html informe.html
 
@@ -414,10 +432,37 @@ def _classifica_token(tok: Token, formes: Formes) -> str | None:
     return None
 
 
-def calcula_ipd(text: str, formes: Formes | None = None) -> dict:
+DIALECTES = ("val", "cat")
+
+
+def _ipd(total_occ: int, total_or: int, dialecte: str | None = None) -> float | None:
+    """IPD a partir dels comptes. Sense cap marcador: `None` si no es dona
+    `dialecte`, 1.0 per a `"val"` i 0.0 per a `"cat"` (vore "TEXT SENSE
+    CAP PARAULA MARCADA" al docstring del mòdul).
+
+    >>> _ipd(3, 1), _ipd(3, 1, "cat")
+    (0.75, 0.75)
+    >>> _ipd(0, 0) is None, _ipd(0, 0, "val"), _ipd(0, 0, "cat")
+    (True, 1.0, 0.0)
+    """
+    if dialecte is not None and dialecte not in DIALECTES:
+        raise ValueError(f"dialecte ha de ser None o un de {DIALECTES}, no {dialecte!r}")
+    total = total_occ + total_or
+    if not total:
+        if dialecte is None:
+            return None
+        return 1.0 if dialecte == "val" else 0.0
+    return round(total_occ / total, 4)
+
+
+def calcula_ipd(
+    text: str, formes: Formes | None = None, dialecte: str | None = None
+) -> dict:
     """Calcula l'IPD d'un text solt (una frase, un paràgraf, un
     document sencer). Si no es passa `formes`, carrega (o reutilitza)
-    l'índex complet amb `carrega_formes_dialectals()`.
+    l'índex complet amb `carrega_formes_dialectals()`. `dialecte`
+    (`None`, `"val"` o `"cat"`) només canvia el resultat quan no hi ha
+    cap paraula marcada: `None`, 1.0 o 0.0 respectivament.
 
     DOS BUGS REALS trobats i corregits (13/10/2026, a petició de
     l'usuari revisant el seu propi benchmark -- vore
@@ -452,9 +497,16 @@ def calcula_ipd(text: str, formes: Formes | None = None) -> dict:
     >>> r["total_occidentals"], r["total_orientals"], r["ipd"]
     (1, 1, 0.5)
 
+    Sense cap paraula marcada: `None` per defecte; pur per al dialecte
+    que s'avalua si es dona `dialecte` (1.0 en valencià, 0.0 en català):
+
     >>> r = calcula_ipd("La casa és gran i té un jardí.")
     >>> r["total_marcades"], r["ipd"]
     (0, None)
+    >>> calcula_ipd("La casa és gran i té un jardí.", dialecte="val")["ipd"]
+    1.0
+    >>> calcula_ipd("La casa és gran i té un jardí.", dialecte="cat")["ipd"]
+    0.0
 
     "entre" (preposició) ja NO es compta com a marcador verbal fals
     (bug 1 dalt):
@@ -509,7 +561,7 @@ def calcula_ipd(text: str, formes: Formes | None = None) -> dict:
         "total_occidentals": total_occ,
         "total_orientals": total_or,
         "total_marcades": total_marcades,
-        "ipd": round(total_occ / total_marcades, 4) if total_marcades else None,
+        "ipd": _ipd(total_occ, total_or, dialecte),
         "marcadors_occidentals": marcadors_occ,
         "marcadors_orientals": marcadors_or,
     }
@@ -583,9 +635,18 @@ def resalta_html(text: str, formes: Formes | None = None) -> str:
     return "".join(out)
 
 
+def _text_ipd(ipd: float | None, total_marcades: int) -> str:
+    """IPD per a la consola, amb una nota si no ve de cap marcador."""
+    if ipd is None:
+        return "-- (cap paraula marcada)"
+    text = f"{ipd:.4f}"
+    if not total_marcades:
+        text += " (cap paraula marcada: pur per al dialecte avaluat)"
+    return text
+
+
 def _mostra_text(etiqueta: str, resultat: dict, mostra: int) -> None:
-    ipd = resultat["ipd"]
-    ipd_text = f"{ipd:.4f}" if ipd is not None else "-- (cap paraula marcada)"
+    ipd_text = _text_ipd(resultat["ipd"], resultat["total_marcades"])
     print(f"{etiqueta}")
     print(f"  IPD: {ipd_text}")
     print(
@@ -601,7 +662,8 @@ def _mostra_text(etiqueta: str, resultat: dict, mostra: int) -> None:
 
 
 def _resum_camp(
-    path: Path, camp: str, formes, limit: int | None = None
+    path: Path, camp: str, formes, limit: int | None = None,
+    dialecte: str | None = None,
 ) -> tuple[list[dict], int, int]:
     """Calcula l'IPD de `camp` a cada linia de `path` (com a molt `limit`
     documents, si es dona -- util per a corpus grans com el del BOE,
@@ -614,21 +676,25 @@ def _resum_camp(
         if limit is not None and i >= limit:
             break
         text = doc.get(camp) or ""
-        r = calcula_ipd(text, formes)
+        r = calcula_ipd(text, formes, dialecte)
         total_occ += r["total_occidentals"]
         total_or += r["total_orientals"]
         resultats.append({"id": doc.get("id") or doc.get("corpus_id"), "text": text, **r})
     return resultats, total_occ, total_or
 
 
-def _ipd_color(ipd: float | None) -> str:
-    if ipd is None:
+def _ipd_color(ipd: float | None, sense_marcadors: bool = False) -> str:
+    if ipd is None or sense_marcadors:
         return "#9a9ba5"
     if ipd >= 0.8:
         return "#1a9850"
     if ipd >= 0.5:
         return "#d6a300"
     return "#d1372f"
+
+
+def _html_ipd(ipd: float | None) -> str:
+    return "—" if ipd is None else str(ipd)
 
 
 def genera_informe_html(
@@ -657,15 +723,15 @@ def genera_informe_html(
         id_doc = _esc(str(ra["id"] if ra["id"] is not None else i))
         cela_a = (
             f'<td class="txt">{resalta_html(ra["text"], formes)}</td>'
-            f'<td class="score" style="color:{_ipd_color(ra["ipd"])}">'
-            f'{ra["ipd"] if ra["ipd"] is not None else "—"}</td>'
+            f'<td class="score" style="color:{_ipd_color(ra["ipd"], not ra["total_marcades"])}">'
+            f'{_html_ipd(ra["ipd"])}</td>'
         )
         cela_b = ""
         if rb is not None:
             cela_b = (
                 f'<td class="txt">{resalta_html(rb["text"], formes)}</td>'
-                f'<td class="score" style="color:{_ipd_color(rb["ipd"])}">'
-                f'{rb["ipd"] if rb["ipd"] is not None else "—"}</td>'
+                f'<td class="score" style="color:{_ipd_color(rb["ipd"], not rb["total_marcades"])}">'
+                f'{_html_ipd(rb["ipd"])}</td>'
             )
         cerca = _esc((ra["text"] + " " + (rb["text"] if rb else "")).lower())
         files_html.append(
@@ -677,7 +743,7 @@ def genera_informe_html(
     )
     resum_b = (
         f'<div class="card"><div class="label">IPD global "{_esc(camp_alt)}"</div>'
-        f'<div class="value" style="color:{_ipd_color(ipd_b)}">{ipd_b if ipd_b is not None else "—"}</div></div>'
+        f'<div class="value" style="color:{_ipd_color(ipd_b)}">{_html_ipd(ipd_b)}</div></div>'
         if camp_alt is not None else ""
     )
 
@@ -724,7 +790,7 @@ def genera_informe_html(
   <p class="subt">{len(res_a)} documents. Verd = marcador occidental (valencià), taronja = marcador oriental (català).</p>
   <div class="cards">
     <div class="card"><div class="label">IPD global "{_esc(camp)}"</div>
-      <div class="value" style="color:{_ipd_color(ipd_a)}">{ipd_a if ipd_a is not None else "—"}</div></div>
+      <div class="value" style="color:{_ipd_color(ipd_a)}">{_html_ipd(ipd_a)}</div></div>
     {resum_b}
   </div>
   <div class="legend"><span class="mk-occ">occidental</span><span class="mk-or">oriental</span></div>
@@ -752,19 +818,21 @@ document.getElementById('cerca').addEventListener('input', function (e) {{
 def _processa_corpus(
     path: Path, camp: str, camp_alt: str | None, mostra: int,
     sortida_json: Path | None, sortida_html: Path | None, limit: int | None,
+    dialecte: str | None = None, dialecte_alt: str | None = None,
 ) -> None:
     formes = carrega_formes_dialectals()
-    res_a, occ_a, or_a = _resum_camp(path, camp, formes, limit)
-    ipd_a = round(occ_a / (occ_a + or_a), 4) if (occ_a + or_a) else None
+    res_a, occ_a, or_a = _resum_camp(path, camp, formes, limit, dialecte)
+    ipd_a = _ipd(occ_a, or_a, dialecte)
 
     res_b = ipd_b = None
     if camp_alt is not None:
-        res_b, occ_b, or_b = _resum_camp(path, camp_alt, formes, limit)
-        ipd_b = round(occ_b / (occ_b + or_b), 4) if (occ_b + or_b) else None
+        res_b, occ_b, or_b = _resum_camp(path, camp_alt, formes, limit, dialecte_alt)
+        ipd_b = _ipd(occ_b, or_b, dialecte_alt)
 
     limit_text = f", limit a {limit}" if limit is not None else ""
-    print(f"Corpus: {path}  ({len(res_a)} documents, camp '{camp}'{limit_text})")
-    print(f"  IPD global: {ipd_a if ipd_a is not None else '-- (cap paraula marcada)'}")
+    com_a = f" com a '{dialecte}'" if dialecte is not None else ""
+    print(f"Corpus: {path}  ({len(res_a)} documents, camp '{camp}'{com_a}{limit_text})")
+    print(f"  IPD global: {_text_ipd(ipd_a, occ_a + or_a)}")
     print(f"  occidentals={occ_a}  orientals={or_a}")
 
     if sortida_json is not None:
@@ -790,6 +858,8 @@ def _processa_corpus(
             json.dumps(
                 {
                     "camp": camp, "camp_alt": camp_alt,
+                    "dialecte": dialecte,
+                    "dialecte_alt": dialecte_alt if camp_alt is not None else None,
                     "ipd_global": ipd_a, "total_occidentals": occ_a, "total_orientals": or_a,
                     "ipd_global_alt": ipd_b,
                     "documents": documents,
@@ -824,6 +894,16 @@ def main() -> None:
              "(p.ex. --camp occidental --camp-alt oriental per al benchmark del projecte).",
     )
     parser.add_argument(
+        "--dialecte", choices=DIALECTES, default=None,
+        help="Dialecte amb què s'avalua el text (--text, --fitxer o --camp). "
+             "Només importa si no hi ha cap paraula marcada: sense l'opció "
+             "l'IPD és buit (None); amb 'val' és 1.0 i amb 'cat' 0.0 (text pur).",
+    )
+    parser.add_argument(
+        "--dialecte-alt", choices=DIALECTES, default=None,
+        help="Igual que --dialecte, per a --camp-alt.",
+    )
+    parser.add_argument(
         "--mostra", type=int, default=10,
         help="Quants marcadors trobats mostrar de cada dialecte (nomes per a --text/--fitxer).",
     )
@@ -844,14 +924,18 @@ def main() -> None:
     args = parser.parse_args()
 
     if args.text is not None:
-        _mostra_text("(text solt)", calcula_ipd(args.text), args.mostra)
+        _mostra_text(
+            "(text solt)", calcula_ipd(args.text, dialecte=args.dialecte), args.mostra
+        )
     elif args.fitxer is not None:
         text = args.fitxer.read_text(encoding="utf-8")
-        _mostra_text(str(args.fitxer), calcula_ipd(text), args.mostra)
+        _mostra_text(
+            str(args.fitxer), calcula_ipd(text, dialecte=args.dialecte), args.mostra
+        )
     else:
         _processa_corpus(
             args.corpus, args.camp, args.camp_alt, args.mostra,
-            args.sortida, args.html, args.limit,
+            args.sortida, args.html, args.limit, args.dialecte, args.dialecte_alt,
         )
 
 
