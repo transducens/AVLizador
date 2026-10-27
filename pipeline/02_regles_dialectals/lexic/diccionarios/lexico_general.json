@@ -8156,7 +8156,14 @@
     "valenciano": "després",
     "fuente": "unificado",
     "id": "E0977",
-    "categoria": "adj"
+    "categoria": "adj",
+    "forma_problematica": "després",
+    "lado": "cat",
+    "problema": "homonimia_lexica",
+    "lemas": [
+      "després [adj]",
+      "després [adv]"
+    ]
   },
   {
     "catalan": "desè",
@@ -13140,5 +13147,69 @@
     "fuente": "unificado",
     "id": "E1658",
     "categoria": "adv"
+  },
+  {
+    "valenciano": "forqueta",
+    "catalan": "forquilla",
+    "tipo": "v:lexic_val",
+    "fuente": "lista_victor",
+    "id": "E1662",
+    "categoria": "n"
+  },
+  {
+    "valenciano": "forquetes",
+    "catalan": "forquilles",
+    "tipo": "v:lexic_val",
+    "fuente": "lista_victor",
+    "id": "E1663",
+    "categoria": "n"
+  },
+  {
+    "valenciano": "fi",
+    "catalan": "finalitat",
+    "tipo": "v:lexic_val",
+    "fuente": "misc",
+    "id": "E1664",
+    "categoria": "n",
+    "forma_problematica": "fi",
+    "lado": "cat",
+    "problema": "homonimia_lexica",
+    "lemas": [
+      "fi [n]",
+      "fi [adj, n]"
+    ]
+  },
+  {
+    "valenciano": "fins",
+    "catalan": "finalitats",
+    "tipo": "v:lexic_val",
+    "fuente": "misc",
+    "id": "E1665",
+    "categoria": "n",
+    "forma_problematica": "fins",
+    "lado": "cat",
+    "problema": "homonimia_lexica",
+    "lemas": [
+      "fi [n]",
+      "fi [adj, n]",
+      "fins [pr]"
+    ]
+  },
+  {
+    "valenciano": "naixement",
+    "catalan": "naixença",
+    "tipo": "v:lexic_val",
+    "fuente": "misc",
+    "id": "E1666",
+    "categoria": "n"
+  },
+  {
+    "valenciano": "naixements",
+    "catalan": "naixences",
+    "tipo": "v:lexic_val",
+    "fuente": "misc",
+    "id": "E1667",
+    "categoria": "n"
   }
+  
 ]
