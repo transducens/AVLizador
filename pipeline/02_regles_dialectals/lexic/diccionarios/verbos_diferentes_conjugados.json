@@ -21672,6 +21672,15 @@
     "ambigu": false
   },
   {
+    "catalan": "rentada",
+    "valenciano": "llavada",
+    "infinitiu_cat": "rentar",
+    "infinitiu_val": "llavar",
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
     "catalan": "copejaríem",
     "valenciano": "colpejaríem",
     "infinitiu_cat": "copejar",

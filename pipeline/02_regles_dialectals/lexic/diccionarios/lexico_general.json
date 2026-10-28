@@ -13174,6 +13174,22 @@
     "fuente": "misc",
     "id": "E1667",
     "categoria": "n"
+  },
+  {
+    "valenciano": "llavada",
+    "catalan": "rentada",
+    "tipo": "v:lexic_val",
+    "fuente": "misc",
+    "id": "E1668",
+    "categoria": "adj"
+  },
+  {
+    "valenciano": "llavades",
+    "catalan": "rentades",
+    "tipo": "v:lexic_val",
+    "fuente": "misc",
+    "id": "E1669",
+    "categoria": "adj"
   }
   
 ]
