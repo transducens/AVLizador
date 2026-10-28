@@ -13974,373 +13974,6 @@
     ]
   },
   {
-    "catalan": "reportaria",
-    "valenciano": "generaria",
-    "infinitiu_cat": "reportar",
-    "infinitiu_val": "generar",
-    "repetida": true,
-    "id": "REP_744",
-    "morfologies": [
-      [
-        "cni",
-        "p1",
-        "sg"
-      ],
-      [
-        "cni",
-        "p3",
-        "sg"
-      ]
-    ],
-    "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": false,
-    "ambigu": false
-  },
-  {
-    "catalan": "reportéssim",
-    "valenciano": "generàrem",
-    "infinitiu_cat": "reportar",
-    "infinitiu_val": "generar",
-    "repetida": true,
-    "id": "REP_746",
-    "morfologies": [
-      [
-        "pis",
-        "p1",
-        "pl"
-      ]
-    ],
-    "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": false,
-    "ambigu": false
-  },
-  {
-    "catalan": "reportés",
-    "valenciano": "generara",
-    "infinitiu_cat": "reportar",
-    "infinitiu_val": "generar",
-    "repetida": true,
-    "id": "REP_747",
-    "morfologies": [
-      [
-        "pis",
-        "p1",
-        "sg"
-      ],
-      [
-        "pis",
-        "p3",
-        "sg"
-      ]
-    ],
-    "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": false,
-    "ambigu": false
-  },
-  {
-    "catalan": "reportéssiu",
-    "valenciano": "generàreu",
-    "infinitiu_cat": "reportar",
-    "infinitiu_val": "generar",
-    "repetida": true,
-    "id": "REP_749",
-    "morfologies": [
-      [
-        "pis",
-        "p2",
-        "pl"
-      ]
-    ],
-    "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": false,
-    "ambigu": false
-  },
-  {
-    "catalan": "reportessis",
-    "valenciano": "generares",
-    "infinitiu_cat": "reportar",
-    "infinitiu_val": "generar",
-    "repetida": true,
-    "id": "REP_750",
-    "morfologies": [
-      [
-        "pis",
-        "p2",
-        "sg"
-      ]
-    ],
-    "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": false,
-    "ambigu": false
-  },
-  {
-    "catalan": "reportessin",
-    "valenciano": "generaren",
-    "infinitiu_cat": "reportar",
-    "infinitiu_val": "generar",
-    "repetida": true,
-    "id": "REP_751",
-    "morfologies": [
-      [
-        "pis",
-        "p3",
-        "pl"
-      ]
-    ],
-    "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": false,
-    "ambigu": false
-  },
-  {
-    "catalan": "reportem",
-    "valenciano": "generem",
-    "infinitiu_cat": "reportar",
-    "infinitiu_val": "generar",
-    "repetida": true,
-    "id": "REP_752",
-    "morfologies": [
-      [
-        "imp",
-        "p1",
-        "pl"
-      ],
-      [
-        "pri",
-        "p1",
-        "pl"
-      ],
-      [
-        "prs",
-        "p1",
-        "pl"
-      ]
-    ],
-    "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": false,
-    "ambigu": false
-  },
-  {
-    "catalan": "reporteu",
-    "valenciano": "genereu",
-    "infinitiu_cat": "reportar",
-    "infinitiu_val": "generar",
-    "repetida": true,
-    "id": "REP_754",
-    "morfologies": [
-      [
-        "imp",
-        "p2",
-        "pl"
-      ],
-      [
-        "pri",
-        "p2",
-        "pl"
-      ],
-      [
-        "prs",
-        "p2",
-        "pl"
-      ]
-    ],
-    "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": false,
-    "ambigu": false
-  },
-  {
-    "catalan": "reporta",
-    "valenciano": "genera",
-    "infinitiu_cat": "reportar",
-    "infinitiu_val": "generar",
-    "repetida": true,
-    "id": "REP_756",
-    "morfologies": [
-      [
-        "imp",
-        "p2",
-        "sg"
-      ],
-      [
-        "pri",
-        "p3",
-        "sg"
-      ]
-    ],
-    "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": false,
-    "ambigu": false
-  },
-  {
-    "catalan": "reportin",
-    "valenciano": "generen",
-    "infinitiu_cat": "reportar",
-    "infinitiu_val": "generar",
-    "repetida": true,
-    "id": "REP_758",
-    "morfologies": [
-      [
-        "imp",
-        "p3",
-        "pl"
-      ],
-      [
-        "prs",
-        "p3",
-        "pl"
-      ]
-    ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": false,
-    "ambigu": true,
-    "val_traduccions_cat": [
-      "reporten",
-      "reportin"
-    ]
-  },
-  {
-    "catalan": "reporten",
-    "valenciano": "generen",
-    "infinitiu_cat": "reportar",
-    "infinitiu_val": "generar",
-    "repetida": true,
-    "id": "REP_759",
-    "morfologies": [
-      [
-        "pri",
-        "p3",
-        "pl"
-      ]
-    ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": false,
-    "ambigu": true,
-    "val_traduccions_cat": [
-      "reporten",
-      "reportin"
-    ]
-  },
-  {
-    "catalan": "reporti",
-    "valenciano": "genere",
-    "infinitiu_cat": "reportar",
-    "infinitiu_val": "generar",
-    "repetida": true,
-    "id": "REP_760",
-    "morfologies": [
-      [
-        "imp",
-        "p3",
-        "sg"
-      ],
-      [
-        "prs",
-        "p1",
-        "sg"
-      ],
-      [
-        "prs",
-        "p3",
-        "sg"
-      ]
-    ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": false,
-    "ambigu": true,
-    "val_traduccions_cat": [
-      "reporti",
-      "reporto"
-    ]
-  },
-  {
-    "catalan": "reporto",
-    "valenciano": "genere",
-    "infinitiu_cat": "reportar",
-    "infinitiu_val": "generar",
-    "repetida": true,
-    "id": "REP_761",
-    "morfologies": [
-      [
-        "pri",
-        "p1",
-        "sg"
-      ]
-    ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": false,
-    "ambigu": true,
-    "val_traduccions_cat": [
-      "reporti",
-      "reporto"
-    ]
-  },
-  {
-    "catalan": "reportava",
-    "valenciano": "generava",
-    "infinitiu_cat": "reportar",
-    "infinitiu_val": "generar",
-    "repetida": true,
-    "id": "REP_762",
-    "morfologies": [
-      [
-        "pii",
-        "p1",
-        "sg"
-      ],
-      [
-        "pii",
-        "p3",
-        "sg"
-      ]
-    ],
-    "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": false,
-    "ambigu": false
-  },
-  {
-    "catalan": "reportes",
-    "valenciano": "generes",
-    "infinitiu_cat": "reportar",
-    "infinitiu_val": "generar",
-    "repetida": true,
-    "id": "REP_765",
-    "morfologies": [
-      [
-        "pri",
-        "p2",
-        "sg"
-      ]
-    ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": false,
-    "ambigu": true,
-    "val_traduccions_cat": [
-      "reportes",
-      "reportis"
-    ]
-  },
-  {
-    "catalan": "reportis",
-    "valenciano": "generes",
-    "infinitiu_cat": "reportar",
-    "infinitiu_val": "generar",
-    "repetida": true,
-    "id": "REP_765",
-    "morfologies": [
-      [
-        "prs",
-        "p2",
-        "sg"
-      ]
-    ],
-    "ambigu_val_a_cat": true,
-    "ambigu_cat_a_val": false,
-    "ambigu": true,
-    "val_traduccions_cat": [
-      "reportes",
-      "reportis"
-    ]
-  },
-  {
     "catalan": "sadollaria",
     "valenciano": "assaciaria",
     "infinitiu_cat": "sadollar",
@@ -20568,15 +20201,6 @@
     "ambigu": false
   },
   {
-    "catalan": "reportar",
-    "valenciano": "generar",
-    "infinitiu_cat": "reportar",
-    "infinitiu_val": "generar",
-    "ambigu_val_a_cat": false,
-    "ambigu_cat_a_val": false,
-    "ambigu": false
-  },
-  {
     "catalan": "sadollar",
     "valenciano": "assaciar",
     "infinitiu_cat": "sadollar",
@@ -22025,6 +21649,758 @@
     "valenciano": "sobreïsques",
     "infinitiu_cat": "sobresortir",
     "infinitiu_val": "sobreeixir",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "prs",
+        "p2",
+        "sg"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "aixecant",
+    "valenciano": "alçant",
+    "infinitiu_cat": "aixecar",
+    "infinitiu_val": "alçar",
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejaríem",
+    "valenciano": "colpejaríem",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "cni",
+        "p1",
+        "pl"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejaria",
+    "valenciano": "colpejaria",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "cni",
+        "p1",
+        "sg"
+      ],
+      [
+        "cni",
+        "p3",
+        "sg"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejaríeu",
+    "valenciano": "colpejaríeu",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "cni",
+        "p2",
+        "pl"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejaries",
+    "valenciano": "colpejaries",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "cni",
+        "p2",
+        "sg"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejarien",
+    "valenciano": "colpejarien",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "cni",
+        "p3",
+        "pl"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejarem",
+    "valenciano": "colpejarem",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "fti",
+        "p1",
+        "pl"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejaré",
+    "valenciano": "colpejaré",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "fti",
+        "p1",
+        "sg"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejareu",
+    "valenciano": "colpejareu",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "fti",
+        "p2",
+        "pl"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejaràs",
+    "valenciano": "colpejaràs",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "fti",
+        "p2",
+        "sg"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejaran",
+    "valenciano": "colpejaran",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "fti",
+        "p3",
+        "pl"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejarà",
+    "valenciano": "colpejarà",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "fti",
+        "p3",
+        "sg"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejant",
+    "valenciano": "colpejant",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "ger"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejares",
+    "valenciano": "colpejares",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "ifi",
+        "p2",
+        "sg"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejaren",
+    "valenciano": "colpejaren",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "ifi",
+        "p3",
+        "pl"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copegem",
+    "valenciano": "colpegem",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "imp",
+        "p1",
+        "pl"
+      ],
+      [
+        "pri",
+        "p1",
+        "pl"
+      ],
+      [
+        "prs",
+        "p1",
+        "pl"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copegeu",
+    "valenciano": "colpegeu",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "imp",
+        "p2",
+        "pl"
+      ],
+      [
+        "pri",
+        "p2",
+        "pl"
+      ],
+      [
+        "prs",
+        "p2",
+        "pl"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copeja",
+    "valenciano": "colpeja",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "imp",
+        "p2",
+        "sg"
+      ],
+      [
+        "pri",
+        "p3",
+        "sg"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copegin",
+    "valenciano": "colpegen",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "imp",
+        "p3",
+        "pl"
+      ],
+      [
+        "prs",
+        "p3",
+        "pl"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copegi",
+    "valenciano": "colpege",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "imp",
+        "p3",
+        "sg"
+      ],
+      [
+        "prs",
+        "p1",
+        "sg"
+      ],
+      [
+        "prs",
+        "p3",
+        "sg"
+      ]
+    ],
+    "ambigu_val_a_cat": true,
+    "ambigu_cat_a_val": false,
+    "ambigu": true,
+    "val_traduccions_cat": [
+      "copegi",
+      "copejo"
+    ]
+  },
+  {
+    "catalan": "copejar",
+    "valenciano": "colpejar",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "inf"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejàvem",
+    "valenciano": "colpejàvem",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "pii",
+        "p1",
+        "pl"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejava",
+    "valenciano": "colpejava",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "pii",
+        "p1",
+        "sg"
+      ],
+      [
+        "pii",
+        "p3",
+        "sg"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejàveu",
+    "valenciano": "colpejàveu",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "pii",
+        "p2",
+        "pl"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejaves",
+    "valenciano": "colpejaves",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "pii",
+        "p2",
+        "sg"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejaven",
+    "valenciano": "colpejaven",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "pii",
+        "p3",
+        "pl"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copegéssim",
+    "valenciano": "colpejàrem",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "pis",
+        "p1",
+        "pl"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copegés",
+    "valenciano": "colpejara",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "pis",
+        "p1",
+        "sg"
+      ],
+      [
+        "pis",
+        "p3",
+        "sg"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copegéssiu",
+    "valenciano": "colpejàreu",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "pis",
+        "p2",
+        "pl"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copegessis",
+    "valenciano": "colpejares",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "pis",
+        "p2",
+        "sg"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copegessin",
+    "valenciano": "colpejaren",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "pis",
+        "p3",
+        "pl"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejades",
+    "valenciano": "colpejades",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "pp",
+        "pl",
+        "f"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejats",
+    "valenciano": "colpejats",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "pp",
+        "pl",
+        "m"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejada",
+    "valenciano": "colpejada",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "pp",
+        "sg",
+        "f"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejat",
+    "valenciano": "colpejat",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "pp",
+        "sg",
+        "m"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copejo",
+    "valenciano": "colpege",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "pri",
+        "p1",
+        "sg"
+      ]
+    ],
+    "ambigu_val_a_cat": true,
+    "ambigu_cat_a_val": false,
+    "ambigu": true,
+    "val_traduccions_cat": [
+      "copegi",
+      "copejo"
+    ]
+  },
+  {
+    "catalan": "copeges",
+    "valenciano": "colpeges",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "pri",
+        "p2",
+        "sg"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copegen",
+    "valenciano": "colpegen",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
+    "repetida": false,
+    "id": null,
+    "morfologies": [
+      [
+        "pri",
+        "p3",
+        "pl"
+      ]
+    ],
+    "ambigu_val_a_cat": false,
+    "ambigu_cat_a_val": false,
+    "ambigu": false
+  },
+  {
+    "catalan": "copegis",
+    "valenciano": "colpeges",
+    "infinitiu_cat": "copejar",
+    "infinitiu_val": "colpejar",
     "repetida": false,
     "id": null,
     "morfologies": [
