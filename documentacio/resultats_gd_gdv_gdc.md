@@ -67,6 +67,8 @@ spaCy: `ca_core_news_md` 3.8.0 (spaCy 3.8.16).
 | Benchmark 151 (154 entradas) | catalán | **0,0727** | 0,1267 | 0,9407 | **0,9954** (media 0,9952) | 4.303 | 20 / 255 |
 | BOE completo (267.962 líneas, 520 documentos) | valenciano | **0,9344** | 0,9424 | **0,9980** (media 0,9976) | 0,9717 | 6.698.334 | 189.858 / 13.333 |
 | BOE completo (267.962 líneas, 520 documentos) | catalán | **0,0625** | 0,0684 | 0,9698 | **0,9980** (media 0,9984) | 6.731.637 | 13.552 / 203.375 |
+| **Benchmark manual (453: 241 BOE + 212 AVL)** | valenciano | **0,9954** | (nuevo) | **0,9996** (media 0,9996) | 0,9181 | 13.216 | 1.083 / 5 |
+| **Benchmark manual (453: 241 BOE + 212 AVL)** | catalán | **0,0330** | (nuevo) | 0,9201 | **0,9973** (media 0,9968) | 13.191 | 36 / 1.054 |
 | BOE estricto (2.000) | valenciano / catalán | *pendiente* | | | | | |
 | BOE amplio (2.000) | valenciano / catalán | *pendiente* | | | | | |
 | GNV (AVL), por líneas | valenciano | **0,8595** | 0,8678 | **0,9982** | 0,9889 | 66.146 | 734 / 120 |
@@ -500,3 +502,79 @@ irresolubles. "després" sigue traduciéndose bien.
 GD medio 0,9439 en el lado valenciano (mediana 0,9808; 39 de 498
 documentos con marcadores por debajo de 0,8) y 0,0746 en el catalán
 (mediana 0,0578; 17 de 489 por encima de 0,2).
+
+## 6. Benchmark manual cat→val (453 frases)
+
+**Fichero**: `dades/benchmark_manual/benchmark_manual_cat_val.json`. Son
+241 frases del BOE y 212 de la AVL, revisadas a mano por el equipo. Cómo
+se generó: `documentacio/hoja_de_ruta_benchmark_manual.md`, sección 7.
+
+**Medida**: 28/10/2026, con los datos recién sincronizados
+(`sync_data --check` → "Tot sincronitzat"; incluye "eliminacion
+cadascu" y los cambios en los verbos). Remedido a las 16:20 con la
+versión regenerada por `construeix_benchmark.py` (que incluye las
+últimas ediciones de la revisión): mismas cifras a cuatro decimales. El benchmark se ha añadido a
+`mesura_corpus.py` como `manual_val` / `manual_cat`.
+
+```
+python pipeline/09_grau_dialectal/mesura_corpus.py --corpus manual_val manual_cat --reinicia
+python pipeline/09_grau_dialectal/gd.py --corpus dades/benchmark_manual/benchmark_manual_cat_val.json --camp occidental --camp-alt oriental --html pipeline/09_grau_dialectal/proves/gd_benchmark_manual.html
+```
+
+Para ver las frases una a una, con los marcadores resaltados:
+`pipeline/09_grau_dialectal/proves/gd_benchmark_manual.html`. Los
+resultados por frase están en `dades/grau_dialectal/manual_val.jsonl` y
+`manual_cat.jsonl`.
+
+| Lado | Fuente | Frases | Palabras | occ | or | GD global / media | GDV | GDC | Sin marcadores |
+|---|---|---|---|---|---|---|---|---|---|
+| valenciano | BOE | 241 | 7.717 | 600 | 5 | 0,9917 / 0,9941 | **0,9994** | 0,9222 | 0 |
+| valenciano | AVL | 212 | 5.499 | 483 | 0 | 1,0000 / 1,0000 | **1,0000** | 0,9122 | 1 |
+| valenciano | **total** | 453 | 13.216 | 1.083 | 5 | **0,9954** / 0,9969 | **0,9996** | 0,9181 | 1 |
+| catalán | BOE | 241 | 7.690 | 5 | 606 | 0,0082 / 0,0059 | 0,9212 | **0,9993** | 0 |
+| catalán | AVL | 212 | 5.501 | 31 | 448 | 0,0647 / 0,0628 | 0,9186 | **0,9944** | 1 |
+| catalán | **total** | 453 | 13.191 | 36 | 1.054 | **0,0330** / 0,0324 | 0,9201 | **0,9973** | 1 |
+
+La única frase sin marcadores es BM-AVL-057 ("t'haig de dir" → "t'he de
+dir"). "haig" no cuenta como marcador por la fila `LIMPIO_588`.
+
+**Lectura**
+
+- Es el corpus **más puro y mejor separado** de todos los medidos: GD
+  0,9954 frente a 0,0330. El 151 da 0,9854 frente a 0,0727 y el BOE
+  completo 0,9344 frente a 0,0625.
+- Tiene mucha densidad de fenómenos: 2,4 marcadores por frase, frente a
+  1,8 en el 151. Era el objetivo de la selección.
+- **GDV del lado valenciano: 0,9996** y **GDC del lado catalán: 0,9973**.
+  Es casi el máximo posible.
+
+### Revisión de los marcadores cruzados
+
+**Lado valenciano: 5 marcadores orientales**, ninguno real:
+
+| Palabra | Frases | Tipo |
+|---|---|---|
+| finalitat/s | BM-BOE-087, 089, 103 y 167 | Error de dato: `E1664`/`E1665` (sección 5) |
+| estat | BM-BOE-065 ("haja estat") | Registro: participio de "ser", aceptado en valenciano |
+
+**Lado catalán: 36 marcadores occidentales** (5 en el BOE y 31 en la
+AVL):
+
+| Tipo | Marcadores | Frases |
+|---|---|---|
+| **Posible errata en el catalán** (para revisar) | 4 | BM-BOE-024 "que **calga** lliurar" (en catalán, "calgui"); BM-BOE-165 "que **siga establida**" (en catalán, "sigui establerta"; cuenta 2); BM-BOE-078 "hagi **sigut**" (en catalán estándar, "hagi estat") |
+| **Error del GD: colisión verbal** (§4.2) | 25 | 3ª singular catalana = 1ª valenciana: permet ×3, transmet ×2, compromet ×2, admet, emet, sotmet, subjau, acull, pateix, abelleix. 3ª plural indicativo = subjuntivo valenciano: consideren, diferencien, estudien, varien, comparen, testimonien, guien, recuperen, serien. Además: escoltes, equipara |
+| **Error del GD: homógrafo o dato** | 7 | "construcció" ×2 (`E0087`), "fem" ×2 (verbo "fer"), "naixement" (`E1666`), "bous" (plural de "bou", animal), "rosa" (*El nom de la rosa*) |
+
+**Posible errata no detectada por el GD**: BM-AVL-161 "quatre anys
+**desprès**" lleva acento grave; en catalán es "després". "desprès"
+(adjetivo, "desprendido") ya no cuenta como marcador desde el 28/10.
+
+Quitando los errores del GD, el lado catalán quedaría en unos **0,004**
+(4 / 1.058) y el valenciano en **1,0000** (o 0,9991 si "estat" cuenta).
+Son cifras orientativas. Casi todo lo que baja el catalán de la AVL es
+la colisión verbal: son formas catalanas correctas ("permet", "consideren")
+que el GD cuenta como valencianas.
+
+**Para el equipo** (no se ha tocado nada del benchmark): revisar el
+catalán de BM-BOE-024, BM-BOE-078, BM-BOE-165 y BM-AVL-161.

@@ -1,5 +1,5 @@
 {
-  "total_entradas": 45187,
+  "total_entradas": 45186,
   "descripcio": "Formes verbals valencia/catala que difereixen entre dialectes. Des del 19/10/2026 les fonts OFICIALS (prioritat maxima) son les de 'diccionarios/' del proveïdor oficial (renombrada des de 'diccionarios_v1/' el 19/10/2026): 'conjugaciones_general.json' (43.242 formes, camp 'morfologia' amb el temps/mode -- descodificat amb evidencia real, vore documentacio/hoja_de_ruta_migracio_diccionarios_v1.md: pri=present indicatiu, prs=present subjuntiu, pii=imperfet indicatiu, pis=imperfet subjuntiu, imp=imperatiu, pp=participi, inf=infinitiu) i 'verbos_diferentes_conjugados.json' (912 parells d'arrel verbal distinta, p.ex. telefonar/trucar). El camp 'problematica' marca formes on el valencia usa la mateixa paraula per al present d'indicatiu i el de subjuntiu (p.ex. abalance = jo abalanco / que jo abalanci), cosa que fa la conversio ambigua sense analisi gramatical (pos-tagging); conjugacions_dict.py exclou estes entrades del lookup automatic i les deixa documentades aci per si en el futur es pot afegir un mecanisme de desambiguacio.\n\nRETIRATS 19/10/2026, mesurat amb els 4 benchmarks (151 + gplsi, les dos direccions) ZERO diferencia en cap: 'verbos_no_ambiguos.json', 'verbos_todos_anotados.json' i 'conjugaciones_nuevo.json'. Comprovat verb a verb que els seus infinitius d'una sola paraula ja estan TOTS coberts per les fonts oficials -- l'unica cosa que aportaven de mes eren frases multi-paraula ('llençar la brossa', 'fer cara de'...) que el motor mai ha pogut fer servir (no hi ha mecanisme de coincidencia multi-paraula per a verbs). Es van guardar primer a `lexic/backup_pendent/` com a xarxa de seguretat, pero eixa carpeta ja s'ha esborrat del tot (mateix dia, confirmat que no quedava res pendent) -- el contingut es conserva a l'historial de git si mai calguera.\n\n'conjugaciones_limpio.json' (968 formes, 111 verbs, el fitxer ORIGINAL de l'equip AVLizador, 29/09/2026) RETIRAT DEL TOT el 19/10/2026: les SEUES 968 files s'han fusionat SENCERES (no nomes un subconjunt) dins de 'conjugaciones_general.json' mateix, amb IDs 'LIMPIO_1'..'LIMPIO_968' (per no col·lidir amb la numeracio del proveïdor), 'morfologia' derivat a mà per a 95 formes seguint el mateix descodificat (resta null, mateix valor que ja usa el proveïdor per a formes sense classificar), i el flag 'problematica' preservat tal qual en 55 files que ja el portaven. **Important, apresa a cops (19/10/2026)**: la primera temptativa va fusionar NOMES les 97 formes 'noves' (les que faltaven al lookup val->cat), i això va trencar el doctest de `cat_val/conjugacions_dict.py` -- 'sofrisquen'->'sofreixin' queda exclosa del lookup val->cat pel filtre de risc de 3a plural (per aixo no eixia com a 'forma nova' des d'eixe costat), pero SI fa falta en brut per a que `carrega_conjugacions_invers()` detecte correctament que 'sofreixin' es ambigua (patisquen/sofrisquen) i l'excloga. Fusionar el fitxer SENCER evita este tipus de forat invisible des d'una sola direccio. El fitxer original es va guardar primer a 'lexic/backup_pendent/', ja esborrada del tot (conservada a l'historial de git). **Pendent d'informar al proveïdor**: el paradigma de present de subjuntiu del verb 'ser' seguix sent un forat real de la seua font (nosaltres ho hem apedaçat local, pero no soluciona l'origen).",
   "entradas": [
     {
@@ -15167,7 +15167,7 @@
     },
     {
       "catalan": "sobresurti",
-      "valenciano": "sobreisca",
+      "valenciano": "sobreïsca",
       "infinitiu_cat": "sobresortir",
       "infinitiu_val": "sobreeixir",
       "repetida": true,
@@ -22333,7 +22333,7 @@
     },
     {
       "catalan": "sobresurto",
-      "valenciano": "sobreisc",
+      "valenciano": "sobreïsc",
       "infinitiu_cat": "sobresortir",
       "infinitiu_val": "sobreeixir",
       "repetida": false,
@@ -22387,7 +22387,7 @@
     },
     {
       "catalan": "sobresurtis",
-      "valenciano": "sobreisques",
+      "valenciano": "sobreïsques",
       "infinitiu_cat": "sobresortir",
       "infinitiu_val": "sobreeixir",
       "repetida": false,
@@ -666293,17 +666293,6 @@
       "valenciano": "haguéreu",
       "morfologia": null,
       "id": "LIMPIO_587"
-    },
-    {
-      "verbo": "haver",
-      "catalan": "haig",
-      "valenciano": "he",
-      "morfologia": [
-        "pri",
-        "p1",
-        "sg"
-      ],
-      "id": "LIMPIO_588"
     },
     {
       "verbo": "haver",

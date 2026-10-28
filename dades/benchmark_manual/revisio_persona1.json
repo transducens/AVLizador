@@ -918,7 +918,7 @@
    "comentari": "",
    "id": "BM-BOE-055",
    "font": "boe",
-   "oriental": "Una de les oportunitats que obre aquesta Llei és la d’adequar els serveis i dispositius del govern d’Espanya a les necessitats d’un món globalitzat.",
+   "oriental": "Una de les oportunitats que obre aquesta Llei és la d’adequar els serveis i dispositius del Govern d’Espanya a les necessitats d’un món globalitzat.",
    "oriental_es_esborrany": false,
    "occidental": "Una de les oportunitats que obri esta Llei és la d’adequar els servicis i dispositius del Govern d’Espanya a les necessitats d’un món globalitzat.",
    "fenomens": [
@@ -988,7 +988,7 @@
    "font": "boe",
    "oriental": "S’avança en la liberalització i s’elimina, així, la impossibilitat de posseir més d’un 5% en diferents prestadors, amb l’expectativa que aquests puguin atreure a la seva activitat el capital financer necessari.",
    "oriental_es_esborrany": false,
-   "occidental": "S’avança en la liberalització i s’elimina així la impossibilitat de posseir més d’un 5% en distints prestadors, amb l’expectativa que estos puguen atraure a la seua activitat el capital financer necessari.",
+   "occidental": "S’avança en la liberalització i s’elimina, així, la impossibilitat de posseir més d’un 5% en distints prestadors, amb l’expectativa que estos puguen atraure a la seua activitat el capital financer necessari.",
    "fenomens": [
     "CONJ_IND: puguin → puguen",
     "POS: seva → seua",
@@ -1629,7 +1629,7 @@
    "comentari": "",
    "id": "BM-BOE-097",
    "font": "boe",
-   "oriental": "En aquesta línia, els pressupostos Generals de l’Estat per a 2014 aprofundeixen en la reducció de la despesa pública dins d’un context de consolidació fiscal, d’acord amb les orientacions i recomanacions establertes per la Unió Europea.",
+   "oriental": "En aquesta línia, els Pressupostos Generals de l’Estat per a 2014 aprofundeixen en la reducció de la despesa pública dins d’un context de consolidació fiscal, d’acord amb les orientacions i recomanacions establertes per la Unió Europea.",
    "oriental_es_esborrany": false,
    "occidental": "En esta línia, els Pressupostos Generals de l’Estat per a 2014 aprofundixen en la reducció del gasto públic dins d’un context de consolidació fiscal, d’acord amb les orientacions i recomanacions establides per la Unió Europea.",
    "fenomens": [
@@ -3826,9 +3826,9 @@
    "comentari": "",
    "id": "BM-BOE-229",
    "font": "boe",
-   "oriental": "Ens trobem en aquests casos davant els supòsits de resolució, veritable neologisme en el nostre ordenament jurídic, però que expressa de forma clara el que es pretén: resoldre de la millor forma possible una situació d’inviabilitat d’una entitat de crèdit.",
+   "oriental": "Ens trobem en aquests casos davant dels supòsits de resolució, veritable neologisme en el nostre ordenament jurídic, però que expressa de forma clara el que es pretén: resoldre de la millor forma possible una situació d’inviabilitat d’una entitat de crèdit.",
    "oriental_es_esborrany": false,
-   "occidental": "Ens trobem en estos casos davant dels supòsits de resolució, verdader neologisme en el nostre ordenament jurídic, però que expressa de manera clara el que es pretén: resoldre de la millor manera possible una situació d’inviabilitat d’una entitat de crèdit.",
+   "occidental": "Ens trobem en estos casos davant dels supòsits de resolució, verdader neologisme en el nostre ordenament jurídic, però que expressa de forma clara el que es pretén: resoldre de la millor manera possible una situació d’inviabilitat d’una entitat de crèdit.",
    "fenomens": [
     "DEM: aquests → estos",
     "LEX_ADJ: veritable → verdader"
@@ -4019,7 +4019,7 @@
    "font": "boe",
    "oriental": "Amb aquests objectius, la present Llei es compon d’un article únic que introdueix modificacions a la Llei 35/2003, de 4 de novembre, d’institucions d’inversió col·lectiva, al llarg de 71 apartats, tres disposicions addicionals, una disposició derogatòria i vuit disposicions finals.",
    "oriental_es_esborrany": false,
-   "occidental": "Amb eixos objectius, la present Llei es compon d’un article únic que introduïx modificacions en la Llei 35/2003, de 4 de novembre, d’Institucions d’Inversió Col·lectiva, al llarg de 71 apartats, tres disposicions addicionals, una disposició derogatòria i huit disposicions finals.",
+   "occidental": "Amb eixos objectius, la present Llei es compon d’un article únic que introduïx modificacions en la Llei 35/2003, de 4 de novembre, d’institucions d’inversió col·lectiva, al llarg de 71 apartats, tres disposicions addicionals, una disposició derogatòria i huit disposicions finals.",
    "fenomens": [
     "NUM: vuit → huit",
     "INC: introdueix → introduïx"

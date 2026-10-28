@@ -214,7 +214,7 @@
    "comentari": "",
    "id": "BM-BOE-014",
    "font": "boe",
-   "oriental": "Atès que el programa de la celebració comença al setembre de 2014, és urgent canviar-ne la denominació, per tal de poder posar en marxa el programa de suport a aquest esdeveniment d’excepcional interès públic.",
+   "oriental": "Atès que el programa de la celebració comença al setembre de 2014, és urgent el canvi de la denominació, per tal de poder posar en marxa el programa de suport a aquest esdeveniment d’excepcional interès públic.",
    "oriental_es_esborrany": false,
    "occidental": "Atés que el programa de la celebració comença al setembre de 2014, és urgent el canvi de denominació, a fi de poder posar en marxa el programa de suport a este esdeveniment d’excepcional interés públic.",
    "fenomens": [
@@ -3957,9 +3957,9 @@
    "comentari": "",
    "id": "BM-BOE-236",
    "font": "boe",
-   "oriental": "Finalment, en vuitè lloc, es concedeixen suplements de crèdit en el pressupost del Ministeri d’Economia i Competitivitat, per import de 95.649.809,01 euros, per a la realització d’actuacions emmarcades en el Pla estatal de recerca científica i tècnica i d’innovació.",
+   "oriental": "Finalment, en vuitè lloc, es concedeixen suplements de crèdit en el pressupost del Ministeri d’Economia i Competitivitat, per un import de 95.649.809,01 euros, per a la realització d’actuacions emmarcades en el pla estatal de recerca científica i tècnica i d’innovació.",
    "oriental_es_esborrany": false,
-   "occidental": "Finalment, en octau lloc, es concedixen suplements de crèdit en el pressupost del Ministeri d’Economia i Competitivitat, per un import de 95.649.809,01 euros, per a la realització d’actuacions emmarcades en el Pla Estatal d’Investigació Científica i Tècnica i d’Innovació.",
+   "occidental": "Finalment, en octau lloc, es concedixen suplements de crèdit en el pressupost del Ministeri d’Economia i Competitivitat, per un import de 95.649.809,01 euros, per a la realització d’actuacions emmarcades en el pla estatal d’investigació científica i tècnica i d’innovació.",
    "fenomens": [
     "LEX_NOM: recerca → investigació",
     "LEX_ADJ: vuitè → octau",
@@ -4088,7 +4088,7 @@
    "font": "boe",
    "oriental": "Quan almenys tres testimonis que coneguin la lletra i la signatura del testador declarin que no tenen cap dubte racional que va ser manuscrit i signat per ell, es podrà prescindir de les declaracions testificals que faltessin.",
    "oriental_es_esborrany": false,
-   "occidental": "Quan almenys tres testimonis que coneguen la lletra i firma del testador declararen que no tenen cap dubte racional que va ser manuscrit i firmat per ell, es podrà prescindir de les declaracions testificals que faltaren.",
+   "occidental": "Quan almenys tres testimonis que coneguen la lletra i la firma del testador declaren que no tenen cap dubte racional que va ser manuscrit i firmat per ell, es podrà prescindir de les declaracions testificals que faltaren.",
    "fenomens": [
     "LEX_NOM: signatura → firma",
     "LEX_ADJ: signat → firmat"

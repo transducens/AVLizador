@@ -7,6 +7,8 @@ Corpus (en este orde, els xicotets primer):
 
     151_val    benchmark de 151, costat valencià (camp `occidental`)
     151_cat    benchmark de 151, costat català (camp `oriental`)
+    manual_val benchmark manual (453 frases BOE + AVL), costat valencià
+    manual_cat benchmark manual, costat català
     gnv        Gramàtica Normativa Valenciana (txt, un document per línia)
     geiec      Gramàtica essencial de l'IEC (txt, un document per línia)
     boe_val    BOE complet, costat valencià (~268.000 línies)
@@ -63,12 +65,15 @@ from gd import _llig_jsonl, calcula_gd, carrega_formes_dialectals  # noqa: E402
 ARREL = _DIR.parents[1]
 EIXIDA_PER_DEFECTE = ARREL / "dades" / "grau_dialectal"
 BENCHMARK_151 = ARREL / "pipeline" / "03_seleccio_de_model" / "benchmark_corpus.json"
+BENCHMARK_MANUAL = ARREL / "dades" / "benchmark_manual" / "benchmark_manual_cat_val.json"
 GRAMATIQUES = ARREL / "pipeline" / "02_regles_dialectals" / "docs_gramatica"
 
 # nom -> (fitxer, camp de text o None per a txt, dialecte esperat)
 CORPUS = {
     "151_val": (BENCHMARK_151, "occidental", "val"),
     "151_cat": (BENCHMARK_151, "oriental", "cat"),
+    "manual_val": (BENCHMARK_MANUAL, "occidental", "val"),
+    "manual_cat": (BENCHMARK_MANUAL, "oriental", "cat"),
     "gnv": (GRAMATIQUES / "gnv_complet.txt", None, "val"),
     "geiec": (GRAMATIQUES / "geiec_complet.txt", None, "cat"),
     "boe_val": (ARREL / "dades" / "boe" / "valencia" / "boe_corpus_entrenamiento_val.jsonl", "texto", "val"),
