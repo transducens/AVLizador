@@ -7373,7 +7373,7 @@
    "id_origen": "AVL-002206"
   },
     {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -7401,7 +7401,7 @@
    "id_origen": "AVL-001956"
   },
   {
-   "valida": null,
+   "valida": false,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -7432,7 +7432,7 @@
    "id_origen": "AVL-000178"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -7461,7 +7461,7 @@
    "id_origen": "AVL-001902"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -7489,7 +7489,7 @@
    "id_origen": "AVL-000782"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -7517,7 +7517,7 @@
    "id_origen": "AVL-002108"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -7546,13 +7546,13 @@
    "id_origen": "AVL-000830"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-193",
    "font": "avl",
-   "oriental": "L'Acadèmia Valenciana de la Llengua és una institució de caràcter públic de la Generalitat Valenciana, que gaudeix de personalitat jurídica pròpia i exerceix les seves funcions amb autonomia orgànica, funcional i pressupostària, per a garantir la seva objectivitat i independència.",
+   "oriental": "L'Acadèmia Valenciana de la Llengua és una institució de caràcter públic de la Generalitat Valenciana, que gaudeix de personalitat jurídica pròpia i exerceix les seves funcions amb autonomia orgànica, funcional i pressupostària, per garantir la seva objectivitat i independència.",
    "oriental_es_esborrany": true,
    "occidental": "L'Acadèmia Valenciana de la Llengua és una institució de caràcter públic de la Generalitat Valenciana, que gaudix de personalitat jurídica pròpia i exercix les seues funcions amb autonomia orgànica, funcional i pressupostària, per a garantir la seua objectivitat i independència.",
    "fenomens": [
@@ -7577,7 +7577,7 @@
    "id_origen": "AVL-002191"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -7605,13 +7605,13 @@
    "id_origen": "AVL-000148"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-197",
    "font": "avl",
-   "oriental": "I desprès, tenim a la nostra disposició nombroses eines com ara els vídeos, les fotografies, les icones o la música per a ser més pròxims; la gent ja no es conforma solament amb el text.",
+   "oriental": "I després, tenim a la nostra disposició nombroses eines com ara els vídeos, les fotografies, les icones o la música per ser més pròxims; la gent ja no es conforma solament amb el text.",
    "oriental_es_esborrany": true,
    "occidental": "I després, tenim a la nostra disposició nombroses ferramentes com ara els vídeos, les fotografies, les icones o la música per a ser més pròxims; la gent ja no es conforma solament amb el text.",
    "fenomens": [
@@ -7634,7 +7634,7 @@
    "id_origen": "AVL-001948"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -7662,13 +7662,13 @@
    "id_origen": "AVL-001824"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-201",
    "font": "avl",
-   "oriental": "Sabent això, que tots vostès, i molt especialment les dones que celebren avui la seva onomàstica, tinguen un feliç dia!",
+   "oriental": "Sabent això, que tots vostès, i molt especialment les dones que celebrin avui la seva onomàstica, tinguen un feliç dia!",
    "oriental_es_esborrany": true,
    "occidental": "Sabent això, que tots vostés, i molt especialment les dones que celebren hui la seua onomàstica, tinguen un feliç dia!",
    "fenomens": [
@@ -7692,13 +7692,13 @@
    "id_origen": "AVL-000834"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-203",
    "font": "avl",
-   "oriental": "El president de l’Acadèmia Valenciana de la Llengua, Ramon Ferrer, s’ha reunit avui amb la batllessa d’Algemesí, Marta Trenzano, per a estudiar i concretar les línies de col·laboració institucional dirigides a la promoció i difusió del valencià.",
+   "oriental": "El president de l’Acadèmia Valenciana de la Llengua, Ramon Ferrer, s’ha reunit avui amb la batllessa d’Algemesí, Marta Trenzano, per estudiar i concretar les línies de col·laboració institucional dirigides a la promoció i difusió del valencià.",
    "oriental_es_esborrany": true,
    "occidental": "El president de l’Acadèmia Valenciana de la Llengua, Ramon Ferrer, s’ha reunit hui amb l’alcaldessa d’Algemesí, Marta Trenzano, per a estudiar i concretar les línies de col·laboració institucional dirigides a la promoció i difusió del valencià.",
    "fenomens": [
@@ -7721,7 +7721,7 @@
    "id_origen": "AVL-002069"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -7749,7 +7749,7 @@
    "id_origen": "AVL-000046"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -7777,7 +7777,7 @@
    "id_origen": "AVL-000490"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -7806,7 +7806,7 @@
    "id_origen": "AVL-001953"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -7834,7 +7834,7 @@
    "id_origen": "AVL-000005"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -7862,7 +7862,7 @@
    "id_origen": "AVL-002031"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -7890,7 +7890,7 @@
    "id_origen": "AVL-001970"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -7918,7 +7918,7 @@
    "id_origen": "AVL-001162"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
