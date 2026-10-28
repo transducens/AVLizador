@@ -817,7 +817,7 @@ def marca_noms_propis(tokens: list[Token]) -> None:
 # categoria: "nou [adj]", "nou [n]", "nou [num]"). Segons la guia del
 # proveïdor, si cap altra lectura comparteix la categoria de l'entrada,
 # spaCy pot decidir; si la comparteix, no (caldria un LLM). Mateix criteri
-# que l'IPD des del 21/10/2026, que ara el reutilitza d'ací.
+# que el GD des del 21/10/2026, que ara el reutilitza d'ací.
 LEXIC_GENERAL_PATH = Path(__file__).resolve().parent.parent / "data" / "lexic_general.json"
 
 # Categoria del proveïdor -> etiquetes POS d'spaCy.

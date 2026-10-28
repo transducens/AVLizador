@@ -1,17 +1,32 @@
 #!/usr/bin/env python3
 """
-ipd.py -- Índex de Puresa Dialectal (IPD): quin percentatge de les
+gd.py -- Grau Dialectal (GD): quin percentatge de les
 paraules dialectalment marcades d'un text son formes OCCIDENTALS
 (valencianes) en compte d'ORIENTALS (catalanes).
 
-    IPD = total_paraules_occidentals / (total_occidentals + total_orientals)
+    GD = total_paraules_occidentals / (total_occidentals + total_orientals)
 
-Un IPD d'1.0 vol dir "cap paraula catalana marcada en tot el text", 0.0
-vol dir el contrari, i `None` vol dir que no s'ha trobat cap paraula
-dialectalment marcada (el text no diu res sobre quin dialecte és -- no
-es pot calcular un percentatge sobre zero).
+Un GD d'1.0 vol dir "cap paraula catalana marcada en tot el text", 0.0
+vol dir el contrari.
 
-ORIGEN (13/10/2026, vore `documentacio/hoja_de_ruta_ipd_y_proxima_fase.md`):
+TEXT SENSE CAP PARAULA MARCADA (decisió de l'usuari, 26/10/2026): què
+val el GD depén de la tasca, així que el tria el paràmetre `dialecte`:
+
+  - sense `dialecte` (per defecte, `None`): el GD és `None` -- el text no
+    diu res sobre el dialecte i no entra en cap mitjana. És la mesura
+    neutra, la que no afavorix cap dels dos dialectes.
+  - `dialecte="val"`: 1.0 -- el text s'avalua com a valencià i, com que
+    no té res que el desmentisca, compta com a valencià pur.
+  - `dialecte="cat"`: 0.0 -- el mateix, avaluat com a català.
+
+Amb `"val"`/`"cat"` el resultat queda condicionat per la tasca (un text
+sense marcadors afavorix el costat que s'avalua): servix per a
+comprovar que un text o una traducció és pur en el dialecte esperat, no
+per a comparar dialectes. 0.5 es va provar i es va descartar perquè es
+confon amb un text mesclat a parts iguals. Amb qualsevol mode,
+`total_marcades == 0` diu que el GD no ve de cap marcador.
+
+ORIGEN (13/10/2026, vore `documentacio/hoja_de_ruta_gd_y_proxima_fase.md`):
 `pipeline/01_extraccio_i_neteja/estudi_dialectal.py` ja calculava una mètrica molt
 semblant (`ratio_occ`), pero contra dos llistes curades a mà d'una
 vuitantena de paraules cadascuna (`OCCIDENTAL_MARKERS`/`ORIENTAL_MARKERS`
@@ -23,7 +38,7 @@ nova. Avantages sobre l'enfocament antic:
 
   1. Molt mes vocabulari cobert (uns 500 cops mes paraules).
   2. Una sola font de veritat: si una paraula es dialectal segons el
-     motor de traducció, també ho és segons l'IPD -- no hi ha dos
+     motor de traducció, també ho és segons el GD -- no hi ha dos
      llistes que es puguen desincronitzar.
   3. Funciona per a QUALSEVOL text (una frase solta, un fitxer, un
      corpus JSONL sencer), no només per als documents ja carregats a
@@ -55,12 +70,12 @@ complet (267.962 documents reals, mai sobre l'eixida del motor): "qué"
 nomes apareix 1 volta per cada 17.584 "què" (0,0%) i "açò" nomes 65
 voltes per cada 5.708 "això" (1,1%) al costat VALENCIÀ real -- el mateix
 patró ja confirmat a menor escala amb el benchmark de 151 (7/9 "què").
-S'exclouen dels DOS costats de l'índex de l'IPD (ni compten com a
+S'exclouen dels DOS costats de l'índex del GD (ni compten com a
 marcador occidental ni oriental), PERO NO es toca
 `traductor/rules/val_cat/lexic.py::_BUG_DADES_CONEGUTS` -- eixe set
 alimenta la TRADUCCIÓ de veres (`carrega_lexic()`), i ja es va mesurar
 (15/10/2026) que excloure "qué" ahí trenca una traducció real (RC055).
-Els dos mecanismes són independents a propòsit: l'IPD pot decidir que
+Els dos mecanismes són independents a propòsit: el GD pot decidir que
 una paraula no és un bon marcador sense que això canvie com es traduïx.
 
 HOMÒGRAFS ENTRE CATEGORIES I FORMES AMBIGÜES (21/10/2026, sense cap
@@ -105,21 +120,24 @@ pendent de confirmar -- cap dels dos es toca ací.
 
 ÚS com a script:
 
-    python ipd.py --text "Este xiquet vol vindre hui."
-    python ipd.py --fitxer un_document.txt
-    python ipd.py --corpus ../../dades/avl/final/unified.jsonl --camp text
+    python gd.py --text "Este xiquet vol vindre hui."
+    python gd.py --text "Aquest nen vol venir avui." --dialecte cat
+    python gd.py --fitxer un_document.txt
+    python gd.py --corpus ../../dades/avl/final/unified.jsonl --camp text
 
     # Informe HTML per a VORE i depurar frase a frase (paraules
     # ressaltades, verd=occidental/taronja=oriental), amb dos columnes
     # una al costat de l'altra quan el corpus en té (com el benchmark
-    # del projecte, "occidental"/"oriental"):
-    python ipd.py --corpus ../03_seleccio_de_model/benchmark_corpus.json \
+    # del projecte, "occidental"/"oriental"; afegiu `--dialecte val
+    # --dialecte-alt cat` per a comptar com a purs els textos sense
+    # marcadors):
+    python gd.py --corpus ../03_seleccio_de_model/benchmark_corpus.json \
         --camp occidental --camp-alt oriental --html informe.html
 
 ÚS com a mòdul (des d'un atre script del projecte):
 
-    from ipd import calcula_ipd
-    calcula_ipd("Este xiquet vol vindre hui.")["ipd"]  # -> 1.0
+    from gd import calcula_gd
+    calcula_gd("Este xiquet vol vindre hui.")["gd"]  # -> 1.0
 """
 
 from __future__ import annotations
@@ -131,7 +149,7 @@ import sys
 from pathlib import Path
 from typing import Iterator
 
-# `ipd.py` viu a pipeline/09_index_puresa_dialectal/, dos nivells per
+# `gd.py` viu a pipeline/09_grau_dialectal/, dos nivells per
 # davall de `traductor/` (no dins d'ella) -- mateix mecanisme que
 # `pipeline/03_seleccio_de_model/evalua_models.py` per a trobar el
 # paquet quan l'script s'executa des de dins d'esta carpeta.
@@ -157,7 +175,7 @@ from traductor.rules.val_cat.possessius import _carrega_possessius
 # Nomes per a `WORD_RE` (vore `_processa_corpus`/`resalta_html`, que
 # encara necessiten un regex simple de paraula per a construir l'HTML
 # ressaltat caràcter a caràcter -- el recompte de debò ara tokenitza amb
-# el motor de veres, vore `calcula_ipd`).
+# el motor de veres, vore `calcula_gd`).
 WORD_RE = re.compile(r"[^\W\d_]+", re.UNICODE)
 
 _CACHE: "Formes | None" = None
@@ -177,7 +195,7 @@ _carrega_homografs = carrega_homografs
 class Formes:
     """Les formes dialectals carregades, separades en dos grups perquè
     cadascun necessita un criteri distint de confiança (vore
-    `calcula_ipd` i "BUG REAL" al docstring del mòdul):
+    `calcula_gd` i "BUG REAL" al docstring del mòdul):
 
     - `occ_simple`/`or_simple`: paraules de lèxic/demostratius/numerals/
       possessius -- lookup directe.
@@ -414,14 +432,41 @@ def _classifica_token(tok: Token, formes: Formes) -> str | None:
     return None
 
 
-def calcula_ipd(text: str, formes: Formes | None = None) -> dict:
-    """Calcula l'IPD d'un text solt (una frase, un paràgraf, un
+DIALECTES = ("val", "cat")
+
+
+def _gd(total_occ: int, total_or: int, dialecte: str | None = None) -> float | None:
+    """GD a partir dels comptes. Sense cap marcador: `None` si no es dona
+    `dialecte`, 1.0 per a `"val"` i 0.0 per a `"cat"` (vore "TEXT SENSE
+    CAP PARAULA MARCADA" al docstring del mòdul).
+
+    >>> _gd(3, 1), _gd(3, 1, "cat")
+    (0.75, 0.75)
+    >>> _gd(0, 0) is None, _gd(0, 0, "val"), _gd(0, 0, "cat")
+    (True, 1.0, 0.0)
+    """
+    if dialecte is not None and dialecte not in DIALECTES:
+        raise ValueError(f"dialecte ha de ser None o un de {DIALECTES}, no {dialecte!r}")
+    total = total_occ + total_or
+    if not total:
+        if dialecte is None:
+            return None
+        return 1.0 if dialecte == "val" else 0.0
+    return round(total_occ / total, 4)
+
+
+def calcula_gd(
+    text: str, formes: Formes | None = None, dialecte: str | None = None
+) -> dict:
+    """Calcula el GD d'un text solt (una frase, un paràgraf, un
     document sencer). Si no es passa `formes`, carrega (o reutilitza)
-    l'índex complet amb `carrega_formes_dialectals()`.
+    l'índex complet amb `carrega_formes_dialectals()`. `dialecte`
+    (`None`, `"val"` o `"cat"`) només canvia el resultat quan no hi ha
+    cap paraula marcada: `None`, 1.0 o 0.0 respectivament.
 
     DOS BUGS REALS trobats i corregits (13/10/2026, a petició de
     l'usuari revisant el seu propi benchmark -- vore
-    `documentacio/hoja_de_ruta_ipd_y_proxima_fase.md` per al detall
+    `documentacio/hoja_de_ruta_gd_y_proxima_fase.md` per al detall
     complet i les xifres abans/després):
 
     1. **Filtre de POS per als marcadors verbals** (vore
@@ -442,30 +487,37 @@ def calcula_ipd(text: str, formes: Formes | None = None) -> dict:
     "vindre" compta des de la integració de `conjugaciones_general.json`
     (19/10/2026), que porta els infinitius:
 
-    >>> r = calcula_ipd("Este xiquet vol vindre hui.")
-    >>> r["total_occidentals"], r["total_orientals"], r["ipd"]
+    >>> r = calcula_gd("Este xiquet vol vindre hui.")
+    >>> r["total_occidentals"], r["total_orientals"], r["gd"]
     (4, 0, 1.0)
     >>> r["marcadors_occidentals"]
     ['este', 'xiquet', 'vindre', 'hui']
 
-    >>> r = calcula_ipd("El xiquet jugava amb el nen del veí.")
-    >>> r["total_occidentals"], r["total_orientals"], r["ipd"]
+    >>> r = calcula_gd("El xiquet jugava amb el nen del veí.")
+    >>> r["total_occidentals"], r["total_orientals"], r["gd"]
     (1, 1, 0.5)
 
-    >>> r = calcula_ipd("La casa és gran i té un jardí.")
-    >>> r["total_marcades"], r["ipd"]
+    Sense cap paraula marcada: `None` per defecte; pur per al dialecte
+    que s'avalua si es dona `dialecte` (1.0 en valencià, 0.0 en català):
+
+    >>> r = calcula_gd("La casa és gran i té un jardí.")
+    >>> r["total_marcades"], r["gd"]
     (0, None)
+    >>> calcula_gd("La casa és gran i té un jardí.", dialecte="val")["gd"]
+    1.0
+    >>> calcula_gd("La casa és gran i té un jardí.", dialecte="cat")["gd"]
+    0.0
 
     "entre" (preposició) ja NO es compta com a marcador verbal fals
     (bug 1 dalt):
 
-    >>> r = calcula_ipd("El llibre és entre els dos prestatges.")
+    >>> r = calcula_gd("El llibre és entre els dos prestatges.")
     >>> r["total_marcades"]
     0
 
     "d'aquestes" ara SÍ es detecta com a marcador oriental (bug 2 dalt):
 
-    >>> r = calcula_ipd("En el decurs d'aquestes estades.")
+    >>> r = calcula_gd("En el decurs d'aquestes estades.")
     >>> r["marcadors_orientals"]
     ['aquestes']
 
@@ -475,9 +527,9 @@ def calcula_ipd(text: str, formes: Formes | None = None) -> dict:
     així que eixa lectura es perd: fals negatiu acceptat); "manca" nom
     (lectura dialectal, "carència") sí compta:
 
-    >>> calcula_ipd("Hem comprat un cotxe nou.")["total_marcades"]
+    >>> calcula_gd("Hem comprat un cotxe nou.")["total_marcades"]
     0
-    >>> calcula_ipd("Hi ha una manca de recursos.")["marcadors_orientals"]
+    >>> calcula_gd("Hi ha una manca de recursos.")["marcadors_orientals"]
     ['manca']
     """
     if formes is None:
@@ -509,7 +561,7 @@ def calcula_ipd(text: str, formes: Formes | None = None) -> dict:
         "total_occidentals": total_occ,
         "total_orientals": total_or,
         "total_marcades": total_marcades,
-        "ipd": round(total_occ / total_marcades, 4) if total_marcades else None,
+        "gd": _gd(total_occ, total_or, dialecte),
         "marcadors_occidentals": marcadors_occ,
         "marcadors_orientals": marcadors_or,
     }
@@ -551,9 +603,9 @@ def resalta_html(text: str, formes: Formes | None = None) -> str:
     """Torna `text` com a HTML amb cada paraula marcada envoltada en un
     `<span>` (classe `mk-occ` les occidentals, `mk-or` les orientals) --
     pensat per a `--html` (vore baix), per a poder VORE d'un colp d'ull
-    quines paraules concretes fan pujar o baixar l'IPD d'una frase, en
+    quines paraules concretes fan pujar o baixar el GD d'una frase, en
     compte de només el número final. Fa EXACTAMENT la mateixa
-    classificació que `calcula_ipd` (mateix filtre de POS per als
+    classificació que `calcula_gd` (mateix filtre de POS per als
     marcadors verbals -- vore "BUG REAL" al docstring del mòdul), perquè
     el ressaltat visual i el número calculat mai es contradiguen.
 
@@ -583,11 +635,20 @@ def resalta_html(text: str, formes: Formes | None = None) -> str:
     return "".join(out)
 
 
+def _text_gd(gd: float | None, total_marcades: int) -> str:
+    """GD per a la consola, amb una nota si no ve de cap marcador."""
+    if gd is None:
+        return "-- (cap paraula marcada)"
+    text = f"{gd:.4f}"
+    if not total_marcades:
+        text += " (cap paraula marcada: pur per al dialecte avaluat)"
+    return text
+
+
 def _mostra_text(etiqueta: str, resultat: dict, mostra: int) -> None:
-    ipd = resultat["ipd"]
-    ipd_text = f"{ipd:.4f}" if ipd is not None else "-- (cap paraula marcada)"
+    gd_text = _text_gd(resultat["gd"], resultat["total_marcades"])
     print(f"{etiqueta}")
-    print(f"  IPD: {ipd_text}")
+    print(f"  GD: {gd_text}")
     print(
         f"  occidentals={resultat['total_occidentals']}  "
         f"orientals={resultat['total_orientals']}  "
@@ -601,9 +662,10 @@ def _mostra_text(etiqueta: str, resultat: dict, mostra: int) -> None:
 
 
 def _resum_camp(
-    path: Path, camp: str, formes, limit: int | None = None
+    path: Path, camp: str, formes, limit: int | None = None,
+    dialecte: str | None = None,
 ) -> tuple[list[dict], int, int]:
-    """Calcula l'IPD de `camp` a cada linia de `path` (com a molt `limit`
+    """Calcula el GD de `camp` a cada linia de `path` (com a molt `limit`
     documents, si es dona -- util per a corpus grans com el del BOE,
     ~268.000 linies, on cada frase es tokenitza amb spaCy i provar amb
     tot no es practic la primera vegada). Torna `(resultats_per_doc,
@@ -614,32 +676,36 @@ def _resum_camp(
         if limit is not None and i >= limit:
             break
         text = doc.get(camp) or ""
-        r = calcula_ipd(text, formes)
+        r = calcula_gd(text, formes, dialecte)
         total_occ += r["total_occidentals"]
         total_or += r["total_orientals"]
         resultats.append({"id": doc.get("id") or doc.get("corpus_id"), "text": text, **r})
     return resultats, total_occ, total_or
 
 
-def _ipd_color(ipd: float | None) -> str:
-    if ipd is None:
+def _gd_color(gd: float | None, sense_marcadors: bool = False) -> str:
+    if gd is None or sense_marcadors:
         return "#9a9ba5"
-    if ipd >= 0.8:
+    if gd >= 0.8:
         return "#1a9850"
-    if ipd >= 0.5:
+    if gd >= 0.5:
         return "#d6a300"
     return "#d1372f"
 
 
+def _html_gd(gd: float | None) -> str:
+    return "—" if gd is None else str(gd)
+
+
 def genera_informe_html(
     path: Path, camp: str, camp_alt: str | None, formes,
-    res_a: list[dict], ipd_a: float | None,
-    res_b: list[dict] | None, ipd_b: float | None,
+    res_a: list[dict], gd_a: float | None,
+    res_b: list[dict] | None, gd_b: float | None,
     sortida: Path,
 ) -> None:
     """Genera un informe HTML autònom (sense dependencies externes) amb
     una fila per document: el text ressaltat paraula a paraula (verd =
-    marcador occidental, taronja = marcador oriental) i l'IPD de cada
+    marcador occidental, taronja = marcador oriental) i el GD de cada
     columna -- pensat per a VORE i depurar per què un benchmark puntua
     com puntua, no només llegir el número agregat. Si `camp_alt` es
     dona (p.ex. "occidental"/"oriental" del benchmark del projecte),
@@ -657,15 +723,15 @@ def genera_informe_html(
         id_doc = _esc(str(ra["id"] if ra["id"] is not None else i))
         cela_a = (
             f'<td class="txt">{resalta_html(ra["text"], formes)}</td>'
-            f'<td class="score" style="color:{_ipd_color(ra["ipd"])}">'
-            f'{ra["ipd"] if ra["ipd"] is not None else "—"}</td>'
+            f'<td class="score" style="color:{_gd_color(ra["gd"], not ra["total_marcades"])}">'
+            f'{_html_gd(ra["gd"])}</td>'
         )
         cela_b = ""
         if rb is not None:
             cela_b = (
                 f'<td class="txt">{resalta_html(rb["text"], formes)}</td>'
-                f'<td class="score" style="color:{_ipd_color(rb["ipd"])}">'
-                f'{rb["ipd"] if rb["ipd"] is not None else "—"}</td>'
+                f'<td class="score" style="color:{_gd_color(rb["gd"], not rb["total_marcades"])}">'
+                f'{_html_gd(rb["gd"])}</td>'
             )
         cerca = _esc((ra["text"] + " " + (rb["text"] if rb else "")).lower())
         files_html.append(
@@ -673,11 +739,11 @@ def genera_informe_html(
         )
 
     capcalera_b = (
-        f'<th>{_esc(camp_alt)}</th><th>IPD</th>' if camp_alt is not None else ""
+        f'<th>{_esc(camp_alt)}</th><th>GD</th>' if camp_alt is not None else ""
     )
     resum_b = (
-        f'<div class="card"><div class="label">IPD global "{_esc(camp_alt)}"</div>'
-        f'<div class="value" style="color:{_ipd_color(ipd_b)}">{ipd_b if ipd_b is not None else "—"}</div></div>'
+        f'<div class="card"><div class="label">GD global "{_esc(camp_alt)}"</div>'
+        f'<div class="value" style="color:{_gd_color(gd_b)}">{_html_gd(gd_b)}</div></div>'
         if camp_alt is not None else ""
     )
 
@@ -686,7 +752,7 @@ def genera_informe_html(
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Informe IPD -- {_esc(path.name)}</title>
+<title>Informe GD -- {_esc(path.name)}</title>
 <style>
   :root {{
     --bg:#f7f7f8; --panel:#fff; --border:#e2e2e6; --text:#1c1c1f; --text-dim:#6b6b74;
@@ -720,18 +786,18 @@ def genera_informe_html(
 </style>
 </head>
 <body>
-  <h1>Informe IPD -- {_esc(path.name)}</h1>
+  <h1>Informe GD -- {_esc(path.name)}</h1>
   <p class="subt">{len(res_a)} documents. Verd = marcador occidental (valencià), taronja = marcador oriental (català).</p>
   <div class="cards">
-    <div class="card"><div class="label">IPD global "{_esc(camp)}"</div>
-      <div class="value" style="color:{_ipd_color(ipd_a)}">{ipd_a if ipd_a is not None else "—"}</div></div>
+    <div class="card"><div class="label">GD global "{_esc(camp)}"</div>
+      <div class="value" style="color:{_gd_color(gd_a)}">{_html_gd(gd_a)}</div></div>
     {resum_b}
   </div>
   <div class="legend"><span class="mk-occ">occidental</span><span class="mk-or">oriental</span></div>
   <input id="cerca" type="search" placeholder="Cerca per id o text...">
   <div style="overflow-x:auto">
   <table id="taula">
-    <thead><tr><th>ID</th><th>{_esc(camp)}</th><th>IPD</th>{capcalera_b}</tr></thead>
+    <thead><tr><th>ID</th><th>{_esc(camp)}</th><th>GD</th>{capcalera_b}</tr></thead>
     <tbody>{"".join(files_html)}</tbody>
   </table>
   </div>
@@ -752,19 +818,21 @@ document.getElementById('cerca').addEventListener('input', function (e) {{
 def _processa_corpus(
     path: Path, camp: str, camp_alt: str | None, mostra: int,
     sortida_json: Path | None, sortida_html: Path | None, limit: int | None,
+    dialecte: str | None = None, dialecte_alt: str | None = None,
 ) -> None:
     formes = carrega_formes_dialectals()
-    res_a, occ_a, or_a = _resum_camp(path, camp, formes, limit)
-    ipd_a = round(occ_a / (occ_a + or_a), 4) if (occ_a + or_a) else None
+    res_a, occ_a, or_a = _resum_camp(path, camp, formes, limit, dialecte)
+    gd_a = _gd(occ_a, or_a, dialecte)
 
-    res_b = ipd_b = None
+    res_b = gd_b = None
     if camp_alt is not None:
-        res_b, occ_b, or_b = _resum_camp(path, camp_alt, formes, limit)
-        ipd_b = round(occ_b / (occ_b + or_b), 4) if (occ_b + or_b) else None
+        res_b, occ_b, or_b = _resum_camp(path, camp_alt, formes, limit, dialecte_alt)
+        gd_b = _gd(occ_b, or_b, dialecte_alt)
 
     limit_text = f", limit a {limit}" if limit is not None else ""
-    print(f"Corpus: {path}  ({len(res_a)} documents, camp '{camp}'{limit_text})")
-    print(f"  IPD global: {ipd_a if ipd_a is not None else '-- (cap paraula marcada)'}")
+    com_a = f" com a '{dialecte}'" if dialecte is not None else ""
+    print(f"Corpus: {path}  ({len(res_a)} documents, camp '{camp}'{com_a}{limit_text})")
+    print(f"  GD global: {_text_gd(gd_a, occ_a + or_a)}")
     print(f"  occidentals={occ_a}  orientals={or_a}")
 
     if sortida_json is not None:
@@ -772,7 +840,7 @@ def _processa_corpus(
         # el document inclou també les claus "_alt" amb el mateix detall
         # per a eixa segona columna -- així un sol JSON basta per a
         # reconstruir la comparativa de dos columnes sense tornar a
-        # executar res (vore visor_ipd.html, pensat per a llegir este
+        # executar res (vore visor_gd.html, pensat per a llegir este
         # format, 14/10/2026).
         documents = []
         for i, ra in enumerate(res_a):
@@ -780,7 +848,7 @@ def _processa_corpus(
             if res_b is not None:
                 rb = res_b[i]
                 doc["text_alt"] = rb["text"]
-                doc["ipd_alt"] = rb["ipd"]
+                doc["gd_alt"] = rb["gd"]
                 doc["total_occidentals_alt"] = rb["total_occidentals"]
                 doc["total_orientals_alt"] = rb["total_orientals"]
                 doc["marcadors_occidentals_alt"] = rb["marcadors_occidentals"]
@@ -790,8 +858,10 @@ def _processa_corpus(
             json.dumps(
                 {
                     "camp": camp, "camp_alt": camp_alt,
-                    "ipd_global": ipd_a, "total_occidentals": occ_a, "total_orientals": or_a,
-                    "ipd_global_alt": ipd_b,
+                    "dialecte": dialecte,
+                    "dialecte_alt": dialecte_alt if camp_alt is not None else None,
+                    "gd_global": gd_a, "total_occidentals": occ_a, "total_orientals": or_a,
+                    "gd_global_alt": gd_b,
                     "documents": documents,
                 },
                 ensure_ascii=False, indent=2,
@@ -801,14 +871,14 @@ def _processa_corpus(
         print(f"  Guardat detall per document a {sortida_json}")
 
     if sortida_html is not None:
-        genera_informe_html(path, camp, camp_alt, formes, res_a, ipd_a, res_b, ipd_b, sortida_html)
-        extra = f" / '{camp_alt}'={ipd_b}" if camp_alt is not None else ""
-        print(f"  Informe HTML guardat a {sortida_html} (IPD '{camp}'={ipd_a}{extra})")
+        genera_informe_html(path, camp, camp_alt, formes, res_a, gd_a, res_b, gd_b, sortida_html)
+        extra = f" / '{camp_alt}'={gd_b}" if camp_alt is not None else ""
+        print(f"  Informe HTML guardat a {sortida_html} (GD '{camp}'={gd_a}{extra})")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Calcula l'Índex de Puresa Dialectal (IPD) d'un text, fitxer o corpus JSONL."
+        description="Calcula el Grau Dialectal (GD) d'un text, fitxer o corpus JSONL."
     )
     grup = parser.add_mutually_exclusive_group(required=True)
     grup.add_argument("--text", help="Frase o text solt a analitzar.")
@@ -822,6 +892,16 @@ def main() -> None:
         "--camp-alt", default=None,
         help="Amb --corpus: segon camp a comparar al costat del primer "
              "(p.ex. --camp occidental --camp-alt oriental per al benchmark del projecte).",
+    )
+    parser.add_argument(
+        "--dialecte", choices=DIALECTES, default=None,
+        help="Dialecte amb què s'avalua el text (--text, --fitxer o --camp). "
+             "Només importa si no hi ha cap paraula marcada: sense l'opció "
+             "el GD és buit (None); amb 'val' és 1.0 i amb 'cat' 0.0 (text pur).",
+    )
+    parser.add_argument(
+        "--dialecte-alt", choices=DIALECTES, default=None,
+        help="Igual que --dialecte, per a --camp-alt.",
     )
     parser.add_argument(
         "--mostra", type=int, default=10,
@@ -844,14 +924,18 @@ def main() -> None:
     args = parser.parse_args()
 
     if args.text is not None:
-        _mostra_text("(text solt)", calcula_ipd(args.text), args.mostra)
+        _mostra_text(
+            "(text solt)", calcula_gd(args.text, dialecte=args.dialecte), args.mostra
+        )
     elif args.fitxer is not None:
         text = args.fitxer.read_text(encoding="utf-8")
-        _mostra_text(str(args.fitxer), calcula_ipd(text), args.mostra)
+        _mostra_text(
+            str(args.fitxer), calcula_gd(text, dialecte=args.dialecte), args.mostra
+        )
     else:
         _processa_corpus(
             args.corpus, args.camp, args.camp_alt, args.mostra,
-            args.sortida, args.html, args.limit,
+            args.sortida, args.html, args.limit, args.dialecte, args.dialecte_alt,
         )
 
 

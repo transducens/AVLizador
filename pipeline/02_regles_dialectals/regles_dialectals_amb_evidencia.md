@@ -351,7 +351,7 @@ concreta abans de decidir si canvia o no.
 Ja implementat com a regla determinista (`traductor/rules/numerals.py`,
 concordança de gènere). Nota important: precisament perquè "dos" és vàlid
 per als dos gèneres en occidental, esta regla **no** es fa servir com a
-marcador dialectal en l'Índex de Puresa Dialectal (vore
+marcador dialectal en el Grau Dialectal (vore
 `metrica_puresa_dialectal.md`) — "dos" apareix legítimament en textos
 orientals per a masculí, així que comptar-lo com a senyal de contaminació
 donaria molts falsos positius.
@@ -576,7 +576,7 @@ Per això esta regla es tradueix sempre cap a perifràstic quan es detecta
 la forma simple (és la direcció de conversió correcta), però la forma
 perifràstica en si mateixa **no és un marcador dialectal fiable**: no
 serveix per a detectar si un text és occidental o oriental, perquè
-apareix als dos costats. Per este motiu l'Índex de Puresa Dialectal (vore
+apareix als dos costats. Per este motiu el Grau Dialectal (vore
 `metrica_puresa_dialectal.md`) NOMÉS usa el costat occidental d'esta
 regla (les terminacions -à/-aren/-àrem/-àreu) com a marcador, mai
 "va"/"van"/"vam"/"vau".

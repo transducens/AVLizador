@@ -1,6 +1,6 @@
 *[Léelo en valenciano](README.md)*
 
-# `pipeline/09_index_puresa_dialectal/` — Índice de Pureza Dialectal (IPD)
+# `pipeline/09_grau_dialectal/` — Grado Dialectal (GD)
 
 Novena etapa del proyecto AVLizador (ver `README.es.md` de la raíz):
 métrica para saber, de cualquier texto, qué porcentaje de sus palabras
@@ -8,13 +8,86 @@ dialectalmente marcadas son formas **occidentales** (valencianas) en vez
 de **orientales** (catalanas).
 
 ```
-IPD = total_palabras_occidentales / (total_occidentales + total_orientales)
+GD = total_palabras_occidentales / (total_occidentales + total_orientales)
 ```
 
-Un IPD de 1,0 significa que ninguna palabra catalana marcada aparece en
-el texto; 0,0 significa lo contrario; y `None` (sin resultado) significa
-que el texto no contiene ninguna palabra dialectalmente marcada de las
-que conoce el índice — no se puede calcular un porcentaje sobre cero.
+Hasta el 26/10/2026 esta métrica se llamaba **Índice de Pureza
+Dialectal (IPD)**, y sus hermanas IPDV/IPDC. Los documentos antiguos
+(informes semanales, historial) conservan ese nombre.
+
+Un GD de 1,0 significa que ninguna palabra catalana marcada aparece en
+el texto; 0,0 significa lo contrario.
+
+**Texto sin ninguna palabra marcada (decisión del 26/10/2026)**: un
+texto sin ninguna palabra dialectalmente marcada de las que conoce el
+índice no dice nada sobre su dialecto, y el valor que conviene darle
+depende de la tarea. Por eso hay tres modos, elegidos con el parámetro
+`dialecte` (`--dialecte` para `--text`/`--fitxer`/`--camp`,
+`--dialecte-alt` para `--camp-alt` en la CLI):
+
+| `dialecte` | GD sin marcadores | para qué |
+|---|---|---|
+| sin poner (por defecto) | `None` (vacío) | medida neutra: el texto no entra en las medias y no favorece a ningún dialecto |
+| `"val"` | **1,0** | comprobar que un texto (o una traducción cat→val) es valenciano puro: lo que no tiene nada que lo desmienta cuenta como puro |
+| `"cat"` | **0,0** | lo mismo para un texto que debe ser catalán |
+
+Con `"val"`/`"cat"` el resultado queda condicionado por la tarea (los
+textos sin marcadores favorecen al lado que se evalúa), así que
+no sirve para comparar dialectos. Se probó 0,5 y se descartó: se
+confunde con un texto mezclado a partes iguales. En cualquier modo,
+`total_marcades == 0` dice que el GD no viene de ningún marcador, y en
+el informe HTML esos textos salen en gris. El GD global de un corpus
+se calcula con la suma de marcadores, así que solo cambia si el corpus
+entero no tiene ninguno.
+
+## GDV e GDC: dos índices simétricos con las palabras neutras (26-27/10/2026)
+
+Además del GD, hay dos medidas hermanas, cada una en su fichero, que
+van las dos de **0 a 1** (1 = todas las palabras son válidas en ese
+dialecto):
+
+| fichero | medida | fórmula | 1,0 significa |
+|---|---|---|---|
+| `gdv.py` | **GDV**, Grado Dialectal Valenciano | (occidentales + neutras) / palabras = 1 − orientales / palabras | ninguna forma catalana |
+| `gdc.py` | **GDC**, Grado Dialectal Catalán | (orientales + neutras) / palabras = 1 − occidentales / palabras | ninguna forma valenciana |
+
+**Diferencia con el GD (decisión del usuario, 27/10/2026)**: el GD solo
+mira los marcadores e ignora las palabras neutras (las que no son
+marcador de ningún dialecto: "casa", "amb", "el"...). El GDV y el GDC
+las cuentan como válidas en los dos dialectos, porque siguen los dos
+estándares. Motivo: poder usarlos como recompensa para entrenar
+modelos, donde una frase sin marcadores también es correcta. Por eso
+GDV + GDC ya no suma 1, y los dos quedan cerca de 1 (el 95-99 % de las
+palabras de un texto son neutras). Un texto sin palabras da 1. Límite:
+"neutra" significa "no está en el diccionario de pares", no "es
+correcta" (un castellanismo cuenta como válido). No reimplementan nada:
+llaman a `gd.py::calcula_gd`, que se queda tal cual.
+
+(Versión del 26/10/2026, ya sustituida: GDV = occidentales / marcadas,
+sin las neutras; con marcadores, GDC = 1 − GDV.)
+
+Para un corpus dan dos cifras: `gdv_global`/`gdc_global` (por palabra,
+sobre todo el corpus) y `gdv_mitjana`/`gdc_mitjana` (media por frase).
+Benchmark de 151 (27/10/2026): GDV del lado valenciano 0,9991 global /
+0,9989 media; GDC del lado catalán 0,9914 / 0,9909.
+
+```bash
+python gdv.py --text "Este xiquet vol vindre hui."
+python gdc.py --text "Aquest nen vol venir avui."
+python gdv.py --corpus ../03_seleccio_de_model/benchmark_corpus.json --camp occidental --sortida gdv.json
+python gdc.py --corpus ../03_seleccio_de_model/benchmark_corpus.json --camp oriental --sortida gdc.json
+```
+
+**Todo de una vez (27/10/2026)**: `mesura_corpus.py` calcula GD, GDV y
+GDC de cada documento del 151 (los dos lados), la GNV, la GEIEC (línea a
+línea) y el BOE completo (cada lado, por línea y por `documento_id`).
+Escribe cada documento en `dades/grau_dialectal/<corpus>.jsonl` en
+cuanto lo calcula; si se para, el mismo comando continúa donde se quedó.
+Al final deja `resum.json` y `resum.md`.
+
+```bash
+python pipeline/09_grau_dialectal/mesura_corpus.py
+```
 
 ## Por qué un módulo nuevo, si ya existía una métrica parecida
 
@@ -25,7 +98,7 @@ mano de unas setenta palabras cada una
 módulo calcula el mismo índice, pero contra el índice de pares
 dialectales que `traductor/` ya mantiene para traducir de verdad:
 
-| | Listas antiguas (`estudi_dialectal.py`) | Índice del IPD (`traductor/data/*.json`) |
+| | Listas antiguas (`estudi_dialectal.py`) | Índice del GD (`traductor/data/*.json`) |
 |---|---|---|
 | Tamaño | ~70 palabras por dialecto | ~53.000 pares (1.471 de léxico general + ~52.000 formas verbales conjugadas + demostrativos/posesivos/numerales) |
 | Fuente de verdad | Lista aparte, mantenida a mano | La MISMA que usa el traductor para traducir |
@@ -54,20 +127,22 @@ como ampliación pendiente, no como un descuido.
 Como script:
 
 ```bash
-python ipd.py --text "Este xiquet vol vindre hui."
-python ipd.py --fitxer un_document.txt
-python ipd.py --corpus ../../dades/avl/final/unified.jsonl --camp text --sortida resultat.json
+python gd.py --text "Este xiquet vol vindre hui."
+python gd.py --text "Aquest nen vol venir avui." --dialecte cat
+python gd.py --fitxer un_document.txt
+python gd.py --corpus ../../dades/avl/final/unified.jsonl --camp text --sortida resultat.json
 
 # Informe HTML para ver y depurar frase a frase (palabras resaltadas en
 # verde=occidental/naranja=oriental), con las dos columnas del benchmark
-# del proyecto una al lado de la otra:
-python ipd.py --corpus ../03_seleccio_de_model/benchmark_corpus.json \
+# del proyecto una al lado de la otra (añadid --dialecte val
+# --dialecte-alt cat para contar como puros los textos sin marcadores):
+python gd.py --corpus ../03_seleccio_de_model/benchmark_corpus.json \
     --camp occidental --camp-alt oriental --html informe.html
 
 # Corpus grandes (p.ej. el del BOE, ~268.000 líneas): --limit para
 # probar con una muestra antes de lanzarlo entero (cada frase se
 # tokeniza con spaCy, así que el fichero completo puede tardar ~30 min):
-python ipd.py --corpus ../../dades/boe/corpus_entrenamiento.jsonl \
+python gd.py --corpus ../../dades/boe/corpus_entrenamiento.jsonl \
     --camp texto_catalan --limit 5000
 ```
 
@@ -75,27 +150,27 @@ Acepta tanto un fichero JSONL (un documento por línea) como un JSON
 normal con un array de objetos (como `benchmark_corpus.json`) — se
 detecta solo.
 
-### `visor_ipd.html` — revisar resultados sin volver a ejecutar nada (14/10/2026)
+### `visor_gd.html` — revisar resultados sin volver a ejecutar nada (14/10/2026)
 
 En vez de generar un informe HTML nuevo para cada corpus que se prueba
 (que se iba acumulando como ficheros sueltos en el repo, regenerables
 pero pesados — ver `CLAUDE_HISTORIAL.md`), `--sortida` (el JSON, no el
 `--html`) es ahora la salida recomendada para revisar resultados:
-incluye el mismo detalle por documento (texto, IPD, marcadores) y, si se
+incluye el mismo detalle por documento (texto, GD, marcadores) y, si se
 da `--camp-alt`, también los datos de la segunda columna (`text_alt`,
-`ipd_alt`, `marcadors_*_alt`) — todo lo que hace falta para reconstruir
-la comparativa de dos columnas sin volver a ejecutar `ipd.py`.
+`gd_alt`, `marcadors_*_alt`) — todo lo que hace falta para reconstruir
+la comparativa de dos columnas sin volver a ejecutar `gd.py`.
 
-`visor_ipd.html` es un visor genérico y reutilizable (sin dependencias,
+`visor_gd.html` es un visor genérico y reutilizable (sin dependencias,
 todo el procesamiento en el navegador, ningún dato sale de ahí) que
 carga ese JSON y lo muestra con el texto resaltado y un buscador, igual
 que el informe `--html` pero sin generar un fichero nuevo por cada
 corpus:
 
 ```bash
-python ipd.py --corpus ../03_seleccio_de_model/benchmark_corpus.json \
+python gd.py --corpus ../03_seleccio_de_model/benchmark_corpus.json \
     --camp occidental --camp-alt oriental --sortida resultat.json
-# despues, abre visor_ipd.html en el navegador y arrastra resultat.json
+# despues, abre visor_gd.html en el navegador y arrastra resultat.json
 ```
 
 Admite cargar varios JSON a la vez (en pestañas), para comparar p.ej.
@@ -104,9 +179,9 @@ el benchmark y gplsi uno al lado del otro sin generar nada nuevo.
 Como módulo, desde otro script del proyecto:
 
 ```python
-from ipd import calcula_ipd
+from gd import calcula_gd
 
-calcula_ipd("Este xiquet vol vindre hui.")["ipd"]  # -> 1.0
+calcula_gd("Este xiquet vol vindre hui.")["gd"]  # -> 1.0
 ```
 
 ## Dos bugs reales encontrados y corregidos (13/10/2026, a petición del usuario)
@@ -128,15 +203,15 @@ detectaba como marcador oriental) aparecieron dos problemas reales:
 ## Validación hecha (13/10/2026)
 
 Contra el benchmark de 151 frases de `pipeline/03_seleccio_de_model/benchmark_corpus.json`
-(después de los dos fixes): el lado valenciano da **IPD 0,9339** (240
-marcadores occidentales, 17 orientales) y el lado catalán **IPD 0,0153**
+(después de los dos fixes): el lado valenciano da **GD 0,9339** (240
+marcadores occidentales, 17 orientales) y el lado catalán **GD 0,0153**
 (4 occidentales, 258 orientales).
 
 **Confirmado a mayor escala con el corpus del BOE** (`dades/boe/`,
 `dades/boe_net/`): el lado catalán se mantiene igual de puro en muestras
 mucho más grandes y de un dominio distinto (5.000 frases de
-`corpus_entrenamiento.jsonl`: IPD 0,0181; 200 frases de
-`muestra_test_dialectal.json`: IPD 0,0127) — el mismo patrón se repite en
+`corpus_entrenamiento.jsonl`: GD 0,0181; 200 frases de
+`muestra_test_dialectal.json`: GD 0,0127) — el mismo patrón se repite en
 tres corpus independientes. La muestra del BOE también aportó evidencia
 mucho más fuerte sobre "qué" (29 apariciones reales sin tocar en
 valenciano, frente a solo 4 en el benchmark pequeño) y dos candidatos
@@ -148,40 +223,40 @@ etiqueta como verbo cuando es el sustantivo "el Estado").
 ## Validación adicional (14/10/2026): texto propio del usuario y el corpus gplsi
 
 **Sobre dos noticias reales del usuario** (`proves/noticia_val.txt`
-valenciano, `proves/noticia_cat.txt` catalán): IPD 0,7308 / 0,1111 —
+valenciano, `proves/noticia_cat.txt` catalán): GD 0,7308 / 0,1111 —
 patrón correcto, pero revisando los marcadores palabra a palabra salieron
 3 casos reales a investigar (un 4º, "estes"/"estès", lo descartó el
 propio usuario — es una errata real del texto catalán de origen, sin
-tilde, no un bug del IPD):
+tilde, no un bug del GD):
 
 1. **"petit"/"menut" mal emparejado** en `lexic_general.json` — después
-   confirmado también como bug real del traductor (no solo del IPD) con
+   confirmado también como bug real del traductor (no solo del GD) con
    el corpus gplsi de abajo.
 2. **"què" se cuela como marcador oriental en texto valenciano** porque
    la exclusión `_BUG_DADES_CONEGUTS_CAT` (que ya excluye "què"/"tard"/
    "ensenyament") solo existe en `cat_val/lexic.py`, y `val_cat/lexic.py`
    tiene su propia `_BUG_DADES_CONEGUTS = {"después"}` sin espejar las
    otras 3 — pendiente de arreglar (no rompe ninguna traducción hoy,
-   solo contamina el IPD, que fusiona las dos direcciones).
+   solo contamina el GD, que fusiona las dos direcciones).
 3. **"acull" por colisión de persona** (1ª "jo acull" vs. 3ª persona
    compartida) — confirmado que NO afecta a ninguna traducción real (la
    clave de lookup siempre es la forma exacta de una sola persona), solo
-   contamina el IPD por ser un conteo agregado sin contexto.
+   contamina el GD por ser un conteo agregado sin contexto.
 
 **Con el dataset `gplsi/CA-VA_alignment_test`** (Hugging Face, CC BY 4.0,
-1.958 frases catalán/valenciano traducidas independientemente): IPD
+1.958 frases catalán/valenciano traducidas independientemente): GD
 global 0,9039 valenciano / 0,0533 catalán — confirma el mismo patrón que
 el benchmark de 151 y el BOE, a una escala y dominio distintos, tercera
 confirmación independiente.
 
-**Filtrado por IPD para separar sinonimia de fallos reales del motor**:
-de las 1.958, 1.139 (58,2%) tienen IPD occidental=1,0 Y oriental=0,0 a la
+**Filtrado por GD para separar sinonimia de fallos reales del motor**:
+de las 1.958, 1.139 (58,2%) tienen GD occidental=1,0 Y oriental=0,0 a la
 vez — sobre ese subconjunto "limpio", el motor de traducción sube de
 65,4%/61,9% a 88,9%/87,9% (val→cat/cat→val), muy cerca del benchmark de
 151. Confirma que gran parte de la caída a escala era sinonimia entre
 dos traductores independientes, no el motor fallando más.
 
-**El análisis de fallos del motor sobre gplsi** (no del IPD, pero
+**El análisis de fallos del motor sobre gplsi** (no del GD, pero
 encontrado gracias a esta validación) destapó 4 bugs reales en el
 traductor — "xicotet"/"menut"/"petit" mal etiquetado `canonica`, los
 pares AVL-only "tindre/vore/obtindre/mantindre" y "últim/darrer"
@@ -209,12 +284,12 @@ seguridad) y se descartó porque spaCy no conoce muchas formas valencianas
 "després" (E0977, adjetivo "desprès"/"després" frente al adverbio
 compartido) y "tancat" siguen contando como marcador falso porque los
 datos no los declaran como homógrafos: se resuelve marcándolos en origen.
-Detalle en el docstring de `ipd.py` ("HOMÒGRAFS ENTRE CATEGORIES").
+Detalle en el docstring de `gd.py` ("HOMÒGRAFS ENTRE CATEGORIES").
 
 ## Relación con el resto del proyecto
 
 Pendiente documentado en `CLAUDE.md` (sección "Pendiente") y detallado en
-`documentacio/hoja_de_ruta_ipd_y_proxima_fase.md`: este era el primer
+`documentacio/hoja_de_ruta_gd_y_proxima_fase.md`: este era el primer
 paso a dar antes de seguir ampliando el motor de reglas con más casos del
 benchmark, y antes de intentar una capa de modelo (LLM) nueva para
 cat→val o de probar con un corpus distinto (el BOE, ya empezado aquí).

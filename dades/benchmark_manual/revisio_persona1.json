@@ -2,7 +2,7 @@
  "instruccions": "Per a cada frase: 'valida' = true (servix), false (no servix) o \"dubtosa\". Si cal corregir el català o el valencià, escriu la frase sencera corregida a 'oriental_corregit' / 'occidental_corregit' (null = es queda com està). AVL: el català és un esborrany del motor i S'HA DE REVISAR SEMPRE. BOE: el valencià ha de ser una adaptació dialectal fidel del català (si el BOE reformula, corregix-lo). Criteris complets: documentacio/hoja_de_ruta_benchmark_manual.md.",
  "frases": [
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -10,7 +10,7 @@
    "font": "boe",
    "oriental": "D’aquesta manera, es tracta de consolidar la contínua adaptació que la regulació ha experimentat per mantenir aquesta rendibilitat raonable mitjançant un sistema previsible i sotmès a concreció temporal.",
    "oriental_es_esborrany": false,
-   "occidental": "D’esta manera, es tracta de consolidar la contínua adaptació que la regulació ha experimentat per a mantindre esta rendibilitat raonable per mitjà d’un sistema previsible i sotmés a una concreció temporal.",
+   "occidental": "D’esta manera, es tracta de consolidar la contínua adaptació que la regulació ha experimentat per a mantindre esta rendibilitat raonable per mitjà d’un sistema previsible i sotmés a concreció temporal.",
    "fenomens": [
     "DEM: aquesta → esta",
     "CONJ_ARREL: mantenir → mantindre",
@@ -37,7 +37,7 @@
    "id_origen": "BOE-A-2013-7705-0082"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -71,7 +71,7 @@
    "id_origen": "BOE-A-2010-10421-0172"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -79,7 +79,7 @@
    "font": "boe",
    "oriental": "La privació del dret a residir en determinats llocs o acudir-hi impedeix al penat residir o acudir al lloc en què hagi comès el delicte, o a aquell en què resideixi la víctima o la seva família, si són diferents.",
    "oriental_es_esborrany": false,
-   "occidental": "La privació del dret a residir en determinats llocs o acudir-hi impedix al penat residir o acudir al lloc en què haja comés el delicte, o a aquell en què residisca la víctima o la seua família, si foren diferents.",
+   "occidental": "La privació del dret a residir en determinats llocs o acudir-hi impedix al penat residir o acudir al lloc en què haja comés el delicte, o a aquell en què residisca la víctima o la seua família, si són diferents.",
    "fenomens": [
     "POS: seva → seua",
     "CONJ_IND: hagi → haja",
@@ -107,7 +107,7 @@
    "id_origen": "BOE-A-2015-3439-0594"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -142,7 +142,7 @@
    "id_origen": "BOE-A-2015-7731-0249"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -176,13 +176,13 @@
    "id_origen": "BOE-A-2009-17493-4262"
   },
   {
-   "valida": null,
+   "valida": "dubtosa",
    "oriental_corregit": null,
    "occidental_corregit": null,
-   "comentari": "",
+   "comentari": "El si s'escau me fa dubtar: no sé si és correcte, però sembla que sí.",
    "id": "BM-BOE-011",
    "font": "boe",
-   "oriental": "La demanda que iniciï aquest procés ha d’anar acompanyada d’un informe emès pel comitè d’empresa o, si s’escau, pels delegats de personal sobre les funcions superiors al·legades i la correspondència d’aquestes dins del sistema de classificació aplicable.",
+   "oriental": "La demanda que iniciï aquest procés serà acompanyada d’un informe emès pel comitè d’empresa o, si s’escau, pels delegats de personal sobre les funcions superiors al·legades i la correspondència d’aquestes dins del sistema de classificació aplicable.",
    "oriental_es_esborrany": false,
    "occidental": "La demanda que inicie este procés serà acompanyada d’un informe emés pel comité d’empresa o, si és el cas, pels delegats de personal sobre les funcions superiors al·legades i la correspondència d’estes dins del sistema de classificació aplicable.",
    "fenomens": [
@@ -212,13 +212,13 @@
    "id_origen": "BOE-A-2011-15936-1771"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-013",
    "font": "boe",
-   "oriental": "Aquesta modificació esdevé urgent atès que aquesta tercera fase d’aquest mecanisme ja s’ha iniciat.",
+   "oriental": "Aquesta modificació esdevé urgent, atès que aquesta tercera fase d’aquest mecanisme ja s’ha iniciat.",
    "oriental_es_esborrany": false,
    "occidental": "Esta modificació esdevé urgent, atés que esta tercera fase d’este mecanisme ja s’ha iniciat.",
    "fenomens": [
@@ -247,7 +247,7 @@
    "id_origen": "BOE-A-2013-8556-0109"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -255,7 +255,7 @@
    "font": "boe",
    "oriental": "Respecte a la durada, no s’opta per prolongar la durada màxima, atès que s’entén que les excessives relacions prolongades generen una amenaça de familiaritat de tal entitat que la independència s’entén compromesa.",
    "oriental_es_esborrany": false,
-   "occidental": "Respecte a la duració, no s’opta per prolongar la duració màxima, atés que s’entén que les excessives relacions prolongades generen una amenaça de familiaritat de tal entitat que la independència es considera compromesa.",
+   "occidental": "Respecte a la duració, no s’opta per prolongar la duració màxima, atés que s’entén que les excessives relacions prolongades generen una amenaça de familiaritat de tal entitat que la independència s’entén compromesa.",
    "fenomens": [
     "LEX_NOM: durada → duració",
     "LEX_ALTRES: atès que → atés que",
@@ -279,7 +279,7 @@
    "id_origen": "BOE-A-2015-8147-0420"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -316,13 +316,13 @@
    "id_origen": "BOE-A-2010-10421-0057"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-019",
    "font": "boe",
-   "oriental": "No s’inclouen en aquesta excepció, i per tant es regulen per aquesta Llei, els subproductes animals i els seus productes derivats quan es destinin a la incineració, als abocadors o siguin utilitzats en una planta de biogàs o de compostatge.",
+   "oriental": "No s’inclouen en aquesta excepció, i per tant es regulen per aquesta llei, els subproductes animals i els seus productes derivats quan es destinin a la incineració, als abocadors o siguin utilitzats en una planta de biogàs o de compostatge.",
    "oriental_es_esborrany": false,
    "occidental": "No s’inclouen en esta excepció, i per tant es regularan per esta llei, els subproductes animals i els seus productes derivats quan es destinen a la incineració, als abocadors o siguen utilitzats en una planta de biogàs o de compostatge.",
    "fenomens": [
@@ -348,15 +348,15 @@
    "id_origen": "BOE-A-2011-13046-0136"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-021",
    "font": "boe",
-   "oriental": "Es faculta el Govern i la ministra d’Ocupació i Seguretat Social perquè, en l’àmbit de les seves competències, dictin totes les disposicions que siguin necessàries per al desplegament i l’execució del que estableix aquest Reial decret llei.",
+   "oriental": "Es faculten el Govern i la ministra d’Ocupació i Seguretat Social perquè, en l’àmbit de les seves competències, dictin totes les disposicions que siguin necessàries per al desplegament i execució del que estableix aquest Reial decret llei.",
    "oriental_es_esborrany": false,
-   "occidental": "Es faculten el Govern i la ministra d’Ocupació i Seguretat Social perquè, en l’àmbit de les seues competències, dicten totes les disposicions que siguen necessàries per al desplegament i execució del que establix este reial decret llei.",
+   "occidental": "Es faculten el Govern i la ministra d’Ocupació i Seguretat Social perquè, en l’àmbit de les seues competències, dicten totes les disposicions que siguen necessàries per al desplegament i execució del que establix este Reial decret llei.",
    "fenomens": [
     "DEM: aquest → este",
     "POS: seves → seues",
@@ -382,7 +382,7 @@
    "id_origen": "BOE-A-2014-2220-0100"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -415,7 +415,7 @@
    "id_origen": "BOE-A-2013-12632-0854"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -423,7 +423,7 @@
    "font": "boe",
    "oriental": "A més, les actuacions que té com a objectiu la protecció civil de la població han deixat de tenir des de fa temps el caràcter de resposta conjuntural i improvisada amb què van néixer.",
    "oriental_es_esborrany": false,
-   "occidental": "A més, les actuacions l’objectiu de les quals és la protecció civil de la població han deixat de tindre des de fa temps el caràcter de resposta conjuntural i improvisada amb que van nàixer.",
+   "occidental": "A més, les actuacions que té com a objectiu la protecció civil de la població han deixat de tindre des de fa temps el caràcter de resposta conjuntural i improvisada amb que van nàixer.",
    "fenomens": [
     "CONJ_INF: néixer → nàixer",
     "CONJ_ARREL: tenir → tindre"
@@ -446,13 +446,13 @@
    "id_origen": "BOE-A-2015-7730-0087"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-027",
    "font": "boe",
-   "oriental": "El passatger ha de pagar el preu del passatge, presentar-se oportunament per a l’embarcament i observar les disposicions establertes per mantenir el bon ordre i la seguretat a bord.",
+   "oriental": "El passatger haurà de pagar el preu del passatge, presentar-se oportunament per a l’embarcament i observar les disposicions establertes per mantenir el bon ordre i la seguretat a bord.",
    "oriental_es_esborrany": false,
    "occidental": "El passatger haurà de pagar el preu del passatge, presentar-se oportunament per a l’embarcament i observar les disposicions establides per a mantindre el bon orde i la seguretat a bord.",
    "fenomens": [
@@ -479,7 +479,7 @@
    "id_origen": "BOE-A-2014-7877-2124"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -487,7 +487,7 @@
    "font": "boe",
    "oriental": "Els experts nomenats poden obtenir de les societats que participen en la fusió, sense cap limitació, totes les informacions i documents que considerin útils, i fer totes les verificacions que estimin necessàries.",
    "oriental_es_esborrany": false,
-   "occidental": "Els experts nomenats podran obtindre de les societats que participen en la fusió, sense cap limitació, totes les informacions i documents que consideren útils, i fer totes les verificacions que estimen necessàries.",
+   "occidental": "Els experts nomenats poden obtindre de les societats que participen en la fusió, sense cap limitació, totes les informacions i documents que consideren útils, i fer totes les verificacions que estimen necessàries.",
    "fenomens": [
     "CONJ_ARREL: obtenir → obtindre",
     "CONJ_SUBJ: considerin → consideren",
@@ -511,7 +511,7 @@
    "id_origen": "BOE-A-2012-8406-0127"
   },
   {
-   "valida": null,
+   "valida": "dubtosa",
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -519,7 +519,7 @@
    "font": "boe",
    "oriental": "L’acció de cessació es dirigeix a obtenir una sentència que condemni el demandat a cessar en la conducta contrària a aquesta Llei i a prohibir la seva reiteració futura.",
    "oriental_es_esborrany": false,
-   "occidental": "L’acció de cessació es dirigix a obtindre una sentència que condemne el demandat a cessar en la conducta contrària a esta llei i a prohibir-ne la reiteració futura.",
+   "occidental": "L’acció de cessació es dirigix a obtindre una sentència que condemne el demandat a cessar en la conducta contrària a esta Llei i a prohibir-ne la reiteració futura.",
    "fenomens": [
     "CONJ_SUBJ: condemni → condemne",
     "CONJ_ARREL: obtenir → obtindre",
@@ -545,13 +545,13 @@
    "id_origen": "BOE-A-2009-5391-0167"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-033",
    "font": "boe",
-   "oriental": "Tot nou dipòsit ha d’anar acompanyat d’una declaració signada pel dipositant que certifiqui que la matèria biològica objecte del nou dipòsit és la mateixa que es va dipositar inicialment.",
+   "oriental": "Tot nou dipòsit haurà d’anar acompanyat d’una declaració signada pel dipositant que certifiqui que la matèria biològica objecte del nou dipòsit és la mateixa que es va dipositar inicialment.",
    "oriental_es_esborrany": false,
    "occidental": "Tot nou depòsit haurà d’anar acompanyat d’una declaració firmada pel depositant que certifique que la matèria biològica objecte del nou depòsit és la mateixa que es va depositar inicialment.",
    "fenomens": [
@@ -579,15 +579,15 @@
    "id_origen": "BOE-A-2015-8328-0907"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-035",
    "font": "boe",
-   "oriental": "El règim de visites pot tenir lloc en els punts de trobada familiar habilitats, quan així ho aconselli l’interès superior del menor i el dret a la privacitat de la família de procedència i la família acollidora.",
+   "oriental": "El règim de visites podrà tenir lloc en els punts de trobada familiar habilitats, quan així ho aconselli l’interès superior del menor i el dret a la privacitat de les famílies de procedència i la família acollidora.",
    "oriental_es_esborrany": false,
-   "occidental": "El règim de visites podrà tindre lloc en els punts de trobada familiar habilitats quan així ho aconselle l’interés superior del menor i el dret a la privacitat de les famílies de procedència i acollidora.",
+   "occidental": "El règim de visites podrà tindre lloc en els punts de trobada familiar habilitats quan així ho aconselle l’interés superior del menor i el dret a la privacitat de les famílies de procedència i la família acollidora.",
    "fenomens": [
     "LEX_NOM: interès → interés",
     "CONJ_ARREL: tenir → tindre",
@@ -611,13 +611,13 @@
    "id_origen": "BOE-A-2015-8470-0442"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-037",
    "font": "boe",
-   "oriental": "També té consideració de destinació la participació en missions per mantenir la pau i seguretat internacionals, si no tingués destinació o cessés en la d’origen.",
+   "oriental": "També tindrà consideració de destinació la participació en missions per mantenir la pau i seguretat internacionals, si no tingués destinació o cessés en la d’origen.",
    "oriental_es_esborrany": false,
    "occidental": "També tindrà consideració de destinació la participació en missions per a mantindre la pau i seguretat internacionals, si no en tinguera o cessara en la d’origen.",
    "fenomens": [
@@ -645,7 +645,7 @@
    "id_origen": "BOE-A-2014-12408-0847"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -653,7 +653,7 @@
    "font": "boe",
    "oriental": "Les societats que realitzin activitats regulades tenen capacitat de decisió efectiva, independent del grup de societats, respecte a actius necessaris per explotar, mantenir, o desenvolupar la xarxa de transport o distribució d’energia elèctrica.",
    "oriental_es_esborrany": false,
-   "occidental": "Les societats que realitzen activitats regulades tindran capacitat de decisió efectiva, independent del grup de societats, respecte a actius necessaris per a explotar, mantindre, o desenrotllar la xarxa de transport o distribució d’energia elèctrica.",
+   "occidental": "Les societats que realitzen activitats regulades tenen capacitat de decisió efectiva, independent del grup de societats, respecte a actius necessaris per a explotar, mantindre, o desenrotllar la xarxa de transport o distribució d’energia elèctrica.",
    "fenomens": [
     "CONJ_ARREL: desenvolupar → desenrotllar",
     "CONJ_ARREL: mantenir → mantindre",
@@ -678,7 +678,7 @@
    "id_origen": "BOE-A-2010-5879-0512"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -686,7 +686,7 @@
    "font": "boe",
    "oriental": "La incidència que en la intimitat de qualsevol persona pot tenir el coneixement pels poders públics de la seva ubicació espacial fa que l’autorització per a la seva pràctica s’atribueixi al jutge d’instrucció.",
    "oriental_es_esborrany": false,
-   "occidental": "La incidència que en la intimitat de qualsevol persona pot tindre el coneixement pels poders públics de la seua ubicació espacial fa que l’autorització per a la seua realització s’atribuïsca al jutge d’instrucció.",
+   "occidental": "La incidència que en la intimitat de qualsevol persona pot tindre el coneixement pels poders públics de la seua ubicació espacial fa que l’autorització per a la seua pràctica s’atribuïsca al jutge d’instrucció.",
    "fenomens": [
     "CONJ_SUBJ: atribueixi → atribuïsca",
     "POS: seva → seua",
@@ -714,15 +714,15 @@
    "id_origen": "BOE-A-2015-10725-0096"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-043",
    "font": "boe",
-   "oriental": "És a dir, no les deixa en la posició de destinatari passiu d’aquesta comanda a l’Estat sinó que les erigeix en contrapart necessària, ja que exigeix que es desenvolupi «d’acord amb aquestes».",
+   "oriental": "És a dir, no deixa a aquestes en la posició de destinatari passiu d’aquesta comanda a l’Estat sinó que les erigeix en contrapart necessària, ja que exigeix que es desenvolupi «d’acord amb aquestes».",
    "oriental_es_esborrany": false,
-   "occidental": "És a dir, no deixa a estes en la posició de destinatari passiu d’eixa comanda a l’Estat, sinó que les erigix en contrapart necessària, a l’exigir que es desenrotlle d’acord amb estes».",
+   "occidental": "És a dir, no deixa a estes en la posició de destinatari passiu d’eixa comanda a l’Estat, sinó que les erigix en contrapart necessària, ja que exigix que es desenrotlle «d’acord amb estes».",
    "fenomens": [
     "DEM: aquestes → estes",
     "CONJ_ARREL: desenvolupi → desenrotlle",
@@ -747,7 +747,7 @@
    "id_origen": "BOE-A-2015-5794-0122"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -755,7 +755,7 @@
    "font": "boe",
    "oriental": "Per la seva banda, els títols II i III es dediquen, respectivament, a desenvolupar les dues funcions del Fons: la garantia de dipòsits i les actuacions per reforçar la solvència i el sanejament d’entitats.",
    "oriental_es_esborrany": false,
-   "occidental": "Per la seua banda, els títols II i III es dediquen respectivament a desenrotllar les dos funcions del Fons: la garantia de depòsits i les actuacions en reforç de la solvència i el sanejament d’entitats.",
+   "occidental": "Per la seua banda, els títols II i III es dediquen respectivament a desenrotllar les dos funcions del Fons: la garantia de depòsits i les actuacions per reforçar la solvència i el sanejament d’entitats.",
    "fenomens": [
     "CONJ_ARREL: desenvolupar → desenrotllar",
     "POS: seva → seua",
@@ -782,7 +782,7 @@
    "id_origen": "BOE-A-2011-16173-0030"
   },
   {
-   "valida": null,
+   "valida": false,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -814,7 +814,7 @@
    "id_origen": "BOE-A-2013-6900-0473"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -849,15 +849,15 @@
    "id_origen": "BOE-A-2015-11160-0017"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-051",
    "font": "boe",
-   "oriental": "Se suspèn la vigència de l’incís següent de l’article 114 de la Llei orgànica 6/1985, d’1 de juliol, del poder judicial: «sol·licitar-los que aquestes cambres procedeixin a elegir els nous vocals;».",
+   "oriental": "Se suspèn la vigència de l’incís següent de l’article 114 de la Llei orgànica 6/1985, d’1 de juliol, del Poder Judicial: «sol·licitar-los que aquestes cambres procedeixin a elegir els nous vocals;».",
    "oriental_es_esborrany": false,
-   "occidental": "Se suspén la vigència del següent incís de l’article 114 de la Llei Orgànica 6/1985, d’1 de juliol, del Poder Judicial: «sol·licitar-los que estes cambres procedisquen a elegir els nous vocals i».",
+   "occidental": "Se suspén la vigència de l’incís següent de l’article 114 de la Llei Orgànica 6/1985, d’1 de juliol, del Poder Judicial: «sol·licitar-los que estes cambres procedisquen a elegir els nous vocals;».",
    "fenomens": [
     "DEM: aquestes → estes",
     "CONJ_IMP: suspèn → suspén",
@@ -881,7 +881,7 @@
    "id_origen": "BOE-A-2013-3860-0027"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -912,7 +912,7 @@
    "id_origen": "BOE-A-2013-12913-0631"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -920,7 +920,7 @@
    "font": "boe",
    "oriental": "Una de les oportunitats que obre aquesta Llei és la d’adequar els serveis i dispositius del govern d’Espanya a les necessitats d’un món globalitzat.",
    "oriental_es_esborrany": false,
-   "occidental": "Una de les oportunitats que obri esta llei és el fet d’adequar els servicis i dispositius del Govern d’Espanya a les necessitats d’un món globalitzat.",
+   "occidental": "Una de les oportunitats que obri esta Llei és la d’adequar els servicis i dispositius del Govern d’Espanya a les necessitats d’un món globalitzat.",
    "fenomens": [
     "CONJ_IMP: obre → obri",
     "LEX_NOM: serveis → servicis",
@@ -946,15 +946,15 @@
    "id_origen": "BOE-A-2011-15623-0180"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-057",
    "font": "boe",
-   "oriental": "La Cambra de Comptes depèn orgànicament del Parlament de Navarra i exerceix les seves funcions d’acord amb la seva Llei foral reguladora.",
+   "oriental": "La Cambra de Comptes depèn orgànicament del Parlament de Navarra i exerceix les seves funcions d’acord amb la seva Llei Foral reguladora.",
    "oriental_es_esborrany": false,
-   "occidental": "La Cambra de Comptos depén orgànicament del Parlament de Navarra i exercix les funcions d’acord amb la seua Llei Foral reguladora.",
+   "occidental": "La Cambra de Comptes depén orgànicament del Parlament de Navarra i exercix les seues funcions d’acord amb la seua Llei Foral reguladora.",
    "fenomens": [
     "POS: seva → seua",
     "POS: seves → seua",
@@ -980,7 +980,7 @@
    "id_origen": "BOE-A-2010-16435-0050"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -1015,7 +1015,7 @@
    "id_origen": "BOE-A-2009-3022-0017"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -1023,7 +1023,7 @@
    "font": "boe",
    "oriental": "Es pot homologar judicialment l’acord de refinançament que reuneixi les condicions de l’article 71.6 i hagi estat subscrit per creditors que representin almenys el setanta-cinc per cent del passiu titularitat d’entitats financeres en el moment de l’adopció de l’acord.",
    "oriental_es_esborrany": false,
-   "occidental": "Es podrà homologar judicialment l’acord de refinançament que reunisca les condicions de l’article 71.6 i haja sigut subscrit per creditors que representen almenys el setanta-cinc per cent del passiu titularitat d’entitats financeres en el moment de l’adopció de l’acord.",
+   "occidental": "Es pot homologar judicialment l’acord de refinançament que reunisca les condicions de l’article 71.6 i haja sigut subscrit per creditors que representen almenys el setanta-cinc per cent del passiu titularitat d’entitats financeres en el moment de l’adopció de l’acord.",
    "fenomens": [
     "CONJ_IND: hagi → haja",
     "CONJ_SUBJ: reuneixi → reunisca",
@@ -1050,7 +1050,7 @@
    "id_origen": "BOE-A-2011-15938-1184"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -1058,7 +1058,7 @@
    "font": "boe",
    "oriental": "En el context del mercat únic d’assegurances, aquesta Llei garanteix que es puguin comercialitzar a Espanya assegurances ofertes per entitats d’altres estats membres, sempre que es compleixin les disposicions legals d’interès general.",
    "oriental_es_esborrany": false,
-   "occidental": "En el context del mercat únic d’assegurances, esta llei garantix que es puguen comercialitzar a Espanya assegurances oferides per entitats d’altres estats membres, sempre que es complisquen les disposicions legals d’interés general.",
+   "occidental": "En el context del mercat únic d’assegurances, esta Llei garantix que es puguen comercialitzar a Espanya assegurances oferides per entitats d’altres estats membres, sempre que es complisquen les disposicions legals d’interés general.",
    "fenomens": [
     "CONJ_IND: puguin → puguen",
     "LEX_NOM: interès → interés",
@@ -1085,15 +1085,15 @@
    "id_origen": "BOE-A-2015-7897-0739"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-065",
    "font": "boe",
-   "oriental": "«h)  Per una força major que impossibiliti definitivament la prestació de treball, sempre que la seva existència hagi estat degudament constatada de conformitat amb el que disposa l’apartat 7 de l’article 51.» Dos.",
+   "oriental": "«h)  Per força major que impossibiliti definitivament la prestació de treball, sempre que la seva existència hagi estat degudament constatada d'acord amb el que disposa l’apartat 7 de l’article 51.» Dos.",
    "oriental_es_esborrany": false,
-   "occidental": "«h)  Per força major que impossibilite definitivament la prestació de treball, sempre que la seua existència haja sigut degudament constatada d’acord amb el que disposa l’apartat 7 de l’article 51.» Dos.",
+   "occidental": "«h)  Per força major que impossibilite definitivament la prestació de treball, sempre que la seua existència haja estat degudament constatada d’acord amb el que disposa l’apartat 7 de l’article 51.» Dos.",
    "fenomens": [
     "POS: seva → seua",
     "CONJ_IND: hagi → haja",
@@ -1120,7 +1120,7 @@
    "id_origen": "BOE-A-2012-2076-0588"
   },
   {
-   "valida": null,
+   "valida": "dubtosa",
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -1128,7 +1128,7 @@
    "font": "boe",
    "oriental": "La disposició final vuitena modifica la Llei 43/2006, de 29 de desembre, per a la millora del creixement i de l’ocupació, com a conseqüència de la necessitat de protecció de les persones que hagin estat víctimes de tràfic d’éssers humans.",
    "oriental_es_esborrany": false,
-   "occidental": "La disposició final huitena modifica la Llei 43/2006, de 29 de desembre, per a la millora del creixement i de l’ocupació, com a conseqüència de la necessitat de protecció de les persones que hagen sigut víctimes de comerç d’éssers humans.",
+   "occidental": "La disposició final huitena modifica la Llei 43/2006, de 29 de desembre, per a la millora del creixement i de l’ocupació, com a conseqüència de la necessitat de protecció de les persones que hagen sigut víctimes de tràfic d’éssers humans.",
    "fenomens": [
     "NUM: vuitena → huitena",
     "CONJ_PART: estat → sigut",
@@ -1152,15 +1152,15 @@
    "id_origen": "BOE-A-2015-8470-0189"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-069",
    "font": "boe",
-   "oriental": "Encara que el procediment sancionador es doni per acabat d’aquesta manera, l’interessat pot interposar idèntics recursos als que li haurien correspost en el supòsit que el procediment hagués acabat de forma ordinària.",
+   "oriental": "Encara que el procediment sancionador es doni per acabat d’aquesta manera, l’interessat pot interposar idèntics recursos als que li haurien correspost en cas que el procediment hagués acabat de forma ordinària.",
    "oriental_es_esborrany": false,
-   "occidental": "Encara que el procediment sancionador es done per acabat d’esta manera, l’interessat podrà interposar idèntics recursos als que li haurien correspost en cas que el procediment haguera acabat de manera ordinària.",
+   "occidental": "Encara que el procediment sancionador es done per acabat d’esta manera, l’interessat podrà interposar idèntics recursos als que li haurien correspost en cas que el procediment haguera acabat de forma ordinària.",
    "fenomens": [
     "DEM: aquesta → esta",
     "CONJ_IND: hagués → haguera",
@@ -1184,13 +1184,13 @@
    "id_origen": "BOE-A-2013-7320-0998"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-071",
    "font": "boe",
-   "oriental": "No obstant això, aquesta comunicació sobre els drets a jubilació ordinària que pugui correspondre a cada treballador s’ha de remetre als efectes merament informatius, sense que origini drets ni expectatives de drets a favor del treballador o de tercers.",
+   "oriental": "No obstant això, aquesta comunicació sobre els drets a jubilació ordinària que pugui correspondre a cada treballador es remetrà a efectes merament informatius, sense que origini drets ni expectatives de drets a favor del treballador o de tercers.",
    "oriental_es_esborrany": false,
    "occidental": "No obstant això, esta comunicació sobre els drets a jubilació ordinària que puga correspondre a cada treballador es remetrà a efectes merament informatius, sense que origine drets ni expectatives de drets a favor del treballador o de tercers.",
    "fenomens": [
@@ -1216,13 +1216,13 @@
    "id_origen": "BOE-A-2011-13242-0603"
   },
   {
-   "valida": null,
+   "valida": "dubtosa",
    "oriental_corregit": null,
    "occidental_corregit": null,
-   "comentari": "",
+   "comentari": "dubtosa amb l'ús de li o els",
    "id": "BM-BOE-073",
    "font": "boe",
-   "oriental": "El termini per interposar un recurs contenciós administratiu ordinari per part dels operadors que hagin presentat la sol·licitud a la Comissió Nacional dels Mercats i la Competència ha de quedar suspès fins que aquesta li comuniqui la seva decisió.",
+   "oriental": "El termini per interposar un recurs contenciós administratiu ordinari per part dels operadors que hagin presentat la seva sol·licitud a la Comissió Nacional dels Mercats i la Competència quedarà suspès fins que aquesta li comuniqui la seva decisió.",
    "oriental_es_esborrany": false,
    "occidental": "El termini per a interposar un recurs contenciós administratiu ordinari per part dels operadors que hagen presentat la seua sol·licitud a la Comissió Nacional dels Mercats i la Competència quedarà suspés fins que esta els comunique la seua decisió.",
    "fenomens": [
@@ -1254,7 +1254,7 @@
    "id_origen": "BOE-A-2013-12888-0359"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -1262,7 +1262,7 @@
    "font": "boe",
    "oriental": "El que disposa aquest apartat s’entén sense perjudici del dret del que impugni a instar l’eliminació dels efectes o la reparació dels danys que l’acord li hagi ocasionat mentre estava en vigor.",
    "oriental_es_esborrany": false,
-   "occidental": "El que disposa este apartat s’entén sense perjuí del dret del que impugne a instar l’eliminació dels efectes o la reparació dels danys que l’acord li haja ocasionat mentres va estar en vigor.",
+   "occidental": "El que disposa este apartat s’entén sense perjuí del dret del que impugne a instar l’eliminació dels efectes o la reparació dels danys que l’acord li haja ocasionat mentres estava en vigor.",
    "fenomens": [
     "LEX_NOM: perjudici → perjuí",
     "DEM: aquest → este",
@@ -1292,15 +1292,15 @@
    "id_origen": "BOE-A-2014-12589-0169"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-077",
    "font": "boe",
-   "oriental": "No obstant això, a sol·licitud de les dues parts, es pot suspendre el procediment fins que recaigui resolució ferma en un altre procediment diferent, quan en aquest s’hagi de resoldre la que constitueixi objecte principal del primer procés.",
+   "oriental": "No obstant això, a sol·licitud de les dues parts, es podrà suspendre el procediment fins que recaigui una resolució ferma en un altre procediment diferent quan en aquest s’hagi de resoldre la que constitueixi l’objecte principal del primer procés.",
    "oriental_es_esborrany": false,
-   "occidental": "No obstant això, a sol·licitud de les dos parts, es podrà suspendre el procediment fins que recaiga una resolució ferma en un altre procediment distint quan s’hi haja de resoldre la que constituïx l’objecte principal del primer procés.",
+   "occidental": "No obstant això, a sol·licitud de les dos parts, es podrà suspendre el procediment fins que recaiga una resolució ferma en un altre procediment diferent quan en este s’haja de resoldre la que constituïx l’objecte principal del primer procés.",
    "fenomens": [
     "CONJ_IND: hagi → haja",
     "CONJ_SUBJ: recaigui → recaiga",
@@ -1326,15 +1326,15 @@
    "id_origen": "BOE-A-2011-15936-1281"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-079",
    "font": "boe",
-   "oriental": "Quan l’Estat d’emissió participi en l’execució a Espanya, el fiscal o el jutge d’instrucció ha de rebre l’exhort que li pugui transmetre directament l’autoritat d’emissió mentre es trobi al nostre país i que completi l’anterior. 4.",
+   "oriental": "Quan l’Estat d’emissió participi en l’execució a Espanya, el fiscal o el jutge d’instrucció rebrà l’exhort que li pugui transmetre directament l’autoritat d’emissió mentre es trobi al nostre país i que completi l’anterior. 4.",
    "oriental_es_esborrany": false,
-   "occidental": "Quan l’estat d’emissió participe en l’execució a Espanya, el fiscal o el jutge d’instrucció rebrà l’exhort que li puga transmetre directament l’autoritat d’emissió mentres es trobe al nostre país i que complete l’anterior. 4.",
+   "occidental": "Quan l’Estat d’emissió participe en l’execució a Espanya, el fiscal o el jutge d’instrucció rebrà l’exhort que li puga transmetre directament l’autoritat d’emissió mentres es trobe al nostre país i que complete l’anterior. 4.",
    "fenomens": [
     "CONJ_SUBJ: participi → participe",
     "CONJ_SUBJ: trobi → trobe",
@@ -1360,15 +1360,15 @@
    "id_origen": "BOE-A-2014-12029-2199"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-081",
    "font": "boe",
-   "oriental": "L’administració corresponent ha de traslladar la seva proposta, amb els antecedents necessaris, a l’altra perquè en el termini de quatre mesos es pronunciï sobre el canvi de domicili i la data a la qual se’n retrotreuen els efectes.",
+   "oriental": "La mencionada administració traslladarà la seva proposta, amb els antecedents necessaris, a l’altra perquè en el termini de quatre mesos es pronunciï sobre el canvi de domicili i la data a la qual se’n retrotreuen els efectes.",
    "oriental_es_esborrany": false,
-   "occidental": "La mencionada administració traslladarà la seua proposta, amb els antecedents necessaris, a l’altra perquè es pronuncie en el termini de quatre mesos sobre el canvi de domicili i la data a què se’n retrotrauen els efectes.",
+   "occidental": "La mencionada administració traslladarà la seua proposta, amb els antecedents necessaris, a l’altra perquè en el termini de quatre mesos es pronuncie sobre el canvi de domicili i la data a la qual se’n retrotrauen els efectes.",
    "fenomens": [
     "CONJ_IND: retrotreuen → retrotrauen",
     "POS: seva → seua",
@@ -1392,13 +1392,13 @@
    "id_origen": "BOE-A-2014-4284-0251"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-083",
    "font": "boe",
-   "oriental": "Quan el dipositari autoritzat i el transportista hagin acordat compartir la responsabilitat a què es refereix aquest apartat, l’Administració tributària pot dirigir-se contra el transportista a títol de responsable solidari.",
+   "oriental": "Quan el dipositari autoritzat i el transportista hagin acordat compartir la responsabilitat a què es refereix aquest apartat, l’Administració tributària pot dirigir-se contra el dit transportista a títol de responsable solidari.",
    "oriental_es_esborrany": false,
    "occidental": "Quan el depositari autoritzat i el transportista hagen acordat compartir la responsabilitat a què es referix este apartat, l’Administració tributària podrà dirigir-se contra el dit transportista a títol de responsable solidari.",
    "fenomens": [
@@ -1425,13 +1425,13 @@
    "id_origen": "BOE-A-2010-3366-0625"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-085",
    "font": "boe",
-   "oriental": "La mesura s’ha d’adoptar amb caràcter d’urgència perquè pugui assolir l’objectiu pretès de fomentar el desenvolupament del transport aeri i del sector del turisme.",
+   "oriental": "La mesura s’ha d’adoptar amb caràcter d’urgència perquè pugui aconseguir l’objectiu pretès de fomentar el desenvolupament del transport aeri i del sector del turisme.",
    "oriental_es_esborrany": false,
    "occidental": "La mesura s’ha d’adoptar amb caràcter d’urgència perquè puga aconseguir l’objectiu pretés de fomentar el desenrotllament del transport aeri i del sector del turisme.",
    "fenomens": [
@@ -1459,13 +1459,13 @@
    "id_origen": "BOE-A-2014-2219-0017"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-087",
    "font": "boe",
-   "oriental": "I també es castiga qui utilitzi mitjans coactius per forçar l’altre a abandonar el territori espanyol o a no tornar-hi, amb aquesta mateixa finalitat d’obligar-la a contreure matrimoni.",
+   "oriental": "I també es castiga a qui utilitzi mitjans coactius per forçar un altre a abandonar el territori espanyol o a no tornar-hi, amb aquesta mateixa finalitat d’obligar-la a contreure matrimoni.",
    "oriental_es_esborrany": false,
    "occidental": "I també es castiga a qui utilitze mitjans coactius per a forçar un altre a abandonar el territori espanyol o a no tornar-hi, amb eixa mateixa finalitat d’obligar-lo a contraure matrimoni.",
    "fenomens": [
@@ -1491,15 +1491,15 @@
    "id_origen": "BOE-A-2015-3439-0336"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-089",
    "font": "boe",
-   "oriental": "Amb aquesta finalitat, de conformitat amb el que estableix l’article 40.1.b) d’aquesta Llei, l’entitat gestora de la prestació pot detreure de cada mensualitat meritada per l’interessat la corresponent quota deguda.",
+   "oriental": "Amb aquesta finalitat, de conformitat amb el que estableix l’article 40.1.b) d’aquesta Llei, l’entitat gestora de la prestació podrà detreure de cada mensualitat meritada per l’interessat la corresponent quota deguda.",
    "oriental_es_esborrany": false,
-   "occidental": "Amb esta finalitat, de conformitat amb el que establix l’article 40.1.b) d’esta llei, l’entitat gestora de la prestació podrà detraure de cada mensualitat meritada per l’interessat la corresponent quota deguda.",
+   "occidental": "Amb esta finalitat, de conformitat amb el que establix l’article 40.1.b) d’esta Llei, l’entitat gestora de la prestació podrà detraure de cada mensualitat meritada per l’interessat la corresponent quota deguda.",
    "fenomens": [
     "DEM: aquesta → esta",
     "CONJ_INF: detreure → detraure",
@@ -1525,7 +1525,7 @@
    "id_origen": "BOE-A-2013-2874-0421"
   },
   {
-   "valida": null,
+   "valida": "dubtosa",
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -1533,7 +1533,7 @@
    "font": "boe",
    "oriental": "Destruir, abandonar, deteriorar o sostreure equip, cabals, material o altres efectes, així com adquirir o posseir qualsevol dels béns o efectes esmentats amb coneixement de la seva procedència il·lícita o facilitar-los a tercers.",
    "oriental_es_esborrany": false,
-   "occidental": "Destruir, abandonar, deteriorar o sostraure equips, cabals, material o altres efectes, així com adquirir o posseir qualsevol d’estos béns o efectes amb coneixement de la seua il·lícita procedència, o facilitar-los a tercers.",
+   "occidental": "Destruir, abandonar, deteriorar o sostraure equips, cabals, material o altres efectes, així com adquirir o posseir qualsevol dels béns o efectes mencionats amb coneixement de la seua procedència il·lícita, o facilitar-los a tercers.",
    "fenomens": [
     "POS: seva → seua",
     "CONJ_INF: sostreure → sostraure"
@@ -1557,15 +1557,15 @@
    "id_origen": "BOE-A-2014-12652-0294"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-093",
    "font": "boe",
-   "oriental": "No s’ha d’aplicar aquesta deducció quan es manifesti algun dels casos establerts a l’apartat 4 de l’esmentat article 30, excepte en el cas de la lletra e) d’aquest apartat, on la deducció és del 18 per cent del dividend percebut.",
+   "oriental": "No s’ha d’aplicar aquesta deducció quan es manifesti algun dels casos establerts a l’apartat 4 del mencionat article 30, excepte en el cas de la lletra e) d’aquest apartat, on la deducció serà del 18 per cent del dividend percebut.",
    "oriental_es_esborrany": false,
-   "occidental": "No s’aplicarà esta deducció quan es manifeste algun dels casos establits en l’apartat 4 del mencionat article 30, excepte en el cas de la lletra e) d’eixe apartat, on la deducció serà del 18 per cent del dividend percebut.",
+   "occidental": "No s’ha d’aplicar esta deducció quan es manifeste algun dels casos establits en l’apartat 4 del mencionat article 30, excepte en el cas de la lletra e) d’eixe apartat, on la deducció serà del 18 per cent del dividend percebut.",
    "fenomens": [
     "CONJ_SUBJ: manifesti → manifeste",
     "DEM: aquesta → esta",
@@ -1589,7 +1589,7 @@
    "id_origen": "BOE-A-2009-17000-0170"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -1597,7 +1597,7 @@
    "font": "boe",
    "oriental": "Aquesta autorització només pot ser denegada quan el sol·licitant no acrediti el compliment de totes les condicions legalment establertes per a la seva obtenció o no se subrogui en les obligacions del titular anterior.",
    "oriental_es_esborrany": false,
-   "occidental": "Esta autorització només podrà ser denegada quan el sol·licitant no acredite el compliment de totes les condicions legalment establides per a la seua obtenció o no se subrogue en les obligacions de l’anterior titular.",
+   "occidental": "Esta autorització només podrà ser denegada quan el sol·licitant no acredite el compliment de totes les condicions legalment establides per a la seua obtenció o no se subrogue en les obligacions del titular anterior.",
    "fenomens": [
     "POS: seva → seua",
     "CONJ_PART: establertes → establides",
@@ -1623,13 +1623,13 @@
    "id_origen": "BOE-A-2010-5292-0620"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-097",
    "font": "boe",
-   "oriental": "En aquesta línia, els pressupostos generals de l’Estat per a 2014 aprofundeixen en la reducció de la despesa pública dins d’un context de consolidació fiscal, d’acord amb les orientacions i recomanacions establertes per la Unió Europea.",
+   "oriental": "En aquesta línia, els pressupostos Generals de l’Estat per a 2014 aprofundeixen en la reducció de la despesa pública dins d’un context de consolidació fiscal, d’acord amb les orientacions i recomanacions establertes per la Unió Europea.",
    "oriental_es_esborrany": false,
    "occidental": "En esta línia, els Pressupostos Generals de l’Estat per a 2014 aprofundixen en la reducció del gasto públic dins d’un context de consolidació fiscal, d’acord amb les orientacions i recomanacions establides per la Unió Europea.",
    "fenomens": [
@@ -1656,15 +1656,15 @@
    "id_origen": "BOE-A-2013-13616-0023"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-099",
    "font": "boe",
-   "oriental": "Aquí també s’inclou una important novetat que té sens dubte especials repercussions en l’avanç dels serveis electrònics oferts per l’Administració.",
+   "oriental": "Aquí també s’inclou una important novetat que tindrà, sens dubte, especials repercussions en l’avanç dels serveis electrònics oferts per l’Administració.",
    "oriental_es_esborrany": false,
-   "occidental": "També ací s’inclou una important novetat que tindrà, sens dubte, especials repercussions en l’avanç dels servicis electrònics oferits per l’Administració.",
+   "occidental": "Ací també s’inclou una important novetat que tindrà, sens dubte, especials repercussions en l’avanç dels servicis electrònics oferits per l’Administració.",
    "fenomens": [
     "LEX_NOM: serveis → servicis",
     "LEX_ADV: aquí → ací",
@@ -1688,15 +1688,15 @@
    "id_origen": "BOE-A-2009-18732-0048"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-101",
    "font": "boe",
-   "oriental": "A aquests efectes, s’entén per Administració sanitària competent la corresponent a la comunitat autònoma on es pretengui exercir l’activitat, i l’Organització Nacional de Trasplantaments quan les activitats preteses superin l’àmbit esmentat.",
+   "oriental": "A aquests efectes, s’entén per Administració sanitària competent la corresponent a la comunitat autònoma on es pretengui realitzar l’activitat, i l’Organització Nacional de Trasplantaments quan les activitats preteses superin l’àmbit indicat.",
    "oriental_es_esborrany": false,
-   "occidental": "A este efecte, s’entendrà per Administració sanitària competent la corresponent a la comunitat autònoma on es pretenga realitzar l’activitat, i l’Organització Nacional de Trasplantaments quan les activitats preteses superen l’àmbit indicat.",
+   "occidental": "A estos efectes, s’entendrà per Administració sanitària competent la corresponent a la comunitat autònoma on es pretenga realitzar l’activitat, i l’Organització Nacional de Trasplantaments quan les activitats preteses superen l’àmbit indicat.",
    "fenomens": [
     "CONJ_SUBJ: pretengui → pretenga",
     "CONJ_SUBJ: superin → superen"
@@ -1721,7 +1721,7 @@
    "id_origen": "BOE-A-2012-5403-0726"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -1729,7 +1729,7 @@
    "font": "boe",
    "oriental": "Constituir un grup o organització que persegueixi finalitats manifestament il·legals que vulnerin les regles essencials que defineixen el comportament del militar.",
    "oriental_es_esborrany": false,
-   "occidental": "Constituir un grup o organització que perseguisca fins manifestament il·legals que vulneren les regles essencials que defineixen el comportament del militar.",
+   "occidental": "Constituir un grup o organització que perseguisca finalitats manifestament il·legals que vulneren les regles essencials que defineixen el comportament del militar.",
    "fenomens": [
     "CONJ_SUBJ: persegueixi → perseguisca",
     "CONJ_SUBJ: vulnerin → vulneren"
@@ -1752,7 +1752,7 @@
    "id_origen": "BOE-A-2015-11070-0697"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -1783,13 +1783,13 @@
    "id_origen": "BOE-A-2015-11070-0479"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-107",
    "font": "boe",
-   "oriental": "Les notificacions i publicacions que es practiquin a través de la seu electrònica del Ministeri d’Educació, Cultura i Esports han d’estar precedides d’una comunicació escrita als interessats que adverteixi d’aquesta circumstància pels mitjans que s’estableixin en la convocatòria corresponent.",
+   "oriental": "Les notificacions i publicacions que es practiquin a través de la seu electrònica del Ministeri d’Educació, Cultura i Esports aniran precedides d’una comunicació escrita als interessats que adverteixi d’aquesta circumstància pels mitjans que s’estableixin en la convocatòria corresponent.",
    "oriental_es_esborrany": false,
    "occidental": "Les notificacions i publicacions que es practiquen a través de la seu electrònica del Ministeri d’Educació, Cultura i Esport aniran precedides d’una comunicació escrita als interessats que advertisca d’esta circumstància pels mitjans que s’establisquen en la convocatòria corresponent.",
    "fenomens": [
@@ -1816,13 +1816,13 @@
    "id_origen": "BOE-A-2013-12886-1273"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-109",
    "font": "boe",
-   "oriental": "Aquesta retenció s’aplica a l’exercici en què finalitzi el termini fixat en el contracte per a la terminació de l’obra o al següent, segons el moment en què es prevegi realitzar el pagament de la certificació final.",
+   "oriental": "Aquesta retenció s’aplica a l’exercici en què finalitzi el termini fixat en el contracte per a la terminació de l’obra o al següent, segons el moment en què es prevegi fer el pagament de la certificació final.",
    "oriental_es_esborrany": false,
    "occidental": "Esta retenció s’aplicarà a l’exercici en què finalitze el termini fixat en el contracte per a la terminació de l’obra o al següent, segons el moment en què es preveja fer el pagament de la certificació final.",
    "fenomens": [
@@ -1848,7 +1848,7 @@
    "id_origen": "BOE-A-2012-15651-3471"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -1856,7 +1856,7 @@
    "font": "boe",
    "oriental": "D’aquesta manera, s’assegura que els contractes als quals s’apliqui aquest nou índex contribueixin a garantir el manteniment de la competitivitat de l’economia en el mitjà termini.",
    "oriental_es_esborrany": false,
-   "occidental": "D’esta manera, s’assegura que els contractes a què s’aplique este nou índex contribuïsquen a garantir el manteniment de la competitivitat de l’economia en el mitjà termini.",
+   "occidental": "D’esta manera, s’assegura que els contractes als quals s’aplique este nou índex contribuïsquen a garantir el manteniment de la competitivitat de l’economia en el mitjà termini.",
    "fenomens": [
     "CONJ_SUBJ: apliqui → aplique",
     "DEM: aquest → este",
@@ -1881,7 +1881,7 @@
    "id_origen": "BOE-A-2015-3443-0088"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -1889,7 +1889,7 @@
    "font": "boe",
    "oriental": "Congruent amb aquesta, també es preveu que la suspensió dels acords d’adjudicació es mantingui fins que es resolgui sobre el fons del recurs o, almenys, sobre el manteniment o no de la suspensió.",
    "oriental_es_esborrany": false,
-   "occidental": "Congruent amb esta, es preveu també que la suspensió dels acords d’adjudicació es mantinga fins que es resolga sobre el fons del recurs o, almenys, sobre el manteniment o no de la suspensió.",
+   "occidental": "Congruent amb esta, també es preveu que la suspensió dels acords d’adjudicació es mantinga fins que es resolga sobre el fons del recurs o, almenys, sobre el manteniment o no de la suspensió.",
    "fenomens": [
     "CONJ_SUBJ: mantingui → mantinga",
     "DEM: aquesta → esta",
@@ -1915,15 +1915,15 @@
    "id_origen": "BOE-A-2010-12765-0014"
   },
   {
-   "valida": null,
+   "valida": "dubtosa",
    "oriental_corregit": null,
    "occidental_corregit": null,
-   "comentari": "",
+   "comentari": "Va a haber problema con el en",
    "id": "BM-BOE-115",
    "font": "boe",
-   "oriental": "Aquestes obres no poden ser autoritzades per l’òrgan urbanístic competent sense que, amb caràcter previ, l’Administració de l’Estat n’emeti un informe favorable on consti que la servitud de trànsit està garantida.",
+   "oriental": "Aquestes obres no podran ser autoritzades per l’òrgan urbanístic competent sense que, amb caràcter previ, l’Administració de l’Estat n’emeti un informe favorable on consti que la servitud de trànsit està garantida.",
    "oriental_es_esborrany": false,
-   "occidental": "Estes obres no podran ser autoritzades per l’òrgan urbanístic competent sense que, amb caràcter previ, l’Administració de l’Estat emeta un informe favorable en què conste que la servitud de trànsit queda garantida.",
+   "occidental": "Estes obres no podran ser autoritzades per l’òrgan urbanístic competent sense que, amb caràcter previ, l’Administració de l’Estat emeta un informe favorable on conste que la servitud de trànsit queda garantida.",
    "fenomens": [
     "DEM: aquestes → estes",
     "CONJ_SUBJ: consti → conste",
@@ -1947,15 +1947,15 @@
    "id_origen": "BOE-A-2013-5670-0495"
   },
   {
-   "valida": null,
+   "valida": false,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-117",
    "font": "boe",
-   "oriental": "A aquests efectes han de presentar una proposta de contracte d’arrendament en la qual s’identifiqui l’eventual arrendatari, que limiti la informació a què té dret, a les dades que constin en el Registre, relacionades exclusivament amb aquest arrendatari.",
+   "oriental": "A aquests efectes hauran de presentar una proposta de contracte d’arrendament en la qual s’identifiqui l’eventual arrendatari, que limiti la informació a què té dret, a les dades que constin en el Registre, relacionades exclusivament amb aquest arrendatari.",
    "oriental_es_esborrany": false,
-   "occidental": "A estos efectes hauran de presentar una proposta de contracte d’arrendament en què s’identifique l’eventual arrendatari; la informació a la qual tindrà dret es limitarà a les dades que consten en el Registre relacionades exclusivament amb eixe arrendatari.",
+   "occidental": "A estos efectes hauran de presentar una proposta de contracte d’arrendament en la qual s’identifique l’eventual arrendatari; la informació a la qual tindrà dret es limitarà a les dades que consten en el Registre relacionades exclusivament amb eixe arrendatari.",
    "fenomens": [
     "CONJ_SUBJ: identifiqui → identifique",
     "CONJ_SUBJ: constin → consten",
@@ -1979,15 +1979,15 @@
    "id_origen": "BOE-A-2013-5941-0261"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-119",
    "font": "boe",
-   "oriental": "Aquesta nova Llei es proposa, doncs, reforçar els mecanismes que potenciïn i millorin el funcionament del sistema nacional de protecció dels ciutadans davant emergències i catàstrofes que ja va preveure la Llei anterior.",
+   "oriental": "Aquesta nova Llei es proposa, doncs, reforçar els mecanismes que potenciïn i millorin el funcionament del sistema nacional de protecció dels ciutadans davant d’emergències i catàstrofes que ja va preveure la Llei anterior.",
    "oriental_es_esborrany": false,
-   "occidental": "Esta nova llei es proposa, doncs, reforçar els mecanismes que potencien i milloren el funcionament del sistema nacional de protecció dels ciutadans davant d’emergències i catàstrofes, que ja va preveure la llei anterior.",
+   "occidental": "Esta nova Llei es proposa, doncs, reforçar els mecanismes que potencien i milloren el funcionament del sistema nacional de protecció dels ciutadans davant d’emergències i catàstrofes, que ja va preveure la Llei anterior.",
    "fenomens": [
     "CONJ_SUBJ: millorin → milloren",
     "CONJ_SUBJ: potenciïn → potencien",
@@ -2011,15 +2011,15 @@
    "id_origen": "BOE-A-2015-7730-0027"
   },
   {
-   "valida": null,
+   "valida": "dubotosa",
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-121",
    "font": "boe",
-   "oriental": "Les variacions en el pressupost les ha d’autoritzar el titular del Ministeri d’Economia i Hisenda, quan l’import no excedeixi un cinc per cent d’aquest pressupost, i el Govern, en els altres casos.",
+   "oriental": "Les variacions en el pressupost les ha d’autoritzar el titular del Ministeri d’Economia i Hisenda, quan el seu import no excedeixi un cinc per cent d’aquest pressupost, i el Govern les autoritzarà en els altres casos.",
    "oriental_es_esborrany": false,
-   "occidental": "El titular del Ministeri d’Economia i Hisenda autoritzarà les variacions en el pressupost quan el seu import no excedisca un cinc per cent d’este, i el Govern les autoritzarà en els altres casos.",
+   "occidental": "Les variaciones en el pressupost les ha d’autoritzar el titular del Ministeri d’Economia i Hisenda, quan el seu import no excedisca un cinc per cent d’este pressupost, i el Govern les autoritzarà en els altres casos.",
    "fenomens": [
     "CONJ_SUBJ: excedeixi → excedisca",
     "DEM: aquest → este"
@@ -2042,7 +2042,7 @@
    "id_origen": "BOE-A-2011-9280-0788"
   },
   {
-   "valida": null,
+   "valida": "dubotosa",
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -2073,7 +2073,7 @@
    "id_origen": "BOE-A-2011-16467-3775"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -2081,7 +2081,7 @@
    "font": "boe",
    "oriental": "Realitzada l’adjudicació i formalitzat el contracte, s’han de comunicar aquestes qüestions al Govern estranger amb expressió de la data a partir de la qual comenci l’execució d’aquest.",
    "oriental_es_esborrany": false,
-   "occidental": "Realitzada l’adjudicació i formalitzat el contracte, es comunicaran estos punts al Govern estranger amb expressió de la data a partir de la qual comence l’execució d’este.",
+   "occidental": "Realitzada l’adjudicació i formalitzat el contracte, s’han de comunicar estes qüestions al Govern estranger amb expressió de la data a partir de la qual comence l’execució d’este.",
    "fenomens": [
     "DEM: aquest → este",
     "CONJ_SUBJ: comenci → comence"
@@ -2104,15 +2104,15 @@
    "id_origen": "BOE-A-2012-6929-0158"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-127",
    "font": "boe",
-   "oriental": "Els termes i les condicions d’aquesta habilitació són els que preveuen aquesta Llei, el seu desplegament reglamentari i el conveni de gestió que se subscrigui amb l’Estat.",
+   "oriental": "Els termes i condicions d’aquesta habilitació són els que preveuen aquesta Llei, el seu desplegament reglamentari i el conveni de gestió que se subscrigui amb l’Estat.",
    "oriental_es_esborrany": false,
-   "occidental": "Els termes i condicions d’esta habilitació són els que prevegen esta llei, el seu desplegament reglamentari i el conveni de gestió que se subscriga amb l’Estat.",
+   "occidental": "Els termes i condicions d’esta habilitació són els que prevegen esta Llei, el seu desplegament reglamentari i el conveni de gestió que se subscriga amb l’Estat.",
    "fenomens": [
     "CONJ_SUBJ: subscrigui → subscriga",
     "DEM: aquesta → esta"
@@ -2137,15 +2137,15 @@
    "id_origen": "BOE-A-2014-4328-0109"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-129",
    "font": "boe",
-   "oriental": "«17è  Els arrendaments amb opció de compra d’edificis o part d’aquests destinats exclusivament a habitatges, incloses les places de garatge, amb un màxim de dues unitats, i annexos situats en aquests que s’arrendin conjuntament».",
+   "oriental": "«Els arrendaments amb opció de compra d’edificis o part d’aquests destinats exclusivament a habitatges, incloses les places de garatge, amb un màxim de dues unitats, i annexos situats en aquells que s’arrendin conjuntament».",
    "oriental_es_esborrany": false,
-   "occidental": "Els arrendaments amb opció de compra d’edificis o part d’estos destinats exclusivament a vivendes, incloent-hi les places de garatge, amb un màxim de dos unitats, i annexos situats en aquells que s’arrenden conjuntament».",
+   "occidental": "Els arrendaments amb opció de compra d’edificis o part d’estos destinats exclusivament a vivendes, incloses les places de garatge, amb un màxim de dos unitats, i annexos situats en aquells que s’arrenden conjuntament».",
    "fenomens": [
     "CONJ_SUBJ: arrendin → arrenden",
     "DEM: aquests → estos",
@@ -2171,7 +2171,7 @@
    "id_origen": "BOE-A-2009-17000-0364"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -2205,7 +2205,7 @@
    "id_origen": "BOE-A-2014-7065-0030"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -2237,7 +2237,7 @@
    "id_origen": "BOE-A-2012-4442-1090"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -2272,15 +2272,15 @@
    "id_origen": "BOE-A-2014-12328-0569"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-137",
    "font": "boe",
-   "oriental": "Aquest mitjà es prefereix a l’autorització autonòmica per evitar que es juxtaposi a la llicència urbanística i es redueixin les càrregues administratives, sense menyscabament de l’interès ambiental a protegir.",
+   "oriental": "Es prefereix aquest mitjà a l’autorització autonòmica per evitar que es juxtaposi a la llicència urbanística i es redueixin les càrregues administratives, sense menyscabament de l’interès ambiental a protegir.",
    "oriental_es_esborrany": false,
-   "occidental": "Es preferix este mitjà a l’autorització autonòmica, per a evitar que es juxtapose a la llicència urbanística i es reduïsquen les càrregues administratives, sense detriment de l’interés ambiental a protegir.",
+   "occidental": "Es preferix este mitjà a l’autorització autonòmica, per a evitar que es juxtapose a la llicència urbanística i es reduïsquen les càrregues administratives, sense menyscabament de l’interés ambiental a protegir.",
    "fenomens": [
     "CONJ_SUBJ: juxtaposi → juxtapose",
     "LEX_NOM: interès → interés",
@@ -2307,7 +2307,7 @@
    "id_origen": "BOE-A-2013-5670-0043"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -2346,7 +2346,7 @@
    "id_origen": "BOE-A-2015-7897-0673"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -2354,7 +2354,7 @@
    "font": "boe",
    "oriental": "Constitueix una solució transitòria a l’espera que es refonguin i s’harmonitzin en la seva totalitat les diferents lleis que en aquests moments regulen el nostre dret de societats.",
    "oriental_es_esborrany": false,
-   "occidental": "Constituïx una solució transitòria a l’espera que es refonguen i harmonitzen en la seua totalitat les distintes lleis que en estos moments regulen el nostre dret de societats.",
+   "occidental": "Constituïx una solució transitòria a l’espera que es refonguen i s’harmonitzen en la seua totalitat les distintes lleis que en estos moments regulen el nostre dret de societats.",
    "fenomens": [
     "POS: seva → seua",
     "CONJ_SUBJ: harmonitzin → harmonitzen",
@@ -2380,7 +2380,7 @@
    "id_origen": "BOE-A-2009-5614-0029"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -2412,7 +2412,7 @@
    "id_origen": "BOE-A-2015-7765-0062"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -2420,7 +2420,7 @@
    "font": "boe",
    "oriental": "El que disposen els articles sisè i setè d’aquest Reial decret llei és aplicable als contractes de concessió sigui quina sigui la seva data d’adjudicació.",
    "oriental_es_esborrany": false,
-   "occidental": "El que disposen els articles sext i sèptim d’este reial decret llei serà aplicable als contractes de concessió siga quina siga la seua data d’adjudicació.",
+   "occidental": "El que disposen els articles sext i sèptim d’este Reial decret llei és aplicable als contractes de concessió siga quina siga la seua data d’adjudicació.",
    "fenomens": [
     "DEM: aquest → este",
     "POS: seva → seua",
@@ -2454,7 +2454,7 @@
    "id_origen": "BOE-A-2014-747-0435"
   },
   {
-   "valida": null,
+   "valida": "dubotsa",
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -2462,7 +2462,7 @@
    "font": "boe",
    "oriental": "D’aquí ve l’extraordinària i urgent necessitat d’evitar, a través de la renovació d’aquest mateix recurs, que un apreciable nombre d’empreses entrin ara en causa de dissolució o, si s’escau, en supòsits de reducció obligatòria de capital.",
    "oriental_es_esborrany": false,
-   "occidental": "D’ací l’extraordinària i urgent necessitat d’evitar, a través de la renovació d’este mateix recurs, que un apreciable nombre d’empreses entren ara en causa de dissolució o, si és el cas, en supòsits de reducció obligatòria de capital.",
+   "occidental": "D’ací ve l’extraordinària i urgent necessitat d’evitar, a través de la renovació d’este mateix recurs, que un apreciable nombre d’empreses entren ara en causa de dissolució o, si és el cas, en supòsits de reducció obligatòria de capital.",
    "fenomens": [
     "DEM: aquest → este",
     "LEX_ADV: aquí → ací",
@@ -2486,15 +2486,15 @@
    "id_origen": "BOE-A-2010-5294-0010"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-149",
    "font": "boe",
-   "oriental": "S’ha d’imposar la pena en la meitat superior quan els efectes falsificats afectin una generalitat de persones o quan els fets es cometin en el marc d’una organització criminal dedicada a aquestes activitats.",
+   "oriental": "S’ha d’imposar la pena en la seva meitat superior quan els efectes falsificats afectin una generalitat de persones o quan els fets es cometin en el marc d’una organització criminal dedicada a aquestes activitats.",
    "oriental_es_esborrany": false,
-   "occidental": "S’imposarà la pena en la seua mitat superior quan els efectes falsificats afecten una generalitat de persones o quan els fets es cometen en el marc d’una organització criminal dedicada a estes activitats.",
+   "occidental": "S’ha d’imposarà la pena en la seua mitat superior quan els efectes falsificats afecten una generalitat de persones o quan els fets es cometen en el marc d’una organització criminal dedicada a estes activitats.",
    "fenomens": [
     "DEM: aquestes → estes",
     "LEX_NOM: meitat → mitat",
@@ -2520,15 +2520,15 @@
    "id_origen": "BOE-A-2010-9953-0994"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-151",
    "font": "boe",
-   "oriental": "L’incompliment per part dels dipositaris de les funcions i obligacions que preveuen els articles 60 i 62 d’aquesta Llei, sempre que comportin un perjudici greu per als partícips o accionistes d’una IIC.",
+   "oriental": "L’incompliment per part dels dipositaris de les funcions i obligacions que previstes els articles 60 i 62 d’aquesta Llei, sempre que comportin un perjudici greu per als partícips o accionistes d’una IIC.",
    "oriental_es_esborrany": false,
-   "occidental": "L’incompliment per part dels depositaris de les funcions i obligacions previstes en els articles 60 i 62 d’esta llei, sempre que comporten un perjuí greu per als partícips o accionistes d’una IIC.",
+   "occidental": "L’incompliment per part dels depositaris de les funcions i obligacions que previstes en els articles 60 i 62 d’esta Llei, sempre que comporten un perjuí greu per als partícips o accionistes d’una IIC.",
    "fenomens": [
     "CONJ_SUBJ: comportin → comporten",
     "LEX_NOM: perjudici → perjuí",
@@ -2555,13 +2555,13 @@
    "id_origen": "BOE-A-2011-15621-0813"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-153",
    "font": "boe",
-   "oriental": "En el termini de cinc anys, o quan l’evolució del mercat i l’estructura empresarial del sector ho aconsellin, el Govern pot revisar el percentatge assenyalat en l’apartat 1 o acordar l’aixecament de la prohibició imposada en aquesta disposició.",
+   "oriental": "En el termini de cinc anys, o quan l’evolució del mercat i l’estructura empresarial del sector ho aconsellin, el Govern podrà revisar el percentatge assenyalat en l’apartat 1 o acordar l’aixecament de la prohibició imposada en aquesta disposició.",
    "oriental_es_esborrany": false,
    "occidental": "En el termini de cinc anys, o quan l’evolució del mercat i l’estructura empresarial del sector ho aconsellen, el Govern podrà revisar el percentatge assenyalat en l’apartat 1 o acordar l’alçament de la prohibició imposada en esta disposició.",
    "fenomens": [
@@ -2587,7 +2587,7 @@
    "id_origen": "BOE-A-2013-2030-0807"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -2595,7 +2595,7 @@
    "font": "boe",
    "oriental": "La intervenció en la negociació correspon a les seccions sindicals quan aquestes així ho acordin, sempre que sumin la majoria dels membres del comitè d’empresa o entre els delegats de personal.",
    "oriental_es_esborrany": false,
-   "occidental": "La intervenció en la negociació correspondrà a les seccions sindicals quan estes així ho acorden, sempre que sumen la majoria dels membres del comité d’empresa o entre els delegats de personal.",
+   "occidental": "La intervenció en la negociació correspon a les seccions sindicals quan estes així ho acorden, sempre que sumen la majoria dels membres del comité d’empresa o entre els delegats de personal.",
    "fenomens": [
     "DEM: aquestes → estes",
     "LEX_NOM: comitè → comité",
@@ -2620,15 +2620,15 @@
    "id_origen": "BOE-A-2011-10131-0186"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-157",
    "font": "boe",
-   "oriental": "L’exercici del dret d’associació professional s’ha de realitzar de manera que quedi garantit el compliment de les missions de les Forces Armades, el desenvolupament de les operacions, el codi de conducta dels seus membres i els preceptes d’aquesta Llei.",
+   "oriental": "L’exercici del dret d’associació professional es realitzarà de manera que quedi garantit el compliment de les missions de les Forces Armades, el desenvolupament de les operacions, el codi de conducta dels seus membres i els preceptes d’aquesta Llei.",
    "oriental_es_esborrany": false,
-   "occidental": "L’exercici del dret d’associació professional es realitzarà de manera que quede garantit el compliment de les missions de les Forces Armades, el desenrotllament de les operacions, el codi de conducta dels seus membres i els preceptes d’esta llei.",
+   "occidental": "L’exercici del dret d’associació professional es realitzarà de manera que quede garantit el compliment de les missions de les Forces Armades, el desenrotllament de les operacions, el codi de conducta dels seus membres i els preceptes d’esta Llei.",
    "fenomens": [
     "CONJ_SUBJ: quedi → quede",
     "DEM: aquesta → esta",
@@ -2652,13 +2652,13 @@
    "id_origen": "BOE-A-2011-12961-0418"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-159",
    "font": "boe",
-   "oriental": "Per garantir l’efectivitat d’aquesta mesura, l’òrgan competent pot requerir la col·laboració necessària dels prestadors de serveis d’intermediació, dels serveis de pagaments electrònics i de publicitat, i ordenar-los que suspenguin el servei corresponent que facilitin al prestador infractor.",
+   "oriental": "Per garantir l’efectivitat d’aquesta mesura, l’òrgan competent podrà requerir la col·laboració necessària dels prestadors de serveis d’intermediació, dels serveis de pagaments electrònics i de publicitat, i ordenar-los que suspenguin el corresponent servei que facilitin al prestador infractor.",
    "oriental_es_esborrany": false,
    "occidental": "Per a garantir l’efectivitat d’esta mesura, l’òrgan competent podrà requerir la col·laboració necessària dels prestadors de servicis d’intermediació, de servicis de pagaments electrònics i de publicitat, i ordenar-los que suspenguen el corresponent servici que faciliten al prestador infractor.",
    "fenomens": [
@@ -2691,7 +2691,7 @@
    "id_origen": "BOE-A-2014-11404-0458"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -2699,7 +2699,7 @@
    "font": "boe",
    "oriental": "Finalment, aquesta Llei aprofita per seguir impulsant un marc regulador eficient per a les activitats econòmiques que simplifiqui la legislació existent, elimini regulacions innecessàries, estableixi procediments més àgils i minimitzi les càrregues administratives.",
    "oriental_es_esborrany": false,
-   "occidental": "Finalment, esta llei aprofita per a continuar impulsant un marc regulador eficient per a les activitats econòmiques que simplifique la legislació existent, elimine regulacions innecessàries, establisca procediments més àgils i minimitze les càrregues administratives.",
+   "occidental": "Finalment, esta Llei aprofita per a seguir impulsant un marc regulador eficient per a les activitats econòmiques que simplifique la legislació existent, elimine regulacions innecessàries, establisca procediments més àgils i minimitze les càrregues administratives.",
    "fenomens": [
     "CONJ_SUBJ: simplifiqui → simplifique",
     "DEM: aquesta → esta",
@@ -2726,15 +2726,15 @@
    "id_origen": "BOE-A-2013-12888-0036"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-163",
    "font": "boe",
-   "oriental": "En els processos contenciosos administratius que es refereixin a qüestions de personal que no impliquin la seva separació iniciats abans de l’entrada en vigor d’aquesta Llei no s’exigeix la postulació dels funcionaris públics.",
+   "oriental": "En els processos contenciosos administratius que es refereixin a qüestions de personal que no impliquin la seva separació, iniciats abans de l’entrada en vigor d’aquesta Llei, no s’exigeix la postulació dels funcionaris públics.",
    "oriental_es_esborrany": false,
-   "occidental": "En els processos contenciosos administratius que es referisquen a qüestions de personal que no impliquen la seua separació, iniciats abans de l’entrada en vigor d’esta llei, no s’exigirà la postulació dels funcionaris públics.",
+   "occidental": "En els processos contenciosos administratius que es referisquen a qüestions de personal que no impliquen la seua separació, iniciats abans de l’entrada en vigor d’esta Llei, no s’exigirà la postulació dels funcionaris públics.",
    "fenomens": [
     "POS: seva → seua",
     "CONJ_SUBJ: refereixin → referisquen",
@@ -2759,15 +2759,15 @@
    "id_origen": "BOE-A-2012-14301-0209"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-165",
    "font": "boe",
-   "oriental": "Els organismes de control estan obligats, com a requisit previ a l’efectivitat de l’autorització, a subscriure pòlisses d’assegurança que cobreixin els riscos de la seva responsabilitat en la quantia que s’estableixi, sense que aquesta en limiti la responsabilitat.",
+   "oriental": "Els organismes de control estan obligats, com a requisit previ a l’efectivitat de l’autorització, a subscriure pòlisses d’assegurança que cobreixin els riscos de la seva responsabilitat en la quantia que siga establida, sense que aquesta en limiti la responsabilitat.",
    "oriental_es_esborrany": false,
-   "occidental": "Els organismes de control estaran obligats, com a requisit previ a l’efectivitat de l’autorització, a subscriure pòlisses d’assegurança que cobrisquen els riscos de la seua responsabilitat en la quantia que siga establida, sense que esta limite la dita responsabilitat.",
+   "occidental": "Els organismes de control estan obligats, com a requisit previ a l’efectivitat de l’autorització, a subscriure pòlisses d’assegurança que cobrisquen els riscos de la seua responsabilitat en la quantia que siga establida, sense que esta limite la dita responsabilitat.",
    "fenomens": [
     "POS: seva → seua",
     "DEM: aquesta → esta",
@@ -2795,13 +2795,13 @@
    "id_origen": "BOE-A-2009-20725-0724"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-167",
    "font": "boe",
-   "oriental": "A aquests efectes, es considera que les reduccions de capital, sigui quina sigui la seva finalitat, afecten en primer lloc la part del capital social que provingui de beneficis no distribuïts, fins a la seva anul·lació.",
+   "oriental": "A aquests efectes, es considerarà que les reduccions de capital, sigui quina sigui la seva finalitat, afecten en primer lloc la part del capital social que provingui de beneficis no distribuïts, fins a la seva anul·lació.",
    "oriental_es_esborrany": false,
    "occidental": "A estos efectes, es considerarà que les reduccions de capital, siga quina siga la seua finalitat, afecten en primer lloc la part del capital social que provinga de beneficis no distribuïts, fins a la seua anul·lació.",
    "fenomens": [
@@ -2835,7 +2835,7 @@
    "id_origen": "BOE-A-2010-20049-0898"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -2868,7 +2868,7 @@
    "id_origen": "BOE-A-2009-18118-0040"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -2876,7 +2876,7 @@
    "font": "boe",
    "oriental": "En cas que la concessió o autorització esmentada es transmeti, l’adquirent té dret igualment a la llicència del servei, sempre que compleixi les condicions que exigeixen per a això les prescripcions particulars.",
    "oriental_es_esborrany": false,
-   "occidental": "En cas que la dita concessió o autorització es transmeta, l’adquirent tindrà dret igualment a la llicència del servici, sempre que complisca les condicions que exigixen per a això les prescripcions particulars.",
+   "occidental": "En cas que la concessió o autorització mencionada es transmeta, l’adquirent té dret igualment a la llicència del servici, sempre que complisca les condicions que exigixen per a això les prescripcions particulars.",
    "fenomens": [
     "CONJ_SUBJ: compleixi → complisca",
     "CONJ_SUBJ: transmeti → transmeta",
@@ -2903,15 +2903,15 @@
    "id_origen": "BOE-A-2011-16467-2566"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-173",
    "font": "boe",
-   "oriental": "Finalment, el nou ordinal 9è estableix la regla aplicable als serveis d’arrendament a curt termini de mitjans de transport, basada en el lloc en què s’efectuï la seva posada en possessió.",
+   "oriental": "Finalment, el nou ordinal novè estableix la regla aplicable als serveis d’arrendament a curt termini de mitjans de transport, basada en el lloc on s’efectuï la seva posada en possessió d’aquestos.",
    "oriental_es_esborrany": false,
-   "occidental": "Finalment, el nou ordinal 9é establix la regla aplicable als servicis d’arrendament a curt termini de mitjans de transport, basada en el lloc on s’efectue la posada en possessió d’estos.",
+   "occidental": "Finalment, el nou ordinal nové establix la regla aplicable als servicis d’arrendament a curt termini de mitjans de transport, basada en el lloc on s’efectue la posada en possessió d’estos.",
    "fenomens": [
     "LEX_NOM: serveis → servicis",
     "CONJ_SUBJ: efectuï → efectue",
@@ -2935,13 +2935,13 @@
    "id_origen": "BOE-A-2010-3366-0046"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-175",
    "font": "boe",
-   "oriental": "En tot cas, els partits polítics, les federacions o coalicions de partits, i les agrupacions d’electors no poden presentar candidatures que, de fet, continuïn o succeeixin l’activitat d’un partit polític declarat judicialment il·legal i dissolt, o suspès.",
+   "oriental": "En tot cas, els partits polítics, les federacions o coalicions de partits, i les agrupacions d’electors no poden presentar candidatures que, de fet, continuïn o succeeixin la successió de l’activitat d’un partit polític declarat judicialment il·legal i dissolt, o suspès.",
    "oriental_es_esborrany": false,
    "occidental": "En tot cas, els partits polítics, les federacions o coalicions de partits i les agrupacions d’electors no podran presentar candidatures que, de fet, continuen o realitzen la successió de l’activitat d’un partit polític declarat judicialment il·legal i dissolt, o suspés.",
    "fenomens": [
@@ -2966,7 +2966,7 @@
    "id_origen": "BOE-A-2011-1640-0048"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -2974,7 +2974,7 @@
    "font": "boe",
    "oriental": "En darrera instància, es tracta que el sistema permeti consolidar en el sistema productiu una cultura de formació professional que afavoreixi la creació dʼuna ocupació estable i de qualitat.",
    "oriental_es_esborrany": false,
-   "occidental": "En última instància, es tracta que el sistema permeta consolidar en el sistema productiu una cultura de formació professional i afavorir amb això la creació d’ocupació estable i de qualitat.",
+   "occidental": "En última instància, es tracta que el sistema permeta consolidar en el sistema productiu una cultura de formació professional que afavorisca la creació d’una ocupació estable i de qualitat.",
    "fenomens": [
     "LEX_ADJ: darrera → última",
     "CONJ_SUBJ: permeti → permeta"
@@ -2998,7 +2998,7 @@
    "id_origen": "BOE-A-2015-3031-0037"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -3006,7 +3006,7 @@
    "font": "boe",
    "oriental": "Les administracions públiques han de publicar els plans i els programes anuals i pluriennals en què es fixin objectius concrets, així com les activitats, els mitjans i el temps previst per a la seva consecució.",
    "oriental_es_esborrany": false,
-   "occidental": "Les administracions públiques publicaran els plans i programes anuals i plurianuals en què es fixen objectius concrets, així com les activitats, mitjans i temps previst per a la seua consecució.",
+   "occidental": "Les administracions públiques han e publicar els plans i els programes anuals i plurianuals en què es fixen objectius concrets, així com les activitats, els mitjans i el temps previst per a la seua consecució.",
    "fenomens": [
     "POS: seva → seua",
     "LEX_ADJ: pluriennals → plurianuals",
@@ -3030,15 +3030,15 @@
    "id_origen": "BOE-A-2013-12887-0265"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-181",
    "font": "boe",
-   "oriental": "Excepcionalment es poden acordar tarifes inferiors al cost del servei mentre subsisteixin supòsits de subactivitat en absència de concurrència amb entitats privades.",
+   "oriental": "Excepcionalment, es poden acordar tarifes inferiors al cost del servei mentre subsisteixin supòsits de subactivitat en absència de concurrència amb entitats privades.",
    "oriental_es_esborrany": false,
-   "occidental": "Excepcionalment, es podran acordar tarifes inferiors al cost del servici mentres subsistisquen supòsits de subactivitat en absència de concurrència amb entitats privades.",
+   "occidental": "Excepcionalment, es poden acordar tarifes inferiors al cost del servici mentres subsistisquen supòsits de subactivitat en absència de concurrència amb entitats privades.",
    "fenomens": [
     "CONJ_SUBJ: subsisteixin → subsistisquen",
     "LEX_NOM: servei → servici",
@@ -3062,15 +3062,15 @@
    "id_origen": "BOE-A-2010-12703-0906"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-183",
    "font": "boe",
-   "oriental": "Aquí ha de figurar un exemple representatiu Taxa anual equivalent (TAE) La TAE és el cost total del crèdit expressat en que inclogui tots els supòsits utilitzats per calcular la taxa] forma de percentatge anual de l’import total del crèdit.",
+   "oriental": "Aquí ha de figurar un exemple representatiu que Taxa anual equivalent (TAE) [la TAE és el cost total del crèdit expressat en que inclogui tots els supòsits utilitzats per calcular la taxa] forma de percentatge anual de l’import total del crèdit.",
    "oriental_es_esborrany": false,
-   "occidental": "Ací figurarà un exemple representatiu que Taxa anual equivalent (TAE) La TAE és el cost total del crèdit expressat en la incloga tots els supòsits utilitzats per a calcular la taxa] forma de percentatge anual de l’import total del crèdit.",
+   "occidental": "Ací ha de figurar un exemple representatiu que Taxa anual equivalent (TAE) [la TAE és el cost total del crèdit expressat en que incloga tots els supòsits utilitzats per a calcular la taxa] forma de percentatge anual de l’import total del crèdit.",
    "fenomens": [
     "LEX_ADV: aquí → ací",
     "CONJ_SUBJ: inclogui → incloga",
@@ -3094,7 +3094,7 @@
    "id_origen": "BOE-A-2011-10970-0685"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -3102,7 +3102,7 @@
    "font": "boe",
    "oriental": "Mentre la Comissió de Regulació Econòmica Aeroportuària no es doti del personal propi, el Ministeri de Foment li ha de prestar l’assistència necessària per a l’exercici de les seves funcions.",
    "oriental_es_esborrany": false,
-   "occidental": "Mentres la Comissió de Regulació Econòmica Aeroportuària es dote del personal propi, el Ministeri de Foment li prestarà l’assistència necessària per a l’exercici de les seues funcions.",
+   "occidental": "Mentres la Comissió de Regulació Econòmica Aeroportuària no es dote del personal propi, el Ministeri de Foment li ha de prestar l’assistència necessària per a l’exercici de les seues funcions.",
    "fenomens": [
     "POS: seves → seues",
     "LEX_ADV: mentre → mentres",
@@ -3126,13 +3126,13 @@
    "id_origen": "BOE-A-2011-14221-0152"
   },
   {
-   "valida": null,
+   "valida": "dubtosa",
    "oriental_corregit": null,
    "occidental_corregit": null,
-   "comentari": "",
+   "comentari": "Problema con el -los o els haurà de",
    "id": "BM-BOE-187",
    "font": "boe",
-   "oriental": "Els controladors de trànsit aeri que arribin als 57 anys d’edat deixen d’exercir funcions operatives de control de trànsit aeri, i el proveïdor de serveis els ha d’oferir un altre lloc de treball que no comporti l’exercici d’aquestes funcions.",
+   "oriental": "Els controladors de trànsit aeri que arribin als 57 anys d’edat deixaran d’exercir funcions operatives de control de trànsit aeri, i el proveïdor de serveis els ha d’oferir un altre lloc de treball que no comporti l’exercici d’aquestes funcions.",
    "oriental_es_esborrany": false,
    "occidental": "Els controladors de trànsit aeri que arriben als 57 anys d’edat deixaran d’exercir funcions operatives de control de trànsit aeri, i el proveïdor de servicis haurà d’oferir-los un altre lloc de treball que no comporte l’exercici d’eixes funcions.",
    "fenomens": [
@@ -3158,7 +3158,7 @@
    "id_origen": "BOE-A-2010-5983-0189"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -3190,7 +3190,7 @@
    "id_origen": "BOE-A-2012-9364-0048"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -3222,7 +3222,7 @@
    "id_origen": "BOE-A-2010-3514-0013"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -3230,7 +3230,7 @@
    "font": "boe",
    "oriental": "Informació sobre l’obligació del comerciant de proporcionar, abans que s’acordi un intercanvi, informació quant a cada intercanvi proposat i de qualsevol despesa addicional que sigui imputable al consumidor en relació amb l’intercanvi.",
    "oriental_es_esborrany": false,
-   "occidental": "Informació sobre l’obligació del comerciant de proporcionar, abans que s’acorde un intercanvi, informació sobre cada intercanvi proposat i de qualsevol gasto addicional que siga imputable al consumidor en relació amb l’intercanvi.",
+   "occidental": "Informació sobre l’obligació del comerciant de proporcionar, abans que s’acorde un intercanvi, informació quant a cada intercanvi proposat i de qualsevol gasto addicional que siga imputable al consumidor en relació amb l’intercanvi.",
    "fenomens": [
     "CONJ_SUBJ: sigui → siga",
     "LEX_NOM: despesa → gasto",
@@ -3254,10 +3254,10 @@
    "id_origen": "BOE-A-2012-9111-0774"
   },
   {
-   "valida": null,
+   "valida": "dubtosa",
    "oriental_corregit": null,
    "occidental_corregit": null,
-   "comentari": "",
+   "comentari": "Tengo duda con el hi",
    "id": "BM-BOE-195",
    "font": "boe",
    "oriental": "No hi estan incloses les instal·lacions o parts d’instal·lacions la dedicació principal de les quals sigui la recerca, el desenvolupament i l’experimentació de nous productes i processos, ni les instal·lacions que cremin exclusivament biomassa.",
@@ -3289,7 +3289,7 @@
    "id_origen": "BOE-A-2009-10751-0479"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -3297,7 +3297,7 @@
    "font": "boe",
    "oriental": "L’Esquema judicial d’interoperabilitat i seguretat s’ha d’aplicar en l’Administració de Justícia per assegurar l’accés, integritat, disponibilitat, autenticitat, confidencialitat, traçabilitat i conservació de les dades, informacions i serveis utilitzats en mitjans electrònics que gestionin en l’exercici de les seves competències.",
    "oriental_es_esborrany": false,
-   "occidental": "L’esquema judicial d’interoperabilitat i seguretat serà aplicat en l’Administració de justícia per a assegurar l’accés, integritat, disponibilitat, autenticitat, confidencialitat, traçabilitat i conservació de les dades, informacions i servicis utilitzats en mitjans electrònics que gestionen en l’exercici de les seues competències.",
+   "occidental": "L’Esquema judicial d’interoperabilitat i seguretat s’ha d’aplicar en l’Administració de Justícia per a assegurar l’accés, integritat, disponibilitat, autenticitat, confidencialitat, traçabilitat i conservació de les dades, informacions i servicis utilitzats en mitjans electrònics que gestionen en l’exercici de les seues competències.",
    "fenomens": [
     "LEX_NOM: serveis → servicis",
     "POS: seves → seues",
@@ -3322,13 +3322,13 @@
    "id_origen": "BOE-A-2011-11605-0505"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-199",
    "font": "boe",
-   "oriental": "Igualment, quan les reclamacions de rendes o de quantitats degudes accedeixin al procés monitori i l’arrendatari hi formuli oposició, la resolució definitiva ha de seguir els tràmits del judici verbal, sigui quina sigui la seva quantia.",
+   "oriental": "Igualment, quan les reclamacions de rendes o de quantitats degudes accedeixin al procés monitori i es formuli oposició per l’arrendatari, la resolució definitiva seguirà els tràmits del judici verbal, sigui quina sigui la seva quantia.",
    "oriental_es_esborrany": false,
    "occidental": "Igualment, quan les reclamacions de rendes o de quantitats degudes accedisquen al procés monitori i es formule oposició per l’arrendatari, la resolució definitiva seguirà els tràmits del juí verbal, siga quina siga la seua quantia.",
    "fenomens": [
@@ -3360,15 +3360,15 @@
    "id_origen": "BOE-A-2009-18733-0024"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-201",
    "font": "boe",
-   "oriental": "És requisit indispensable que el beneficiari redueixi la jornada de treball, almenys, en un  50 per  100 de la seva durada, per tal que es dediqui a l’atenció directa, contínua i permanent, del menor.",
+   "oriental": "És requisit indispensable que el beneficiari redueixi la seva jornada de treball, almenys, en un 50 per 100 de la seva durada, a fi que es dediqui a l’atenció directa, contínua i permanent, del menor.",
    "oriental_es_esborrany": false,
-   "occidental": "Serà requisit indispensable que el beneficiari reduïsca la seua jornada de treball, almenys, un 50 per 100 de la seua duració, a fi que es dedique a l’atenció directa, contínua i permanent, del menor.",
+   "occidental": "És requisit indispensable que el beneficiari reduïsca la seua jornada de treball, almenys, un 50 per 100 de la seua duració, a fi que es dedique a l’atenció directa, contínua i permanent, del menor.",
    "fenomens": [
     "POS: seva → seua",
     "CONJ_SUBJ: redueixi → reduïsca",
@@ -3396,13 +3396,13 @@
    "id_origen": "BOE-A-2010-19703-3807"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-203",
    "font": "boe",
-   "oriental": "Els interessats en la prestació d’un servei postal per al qual es necessiti autorització administrativa singular han d’adreçar les seves sol·licituds, amb la documentació exigible, a la Comissió Nacional del Sector Postal.",
+   "oriental": "Els interessats en la prestació d’un servei postal per al qual es necessiti autorització administrativa singular dirigiran les seves sol·licituds, amb la documentació exigible, a la Comissió Nacional del Sector Postal.",
    "oriental_es_esborrany": false,
    "occidental": "Els interessats en la prestació d’un servici postal per al qual es necessite autorització administrativa singular dirigiran les seues sol·licituds, amb la documentació exigible, a la Comissió Nacional del Sector Postal.",
    "fenomens": [
@@ -3428,7 +3428,7 @@
    "id_origen": "BOE-A-2010-20139-0716"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -3436,7 +3436,7 @@
    "font": "boe",
    "oriental": "És raonable que la màxima font d’ingressos de l’esport més professionalitzat amb àmplia diferència serveixi també per finançar la base d’aquesta piràmide de la qual és la cúspide.",
    "oriental_es_esborrany": false,
-   "occidental": "És raonable que la major font d’ingressos de l’esport més professionalitzat amb àmplia diferència servisca també per a finançar la base d’eixa piràmide de la qual és la cúspide.",
+   "occidental": "És raonable que la màxima font d’ingressos de l’esport més professionalitzat amb àmplia diferència servisca també per a finançar la base d’eixa piràmide de la qual és la cúspide.",
    "fenomens": [
     "CONJ_SUBJ: serveixi → servisca",
     "PER_A: per → per a"
@@ -3459,7 +3459,7 @@
    "id_origen": "BOE-A-2015-4780-0038"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -3467,7 +3467,7 @@
    "font": "boe",
    "oriental": "S’hi han d’inscriure les dades relatives a les persones o entitats que fabriquin, importin, comercialitzin, reparin o cedeixin en arrendament els instruments o sistemes sotmesos al control metrològic de l’Estat i les seves modificacions.",
    "oriental_es_esborrany": false,
-   "occidental": "S’hi hauran d’inscriure les dades relatives a les persones o entitats que fabriquen, importen, comercialitzen, reparen o cedisquen en arrendament els instruments o sistemes sotmesos al control metrològic de l’Estat i les seues modificacions.",
+   "occidental": "S’hi han d’inscriure les dades relatives a les persones o entitats que fabriquen, importen, comercialitzen, reparen o cedisquen en arrendament els instruments o sistemes sotmesos al control metrològic de l’Estat i les seues modificacions.",
    "fenomens": [
     "CONJ_SUBJ: importin → importen",
     "CONJ_SUBJ: comercialitzin → comercialitzen",
@@ -3494,7 +3494,7 @@
    "id_origen": "BOE-A-2014-13359-0269"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -3502,7 +3502,7 @@
    "font": "boe",
    "oriental": "Així mateix, quan justifiqui la seva necessitat, pot ordenar la retroacció d’actuacions a un moment determinat del procediment d’instància perquè segueixi el curs ordenat per la llei fins a la seva culminació.",
    "oriental_es_esborrany": false,
-   "occidental": "Podrà així mateix, quan justifique la seua necessitat, ordenar la retroacció d’actuacions a un moment determinat del procediment d’instància perquè seguisca el curs ordenat per la llei fins a la seua culminació.",
+   "occidental": "Així mateix, quan justifique la seua necessitat, pot ordenar la retroacció d’actuacions a un moment determinat del procediment d’instància perquè seguisca el curs ordenat per la llei fins a la seua culminació.",
    "fenomens": [
     "POS: seva → seua",
     "CONJ_SUBJ: segueixi → seguisca",
@@ -3528,7 +3528,7 @@
    "id_origen": "BOE-A-2015-8167-1439"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -3536,7 +3536,7 @@
    "font": "boe",
    "oriental": "S’entén que hi ha causa justa quan el conseller general incompleixi els deures inherents al seu càrrec o perjudiqui amb la seva actuació, pública o privada, el prestigi, bon nom o activitat de la caixa.",
    "oriental_es_esborrany": false,
-   "occidental": "S’entendrà que hi ha justa causa quan el conseller general incomplisca els deures inherents al seu càrrec o perjudique amb la seua actuació, pública o privada, el prestigi, bon nom o activitat de la caixa.",
+   "occidental": "S’entén que hi ha causa justa quan el conseller general incomplisca els deures inherents al seu càrrec o perjudique amb la seua actuació, pública o privada, el prestigi, bon nom o activitat de la caixa.",
    "fenomens": [
     "POS: seva → seua",
     "CONJ_SUBJ: incompleixi → incomplisca",
@@ -3560,13 +3560,13 @@
    "id_origen": "BOE-A-2013-13723-0396"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-213",
    "font": "boe",
-   "oriental": "El registrador ha d’ordenar la publicació d’un edicte que reflecteixi les dades de la finca o finques que resultin de l’expedient, així com la seva titularitat i càrregues.",
+   "oriental": "El registrador ordenarà la publicació d’un edicte que reflecteixi les dades de la finca o finques que resultin de l’expedient, així com la seva titularitat i càrregues.",
    "oriental_es_esborrany": false,
    "occidental": "El registrador ordenarà la publicació d’un edicte que reflectisca les dades de la finca o finques que resulten de l’expedient, així com la seua titularitat i càrregues.",
    "fenomens": [
@@ -3592,7 +3592,7 @@
    "id_origen": "BOE-A-2015-7046-0243"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -3600,7 +3600,7 @@
    "font": "boe",
    "oriental": "S’incorporen les definicions de la Directiva del «negociant» i de l’«agent» com a gestors de residus, de manera que es distingeixen aquestes dues figures en què el negociant actua per compte propi mentre que l’agent actua per compte de tercers.",
    "oriental_es_esborrany": false,
-   "occidental": "S’incorporen les definicions de la Directiva del «negociant» i de l’«agent» com a gestors de residus, i es distingixen estes dos figures en què el negociant actua per compte propi, mentres que l’agent actua per compte de tercers.",
+   "occidental": "S’incorporen les definicions de la Directiva del «negociant» i de l’«agent» com a gestors de residus, de manera que es distingixen estes dos figures en què el negociant actua per compte propi, mentres que l’agent actua per compte de tercers.",
    "fenomens": [
     "DEM: aquestes → estes",
     "LEX_ADV: mentre → mentres",
@@ -3625,7 +3625,7 @@
    "id_origen": "BOE-A-2011-13046-0034"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -3633,7 +3633,7 @@
    "font": "boe",
    "oriental": "Des d’aquest punt de vista, la Llei consta de sis títols, completats amb vuit disposicions addicionals, dues de transitòries, una de derogatòria i quatre de finals.",
    "oriental_es_esborrany": false,
-   "occidental": "Des d’este punt de vista, la llei consta de sis títols, completats amb huit disposicions addicionals, dos de transitòries, una de derogatòria i quatre de finals.",
+   "occidental": "Des d’este punt de vista, la Llei consta de sis títols, completats amb huit disposicions addicionals, dos de transitòries, una de derogatòria i quatre de finals.",
    "fenomens": [
     "DEM: aquest → este",
     "NUM: vuit → huit",
@@ -3657,7 +3657,7 @@
    "id_origen": "BOE-A-2009-17242-0025"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -3665,7 +3665,7 @@
    "font": "boe",
    "oriental": "La manca dels registres que preveu aquesta Llei per a les activitats amb transcendència per a la seguretat ciutadana, o l’omissió de comunicacions obligatòries.",
    "oriental_es_esborrany": false,
-   "occidental": "La carència dels registres que preveu esta llei per a les activitats amb transcendència per a la seguretat ciutadana o l’omissió de comunicacions obligatòries.",
+   "occidental": "La carència dels registres que preveu esta Llei per a les activitats amb transcendència per a la seguretat ciutadana o l’omissió de comunicacions obligatòries.",
    "fenomens": [
     "LEX_NOM: manca → carència (homògraf)",
     "DEM: aquesta → esta"
@@ -3688,7 +3688,7 @@
    "id_origen": "BOE-A-2015-3442-0414"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -3696,7 +3696,7 @@
    "font": "boe",
    "oriental": "Almenys un cop l’any, el Banc d’Espanya ha de sotmetre a proves de resistència les entitats de crèdit que supervisa, a fi de facilitar el procés de revisió i avaluació previst en aquest article.",
    "oriental_es_esborrany": false,
-   "occidental": "Almenys una vegada a l’any, el Banc d’Espanya sotmetrà les entitats de crèdit que supervisa a proves de resistència, a fi de facilitar el procés de revisió i avaluació previst en este article.",
+   "occidental": "Almenys una vegada a l’any, el Banc d’Espanya ha de sometre a proves de resistència les entitats de crèdit que supervisa, a fi de facilitar el procés de revisió i avaluació previst en este article.",
    "fenomens": [
     "DEM: aquest → este",
     "LEX_NOM: cop → vegada (homògraf)"
@@ -3719,7 +3719,7 @@
    "id_origen": "BOE-A-2014-6726-1194"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -3727,7 +3727,7 @@
    "font": "boe",
    "oriental": "Així, el primer dels articles d’aquest capítol fa referència a la delimitació d’aquesta potestat i al·ludeix de manera genèrica a les característiques bàsiques que han de definir aquesta societat que es constituiria com una societat anònima.",
    "oriental_es_esborrany": false,
-   "occidental": "Així, el primer dels articles d’este capítol fa referència a la delimitació d’esta potestat i al·ludix de manera genèrica a les característiques bàsiques que definiran esta societat, que es constituiria com una societat anònima.",
+   "occidental": "Així, el primer dels articles d’este capítol fa referència a la delimitació d’esta potestat i al·ludix de manera genèrica a les característiques bàsiques que han de definir esta societat, que es constituiria com una societat anònima.",
    "fenomens": [
     "DEM: aquest → este",
     "DEM: aquesta → esta",
@@ -3753,15 +3753,15 @@
    "id_origen": "BOE-A-2012-14062-0077"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-225",
    "font": "boe",
-   "oriental": "L’esdeveniment ofereix l’oportunitat a les empreses espanyoles d’aprofitar aquesta onada d’innovació, i obre multitud de possibilitats de compartir i exportar iniciatives empresarials que aquí han tingut èxit.",
+   "oriental": "L’esdeveniment ofereix l’oportunitat a les empreses espanyoles d’aprofitar aquesta onada d’innovació, obrint multitud de possibilitats de compartir i exportar iniciatives empresarials que aquí han tingut èxit.",
    "oriental_es_esborrany": false,
-   "occidental": "L’esdeveniment oferix l’oportunitat a les empreses espanyoles d’aprofitar esta onada d’innovació, obrint multitud de possibilitats de compartir i exportar iniciatives empresarials que ací han sigut reeixides.",
+   "occidental": "L’esdeveniment oferix l’oportunitat a les empreses espanyoles d’aprofitar esta onada d’innovació, obrint multitud de possibilitats de compartir i exportar iniciatives empresarials que ací han tingut èxit.",
    "fenomens": [
     "DEM: aquesta → esta",
     "LEX_ADV: aquí → ací",
@@ -3787,7 +3787,7 @@
    "id_origen": "BOE-A-2015-7120-0017"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -3820,7 +3820,7 @@
    "id_origen": "BOE-A-2011-11604-0068"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -3851,7 +3851,7 @@
    "id_origen": "BOE-A-2012-11247-0018"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -3882,15 +3882,15 @@
    "id_origen": "BOE-A-2009-10575-0067"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-233",
    "font": "boe",
-   "oriental": "Si, un cop transcorregut el termini indicat en el requeriment, l’incompliment persisteix, la part que el va adreçar ha de notificar a les parts signants la concurrència de la causa de resolució i el conveni s’entén resolt.",
+   "oriental": "Si, un cop transcorregut el termini indicat en el requeriment, persisteix l’incompliment, la part que el va adreçar ha de notificar a les parts signants la concurrència de la causa de resolució i es considera resolt el conveni.",
    "oriental_es_esborrany": false,
-   "occidental": "Si, una vegada transcorregut el termini indicat en el requeriment, persisteix l’incompliment, la part que el va dirigir notificarà a les parts firmants la concurrència de la causa de resolució i es considerarà resolt el conveni.",
+   "occidental": "Si, una vegada transcorregut el termini indicat en el requeriment, persisteix l’incompliment, la part que el va adreçar ha de notificar a les parts firmants la concurrència de la causa de resolució i es considerarà resolt el conveni.",
    "fenomens": [
     "LEX_NOM: signants → firmants",
     "LEX_NOM: cop → vegada (homògraf)"
@@ -3913,15 +3913,15 @@
    "id_origen": "BOE-A-2015-10566-0791"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-235",
    "font": "boe",
-   "oriental": "A aquests efectes, en la comprovació dels arxius dels treballs d’auditories de petites i mitjanes entitats s’han de tenir en compte les consideracions específiques que estableixen les normes d’auditoria per a les entitats de dimensió petita.",
+   "oriental": "A aquests efectes, en la comprovació dels arxius dels treballs d’auditories de petites i mitjanes entitats es tindran en compte les consideracions específiques que estableixen les normes d’auditoria per a les entitats de petita dimensió.",
    "oriental_es_esborrany": false,
-   "occidental": "A este efecte, en la comprovació dels arxius dels treballs d’auditories de xicotetes i mitjanes entitats es tindran en compte les consideracions específiques que s’establixen en les normes d’auditoria per a les entitats de xicoteta dimensió.",
+   "occidental": "A estos efectes, en la comprovació dels arxius dels treballs d’auditories de xicotetes i mitjanes entitats es tindran en compte les consideracions específiques que establixen les normes d’auditoria per a les entitats de xicoteta dimensió.",
    "fenomens": [
     "LEX_ADJ: petita → xicoteta",
     "LEX_ADJ: petites → xicotetes",
@@ -3948,13 +3948,13 @@
    "id_origen": "BOE-A-2015-8147-1217"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-237",
    "font": "boe",
-   "oriental": "Si per a la validesa com a font de prova de l’objecte, document o dada a Espanya es requereix alguna formalitat o procediment específic en la seva obtenció, s’ha de fer constar així al certificat estès per l’autoritat emissora.",
+   "oriental": "Si per a la validesa com a font de prova de l’objecte, document o dada a Espanya es requereix alguna formalitat o procediment específic en la seva obtenció, es farà constar així en el certificat estès per l’autoritat emissora.",
    "oriental_es_esborrany": false,
    "occidental": "Si per a la validesa com a font de prova de l’objecte, document o dada a Espanya es requerix alguna formalitat o procediment específic en la seua obtenció, es farà constar així en el certificat estés per l’autoritat emissora.",
    "fenomens": [
@@ -3980,7 +3980,7 @@
    "id_origen": "BOE-A-2014-12029-2164"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -3988,7 +3988,7 @@
    "font": "boe",
    "oriental": "A aquests efectes, l’import màxim de despeses de gestió en què pot incórrer en l’exercici 2014 ascendeix a 23.710 milers d’euros.",
    "oriental_es_esborrany": false,
-   "occidental": "A este efecte, l’import màxim de gastos de gestió en què pot incórrer en l’exercici 2014 ascendix a 23.710 milers d’euros.",
+   "occidental": "A estos efectes, l’import màxim de gastos de gestió en què pot incórrer en l’exercici 2014 ascendix a 23.710 milers d’euros.",
    "fenomens": [
     "LEX_NOM: despeses → gastos",
     "INC: ascendeix → ascendix"
@@ -4011,7 +4011,7 @@
    "id_origen": "BOE-A-2014-7468-0052"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4019,7 +4019,7 @@
    "font": "boe",
    "oriental": "Amb aquests objectius, la present Llei es compon d’un article únic que introdueix modificacions a la Llei 35/2003, de 4 de novembre, d’institucions d’inversió col·lectiva, al llarg de 71 apartats, tres disposicions addicionals, una disposició derogatòria i vuit disposicions finals.",
    "oriental_es_esborrany": false,
-   "occidental": "Amb eixos objectius, la present llei es compon d’un article únic que introduïx modificacions en la Llei 35/2003, de 4 de novembre, d’Institucions d’Inversió Col·lectiva, al llarg de 71 apartats, tres disposicions addicionals, una disposició derogatòria i huit disposicions finals.",
+   "occidental": "Amb eixos objectius, la present Llei es compon d’un article únic que introduïx modificacions en la Llei 35/2003, de 4 de novembre, d’Institucions d’Inversió Col·lectiva, al llarg de 71 apartats, tres disposicions addicionals, una disposició derogatòria i huit disposicions finals.",
    "fenomens": [
     "NUM: vuit → huit",
     "INC: introdueix → introduïx"
@@ -4042,13 +4042,13 @@
    "id_origen": "BOE-A-2011-15621-0018"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-243",
    "font": "boe",
-   "oriental": "Amb aquesta intenció es redueixen els terminis previstos agilitant l’operativa del Fons de Reestructuració Ordenada Bancària i, així mateix, es realitzen una sèrie d’ajustos en la seva regulació.",
+   "oriental": "Amb aquesta intenció es redueixen els terminis previstos per agilitzar l’operativa del Fons de Reestructuració Ordenada Bancària i, així mateix, es realitzen una sèrie d’ajustos en la seva regulació.",
    "oriental_es_esborrany": false,
    "occidental": "Amb eixa intenció es reduïxen els terminis previstos per a agilitzar l’operativa del Fons de Reestructuració Ordenada Bancària i, així mateix, es realitzen una sèrie d’ajustos en la seua regulació.",
    "fenomens": [
@@ -4073,7 +4073,7 @@
    "id_origen": "BOE-A-2010-5879-0066"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4104,7 +4104,7 @@
    "id_origen": "BOE-A-2015-5794-0019"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4135,7 +4135,7 @@
    "id_origen": "BOE-A-2015-5288-0504"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4143,7 +4143,7 @@
    "font": "boe",
    "oriental": "La Llei consta de vuitanta-quatre articles agrupats en vuit títols, dinou disposicions addicionals, dotze disposicions transitòries, una disposició derogatòria, onze disposicions finals i dos annexos.",
    "oriental_es_esborrany": false,
-   "occidental": "La llei consta de huitanta-quatre articles agrupats en huit títols, dènou disposicions addicionals, dotze disposicions transitòries, una disposició derogatòria, onze disposicions finals i dos annexos.",
+   "occidental": "La Llei consta de huitanta-quatre articles agrupats en huit títols, dènou disposicions addicionals, dotze disposicions transitòries, una disposició derogatòria, onze disposicions finals i dos annexos.",
    "fenomens": [
     "NUM: dinou → dènou",
     "NUM: vuit → huit",
@@ -4167,7 +4167,7 @@
    "id_origen": "BOE-A-2014-4950-0046"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4197,7 +4197,7 @@
    "id_origen": "AVL-000192"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4226,7 +4226,7 @@
    "id_origen": "AVL-000764"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4255,7 +4255,7 @@
    "id_origen": "AVL-000169"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4287,13 +4287,13 @@
    "id_origen": "AVL-000019"
   },
   {
-   "valida": null,
+   "valida": false,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-009",
    "font": "avl",
-   "oriental": "Valga aquest vers del poeta Ausiàs March per a acreditar-ho: «O amadors!, en amor sentireu / que lo que més delitat us haurà, / en molt breu temps al revès tornarà / e tan greujós res contra vós haureu».",
+   "oriental": "Valga aquest vers del poeta Ausiàs March per acreditar-ho: «O amadors!, en amor sentireu / que lo que més delitat us haurà, / en molt breu temps al revès tornarà / e tan greujós res contra vós haureu».",
    "oriental_es_esborrany": true,
    "occidental": "Valga este vers del poeta Ausiàs March per a acreditar-ho: «O amadors!, en amor sentireu / que lo que més delitat vos haurà, / en molt breu temps al revés tornarà / e tan greujós res contra vós haureu».",
    "fenomens": [
@@ -4317,7 +4317,7 @@
    "id_origen": "AVL-000168"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4347,7 +4347,7 @@
    "id_origen": "AVL-001928"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4377,7 +4377,7 @@
    "id_origen": "AVL-000052"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4404,7 +4404,7 @@
    "id_origen": "AVL-001781"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4438,13 +4438,13 @@
    "id_origen": "AVL-000792"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-019",
    "font": "avl",
-   "oriental": "Per tant, una cop establerta la norma general de pronunciació de les vocals àtones en valencià, convé tenir en compte els criteris particulars que tot seguit s'exposen.",
+   "oriental": "Per tant, un cop establerta la norma general de pronunciació de les vocals àtones en valencià, convé tenir en compte els criteris particulars que tot seguit s'exposen.",
    "oriental_es_esborrany": true,
    "occidental": "Per tant, una vegada establida la norma general de pronunciació de les vocals àtones en valencià, convé tindre en compte els criteris particulars que tot seguit s'exposen.",
    "fenomens": [
@@ -4468,15 +4468,15 @@
    "id_origen": "AVL-001632"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-021",
    "font": "avl",
-   "oriental": "En l’antiga Roma, l’ otium no era, com potser s’entén en l’actualitat un estat d’inactivitat perquè cada u, individualment, fes el que li apetís.",
+   "oriental": "En l’antiga Roma, l’otium no era, com potser s’entén en l’actualitat un estat d’inactivitat perquè cada u, individualment, fes el que li apetís.",
    "oriental_es_esborrany": true,
-   "occidental": "En l’antiga Roma, l’ otium no era, com potser s’entén en l’actualitat un estat d’inactivitat perquè cada u, individualment, fera el que li abellira.",
+   "occidental": "En l’antiga Roma, l’otium no era, com potser s’entén en l’actualitat un estat d’inactivitat perquè cada u, individualment, fera el que li abellira.",
    "fenomens": [
     "CONJ_SUBJ: fes → fera",
     "CONJ_ARREL: apetís → abellira"
@@ -4496,15 +4496,15 @@
    "id_origen": "AVL-000162"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-023",
    "font": "avl",
-   "oriental": "Així, de oferir creéssim oferta, i de oferta posteriorment creéssim ofertar; un altre exemple: de influir creéssim influència, i d’aquest nom reportéssim desprès per derivació influenciar.",
+   "oriental": "Així, d’oferir creéssim oferta, i de oferta posteriorment creéssim ofertar; un altre exemple: de influir creéssim influència, i d’aquest nom reportéssim després per derivació influenciar.",
    "oriental_es_esborrany": true,
-   "occidental": "Així, de oferir creàrem oferta, i de oferta posteriorment creàrem ofertar; un altre exemple: de influir creàrem influència, i d’este nom generàrem després per derivació influenciar.",
+   "occidental": "Així, d’oferir creàrem oferta, i de oferta posteriorment creàrem ofertar; un altre exemple: de influir creàrem influència, i d’este nom generàrem després per derivació influenciar.",
    "fenomens": [
     "CONJ_SUBJ: creéssim → creàrem",
     "DEM: aquest → este",
@@ -4530,13 +4530,13 @@
    "id_origen": "AVL-000260"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-025",
    "font": "avl",
-   "oriental": "El costum de celebrar alguna cosa alçant els gots, sigui colpejant-los lleument o sigui compartint-ne el contingut, és un ritual molt antic, que serveix per a manifestar bons desitjos i reportar confiança entre els comensals.",
+   "oriental": "El costum de celebrar alguna cosa aixecant els gots, sigui copejant-los lleument o sigui compartint-ne el contingut, és un ritual molt antic, que serveix per a manifestar bons desitjos i reportar confiança entre els comensals.",
    "oriental_es_esborrany": true,
    "occidental": "El costum de celebrar alguna cosa alçant els gots, siga colpejant-los lleument o siga compartint-ne el contingut, és un ritual molt antic, que servix per a manifestar bons desitjos i generar confiança entre els comensals.",
    "fenomens": [
@@ -4561,7 +4561,7 @@
    "id_origen": "AVL-001573"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4589,7 +4589,7 @@
    "id_origen": "AVL-002211"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4617,7 +4617,7 @@
    "id_origen": "AVL-002026"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4646,13 +4646,13 @@
    "id_origen": "AVL-001702"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-033",
    "font": "avl",
-   "oriental": "En aquest sentit, cal recordar que la sèrie Toponímia dels Pobles Valencians és una continuació del projecte que va iniciar la Generalitat l’any 1993 per a recollir la informació toponímica corresponent a tots els municipis de la Comunitat Valenciana.",
+   "oriental": "En aquest sentit, cal recordar que la sèrie Toponímia dels Pobles Valencians és una continuació del projecte que va iniciar la Generalitat l’any 1993 per recollir la informació toponímica corresponent a tots els municipis de la Comunitat Valenciana.",
    "oriental_es_esborrany": true,
    "occidental": "En este sentit, cal recordar que la sèrie Toponímia dels Pobles Valencians és una continuació del projecte que va iniciar la Generalitat l’any 1993 per a arreplegar la informació toponímica corresponent a tots els municipis de la Comunitat Valenciana.",
    "fenomens": [
@@ -4675,13 +4675,13 @@
    "id_origen": "AVL-001863"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-035",
    "font": "avl",
-   "oriental": "Desprès de la signatura del conveni, s’ha produït l’intercanvi de regals institucionals.",
+   "oriental": "Després de la signatura del conveni, s’ha produït l’intercanvi de regals institucionals.",
    "oriental_es_esborrany": true,
    "occidental": "Després de la firma del conveni, s’ha produït l’intercanvi de regals institucionals.",
    "fenomens": [
@@ -4704,7 +4704,7 @@
    "id_origen": "AVL-001823"
   },
   {
-   "valida": null,
+   "valida": "dubtosa",
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4732,7 +4732,7 @@
    "id_origen": "AVL-001504"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4760,13 +4760,13 @@
    "id_origen": "AVL-001877"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-041",
    "font": "avl",
-   "oriental": "Les dones, en principi, hi anaven a rentar; però, entre llavada i llavada, hi havia temps per a fer petar la xerrada.",
+   "oriental": "Les dones, en principi, hi anaven a rentar; però, entre rentada i rentada, hi havia temps per a fer petar la xerrada.",
    "oriental_es_esborrany": true,
    "occidental": "Les dones, en principi, hi anaven a llavar; però, entre llavada i llavada, hi havia temps per a fer petar la xarrada.",
    "fenomens": [
@@ -4789,7 +4789,7 @@
    "id_origen": "AVL-001014"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4817,7 +4817,7 @@
    "id_origen": "AVL-002212"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4845,7 +4845,7 @@
    "id_origen": "AVL-001907"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4876,7 +4876,7 @@
    "id_origen": "AVL-001229"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4904,7 +4904,7 @@
    "id_origen": "AVL-001581"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4932,7 +4932,7 @@
    "id_origen": "AVL-000278"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4960,7 +4960,7 @@
    "id_origen": "AVL-000709"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -4988,13 +4988,13 @@
    "id_origen": "AVL-001935"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-057",
    "font": "avl",
-   "oriental": "Mira, si t'haig de dir la veritat, no haig pogut fer res.",
+   "oriental": "Mira, si t'haig de dir la veritat, no he pogut fer res.",
    "oriental_es_esborrany": true,
    "occidental": "Mira, si t'he de dir la veritat, no he pogut fer res.",
    "fenomens": [
@@ -5015,13 +5015,13 @@
    "id_origen": "AVL-001798"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-059",
    "font": "avl",
-   "oriental": "En el primer cas s’està dient de manera emfàtica que jo haig estat testimoni del que estic contant; ningú m’ho ha contat.",
+   "oriental": "En el primer cas s’està dient de manera emfàtica que jo he estat testimoni del que estic contant; ningú m’ho ha contat.",
    "oriental_es_esborrany": true,
    "occidental": "En el primer cas s’està dient de manera emfàtica que jo he sigut testimoni del que estic contant; ningú m’ho ha contat.",
    "fenomens": [
@@ -5043,7 +5043,7 @@
    "id_origen": "AVL-000570"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5073,13 +5073,13 @@
    "id_origen": "AVL-001804"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-063",
    "font": "avl",
-   "oriental": "El problema es planteja quan una opinió, per molt fonamentada que estigui (o així cregui qui l’emeto), deixa de ser el parer d’algú sobre un assumpte per a convertir-se en una veritat indiscutible.",
+   "oriental": "El problema es planteja quan una opinió, per molt fonamentada que estigui (o així cregui qui l’emet), deixa de ser el parer d’algú sobre un assumpte per a convertir-se en una veritat indiscutible.",
    "oriental_es_esborrany": true,
    "occidental": "El problema es planteja quan una opinió, per molt fonamentada que estiga (o així crega qui l’emet), deixa de ser el parer d’algú sobre un assumpte per a convertir-se en una veritat indiscutible.",
    "fenomens": [
@@ -5104,13 +5104,13 @@
    "id_origen": "AVL-001404"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-065",
    "font": "avl",
-   "oriental": "Diuen que acabaran aquesta mateixa setmana..., sí, ja m'ho haig cregut!",
+   "oriental": "Diuen que acabaran aquesta mateixa setmana..., sí, ja m'ho he cregut!",
    "oriental_es_esborrany": true,
    "occidental": "Diuen que acabaran esta mateixa setmana..., sí, ja m'ho he cregut!",
    "fenomens": [
@@ -5132,7 +5132,7 @@
    "id_origen": "AVL-001702"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5161,13 +5161,13 @@
    "id_origen": "AVL-001924"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-069",
    "font": "avl",
-   "oriental": "En aquest conveni, RTVV es comprometo a produir un documental sobre la figura de l’Escriptor de l’Any i l’AVL assumeix la seva exhibició en l’exposició i la seva distribució per tots els instituts de la Comunitat Valenciana.",
+   "oriental": "En aquest conveni, RTVV es compromet a produir un documental sobre la figura de l’Escriptor de l’Any i l’AVL assumeix la seva exhibició en l’exposició i la seva distribució per tots els instituts de la Comunitat Valenciana.",
    "oriental_es_esborrany": true,
    "occidental": "En este conveni, RTVV es compromet a produir un documental sobre la figura de l’Escriptor de l’Any i l’AVL assumix la seua exhibició en l’exposició i la seua distribució per tots els instituts de la Comunitat Valenciana.",
    "fenomens": [
@@ -5193,13 +5193,13 @@
    "id_origen": "AVL-002232"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-071",
    "font": "avl",
-   "oriental": "El descobriment que aquesta malaltia es transmeto a través dels mosquits es deu al britànic Ronald Ross, que fou guardonat amb el Nobel de Medicina l’any 1902 per les seves aportacions a la recerca.",
+   "oriental": "El descobriment que aquesta malaltia es transmet a través dels mosquits es deu al britànic Ronald Ross, que fou guardonat amb el Nobel de Medicina l’any 1902 per les seves aportacions a la recerca.",
    "oriental_es_esborrany": true,
    "occidental": "El descobriment que esta malaltia es transmet a través dels mosquits es deu al britànic Ronald Ross, que fou guardonat amb el Nobel de Medicina l’any 1902 per les seues aportacions a la investigació.",
    "fenomens": [
@@ -5225,7 +5225,7 @@
    "id_origen": "AVL-001169"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5255,13 +5255,13 @@
    "id_origen": "AVL-000140"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-075",
    "font": "avl",
-   "oriental": "Segons dades del Ministeri de Sanitat, Consum i Benestar Social, un 35% de la població espanyola admeto haver-ne consumit alguna cop en la vida.",
+   "oriental": "Segons dades del Ministeri de Sanitat, Consum i Benestar Social, un 35% de la població espanyola admet haver-ne consumit alguna cop en la vida.",
    "oriental_es_esborrany": true,
    "occidental": "Segons dades del Ministeri de Sanitat, Consum i Benestar Social, un 35% de la població espanyola admet haver-ne consumit alguna vegada en la vida.",
    "fenomens": [
@@ -5283,13 +5283,13 @@
    "id_origen": "AVL-000667"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-077",
    "font": "avl",
-   "oriental": "Es tracta d’un cultisme reprès modernament per via literària, que s’aplica sobretot a l’actitud d’algú que, amb un aire de superioritat, transmeto subtilment el seu empipament per alguna cosa que se sent obligat a fer.",
+   "oriental": "Es tracta d’un cultisme reprès modernament per via literària, que s’aplica sobretot a l’actitud d’algú que, amb un aire de superioritat, transmet subtilment el seu empipament per alguna cosa que se sent obligat a fer.",
    "oriental_es_esborrany": true,
    "occidental": "Es tracta d’un cultisme représ modernament per via literària, que s’aplica sobretot a l’actitud d’algú que, amb un aire de superioritat, transmet subtilment el seu enuig per alguna cosa que se sent obligat a fer.",
    "fenomens": [
@@ -5313,13 +5313,13 @@
    "id_origen": "AVL-001412"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-079",
    "font": "avl",
-   "oriental": "Conforme està redactat el projecte d’Ordre, qualsevol nova incorporació que les citades comunitats autònomes facen a les llistes implicarà que s’hagi de fer una modificació correlativa en la norma valenciana; en cas contrari, no podrà aplicar-se la nova equivalència.",
+   "oriental": "Conforme està redactat el projecte d’Ordre, qualsevol nova incorporació que les citades comunitats autònomes facin a les llistes implicarà que s’hagi de fer una modificació correlativa en la norma valenciana; en cas contrari, no podrà aplicar-se la nova equivalència.",
    "oriental_es_esborrany": true,
    "occidental": "Conforme està redactat el projecte d’Orde, qualsevol nova incorporació que les citades comunitats autònomes facen a les llistes implicarà que s’haja de fer una modificació correlativa en la norma valenciana; en cas contrari, no podrà aplicar-se la nova equivalència.",
    "fenomens": [
@@ -5341,13 +5341,13 @@
    "id_origen": "AVL-002215"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-081",
    "font": "avl",
-   "oriental": "No haig fet res de seny en tot el dia.",
+   "oriental": "No he fet res de seny en tot el dia.",
    "oriental_es_esborrany": true,
    "occidental": "No he fet res de trellat en tot el dia.",
    "fenomens": [
@@ -5369,15 +5369,15 @@
    "id_origen": "AVL-001801"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-083",
    "font": "avl",
-   "oriental": "TITOL V De l'organització i els recursos de la AVL CAPITOL I Del personal Article 32 El Personal que hagi de prestar serveis en la AVL es regirà pel Règim Jurídic aplicable al personal al servei de la Generalitat.",
+   "oriental": "TITOL V De l'organització i els recursos de la AVL CAPITOL I Del personal Article 32. El Personal que hagi de prestar serveis en la AVL es regirà pel Règim Jurídic aplicable al personal al servei de la Generalitat.",
    "oriental_es_esborrany": true,
-   "occidental": "TITOL V De l'organització i els recursos de la AVL CAPITOL I Del personal Article 32 El Personal que haja de prestar servicis en la AVL es regirà pel Règim Jurídic aplicable al personal al servici de la Generalitat.",
+   "occidental": "TITOL V De l'organització i els recursos de la AVL CAPITOL I Del personal Article 32. El Personal que haja de prestar servicis en la AVL es regirà pel Règim Jurídic aplicable al personal al servici de la Generalitat.",
    "fenomens": [
     "CONJ_IND: hagi → haja",
     "LEX_NOM: serveis → servicis",
@@ -5399,13 +5399,13 @@
    "id_origen": "AVL-002189"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-085",
    "font": "avl",
-   "oriental": "València, 24 d’octubre de 2022 Sant Miquel dels Reis acullo la proposta coreogràfica de la companyia Hort-Art que reverbera l’univers de Joan Fuster Hort-Art presenta la seva producció amb l’Acadèmia Valenciana de la Llengua i l’Ajuntament de Faura.",
+   "oriental": "València, 24 d’octubre de 2022 Sant Miquel dels Reis acull la proposta coreogràfica de la companyia Hort-Art que reverbera l’univers de Joan Fuster Hort-Art presenta la seva producció amb l’Acadèmia Valenciana de la Llengua i l’Ajuntament de Faura.",
    "oriental_es_esborrany": true,
    "occidental": "València, 24 d’octubre de 2022 Sant Miquel dels Reis acull la proposta coreogràfica de la companyia Hort-Art que reverbera l’univers de Joan Fuster Hort-Art presenta la seua producció amb l’Acadèmia Valenciana de la Llengua i l’Ajuntament de Faura.",
    "fenomens": [
@@ -5427,7 +5427,7 @@
    "id_origen": "AVL-001936"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5457,7 +5457,7 @@
    "id_origen": "AVL-000035"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5490,7 +5490,7 @@
    "id_origen": "AVL-000944"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5521,7 +5521,7 @@
    "id_origen": "AVL-000900"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5549,7 +5549,7 @@
    "id_origen": "AVL-000662"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5577,7 +5577,7 @@
    "id_origen": "AVL-002066"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5605,7 +5605,7 @@
    "id_origen": "AVL-002227"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6775,579 +6775,6 @@
    "url": "https://www.avl.gva.es/documents/31983/0/Informe+Decret+model+ling%C3%BC%C3%ADstic+educatiu+valenci%C3%A0.pdf",
    "data": null,
    "id_origen": "AVL-002216"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-181",
-   "font": "avl",
-   "oriental": "Així mateix, emfasitza que l’Acadèmia celebra l’Any Fuster posant en relleu “aqueixa mirada de cultura compartida, i també la seva mirada lúcida i polièdrica”.",
-   "oriental_es_esborrany": true,
-   "occidental": "Així mateix, emfasitza que l’Acadèmia celebra l’Any Fuster posant en relleu “eixa mirada de cultura compartida, i també la seua mirada lúcida i polièdrica”.",
-   "fenomens": [
-    "DEM: aqueixa → eixa",
-    "POS: seves → seua"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "eixa",
-    "seua"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "nota-de-premsa",
-   "document": "AVL-001956",
-   "titol": "La presidenta de l’AVL assistix a la conferència ‘Joan Fuster, arquitecte d’una cultura’",
-   "url": "https://www.avl.gva.es/la-presidenta-de-lavl-assistix-a-la-conferencia-joan-fuster-arquitecte-duna-cultura/",
-   "data": "2022-06-08T15:25:00",
-   "id_origen": "AVL-001956"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-183",
-   "font": "avl",
-   "oriental": "C., que inicialment anomenà «bis sextus dies ante Kalendas Martias», és a dir, ‘repetit dues cops el sisè dia abans de les calendes del mes de març’, i que desprès es reduí a bisextus.",
-   "oriental_es_esborrany": true,
-   "occidental": "C., que inicialment anomenà «bis sextus dies ante Kalendas Martias», és a dir, ‘repetit dos vegades el sext dia abans de les calendes del mes de març’, i que després es reduí a bisextus.",
-   "fenomens": [
-    "LEX_NOM: cops → vegades (homògraf)",
-    "LEX_ADJ: sisè → sext",
-    "LEX_ADJ: desprès → després",
-    "DOS_DUES: dues → dos"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "vegades",
-    "sext",
-    "després"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "glossari",
-   "document": "AVL-000178",
-   "titol": "bixest",
-   "url": "https://www.avl.gva.es/glossari/bixest/",
-   "data": "2024-02-29T00:00:19",
-   "id_origen": "AVL-000178"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-185",
-   "font": "avl",
-   "oriental": "La presidenta de l’Acadèmia Valenciana de la Llengua, Verònica Cantó, i la rectora de la Universitat d’Alacant, Amparo Navarro, han signat la renovació de l’acord de col·laboració que les dues entitats mantenen des de fa vuit anys.",
-   "oriental_es_esborrany": true,
-   "occidental": "La presidenta de l’Acadèmia Valenciana de la Llengua, Verònica Cantó, i la rectora de la Universitat d’Alacant, Amparo Navarro, han firmat la renovació de l’acord de col·laboració que les dos entitats mantenen des de fa huit anys.",
-   "fenomens": [
-    "LEX_ADJ: signat → firmat",
-    "NUM: vuit → huit",
-    "DOS_DUES: dues → dos"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "firmat",
-    "huit"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "nota-de-premsa",
-   "document": "AVL-001902",
-   "titol": "L’Acadèmia Valenciana de la Llengua i la Universitat d’Alacant renoven el seu compromís de col·laboració",
-   "url": "https://www.avl.gva.es/lacademia-valenciana-de-la-llengua-i-la-universitat-dalacant-renoven-el-seu-compromis-de-collaboracio/",
-   "data": "2023-07-20T13:22:16",
-   "id_origen": "AVL-001902"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-187",
-   "font": "avl",
-   "oriental": "A cops es recorre a la negació del conflicte mateix, com si fora fruit de les figuracions fantasioses d’altres persones; altres cops es tendeix a suavitzar la intensitat dels problemes, tamisant-los amb subterfugis mentals que permeten crear una realitat paral·lela.",
-   "oriental_es_esborrany": true,
-   "occidental": "A vegades es recorre a la negació del conflicte mateix, com si fora fruit de les figuracions fantasioses d’altres persones; altres vegades es tendix a suavitzar la intensitat dels problemes, tamisant-los amb subterfugis mentals que permeten crear una realitat paral·lela.",
-   "fenomens": [
-    "LEX_NOM: cops → vegades (homògraf)",
-    "INC: tendeix → tendix"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "vegades",
-    "vegades"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "glossari",
-   "document": "AVL-000782",
-   "titol": "escapisme",
-   "url": "https://www.avl.gva.es/glossari/escapisme/",
-   "data": "2023-03-22T11:22:32",
-   "id_origen": "AVL-000782"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-189",
-   "font": "avl",
-   "oriental": "La nostra aspiració és que els usuaris puguen trobar reunides en un sol cop d’ull totes les publicacions històriques disponibles, i, al mateix temps, seleccionar-les amb criteris geogràfics o cronològics a través de l'eina de cerca de l’aplicació.",
-   "oriental_es_esborrany": true,
-   "occidental": "La nostra aspiració és que els usuaris puguen trobar reunides en un sol colp d’ull totes les publicacions històriques disponibles, i, al mateix temps, seleccionar-les amb criteris geogràfics o cronològics a través de la ferramenta de busca de l’aplicació.",
-   "fenomens": [
-    "LEX_NOM: cop → colp (homògraf)",
-    "LEX_NOM: eina → ferramenta"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "colp",
-    "ferramenta"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "pagina",
-   "document": "AVL-002108",
-   "titol": "Nota explicativa",
-   "url": "https://www.avl.gva.es/nota-explicativa/",
-   "data": "2023-09-19T11:40:44",
-   "id_origen": "AVL-002108"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-191",
-   "font": "avl",
-   "oriental": "S’usa principalment per a referir-se a la part exterior i dura dels arbres, així com a la cobertura llenyosa d’algunes fruites seques, com les ametlles, les nous, les avellanes, les pipes, etc.",
-   "oriental_es_esborrany": true,
-   "occidental": "S’usa principalment per a referir-se a la part exterior i dura dels arbres, així com a la cobertura llenyosa d’algunes fruites seques, com les ametles, les anous, les avellanes, les pipes, etc.",
-   "fenomens": [
-    "LEX_NOM: ametlles → ametles",
-    "LEX_NOM: nous → anous (homògraf)",
-    "PER_A: per → per a [l'esborrany no ho ha convertit]"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "ametles",
-    "anous"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "glossari",
-   "document": "AVL-000830",
-   "titol": "corfa",
-   "url": "https://www.avl.gva.es/glossari/corfa/",
-   "data": "2023-03-22T10:54:56",
-   "id_origen": "AVL-000830"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-193",
-   "font": "avl",
-   "oriental": "L'Acadèmia Valenciana de la Llengua és una institució de caràcter públic de la Generalitat Valenciana, que gaudeix de personalitat jurídica pròpia i exerceix les seves funcions amb autonomia orgànica, funcional i pressupostària, per a garantir la seva objectivitat i independència.",
-   "oriental_es_esborrany": true,
-   "occidental": "L'Acadèmia Valenciana de la Llengua és una institució de caràcter públic de la Generalitat Valenciana, que gaudix de personalitat jurídica pròpia i exercix les seues funcions amb autonomia orgànica, funcional i pressupostària, per a garantir la seua objectivitat i independència.",
-   "fenomens": [
-    "POS: seves → seues",
-    "POS: seves → seua",
-    "INC: gaudeix → gaudix",
-    "INC: exerceix → exercix",
-    "PER_A: per → per a [l'esborrany no ho ha convertit]"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "seues",
-    "seua"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "legislacio",
-   "document": "AVL-002191",
-   "titol": "Reglament de lAcadèmia Valenciana de la Llengua",
-   "url": "https://www.avl.gva.es/documents/31595/32337/Reglament+de+lAcad%C3%A8mia+Valenciana+de+la+Llengua",
-   "data": null,
-   "id_origen": "AVL-002191"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-195",
-   "font": "avl",
-   "oriental": "«¡Vine aquí, flor bufona, reina de la casa! ¡ Xata!», escriu Vicent Andrés Estellés en un dels seus poemes.",
-   "oriental_es_esborrany": true,
-   "occidental": "«¡Vine ací, flor bonica, reina de la casa! ¡ Xata!», escriu Vicent Andrés Estellés en un dels seus poemes.",
-   "fenomens": [
-    "LEX_ADV: aquí → ací",
-    "LEX_ADJ: bufona → bonica"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "ací",
-    "bonica"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "glossari",
-   "document": "AVL-000148",
-   "titol": "xato",
-   "url": "https://www.avl.gva.es/glossari/xato/",
-   "data": "2024-12-04T13:57:05",
-   "id_origen": "AVL-000148"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-197",
-   "font": "avl",
-   "oriental": "I desprès, tenim a la nostra disposició nombroses eines com ara els vídeos, les fotografies, les icones o la música per a ser més pròxims; la gent ja no es conforma solament amb el text.",
-   "oriental_es_esborrany": true,
-   "occidental": "I després, tenim a la nostra disposició nombroses ferramentes com ara els vídeos, les fotografies, les icones o la música per a ser més pròxims; la gent ja no es conforma solament amb el text.",
-   "fenomens": [
-    "LEX_ADJ: desprès → després",
-    "LEX_NOM: eines → ferramentes",
-    "PER_A: per → per a [l'esborrany no ho ha convertit]"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "després",
-    "ferramentes"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "nota-de-premsa",
-   "document": "AVL-001948",
-   "titol": "Rebeca Díez: “És complicat que la gent s’expresse en les xarxes en la llengua que s’usa menys”",
-   "url": "https://www.avl.gva.es/rebeca-diez-es-complicat-que-la-gent-sexpresse-en-les-xarxes-en-la-llengua-que-susa-menys/",
-   "data": "2022-06-29T13:09:00",
-   "id_origen": "AVL-001948"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-199",
-   "font": "avl",
-   "oriental": "Diego Zaragozí ha conclòs la seva intervenció agraint la permanent col·laboració amb l’AVL, “que sempre ens ha estès la mà quan ens ha fet falta”.",
-   "oriental_es_esborrany": true,
-   "occidental": "Diego Zaragozí ha conclòs la seua intervenció agraint la permanent col·laboració amb l’AVL, “que sempre ens ha estés la mà quan ens ha fet falta”.",
-   "fenomens": [
-    "POS: seves → seua",
-    "LEX_ADJ: estès → estés"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "seua",
-    "estés"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "nota-de-premsa",
-   "document": "AVL-001824",
-   "titol": "L’AVL i l’Ajuntament d’Altea firmen un conveni de col·laboració per a promoure l’ús del valencià en tots els àmbits públics",
-   "url": "https://www.avl.gva.es/lavl-i-lajuntament-daltea-firmen-un-conveni-de-collaboracio-per-a-promoure-lus-del-valencia-en-tots-els-ambits-publics/",
-   "data": "2025-11-20T13:58:32",
-   "id_origen": "AVL-001824"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-201",
-   "font": "avl",
-   "oriental": "Sabent això, que tots vostès, i molt especialment les dones que celebren avui la seva onomàstica, tinguen un feliç dia!",
-   "oriental_es_esborrany": true,
-   "occidental": "Sabent això, que tots vostés, i molt especialment les dones que celebren hui la seua onomàstica, tinguen un feliç dia!",
-   "fenomens": [
-    "LEX_ALTRES: vostès → vostés",
-    "LEX_ADV: avui → hui",
-    "POS: seves → seua"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "vostés",
-    "hui",
-    "seua"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "glossari",
-   "document": "AVL-000834",
-   "titol": "conxa",
-   "url": "https://www.avl.gva.es/glossari/conxa/",
-   "data": "2023-03-22T10:52:58",
-   "id_origen": "AVL-000834"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-203",
-   "font": "avl",
-   "oriental": "El president de l’Acadèmia Valenciana de la Llengua, Ramon Ferrer, s’ha reunit avui amb la batllessa d’Algemesí, Marta Trenzano, per a estudiar i concretar les línies de col·laboració institucional dirigides a la promoció i difusió del valencià.",
-   "oriental_es_esborrany": true,
-   "occidental": "El president de l’Acadèmia Valenciana de la Llengua, Ramon Ferrer, s’ha reunit hui amb l’alcaldessa d’Algemesí, Marta Trenzano, per a estudiar i concretar les línies de col·laboració institucional dirigides a la promoció i difusió del valencià.",
-   "fenomens": [
-    "LEX_ADV: avui → hui",
-    "LEX_NOM: batllessa → alcaldessa",
-    "PER_A: per → per a [l'esborrany no ho ha convertit]"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "hui",
-    "alcaldessa"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "nota-de-premsa",
-   "document": "AVL-002069",
-   "titol": "L’alcaldessa d’Algemesí visita l’Acadèmia valenciana de la Llengua",
-   "url": "https://www.avl.gva.es/lalcaldessa-dalgemesi-visita-lacademia-valenciana-de-la-llengua-2/",
-   "data": "2015-09-24T13:49:00",
-   "id_origen": "AVL-002069"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-205",
-   "font": "avl",
-   "oriental": "Si mirem arrere, en molts pobles i ciutats no hi havia plaça en què no se sentiren nois i noies jugant en valencià.",
-   "oriental_es_esborrany": true,
-   "occidental": "Si mirem arrere, en molts pobles i ciutats no hi havia plaça en què no se sentiren xiquets i xiquetes jugant en valencià.",
-   "fenomens": [
-    "LEX_NOM: nois → xiquets",
-    "LEX_NOM: nenes → xiquetes"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "xiquets",
-    "xiquetes"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "butlleti",
-   "document": "AVL-000046",
-   "titol": "La importància de jugar en valencià",
-   "url": "https://www.avl.gva.es/butlleti/la-importancia-de-jugar-en-valencia/",
-   "data": "2025-05-05T14:20:08",
-   "id_origen": "AVL-000046"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-207",
-   "font": "avl",
-   "oriental": "Se solen menjar pastissos tradicionals, com la coca de tomàquet i pebrot, i es passa la nit al cel ras entre amics i familiars rebent la caiguda del reixiu al cap.",
-   "oriental_es_esborrany": true,
-   "occidental": "Se solen menjar pastissos tradicionals, com la coca de tomaca i pimentó, i es passa la nit al cel ras entre amics i familiars rebent la caiguda del reixiu al cap.",
-   "fenomens": [
-    "LEX_NOM: tomàquet → tomaca",
-    "LEX_NOM: pebrot → pimentó"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "tomaca",
-    "pimentó"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "glossari",
-   "document": "AVL-000490",
-   "titol": "ros",
-   "url": "https://www.avl.gva.es/glossari/ros/",
-   "data": "2023-03-22T17:07:24",
-   "id_origen": "AVL-000490"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-209",
-   "font": "avl",
-   "oriental": "Els tres hòmens, cadascú per la seva banda, despleguen una sèrie d’intrigues, gelosies i enganys per a conquistar la noia.",
-   "oriental_es_esborrany": true,
-   "occidental": "Els tres hòmens, cadascú per la seua banda, despleguen una sèrie d’intrigues, gelosies i enganys per a conquistar la xica.",
-   "fenomens": [
-    "POS: seves → seua",
-    "LEX_NOM: noia → xica",
-    "PER_A: per → per a [l'esborrany no ho ha convertit]"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "seua",
-    "xica"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "nota-de-premsa",
-   "document": "AVL-001953",
-   "titol": "L’Acadèmia col·labora amb Les Arts Volant i repartirà el còmic sobre la vida i l’obra de Martín i Soler en les representacions d’“El tutor burlat”",
-   "url": "https://www.avl.gva.es/lacademia-col%c2%b7labora-amb-les-arts-volant-i-repartira-el-comic-sobre-la-vida-i-lobra-de-martin-i-soler-en-les-representacions-del-tutor-burlat/",
-   "data": "2022-06-17T15:02:00",
-   "id_origen": "AVL-001953"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-211",
-   "font": "avl",
-   "oriental": "Un gran honor pel fet de poder contribuir amb la meva feina a l’enfortiment de l’estima per la llengua i la difusió i promoció de la cultura en valencià.",
-   "oriental_es_esborrany": true,
-   "occidental": "Un gran honor pel fet de poder contribuir amb la meua faena a l’enfortiment de l’estima per la llengua i la difusió i promoció de la cultura en valencià.",
-   "fenomens": [
-    "POS: meves → meua",
-    "LEX_NOM: feina → faena"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "meua",
-    "faena"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "butlleti",
-   "document": "AVL-000005",
-   "titol": "«Contribuiré amb la meua faena a l’enfortiment de l’estima per la llengua i la difusió i promoció de la cultura en valencià»",
-   "url": "https://www.avl.gva.es/butlleti/contribuire-amb-la-meua-faena-a-lenfortiment-de-lestima-per-la-llengua-i-la-difusio-i-promocio-de-la-cultura-en-valencia/",
-   "data": "2026-06-04T11:11:37",
-   "id_origen": "AVL-000005"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-213",
-   "font": "avl",
-   "oriental": "El professor Hauf és autor de més de dos-cents treballs de recerca i d’innombrables articles periodístics i de divulgació publicats al llarg de la seva extensa carrera docent.",
-   "oriental_es_esborrany": true,
-   "occidental": "El professor Hauf és autor de més de dos-cents treballs d’investigació i d’innombrables articles periodístics i de divulgació publicats al llarg de la seua extensa carrera docent.",
-   "fenomens": [
-    "LEX_NOM: recerca → investigació",
-    "POS: seves → seua"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "investigació",
-    "seua"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "nota-de-premsa",
-   "document": "AVL-002031",
-   "titol": "L’acadèmic Albert Hauf participa en La Nau, en els actes del 700 aniversari de la mort de Ramon Llull",
-   "url": "https://www.avl.gva.es/lacademic-albert-hauf-participa-en-la-nau-en-els-actes-del-700-aniversari-de-la-mort-de-ramon-llull/",
-   "data": "2017-01-13T11:23:00",
-   "id_origen": "AVL-002031"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-215",
-   "font": "avl",
-   "oriental": "Per la seva part, Ramon Ferrer, que ha lamentat la sortida de destacats membres de la institució, podria completar el seu mandat com a president de l’Acadèmia Valenciana de la Llengua.",
-   "oriental_es_esborrany": true,
-   "occidental": "Per la seua part, Ramon Ferrer, que ha lamentat l’eixida de destacats membres de la institució, podria completar el seu mandat com a president de l’Acadèmia Valenciana de la Llengua.",
-   "fenomens": [
-    "POS: seves → seua",
-    "LEX_NOM: sortida → eixida"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "seua",
-    "eixida"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "nota-de-premsa",
-   "document": "AVL-001970",
-   "titol": "La renovació de l’AVL deixa fora a destacats membres de la institució",
-   "url": "https://www.avl.gva.es/la-renovacio-de-lavl-deixa-fora-a-destacats-membres-de-la-institucio/",
-   "data": "2020-12-04T08:37:00",
-   "id_origen": "AVL-001970"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-217",
-   "font": "avl",
-   "oriental": "Durant la dècada dels vuitanta, el manga experimentà una gran expansió internacional i eixamplà la seva temàtica a històries esguitades d’escenes d’horror, amb continguts violents i sensuals, sovint entroncades amb relats de guerrers samurais i monstres terrorífics.",
-   "oriental_es_esborrany": true,
-   "occidental": "Durant la dècada dels huitanta, el manga experimentà una gran expansió internacional i eixamplà la seua temàtica a històries esguitades d’escenes d’horror, amb continguts violents i sensuals, sovint entroncades amb relats de guerrers samurais i monstres terrorífics.",
-   "fenomens": [
-    "NUM: vuitanta → huitanta",
-    "POS: seves → seua"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "huitanta",
-    "seua"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "glossari",
-   "document": "AVL-001162",
-   "titol": "manga",
-   "url": "https://www.avl.gva.es/glossari/manga/",
-   "data": "2022-07-20T10:29:09",
-   "id_origen": "AVL-001162"
-  },
-  {
-   "valida": null,
-   "oriental_corregit": null,
-   "occidental_corregit": null,
-   "comentari": "",
-   "id": "BM-AVL-219",
-   "font": "avl",
-   "oriental": "«Em sent orgullós de la meva identitat, de les meves arrels i de parlar en valencià».",
-   "oriental_es_esborrany": true,
-   "occidental": "«Em sent orgullós de la meua identitat, de les meues arrels i de parlar en valencià».",
-   "fenomens": [
-    "POS: meves → meua",
-    "POS: meves → meues"
-   ],
-   "ipd_valencia": 1.0,
-   "marcadors_valencians": [
-    "meua",
-    "meues"
-   ],
-   "ipd_catala": null,
-   "marcadors_catalans": null,
-   "doc_type": "nota-de-premsa",
-   "document": "AVL-001850",
-   "titol": "Músics, creadors de continguts en les xarxes i comunicadors se sumen a la proposta «Comença» de l’AVL per a fomentar l’ús del valencià",
-   "url": "https://www.avl.gva.es/musics-creadors-de-continguts-en-les-xarxes-i-comunicadors-se-sumen-a-la-proposta-comenca-de-lavl-per-a-fomentar-lus-del-valencia/",
-   "data": "2025-02-21T10:22:00",
-   "id_origen": "AVL-001850"
   }
  ]
 }

@@ -130,8 +130,8 @@ Si cal canviar el prompt que usa el model, dis-m'ho i l'aplique en
 
 ## Mètrica de puresa dialectal (proposta, encara no implementada)
 
-`metrica_puresa_dialectal.md` especifica l'Índex de Puresa Dialectal
-(IPD) — un score bidireccional per a detectar contaminació occidental↔oriental
+`metrica_puresa_dialectal.md` especifica el Grau Dialectal
+(GD) — un score bidireccional per a detectar contaminació occidental↔oriental
 en qualsevol text, reutilitzant les taules de `traductor/rules/` com a
 diccionari de marcadors. Pensat per a aplicar-se sobre el corpus AVL, el
 BOE i el corpus sintètic per a mesurar la qualitat/puresa de cada font.

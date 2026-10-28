@@ -25,8 +25,10 @@ valida.
      només decidix unes poques paraules ambigües del lèxic ("cop" → colp o
      vegada; "gandula" → hamaca o gandula), triant entre les frases que
      construïx el motor.
-2. **L'Índex de Puresa Dialectal (IPD)**
-   ([`pipeline/09_index_puresa_dialectal/`](pipeline/09_index_puresa_dialectal/)).
+2. **El Grau Dialectal (GD)**
+   ([`pipeline/09_grau_dialectal/`](pipeline/09_grau_dialectal/)),
+   amb dos índexs simètrics germans: el GDV (Grau Dialectal Valencià) i el
+   GDC (Grau Dialectal Català), tots dos de 0 a 1.
 
 L'estat i l'estructura actuals del traductor són al principi de
 [`traductor/README.md`](traductor/README.md). La direcció valencià → català
@@ -66,7 +68,7 @@ pipeline/
   06_dades_entrenament/
   07_entrenament_de_models/
   08_traduccio_corpus/
-  09_index_puresa_dialectal/
+  09_grau_dialectal/
 dades/                   # transversal, el consumeixen diverses etapes
 documentacio/            # transversal
 ```
@@ -82,7 +84,7 @@ documentacio/            # transversal
 | [`pipeline/06_dades_entrenament/`](pipeline/06_dades_entrenament/) | Etapa 6 — prepara el dataset final (train/dev/test) per al finetuning |
 | [`pipeline/07_entrenament_de_models/`](pipeline/07_entrenament_de_models/) | Etapa 7 — finetuning, baselines i comparació de models |
 | [`pipeline/08_traduccio_corpus/`](pipeline/08_traduccio_corpus/) | Etapa 8 — aplica el motor de regles a un corpus complet (no només al benchmark); postprocessat amb LLM dels casos ambigus |
-| [`pipeline/09_index_puresa_dialectal/`](pipeline/09_index_puresa_dialectal/) | Etapa 9 — Índex de Puresa Dialectal (IPD): mètrica reutilitzable per a mesurar quin percentatge d'un text és occidental vs. oriental, basada en l'índex de parells de `traductor/` |
+| [`pipeline/09_grau_dialectal/`](pipeline/09_grau_dialectal/) | Etapa 9 — Grau Dialectal (GD): mètrica reutilitzable per a mesurar quin percentatge d'un text és occidental vs. oriental, basada en l'índex de parells de `traductor/` |
 | [`documentacio/`](documentacio/) | La metodologia completa del projecte |
 
 **Dades** (tot agrupat en [`dades/`](dades/), separat del codi):

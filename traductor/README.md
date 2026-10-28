@@ -15,8 +15,8 @@ Conceptualment és l'etapa 5 del projecte.
 s'hi va arribar: nomena fitxers i capes que ja no existixen.
 
 **Prioritat: català → valencià** (decisió de l'usuari, 20/10/2026). És una
-de les dos eines que s'entreguen a la Conselleria (l'altra és l'IPD,
-`pipeline/09_index_puresa_dialectal/`), en equips només amb CPU.
+de les dos eines que s'entreguen a la Conselleria (l'altra és el GD,
+`pipeline/09_grau_dialectal/`), en equips només amb CPU.
 
 ### Què hi ha al paquet
 
@@ -119,7 +119,7 @@ mà, i el que diu este README sobre ells és històric:
   (`rules/pos_tagger.py::genere_tras_substitucio`).
 - `categoria_gramatical_lexic.json` → els homògrafs els decidix el propi
   lèxic (`problema: "homonimia_lexica"`, `categoria`, `lemas`) amb spaCy
-  (`rules/__init__.py::carrega_homografs`, el mateix mecanisme que l'IPD).
+  (`rules/__init__.py::carrega_homografs`, el mateix mecanisme que el GD).
 - `demostratius_avl.json` → `demostratius.py` llig les entrades
   `categoria: "det"` del lèxic, igual que `possessius.py`.
 A més, les entrades `_PENDENT` del lèxic s'usen com les altres
@@ -617,9 +617,9 @@ mai generació de text nou) és el mecanisme que dona el rècord
 **129/151 (85,4%) motor+LLM amb `qwen3:8b`**, confirmat en Abaco -- xifra
 anterior a la neteja d'avui, pendent de reconfirmar.
 
-**Índex de Puresa Dialectal**: mètrica nova i independent
-(`pipeline/09_index_puresa_dialectal/ipd.py`) que reutilitza el mateix
-índex de diccionari que este motor, pero per a mesurar puresa dialectal
+**Grau Dialectal**: mètrica nova i independent
+(`pipeline/09_grau_dialectal/gd.py`) que reutilitza el mateix
+índex de diccionari que este motor, pero per a mesurar el grau dialectal
 d'un text qualsevol, no per a traduir. No toca ni depén de cap fitxer
 d'esta carpeta.
 

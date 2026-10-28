@@ -16,7 +16,7 @@ histórico de cómo se llegó aquí: nombra ficheros y capas que ya no existen.
 
 **Prioridad: catalán → valenciano** (decisión del usuario, 20/10/2026). Es
 una de las dos herramientas que se entregan a la Conselleria (la otra es
-el IPD, `pipeline/09_index_puresa_dialectal/`), en equipos solo con CPU.
+el GD, `pipeline/09_grau_dialectal/`), en equipos solo con CPU.
 
 ### Qué hay en el paquete
 
@@ -123,7 +123,7 @@ mano, y lo que dice este README sobre ellos es histórico:
   (`rules/pos_tagger.py::genere_tras_substitucio`).
 - `categoria_gramatical_lexic.json` → los homógrafos los decide el propio
   léxico (`problema: "homonimia_lexica"`, `categoria`, `lemas`) con spaCy
-  (`rules/__init__.py::carrega_homografs`, el mismo mecanismo que el IPD).
+  (`rules/__init__.py::carrega_homografs`, el mismo mecanismo que el GD).
 - `demostratius_avl.json` → `demostratius.py` lee las entradas
   `categoria: "det"` del léxico, igual que `possessius.py`.
 Además, las entradas `_PENDENT` del léxico se usan como las demás (la
@@ -490,9 +490,9 @@ texto nuevo) es el mecanismo que da el récord **129/151 (85,4%)
 motor+LLM con `qwen3:8b`**, confirmado en Abaco — cifra anterior a la
 limpieza de hoy, pendiente de reconfirmar.
 
-**Índice de Pureza Dialectal**: métrica nueva e independiente
-(`pipeline/09_index_puresa_dialectal/ipd.py`) que reutiliza el mismo
-índice de diccionario que este motor, pero para medir pureza dialectal
+**Grado Dialectal**: métrica nueva e independiente
+(`pipeline/09_grau_dialectal/gd.py`) que reutiliza el mismo
+índice de diccionario que este motor, pero para medir el grado dialectal
 de cualquier texto, no para traducir. No toca ni depende de ningún
 fichero de esta carpeta.
 

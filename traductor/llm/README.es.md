@@ -37,7 +37,7 @@ errores que tiene están catalogados abajo para retomarla más adelante.
 
 `traductor.translate()` y `traductor.translate_cat_val()` **no la usan**:
 sin Ollama ni GPU todo funciona igual. Las herramientas que se entregan
-(traductor cat→val e IPD, para la Conselleria, solo CPU) no la necesitan.
+(traductor cat→val e GD, para la Conselleria, solo CPU) no la necesitan.
 
 ## Qué hace
 
