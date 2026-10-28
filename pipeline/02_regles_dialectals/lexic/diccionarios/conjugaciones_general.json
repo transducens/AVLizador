@@ -643884,17 +643884,6 @@
   },
   {
     "verbo": "haver",
-    "catalan": "haig",
-    "valenciano": "he",
-    "morfologia": [
-      "pri",
-      "p1",
-      "sg"
-    ],
-    "id": "LIMPIO_588"
-  },
-  {
-    "verbo": "haver",
     "catalan": "hàgim",
     "valenciano": "hàgem",
     "morfologia": null,
