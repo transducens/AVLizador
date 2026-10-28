@@ -40,34 +40,53 @@ l'informe HTML eixos textos apareixen en gris. El GD global d'un corpus
 es calcula amb la suma de marcadors, així que només canvia si el corpus
 sencer no en té cap.
 
-## GDV i GDC: dos índexs simètrics (26/10/2026)
+## GDV i GDC: dos índexs simètrics amb les paraules neutres (26-27/10/2026)
 
 A banda del GD, hi ha dos mesures germanes, cada una en el seu fitxer,
-que van totes dos de **0 (gens pur) a 1 (pur)**:
+que van totes dos de **0 a 1** (1 = totes les paraules són vàlides en
+eixe dialecte):
 
 | fitxer | mesura | fórmula | 1,0 vol dir |
 |---|---|---|---|
-| `gdv.py` | **GDV**, Grau Dialectal Valencià | occidentals / marcades | valencià pur |
-| `gdc.py` | **GDC**, Grau Dialectal Català | orientals / marcades | català pur |
+| `gdv.py` | **GDV**, Grau Dialectal Valencià | (occidentals + neutres) / paraules = 1 − orientals / paraules | cap forma catalana |
+| `gdc.py` | **GDC**, Grau Dialectal Català | (orientals + neutres) / paraules = 1 − occidentals / paraules | cap forma valenciana |
 
-Amb marcadors, GDC = 1 − GDV. **Un text sense cap paraula marcada
-compta com a pur en tots dos (GDV = 1 i GDC = 1)**: no té res que el
-desmentisca. `total_marcades == 0` diu que el valor no ve de cap
-marcador. No reimplementen res: criden `gd.py::calcula_gd`, que es
-queda tal qual.
+**Diferència amb el GD (decisió de l'usuari, 27/10/2026)**: el GD només
+mira els marcadors i ignora les paraules neutres (les que no són
+marcador de cap dialecte: "casa", "amb", "el"...). El GDV i el GDC les
+compten com a vàlides en els dos dialectes, perquè seguixen els dos
+estàndards. Motiu: poder-los fer servir de recompensa per a entrenar
+models, on una frase sense marcadors també és correcta. Per això
+GDV + GDC ja no suma 1, i tots dos queden prop d'1 (el 95-99 % de les
+paraules d'un text són neutres). Un text sense paraules dona 1. Límit:
+"neutra" vol dir "no està al diccionari de parells", no "és correcta"
+(un castellanisme hi compta com a vàlid). No reimplementen res: criden
+`gd.py::calcula_gd`, que es queda tal qual.
 
-Per a un corpus donen dos xifres: `gdv_global`/`gdc_global` (suma de
-marcadors, les frases sense marcadors no hi pesen) i
-`gdv_mitjana`/`gdc_mitjana` (mitjana per frase, les frases sense
-marcadors hi compten com a 1,0). Benchmark de 151 (26/10/2026): GDV
-del costat valencià 0,9863 global / 0,9930 mitjana (14 frases sense
-marcadors); GDC del costat català 0,8733 / 0,8937 (15).
+(Versió del 26/10/2026, ja substituïda: GDV = occidentals / marcades,
+sense les neutres; amb marcadors, GDC = 1 − GDV.)
+
+Per a un corpus donen dos xifres: `gdv_global`/`gdc_global` (per
+paraula, sobre tot el corpus) i `gdv_mitjana`/`gdc_mitjana` (mitjana
+per frase). Benchmark de 151 (27/10/2026): GDV del costat valencià
+0,9991 global / 0,9989 mitjana; GDC del costat català 0,9914 / 0,9909.
 
 ```bash
 python gdv.py --text "Este xiquet vol vindre hui."
 python gdc.py --text "Aquest nen vol venir avui."
 python gdv.py --corpus ../03_seleccio_de_model/benchmark_corpus.json --camp occidental --sortida gdv.json
 python gdc.py --corpus ../03_seleccio_de_model/benchmark_corpus.json --camp oriental --sortida gdc.json
+```
+
+**Tot d'una vegada (27/10/2026)**: `mesura_corpus.py` calcula GD, GDV i
+GDC de cada document del 151 (els dos costats), la GNV, la GEIEC (línia
+a línia) i el BOE complet (cada costat, per línia i per `documento_id`).
+Escriu cada document a `dades/grau_dialectal/<corpus>.jsonl` tan prompte
+com el calcula; si es para, el mateix comandament continua on s'havia
+quedat. Al final deixa `resum.json` i `resum.md`.
+
+```bash
+python pipeline/09_grau_dialectal/mesura_corpus.py
 ```
 
 ## Per què un mòdul nou, si ja hi havia una mètrica pareguda

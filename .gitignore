@@ -43,3 +43,6 @@ dades/boe_net/corpus_entrenamiento_net.jsonl
 # se acumula un fichero por cada run -- regenerable relanzando el benchmark
 pipeline/03_seleccio_de_model/resultats/*
 !pipeline/03_seleccio_de_model/resultats/.gitkeep
+
+# Resultats de pipeline/09_grau_dialectal/mesura_corpus.py (desenes de MB)
+dades/grau_dialectal/

@@ -1,32 +1,37 @@
 #!/usr/bin/env python3
 """
-gdc.py -- Grau Dialectal Català (GDC): quina part de les
-paraules dialectalment marcades d'un text són formes CATALANES
-(orientals). 1.0 = català pur, 0.0 = cap forma catalana.
+gdc.py -- Grau Dialectal Català (GDC): quina part de les paraules d'un
+text és vàlida en català. 1.0 = totes, 0.0 = cap.
 
-    GDC = total_orientals / (total_occidentals + total_orientals)
+    GDC = (total_orientals + neutres) / total_paraules
+        = 1 - total_occidentals / total_paraules
 
-Germà simètric d'`gdv.py` (Grau Dialectal Valencià): les
-dos mesures van de 0 (gens pur) a 1 (pur), així que un text català pur
-té GDC = 1 i un text valencià pur té GDV = 1. Amb marcadors,
-GDC = 1 - GDV.
+Germà simètric d'`gdv.py` (Grau Dialectal Valencià).
 
-TEXT SENSE CAP PARAULA MARCADA (decisió de l'usuari, 26/10/2026): no hi
-ha res que el desmentisca, així que és fidel als dos dialectes i compta
-com a PUR en tots dos: GDC = 1.0 (i GDV = 1.0). `total_marcades == 0`
-diu que el valor no ve de cap marcador.
+NEUTRES (decisió de l'usuari, 27/10/2026): les paraules que no són
+marcador de cap dialecte ("casa", "amb", "el"...) són vàlides en els
+dos, així que compten a favor del GDC (i del GDV). Només resten les
+formes valencianes (occidentals). Motiu: el GDC s'ha de poder fer servir
+de recompensa per a entrenar models, i una frase sense marcadors també
+seguix l'estàndard català. Diferència amb el GD (`gd.py`), que es queda
+tal qual: el GD només mira els marcadors (occidentals / marcades) i
+ignora les neutres. Per això ara GDV + GDC no suma 1 (amb neutres, els
+dos s'acosten a 1).
 
-No reimplementa res: els marcadors els detecta `gd.py::calcula_gd`
-(mateix índex de parells del traductor, mateix filtre de POS i
-d'homògrafs). `gd.py` es queda tal qual (GD únic, 1 = valencià i
-0 = català, amb el paràmetre `dialecte`).
+Límit: "neutra" vol dir "no està al diccionari de parells", no "és
+correcta" -- un castellanisme o una paraula dialectal que el diccionari
+no recull també hi compten com a vàlides.
 
-CORPUS: dona dos xifres, perquè les frases sense marcadors només
-compten en una d'elles:
-  - `gdc_global`: suma de marcadors de tot el corpus (com el GD global
-    d'`gd.py`); les frases sense marcadors no hi pesen.
-  - `gdc_mitjana`: mitjana del GDC de cada frase; les frases sense
-    marcadors hi compten com a 1.0.
+Text sense cap paraula: GDC = 1.0 (no hi ha res que el desmentisca).
+
+No reimplementa res: els marcadors i el recompte de paraules els fa
+`gd.py::calcula_gd` (mateix índex de parells del traductor, mateix
+filtre de POS i d'homògrafs).
+
+CORPUS: dona dos xifres:
+  - `gdc_global`: 1 - occidentals / paraules de tot el corpus (cada
+    paraula pesa igual, les frases llargues pesen més);
+  - `gdc_mitjana`: mitjana del GDC de cada frase (cada frase pesa igual).
 
 ÚS com a script:
 
@@ -60,25 +65,33 @@ def calcula_gdc(text: str, formes: Formes | None = None) -> dict:
 
     >>> calcula_gdc("Aquest nen vol venir avui.")["gdc"]
     1.0
-    >>> calcula_gdc("Este xiquet vol vindre hui.")["gdc"]
-    0.0
-    >>> calcula_gdc("El xiquet jugava amb el nen del veí.")["gdc"]
-    0.5
 
-    Sense cap paraula marcada, compta com a pur:
+    4 de 5 paraules valencianes ("este", "xiquet", "vindre", "hui");
+    "vol" és neutra i compta com a catalana:
+
+    >>> calcula_gdc("Este xiquet vol vindre hui.")["gdc"]
+    0.2
+
+    1 forma valenciana ("xiquet") de 8 paraules:
+
+    >>> calcula_gdc("El xiquet jugava amb el nen del veí.")["gdc"]
+    0.875
+
+    Sense cap paraula marcada, totes són neutres:
 
     >>> r = calcula_gdc("La casa és gran i té un jardí.")
-    >>> r["total_marcades"], r["gdc"]
-    (0, 1.0)
+    >>> r["total_marcades"], r["total_neutres"], r["gdc"]
+    (0, 8, 1.0)
     """
     r = calcula_gd(text, formes)
-    total = r["total_marcades"]
+    total = r["total_paraules"]
     return {
-        "total_paraules": r["total_paraules"],
+        "total_paraules": total,
         "total_occidentals": r["total_occidentals"],
         "total_orientals": r["total_orientals"],
-        "total_marcades": total,
-        "gdc": round(r["total_orientals"] / total, 4) if total else 1.0,
+        "total_marcades": r["total_marcades"],
+        "total_neutres": total - r["total_marcades"],
+        "gdc": round(1 - r["total_occidentals"] / total, 4) if total else 1.0,
         "marcadors_occidentals": r["marcadors_occidentals"],
         "marcadors_orientals": r["marcadors_orientals"],
     }
@@ -98,15 +111,18 @@ def calcula_gdc_corpus(
         r = calcula_gdc(text, formes)
         documents.append({"id": doc.get("id") or doc.get("corpus_id"), "text": text, **r})
 
+    total_occ = sum(d["total_occidentals"] for d in documents)
     total_or = sum(d["total_orientals"] for d in documents)
-    total_marcades = sum(d["total_marcades"] for d in documents)
+    total_paraules = sum(d["total_paraules"] for d in documents)
     return {
         "camp": camp,
         "documents_totals": len(documents),
         "documents_sense_marcadors": sum(1 for d in documents if not d["total_marcades"]),
-        "total_occidentals": total_marcades - total_or,
+        "total_paraules": total_paraules,
+        "total_occidentals": total_occ,
         "total_orientals": total_or,
-        "gdc_global": round(total_or / total_marcades, 4) if total_marcades else 1.0,
+        "total_neutres": total_paraules - total_occ - total_or,
+        "gdc_global": round(1 - total_occ / total_paraules, 4) if total_paraules else 1.0,
         "gdc_mitjana": (
             round(sum(d["gdc"] for d in documents) / len(documents), 4) if documents else 1.0
         ),
@@ -115,12 +131,11 @@ def calcula_gdc_corpus(
 
 
 def _mostra_text(etiqueta: str, r: dict, mostra: int) -> None:
-    nota = "" if r["total_marcades"] else " (cap paraula marcada: compta com a pur)"
     print(etiqueta)
-    print(f"  GDC: {r['gdc']:.4f}{nota}")
+    print(f"  GDC: {r['gdc']:.4f}")
     print(
         f"  occidentals={r['total_occidentals']}  orientals={r['total_orientals']}  "
-        f"paraules totals={r['total_paraules']}"
+        f"neutres={r['total_neutres']}  paraules totals={r['total_paraules']}"
     )
     if mostra > 0:
         if r["marcadors_occidentals"]:
@@ -131,8 +146,8 @@ def _mostra_text(etiqueta: str, r: dict, mostra: int) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Calcula el Grau Dialectal Català (GDC) "
-                    "d'un text, fitxer o corpus (0 = gens català, 1 = català pur)."
+        description="Calcula el Grau Dialectal Català (GDC) d'un text, fitxer o corpus: "
+                    "part de les paraules vàlides en català (marcadors catalans + neutres)."
     )
     grup = parser.add_mutually_exclusive_group(required=True)
     grup.add_argument("--text", help="Frase o text solt a analitzar.")
@@ -153,10 +168,11 @@ def main() -> None:
 
     res = calcula_gdc_corpus(args.corpus, args.camp, args.limit)
     print(f"Corpus: {args.corpus}  ({res['documents_totals']} documents, camp '{args.camp}')")
-    print(f"  GDC global (suma de marcadors): {res['gdc_global']}")
-    print(f"  GDC mitjana per document:       {res['gdc_mitjana']}  "
-          f"({res['documents_sense_marcadors']} sense marcadors, compten com a 1.0)")
-    print(f"  occidentals={res['total_occidentals']}  orientals={res['total_orientals']}")
+    print(f"  GDC global (per paraula):  {res['gdc_global']}")
+    print(f"  GDC mitjana per document:  {res['gdc_mitjana']}  "
+          f"({res['documents_sense_marcadors']} sense marcadors)")
+    print(f"  occidentals={res['total_occidentals']}  orientals={res['total_orientals']}  "
+          f"neutres={res['total_neutres']}  paraules totals={res['total_paraules']}")
     if args.sortida is not None:
         args.sortida.write_text(json.dumps(res, ensure_ascii=False, indent=2), encoding="utf-8")
         print(f"  Guardat detall per document a {args.sortida}")
