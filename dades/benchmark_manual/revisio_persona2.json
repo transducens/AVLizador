@@ -7371,6 +7371,579 @@
    "url": "https://www.avl.gva.es/documents/31983/0/Marc+de+refer%C3%A8ncia+per+a+l%27elaboraci%C3%B3+de+materials+curriculars+en+valenci%C3%A0",
    "data": null,
    "id_origen": "AVL-002206"
+  },
+    {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-181",
+   "font": "avl",
+   "oriental": "Així mateix, emfasitza que l’Acadèmia celebra l’Any Fuster posant en relleu “aqueixa mirada de cultura compartida, i també la seva mirada lúcida i polièdrica”.",
+   "oriental_es_esborrany": true,
+   "occidental": "Així mateix, emfasitza que l’Acadèmia celebra l’Any Fuster posant en relleu “eixa mirada de cultura compartida, i també la seua mirada lúcida i polièdrica”.",
+   "fenomens": [
+    "DEM: aqueixa → eixa",
+    "POS: seves → seua"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "eixa",
+    "seua"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "nota-de-premsa",
+   "document": "AVL-001956",
+   "titol": "La presidenta de l’AVL assistix a la conferència ‘Joan Fuster, arquitecte d’una cultura’",
+   "url": "https://www.avl.gva.es/la-presidenta-de-lavl-assistix-a-la-conferencia-joan-fuster-arquitecte-duna-cultura/",
+   "data": "2022-06-08T15:25:00",
+   "id_origen": "AVL-001956"
+  },
+  {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-183",
+   "font": "avl",
+   "oriental": "C., que inicialment anomenà «bis sextus dies ante Kalendas Martias», és a dir, ‘repetit dues cops el sisè dia abans de les calendes del mes de març’, i que desprès es reduí a bisextus.",
+   "oriental_es_esborrany": true,
+   "occidental": "C., que inicialment anomenà «bis sextus dies ante Kalendas Martias», és a dir, ‘repetit dos vegades el sext dia abans de les calendes del mes de març’, i que després es reduí a bisextus.",
+   "fenomens": [
+    "LEX_NOM: cops → vegades (homògraf)",
+    "LEX_ADJ: sisè → sext",
+    "LEX_ADJ: desprès → després",
+    "DOS_DUES: dues → dos"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "vegades",
+    "sext",
+    "després"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "glossari",
+   "document": "AVL-000178",
+   "titol": "bixest",
+   "url": "https://www.avl.gva.es/glossari/bixest/",
+   "data": "2024-02-29T00:00:19",
+   "id_origen": "AVL-000178"
+  },
+  {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-185",
+   "font": "avl",
+   "oriental": "La presidenta de l’Acadèmia Valenciana de la Llengua, Verònica Cantó, i la rectora de la Universitat d’Alacant, Amparo Navarro, han signat la renovació de l’acord de col·laboració que les dues entitats mantenen des de fa vuit anys.",
+   "oriental_es_esborrany": true,
+   "occidental": "La presidenta de l’Acadèmia Valenciana de la Llengua, Verònica Cantó, i la rectora de la Universitat d’Alacant, Amparo Navarro, han firmat la renovació de l’acord de col·laboració que les dos entitats mantenen des de fa huit anys.",
+   "fenomens": [
+    "LEX_ADJ: signat → firmat",
+    "NUM: vuit → huit",
+    "DOS_DUES: dues → dos"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "firmat",
+    "huit"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "nota-de-premsa",
+   "document": "AVL-001902",
+   "titol": "L’Acadèmia Valenciana de la Llengua i la Universitat d’Alacant renoven el seu compromís de col·laboració",
+   "url": "https://www.avl.gva.es/lacademia-valenciana-de-la-llengua-i-la-universitat-dalacant-renoven-el-seu-compromis-de-collaboracio/",
+   "data": "2023-07-20T13:22:16",
+   "id_origen": "AVL-001902"
+  },
+  {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-187",
+   "font": "avl",
+   "oriental": "A cops es recorre a la negació del conflicte mateix, com si fora fruit de les figuracions fantasioses d’altres persones; altres cops es tendeix a suavitzar la intensitat dels problemes, tamisant-los amb subterfugis mentals que permeten crear una realitat paral·lela.",
+   "oriental_es_esborrany": true,
+   "occidental": "A vegades es recorre a la negació del conflicte mateix, com si fora fruit de les figuracions fantasioses d’altres persones; altres vegades es tendix a suavitzar la intensitat dels problemes, tamisant-los amb subterfugis mentals que permeten crear una realitat paral·lela.",
+   "fenomens": [
+    "LEX_NOM: cops → vegades (homògraf)",
+    "INC: tendeix → tendix"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "vegades",
+    "vegades"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "glossari",
+   "document": "AVL-000782",
+   "titol": "escapisme",
+   "url": "https://www.avl.gva.es/glossari/escapisme/",
+   "data": "2023-03-22T11:22:32",
+   "id_origen": "AVL-000782"
+  },
+  {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-189",
+   "font": "avl",
+   "oriental": "La nostra aspiració és que els usuaris puguen trobar reunides en un sol cop d’ull totes les publicacions històriques disponibles, i, al mateix temps, seleccionar-les amb criteris geogràfics o cronològics a través de l'eina de cerca de l’aplicació.",
+   "oriental_es_esborrany": true,
+   "occidental": "La nostra aspiració és que els usuaris puguen trobar reunides en un sol colp d’ull totes les publicacions històriques disponibles, i, al mateix temps, seleccionar-les amb criteris geogràfics o cronològics a través de la ferramenta de busca de l’aplicació.",
+   "fenomens": [
+    "LEX_NOM: cop → colp (homògraf)",
+    "LEX_NOM: eina → ferramenta"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "colp",
+    "ferramenta"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "pagina",
+   "document": "AVL-002108",
+   "titol": "Nota explicativa",
+   "url": "https://www.avl.gva.es/nota-explicativa/",
+   "data": "2023-09-19T11:40:44",
+   "id_origen": "AVL-002108"
+  },
+  {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-191",
+   "font": "avl",
+   "oriental": "S’usa principalment per a referir-se a la part exterior i dura dels arbres, així com a la cobertura llenyosa d’algunes fruites seques, com les ametlles, les nous, les avellanes, les pipes, etc.",
+   "oriental_es_esborrany": true,
+   "occidental": "S’usa principalment per a referir-se a la part exterior i dura dels arbres, així com a la cobertura llenyosa d’algunes fruites seques, com les ametles, les anous, les avellanes, les pipes, etc.",
+   "fenomens": [
+    "LEX_NOM: ametlles → ametles",
+    "LEX_NOM: nous → anous (homògraf)",
+    "PER_A: per → per a [l'esborrany no ho ha convertit]"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "ametles",
+    "anous"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "glossari",
+   "document": "AVL-000830",
+   "titol": "corfa",
+   "url": "https://www.avl.gva.es/glossari/corfa/",
+   "data": "2023-03-22T10:54:56",
+   "id_origen": "AVL-000830"
+  },
+  {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-193",
+   "font": "avl",
+   "oriental": "L'Acadèmia Valenciana de la Llengua és una institució de caràcter públic de la Generalitat Valenciana, que gaudeix de personalitat jurídica pròpia i exerceix les seves funcions amb autonomia orgànica, funcional i pressupostària, per a garantir la seva objectivitat i independència.",
+   "oriental_es_esborrany": true,
+   "occidental": "L'Acadèmia Valenciana de la Llengua és una institució de caràcter públic de la Generalitat Valenciana, que gaudix de personalitat jurídica pròpia i exercix les seues funcions amb autonomia orgànica, funcional i pressupostària, per a garantir la seua objectivitat i independència.",
+   "fenomens": [
+    "POS: seves → seues",
+    "POS: seves → seua",
+    "INC: gaudeix → gaudix",
+    "INC: exerceix → exercix",
+    "PER_A: per → per a [l'esborrany no ho ha convertit]"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "seues",
+    "seua"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "legislacio",
+   "document": "AVL-002191",
+   "titol": "Reglament de lAcadèmia Valenciana de la Llengua",
+   "url": "https://www.avl.gva.es/documents/31595/32337/Reglament+de+lAcad%C3%A8mia+Valenciana+de+la+Llengua",
+   "data": null,
+   "id_origen": "AVL-002191"
+  },
+  {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-195",
+   "font": "avl",
+   "oriental": "«¡Vine aquí, flor bufona, reina de la casa! ¡ Xata!», escriu Vicent Andrés Estellés en un dels seus poemes.",
+   "oriental_es_esborrany": true,
+   "occidental": "«¡Vine ací, flor bonica, reina de la casa! ¡ Xata!», escriu Vicent Andrés Estellés en un dels seus poemes.",
+   "fenomens": [
+    "LEX_ADV: aquí → ací",
+    "LEX_ADJ: bufona → bonica"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "ací",
+    "bonica"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "glossari",
+   "document": "AVL-000148",
+   "titol": "xato",
+   "url": "https://www.avl.gva.es/glossari/xato/",
+   "data": "2024-12-04T13:57:05",
+   "id_origen": "AVL-000148"
+  },
+  {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-197",
+   "font": "avl",
+   "oriental": "I desprès, tenim a la nostra disposició nombroses eines com ara els vídeos, les fotografies, les icones o la música per a ser més pròxims; la gent ja no es conforma solament amb el text.",
+   "oriental_es_esborrany": true,
+   "occidental": "I després, tenim a la nostra disposició nombroses ferramentes com ara els vídeos, les fotografies, les icones o la música per a ser més pròxims; la gent ja no es conforma solament amb el text.",
+   "fenomens": [
+    "LEX_ADJ: desprès → després",
+    "LEX_NOM: eines → ferramentes",
+    "PER_A: per → per a [l'esborrany no ho ha convertit]"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "després",
+    "ferramentes"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "nota-de-premsa",
+   "document": "AVL-001948",
+   "titol": "Rebeca Díez: “És complicat que la gent s’expresse en les xarxes en la llengua que s’usa menys”",
+   "url": "https://www.avl.gva.es/rebeca-diez-es-complicat-que-la-gent-sexpresse-en-les-xarxes-en-la-llengua-que-susa-menys/",
+   "data": "2022-06-29T13:09:00",
+   "id_origen": "AVL-001948"
+  },
+  {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-199",
+   "font": "avl",
+   "oriental": "Diego Zaragozí ha conclòs la seva intervenció agraint la permanent col·laboració amb l’AVL, “que sempre ens ha estès la mà quan ens ha fet falta”.",
+   "oriental_es_esborrany": true,
+   "occidental": "Diego Zaragozí ha conclòs la seua intervenció agraint la permanent col·laboració amb l’AVL, “que sempre ens ha estés la mà quan ens ha fet falta”.",
+   "fenomens": [
+    "POS: seves → seua",
+    "LEX_ADJ: estès → estés"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "seua",
+    "estés"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "nota-de-premsa",
+   "document": "AVL-001824",
+   "titol": "L’AVL i l’Ajuntament d’Altea firmen un conveni de col·laboració per a promoure l’ús del valencià en tots els àmbits públics",
+   "url": "https://www.avl.gva.es/lavl-i-lajuntament-daltea-firmen-un-conveni-de-collaboracio-per-a-promoure-lus-del-valencia-en-tots-els-ambits-publics/",
+   "data": "2025-11-20T13:58:32",
+   "id_origen": "AVL-001824"
+  },
+  {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-201",
+   "font": "avl",
+   "oriental": "Sabent això, que tots vostès, i molt especialment les dones que celebren avui la seva onomàstica, tinguen un feliç dia!",
+   "oriental_es_esborrany": true,
+   "occidental": "Sabent això, que tots vostés, i molt especialment les dones que celebren hui la seua onomàstica, tinguen un feliç dia!",
+   "fenomens": [
+    "LEX_ALTRES: vostès → vostés",
+    "LEX_ADV: avui → hui",
+    "POS: seves → seua"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "vostés",
+    "hui",
+    "seua"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "glossari",
+   "document": "AVL-000834",
+   "titol": "conxa",
+   "url": "https://www.avl.gva.es/glossari/conxa/",
+   "data": "2023-03-22T10:52:58",
+   "id_origen": "AVL-000834"
+  },
+  {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-203",
+   "font": "avl",
+   "oriental": "El president de l’Acadèmia Valenciana de la Llengua, Ramon Ferrer, s’ha reunit avui amb la batllessa d’Algemesí, Marta Trenzano, per a estudiar i concretar les línies de col·laboració institucional dirigides a la promoció i difusió del valencià.",
+   "oriental_es_esborrany": true,
+   "occidental": "El president de l’Acadèmia Valenciana de la Llengua, Ramon Ferrer, s’ha reunit hui amb l’alcaldessa d’Algemesí, Marta Trenzano, per a estudiar i concretar les línies de col·laboració institucional dirigides a la promoció i difusió del valencià.",
+   "fenomens": [
+    "LEX_ADV: avui → hui",
+    "LEX_NOM: batllessa → alcaldessa",
+    "PER_A: per → per a [l'esborrany no ho ha convertit]"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "hui",
+    "alcaldessa"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "nota-de-premsa",
+   "document": "AVL-002069",
+   "titol": "L’alcaldessa d’Algemesí visita l’Acadèmia valenciana de la Llengua",
+   "url": "https://www.avl.gva.es/lalcaldessa-dalgemesi-visita-lacademia-valenciana-de-la-llengua-2/",
+   "data": "2015-09-24T13:49:00",
+   "id_origen": "AVL-002069"
+  },
+  {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-205",
+   "font": "avl",
+   "oriental": "Si mirem arrere, en molts pobles i ciutats no hi havia plaça en què no se sentiren nois i noies jugant en valencià.",
+   "oriental_es_esborrany": true,
+   "occidental": "Si mirem arrere, en molts pobles i ciutats no hi havia plaça en què no se sentiren xiquets i xiquetes jugant en valencià.",
+   "fenomens": [
+    "LEX_NOM: nois → xiquets",
+    "LEX_NOM: nenes → xiquetes"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "xiquets",
+    "xiquetes"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "butlleti",
+   "document": "AVL-000046",
+   "titol": "La importància de jugar en valencià",
+   "url": "https://www.avl.gva.es/butlleti/la-importancia-de-jugar-en-valencia/",
+   "data": "2025-05-05T14:20:08",
+   "id_origen": "AVL-000046"
+  },
+  {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-207",
+   "font": "avl",
+   "oriental": "Se solen menjar pastissos tradicionals, com la coca de tomàquet i pebrot, i es passa la nit al cel ras entre amics i familiars rebent la caiguda del reixiu al cap.",
+   "oriental_es_esborrany": true,
+   "occidental": "Se solen menjar pastissos tradicionals, com la coca de tomaca i pimentó, i es passa la nit al cel ras entre amics i familiars rebent la caiguda del reixiu al cap.",
+   "fenomens": [
+    "LEX_NOM: tomàquet → tomaca",
+    "LEX_NOM: pebrot → pimentó"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "tomaca",
+    "pimentó"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "glossari",
+   "document": "AVL-000490",
+   "titol": "ros",
+   "url": "https://www.avl.gva.es/glossari/ros/",
+   "data": "2023-03-22T17:07:24",
+   "id_origen": "AVL-000490"
+  },
+  {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-209",
+   "font": "avl",
+   "oriental": "Els tres hòmens, cadascú per la seva banda, despleguen una sèrie d’intrigues, gelosies i enganys per a conquistar la noia.",
+   "oriental_es_esborrany": true,
+   "occidental": "Els tres hòmens, cadascú per la seua banda, despleguen una sèrie d’intrigues, gelosies i enganys per a conquistar la xica.",
+   "fenomens": [
+    "POS: seves → seua",
+    "LEX_NOM: noia → xica",
+    "PER_A: per → per a [l'esborrany no ho ha convertit]"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "seua",
+    "xica"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "nota-de-premsa",
+   "document": "AVL-001953",
+   "titol": "L’Acadèmia col·labora amb Les Arts Volant i repartirà el còmic sobre la vida i l’obra de Martín i Soler en les representacions d’“El tutor burlat”",
+   "url": "https://www.avl.gva.es/lacademia-col%c2%b7labora-amb-les-arts-volant-i-repartira-el-comic-sobre-la-vida-i-lobra-de-martin-i-soler-en-les-representacions-del-tutor-burlat/",
+   "data": "2022-06-17T15:02:00",
+   "id_origen": "AVL-001953"
+  },
+  {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-211",
+   "font": "avl",
+   "oriental": "Un gran honor pel fet de poder contribuir amb la meva feina a l’enfortiment de l’estima per la llengua i la difusió i promoció de la cultura en valencià.",
+   "oriental_es_esborrany": true,
+   "occidental": "Un gran honor pel fet de poder contribuir amb la meua faena a l’enfortiment de l’estima per la llengua i la difusió i promoció de la cultura en valencià.",
+   "fenomens": [
+    "POS: meves → meua",
+    "LEX_NOM: feina → faena"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "meua",
+    "faena"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "butlleti",
+   "document": "AVL-000005",
+   "titol": "«Contribuiré amb la meua faena a l’enfortiment de l’estima per la llengua i la difusió i promoció de la cultura en valencià»",
+   "url": "https://www.avl.gva.es/butlleti/contribuire-amb-la-meua-faena-a-lenfortiment-de-lestima-per-la-llengua-i-la-difusio-i-promocio-de-la-cultura-en-valencia/",
+   "data": "2026-06-04T11:11:37",
+   "id_origen": "AVL-000005"
+  },
+  {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-213",
+   "font": "avl",
+   "oriental": "El professor Hauf és autor de més de dos-cents treballs de recerca i d’innombrables articles periodístics i de divulgació publicats al llarg de la seva extensa carrera docent.",
+   "oriental_es_esborrany": true,
+   "occidental": "El professor Hauf és autor de més de dos-cents treballs d’investigació i d’innombrables articles periodístics i de divulgació publicats al llarg de la seua extensa carrera docent.",
+   "fenomens": [
+    "LEX_NOM: recerca → investigació",
+    "POS: seves → seua"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "investigació",
+    "seua"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "nota-de-premsa",
+   "document": "AVL-002031",
+   "titol": "L’acadèmic Albert Hauf participa en La Nau, en els actes del 700 aniversari de la mort de Ramon Llull",
+   "url": "https://www.avl.gva.es/lacademic-albert-hauf-participa-en-la-nau-en-els-actes-del-700-aniversari-de-la-mort-de-ramon-llull/",
+   "data": "2017-01-13T11:23:00",
+   "id_origen": "AVL-002031"
+  },
+  {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-215",
+   "font": "avl",
+   "oriental": "Per la seva part, Ramon Ferrer, que ha lamentat la sortida de destacats membres de la institució, podria completar el seu mandat com a president de l’Acadèmia Valenciana de la Llengua.",
+   "oriental_es_esborrany": true,
+   "occidental": "Per la seua part, Ramon Ferrer, que ha lamentat l’eixida de destacats membres de la institució, podria completar el seu mandat com a president de l’Acadèmia Valenciana de la Llengua.",
+   "fenomens": [
+    "POS: seves → seua",
+    "LEX_NOM: sortida → eixida"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "seua",
+    "eixida"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "nota-de-premsa",
+   "document": "AVL-001970",
+   "titol": "La renovació de l’AVL deixa fora a destacats membres de la institució",
+   "url": "https://www.avl.gva.es/la-renovacio-de-lavl-deixa-fora-a-destacats-membres-de-la-institucio/",
+   "data": "2020-12-04T08:37:00",
+   "id_origen": "AVL-001970"
+  },
+  {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-217",
+   "font": "avl",
+   "oriental": "Durant la dècada dels vuitanta, el manga experimentà una gran expansió internacional i eixamplà la seva temàtica a històries esguitades d’escenes d’horror, amb continguts violents i sensuals, sovint entroncades amb relats de guerrers samurais i monstres terrorífics.",
+   "oriental_es_esborrany": true,
+   "occidental": "Durant la dècada dels huitanta, el manga experimentà una gran expansió internacional i eixamplà la seua temàtica a històries esguitades d’escenes d’horror, amb continguts violents i sensuals, sovint entroncades amb relats de guerrers samurais i monstres terrorífics.",
+   "fenomens": [
+    "NUM: vuitanta → huitanta",
+    "POS: seves → seua"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "huitanta",
+    "seua"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "glossari",
+   "document": "AVL-001162",
+   "titol": "manga",
+   "url": "https://www.avl.gva.es/glossari/manga/",
+   "data": "2022-07-20T10:29:09",
+   "id_origen": "AVL-001162"
+  },
+  {
+   "valida": null,
+   "oriental_corregit": null,
+   "occidental_corregit": null,
+   "comentari": "",
+   "id": "BM-AVL-219",
+   "font": "avl",
+   "oriental": "«Em sent orgullós de la meva identitat, de les meves arrels i de parlar en valencià».",
+   "oriental_es_esborrany": true,
+   "occidental": "«Em sent orgullós de la meua identitat, de les meues arrels i de parlar en valencià».",
+   "fenomens": [
+    "POS: meves → meua",
+    "POS: meves → meues"
+   ],
+   "ipd_valencia": 1.0,
+   "marcadors_valencians": [
+    "meua",
+    "meues"
+   ],
+   "ipd_catala": null,
+   "marcadors_catalans": null,
+   "doc_type": "nota-de-premsa",
+   "document": "AVL-001850",
+   "titol": "Músics, creadors de continguts en les xarxes i comunicadors se sumen a la proposta «Comença» de l’AVL per a fomentar l’ús del valencià",
+   "url": "https://www.avl.gva.es/musics-creadors-de-continguts-en-les-xarxes-i-comunicadors-se-sumen-a-la-proposta-comenca-de-lavl-per-a-fomentar-lus-del-valencia/",
+   "data": "2025-02-21T10:22:00",
+   "id_origen": "AVL-001850"
   }
  ]
 }
