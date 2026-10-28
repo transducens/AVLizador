@@ -176,7 +176,7 @@
    "id_origen": "BOE-A-2009-17493-4262"
   },
   {
-   "valida": "dubtosa",
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "El si s'escau me fa dubtar: no sé si és correcte, però sembla que sí.",
@@ -511,7 +511,7 @@
    "id_origen": "BOE-A-2012-8406-0127"
   },
   {
-   "valida": "dubtosa",
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -519,7 +519,7 @@
    "font": "boe",
    "oriental": "L’acció de cessació es dirigeix a obtenir una sentència que condemni el demandat a cessar en la conducta contrària a aquesta Llei i a prohibir la seva reiteració futura.",
    "oriental_es_esborrany": false,
-   "occidental": "L’acció de cessació es dirigix a obtindre una sentència que condemne el demandat a cessar en la conducta contrària a esta Llei i a prohibir-ne la reiteració futura.",
+   "occidental": "L’acció de cessació es dirigix a obtindre una sentència que condemne el demandat a cessar en la conducta contrària a esta Llei i a prohibir la seua reiteració futura.",
    "fenomens": [
     "CONJ_SUBJ: condemni → condemne",
     "CONJ_ARREL: obtenir → obtindre",
@@ -1120,7 +1120,7 @@
    "id_origen": "BOE-A-2012-2076-0588"
   },
   {
-   "valida": "dubtosa",
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -1216,7 +1216,7 @@
    "id_origen": "BOE-A-2011-13242-0603"
   },
   {
-   "valida": "dubtosa",
+   "valida": false,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "dubtosa amb l'ús de li o els",
@@ -1525,13 +1525,13 @@
    "id_origen": "BOE-A-2013-2874-0421"
   },
   {
-   "valida": "dubtosa",
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-091",
    "font": "boe",
-   "oriental": "Destruir, abandonar, deteriorar o sostreure equip, cabals, material o altres efectes, així com adquirir o posseir qualsevol dels béns o efectes esmentats amb coneixement de la seva procedència il·lícita o facilitar-los a tercers.",
+   "oriental": "Destruir, abandonar, deteriorar o sostreure equips, cabals, material o altres efectes, així com adquirir o posseir qualsevol dels béns o efectes esmentats amb coneixement de la seva procedència il·lícita o facilitar-los a tercers.",
    "oriental_es_esborrany": false,
    "occidental": "Destruir, abandonar, deteriorar o sostraure equips, cabals, material o altres efectes, així com adquirir o posseir qualsevol dels béns o efectes mencionats amb coneixement de la seua procedència il·lícita, o facilitar-los a tercers.",
    "fenomens": [
@@ -3126,7 +3126,7 @@
    "id_origen": "BOE-A-2011-14221-0152"
   },
   {
-   "valida": "dubtosa",
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "Problema con el -los o els haurà de",
@@ -3134,7 +3134,7 @@
    "font": "boe",
    "oriental": "Els controladors de trànsit aeri que arribin als 57 anys d’edat deixaran d’exercir funcions operatives de control de trànsit aeri, i el proveïdor de serveis els ha d’oferir un altre lloc de treball que no comporti l’exercici d’aquestes funcions.",
    "oriental_es_esborrany": false,
-   "occidental": "Els controladors de trànsit aeri que arriben als 57 anys d’edat deixaran d’exercir funcions operatives de control de trànsit aeri, i el proveïdor de servicis haurà d’oferir-los un altre lloc de treball que no comporte l’exercici d’eixes funcions.",
+   "occidental": "Els controladors de trànsit aeri que arriben als 57 anys d’edat deixaran d’exercir funcions operatives de control de trànsit aeri, i el proveïdor de servicis els ha d’oferir un altre lloc de treball que no comporte l’exercici d’eixes funcions.",
    "fenomens": [
     "LEX_NOM: serveis → servicis",
     "CONJ_SUBJ: arribin → arriben",
@@ -3254,13 +3254,13 @@
    "id_origen": "BOE-A-2012-9111-0774"
   },
   {
-   "valida": "dubtosa",
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "Tengo duda con el hi",
    "id": "BM-BOE-195",
    "font": "boe",
-   "oriental": "No hi estan incloses les instal·lacions o parts d’instal·lacions la dedicació principal de les quals sigui la recerca, el desenvolupament i l’experimentació de nous productes i processos, ni les instal·lacions que cremin exclusivament biomassa.",
+   "oriental": "No estan incloses les instal·lacions o parts d’instal·lacions la dedicació principal de les quals sigui la recerca, el desenvolupament i l’experimentació de nous productes i processos, ni les instal·lacions que cremin exclusivament biomassa.",
    "oriental_es_esborrany": false,
    "occidental": "No estan incloses les instal·lacions o parts d’instal·lacions la dedicació principal de les quals siga la investigació, el desenrotllament i l’experimentació de nous productes i processos, ni les instal·lacions que cremen exclusivament biomassa.",
    "fenomens": [
@@ -4704,7 +4704,7 @@
    "id_origen": "AVL-001823"
   },
   {
-   "valida": "dubtosa",
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
