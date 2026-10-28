@@ -5633,7 +5633,7 @@
    "id_origen": "AVL-000776"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5663,13 +5663,13 @@
    "id_origen": "AVL-001112"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-103",
    "font": "avl",
-   "oriental": "Maria Isabel Guardiola ha estat la única candidata a l’elecció, desprès que el passat mes de març cap de les dues aspirants, les professores Sandra Montserrat i Àngel Diéguez, obtingueren els vots suficients.",
+   "oriental": "Maria Isabel Guardiola ha estat la única candidata a l’elecció, després que el passat mes de març cap de les dues aspirants, les professores Sandra Montserrat i Àngel Diéguez, obtingueren els vots suficients.",
    "oriental_es_esborrany": true,
    "occidental": "Maria Isabel Guardiola ha sigut la única candidata a l’elecció, després que el passat mes de març cap de les dos aspirants, les professores Sandra Montserrat i Àngel Diéguez, obtingueren els vots suficients.",
    "fenomens": [
@@ -5692,7 +5692,7 @@
    "id_origen": "AVL-002015"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5720,7 +5720,7 @@
    "id_origen": "AVL-002193"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5748,13 +5748,13 @@
    "id_origen": "AVL-001964"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-109",
    "font": "avl",
-   "oriental": "Escoltis les opinions de tal i tal altre, i no vols que jo et digui res.",
+   "oriental": "Escoltes les opinions de tal i tal altre, i no vols que jo et digui res.",
    "oriental_es_esborrany": true,
    "occidental": "Escoltes les opinions de tal i tal altre, i no vols que jo et diga res.",
    "fenomens": [
@@ -5776,13 +5776,13 @@
    "id_origen": "AVL-001740"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-111",
    "font": "avl",
-   "oriental": "Aquestes mesures alternatives seriïn molt més ràpides i senzilles que una modificació de la llei, perquè només requeriria un acord del Ple de la institució.",
+   "oriental": "Aquestes mesures alternatives serien molt més ràpides i senzilles que una modificació de la llei, perquè només requeriria un acord del Ple de la institució.",
    "oriental_es_esborrany": true,
    "occidental": "Estes mesures alternatives serien molt més ràpides i senzilles que una modificació de la llei, perquè només requeriria un acord del Ple de la institució.",
    "fenomens": [
@@ -5804,7 +5804,7 @@
    "id_origen": "AVL-002223"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5832,13 +5832,13 @@
    "id_origen": "AVL-001839"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-115",
    "font": "avl",
-   "oriental": "El diu allibera una hormona, anomenada progesterona, que fa que la mucositat cervical es faci més densa, i d’aqueixa manera s’impedeix que els espermatozous puguen arribar a les trompes de Fal·lopi.",
+   "oriental": "El diu allibera una hormona, anomenada progesterona, que fa que la mucositat cervical es faci més densa, i d’aqueixa manera s’impedeix que els espermatozous puguin arribar a les trompes de Fal·lopi.",
    "oriental_es_esborrany": true,
    "occidental": "El diu allibera una hormona, anomenada progesterona, que fa que la mucositat cervical es faça més densa, i d’eixa manera s’impedix que els espermatozous puguen arribar a les trompes de Fal·lopi.",
    "fenomens": [
@@ -5861,7 +5861,7 @@
    "id_origen": "AVL-001407"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5891,7 +5891,7 @@
    "id_origen": "AVL-000718"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5919,13 +5919,13 @@
    "id_origen": "AVL-001689"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-121",
    "font": "avl",
-   "oriental": "Així i tot, els estudiosos de la llengua detecten a cops errades importants en els materials que estudiïn.",
+   "oriental": "Així i tot, els estudiosos de la llengua detecten a cops errades importants en els materials que estudien.",
    "oriental_es_esborrany": true,
    "occidental": "Així i tot, els estudiosos de la llengua detecten a vegades errades importants en els materials que estudien.",
    "fenomens": [
@@ -5947,13 +5947,13 @@
    "id_origen": "AVL-002232"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-123",
    "font": "avl",
-   "oriental": "Tot i això, la situació millora si es comparin les darreres dades amb les de l’enquesta del 2010.",
+   "oriental": "Tot i això, la situació millora si es comparen les darreres dades amb les de l’enquesta del 2010.",
    "oriental_es_esborrany": true,
    "occidental": "Tot i això, la situació millora si es comparen les últimes dades amb les de l’enquesta del 2010.",
    "fenomens": [
@@ -5975,13 +5975,13 @@
    "id_origen": "AVL-002037"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-125",
    "font": "avl",
-   "oriental": "«Maduresa i joventut avui es donen la mà com a baules de la llarga cadena que testimoniïn la fidelitat i l’estima per la nostra llengua.",
+   "oriental": "«Maduresa i joventut avui es donen la mà com a baules de la llarga cadena que testimonien la fidelitat i l’estima per la nostra llengua.",
    "oriental_es_esborrany": true,
    "occidental": "«Maduresa i joventut hui es donen la mà com a baules de la llarga cadena que testimonien la fidelitat i l’estima per la nostra llengua.",
    "fenomens": [
@@ -6003,7 +6003,7 @@
    "id_origen": "AVL-001862"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6033,7 +6033,7 @@
    "id_origen": "AVL-002228"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6061,13 +6061,13 @@
    "id_origen": "AVL-002220"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-131",
    "font": "avl",
-   "oriental": "Cal subratllar, precisament, que el document i les seves propostes es considerin adients i útils amb independència de les característiques que tinguen en el futur les decisions institucionals sobre homologació de texts educatius.",
+   "oriental": "Cal subratllar, precisament, que el document i les seves propostes es consideren adients i útils amb independència de les característiques que tinguin en el futur les decisions institucionals sobre homologació de texts educatius.",
    "oriental_es_esborrany": true,
    "occidental": "Cal subratllar, precisament, que el document i les seues propostes es consideren adients i útils amb independència de les característiques que tinguen en el futur les decisions institucionals sobre homologació de texts educatius.",
    "fenomens": [
@@ -6089,7 +6089,7 @@
    "id_origen": "AVL-002206"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6117,7 +6117,7 @@
    "id_origen": "AVL-000004"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6145,7 +6145,7 @@
    "id_origen": "AVL-002223"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6173,7 +6173,7 @@
    "id_origen": "AVL-001993"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6202,13 +6202,13 @@
    "id_origen": "AVL-000228"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-141",
    "font": "avl",
-   "oriental": "Aquesta malaltia és coneguda també amb els noms de febre vermella i grip tropical, perquè es detectà per primera cop a començaments del segle XIX en les zones tropicals d’Amèrica Llatina.",
+   "oriental": "Aquesta malaltia és coneguda també amb els noms de febre vermella i grip tropical, perquè es detectà per primer cop a començaments del segle XIX en les zones tropicals d’Amèrica Llatina.",
    "oriental_es_esborrany": true,
    "occidental": "Esta malaltia és coneguda també amb els noms de febra roja i grip tropical, perquè es detectà per primera vegada a començaments del segle XIX en les zones tropicals d’Amèrica Llatina.",
    "fenomens": [
@@ -6234,7 +6234,7 @@
    "id_origen": "AVL-001438"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6262,13 +6262,13 @@
    "id_origen": "AVL-000165"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-145",
    "font": "avl",
-   "oriental": "Ramon Ferrer, desprès d’aquests cinc anys al capdavant de l’ens, aspira a continuar en … el càrrec si aconsegueix almenys onze dels vint vots dels seus companys de la institució.",
+   "oriental": "Ramon Ferrer, després d’aquests cinc anys al capdavant de l’ens, aspira a continuar en … el càrrec si aconsegueix almenys onze dels vint vots dels seus companys de la institució.",
    "oriental_es_esborrany": true,
    "occidental": "Ramon Ferrer, després d’estos cinc anys al capdavant de l’ens, aspira a continuar en … el càrrec si aconseguix almenys onze dels vint vots dels seus companys de la institució.",
    "fenomens": [
@@ -6291,7 +6291,7 @@
    "id_origen": "AVL-002033"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6320,13 +6320,13 @@
    "id_origen": "AVL-001914"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-149",
    "font": "avl",
-   "oriental": "Però, més enllà d’aquesta simple amalgama de parlants, la hispanitat, imitant la idea de la francophonie francesa, transcendeix aquest caràcter merament descriptiu per a aspirar a ser també un sentiment d’unitat basat en la pertinença a una cultura.",
+   "oriental": "Però, més enllà d’aquesta simple amalgama de parlants, la hispanitat, imitant la idea de la francophonie francesa, transcendeix aquest caràcter merament descriptiu per aspirar a ser també un sentiment d’unitat basat en la pertinença a una cultura.",
    "oriental_es_esborrany": true,
    "occidental": "Però, més enllà d’esta simple amalgama de parlants, la hispanitat, imitant la idea de la francophonie francesa, transcendix este caràcter merament descriptiu per a aspirar a ser també un sentiment d’unitat basat en la pertinença a una cultura.",
    "fenomens": [
@@ -6350,7 +6350,7 @@
    "id_origen": "AVL-001253"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6378,7 +6378,7 @@
    "id_origen": "AVL-002212"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6406,7 +6406,7 @@
    "id_origen": "AVL-000093"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6434,7 +6434,7 @@
    "id_origen": "AVL-000058"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6462,7 +6462,7 @@
    "id_origen": "AVL-001840"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6490,13 +6490,13 @@
    "id_origen": "AVL-002007"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-161",
    "font": "avl",
-   "oriental": "Ara, quatre anys desprès, en aprovar aquesta declaració, no escombraries sinó reiterar la mateixa manifestació.",
+   "oriental": "Ara, quatre anys desprès, en aprovar aquesta declaració, no fem sinó reiterar la mateixa manifestació.",
    "oriental_es_esborrany": true,
    "occidental": "Ara, quatre anys després, en aprovar esta declaració, no fem sinó reiterar la mateixa manifestació.",
    "fenomens": [
@@ -6520,7 +6520,7 @@
    "id_origen": "AVL-002204"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6548,7 +6548,7 @@
    "id_origen": "AVL-000787"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6576,7 +6576,7 @@
    "id_origen": "AVL-002217"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6605,7 +6605,7 @@
    "id_origen": "AVL-000094"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6633,7 +6633,7 @@
    "id_origen": "AVL-001984"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6661,7 +6661,7 @@
    "id_origen": "AVL-001878"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6689,7 +6689,7 @@
    "id_origen": "AVL-002108"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6718,13 +6718,13 @@
    "id_origen": "AVL-002020"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-177",
    "font": "avl",
-   "oriental": "Tanmateix, l’Acadèmia considera que, per la seva gravetat, el perjudici causat per aquestes modificacions és mereixedor no només d’una recomanació, sinó de la interposició d’un recurs d’inconstitucionalitat per a restaurar l’autonomia lesionada.",
+   "oriental": "Tanmateix, l’Acadèmia considera que, per la seva gravetat, el perjudici causat per aquestes modificacions és mereixedor no només d’una recomanació, sinó de la interposició d’un recurs d’inconstitucionalitat per restaurar l’autonomia lesionada.",
    "oriental_es_esborrany": true,
    "occidental": "Tanmateix, l’Acadèmia considera que, per la seua gravetat, el perjuí causat per estes modificacions és mereixedor no només d’una recomanació, sinó de la interposició d’un recurs d’inconstitucionalitat per a restaurar l’autonomia lesionada.",
    "fenomens": [
@@ -6749,7 +6749,7 @@
    "id_origen": "AVL-001833"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
