@@ -578,3 +578,51 @@ que el GD cuenta como valencianas.
 
 **Para el equipo** (no se ha tocado nada del benchmark): revisar el
 catalán de BM-BOE-024, BM-BOE-078, BM-BOE-165 y BM-AVL-161.
+
+## 7. Los tres benchmarks manuales (30/10/2026, BOE revisado de nuevo)
+
+El BOE del benchmark manual se ha vuelto a revisar desde el texto
+original alineado; la revisión anterior está archivada (ver
+`hoja_de_ruta_benchmark_manual.md`, sección 9). La sección 6 corresponde
+a esa revisión anterior y no es comparable con esta.
+
+Ahora hay tres benchmarks, que salen de `construeix_benchmark.py`:
+el **BOE** (246 frases), la **AVL** (212, la misma revisión que en la
+sección 6) y la **mezcla** de los dos (458). Medidos con
+`mesura_corpus.py` (`manual_boe_*`, `manual_avl_*`, `manual_*`):
+
+| Benchmark | Lado | Frases | Sin marcadores | occ | or | GD global | GDV global | GDC global | GD media | GDV media | GDC media |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| BOE | val | 246 | 0 | 608 | 3 | 0,9951 | 0,9996 | 0,9226 | 0,9970 | 0,9996 | 0,9201 |
+| BOE | cat | 246 | 0 | 0 | 618 | **0,0000** | 0,9214 | **1,0000** | 0,0000 | 0,9188 | 1,0000 |
+| AVL | val | 212 | 1 | 481 | 0 | **1,0000** | **1,0000** | 0,9125 | 1,0000 | 1,0000 | 0,9017 |
+| AVL | cat | 212 | 1 | 29 | 449 | 0,0607 | 0,9184 | 0,9947 | 0,0581 | 0,9079 | 0,9941 |
+| Mezcla | val | 458 | 1 | 1.089 | 3 | 0,9973 | 0,9998 | 0,9184 | 0,9984 | 0,9998 | 0,9116 |
+| Mezcla | cat | 458 | 1 | 29 | 1.067 | 0,0265 | 0,9202 | 0,9978 | 0,0268 | 0,9137 | 0,9973 |
+
+Con la revisión anterior (453 frases, sección 6), la mezcla daba GD
+0,9954 en el lado valenciano y 0,0330 en el catalán.
+
+**Marcadores cruzados que quedan** (revisados uno a uno):
+
+- **BOE valenciano, 3 orientales**: "finalitat" en BM-BOE-087, 089 y 167.
+  Es el error de dato de `E1664`/`E1665` (sección 5), no de la revisión.
+- **BOE catalán, 0 occidentales.** Las erratas que había en la revisión
+  anterior ("calga", "sigut", "siga establida") ya no están.
+- **AVL valenciano, 0 orientales.**
+- **AVL catalán, 29 occidentales**, todos errores conocidos del GD y
+  ninguno de la revisión:
+  - **Colisión verbal** (sección 2, problema abierto 1): permet ×3,
+    compromet ×2, transmet ×2, sotmet, emet, admet, acull, pateix,
+    abelleix, subjau (3ª singular catalana = 1ª valenciana); consideren,
+    diferencien, estudien, varien, comparen, testimonien, guien,
+    recuperen, serien (3ª plural de indicativo = subjuntivo valenciano);
+    también escoltes y equipara.
+  - **Homógrafo o dato**: "fem" ×2 (verbo "fer"), "naixement" (`E1666`),
+    "rosa" (BM-AVL-146).
+
+Si se quitan estos errores del GD, los tres benchmarks quedan puros: GD
+1 en el lado valenciano y 0 en el catalán.
+
+Resultados por frase en `dades/grau_dialectal/manual_*.jsonl` (fuera de
+git); resumen en `dades/grau_dialectal/resum.{json,md}`.
