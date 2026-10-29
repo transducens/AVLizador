@@ -1333,7 +1333,8 @@
     "valenciano": "xicotet",
     "tipo": "v:lexic_val",
     "fuente": "unificado",
-    "id": "E0167"
+    "id": "E0167",
+    "categoria": "adj"
   },
   {
     "espanol": "pequeñito",

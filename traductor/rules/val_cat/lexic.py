@@ -304,8 +304,8 @@ def carrega_lexic(lexic_general_path: Path = LEXIC_GENERAL_PATH) -> dict[str, st
     ('noia', 'nois', 'noies')
     >>> lookup["duració"]  # entrada `_PENDENT`, s'usa igual
     'durada'
-    >>> lookup["xicoteta"], lookup["xicotet"]  # mana la canònica
-    ('menuda', 'menut')
+    >>> lookup["xicoteta"], lookup["xicotet"]  # "menut" retirat el 22/10; E0167 amb categoria des del 30/10
+    ('petita', 'petit')
     >>> lookup["firmant"], lookup["acetilé"], lookup["vesprada"], lookup["hui"]
     ('signant', 'acetilè', 'tarda', 'avui')
     >>> "qué" in lookup  # parell retirat de les dades al merge del 21/10/2026
