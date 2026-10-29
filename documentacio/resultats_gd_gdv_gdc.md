@@ -53,24 +53,31 @@ Hay dos tipos de métrica (decisión del 27/10/2026):
 
 ## Resumen
 
-Valores de GDV/GDC con la fórmula del 27/10 (con neutras).
+**Medida vigente: 28/10/2026**, con el léxico y los verbos del compañero
+ya fusionados (rama `lista-lexico`) y con `mesura_corpus.py`, línea a
+línea. Qué ha cambiado y por qué, en la sección 5. Las secciones 1, 2 y 4
+son la revisión detallada del 27/10, con el léxico anterior.
 
-| Corpus | Lado | GD | GDV | GDC | Palabras | occ / or |
-|---|---|---|---|---|---|---|
-| Benchmark 151 (154 entradas) | valenciano | **0,9863** | **0,9991** (media 0,9989) | — | 4.302 | 287 / 4 |
-| Benchmark 151 (154 entradas) | catalán | **0,1267** | — | **0,9914** (media 0,9909) | 4.303 | 37 / 255 |
-| BOE completo (267.962 líneas, 520 documentos) | valenciano | **0,9424** | **0,9983** (media 0,9978) | 0,9714 | 6.698.334 | 191.527 / 11.714 |
-| BOE completo (267.962 líneas, 520 documentos) | catalán | **0,0684** | 0,9703 | **0,9978** (media 0,9983) | 6.731.637 | 14.705 / 200.163 |
-| BOE estricto (2.000) | valenciano / catalán | *pendiente* | | | | |
-| BOE amplio (2.000) | valenciano / catalán | *pendiente* | | | | |
-| GNV (AVL), texto entero | valenciano | **0,8696** | **0,9983** | 0,9885 | 66.146 | 760 / 114 |
-| GEIEC (IEC), texto entero | catalán | **0,2260** | 0,9832 | **0,9951** | 92.719 | 456 / 1.562 |
+Valores de GDV/GDC con la fórmula del 27/10 (con neutras). Modelo de
+spaCy: `ca_core_news_md` 3.8.0 (spaCy 3.8.16).
 
-Las gramáticas están medidas como texto entero. `mesura_corpus.py` las
-mide línea a línea y da cifras algo distintas (spaCy ve menos contexto):
-GNV GD 0,8678 (755 / 115), GEIEC GD 0,2453 (518 / 1.594); GDV/GDC
-cambian en la cuarta cifra. El 151 da exactamente lo mismo por las dos
-vías.
+| Corpus | Lado | GD 28/10 | GD 27/10 | GDV | GDC | Palabras | occ / or |
+|---|---|---|---|---|---|---|---|
+| Benchmark 151 (154 entradas) | valenciano | **0,9854** | 0,9863 | **0,9991** (media 0,9989) | 0,9372 | 4.302 | 270 / 4 |
+| Benchmark 151 (154 entradas) | catalán | **0,0727** | 0,1267 | 0,9407 | **0,9954** (media 0,9952) | 4.303 | 20 / 255 |
+| BOE completo (267.962 líneas, 520 documentos) | valenciano | **0,9344** | 0,9424 | **0,9980** (media 0,9976) | 0,9717 | 6.698.334 | 189.858 / 13.333 |
+| BOE completo (267.962 líneas, 520 documentos) | catalán | **0,0625** | 0,0684 | 0,9698 | **0,9980** (media 0,9984) | 6.731.637 | 13.552 / 203.375 |
+| **Benchmark manual (453: 241 BOE + 212 AVL)** | valenciano | **0,9954** | (nuevo) | **0,9996** (media 0,9996) | 0,9181 | 13.216 | 1.083 / 5 |
+| **Benchmark manual (453: 241 BOE + 212 AVL)** | catalán | **0,0330** | (nuevo) | 0,9201 | **0,9973** (media 0,9968) | 13.191 | 36 / 1.054 |
+| BOE estricto (2.000) | valenciano / catalán | *pendiente* | | | | | |
+| BOE amplio (2.000) | valenciano / catalán | *pendiente* | | | | | |
+| GNV (AVL), por líneas | valenciano | **0,8595** | 0,8678 | **0,9982** | 0,9889 | 66.146 | 734 / 120 |
+| GEIEC (IEC), por líneas | catalán | **0,2334** | 0,2453 | 0,9828 | **0,9948** | 92.719 | 486 / 1.596 |
+
+Las gramáticas se miden aquí línea a línea, como hace `mesura_corpus.py`.
+Medidas como texto entero (`--fitxer`, sección 4, 27/10) daban GNV 0,8696
+(760 / 114) y GEIEC 0,2260 (456 / 1.562): spaCy ve otro contexto. El 151
+da exactamente lo mismo por las dos vías.
 
 Las revisiones marcador a marcador de cada sección se expresan con el GD
 (es donde se ve el efecto de cada marcador; en GDV/GDC el efecto queda
@@ -162,7 +169,8 @@ catalán) y se han clasificado en tres tipos:
 está corrigiendo el equipo; cuando llegue, se vuelve a medir):
 
 1. `E0977` ("després"): marcarlo `homonimia_lexica` (lemas adj/adv).
-   Arregla 17 de los 20 errores del lado catalán.
+   Arregla 17 de los 20 errores del lado catalán. **Hecho el 27/10 por el
+   compañero; medido el 28/10: 0,1267 → 0,0727 (sección 5).**
 2. "mentre": que el GD respete la canónica idéntica `E1647` como ya hace
    el traductor desde el 21/10 (cambio de código en `gd.py`, no de datos).
 3. `E0537` ("tancada"), "rebuda" y `LIMPIO_588` ("he"): revisar los datos.
@@ -389,3 +397,184 @@ pronombre y el subjuntivo, marcadores catalanes reales.
 
   Cualquiera de las dos hay que medirla en todos los corpus antes de
   decidir.
+
+## 5. Remedición del 28/10/2026 (léxico del compañero fusionado)
+
+Qué se midió: todos los corpus, con `mesura_corpus.py --reinicia`, tras
+fusionar `origin/lista-lexico` (commits `e0bace3` y `ea24adc` de
+mga155-ua, 27/10) y sincronizar `traductor/data/` (`33e57de`). El código
+del GD no ha cambiado; solo los datos.
+
+```
+python pipeline/09_grau_dialectal/mesura_corpus.py --reinicia
+```
+
+### Qué traía el léxico nuevo
+
+- `lexico_general.json`:
+  - `E0977` "després" marcado `homonimia_lexica` (lemas adj/adv);
+  - seis entradas nuevas: `E1662`/`E1663` forqueta(es)→forquilla(es),
+    `E1664` fi→finalitat, `E1665` fins→finalitats (las dos
+    `homonimia_lexica`), `E1666`/`E1667` naixement(s)→naixença(es).
+- `verbos_diferentes_conjugados.json`: 69 filas nuevas, como
+  xuplar/xuclar, sobreeixir/sobresortir, tindre, obtindre, mantindre,
+  llavar, entregar, generar y firmar. Además se recalcularon las marcas
+  de ambigüedad de 70 filas.
+
+Comparando el índice de marcadores del GD antes y después:
+- solo entran 56 formas occidentales nuevas y 59 orientales nuevas
+  (casi todas de xuplar/sobreeixir, y las de las entradas nuevas del
+  léxico);
+- salen 12 formas de cada lado: conjugaciones raras de sobreeixir/xuclar
+  que ahora están en los dos lados;
+- "fi" y "fins" pasan a no contar nunca, porque son homógrafos
+  irresolubles;
+- "després" pasa a contar solo si spaCy lo etiqueta como adjetivo.
+
+Los verbos frecuentes (tindre, obtindre, generar…) ya estaban en el
+índice por `conjugaciones_general.json`, así que no cambian nada en el
+GD.
+
+### Diferencias, explicadas marcador a marcador
+
+Toda la diferencia entre el 27/10 y el 28/10 sale de tres cambios:
+
+| Cambio | 151 val | 151 cat | GNV | GEIEC | BOE val | BOE cat | Valoración |
+|---|---|---|---|---|---|---|---|
+| "després" deja de contar (spaCy nunca lo da como adjetivo) | −17 occ | −17 occ | −22 occ | −34 occ | −1.972 occ | −1.456 occ | **Arreglo**: era el adverbio compartido |
+| "finalitat/s" pasa a marcador catalán (`E1664`/`E1665`) | — | — | +5 or | +2 or | **+1.619 or** | +3.206 or | **Error de dato**: "finalitat" es la palabra normal también en valenciano (el BOE valenciano la usa 1.619 veces) |
+| "naixement/s" pasa a marcador valenciano (`E1666`/`E1667`) | — | — | +1 occ | +2 occ | +301 occ | +303 occ | **Error de dato o registro**: el BOE catalán usa "naixement" igual que el valenciano (303 frente a 301) |
+| Resto (forquetes, sobreeixir, xuclar…) | — | — | — | — | +2 occ | +6 or | Sin efecto |
+
+Con eso cuadran exactamente todos los recuentos. Por ejemplo, en el BOE
+valenciano: 191.527 + 303 − 1.972 = 189.858 marcadores occidentales, y
+11.714 + 1.619 = 13.333 orientales.
+
+### Lectura
+
+- **"després" quedó resuelto**: el lado catalán del 151 baja de 0,1267 a
+  **0,0727**, el BOE catalán de 0,0684 a 0,0625 y la GEIEC de 0,2453 a
+  0,2334. Era el error más grande del GD (sección 1).
+- **El BOE valenciano empeora (0,9424 → 0,9344) por un dato nuevo, no
+  por el texto**:
+  - "finalitat" entra como forma solo catalana, y es la palabra normal
+    en los dos estándares;
+  - sin ese par, el BOE valenciano daría **0,9419**, prácticamente
+    igual que antes: el arreglo de "després" apenas le afecta
+    (−0,0005), porque allí "després" hinchaba el lado bueno;
+  - la GNV baja por lo mismo (0,8678 → 0,8595): pierde 22 "després" y
+    gana 5 "finalitat".
+- **"naixement/naixença"** tiene el mismo problema, más pequeño:
+  "naixement" es normal en los dos BOE y ahora cuenta como valenciano en
+  el catalán.
+- GDV y GDC casi no se mueven (cuarta cifra), como siempre: las neutras
+  lo diluyen.
+
+### Efecto en el traductor (cat→val), visto de paso
+
+Las entradas nuevas también cambian la traducción:
+- "La finalitat d'aquesta llei" pasa a "La fi d'esta llei";
+- "Amb les finalitats previstes" pasa a "Amb les fins previstes", con el
+  género mal: "fi" en el sentido de finalidad es masculino.
+
+El BOE catalán tiene 3.206 apariciones de "finalitat/s" y la referencia
+valenciana usa "finalitat" (1.619). Es probable que esto baje los
+benchmarks del BOE. Falta medirlo: hay que pasar los benchmarks cat→val
+del 151, del BOE estricto y del BOE amplio.
+
+"fins a" y "la fi del mes" no se tocan, porque son homógrafos
+irresolubles. "després" sigue traduciéndose bien.
+
+### Propuesta para el compañero (no se ha tocado nada)
+
+- **`E1664`/`E1665` (fi/fins → finalitat/s)**: revisar. "Finalitat" es
+  valenciano normativo y es la forma del BOE valenciano. Si el par se
+  queda, en cat→val produce "les fins" (género mal).
+- **`E1666`/`E1667` (naixement/naixença)**: revisar. "Naixement" es la
+  forma habitual en los dos BOE.
+- Siguen abiertos los otros errores de las secciones 1 y 2: `E0434`
+  "rebuda"/"recepció", `E0087` "construcció", `E0537`/`E0538` "tancada",
+  `E0251` "afecte/afecta", `E1625` "eixos", "deu" numeral, "mentre"
+  (este último es código de `gd.py`) y la colisión verbal.
+
+### BOE por documento (28/10)
+
+GD medio 0,9439 en el lado valenciano (mediana 0,9808; 39 de 498
+documentos con marcadores por debajo de 0,8) y 0,0746 en el catalán
+(mediana 0,0578; 17 de 489 por encima de 0,2).
+
+## 6. Benchmark manual cat→val (453 frases)
+
+**Fichero**: `dades/benchmark_manual/benchmark_manual_cat_val.json`. Son
+241 frases del BOE y 212 de la AVL, revisadas a mano por el equipo. Cómo
+se generó: `documentacio/hoja_de_ruta_benchmark_manual.md`, sección 7.
+
+**Medida**: 28/10/2026, con los datos recién sincronizados
+(`sync_data --check` → "Tot sincronitzat"; incluye "eliminacion
+cadascu" y los cambios en los verbos). Remedido a las 16:20 con la
+versión regenerada por `construeix_benchmark.py` (que incluye las
+últimas ediciones de la revisión): mismas cifras a cuatro decimales. El benchmark se ha añadido a
+`mesura_corpus.py` como `manual_val` / `manual_cat`.
+
+```
+python pipeline/09_grau_dialectal/mesura_corpus.py --corpus manual_val manual_cat --reinicia
+python pipeline/09_grau_dialectal/gd.py --corpus dades/benchmark_manual/benchmark_manual_cat_val.json --camp occidental --camp-alt oriental --html pipeline/09_grau_dialectal/proves/gd_benchmark_manual.html
+```
+
+Para ver las frases una a una, con los marcadores resaltados:
+`pipeline/09_grau_dialectal/proves/gd_benchmark_manual.html`. Los
+resultados por frase están en `dades/grau_dialectal/manual_val.jsonl` y
+`manual_cat.jsonl`.
+
+| Lado | Fuente | Frases | Palabras | occ | or | GD global / media | GDV | GDC | Sin marcadores |
+|---|---|---|---|---|---|---|---|---|---|
+| valenciano | BOE | 241 | 7.717 | 600 | 5 | 0,9917 / 0,9941 | **0,9994** | 0,9222 | 0 |
+| valenciano | AVL | 212 | 5.499 | 483 | 0 | 1,0000 / 1,0000 | **1,0000** | 0,9122 | 1 |
+| valenciano | **total** | 453 | 13.216 | 1.083 | 5 | **0,9954** / 0,9969 | **0,9996** | 0,9181 | 1 |
+| catalán | BOE | 241 | 7.690 | 5 | 606 | 0,0082 / 0,0059 | 0,9212 | **0,9993** | 0 |
+| catalán | AVL | 212 | 5.501 | 31 | 448 | 0,0647 / 0,0628 | 0,9186 | **0,9944** | 1 |
+| catalán | **total** | 453 | 13.191 | 36 | 1.054 | **0,0330** / 0,0324 | 0,9201 | **0,9973** | 1 |
+
+La única frase sin marcadores es BM-AVL-057 ("t'haig de dir" → "t'he de
+dir"). "haig" no cuenta como marcador por la fila `LIMPIO_588`.
+
+**Lectura**
+
+- Es el corpus **más puro y mejor separado** de todos los medidos: GD
+  0,9954 frente a 0,0330. El 151 da 0,9854 frente a 0,0727 y el BOE
+  completo 0,9344 frente a 0,0625.
+- Tiene mucha densidad de fenómenos: 2,4 marcadores por frase, frente a
+  1,8 en el 151. Era el objetivo de la selección.
+- **GDV del lado valenciano: 0,9996** y **GDC del lado catalán: 0,9973**.
+  Es casi el máximo posible.
+
+### Revisión de los marcadores cruzados
+
+**Lado valenciano: 5 marcadores orientales**, ninguno real:
+
+| Palabra | Frases | Tipo |
+|---|---|---|
+| finalitat/s | BM-BOE-087, 089, 103 y 167 | Error de dato: `E1664`/`E1665` (sección 5) |
+| estat | BM-BOE-065 ("haja estat") | Registro: participio de "ser", aceptado en valenciano |
+
+**Lado catalán: 36 marcadores occidentales** (5 en el BOE y 31 en la
+AVL):
+
+| Tipo | Marcadores | Frases |
+|---|---|---|
+| **Posible errata en el catalán** (para revisar) | 4 | BM-BOE-024 "que **calga** lliurar" (en catalán, "calgui"); BM-BOE-165 "que **siga establida**" (en catalán, "sigui establerta"; cuenta 2); BM-BOE-078 "hagi **sigut**" (en catalán estándar, "hagi estat") |
+| **Error del GD: colisión verbal** (§4.2) | 25 | 3ª singular catalana = 1ª valenciana: permet ×3, transmet ×2, compromet ×2, admet, emet, sotmet, subjau, acull, pateix, abelleix. 3ª plural indicativo = subjuntivo valenciano: consideren, diferencien, estudien, varien, comparen, testimonien, guien, recuperen, serien. Además: escoltes, equipara |
+| **Error del GD: homógrafo o dato** | 7 | "construcció" ×2 (`E0087`), "fem" ×2 (verbo "fer"), "naixement" (`E1666`), "bous" (plural de "bou", animal), "rosa" (*El nom de la rosa*) |
+
+**Posible errata no detectada por el GD**: BM-AVL-161 "quatre anys
+**desprès**" lleva acento grave; en catalán es "després". "desprès"
+(adjetivo, "desprendido") ya no cuenta como marcador desde el 28/10.
+
+Quitando los errores del GD, el lado catalán quedaría en unos **0,004**
+(4 / 1.058) y el valenciano en **1,0000** (o 0,9991 si "estat" cuenta).
+Son cifras orientativas. Casi todo lo que baja el catalán de la AVL es
+la colisión verbal: son formas catalanas correctas ("permet", "consideren")
+que el GD cuenta como valencianas.
+
+**Para el equipo** (no se ha tocado nada del benchmark): revisar el
+catalán de BM-BOE-024, BM-BOE-078, BM-BOE-165 y BM-AVL-161.

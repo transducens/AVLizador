@@ -29,6 +29,17 @@
   sbatch benchmark_integrat_posfiltre.sh qwen3:8b c "" --ids RC151 --debug
   ```
 
+- **`baseline_models_llengua.sh`** (29/10/2026) -- SOLO CPU, job array
+  (un modelo de lenguaje por tarea, 9 en paralelo). Baseline de modelos
+  pequeños para `traductor/model_llengua/` (el sistema final cat→val):
+  benchmark combinado de 253 frases con el criterio por defecto + rejilla
+  de criterios sobre los 98 homógrafos. Solo con el clon del repo
+  (`~/scrapeo/AVLizador`, `git pull`).
+  ```
+  sbatch baseline_models_llengua.sh               # los 9 modelos
+  sbatch --array=0,3 baseline_models_llengua.sh   # solo algunos (índice de MODELS)
+  ```
+
 `archivo/` guarda herramientas de exploración ya cerradas (comparativa
 de vías A/B/C, baseline de 3 modelos en paralelo) -- se conservan por si
 hace falta repetir ese tipo de comparación, pero no son el flujo normal.

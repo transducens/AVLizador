@@ -176,7 +176,7 @@
    "id_origen": "BOE-A-2009-17493-4262"
   },
   {
-   "valida": "dubtosa",
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "El si s'escau me fa dubtar: no sé si és correcte, però sembla que sí.",
@@ -511,7 +511,7 @@
    "id_origen": "BOE-A-2012-8406-0127"
   },
   {
-   "valida": "dubtosa",
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -519,7 +519,7 @@
    "font": "boe",
    "oriental": "L’acció de cessació es dirigeix a obtenir una sentència que condemni el demandat a cessar en la conducta contrària a aquesta Llei i a prohibir la seva reiteració futura.",
    "oriental_es_esborrany": false,
-   "occidental": "L’acció de cessació es dirigix a obtindre una sentència que condemne el demandat a cessar en la conducta contrària a esta Llei i a prohibir-ne la reiteració futura.",
+   "occidental": "L’acció de cessació es dirigix a obtindre una sentència que condemne el demandat a cessar en la conducta contrària a esta Llei i a prohibir la seua reiteració futura.",
    "fenomens": [
     "CONJ_SUBJ: condemni → condemne",
     "CONJ_ARREL: obtenir → obtindre",
@@ -918,7 +918,7 @@
    "comentari": "",
    "id": "BM-BOE-055",
    "font": "boe",
-   "oriental": "Una de les oportunitats que obre aquesta Llei és la d’adequar els serveis i dispositius del govern d’Espanya a les necessitats d’un món globalitzat.",
+   "oriental": "Una de les oportunitats que obre aquesta Llei és la d’adequar els serveis i dispositius del Govern d’Espanya a les necessitats d’un món globalitzat.",
    "oriental_es_esborrany": false,
    "occidental": "Una de les oportunitats que obri esta Llei és la d’adequar els servicis i dispositius del Govern d’Espanya a les necessitats d’un món globalitzat.",
    "fenomens": [
@@ -988,7 +988,7 @@
    "font": "boe",
    "oriental": "S’avança en la liberalització i s’elimina, així, la impossibilitat de posseir més d’un 5% en diferents prestadors, amb l’expectativa que aquests puguin atreure a la seva activitat el capital financer necessari.",
    "oriental_es_esborrany": false,
-   "occidental": "S’avança en la liberalització i s’elimina així la impossibilitat de posseir més d’un 5% en distints prestadors, amb l’expectativa que estos puguen atraure a la seua activitat el capital financer necessari.",
+   "occidental": "S’avança en la liberalització i s’elimina, així, la impossibilitat de posseir més d’un 5% en distints prestadors, amb l’expectativa que estos puguen atraure a la seua activitat el capital financer necessari.",
    "fenomens": [
     "CONJ_IND: puguin → puguen",
     "POS: seva → seua",
@@ -1120,7 +1120,7 @@
    "id_origen": "BOE-A-2012-2076-0588"
   },
   {
-   "valida": "dubtosa",
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -1216,7 +1216,7 @@
    "id_origen": "BOE-A-2011-13242-0603"
   },
   {
-   "valida": "dubtosa",
+   "valida": false,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "dubtosa amb l'ús de li o els",
@@ -1525,13 +1525,13 @@
    "id_origen": "BOE-A-2013-2874-0421"
   },
   {
-   "valida": "dubtosa",
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-BOE-091",
    "font": "boe",
-   "oriental": "Destruir, abandonar, deteriorar o sostreure equip, cabals, material o altres efectes, així com adquirir o posseir qualsevol dels béns o efectes esmentats amb coneixement de la seva procedència il·lícita o facilitar-los a tercers.",
+   "oriental": "Destruir, abandonar, deteriorar o sostreure equips, cabals, material o altres efectes, així com adquirir o posseir qualsevol dels béns o efectes esmentats amb coneixement de la seva procedència il·lícita o facilitar-los a tercers.",
    "oriental_es_esborrany": false,
    "occidental": "Destruir, abandonar, deteriorar o sostraure equips, cabals, material o altres efectes, així com adquirir o posseir qualsevol dels béns o efectes mencionats amb coneixement de la seua procedència il·lícita, o facilitar-los a tercers.",
    "fenomens": [
@@ -1629,7 +1629,7 @@
    "comentari": "",
    "id": "BM-BOE-097",
    "font": "boe",
-   "oriental": "En aquesta línia, els pressupostos Generals de l’Estat per a 2014 aprofundeixen en la reducció de la despesa pública dins d’un context de consolidació fiscal, d’acord amb les orientacions i recomanacions establertes per la Unió Europea.",
+   "oriental": "En aquesta línia, els Pressupostos Generals de l’Estat per a 2014 aprofundeixen en la reducció de la despesa pública dins d’un context de consolidació fiscal, d’acord amb les orientacions i recomanacions establertes per la Unió Europea.",
    "oriental_es_esborrany": false,
    "occidental": "En esta línia, els Pressupostos Generals de l’Estat per a 2014 aprofundixen en la reducció del gasto públic dins d’un context de consolidació fiscal, d’acord amb les orientacions i recomanacions establides per la Unió Europea.",
    "fenomens": [
@@ -3126,7 +3126,7 @@
    "id_origen": "BOE-A-2011-14221-0152"
   },
   {
-   "valida": "dubtosa",
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "Problema con el -los o els haurà de",
@@ -3134,7 +3134,7 @@
    "font": "boe",
    "oriental": "Els controladors de trànsit aeri que arribin als 57 anys d’edat deixaran d’exercir funcions operatives de control de trànsit aeri, i el proveïdor de serveis els ha d’oferir un altre lloc de treball que no comporti l’exercici d’aquestes funcions.",
    "oriental_es_esborrany": false,
-   "occidental": "Els controladors de trànsit aeri que arriben als 57 anys d’edat deixaran d’exercir funcions operatives de control de trànsit aeri, i el proveïdor de servicis haurà d’oferir-los un altre lloc de treball que no comporte l’exercici d’eixes funcions.",
+   "occidental": "Els controladors de trànsit aeri que arriben als 57 anys d’edat deixaran d’exercir funcions operatives de control de trànsit aeri, i el proveïdor de servicis els ha d’oferir un altre lloc de treball que no comporte l’exercici d’eixes funcions.",
    "fenomens": [
     "LEX_NOM: serveis → servicis",
     "CONJ_SUBJ: arribin → arriben",
@@ -3254,13 +3254,13 @@
    "id_origen": "BOE-A-2012-9111-0774"
   },
   {
-   "valida": "dubtosa",
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "Tengo duda con el hi",
    "id": "BM-BOE-195",
    "font": "boe",
-   "oriental": "No hi estan incloses les instal·lacions o parts d’instal·lacions la dedicació principal de les quals sigui la recerca, el desenvolupament i l’experimentació de nous productes i processos, ni les instal·lacions que cremin exclusivament biomassa.",
+   "oriental": "No estan incloses les instal·lacions o parts d’instal·lacions la dedicació principal de les quals sigui la recerca, el desenvolupament i l’experimentació de nous productes i processos, ni les instal·lacions que cremin exclusivament biomassa.",
    "oriental_es_esborrany": false,
    "occidental": "No estan incloses les instal·lacions o parts d’instal·lacions la dedicació principal de les quals siga la investigació, el desenrotllament i l’experimentació de nous productes i processos, ni les instal·lacions que cremen exclusivament biomassa.",
    "fenomens": [
@@ -3826,9 +3826,9 @@
    "comentari": "",
    "id": "BM-BOE-229",
    "font": "boe",
-   "oriental": "Ens trobem en aquests casos davant els supòsits de resolució, veritable neologisme en el nostre ordenament jurídic, però que expressa de forma clara el que es pretén: resoldre de la millor forma possible una situació d’inviabilitat d’una entitat de crèdit.",
+   "oriental": "Ens trobem en aquests casos davant dels supòsits de resolució, veritable neologisme en el nostre ordenament jurídic, però que expressa de forma clara el que es pretén: resoldre de la millor forma possible una situació d’inviabilitat d’una entitat de crèdit.",
    "oriental_es_esborrany": false,
-   "occidental": "Ens trobem en estos casos davant dels supòsits de resolució, verdader neologisme en el nostre ordenament jurídic, però que expressa de manera clara el que es pretén: resoldre de la millor manera possible una situació d’inviabilitat d’una entitat de crèdit.",
+   "occidental": "Ens trobem en estos casos davant dels supòsits de resolució, verdader neologisme en el nostre ordenament jurídic, però que expressa de forma clara el que es pretén: resoldre de la millor manera possible una situació d’inviabilitat d’una entitat de crèdit.",
    "fenomens": [
     "DEM: aquests → estos",
     "LEX_ADJ: veritable → verdader"
@@ -4019,7 +4019,7 @@
    "font": "boe",
    "oriental": "Amb aquests objectius, la present Llei es compon d’un article únic que introdueix modificacions a la Llei 35/2003, de 4 de novembre, d’institucions d’inversió col·lectiva, al llarg de 71 apartats, tres disposicions addicionals, una disposició derogatòria i vuit disposicions finals.",
    "oriental_es_esborrany": false,
-   "occidental": "Amb eixos objectius, la present Llei es compon d’un article únic que introduïx modificacions en la Llei 35/2003, de 4 de novembre, d’Institucions d’Inversió Col·lectiva, al llarg de 71 apartats, tres disposicions addicionals, una disposició derogatòria i huit disposicions finals.",
+   "occidental": "Amb eixos objectius, la present Llei es compon d’un article únic que introduïx modificacions en la Llei 35/2003, de 4 de novembre, d’institucions d’inversió col·lectiva, al llarg de 71 apartats, tres disposicions addicionals, una disposició derogatòria i huit disposicions finals.",
    "fenomens": [
     "NUM: vuit → huit",
     "INC: introdueix → introduïx"
@@ -4704,7 +4704,7 @@
    "id_origen": "AVL-001823"
   },
   {
-   "valida": "dubtosa",
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5633,7 +5633,7 @@
    "id_origen": "AVL-000776"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5663,13 +5663,13 @@
    "id_origen": "AVL-001112"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-103",
    "font": "avl",
-   "oriental": "Maria Isabel Guardiola ha estat la única candidata a l’elecció, desprès que el passat mes de març cap de les dues aspirants, les professores Sandra Montserrat i Àngel Diéguez, obtingueren els vots suficients.",
+   "oriental": "Maria Isabel Guardiola ha estat la única candidata a l’elecció, després que el passat mes de març cap de les dues aspirants, les professores Sandra Montserrat i Àngel Diéguez, obtingueren els vots suficients.",
    "oriental_es_esborrany": true,
    "occidental": "Maria Isabel Guardiola ha sigut la única candidata a l’elecció, després que el passat mes de març cap de les dos aspirants, les professores Sandra Montserrat i Àngel Diéguez, obtingueren els vots suficients.",
    "fenomens": [
@@ -5692,7 +5692,7 @@
    "id_origen": "AVL-002015"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5720,7 +5720,7 @@
    "id_origen": "AVL-002193"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5748,13 +5748,13 @@
    "id_origen": "AVL-001964"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-109",
    "font": "avl",
-   "oriental": "Escoltis les opinions de tal i tal altre, i no vols que jo et digui res.",
+   "oriental": "Escoltes les opinions de tal i tal altre, i no vols que jo et digui res.",
    "oriental_es_esborrany": true,
    "occidental": "Escoltes les opinions de tal i tal altre, i no vols que jo et diga res.",
    "fenomens": [
@@ -5776,13 +5776,13 @@
    "id_origen": "AVL-001740"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-111",
    "font": "avl",
-   "oriental": "Aquestes mesures alternatives seriïn molt més ràpides i senzilles que una modificació de la llei, perquè només requeriria un acord del Ple de la institució.",
+   "oriental": "Aquestes mesures alternatives serien molt més ràpides i senzilles que una modificació de la llei, perquè només requeriria un acord del Ple de la institució.",
    "oriental_es_esborrany": true,
    "occidental": "Estes mesures alternatives serien molt més ràpides i senzilles que una modificació de la llei, perquè només requeriria un acord del Ple de la institució.",
    "fenomens": [
@@ -5804,7 +5804,7 @@
    "id_origen": "AVL-002223"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5832,13 +5832,13 @@
    "id_origen": "AVL-001839"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-115",
    "font": "avl",
-   "oriental": "El diu allibera una hormona, anomenada progesterona, que fa que la mucositat cervical es faci més densa, i d’aqueixa manera s’impedeix que els espermatozous puguen arribar a les trompes de Fal·lopi.",
+   "oriental": "El diu allibera una hormona, anomenada progesterona, que fa que la mucositat cervical es faci més densa, i d’aqueixa manera s’impedeix que els espermatozous puguin arribar a les trompes de Fal·lopi.",
    "oriental_es_esborrany": true,
    "occidental": "El diu allibera una hormona, anomenada progesterona, que fa que la mucositat cervical es faça més densa, i d’eixa manera s’impedix que els espermatozous puguen arribar a les trompes de Fal·lopi.",
    "fenomens": [
@@ -5861,7 +5861,7 @@
    "id_origen": "AVL-001407"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5891,7 +5891,7 @@
    "id_origen": "AVL-000718"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -5919,13 +5919,13 @@
    "id_origen": "AVL-001689"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-121",
    "font": "avl",
-   "oriental": "Així i tot, els estudiosos de la llengua detecten a cops errades importants en els materials que estudiïn.",
+   "oriental": "Així i tot, els estudiosos de la llengua detecten a cops errades importants en els materials que estudien.",
    "oriental_es_esborrany": true,
    "occidental": "Així i tot, els estudiosos de la llengua detecten a vegades errades importants en els materials que estudien.",
    "fenomens": [
@@ -5947,13 +5947,13 @@
    "id_origen": "AVL-002232"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-123",
    "font": "avl",
-   "oriental": "Tot i això, la situació millora si es comparin les darreres dades amb les de l’enquesta del 2010.",
+   "oriental": "Tot i això, la situació millora si es comparen les darreres dades amb les de l’enquesta del 2010.",
    "oriental_es_esborrany": true,
    "occidental": "Tot i això, la situació millora si es comparen les últimes dades amb les de l’enquesta del 2010.",
    "fenomens": [
@@ -5975,13 +5975,13 @@
    "id_origen": "AVL-002037"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-125",
    "font": "avl",
-   "oriental": "«Maduresa i joventut avui es donen la mà com a baules de la llarga cadena que testimoniïn la fidelitat i l’estima per la nostra llengua.",
+   "oriental": "«Maduresa i joventut avui es donen la mà com a baules de la llarga cadena que testimonien la fidelitat i l’estima per la nostra llengua.",
    "oriental_es_esborrany": true,
    "occidental": "«Maduresa i joventut hui es donen la mà com a baules de la llarga cadena que testimonien la fidelitat i l’estima per la nostra llengua.",
    "fenomens": [
@@ -6003,7 +6003,7 @@
    "id_origen": "AVL-001862"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6033,7 +6033,7 @@
    "id_origen": "AVL-002228"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6061,13 +6061,13 @@
    "id_origen": "AVL-002220"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-131",
    "font": "avl",
-   "oriental": "Cal subratllar, precisament, que el document i les seves propostes es considerin adients i útils amb independència de les característiques que tinguen en el futur les decisions institucionals sobre homologació de texts educatius.",
+   "oriental": "Cal subratllar, precisament, que el document i les seves propostes es consideren adients i útils amb independència de les característiques que tinguin en el futur les decisions institucionals sobre homologació de texts educatius.",
    "oriental_es_esborrany": true,
    "occidental": "Cal subratllar, precisament, que el document i les seues propostes es consideren adients i útils amb independència de les característiques que tinguen en el futur les decisions institucionals sobre homologació de texts educatius.",
    "fenomens": [
@@ -6089,7 +6089,7 @@
    "id_origen": "AVL-002206"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6117,7 +6117,7 @@
    "id_origen": "AVL-000004"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6145,7 +6145,7 @@
    "id_origen": "AVL-002223"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6173,7 +6173,7 @@
    "id_origen": "AVL-001993"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6202,13 +6202,13 @@
    "id_origen": "AVL-000228"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-141",
    "font": "avl",
-   "oriental": "Aquesta malaltia és coneguda també amb els noms de febre vermella i grip tropical, perquè es detectà per primera cop a començaments del segle XIX en les zones tropicals d’Amèrica Llatina.",
+   "oriental": "Aquesta malaltia és coneguda també amb els noms de febre vermella i grip tropical, perquè es detectà per primer cop a començaments del segle XIX en les zones tropicals d’Amèrica Llatina.",
    "oriental_es_esborrany": true,
    "occidental": "Esta malaltia és coneguda també amb els noms de febra roja i grip tropical, perquè es detectà per primera vegada a començaments del segle XIX en les zones tropicals d’Amèrica Llatina.",
    "fenomens": [
@@ -6234,7 +6234,7 @@
    "id_origen": "AVL-001438"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6262,13 +6262,13 @@
    "id_origen": "AVL-000165"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-145",
    "font": "avl",
-   "oriental": "Ramon Ferrer, desprès d’aquests cinc anys al capdavant de l’ens, aspira a continuar en … el càrrec si aconsegueix almenys onze dels vint vots dels seus companys de la institució.",
+   "oriental": "Ramon Ferrer, després d’aquests cinc anys al capdavant de l’ens, aspira a continuar en … el càrrec si aconsegueix almenys onze dels vint vots dels seus companys de la institució.",
    "oriental_es_esborrany": true,
    "occidental": "Ramon Ferrer, després d’estos cinc anys al capdavant de l’ens, aspira a continuar en … el càrrec si aconseguix almenys onze dels vint vots dels seus companys de la institució.",
    "fenomens": [
@@ -6291,7 +6291,7 @@
    "id_origen": "AVL-002033"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6320,13 +6320,13 @@
    "id_origen": "AVL-001914"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-149",
    "font": "avl",
-   "oriental": "Però, més enllà d’aquesta simple amalgama de parlants, la hispanitat, imitant la idea de la francophonie francesa, transcendeix aquest caràcter merament descriptiu per a aspirar a ser també un sentiment d’unitat basat en la pertinença a una cultura.",
+   "oriental": "Però, més enllà d’aquesta simple amalgama de parlants, la hispanitat, imitant la idea de la francophonie francesa, transcendeix aquest caràcter merament descriptiu per aspirar a ser també un sentiment d’unitat basat en la pertinença a una cultura.",
    "oriental_es_esborrany": true,
    "occidental": "Però, més enllà d’esta simple amalgama de parlants, la hispanitat, imitant la idea de la francophonie francesa, transcendix este caràcter merament descriptiu per a aspirar a ser també un sentiment d’unitat basat en la pertinença a una cultura.",
    "fenomens": [
@@ -6350,7 +6350,7 @@
    "id_origen": "AVL-001253"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6378,7 +6378,7 @@
    "id_origen": "AVL-002212"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6406,7 +6406,7 @@
    "id_origen": "AVL-000093"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6434,7 +6434,7 @@
    "id_origen": "AVL-000058"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6462,7 +6462,7 @@
    "id_origen": "AVL-001840"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6490,13 +6490,13 @@
    "id_origen": "AVL-002007"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-161",
    "font": "avl",
-   "oriental": "Ara, quatre anys desprès, en aprovar aquesta declaració, no escombraries sinó reiterar la mateixa manifestació.",
+   "oriental": "Ara, quatre anys desprès, en aprovar aquesta declaració, no fem sinó reiterar la mateixa manifestació.",
    "oriental_es_esborrany": true,
    "occidental": "Ara, quatre anys després, en aprovar esta declaració, no fem sinó reiterar la mateixa manifestació.",
    "fenomens": [
@@ -6520,7 +6520,7 @@
    "id_origen": "AVL-002204"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6548,7 +6548,7 @@
    "id_origen": "AVL-000787"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6576,7 +6576,7 @@
    "id_origen": "AVL-002217"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6605,7 +6605,7 @@
    "id_origen": "AVL-000094"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6633,7 +6633,7 @@
    "id_origen": "AVL-001984"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6661,7 +6661,7 @@
    "id_origen": "AVL-001878"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6689,7 +6689,7 @@
    "id_origen": "AVL-002108"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
@@ -6718,13 +6718,13 @@
    "id_origen": "AVL-002020"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",
    "id": "BM-AVL-177",
    "font": "avl",
-   "oriental": "Tanmateix, l’Acadèmia considera que, per la seva gravetat, el perjudici causat per aquestes modificacions és mereixedor no només d’una recomanació, sinó de la interposició d’un recurs d’inconstitucionalitat per a restaurar l’autonomia lesionada.",
+   "oriental": "Tanmateix, l’Acadèmia considera que, per la seva gravetat, el perjudici causat per aquestes modificacions és mereixedor no només d’una recomanació, sinó de la interposició d’un recurs d’inconstitucionalitat per restaurar l’autonomia lesionada.",
    "oriental_es_esborrany": true,
    "occidental": "Tanmateix, l’Acadèmia considera que, per la seua gravetat, el perjuí causat per estes modificacions és mereixedor no només d’una recomanació, sinó de la interposició d’un recurs d’inconstitucionalitat per a restaurar l’autonomia lesionada.",
    "fenomens": [
@@ -6749,7 +6749,7 @@
    "id_origen": "AVL-001833"
   },
   {
-   "valida": null,
+   "valida": true,
    "oriental_corregit": null,
    "occidental_corregit": null,
    "comentari": "",

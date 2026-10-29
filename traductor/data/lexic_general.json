@@ -27,15 +27,6 @@
     "categoria": "n"
   },
   {
-    "espanol": "cada palo que aguante su vela",
-    "catalan": "cadascú que carregui el mort",
-    "valenciano": "cada u que carregue el mort",
-    "tipo": "v:lexic_val_gva",
-    "fuente": "unificado",
-    "id": "E0004",
-    "categoria": "adv"
-  },
-  {
     "espanol": "trabajo de investigación",
     "catalan": "treball de recerca",
     "valenciano": "treball d'investigació",
@@ -970,15 +961,6 @@
     ]
   },
   {
-    "espanol": "cada cual",
-    "catalan": "cadascú",
-    "valenciano": "cada u",
-    "tipo": "v:lexic_val_gva",
-    "fuente": "unificado",
-    "id": "E0120",
-    "categoria": "prn"
-  },
-  {
     "espanol": "vistazo",
     "catalan": "cop d'ull",
     "valenciano": "ullada",
@@ -993,15 +975,6 @@
     "fuente": "unificado",
     "id": "E0122",
     "categoria": "adj"
-  },
-  {
-    "espanol": "cada uno",
-    "catalan": "cadascun",
-    "valenciano": "cada un",
-    "tipo": "v:lexic_val_gva",
-    "fuente": "unificado",
-    "id": "E0123",
-    "categoria": "prn"
   },
   {
     "espanol": "un poco",
