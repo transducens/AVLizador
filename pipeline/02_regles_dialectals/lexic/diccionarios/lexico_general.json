@@ -1120,7 +1120,7 @@
     "problema": "homonimia_lexica",
     "lemas": [
       "reeixida [n]",
-      "reeixit [adj]"
+      "reeixit [adj, n]"
     ]
   },
   {
@@ -1136,7 +1136,7 @@
     "problema": "homonimia_lexica",
     "lemas": [
       "reeixida [n]",
-      "reeixit [adj]"
+      "reeixit [adj, n]"
     ]
   },
   {
@@ -1333,7 +1333,8 @@
     "valenciano": "xicotet",
     "tipo": "v:lexic_val",
     "fuente": "unificado",
-    "id": "E0167"
+    "id": "E0167",
+    "categoria": "adj" 
   },
   {
     "espanol": "pequeñito",
@@ -2013,7 +2014,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "manc [adj]",
+      "manc [adj, n]",
       "manca [n]"
     ]
   },
@@ -2029,7 +2030,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "manc [adj]",
+      "manc [adj, n]",
       "manca [n]"
     ]
   },
@@ -3373,7 +3374,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "rentador [adj]",
+      "rentador [adj, n]",
       "rentadora [n]"
     ]
   },
@@ -3389,7 +3390,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "rentador [adj]",
+      "rentador [adj, n]",
       "rentadora [n]"
     ]
   },
@@ -4224,7 +4225,7 @@
     "lado": "cat",
     "problema": "homonimia_lexica",
     "lemas": [
-      "falaguer [adj]",
+      "falaguer [adj, n]",
       "falaguera [n]"
     ]
   },
@@ -4240,7 +4241,7 @@
     "lado": "cat",
     "problema": "homonimia_lexica",
     "lemas": [
-      "falaguer [adj]",
+      "falaguer [adj, n]",
       "falaguera [n]"
     ]
   },
@@ -5006,7 +5007,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "recuit [adj]",
+      "recuit [adj, n]",
       "recuita [n]"
     ]
   },
@@ -5022,7 +5023,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "recuit [adj]",
+      "recuit [adj, n]",
       "recuita [n]"
     ]
   },
@@ -5393,7 +5394,7 @@
     "problema": "homonimia_lexica",
     "lemas": [
       "panotxa [n]",
-      "panotxo [adj]"
+      "panotxo [adj, n]"
     ]
   },
   {
@@ -5409,7 +5410,7 @@
     "problema": "homonimia_lexica",
     "lemas": [
       "panotxa [n]",
-      "panotxo [adj]"
+      "panotxo [adj, n]"
     ]
   },
   {
@@ -5487,7 +5488,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "fartaner [adj]",
+      "fartaner [adj, n]",
       "fartanera [n]"
     ]
   },
@@ -5503,7 +5504,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "fartaner [adj]",
+      "fartaner [adj, n]",
       "fartanera [n]"
     ]
   },
@@ -6348,7 +6349,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "nou [adj]",
+      "nou [adj, n]",
       "nou [n]",
       "nou [num]"
     ]
@@ -6363,7 +6364,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "nou [adj]",
+      "nou [adj, n]",
       "nou [n]",
       "nou [num]"
     ]
@@ -8125,7 +8126,7 @@
     "lado": "cat",
     "problema": "homonimia_lexica",
     "lemas": [
-      "després [adj]",
+      "després [adj, n]",
       "després [adv]"
     ]
   },

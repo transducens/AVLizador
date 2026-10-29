@@ -1048,7 +1048,12 @@ def tradueix_traductor_invers(frase: str) -> str:
     """Adaptador cap a la direcció INVERSA del paquet `traductor/`
     (`translate_cat_val`, afegida 08/10/2026 -- vore
     `documentacio/hoja_de_ruta_traductor_invers.md`). Mateix mecanisme
-    d'import peresós que `tradueix_traductor_nou`, mateix motiu."""
+    d'import peresós que `tradueix_traductor_nou`, mateix motiu.
+
+    És el MOTOR SOL (`translate_cat_val_motor`): des del 29/10/2026
+    `translate_cat_val` inclou el model de llengua, i este adaptador es
+    queda en el motor per a comparar amb les mesures d'abans. El sistema
+    final s'avalua amb `--model traductor_ml`."""
     import sys
     from pathlib import Path
 
@@ -1056,8 +1061,8 @@ def tradueix_traductor_invers(frase: str) -> str:
     if arrel_projecte not in sys.path:
         sys.path.insert(0, arrel_projecte)
 
-    from traductor.translate_invers import translate_cat_val
-    return translate_cat_val(frase)
+    from traductor.translate_invers import translate_cat_val_motor
+    return translate_cat_val_motor(frase)
 
 
 MODEL_LLENGUA_ID = None  # --model-llengua (None = el per defecte de traductor/model_llengua)
@@ -1318,7 +1323,9 @@ def main():
         required=True,
         help="Model a avaluar. 'traductor_ml' (només --direccio cat-val, "
              "23/10/2026): el sistema final, motor + model de llengua per als "
-             "homògrafs (traductor/model_llengua/)."
+             "homògrafs (traductor/model_llengua/; és el que fa "
+             "traductor.translate_cat_val des del 29/10/2026). 'traductor' "
+             "amb --direccio cat-val: el motor sol, per a comparar."
     )
     parser.add_argument(
         "--model-llengua", default=None,

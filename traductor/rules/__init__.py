@@ -844,9 +844,16 @@ def carrega_homografs(
       altra lectura -- spaCy no pot decidir.
 
     >>> resolubles, irresolubles = carrega_homografs()
-    >>> sorted(resolubles["nou"]), sorted(resolubles["manca"])
-    (['NOUN', 'PROPN'], ['NOUN', 'PROPN'])
+    >>> sorted(resolubles["deu"]), sorted(resolubles["reeixida"])
+    (['NOUN', 'PROPN'], ['ADJ'])
     >>> "bes" in irresolubles, "blanca" in irresolubles
+    (True, True)
+
+    Des del 29/10/2026 els `lemas` diuen que els adjectius també fan de nom
+    ("nou [adj, n]", "manc [adj, n]"), així que "nou" i "manca" ja no són
+    resolubles: les decidix el postprocessat (`traductor/model_llengua/`).
+
+    >>> "nou" in irresolubles, "manca" in irresolubles
     (True, True)
     """
     dades = json.loads(Path(path).read_text(encoding="utf-8"))

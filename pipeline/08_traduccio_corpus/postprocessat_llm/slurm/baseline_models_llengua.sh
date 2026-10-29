@@ -17,6 +17,8 @@
 # Llançar-ho (des de ~/scrapeo/AVLizador/pipeline/08_traduccio_corpus/postprocessat_llm/slurm):
 #   sbatch baseline_models_llengua.sh             # els 9 models
 #   sbatch --array=0,3 baseline_models_llengua.sh # només uns quants (índex de MODELS)
+#   sbatch --array=9 baseline_models_llengua.sh   # FLOR-1.3B (abans: huggingface-cli login
+#                                                 # i acceptar-ne les condicions a la web)
 # Resultats: pipeline/03_seleccio_de_model/resultats/ (JSON de cada model) i
 # dades/abaco/baseline_models_llengua/ (logs de cada model).
 
@@ -31,8 +33,10 @@
 set -euo pipefail
 
 # Models oberts (sense acceptar condicions a Hugging Face), de menys a més
-# paràmetres. FLOR-1.3B, Llama-3.2-1B i Gemma-3-1B demanen accés (gated):
-# afegir-los ací després de `huggingface-cli login` i acceptar-ne les condicions.
+# paràmetres (índexs 0-8, l'array per defecte). Resultats del 29/10/2026 a
+# documentacio/resultats_baseline_models_llengua.md. L'índex 9 (FLOR-1.3B)
+# demana accés (gated): `huggingface-cli login` i acceptar-ne les condicions.
+# Llama-3.2-1B i Gemma-3-1B també són gated i no s'han afegit.
 MODELS=(
     projecte-aina/FLOR-760M
     Qwen/Qwen2.5-0.5B
@@ -43,6 +47,7 @@ MODELS=(
     utter-project/EuroLLM-1.7B
     bigscience/bloom-1b7
     BSC-LT/salamandra-2b
+    projecte-aina/FLOR-1.3B
 )
 MODEL="${MODELS[${SLURM_ARRAY_TASK_ID:-0}]}"
 NOM="${MODEL##*/}"
