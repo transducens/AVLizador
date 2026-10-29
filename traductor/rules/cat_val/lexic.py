@@ -208,13 +208,16 @@ class LexicInversRule:
     >>> tradueix("Menjo el préssec.")
     'Menjo el bresquilla.'
 
-    Homògrafs del lèxic (`homonimia_lexica`): "nou" adjectiu no es toca;
-    "manca" com a verb tampoc, com a nom sí:
+    Homògrafs del lèxic (`homonimia_lexica`). Des del 29/10/2026 "nou" i
+    "manca" són irresolubles (els `lemas` diuen que l'adjectiu també fa de
+    nom): el motor SOL les tradueix sempre, i és el postprocessat
+    (`traductor.translate_cat_val`, spaCy + model de llengua) el que deixa
+    "nou" adjectiu i "manca" verb sense traduir:
 
     >>> tradueix("En un nou procés d'expansió.")
-    "En un nou procés d'expansió."
+    "En un anou procés d'expansió."
     >>> tradueix("Aquesta regió manca relativament de grans cràters.")
-    'Aquesta regió manca relativament de grans cràters.'
+    'Aquesta regió carència relativament de grans cràters.'
     >>> tradueix("Patix una gran manca afectiva.")
     'Patix una gran carència afectiva.'
 

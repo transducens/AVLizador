@@ -684,15 +684,6 @@
     "categoria": "adv"
   },
   {
-    "espanol": "albañilería",
-    "catalan": "obra de paleta",
-    "valenciano": "construcció",
-    "tipo": "v:lexic_val_gva",
-    "fuente": "unificado",
-    "id": "E0087",
-    "categoria": "n"
-  },
-  {
     "espanol": "bajío de arena",
     "catalan": "baix de sorra",
     "valenciano": "baix d'arena",
@@ -1129,7 +1120,7 @@
     "problema": "homonimia_lexica",
     "lemas": [
       "reeixida [n]",
-      "reeixit [adj]"
+      "reeixit [adj, n]"
     ]
   },
   {
@@ -1145,7 +1136,7 @@
     "problema": "homonimia_lexica",
     "lemas": [
       "reeixida [n]",
-      "reeixit [adj]"
+      "reeixit [adj, n]"
     ]
   },
   {
@@ -2022,7 +2013,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "manc [adj]",
+      "manc [adj, n]",
       "manca [n]"
     ]
   },
@@ -2038,7 +2029,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "manc [adj]",
+      "manc [adj, n]",
       "manca [n]"
     ]
   },
@@ -3382,7 +3373,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "rentador [adj]",
+      "rentador [adj, n]",
       "rentadora [n]"
     ]
   },
@@ -3398,7 +3389,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "rentador [adj]",
+      "rentador [adj, n]",
       "rentadora [n]"
     ]
   },
@@ -4233,7 +4224,7 @@
     "lado": "cat",
     "problema": "homonimia_lexica",
     "lemas": [
-      "falaguer [adj]",
+      "falaguer [adj, n]",
       "falaguera [n]"
     ]
   },
@@ -4249,7 +4240,7 @@
     "lado": "cat",
     "problema": "homonimia_lexica",
     "lemas": [
-      "falaguer [adj]",
+      "falaguer [adj, n]",
       "falaguera [n]"
     ]
   },
@@ -5015,7 +5006,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "recuit [adj]",
+      "recuit [adj, n]",
       "recuita [n]"
     ]
   },
@@ -5031,7 +5022,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "recuit [adj]",
+      "recuit [adj, n]",
       "recuita [n]"
     ]
   },
@@ -5402,7 +5393,7 @@
     "problema": "homonimia_lexica",
     "lemas": [
       "panotxa [n]",
-      "panotxo [adj]"
+      "panotxo [adj, n]"
     ]
   },
   {
@@ -5418,7 +5409,7 @@
     "problema": "homonimia_lexica",
     "lemas": [
       "panotxa [n]",
-      "panotxo [adj]"
+      "panotxo [adj, n]"
     ]
   },
   {
@@ -5496,7 +5487,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "fartaner [adj]",
+      "fartaner [adj, n]",
       "fartanera [n]"
     ]
   },
@@ -5512,7 +5503,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "fartaner [adj]",
+      "fartaner [adj, n]",
       "fartanera [n]"
     ]
   },
@@ -6357,7 +6348,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "nou [adj]",
+      "nou [adj, n]",
       "nou [n]",
       "nou [num]"
     ]
@@ -6372,7 +6363,7 @@
     "lado": "val",
     "problema": "homonimia_lexica",
     "lemas": [
-      "nou [adj]",
+      "nou [adj, n]",
       "nou [n]",
       "nou [num]"
     ]
@@ -8134,7 +8125,7 @@
     "lado": "cat",
     "problema": "homonimia_lexica",
     "lemas": [
-      "després [adj]",
+      "després [adj, n]",
       "després [adv]"
     ]
   },
@@ -13183,5 +13174,21 @@
     "fuente": "misc",
     "id": "E1667",
     "categoria": "n"
+  },
+  {
+    "valenciano": "llavada",
+    "catalan": "rentada",
+    "tipo": "v:lexic_val",
+    "fuente": "misc",
+    "id": "E1668",
+    "categoria": "adj"
+  },
+  {
+    "valenciano": "llavades",
+    "catalan": "rentades",
+    "tipo": "v:lexic_val",
+    "fuente": "misc",
+    "id": "E1669",
+    "categoria": "adj"
   }
 ]

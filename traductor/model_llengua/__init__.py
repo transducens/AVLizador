@@ -21,7 +21,15 @@ Sistema per tipus de punt (decisió de l'usuari, 23/10/2026):
   l'usuari), el model separa bé "gandula/gandules" (diferència traduir -
   deixar: tumbona -2,9..+4,8, persona -7,1..-11,7). "calces" no la separa:
   queda com el motor ("bragues").
-- `resoluble` ("nou", "manca"...): spaCy dins del motor, com sempre.
+- `resoluble` ("deu", "reeixida"): spaCy dins del motor i, des del
+  29/10/2026, també el model (només canvia el motor si guanya per més de
+  `marge`). "nou", "manca", "recuita"... són irresolubles des del 29/10/2026:
+  els `lemas` diuen que l'adjectiu també fa de nom. La capa d'spaCy
+  dels irresolubles deixa la paraula catalana quan spaCy dona una categoria
+  distinta de la dialectal ("un nou procés" ADJ, "la regió manca de" VERB);
+  amb NOUN decidix el model.
+- Des del 29/10/2026 `traductor.translate_cat_val` és SEMPRE este sistema
+  (decisió de l'usuari); el motor sol és `translate_cat_val_motor`.
 
 Resultats (23/10/2026, FLOR-760M): benchmark combinat
 `pipeline/03_seleccio_de_model/benchmark_sistema_final_cat_val.json`

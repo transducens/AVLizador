@@ -19,11 +19,13 @@ copia a traductor/data/, no es llig de "pipeline/02_regles_dialectals/").
 
 Direcció inversa (`translate_cat_val`, afegida 08/10/2026): vore
 `documentacio/hoja_de_ruta_traductor_invers.md` i
-`traductor/rules/cat_val/README.md` per a l'abast actual (encara en
-construcció -- Fase 0/1 de la hoja de ruta) i les limitacions conegudes.
+`traductor/rules/cat_val/README.md` per a l'abast actual i les limitacions
+conegudes. Des del 29/10/2026 és sempre el motor + el postprocessat amb
+model de llengua (`traductor/model_llengua/`, FLOR-760M, CPU; necessita
+`torch` i `transformers`). El motor sol: `translate_cat_val_motor`.
 """
 
 from .translate import translate
-from .translate_invers import translate_cat_val
+from .translate_invers import translate_cat_val, translate_cat_val_motor
 
-__all__ = ["translate", "translate_cat_val"]
+__all__ = ["translate", "translate_cat_val", "translate_cat_val_motor"]

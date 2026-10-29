@@ -10,11 +10,13 @@ paraula escrita ací), sempre amb la forma ambigua al costat CATALÀ:
   `forma_problematica` i valencians distints ("cop" -> "colp" / "vegada").
   El motor no la tradueix (dos candidats sense canònica).
 - `irresoluble`: `homonimia_lexica` on les lectures comparteixen categoria
-  i spaCy no pot decidir ("calces", "gandula"). El motor tradueix sempre;
-  els candidats són la traducció i deixar la paraula catalana.
+  i spaCy no pot decidir ("calces", "gandula"; des del 29/10/2026 també
+  "nou", "manca", "recuita"..., perquè els `lemas` diuen que l'adjectiu
+  també fa de nom). El motor tradueix sempre; els candidats són la
+  traducció i deixar la paraula catalana.
 - `resoluble`: `homonimia_lexica` que spaCy ja resol dins del motor
-  ("nou", "manca"). Només entra si es demana, per a comparar el model de
-  llengua amb spaCy.
+  ("deu", "reeixida"). Des del 29/10/2026 també passen pel model (que
+  només canvia el motor si guanya per més de `marge`).
 
 Cada candidat es construïx sobre una "base neutra" (la frase traduïda pel
 motor amb la paraula ambigua sense tocar): es posa el candidat i es fa
@@ -50,7 +52,10 @@ from ..rules import (
 from ..rules.pos_tagger import _GENERE_CURT, genere_de
 
 TIPUS = ("colisio", "irresoluble", "resoluble")
-TIPUS_PER_DEFECTE = ("colisio", "irresoluble")
+# Des del 29/10/2026 (decisió de l'usuari) també els resolubles passen pel
+# model: spaCy ja ha decidit dins del motor, i el model només ho canvia si
+# guanya per més de `marge`.
+TIPUS_PER_DEFECTE = TIPUS
 
 
 def carrega_punts(path: Path = LEXIC_GENERAL_PATH) -> dict[str, dict]:
@@ -61,8 +66,8 @@ def carrega_punts(path: Path = LEXIC_GENERAL_PATH) -> dict[str, dict]:
     >>> p = carrega_punts()
     >>> p["cop"]["tipus"], p["cop"]["candidats"], p["cops"]["candidats"]
     ('colisio', ['colp', 'vegada'], ['colps', 'vegades'])
-    >>> p["calces"]["tipus"], p["calces"]["candidats"], p["nou"]["tipus"]
-    ('irresoluble', ['bragues', 'calces'], 'resoluble')
+    >>> p["calces"]["tipus"], p["calces"]["candidats"], p["nou"]["tipus"], p["deu"]["tipus"]
+    ('irresoluble', ['bragues', 'calces'], 'irresoluble', 'resoluble')
     >>> p["gandula"]["categoria"], [sorted(l) for l in p["gandula"]["lectures"]]
     ('n', [['adj', 'n'], ['n']])
     """
@@ -110,10 +115,18 @@ _CATEGORIA_PER_POS = {pos: cat for cat, poss in _POS_PER_CATEGORIA.items() for p
 
 def decisio_spacy(punt: Punt) -> str | None:
     """Primera capa per als homògrafs irresolubles. Si spaCy dona a la
-    paraula una categoria que NOMÉS té l'altra lectura, es deixa la paraula
-    catalana ("molt gandula": ADJ, i la lectura "hamaca" només és nom).
-    Si la categoria és la compartida, o no és de cap lectura, no decidix
-    (`None`) i passa al model de llengua.
+    paraula una categoria distinta de la de la lectura dialectal (la de
+    l'entrada), eixa lectura és impossible i es deixa la paraula catalana:
+    "molt gandula" (ADJ; "hamaca" és nom), "un nou procés" (ADJ), "a les nou"
+    (NUM), "la regió manca de..." (VERB, encara que el verb no estiga als
+    `lemas`). Si spaCy dona la categoria dialectal (NOUN), pot ser qualsevol
+    de les dos lectures (un adjectiu també fa de nom: "el nou", "una
+    gandula"): no decidix (`None`) i passa al model de llengua. Sense
+    etiqueta coneguda, tampoc.
+
+    Abans (fins al 29/10/2026) només es decidia si la categoria era d'una
+    altra lectura dels `lemas`: "manca" VERB passava al model i, sense
+    guanyar per `marge`, quedava "carència".
 
     >>> p = Punt(0, "gandula", "", "irresoluble", ["hamaca", "gandula"], "hamaca",
     ...          categoria="n", lectures=[{"adj", "n"}, {"n"}])
@@ -121,11 +134,13 @@ def decisio_spacy(punt: Punt) -> str | None:
     'gandula'
     >>> p.pos = "NOUN"; decisio_spacy(p) is None
     True
-    >>> p.pos = "VERB"; decisio_spacy(p) is None
+    >>> p.pos = "VERB"; decisio_spacy(p)
+    'gandula'
+    >>> p.pos = "PUNCT"; decisio_spacy(p) is None
     True
     """
     cat = _CATEGORIA_PER_POS.get(punt.pos)
-    if not cat or cat == punt.categoria or not any(cat in l for l in punt.lectures):
+    if not cat or cat == punt.categoria:
         return None
     return next(c for c in punt.candidats if c.lower() == punt.paraula.lower())
 

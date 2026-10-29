@@ -48,8 +48,20 @@ per més de `marge` punts) i `concordanca` (`motor` o `variants`,
 experimental: formes de l'altre gènere de les dos paraules d'abans, i el
 model tria).
 
+**Des del 29/10/2026 `traductor.translate_cat_val` és sempre este sistema**
+(motor + FLOR-760M); el motor sol és `translate_cat_val_motor`. Eixe
+mateix dia els resolubles també passen pel model i "nou", "manca",
+"recuita"… són irresolubles (els `lemas` diuen que l'adjectiu també fa de
+nom).
+
 Models: `projecte-aina/FLOR-760M` per defecte (1,5 GB, CPU) i
 `BSC-LT/salamandra-2b` (4,5 GB).
+
+Baseline del 29/10/2026 amb 9 models xicotets (FLOR, salamandra, EuroLLM,
+bloom, Qwen2.5 i Qwen3): **FLOR-760M continua sent el millor** (227/253 al
+combinat; el següent, salamandra-2b, 222) i el més ràpid. Els models que
+no coneixen el valencià trien "vegada" quasi sempre. Detall a
+`documentacio/resultats_baseline_models_llengua.md`; pendent FLOR-1.3B.
 
 ## Fitxers
 

@@ -59,7 +59,13 @@ Errores que quedan en colisio: "un últim **cop** al banc" (golpe = robo) y
 "intent de **cop**" (golpe de estado sin "d'estat"), los dos salen "vegada".
 
 La función del sistema final es `translate_cat_val_ml(text)`, y
-`evalua_models.py --model traductor_ml --direccio cat-val` la evalúa. El
+`evalua_models.py --model traductor_ml --direccio cat-val` la evalúa.
+**Desde el 29/10/2026 `traductor.translate_cat_val` es siempre este
+sistema** (motor + FLOR-760M); el motor solo queda como
+`translate_cat_val_motor` (`evalua_models.py --model traductor --direccio
+cat-val`). Ese mismo día los resolubles también pasan por el modelo y
+"nou", "manca", "recuita"… se volvieron irresolubles (los `lemas` dicen
+que el adjetivo también hace de nombre). El
 benchmark para comparar el sistema final con el motor es
 `pipeline/03_seleccio_de_model/benchmark_sistema_final_cat_val.json`: el de
 151 más los homógrafos. Se reconstruye con `construeix_benchmark_sistema_final.py`.
@@ -101,6 +107,12 @@ vegades", "Una altra vegada", "Per primera vegada").
 Modelos: `projecte-aina/FLOR-760M` por defecto (1,5 GB, CPU, ~1,5 s por
 frase con "cop") y `BSC-LT/salamandra-2b` (4,5 GB, ~3,3 s, peor en todo:
 descartado). Se descargan solos la primera vez desde Hugging Face.
+
+Baseline del 29/10/2026 con 9 modelos pequeños (FLOR, salamandra, EuroLLM,
+bloom, Qwen2.5 y Qwen3): **FLOR-760M sigue siendo el mejor** (227/253 en el
+combinado; el siguiente, salamandra-2b, 222) y el más rápido. Los modelos
+que no conocen el valenciano eligen "vegada" casi siempre. Detalle en
+`documentacio/resultats_baseline_models_llengua.md`; pendiente FLOR-1.3B.
 
 ## Ficheros
 
