@@ -455,6 +455,32 @@ solo elige una. Pero el volumen es mínimo: unos 25 casos en 268.000
 líneas del BOE (1 por cada ~10.000 líneas). Prioridad baja frente a
 "aquest" → "este"/"eixe" y el modo verbal.
 
+**Posible extensión (28/10/2026, aparcada): "els hi" dativo frente a
+acusativo con el parser de dependencias.** Se probó si el parser de
+`ca_core_news_md` 3.8.0 distingue el "els" dativo ("Els hi vaig donar la
+carta") del acusativo ("Els hi vaig veure al parc"). **No sirve**:
+
+| Rasgo | Qué da spaCy |
+|---|---|
+| `dep_` de "els" | `obj` en los dos casos; nunca `iobj` |
+| `morph` de "els" | `Case=Acc,Dat` en los dos casos (no decide) |
+| "hi" | siempre `Case=Loc`; no lo reconoce como sustituto de "li" |
+| "la carta" | `nsubj` (sujeto), cuando debería ser el objeto directo |
+
+El árbol es igual con "donar" y con "veure". Además, el traductor carga
+spaCy sin parser (`exclude=["parser","ner"]`, 22/10), así que usar
+`dep_` costaría velocidad sin ganar nada.
+
+Si se retoma, la señal tendría que ser otra:
+- si el verbo suele llevar objeto directo y dativo (donar, dir,
+  enviar…);
+- si hay otro acusativo en el grupo de clíticos o detrás del verbo.
+
+Esa lista de verbos no puede escribirse a mano (regla del proyecto):
+tendría que salir de los diccionarios o del corpus. Antes de nada,
+contar cuántos "els hi" hay de verdad en el BOE (el total de B4 ronda los
+25 casos).
+
 **val→cat (para el futuro):** la dirección contraria sí es casi
 determinista. "li'l", "li'ls", "li l'" son inequívocos ("li" + el/els) →
 catalán central "l'hi"/"els hi". "li la"/"li les" exigen comprobar con
@@ -771,3 +797,72 @@ los datos, sin arreglar):**
 **En el amplio dominan las diferencias de estilo**: el presente pasa a
 futuro ("és" → "serà" 57, "pot" → "podrà" 52), "a" → "en" (59) y
 mayúsculas. Ninguna de ellas es dialectal.
+
+
+## 22/10/2026 — Sin ficheros ni listas a mano, spaCy `md`, mayúsculas y homógrafos de conjugaciones
+
+Decisiones del usuario, todas medidas con doctests + 151 + gplsi + BOE
+estricto completo (9.453) + BOE amplio (2.000). Detalle y cifras paso a
+paso en `CLAUDE.md` (jornada 22/10/2026).
+
+- **`traductor/data/` solo tiene los dos ficheros del proveedor.** Retirados
+  `flexio_genere_avl.json`, `canvi_genere_lexic_avl.json`,
+  `categoria_gramatical_lexic.json` y `demostratius_avl.json`, y todas las
+  listas léxicas a mano de las dos direcciones. Las entradas `_PENDENT` se
+  usan como las demás. Homógrafos del léxico: `homonimia_lexica` +
+  `categoria` + `lemas` con spaCy (`rules/__init__.py::carrega_homografs`).
+  Demostrativos: entradas `categoria: "det"` del léxico.
+- **Género y artículo con spaCy** (`pos_tagger.genere_tras_substitucio`):
+  determinante, contracciones y apóstrofo tras una sustitución.
+- **spaCy `ca_core_news_md`** (con `sm` de respaldo): misma velocidad, +193
+  MB de RAM, mejor género y morfología.
+- **Mayúsculas**: cat→val ya no protege las palabras en mayúscula (el BOE
+  capitaliza "Servei de Salut", "Comitè de…"); se conserva TODO MAYÚSCULAS;
+  "ʼ" (U+02BC) es apóstrofo; "de" se apostrofa tras sustituir. Límite:
+  topónimos que coinciden con palabras comunes ("les Garrigues", "Maó").
+- **Homógrafos de conjugaciones desde el dato**: ver
+  `rules/cat_val/README.es.md` (sección del 22/10/2026). Sin
+  `SEMPRE_VERB_INVERS`.
+- **Resultado cat→val**: 151 146/154, gplsi 1479/1958, BOE estricto completo
+  8857/9453 (8127 al empezar el día), amplio 1200/2000 (1177).
+
+**Siguiente paso propuesto**: capa de LLM opcional SOLO para homógrafos de
+la misma categoría (`homonimia_lexica` irresolubles: "blanca"/"garsa",
+"calces"/"bragues", "gandula"/"hamaca", "bes") y nombres propios que el
+motor traduce por ir en mayúscula ("Blanca"). Diseño en discusión.
+
+## 23/10/2026 — homógrafos con un modelo de lenguaje (perplejidad)
+
+El "siguiente paso" de arriba se resolvió **sin LLM por preguntas** (la capa
+`traductor/llm/cat_val.py` sigue aparcada: los modelos 7-8B no conocían las
+palabras). En su lugar, paquete opcional `traductor/model_llengua/` (ver su
+`README.es.md`):
+
+- **Qué es**: un modelo de lenguaje pequeño (FLOR-760M, projecte-aina, 1,5
+  GB, CPU) que **solo puntúa** frases. El motor construye la frase
+  valenciana completa de cada candidato del léxico, con el artículo y la
+  concordancia ya puestos ("Una vegada acabada la reunió…" / "Un colp
+  acabada la reunió…"), y gana la más probable. No genera texto ni recibe
+  instrucciones; solo puede elegir entre candidatos del diccionario.
+- **Dónde actúa** (decisión del usuario): solo en `colision_homonima`
+  ("cop" → colp/vegada, "cops" → colps/vegades). Los homógrafos
+  irresolubles ("calces", "gandula/es") usan una capa de **spaCy por
+  categoría no compartida** de los `lemas` ("molt gandula": ADJ, y la
+  lectura "hamaca" solo es nombre → no traducir) y si no, el modelo con
+  margen 5. Los resolubles siguen con spaCy en el motor.
+- **Medido y descartado**: Salamandra-2B (peor y 2× más lento), corrección
+  PMI en colisio (no hace falta; 0,5 se deja porque no empeora), puntuar
+  solo el contexto de la derecha (`dreta`, colisio 28/32). El modelo en los
+  irresolubles se descartó primero (elegía siempre "gandules") y se
+  recuperó al ver la causa: E0592 decía "hamaces" (incorrecto; corregido a
+  "hamaques"). Con el dato bien, 18/24 frente a 14/24 sin él; "calces"
+  sigue sin separarse.
+- **Resultados**: benchmark combinado (151 + 98 homógrafos + 1 frase de
+  gplsi) motor 190/253 → sistema 227/253, sin ningún cambio en el 151;
+  colisio 0 → 31/33. BOE amplio 1.206/2.000. En el BOE, "cop" aparece en 428
+  líneas y la referencia nunca usa "colp" (117 "vegada", el resto reformula).
+- **Evaluación**: `evalua_models.py --model traductor_ml --direccio cat-val`
+  (nuevo) y `python -m traductor.model_llengua.avalua --per-defecte`.
+- **Pendiente**: homógrafos que el léxico no marca (E0251 "afecta"→"carinya",
+  correcto como adjetivo, se aplica al verbo); los numerales del BOE
+  ("octava", "dèsset", "dènou") frente a "huitena", "dessetena", "denovena".
