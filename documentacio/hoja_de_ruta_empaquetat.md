@@ -130,11 +130,20 @@ tests/                    test_doctests.py (todos los módulos) + test_api_cli.p
 
 ## Pendiente después de la fusión
 
-- Licencia (`LICENSE` y campo `license` de `pyproject.toml`).
+- Licencia (`LICENSE` y campo `license` de `pyproject.toml`): **en
+  espera** (30/10, decisión del usuario): no se pone ninguna hasta que lo
+  decida el grupo. Opciones explicadas: Apache-2.0 o MIT para el código +
+  CC BY 4.0 para `dades/` (recomendada), o CC BY 4.0 para todo.
 - CLAUDE.md: pasar este registro (rutas nuevas, órdenes nuevas).
 - Avisar al compañero del léxico de la ruta nueva (`dades/lexic/`).
-- Documentos vivos que aún citan `traductor/` (README de
-  `src/avlizador/traductor_cat_val/`, de `rules/` y de `model_llengua/`,
-  `metodologia_i_resultats.md`): actualizar las rutas. Los históricos
-  (informes, CLAUDE_HISTORIAL) se dejan como están.
+- [x] Documentos vivos que citaban `traductor/` (hecho el 30/10, antes de
+  fusionar): el README del traductor tiene reescritas las secciones de
+  hoy (estructura, uso, resultados del 30/10, sincronizar, añadir datos,
+  evaluar, pruebas) y una nota de rutas para la parte histórica; los de
+  `rules/` y `model_llengua/` con las rutas y órdenes nuevas;
+  `metodologia_i_resultats.md` con una nota de rutas al principio, la
+  sección 11 y la subsección "Empaquetado" en la 16. Los históricos
+  (informes, CLAUDE_HISTORIAL) se dejan como están, y también
+  `dades/benchmarks/boe_dialectal/README_construccio*.md` (copias que no
+  se editan a mano; dicen "`traductor/`" en dos sitios).
 - Opcional: GitHub Actions con `pytest` en CPU.

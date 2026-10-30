@@ -1,12 +1,14 @@
-# `traductor/model_llengua/` — homògrafs cat→val amb un model de llengua
+# `avlizador.traductor_cat_val.model_llengua` — homògrafs cat→val amb un model de llengua
 
-Postprocessat **opcional** (23/10/2026) per a les paraules catalanes
-ambigües que el motor de regles no pot resoldre a soles. `translate_cat_val`
-no canvia i no necessita res d'açò (ni `torch` ni `transformers`).
+Postprocessat (23/10/2026) per a les paraules catalanes ambigües que el
+motor de regles no pot resoldre a soles. Des del 29/10/2026 forma part
+del **sistema principal** (`translate_cat_val`); cal l'extra `[ml]`
+(`torch` + `transformers`). Sense ell, `translate_cat_val` usa el motor
+sol i avisa una vegada (`AvisSenseModelLlengua`).
 
 ## Què resol
 
-Els punts ixen del lèxic (`traductor/data/lexic_general.json`), sense cap
+Els punts ixen del lèxic (`traductor_cat_val/data/lexic_general.json`), sense cap
 paraula escrita al codi:
 
 | tipus | d'on ix | exemple | què fa hui el motor |
@@ -48,7 +50,7 @@ per més de `marge` punts) i `concordanca` (`motor` o `variants`,
 experimental: formes de l'altre gènere de les dos paraules d'abans, i el
 model tria).
 
-**Des del 29/10/2026 `traductor.translate_cat_val` és sempre este sistema**
+**Des del 29/10/2026 `avlizador.translate_cat_val` és sempre este sistema**
 (motor + FLOR-760M); el motor sol és `translate_cat_val_motor`. Eixe
 mateix dia els resolubles també passen pel model i "nou", "manca",
 "recuita"… són irresolubles (els `lemas` diuen que l'adjectiu també fa de
@@ -66,8 +68,8 @@ no coneixen el valencià trien "vegada" quasi sempre. Detall a
 ## Fitxers
 
 `punts.py` (punts i candidats, sense model), `puntuador.py`
-(`ModelLlengua`), `__init__.py` (`tradueix_cat_val_ml`),
-`frases_homografs.json` (frases catalanes amb el sentit esperat),
+(`ModelLlengua`), `__init__.py` (`tradueix_cat_val_ml`); fora del paquet, en
+`pipeline/03_seleccio_de_model/model_llengua/`: `frases_homografs.json` (frases catalanes amb el sentit esperat),
 `genera_benchmark.py` (crea `benchmark_homografs_cat_val.json` amb el
 motor; **les referències s'han de revisar a mà**) i `avalua.py` (prova
 tots els criteris amb cada model).
@@ -75,9 +77,9 @@ tots els criteris amb cada model).
 ## Executar (des de l'arrel del repo)
 
 ```bash
-python -m traductor.model_llengua.genera_benchmark        # no sobreescriu sense --sobreescriu
-python -m traductor.model_llengua.avalua
-python -m traductor.model_llengua.avalua --models projecte-aina/FLOR-760M BSC-LT/salamandra-2b
+python pipeline/03_seleccio_de_model/model_llengua/genera_benchmark.py        # no sobreescriu sense --sobreescriu
+python pipeline/03_seleccio_de_model/model_llengua/avalua.py
+python pipeline/03_seleccio_de_model/model_llengua/avalua.py --models projecte-aina/FLOR-760M BSC-LT/salamandra-2b
 ```
 
 Resultats a `pipeline/03_seleccio_de_model/resultats/benchmark_homografs_ml_<model>_<data>.json`.

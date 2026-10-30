@@ -1,12 +1,14 @@
-# `traductor/model_llengua/` — homógrafos cat→val con un modelo de lenguaje
+# `avlizador.traductor_cat_val.model_llengua` — homógrafos cat→val con un modelo de lenguaje
 
-Postprocesado **opcional** (23/10/2026) para las palabras catalanas
-ambiguas que el motor de reglas no puede resolver solo. `translate_cat_val`
-no cambia y no necesita nada de esto (ni `torch` ni `transformers`).
+Postprocesado (23/10/2026) para las palabras catalanas ambiguas que el
+motor de reglas no puede resolver solo. Desde el 29/10/2026 forma parte
+del **sistema principal** (`translate_cat_val`); necesita el extra `[ml]`
+(`torch` + `transformers`). Sin él, `translate_cat_val` usa el motor solo
+y avisa una vez (`AvisSenseModelLlengua`).
 
 ## Qué resuelve
 
-Los puntos salen del léxico (`traductor/data/lexic_general.json`), sin
+Los puntos salen del léxico (`traductor_cat_val/data/lexic_general.json`), sin
 ninguna palabra escrita en el código:
 
 | tipo | de dónde sale | ejemplo | qué hace hoy el motor |
@@ -60,7 +62,7 @@ Errores que quedan en colisio: "un últim **cop** al banc" (golpe = robo) y
 
 La función del sistema final es `translate_cat_val_ml(text)`, y
 `evalua_models.py --model traductor_ml --direccio cat-val` la evalúa.
-**Desde el 29/10/2026 `traductor.translate_cat_val` es siempre este
+**Desde el 29/10/2026 `avlizador.translate_cat_val` es siempre este
 sistema** (motor + FLOR-760M); el motor solo queda como
 `translate_cat_val_motor` (`evalua_models.py --model traductor --direccio
 cat-val`). Ese mismo día los resolubles también pasan por el modelo y
@@ -119,6 +121,9 @@ que no conocen el valenciano eligen "vegada" casi siempre. Detalle en
 - `punts.py`: detección de los puntos y construcción de los candidatos (sin modelo).
 - `puntuador.py`: `ModelLlengua`, log-probabilidad de un texto (torch + transformers).
 - `__init__.py`: `tradueix_cat_val_ml(text, model, criteri)`, elección del candidato.
+
+Fuera del paquete, en `pipeline/03_seleccio_de_model/model_llengua/`:
+
 - `frases_homografs.json`: las frases catalanas del benchmark, con el sentido esperado.
 - `genera_benchmark.py`: crea `benchmark_homografs_cat_val.json` con el motor
   (la referencia es el motor con el candidato correcto). **Las referencias
@@ -128,16 +133,16 @@ que no conocen el valenciano eligen "vegada" casi siempre. Detalle en
 ## Ejecutar (desde la raíz del repo)
 
 ```bash
-# doctests del paquete y del motor (sin modelo, solo spaCy)
-python -c "import doctest, traductor.model_llengua as m, traductor.model_llengua.punts as p, traductor.rules.cat_val.engine as e; print(doctest.testmod(m), doctest.testmod(p), doctest.testmod(e))"
+# doctests de todo el paquete (sin modelo, solo spaCy)
+pytest tests/test_doctests.py
 
 # regenerar el benchmark (NO sobrescribe uno revisado sin --sobreescriu)
-python -m traductor.model_llengua.genera_benchmark
+python pipeline/03_seleccio_de_model/model_llengua/genera_benchmark.py
 
 # evaluar sobre el benchmark de homógrafos
-python -m traductor.model_llengua.avalua --per-defecte   # solo el sistema final
-python -m traductor.model_llengua.avalua                 # rejilla: PMI x margen x frase/dreta x spaCy sí/no
-python -m traductor.model_llengua.avalua --models projecte-aina/FLOR-760M BSC-LT/salamandra-2b
+python pipeline/03_seleccio_de_model/model_llengua/avalua.py --per-defecte   # solo el sistema final
+python pipeline/03_seleccio_de_model/model_llengua/avalua.py                 # rejilla: PMI x margen x frase/dreta x spaCy sí/no
+python pipeline/03_seleccio_de_model/model_llengua/avalua.py --models projecte-aina/FLOR-760M BSC-LT/salamandra-2b
 
 # sistema final contra el motor solo (151 + homógrafos)
 cd pipeline/03_seleccio_de_model

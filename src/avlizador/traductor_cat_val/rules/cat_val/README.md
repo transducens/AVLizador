@@ -3,7 +3,7 @@
 # `cat_val/` — direcció inversa (català → valencià)
 
 Direcció inversa del motor de regles: català oriental (norma IEC) →
-valencià occidental (norma AVL/GVA). Companya de `traductor/rules/val_cat/*.py`
+valencià occidental (norma AVL/GVA). Companya de `traductor_cat_val/rules/val_cat/*.py`
 (la direcció original, val→cat), que es queda exactament igual, sense
 tocar. Vore `documentacio/hoja_de_ruta_traductor_invers.md` (arrel del
 repositori) per al raonament complet, les xifres reals que justifiquen
@@ -27,16 +27,16 @@ traduït una altra:
 | 8 | `accentuacio.py` | francès → francés | no |
 | 9 | `per_a_infinitiu.py` | per + infinitiu → per a (llevat de "per haver") | sí |
 
-Dades: només `traductor/data/lexic_general.json` i
-`conjugacions_dialectals.json` (còpies de `diccionarios/`). Cap llista de
+Dades: només `traductor_cat_val/data/lexic_general.json` i
+`conjugacions_dialectals.json` (còpies de `dades/lexic/`). Cap llista de
 paraules a mà.
 
 **Homògrafs de la mateixa categoria** ("calces", "gandula", "gandules") i
 **col·lisions** ("cop", "cops", dos traduccions sense canònica): els
-resol la capa opcional `traductor/model_llengua/` (spaCy per categoria dels
+resol la capa opcional `traductor_cat_val/model_llengua/` (spaCy per categoria dels
 `lemas` + model de llengua FLOR-760M). El motor sol, sense eixa capa,
 tradueix sempre els irresolubles i deixa "cop/cops" sense traduir. Vore
-`traductor/model_llengua/README.md`.
+`traductor_cat_val/model_llengua/README.md`.
 
 Les seccions de baix són l'historial de com s'hi va arribar.
 
@@ -59,7 +59,7 @@ d'ací és un fitxer propi, auditable de forma independent.
 - `pos_tagger.py` (spaCy) — sense cap canvi, i amb MES fiabilitat ací que
   en val->cat, perquè l'entrada ja és català real (l'idioma en què
   `ca_core_news_sm` està entrenat).
-- Els mateixos fitxers de dades de `traductor/data/*.json` — cada
+- Els mateixos fitxers de dades de `traductor_cat_val/data/*.json` — cada
   entrada ja porta els dos camps (`valenciano`/`catalan`), així que no
   cal cap fitxer nou, nomes carregadors nous que indexen per l'atre camp.
 
@@ -129,7 +129,7 @@ mateixa categoria i necessitarien un LLM: "calces" (bragues o calces de
 pantaló), "gandula" i "gandules" (hamaca o dona gandula). Als tres corpus
 apareixen 3 vegades ("calces", en llistes d'aranzels del BOE) i
 "gandula(es)" cap: el motor les tradueix sempre. **23/10/2026**: resoltes
-a `traductor/model_llengua/` sense LLM per preguntes (spaCy per categoria
+a `traductor_cat_val/model_llengua/` sense LLM per preguntes (spaCy per categoria
 dels `lemas` + model de llengua): irresolubles 12 → 18/24 al benchmark
 d'homògrafs. De passada es va corregir E0592 ("hamaces" → "hamaques").
 

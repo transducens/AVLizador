@@ -3,7 +3,7 @@
 # `cat_val/` — dirección inversa (català → valencià)
 
 Dirección inversa del motor de reglas: catalán oriental (norma IEC) →
-valenciano occidental (norma AVL/GVA). Compañera de `traductor/rules/val_cat/*.py`
+valenciano occidental (norma AVL/GVA). Compañera de `traductor_cat_val/rules/val_cat/*.py`
 (la dirección original, val→cat), que se queda exactamente igual, sin
 tocar. Ver `documentacio/hoja_de_ruta_traductor_invers.md` (raíz del
 repositorio) para el razonamiento completo, las cifras reales que
@@ -27,16 +27,16 @@ traducido otra:
 | 8 | `accentuacio.py` | francès → francés | no |
 | 9 | `per_a_infinitiu.py` | per + infinitivo → per a (salvo "per haver") | sí |
 
-Datos: solo `traductor/data/lexic_general.json` y
-`conjugacions_dialectals.json` (copias de `diccionarios/`). Ninguna lista
+Datos: solo `traductor_cat_val/data/lexic_general.json` y
+`conjugacions_dialectals.json` (copias de `dades/lexic/`). Ninguna lista
 de palabras a mano.
 
 **Homógrafos de la misma categoría** ("calces", "gandula", "gandules") y
 **colisiones** ("cop", "cops", dos traducciones sin canónica): los
-resuelve la capa opcional `traductor/model_llengua/` (spaCy por categoría
+resuelve la capa opcional `traductor_cat_val/model_llengua/` (spaCy por categoría
 de los `lemas` + modelo de lenguaje FLOR-760M). El motor solo, sin esa
 capa, traduce siempre los irresolubles y deja "cop/cops" sin traducir.
-Ver `traductor/model_llengua/README.es.md`.
+Ver `traductor_cat_val/model_llengua/README.es.md`.
 
 Las secciones de abajo son el historial de cómo se llegó aquí.
 
@@ -59,7 +59,7 @@ regla de aquí es un fichero propio, auditable de forma independiente.
 - `pos_tagger.py` (spaCy) — sin cambios, y con MÁS fiabilidad aquí que en
   val→cat, porque la entrada ya es catalán real (el idioma en el que
   `ca_core_news_sm` está entrenado).
-- Los mismos ficheros de datos de `traductor/data/*.json` — cada entrada
+- Los mismos ficheros de datos de `traductor_cat_val/data/*.json` — cada entrada
   ya trae los dos campos (`valenciano`/`catalan`), así que no hace falta
   ningún fichero nuevo, solo cargadores nuevos que indexan por el otro
   campo.
@@ -130,7 +130,7 @@ lecturas de la misma categoría y necesitarían un LLM: "calces" (bragues
 o calces de pantaló), "gandula" y "gandules" (hamaca o dona gandula). En
 los tres corpus aparecen 3 veces ("calces", en listas de aranceles del
 BOE) y "gandula(es)" ninguna: el motor las traduce siempre.
-**23/10/2026**: resueltas en `traductor/model_llengua/` sin LLM por
+**23/10/2026**: resueltas en `traductor_cat_val/model_llengua/` sin LLM por
 preguntas (spaCy por categoría de los `lemas` + modelo de lenguaje):
 irresolubles 12 → 18/24 en el benchmark de homógrafos. De paso se corrigió
 E0592 ("hamaces" → "hamaques").

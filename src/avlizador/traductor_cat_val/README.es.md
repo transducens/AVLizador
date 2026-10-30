@@ -1,41 +1,55 @@
 *[Read it in Catalan](README.md)*
 
-# Motor de diccionario determinista — etapa 5
+# Traductor catalán → valenciano (`avlizador.traductor_cat_val`)
 
-Este paquete (`traductor/`) vive en la raíz del repositorio, sin el
-prefijo numérico de las otras etapas (`01_...` a `04_...`), porque es un
-paquete Python que se importa por el nombre (`import traductor`) desde
-otras partes del código — un nombre de módulo no puede empezar por un
-dígito en Python. Conceptualmente es la etapa 5 del proyecto.
+Subpaquete del paquete `avlizador` (`src/avlizador/traductor_cat_val/`).
+Hasta el 30/10/2026 era el paquete `traductor/` de la raíz del
+repositorio (la "etapa 5" del proyecto). Instalación, órdenes y
+resultados generales: [README de la raíz](../../../README.es.md).
 
-## Estructura y estado actual (23/10/2026)
+## Estructura y estado actual (30/10/2026)
 
-**Esta sección describe el paquete tal como está hoy.** Todo lo que
-viene después ("DECISIÓN DE ARQUITECTURA", "Las 9 capas"…) es el registro
-histórico de cómo se llegó aquí: nombra ficheros y capas que ya no existen.
+**Esta sección y las cuatro últimas (sincronizar los datos, añadir
+datos, evaluar, pruebas) describen el paquete tal como está hoy.** Todo
+lo que hay entre medias ("DECISIÓN DE ARQUITECTURA", "Las 9 capas"…) es
+el registro histórico de cómo se llegó aquí: nombra ficheros y capas que
+ya no existen. En ese registro, donde dice `traductor/` hoy es
+`src/avlizador/traductor_cat_val/`; `traductor/sync_data.py` es
+`scripts/sync_data.py`; `traductor/llm/` y `traductor/cli.py` están en
+`pipeline/08_traduccio_corpus/postprocessat_llm/capa_llm/`, y las fuentes
+de `diccionarios/` (o `lexic/`), en `dades/lexic/`.
 
 **Prioridad: catalán → valenciano** (decisión del usuario, 20/10/2026). Es
 una de las dos herramientas que se entregan a la Conselleria (la otra es
-el GD, `pipeline/09_grau_dialectal/`), en equipos solo con CPU.
+el GD, `avlizador.grau_dialectal`), en equipos solo con CPU. **Sistema
+principal = motor + FLOR-760M** (30/10/2026); el motor solo, como
+comparación o sin el extra `[ml]`.
 
 ### Qué hay en el paquete
 
 ```
-traductor/
-├── __init__.py, translate.py, translate_invers.py   API: translate (val→cat), translate_cat_val (cat→val)
-├── cli.py                    python -m traductor.cli [--direccio val-cat|cat-val] "texto"
-├── sync_data.py              único puente con pipeline/02_regles_dialectals/lexic/diccionarios/
-├── data/                     SOLO los dos ficheros del proveedor (copias, no editar a mano):
+traductor_cat_val/
+├── __init__.py               API: translate_cat_val (motor + FLOR-760M; sin [ml], motor solo
+│                             con el aviso AvisSenseModelLlengua), translate_cat_val_motor
+├── translate_invers.py       cat→val (sistema principal y motor solo)
+├── translate.py              val→cat: fuera de la API pública; el GD usa sus cargadores
+├── data/                     SOLO los dos ficheros del proveedor (copias que genera
+│   │                         scripts/sync_data.py desde dades/lexic/; no editar a mano):
 │   ├── lexic_general.json          léxico, numerales, posesivos, demostrativos, homógrafos
 │   └── conjugacions_dialectals.json  formas verbales
 ├── rules/
 │   ├── __init__.py           Token, tokenize/detokenize, apóstrofos, concordancia, homógrafos
 │   ├── pos_tagger.py         spaCy (ca_core_news_md, si no sm): categoría, género, lema, forma verbal
 │   ├── cat_val/              motor catalán → valenciano (9 capas, ver abajo)
-│   └── val_cat/              motor valenciano → catalán (10 capas; aparcado desde el 20/10)
-├── model_llengua/            OPCIONAL cat→val: homógrafos con un modelo de lenguaje (FLOR-760M)
-└── llm/                      OPCIONAL, aparcado: capas de LLM por preguntas (Ollama)
+│   └── val_cat/              motor valenciano → catalán (aparcado desde el 20/10; lo usa el GD)
+└── model_llengua/            homógrafos cat→val con FLOR-760M (necesita el extra [ml])
 ```
+
+Fuera del paquete: `scripts/sync_data.py` (raíz),
+`pipeline/03_seleccio_de_model/model_llengua/` (evaluación del modelo de
+lenguaje y benchmark de homógrafos) y
+`pipeline/08_traduccio_corpus/postprocessat_llm/capa_llm/` (capas de LLM
+por preguntas, aparcadas).
 
 ### El sistema catalán → valenciano
 
@@ -58,10 +72,10 @@ texto catalán
   │      AccentuacioInversRule ...... francès → francés
   │      PerAInfinitiuInversRule .... per fer → per a fer
   │
-  └─ 3. OPCIONAL: model_llengua (translate_cat_val_ml) — solo si hay una palabra ambigua del léxico:
+  └─ 3. model_llengua (translate_cat_val_ml) — solo si hay una palabra ambigua del léxico:
          cop / cops (colision_homonima) ........ FLOR puntúa "Una vegada…" frente a "Un colp…"
-         calces / gandula / gandules (irresolub.) spaCy por categoría de los `lemas`; si no, FLOR
-                                                   con margen 5
+         homógrafos (homonimia_lexica: nou, manca, calces, gandula…) spaCy por categoría de los
+                                                   `lemas`; con NOUN, FLOR con margen 5
 ```
 
 Detalle de la capa 3: `model_llengua/README.es.md`. Detalle de las capas
@@ -70,47 +84,45 @@ del motor: `rules/cat_val/README.es.md`.
 ### Uso
 
 ```python
-from traductor import translate_cat_val
-translate_cat_val("Aquest xiquet és molt bo.")      # motor solo (spaCy, sin modelo)
-
-from traductor.model_llengua import translate_cat_val_ml
-translate_cat_val_ml("Un cop acabada la reunió.")    # sistema final: + FLOR-760M (torch + transformers)
+from avlizador.traductor_cat_val import translate_cat_val, translate_cat_val_motor
+translate_cat_val("Un cop acabada la reunió.")         # sistema principal: motor + FLOR-760M
+translate_cat_val_motor("Aquest xiquet és molt bo.")   # motor solo (spaCy, sin modelo)
 ```
 
 ```bash
-python -m traductor.cli --direccio cat-val "Aquest xiquet és molt bo."
+avlizador tradueix "Aquest xiquet és molt bo."
+avlizador tradueix --motor "Aquest xiquet és molt bo."
 ```
 
-### Resultados actuales (cat→val)
+### Resultados actuales (cat→val, 30/10/2026)
 
-| benchmark | motor solo | sistema final (+ modelo) |
-|---|---|---|
-| 151 (banco curado, `benchmark_corpus.json`) | 146/154 | 146/154 (cero cambios) |
-| homógrafos + 151 (`benchmark_sistema_final_cat_val.json`) | 190/253 | **227/253** |
-| BOE estricto completo (regresiones) | 8.857/9.453 (22/10) | — |
-| BOE amplio, muestra 2.000 (huecos) | 1.200/2.000 (22/10) | 1.206/2.000 |
-| gplsi (1.958) | 1.479 (22/10) | — |
+Exactas del sistema principal (motor + FLOR-760M); entre paréntesis, el
+motor solo donde se ha medido. Todas las métricas (BLEU, chrF, TER,
+WER), en `pipeline/03_seleccio_de_model/resultats_benchmarks_cat_val.md`.
+
+| benchmark (`avlizador avalua --llista`) | exactas |
+|---|---|
+| **manual mezcla** (`manual`, el de evaluación) | **227/458** (214), TER 5,61 (5,91) |
+| manual BOE (`manual_boe`) | 32/246 (32) |
+| manual AVL (`manual_avl`) | 195/212 (182) |
+| 151 (`151`) | 146/154 |
+| homógrafos + 151 (`homografs`) | 226/253 |
+| BOE estricto, muestra 2.000 (`boe_estricte`, regresiones) | 1.880/2.000 |
+| BOE amplio, muestra 2.000 (`boe_ampli`, huecos) | 1.203/2.000 |
+| gplsi (`gplsi`) | 1.544/1.958 |
 
 Recursos: motor ~700 MB de RAM con `ca_core_news_md`, ~250 frases/s en 1
 núcleo; la capa de modelo añade 1,5 GB y ~1,5 s por frase con "cop".
 
 ### Reglas de trabajo vigentes
 
-- Los datos solo salen de `diccionarios/` vía `python -m traductor.sync_data`;
+- Los datos solo salen de `dades/lexic/` vía `python scripts/sync_data.py`;
   nada de listas de palabras a mano. Las fuentes del proveedor solo se
   editan con permiso explícito, caso a caso.
 - En caso de duda entre candidatos, manda `canonica: true`. Las entradas
   `_PENDENT` se usan como las demás.
-- Toda regla o dato nuevo se valida con los doctests y con los benchmarks
-  (151, BOE estricto y amplio, gplsi), nunca solo con uno.
-
-**Dirección inversa (catalán→valenciano, en construcción desde el
-08/10/2026)**: `from traductor import translate_cat_val` — ver
-`traductor/rules/cat_val/README.es.md` y
-`documentacio/hoja_de_ruta_traductor_invers.md` (raíz del repositorio)
-para el estado, el alcance actual y el razonamiento completo. Esta
-dirección original (`translate`, val→cat) se queda exactamente igual,
-sin ningún cambio.
+- Toda regla o dato nuevo se valida con `pytest` y con los benchmarks
+  (`avlizador avalua`), nunca solo con uno.
 
 **22/10/2026 — `data/` solo tiene ya los dos ficheros del proveedor**
 (`lexic_general.json` y `conjugacions_dialectals.json`, copias de
@@ -657,124 +669,70 @@ palabra del texto nunca se detecta.
   negra de palabras reales acabadas en consonante+ix que no son verbos
   (`baix`, `calaix`, `dibuix`, `guix`, `fix`, `prefix`, `sufix`).
 
-## Mantener `traductor/data/` sincronizado con las fuentes
+## Mantener `data/` sincronizado con las fuentes
 
-`traductor/rules/*.py` nunca lee `pipeline/02_regles_dialectals/lexic/` en
-tiempo de ejecución -- solo lee copias propias dentro de `traductor/data/`
-(para que el paquete funcione de forma autónoma). Si editas un fichero
-fuente de `lexic/` directamente, ese cambio no llega al motor
-hasta que sincronizas:
+Las reglas nunca leen `dades/lexic/` en tiempo de ejecución: solo leen
+las copias de `data/` (así el paquete instalado funciona solo). Un
+cambio en `dades/lexic/` no llega al traductor hasta que se sincroniza,
+desde la raíz del repositorio:
 
 ```bash
-python -m traductor.sync_data --check   # solo muestra qué ha cambiado, no escribe nada
-python -m traductor.sync_data           # sincroniza de verdad y muestra el mismo resumen
+python scripts/sync_data.py --check   # solo muestra qué ha cambiado, no escribe nada
+python scripts/sync_data.py           # sincroniza de verdad y muestra el mismo resumen
 ```
 
-El resumen dice exactamente qué entradas se han añadido/quitado por
-fichero (no sobrescribe en silencio). Los filtros de negocio (descartar
-`_PENDENT`, topónimos, la excepción de "después"...) NO viven aquí --
-viven en los loaders de cada regla (`lexic.py`, `numerals.py`...) y se
-aplican solos la próxima vez que se instancie `RuleEngine`, así que
-después de sincronizar solo hace falta volver a correr el benchmark
-(sección siguiente) para confirmar que no hay regresión.
+El resumen dice qué entradas se han añadido o quitado por fichero (no
+sobrescribe en silencio). Los filtros (canónica, categoría, homógrafos)
+no viven ahí: viven en los cargadores de cada regla (`lexic.py`,
+`numerals.py`...) y se aplican solos. Después de sincronizar, `pytest` y
+los benchmarks (abajo).
 
 ## Cómo añadir datos nuevos
 
-**Caso 1 -- una palabra o forma concreta (la mayoría de los casos)**: no
-hace falta tocar ningún `.py`, es lookup de diccionario.
+**Caso 1 — una palabra o forma concreta (la mayoría)**: no hace falta
+tocar ningún `.py`, es consulta de diccionario.
 
-1. Edita el fichero fuente que toque (`lexico_general_limpio.json`,
-   `conjugaciones_limpio.json`, `verbos_no_ambiguos.json`,
-   `numerales_limpio.json`, `acentuacion_limpio.json`,
-   `posesivos_cat_val.json`) directamente en `lexic/`.
-2. Corre `python -m traductor.sync_data` (ver arriba).
-3. Corre el benchmark (sección siguiente) para confirmar que no hay
-   regresión.
-4. Si una palabra concreta resulta ser un error del fichero fuente (como
-   "después", ver `lexic.py`), documenta la exclusión en el loader
-   correspondiente con un comentario claro -- no la "arregles" editando
-   el fichero fuente a mano sin dejar rastro.
+1. Con permiso explícito, se edita la fuente que toque de `dades/lexic/`
+   (`lexico_general.json`, `conjugaciones_general.json` o
+   `verbos_diferentes_conjugados.json`).
+2. `python scripts/sync_data.py`.
+3. `pytest` y `avlizador avalua` para ver que no hay regresiones.
+4. Si un dato está mal, se corrige en la fuente (con permiso): nada de
+   listas de exclusión en Python.
 
-**Caso 2 -- un patrón de sufijo genuinamente PRODUCTIVO** (como
-`accentuacio.py`/`incoatius.py`, ver "DECISIÓN DE ARQUITECTURA"): esto sí
-es una regla nueva, no una entrada de diccionario -- pero solo cuando un
-diccionario no puede cubrirlo por definición (el patrón aplica a palabras
-que NUNCA estarán todas enumeradas). Confirma primero con evidencia real
-(benchmark, no teoría) qué excepciones hacen falta, y crea
-`traductor/rules/nombre_regla.py` con la misma interfaz que el resto
-(`apply(tokens) -> tokens`, saltando `is_translated`/`is_proper_noun`).
-Regístrala en `RuleEngine.__init__` DESPUÉS de las 4 capas de diccionario
-(ver `engine.py`), porque una forma ya conocida con exactitud no debe
-dejarse reprocesar por una regla más débil.
+**Caso 2 — un patrón genuinamente productivo** (como `accentuacio.py` o
+`incoatius.py`): es una regla nueva, solo cuando un diccionario no puede
+cubrirlo por definición. spaCy propone y los JSON validan; nada de listas
+de palabras a mano. Se mide primero con los benchmarks, se crea
+`rules/cat_val/nombre_regla.py` con la misma interfaz que el resto
+(`apply(tokens) -> tokens`, saltando `is_translated`) y se registra en
+`RuleEngineInvers` (`rules/cat_val/engine.py`) DESPUÉS de las capas de
+diccionario.
 
-## Relación con el sistema de reglas antiguo
-
-`pipeline/03_seleccio_de_model/evalua_models.py` ya tenía un sistema de reglas
-(`tradueix_regles`, opción `--model regles`) — sustituciones con regex
-sobre la frase completa. Es distinto y **no se ha tocado ni sustituido**:
-el paquete `traductor/` se añade como una opción nueva,
-`--model traductor`, para poder comparar los dos directamente en el mismo
-benchmark:
+## Evaluar
 
 ```bash
-cd pipeline/03_seleccio_de_model
-python evalua_models.py --model traductor                    # motor nuevo (traductor/)
-python evalua_models.py --model regles                       # sistema antiguo (regex)
-python evalua_models.py --model tots                          # todo a la vez, incluidos ambos
+avlizador avalua --benchmarks manual   # el benchmark de evaluación (manual mezcla, 458)
+avlizador avalua --motor               # todos, y también el motor solo
+avlizador avalua --llista              # los benchmarks disponibles (dades/benchmarks/)
 ```
 
-El adaptador (`tradueix_traductor_nou` en `evalua_models.py`) añade la
-raíz del repositorio a `sys.path` antes de importar `traductor/`, porque
-el script siempre se ejecuta desde dentro de `pipeline/03_seleccio_de_model/` y
-Python no encuentra ahí un paquete que vive en la carpeta de al lado.
+Para comparar con otros sistemas (reglas regex antiguas, LLM) sigue
+`pipeline/03_seleccio_de_model/evalua_models.py` (`--model traductor_ml`
+= sistema principal, `--model traductor` = motor solo, `--direccio
+cat-val --benchmark ...`). Necesita el paquete instalado en el entorno
+(`pip install -e .` desde la raíz).
 
-## Uso directo
+## Pruebas
 
 ```bash
-python -m traductor.cli "Tinc huitanta anys i el meu amic francés parla."
-# -> Tinc vuitanta anys i el meu amic francès parla.
-python -m traductor.cli --direccio cat-val "Tinc vuitanta anys."
-# -> Tinc huitanta anys.
+pip install -e ".[ml,avaluacio,dev]" --extra-index-url https://download.pytorch.org/whl/cpu
+pytest
 ```
 
-```python
-from traductor import translate, translate_cat_val
-translate("Tinc huitanta anys.")          # -> "Tinc vuitanta anys."
-translate_cat_val("Tinc vuitanta anys.")  # -> "Tinc huitanta anys."
-```
-
-## Testing
-
-No hay una carpeta `tests/` — cada regla lleva sus propios doctests
-reales (no solo ejemplos ilustrativos) en el docstring de su clase, y se
-verifican con `doctest.testmod()`, no a ojo. Para correr los de todo el
-paquete de una vez (estructura de hoy: `rules/`, `rules/cat_val/`,
-`rules/val_cat/`, `model_llengua/`):
-
-```bash
-python -c "
-import doctest, importlib, pkgutil
-import traductor.rules, traductor.rules.cat_val, traductor.rules.val_cat
-modulos = ['traductor.rules', 'traductor.rules.pos_tagger', 'traductor.translate', 'traductor.translate_invers',
-           'traductor.model_llengua', 'traductor.model_llengua.punts']
-for paquet in (traductor.rules.cat_val, traductor.rules.val_cat):
-    modulos += [paquet.__name__ + '.' + m.name for m in pkgutil.iter_modules(paquet.__path__)]
-fallades = 0
-for nom in modulos:
-    r = doctest.testmod(importlib.import_module(nom))
-    fallades += r.failed
-    print(nom, r)
-print('FALLADES:', fallades)
-"
-```
-
-Y después, siempre, los benchmarks (cat→val):
-
-```bash
-cd pipeline/03_seleccio_de_model
-python evalua_models.py --model traductor --direccio cat-val                       # 151
-python evalua_models.py --model traductor --direccio cat-val --benchmark ../../dades/boe/benchmarks/benchmark_boe_dialectal_estricte_complet.json
-python evalua_models.py --model traductor --direccio cat-val --benchmark ../../dades/boe/benchmarks/benchmark_boe_dialectal_ampli.json
-python evalua_models.py --model traductor --direccio cat-val --benchmark ../../dades/gplsi_ca_va_alignment_test/benchmark_gplsi.json
-python evalua_models.py --model traductor_ml --direccio cat-val --benchmark benchmark_sistema_final_cat_val.json   # sistema final
-```
+`tests/test_doctests.py` pasa los doctests de todos los módulos de
+`avlizador` (701 el 30/10/2026; cada regla lleva los suyos en el
+docstring) y `tests/test_api_cli.py` prueba la API y las órdenes. Los
+doctests llaman a spaCy de verdad (`ca_core_news_md`, que se instala con
+el paquete). **Los doctests no bastan**: toda regla o dato nuevo se mide
+también con los benchmarks.
