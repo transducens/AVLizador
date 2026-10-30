@@ -3,6 +3,10 @@ baseline_cat_val.py -- Baseline cat->val (31/10/2026): el nostre sistema
 (motor + FLOR-760M) davant de LLM generalistes TAL QUAL i d'Apertium, en el
 benchmark manual mescla (458 frases; BOE 246 + AVL 212).
 
+Apertium no té cap parell català -> valencià: va via castellà (cat-spa i
+spa-cat_valencia, decisió de l'usuari del 31/10/2026), amb dos traduccions
+senceres, així que no és una comparació directa amb un conversor dialectal.
+
 Decisió de l'usuari (30-31/10/2026): els LLM s'usen sense ajustar-los res,
 amb una instrucció mínima i igual per a tots (INSTRUCCIO, sense exemples,
 sense regles, sense glossari; temperatura 0). Cada sistema traduïx la
@@ -24,7 +28,7 @@ o una mescla, el GDV ho mostra encara que el BLEU siga alt.
     python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py tradueix --sistema avlizador
     python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py tradueix --sistema motor
     python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py tradueix --sistema ollama:qwen2.5:7b --limit 10
-    python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py tradueix --sistema apertium
+    python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py tradueix --sistema apertium --apertium-mode apy
     python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py resum
 
 En Abaco, els LLM es llancen amb `slurm/baseline_llm_cat_val.sh` (1 GPU per
@@ -67,8 +71,9 @@ INSTRUCCIO = ("Traduïx el text següent del català al valencià. "
               "Respon només amb la traducció.\n\n{text}")
 
 OLLAMA_URL = "http://127.0.0.1:11434"
-APERTIUM_PARELL = "cat-cat_valencia"
+APERTIUM_PARELLS = "cat-spa,spa-cat_valencia"  # no hi ha cat-cat_valencia: via castellà
 APERTIUM_APY = "https://www.apertium.org/apy/translate"
+MAX_FALLADES_SEGUIDES = 5
 
 _ETIQUETA = re.compile(r"^\s*(\*\*)?\s*(traducci[oó]|traduccio|resposta)\s*(\*\*)?\s*:\s*", re.IGNORECASE)
 _EMBOLCALL = [('"', '"'), ("«", "»"), ("“", "”"), ("'", "'"), ("**", "**"), ("*", "*")]
@@ -124,26 +129,49 @@ def traductor_ollama(model: str, url: str, timeout: int):
     return tradueix
 
 
-def traductor_apertium(mode: str, parell: str):
-    """Apertium: `local` (ordre `apertium`, sense marcar les desconegudes)
-    o `apy` (l'API pública d'apertium.org: envia les frases a un servei
-    extern)."""
+def traductor_apertium(mode: str, parells: list[str]):
+    """Apertium encadenant `parells` (per defecte cat-spa i spa-cat_valencia:
+    Apertium no té cap parell català -> valencià, 31/10/2026): `local`
+    (ordre `apertium`, sense marcar les desconegudes) o `apy` (l'API
+    pública d'apertium.org: envia les frases a un servei extern)."""
     if mode == "local":
         if not shutil.which("apertium"):
             raise SystemExit("ERROR: no es troba l'ordre `apertium` (o usa --apertium-mode apy).")
 
-        def tradueix(text: str) -> tuple[str, str]:
+        def un_pas(text: str, parell: str) -> str:
             r = subprocess.run(["apertium", "-u", parell], input=text, capture_output=True,
                                text=True, encoding="utf-8", check=True)
-            return r.stdout.strip(), r.stdout
-        return tradueix
+            return r.stdout.strip()
+    else:
+        def un_pas(text: str, parell: str) -> str:
+            for intent in range(3):
+                try:
+                    r = requests.get(APERTIUM_APY, timeout=60, params={
+                        "langpair": parell.replace("-", "|", 1), "q": text, "markUnknown": "no"})
+                    r.raise_for_status()
+                    time.sleep(0.2)  # sense saturar el servei públic
+                    return r.json()["responseData"]["translatedText"].strip()
+                except requests.exceptions.RequestException:
+                    if intent == 2:
+                        raise
+                    time.sleep(5)
+
+    fallades_seguides = [0]
 
     def tradueix(text: str) -> tuple[str, str]:
-        r = requests.get(APERTIUM_APY, params={"langpair": parell.replace("-", "|", 1), "q": text,
-                                               "markUnknown": "no"}, timeout=60)
-        r.raise_for_status()
-        crua = r.json()["responseData"]["translatedText"]
-        return crua.strip(), crua
+        passos = []
+        try:
+            for parell in parells:
+                text = un_pas(text, parell)
+                passos.append(text)
+        except Exception:
+            fallades_seguides[0] += 1
+            if fallades_seguides[0] >= MAX_FALLADES_SEGUIDES:  # el servei no va: no seguim
+                raise SystemExit(f"ERROR: {MAX_FALLADES_SEGUIDES} frases seguides sense resposta "
+                                 "d'Apertium; s'atura sense guardar resultats.")
+            raise
+        fallades_seguides[0] = 0
+        return text, " ||| ".join(passos)  # crua = cada pas (el castellà intermedi inclòs)
     return tradueix
 
 
@@ -156,9 +184,11 @@ def sistema(nom: str, args) -> tuple[str, str, callable, dict]:
         from avlizador.traductor_cat_val import translate_cat_val_motor
         return "motor", "AVLizador: motor solo", lambda t: (translate_cat_val_motor(t),) * 2, {}
     if nom == "apertium":
-        return ("apertium", f"Apertium {args.apertium_parell}",
-                traductor_apertium(args.apertium_mode, args.apertium_parell),
-                {"mode": args.apertium_mode, "parell": args.apertium_parell})
+        parells = args.apertium_parells.split(",")
+        cadena = " → ".join([parells[0].split("-")[0]] + [p.split("-", 1)[1] for p in parells])
+        return ("apertium", f"Apertium vía castellano ({cadena})",
+                traductor_apertium(args.apertium_mode, parells),
+                {"mode": args.apertium_mode, "parells": parells})
     if nom.startswith("ollama:"):
         model = nom.split(":", 1)[1]
         clau = "ollama_" + re.sub(r"[^A-Za-z0-9.]+", "-", model)
@@ -278,7 +308,8 @@ def main(argv: list[str] | None = None) -> int:
     t.add_argument("--ollama-url", default=OLLAMA_URL)
     t.add_argument("--ollama-timeout", type=int, default=300)
     t.add_argument("--apertium-mode", choices=["local", "apy"], default="local")
-    t.add_argument("--apertium-parell", default=APERTIUM_PARELL)
+    t.add_argument("--apertium-parells", default=APERTIUM_PARELLS,
+                   help="Parells d'Apertium encadenats, separats per comes.")
     sub.add_parser("resum", help="Combina els resultats en resum_baseline.md.")
     args = parser.parse_args(argv)
     return ordre_tradueix(args) if args.ordre == "tradueix" else ordre_resum(args)

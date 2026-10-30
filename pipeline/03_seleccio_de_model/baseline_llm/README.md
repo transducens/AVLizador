@@ -25,7 +25,22 @@ tablas del BOE y de la AVL salen de las mismas traducciones.
 |---|---|
 | AVLizador: motor + FLOR-760M (sistema principal) y motor solo | local, CPU |
 | llama3.1:8b, qwen2.5:7b, qwen2.5:14b, qwen3:8b, qwen3:14b, gemma3:12b, gemma4:12b, salamandra-7b-instruct (`hdnh2006/salamandra-7b-instruct`), mistral-nemo:12b | Abaco, Ollama, 1 GPU por modelo, como mucho 2 a la vez |
-| Apertium `cat-cat_valencia` | `apertium` local o la API pública (`--apertium-mode apy`) |
+| Apertium **vía castellano** (`cat-spa` + `spa-cat_valencia`) | API pública (`--apertium-mode apy`) o `apertium` local con los dos pares instalados |
+
+Apertium no tiene ningún par catalán → valenciano (comprobado el 31/10 en
+la API pública: el valenciano solo es destino desde el castellano y el
+inglés; en Abaco está `apertium` pero ningún par del catalán). Se usa
+la vía castellano (decisión del usuario): son dos traducciones completas,
+no un cambio dialectal, así que **no es una comparación directa** y en la
+tabla figura como "vía castellano". La respuesta cruda guarda también el
+castellano intermedio.
+
+**Apertium, fuera del baseline de momento (decisión del usuario,
+31/10/2026)**: la API pública devolvía error 500 en todas las
+traducciones (también en pares sin relación, como inglés → castellano),
+y en Abaco no hay ningún par del catalán instalado. El código sigue en el
+script (`--sistema apertium`, se para tras 5 frases seguidas sin
+respuesta) por si se retoma.
 
 ## Cómo se ejecuta
 
@@ -38,8 +53,8 @@ python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py tradueix -
 LIMIT=10 sbatch --array=0 baseline_llm_cat_val.sh   # prueba con 10 frases
 sbatch baseline_llm_cat_val.sh                      # los 9 modelos, 2 a la vez
 
-# Apertium
-python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py tradueix --sistema apertium
+# Apertium vía castellano (apy envía las frases a apertium.org)
+python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py tradueix --sistema apertium --apertium-mode apy
 
 # tabla final
 python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py resum
