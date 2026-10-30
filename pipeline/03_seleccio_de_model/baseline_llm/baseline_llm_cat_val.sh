@@ -1,5 +1,5 @@
 #!/bin/bash
-# baseline_llm_cat_val.sh -- Job array de SLURM (31/10/2026): baseline cat->val
+# baseline_llm_cat_val.sh -- Job array de SLURM (30/10/2026): baseline cat->val
 # de LLM generalistes TAL QUAL (instrucció mínima, vore baseline_cat_val.py)
 # en el benchmark manual mescla (458). Cada tasca de l'array avalua UN model
 # amb el seu propi Ollama en UNA GPU; com a molt 2 tasques alhora (%2) per a

@@ -1,13 +1,13 @@
 """
-baseline_cat_val.py -- Baseline cat->val (31/10/2026): el nostre sistema
+baseline_cat_val.py -- Baseline cat->val (30/10/2026): el nostre sistema
 (motor + FLOR-760M) davant de LLM generalistes TAL QUAL i d'Apertium, en el
 benchmark manual mescla (458 frases; BOE 246 + AVL 212).
 
 Apertium no té cap parell català -> valencià: va via castellà (cat-spa i
-spa-cat_valencia, decisió de l'usuari del 31/10/2026), amb dos traduccions
+spa-cat_valencia, decisió de l'usuari del 30/10/2026), amb dos traduccions
 senceres, així que no és una comparació directa amb un conversor dialectal.
 
-Decisió de l'usuari (30-31/10/2026): els LLM s'usen sense ajustar-los res,
+Decisió de l'usuari (30/10/2026): els LLM s'usen sense ajustar-los res,
 amb una instrucció mínima i igual per a tots (INSTRUCCIO, sense exemples,
 sense regles, sense glossari; temperatura 0). Cada sistema traduïx la
 mescla UNA vegada; les taules del BOE i de l'AVL ixen de les mateixes
@@ -131,7 +131,7 @@ def traductor_ollama(model: str, url: str, timeout: int):
 
 def traductor_apertium(mode: str, parells: list[str]):
     """Apertium encadenant `parells` (per defecte cat-spa i spa-cat_valencia:
-    Apertium no té cap parell català -> valencià, 31/10/2026): `local`
+    Apertium no té cap parell català -> valencià, 30/10/2026): `local`
     (ordre `apertium`, sense marcar les desconegudes) o `apy` (l'API
     pública d'apertium.org: envia les frases a un servei extern)."""
     if mode == "local":

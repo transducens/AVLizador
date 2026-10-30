@@ -230,7 +230,7 @@ AVLizador/
 
 ## A. Baseline del sistema final contra LLM (Abaco)
 
-**Estado (31/10/2026, rama `baseline-llm`)**: hecho en
+**Estado (30/10/2026, rama `baseline-llm`)**: hecho en
 `pipeline/03_seleccio_de_model/baseline_llm/` (README dentro). Decisiones
 del usuario: 9 modelos (llama3.1:8b, qwen2.5:7b, qwen2.5:14b, qwen3:8b,
 qwen3:14b, gemma3:12b, gemma4:12b, salamandra-7b-instruct,
@@ -240,8 +240,11 @@ ejemplos, temperatura 0; manual mezcla y sus partes BOE y AVL; GDV de la
 salida. Job array en Abaco con `%2`. **Apertium, fuera de momento**: no
 tiene ningún par catalán → valenciano (lo que dice la tabla de abajo era
 una suposición sin comprobar); se probó la vía castellano y la API
-pública daba error 500 en todo, y en Abaco no hay pares del catalán. Lo
-de abajo es el plan inicial.
+pública daba error 500 en todo, y en Abaco no hay pares del catalán.
+**Siguiente paso**: cuando terminen los 9 modelos (job 2578), subir los
+JSON de `resultats/` desde Abaco, generar la tabla (`baseline_cat_val.py
+resum`) y reportarla (resultados, metodología y análisis de los fallos
+típicos de los LLM). Lo de abajo es el plan inicial.
 
 ### Qué hay ya y qué falta
 

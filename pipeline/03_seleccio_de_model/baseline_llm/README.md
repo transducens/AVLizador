@@ -6,7 +6,7 @@ benchmark de evaluación, el **manual mezcla** (458 frases), y en sus dos
 partes, BOE (246) y AVL (212). Cada sistema traduce la mezcla una vez; las
 tablas del BOE y de la AVL salen de las mismas traducciones.
 
-## Condiciones (decisión del usuario, 30-31/10/2026)
+## Condiciones (decisión del usuario, 30/10/2026)
 
 - **Sin ajustar nada a los LLM**: la misma instrucción mínima para todos,
   sin ejemplos, reglas ni glosario, temperatura 0:
@@ -27,7 +27,7 @@ tablas del BOE y de la AVL salen de las mismas traducciones.
 | llama3.1:8b, qwen2.5:7b, qwen2.5:14b, qwen3:8b, qwen3:14b, gemma3:12b, gemma4:12b, salamandra-7b-instruct (`hdnh2006/salamandra-7b-instruct`), mistral-nemo:12b | Abaco, Ollama, 1 GPU por modelo, como mucho 2 a la vez |
 | Apertium **vía castellano** (`cat-spa` + `spa-cat_valencia`) | API pública (`--apertium-mode apy`) o `apertium` local con los dos pares instalados |
 
-Apertium no tiene ningún par catalán → valenciano (comprobado el 31/10 en
+Apertium no tiene ningún par catalán → valenciano (comprobado el 30/10 en
 la API pública: el valenciano solo es destino desde el castellano y el
 inglés; en Abaco está `apertium` pero ningún par del catalán). Se usa
 la vía castellano (decisión del usuario): son dos traducciones completas,
@@ -36,7 +36,7 @@ tabla figura como "vía castellano". La respuesta cruda guarda también el
 castellano intermedio.
 
 **Apertium, fuera del baseline de momento (decisión del usuario,
-31/10/2026)**: la API pública devolvía error 500 en todas las
+30/10/2026)**: la API pública devolvía error 500 en todas las
 traducciones (también en pares sin relación, como inglés → castellano),
 y en Abaco no hay ningún par del catalán instalado. El código sigue en el
 script (`--sistema apertium`, se para tras 5 frases seguidas sin
