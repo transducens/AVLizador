@@ -124,7 +124,12 @@ tests/                    test_doctests.py (todos los módulos) + test_api_cli.p
       el paquete INSTALADO (no la carpeta `src/`): 48/48; `avlizador
       tradueix`/`gdv` funcionan fuera del repo y `avalua --llista` encuentra
       `dades/benchmarks/` desde la raíz.
-- [ ] Abaco (Linux, solo CPU): instalar desde el clon y probar.
+- [x] **Abaco** (Linux, solo CPU, 30/10): venv nuevo
+      (`~/venvs/avlizador`), `pip install -e ".[ml,avaluacio,dev]"` con
+      torch CPU, FLOR-760M descargado en el nodo de login; `pytest` en un
+      nodo de cálculo con `srun` (sin GPU) en verde; `avlizador avalua
+      --benchmarks manual --motor`: **227/458 (TER 5,61) y 214/458 (TER
+      5,91), idéntico a local** en todas las métricas, 0 errores.
 - [ ] Revisión del usuario y fusión en `main` (el usuario hace los
       commits).
 
