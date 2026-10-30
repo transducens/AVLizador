@@ -24,7 +24,7 @@ tablas del BOE y de la AVL salen de las mismas traducciones.
 | Sistema | Dónde |
 |---|---|
 | AVLizador: motor + FLOR-760M (sistema principal) y motor solo | local, CPU |
-| llama3.1:8b, qwen2.5:7b, qwen2.5:14b, qwen3:8b, qwen3:14b, gemma3:12b, gemma4:12b, salamandra-7b-instruct (`hdnh2006/salamandra-7b-instruct`) | Abaco, Ollama, 1 GPU por modelo, como mucho 2 a la vez |
+| llama3.1:8b, qwen2.5:7b, qwen2.5:14b, qwen3:8b, qwen3:14b, gemma3:12b, gemma4:12b, salamandra-7b-instruct (`hdnh2006/salamandra-7b-instruct`), mistral-nemo:12b | Abaco, Ollama, 1 GPU por modelo, como mucho 2 a la vez |
 | Apertium `cat-cat_valencia` | `apertium` local o la API pública (`--apertium-mode apy`) |
 
 ## Cómo se ejecuta
@@ -36,7 +36,7 @@ python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py tradueix -
 
 # LLM (Abaco, desde esta carpeta del clon, con el venv ~/venvs/avlizador)
 LIMIT=10 sbatch --array=0 baseline_llm_cat_val.sh   # prueba con 10 frases
-sbatch baseline_llm_cat_val.sh                      # los 8 modelos, 2 a la vez
+sbatch baseline_llm_cat_val.sh                      # los 9 modelos, 2 a la vez
 
 # Apertium
 python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py tradueix --sistema apertium

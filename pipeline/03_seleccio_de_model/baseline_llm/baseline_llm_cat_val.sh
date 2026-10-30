@@ -17,7 +17,7 @@
 #SBATCH --job-name=baseline-llm
 #SBATCH --output=logs/%A_%a_baseline_llm.out
 #SBATCH --error=logs/%A_%a_baseline_llm.err
-#SBATCH --array=0-7%2
+#SBATCH --array=0-8%2
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=16G
@@ -35,6 +35,7 @@ MODELS=(
     gemma3:12b
     gemma4:12b
     hdnh2006/salamandra-7b-instruct
+    mistral-nemo:12b
 )
 MODEL="${MODELS[${SLURM_ARRAY_TASK_ID:-0}]}"
 
