@@ -73,6 +73,9 @@ python3 -c "import transformers, sacrebleu, requests" 2>/dev/null || pip install
 python3 -c "import spacy" 2>/dev/null || pip install -q spacy
 # El mateix model d'spaCy que en local (pos_tagger.MODELS_SPACY prova md i després sm)
 python3 -c "import ca_core_news_md" 2>/dev/null || python3 -m spacy download ca_core_news_md -q
+# Des del 30/10/2026 el traductor és el paquet `avlizador` (src/): s'instal·la
+# en mode editable des del clon, sense tocar les dependències de dalt.
+python3 -c "import avlizador" 2>/dev/null || pip install -q --no-deps -e "$ARREL_REPO"
 
 LOGS="$ARREL_REPO/dades/abaco/baseline_models_llengua"
 mkdir -p "$LOGS"
@@ -91,7 +94,7 @@ echo "Línies ERROR: $N_ERRORS"
 echo ""
 echo "=== 2. Graella de criteris sobre els homògrafs (98 frases) ==="
 T0=$(date +%s)
-(cd "$ARREL_REPO" && python3 -u -m traductor.model_llengua.avalua --models "$MODEL" \
+(cd "$ARREL_REPO" && python3 -u pipeline/03_seleccio_de_model/model_llengua/avalua.py --models "$MODEL" \
     --lams 0 0.5 1 --marges 0 5 --puntuacions frase --spacy-irresolubles si --model-irresolubles si) \
     2>&1 | tee "$LOGS/graella_$NOM.log"
 echo "Temps graella: $(( $(date +%s) - T0 )) s"

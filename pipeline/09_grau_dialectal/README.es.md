@@ -2,6 +2,13 @@
 
 # `pipeline/09_grau_dialectal/` — Grado Dialectal (GD)
 
+> **30/10/2026: `gd.py`, `gdv.py` y `gdc.py` se han movido al paquete**
+> [`src/avlizador/grau_dialectal/`](../../src/avlizador/grau_dialectal/)
+> (`pip install -e .` en la raíz). Se usan con `avlizador gd|gdv|gdc ...`
+> o `from avlizador.grau_dialectal import calcula_gd`; donde abajo pone
+> `python gd.py ...`, léase `avlizador gd ...`. Aquí se quedan
+> `mesura_corpus.py`, el visor y las pruebas.
+
 Novena etapa del proyecto AVLizador (ver `README.es.md` de la raíz):
 métrica para saber, de cualquier texto, qué porcentaje de sus palabras
 dialectalmente marcadas son formas **occidentales** (valencianas) en vez

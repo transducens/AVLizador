@@ -30,13 +30,13 @@ from __future__ import annotations
 import json
 from collections import defaultdict
 
-from ..rules import Token, preserva_majuscula, separa_prefix_elidit
-from ..rules.val_cat.conjugacions_dict import (
+from avlizador.traductor_cat_val.rules import Token, preserva_majuscula, separa_prefix_elidit
+from avlizador.traductor_cat_val.rules.val_cat.conjugacions_dict import (
     DEFAULT_CONJUGACIONS_PATH,
     SEMPRE_VERB,
     es_risc_mode_3a_plural,
 )
-from ..rules.val_cat.engine import RuleEngine
+from avlizador.traductor_cat_val.rules.val_cat.engine import RuleEngine
 from .punts import PuntAmbigu, resol
 
 _AMBIGUITATS: dict[str, dict[str, str]] | None = None

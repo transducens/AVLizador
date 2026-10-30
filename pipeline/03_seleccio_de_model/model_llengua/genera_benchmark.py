@@ -7,7 +7,7 @@ referències s'han de revisar a mà després (p.ex. "un altre vegada" ->
 benchmark existent sense `--sobreescriu`.
 
 Ús (des de l'arrel del repo):
-    python -m traductor.model_llengua.genera_benchmark [--sobreescriu]
+    python pipeline/03_seleccio_de_model/model_llengua/genera_benchmark.py [--sobreescriu]
 """
 
 from __future__ import annotations
@@ -16,9 +16,9 @@ import argparse
 import json
 from pathlib import Path
 
-from ..rules import detokenize
-from ..rules.cat_val.engine import RuleEngineInvers
-from .punts import TIPUS, aplica_candidat, base_neutra, carrega_punts, detecta
+from avlizador.traductor_cat_val.rules import detokenize
+from avlizador.traductor_cat_val.rules.cat_val.engine import RuleEngineInvers
+from avlizador.traductor_cat_val.model_llengua.punts import TIPUS, aplica_candidat, base_neutra, carrega_punts, detecta
 
 AQUI = Path(__file__).resolve().parent
 FRASES = AQUI / "frases_homografs.json"

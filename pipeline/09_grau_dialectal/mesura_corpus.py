@@ -63,7 +63,7 @@ _DIR = Path(__file__).resolve().parent
 if str(_DIR) not in sys.path:
     sys.path.insert(0, str(_DIR))
 
-from gd import _llig_jsonl, calcula_gd, carrega_formes_dialectals  # noqa: E402
+from avlizador.grau_dialectal.gd import _llig_jsonl, calcula_gd, carrega_formes_dialectals  # noqa: E402
 
 ARREL = _DIR.parents[1]
 EIXIDA_PER_DEFECTE = ARREL / "dades" / "grau_dialectal"

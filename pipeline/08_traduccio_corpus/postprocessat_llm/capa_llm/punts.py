@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from ..rules import Token, detokenize
+from avlizador.traductor_cat_val.rules import Token, detokenize
 
 
 @dataclass

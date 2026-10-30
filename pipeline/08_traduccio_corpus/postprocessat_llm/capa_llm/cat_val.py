@@ -31,8 +31,8 @@ from __future__ import annotations
 import json
 import re
 
-from ..rules import LEXIC_GENERAL_PATH, Token, carrega_homografs, detokenize, separa_prefix_elidit
-from ..rules.cat_val.engine import RuleEngineInvers
+from avlizador.traductor_cat_val.rules import LEXIC_GENERAL_PATH, Token, carrega_homografs, detokenize, separa_prefix_elidit
+from avlizador.traductor_cat_val.rules.cat_val.engine import RuleEngineInvers
 from .punts import PuntAmbigu, resol
 
 _LECTURA_RE = re.compile(r"^\s*(.+?)\s*\[([^\]]*)\]\s*$")

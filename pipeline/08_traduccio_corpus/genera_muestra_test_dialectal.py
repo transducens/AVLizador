@@ -34,16 +34,16 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT_DIR))
 
-from traductor.rules import Token, detokenize, marca_noms_propis, tokenize  # noqa: E402
-from traductor.rules.val_cat.accentuacio import AccentuacioRule  # noqa: E402
-from traductor.rules.val_cat.concordanca_dos_dues import ConcordancaDosDuesRule  # noqa: E402
-from traductor.rules.val_cat.conjugacions_dict import ConjugacionsDictRule  # noqa: E402
-from traductor.rules.val_cat.demostratius import DemostratiusRule  # noqa: E402
-from traductor.rules.val_cat.incoatius import IncoatiusRule  # noqa: E402
-from traductor.rules.val_cat.lexic import LexicRule  # noqa: E402
-from traductor.rules.val_cat.numerals import NumeralsRule  # noqa: E402
-from traductor.rules.val_cat.possessius import PossessiusRule  # noqa: E402
-from traductor.rules.val_cat.relatiu_on import RelatiuOnRule  # noqa: E402
+from avlizador.traductor_cat_val.rules import Token, detokenize, marca_noms_propis, tokenize  # noqa: E402
+from avlizador.traductor_cat_val.rules.val_cat.accentuacio import AccentuacioRule  # noqa: E402
+from avlizador.traductor_cat_val.rules.val_cat.concordanca_dos_dues import ConcordancaDosDuesRule  # noqa: E402
+from avlizador.traductor_cat_val.rules.val_cat.conjugacions_dict import ConjugacionsDictRule  # noqa: E402
+from avlizador.traductor_cat_val.rules.val_cat.demostratius import DemostratiusRule  # noqa: E402
+from avlizador.traductor_cat_val.rules.val_cat.incoatius import IncoatiusRule  # noqa: E402
+from avlizador.traductor_cat_val.rules.val_cat.lexic import LexicRule  # noqa: E402
+from avlizador.traductor_cat_val.rules.val_cat.numerals import NumeralsRule  # noqa: E402
+from avlizador.traductor_cat_val.rules.val_cat.possessius import PossessiusRule  # noqa: E402
+from avlizador.traductor_cat_val.rules.val_cat.relatiu_on import RelatiuOnRule  # noqa: E402
 
 ENTRADA_PATH = ROOT_DIR / "dades" / "boe_net" / "corpus_entrenamiento_net.jsonl"
 SALIDA_PATH = ROOT_DIR / "dades" / "boe_net" / "muestra_test_dialectal.json"

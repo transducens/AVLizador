@@ -23,17 +23,17 @@ from pathlib import Path
 ARREL = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ARREL))
 
-from traductor.rules import Token, detokenize, marca_noms_propis, tokenize  # noqa: E402
-from traductor.rules import pos_tagger  # noqa: E402
-from traductor.rules.val_cat.accentuacio import AccentuacioRule  # noqa: E402
-from traductor.rules.val_cat.concordanca_dos_dues import ConcordancaDosDuesRule  # noqa: E402
-from traductor.rules.val_cat.conjugacions_dict import DEFAULT_CONJUGACIONS_PATH, ConjugacionsDictRule  # noqa: E402
-from traductor.rules.val_cat.demostratius import DemostratiusRule  # noqa: E402
-from traductor.rules.val_cat.incoatius import IncoatiusRule  # noqa: E402
-from traductor.rules.val_cat.lexic import LexicRule  # noqa: E402
-from traductor.rules.val_cat.numerals import NumeralsRule  # noqa: E402
-from traductor.rules.val_cat.possessius import PossessiusRule  # noqa: E402
-from traductor.rules.val_cat.relatiu_on import RelatiuOnRule  # noqa: E402
+from avlizador.traductor_cat_val.rules import Token, detokenize, marca_noms_propis, tokenize  # noqa: E402
+from avlizador.traductor_cat_val.rules import pos_tagger  # noqa: E402
+from avlizador.traductor_cat_val.rules.val_cat.accentuacio import AccentuacioRule  # noqa: E402
+from avlizador.traductor_cat_val.rules.val_cat.concordanca_dos_dues import ConcordancaDosDuesRule  # noqa: E402
+from avlizador.traductor_cat_val.rules.val_cat.conjugacions_dict import DEFAULT_CONJUGACIONS_PATH, ConjugacionsDictRule  # noqa: E402
+from avlizador.traductor_cat_val.rules.val_cat.demostratius import DemostratiusRule  # noqa: E402
+from avlizador.traductor_cat_val.rules.val_cat.incoatius import IncoatiusRule  # noqa: E402
+from avlizador.traductor_cat_val.rules.val_cat.lexic import LexicRule  # noqa: E402
+from avlizador.traductor_cat_val.rules.val_cat.numerals import NumeralsRule  # noqa: E402
+from avlizador.traductor_cat_val.rules.val_cat.possessius import PossessiusRule  # noqa: E402
+from avlizador.traductor_cat_val.rules.val_cat.relatiu_on import RelatiuOnRule  # noqa: E402
 
 REGLES = [
     LexicRule(), ConjugacionsDictRule(), PossessiusRule(), NumeralsRule(),

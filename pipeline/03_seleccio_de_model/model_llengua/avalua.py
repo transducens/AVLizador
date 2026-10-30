@@ -14,10 +14,10 @@ sistema final hi deixa spaCy); el millor criteri es tria per colisio +
 irresoluble.
 
 Ús (des de l'arrel del repo; la primera vegada baixa el model):
-    python -m traductor.model_llengua.avalua --per-defecte      # només el sistema final
-    python -m traductor.model_llengua.avalua                    # graella per defecte
-    python -m traductor.model_llengua.avalua --models projecte-aina/FLOR-760M BSC-LT/salamandra-2b
-    python -m traductor.model_llengua.avalua --lams 0 0.5 1 --normes suma mitjana --marges 0 2 5 \\
+    python pipeline/03_seleccio_de_model/model_llengua/avalua.py --per-defecte      # només el sistema final
+    python pipeline/03_seleccio_de_model/model_llengua/avalua.py                    # graella per defecte
+    python pipeline/03_seleccio_de_model/model_llengua/avalua.py --models projecte-aina/FLOR-760M BSC-LT/salamandra-2b
+    python pipeline/03_seleccio_de_model/model_llengua/avalua.py --lams 0 0.5 1 --normes suma mitjana --marges 0 2 5 \\
         --concordances motor variants --puntuacions frase dreta --spacy-irresolubles si no
 """
 
@@ -31,12 +31,16 @@ import time
 from datetime import date
 from pathlib import Path
 
-from . import CONCORDANCA_PER_DEFECTE, Criteri, aplica_tries, puntua_punts
-from .genera_benchmark import BENCHMARK
-from .punts import TIPUS
-from .puntuador import MODEL_PER_DEFECTE, ModelLlengua
+import sys
 
-RESULTATS = Path(__file__).resolve().parents[2] / "pipeline" / "03_seleccio_de_model" / "resultats"
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from avlizador.traductor_cat_val.model_llengua import CONCORDANCA_PER_DEFECTE, Criteri, aplica_tries, puntua_punts
+from genera_benchmark import BENCHMARK  # noqa: E402
+from avlizador.traductor_cat_val.model_llengua.punts import TIPUS  # noqa: E402
+from avlizador.traductor_cat_val.model_llengua.puntuador import MODEL_PER_DEFECTE, ModelLlengua
+
+RESULTATS = Path(__file__).resolve().parents[1] / "resultats"
 TIPUS_SISTEMA = ("colisio", "irresoluble")
 
 

@@ -1,17 +1,18 @@
 """
-llm/prova_cat_val.py -- Prova en local de la capa de LLM de cat->val
+capa_llm/prova_cat_val.py (abans traductor/llm/; des de
+pipeline/08_traduccio_corpus/postprocessat_llm/) -- Prova en local de la capa de LLM de cat->val
 (`cat_val.py`). Necessita Ollama en marxa amb el model baixat, llevat de
 `--sense-llm` (només mostra què faria el motor i quins punts detecta).
 
-    python -m traductor.llm.prova_cat_val "Es va posar les calces del pantaló."
-    python -m traductor.llm.prova_cat_val --sense-llm "Dorm en una gandula."
-    python -m traductor.llm.prova_cat_val --model qwen3:4b --verbose "..."
-    python -m traductor.llm.prova_cat_val --prompt v3 --verbose "..."
+    python -m capa_llm.prova_cat_val "Es va posar les calces del pantaló."
+    python -m capa_llm.prova_cat_val --sense-llm "Dorm en una gandula."
+    python -m capa_llm.prova_cat_val --model qwen3:4b --verbose "..."
+    python -m capa_llm.prova_cat_val --prompt v3 --verbose "..."
 
 Avaluació amb les frases de `frases_prova_cat_val.json` (encerts per model
 i prompt):
 
-    python -m traductor.llm.prova_cat_val --avalua --model qwen3:8b --prompt v3
+    python -m capa_llm.prova_cat_val --avalua --model qwen3:8b --prompt v3
 """
 
 from __future__ import annotations
