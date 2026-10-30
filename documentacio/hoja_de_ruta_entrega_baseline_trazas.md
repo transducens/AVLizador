@@ -54,7 +54,93 @@ documentación. Como manda CLAUDE.md, se revisa la lista con el usuario y
 
 ## B. Paquete de entrega y repositorio profesional
 
-### B1. Estructura propuesta (para validar antes de mover nada)
+### B1-bis. Propuesta concreta (30/10/2026, tarde; SUSTITUYE el borrador de B1 de abajo)
+
+Se trabaja en una **rama temporal `empaquetat`** que sale de `main`
+(`4684d03`); se fusiona cuando todo pase las pruebas de la lista final.
+
+```
+AVLizador/
+├── pyproject.toml                 # distribución "avlizador" 1.0.0, Python >= 3.10
+├── README.md · README.es.md · LICENSE (CC BY 4.0, por confirmar) · CHANGELOG.md
+├── src/avlizador/                 # lo que se instala (pip install .)
+│   ├── __init__.py                # API: translate_cat_val, translate_cat_val_motor,
+│   │                              #      translate (val→cat), calcula_gd/gdv/gdc, __version__
+│   ├── __main__.py / cli.py       # orden única: avlizador tradueix | gd | avalua
+│   ├── traductor/                 # = traductor/ de ahora: rules/, model_llengua/
+│   │   │                          #   (solo puntuador, punts, __init__), translate*.py
+│   │   └── data/                  # lexic_general.json + conjugacions_dialectals.json (12 MB)
+│   ├── grau_dialectal/            # gd.py, gdv.py, gdc.py (desde pipeline/09), imports normales
+│   └── avaluacio/                 # métricas (BLEU, chrF, chrF++, TER, WER) +
+│                                  #   avalua_sistema_final sobre dades/benchmarks/
+├── dades/
+│   ├── lexic/                     # fuentes del proveedor (ver decisión 2)
+│   ├── benchmarks/                # EN GIT, con README (origen, tamaño, licencia)
+│   │   ├── manual/                # mezcla 458 (evaluación), BOE 246, AVL 212
+│   │   ├── curat_151/             # benchmark_corpus.json
+│   │   ├── homografs/             # combinado 253 + homógrafos 98
+│   │   ├── boe_dialectal/         # estricto y amplio: muestras y completos (22 MB el mayor)
+│   │   └── gplsi/                 # 1.958 (CC BY 4.0, atribución del dataset)
+│   └── avl/, boe/, ...            # datos brutos de ahora: siguen fuera de git, sin moverlos
+├── scripts/sync_data.py           # herramienta de desarrollo: dades/lexic → src/.../data
+├── tests/                         # pytest: los doctests + pruebas de las órdenes y de la API
+├── documentacio/
+└── pipeline/                      # registro del trabajo (01-09); sus scripts pasan a importar
+                                   #   avlizador.traductor en vez de traductor
+```
+
+Puntos de la propuesta:
+
+- **Import `avlizador.traductor` y `avlizador.grau_dialectal`** (no
+  `traductor` suelto): "traductor" es un nombre genérico que puede chocar
+  con otros paquetes instalados. Cambia los imports de 12 scripts de
+  `pipeline/` y de los `.sh` de Abaco (cambio mecánico).
+- **Diseño `src/`**: obliga a probar el paquete instalado, no la carpeta
+  del repo (es como detectar que falta un JSON en la wheel).
+- **Qué se queda fuera del paquete**: `traductor/llm/` (necesita Ollama;
+  capa de val→cat congelada) → `pipeline/08_traduccio_corpus/postprocessat_llm/`;
+  `model_llengua/avalua.py`, `genera_benchmark.py` y sus JSON →
+  `pipeline/03_seleccio_de_model/` o `dades/benchmarks/homografs/`;
+  `sync_data.py` → `scripts/` (lee las fuentes del repo, no sirve
+  instalado). `mesura_corpus.py` y el visor del GD se quedan en
+  `pipeline/09_grau_dialectal/`.
+- **Dependencias** (`pyproject.toml`):
+  - base: `spacy>=3.8,<3.9` y `ca_core_news_md` 3.8.0 (dependencia por
+    URL de la wheel oficial de spaCy: vale para instalar desde GitHub o
+    desde la wheel, no para PyPI);
+  - `[ml]` (sistema principal): `torch` (CPU), `transformers>=5`,
+    `huggingface_hub>=1.5,<2.0`. FLOR-760M se descarga de Hugging Face
+    la primera vez (1,5 GB; documentar `HF_HOME` y el uso sin conexión);
+  - `[avaluacio]`: `sacrebleu>=2.4`; `[dev]`: `pytest`.
+  - Sin `[ml]`, `translate_cat_val` avisa y usa el motor solo (o falla con
+    un mensaje claro: a decidir).
+- **Benchmarks**: se **copian** (no se mueven) a `dades/benchmarks/`;
+  los originales y los scripts que los construyen siguen donde están.
+
+**Decisiones del usuario antes de empezar:**
+
+1. ¿Import `avlizador.traductor` (propuesta) o `traductor` suelto?
+2. **Fuentes del léxico**: ¿se mueven de
+   `pipeline/02_regles_dialectals/lexic/diccionarios/` a `dades/lexic/`?
+   Ojo: el compañero las edita ahí (rama `lista-lexico`); moverlas cambia
+   su forma de trabajar. Alternativa: dejarlas donde están y que
+   `scripts/sync_data.py` las siga leyendo de ahí.
+3. ¿`translate` (val→cat, aparcado) entra en el paquete?
+4. Sin `[ml]` instalado: ¿motor solo con aviso, o error?
+5. ¿Una orden `avlizador` con subórdenes (propuesta) o tres órdenes
+   sueltas?
+
+**Pruebas antes de fusionar la rama**:
+1. Doctests: 648/648 en el paquete instalado.
+2. Mismas traducciones antes y después en todos los benchmarks: el
+   manual mezcla tiene que dar 227/458, y lo mismo el resto (A/B frase a
+   frase con los JSON del 30/10).
+3. Instalación en un entorno nuevo (`python -m venv`, `pip install
+   ".[ml]"`) en Windows y en Linux (Abaco, solo CPU), y las órdenes de
+   ejemplo del README funcionan.
+4. `pipeline/` sigue funcionando (`evalua_models.py`, `mesura_corpus.py`).
+
+### B1. Estructura propuesta (borrador inicial, superado por B1-bis)
 
 ```
 AVLizador/

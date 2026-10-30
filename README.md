@@ -1,124 +1,147 @@
-*[Llegeix-ho en castellà](README.es.md)*
+*[Léelo en castellano](README.es.md)*
 
-# Traductor dialectal valencià ↔ català oriental
+# AVLizador: traductor dialectal català → valencià i Grau Dialectal
 
-Projecte per a construir un traductor automàtic entre valencià occidental
-(norma AVL/GVA) i català oriental (norma IEC). L'objectiu no és la
-traducció en si: el valencià és una llengua de recursos escassos, mentre
-que el català oriental en té molts més — un traductor dialectal fiable
-actua com a **pont** per a aprofitar eixos recursos en tasques que en
-valencià serien inviables per falta de dades (p. ex. alinear anglés↔valencià
-passant pel català).
+AVLizador convertix text en **català oriental** (norma de l'IEC) a
+**valencià occidental** (norma de l'AVL) i mesura quant de valencià o de
+català té un text. No tradueix entre llengües: canvia només el que és
+dialectal (lèxic, conjugacions, demostratius, possessius, numerals...).
 
-## Què s'entrega (estat del 23/10/2026)
+S'instal·la com un paquet de Python, `avlizador`, amb dues eines:
 
-Dos eines, per a la Conselleria, en equips amb pocs recursos i només CPU.
-La resta del repositori és la infraestructura que les construïx i les
-valida.
+| Eina | Què fa | Importació |
+|---|---|---|
+| **Traductor català → valencià** | Motor de regles amb els diccionaris del projecte i spaCy, més un model de llengua menut (FLOR-760M) que resol les paraules ambigües ("cop" → *colp* o *vegada*, "nou" → *nou* o *anou*) | `avlizador.traductor_cat_val` |
+| **Grau Dialectal** (GD, GDV, GDC) | Índexs de 0 a 1 que diuen si un text és valencià o català | `avlizador.grau_dialectal` |
 
-1. **El traductor català → valencià** ([`traductor/`](traductor/), la
-   direcció prioritària):
-   - el **motor de regles** (`translate_cat_val`): diccionaris del
-     proveïdor + spaCy, determinista, sense GPU ni LLM;
-   - una **capa opcional** ([`traductor/model_llengua/`](traductor/model_llengua/),
-     `translate_cat_val_ml`): un model de llengua menut (FLOR-760M) que
-     només decidix unes poques paraules ambigües del lèxic ("cop" → colp o
-     vegada; "gandula" → hamaca o gandula), triant entre les frases que
-     construïx el motor.
-2. **El Grau Dialectal (GD)**
-   ([`pipeline/09_grau_dialectal/`](pipeline/09_grau_dialectal/)),
-   amb dos índexs simètrics germans: el GDV (Grau Dialectal Valencià) i el
-   GDC (Grau Dialectal Català), tots dos de 0 a 1.
+Funciona **només amb CPU**, sense GPU ni serveis externs: està pensat per
+a equips amb pocs recursos.
 
-L'estat i l'estructura actuals del traductor són al principi de
-[`traductor/README.md`](traductor/README.md). La direcció valencià → català
-existix ([`traductor/rules/val_cat/`](traductor/rules/val_cat/)) però està
-aparcada des del 20/10/2026.
+## Instal·lació
 
-## Comença per ací
+Cal Python 3.10 o posterior. Des d'una còpia del repositori:
 
-**[`documentacio/metodologia_i_resultats.md`](documentacio/metodologia_i_resultats.md)**
-— la història completa del projecte en un sol document: d'on ix el text,
-com es van decidir les regles, quins models es van comparar i amb quins
-resultats, quins bugs es van trobar i com es van corregir, limitacions
-conegudes. Cada carpeta d'etapa té a més el seu propi README amb el detall
-d'ús d'eixa etapa en concret.
+```bash
+pip install ".[ml]" --extra-index-url https://download.pytorch.org/whl/cpu
+```
+
+- `[ml]` instal·la `torch` (versió CPU) i `transformers` per al model de
+  llengua FLOR-760M, que es baixa de Hugging Face la primera vegada que
+  s'usa (1,5 GB; es guarda en la carpeta de `HF_HOME`). És la instal·lació
+  recomanada.
+- Sense `[ml]` (`pip install .`) funciona només el motor de regles: el
+  traductor l'usa i avisa una vegada que falta el model
+  (`AvisSenseModelLlengua`).
+- El model català de spaCy (`ca_core_news_md`) s'instal·la sol.
+- `[avaluacio]` afig `sacrebleu` per a avaluar amb els benchmarks; `[dev]`,
+  `pytest`.
+
+## Ús
+
+En Python:
+
+```python
+from avlizador import translate_cat_val, calcula_gd, calcula_gdv, calcula_gdc
+
+translate_cat_val("Aquest noi necessita ajuda. Un cop acabada la reunió, marxem.")
+# 'Este xic necessita ajuda. Una vegada acabada la reunió, marxem.'
+
+calcula_gd("Este xiquet vol vindre hui.")["gd"]     # 1.0: valencià
+calcula_gdv("Este xiquet vol vindre hui.")["gdv"]   # 1.0: valencià pur
+calcula_gdc("Aquest nen vol venir avui.")["gdc"]    # 1.0: català pur
+```
+
+Des de la línia d'ordres:
+
+```bash
+avlizador tradueix "Aquest noi necessita ajuda."
+avlizador tradueix --fitxer entrada.txt > eixida.txt   # una frase o paràgraf per línia
+avlizador tradueix --motor "..."                       # només el motor, sense el model
+avlizador gd --text "Este xiquet vol vindre hui."      # també gdv i gdc
+avlizador gd --corpus corpus.jsonl --camp text --html informe.html  # informe HTML frase a frase
+avlizador avalua --benchmarks manual                   # avaluació (cal [avaluacio])
+avlizador --help
+```
+
+## Resultats
+
+Benchmark d'avaluació: **manual mescla** (458 frases del BOE i de l'AVL,
+revisades a mà). TER i WER: percentatge de paraules que cal editar per a
+arribar a la referència (com més baixos, millor).
+
+| Sistema | Exactes | BLEU | chrF | TER | WER |
+|---|---|---|---|---|---|
+| Motor + FLOR-760M (sistema principal) | **227/458 (49,6 %)** | **90,88** | **96,34** | **5,61** | **6,01** |
+| Motor sol | 214/458 (46,7 %) | 90,39 | 96,10 | 5,91 | 6,30 |
+
+En les frases de l'AVL encerta exactament el 92 %. En les del BOE les
+frases exactes baixen (13 %) perquè la traducció oficial reformula molt
+(futur on el català usa present, sinònims no dialectals...), però el TER
+es queda en 9: una paraula de cada deu. Tots els benchmarks i mètriques,
+en
+[`pipeline/03_seleccio_de_model/resultats_benchmarks_cat_val.md`](pipeline/03_seleccio_de_model/resultats_benchmarks_cat_val.md).
+
+## Benchmarks
+
+Tots són en [`dades/benchmarks/`](dades/benchmarks/) (vegeu-ne el README):
+el manual (mescla, BOE i AVL), el banc curat de 151 frases, el
+d'homògrafs, els del BOE (estricte i ampli, mostres i complets) i el
+dataset públic gplsi (CC BY 4.0). Format: llista de
+`{"id", "oriental", "occidental"}` (català i valencià).
+
+```bash
+pip install ".[ml,avaluacio]" --extra-index-url https://download.pytorch.org/whl/cpu
+avlizador avalua                      # tots (sense els complets del BOE)
+avlizador avalua --benchmarks manual  # només el d'avaluació
+avlizador avalua --llista             # els disponibles
+```
 
 ## Estructura del repositori
 
-**Reestructurat el 14/10/2026**: les 9 etapes numerades viuen ara dins de
-[`pipeline/`](pipeline/), separades del producte real (`traductor/`) i de
-les dades (`dades/`). `boe/` (abans solt en l'arrel, sense número) ara és
-`pipeline/05_corpus_boe/` — tanca el forat que hi havia en la numeració
-(abans no existia cap "05") sense tocar cap de les altres 8 carpetes.
-
 ```
-traductor/              # el motor real -- el PRODUCTE, no una etapa
-  rules/cat_val/          # motor català -> valencià (el que s'entrega)
-  rules/val_cat/          # motor valencià -> català (aparcat)
-  model_llengua/          # capa opcional cat->val: homògrafs amb un model de llengua
-  llm/                    # capes de LLM per preguntes (aparcades)
-  data/                   # només les còpies dels dos diccionaris del proveïdor
-pipeline/
-  01_extraccio_i_neteja/
-  02_regles_dialectals/
-  03_seleccio_de_model/
-  04_corpus_sintetic/
-  05_corpus_boe/         # abans "boe/" solt en l'arrel, sense número
-  06_dades_entrenament/
-  07_entrenament_de_models/
-  08_traduccio_corpus/
-  09_grau_dialectal/
-dades/                   # transversal, el consumeixen diverses etapes
-documentacio/            # transversal
+src/avlizador/            el paquet que s'instal·la
+  traductor_cat_val/        traductor: regles (rules/), model de llengua (model_llengua/), data/
+  grau_dialectal/           GD, GDV i GDC
+  avaluacio/                mètriques i avaluació amb els benchmarks
+  cli.py                    ordre `avlizador`
+dades/
+  lexic/                    diccionaris del projecte (font única)
+  benchmarks/               benchmarks d'avaluació
+scripts/sync_data.py      copia dades/lexic/ a src/avlizador/traductor_cat_val/data/
+tests/                    pytest: doctests, API i ordres
+documentacio/             metodologia, resultats i fulls de ruta
+pipeline/                 registre del treball que va construir i validar les eines (etapes 01-09)
 ```
 
-| Carpeta | Què és |
-|---|---|
-| [`traductor/`](traductor/) | El motor de regles determinista — el producte del projecte, per això viu fora de `pipeline/`; amb una capa opcional de model de llengua per als homògrafs (`model_llengua/`). Veure `traductor/README.md` |
-| [`pipeline/01_extraccio_i_neteja/`](pipeline/01_extraccio_i_neteja/) | Etapa 1 — scraping de la web de l'AVL i neteja/classificació dialectal |
-| [`pipeline/02_regles_dialectals/`](pipeline/02_regles_dialectals/) | Etapa 2 — regles dialectals i lèxic diferencial valencià↔català |
-| [`pipeline/03_seleccio_de_model/`](pipeline/03_seleccio_de_model/) | Etapa 3 — benchmark i selecció del model de traducció; hui, sobretot, `evalua_models.py`, amb què es mesuren el motor i el sistema final |
-| [`pipeline/04_corpus_sintetic/`](pipeline/04_corpus_sintetic/) | Etapa 4 — generació del corpus sintètic complet |
-| [`pipeline/05_corpus_boe/`](pipeline/05_corpus_boe/) | Etapa 5 — scripts del corpus real i alineat del BOE (abans `boe/`, sense número) |
-| [`pipeline/06_dades_entrenament/`](pipeline/06_dades_entrenament/) | Etapa 6 — prepara el dataset final (train/dev/test) per al finetuning |
-| [`pipeline/07_entrenament_de_models/`](pipeline/07_entrenament_de_models/) | Etapa 7 — finetuning, baselines i comparació de models |
-| [`pipeline/08_traduccio_corpus/`](pipeline/08_traduccio_corpus/) | Etapa 8 — aplica el motor de regles a un corpus complet (no només al benchmark); postprocessat amb LLM dels casos ambigus |
-| [`pipeline/09_grau_dialectal/`](pipeline/09_grau_dialectal/) | Etapa 9 — Grau Dialectal (GD): mètrica reutilitzable per a mesurar quin percentatge d'un text és occidental vs. oriental, basada en l'índex de parells de `traductor/` |
-| [`documentacio/`](documentacio/) | La metodologia completa del projecte |
+`pipeline/` no s'instal·la: és la infraestructura del projecte (scraping
+de l'AVL, regles, corpus del BOE, selecció de models, capes de LLM
+descartades...). La història completa, amb les decisions i el que es va
+descartar, és en
+[`documentacio/metodologia_i_resultats.md`](documentacio/metodologia_i_resultats.md).
 
-**Dades** (tot agrupat en [`dades/`](dades/), separat del codi):
+## Desenvolupament
 
-| Carpeta | Què és |
-|---|---|
-| `dades/avl/` | Eixida crua i neta del scraping de l'AVL (raw/clean/final) — entrada de l'etapa 4 |
-| `dades/boe/` | Corpus real del BOE: PDFs descarregats, extracció i alineació (`corpus_entrenamiento.jsonl`); a `dades/boe/benchmarks/`, els benchmarks "BOE dialectal" estricte i ampli |
-| `dades/gplsi_ca_va_alignment_test/` | Dataset públic gplsi (1.958 parells català/valencià, CC BY 4.0), usat com a benchmark |
-| `dades/sintetic/` | El corpus sintètic generat (etapa 4): `corpus_sintetic_val_cat.jsonl`, `parallel_val_cat.jsonl`... |
-| `dades/dataset_entrenament/` | El dataset final ja partit (etapa 6): `train.jsonl`/`dev.jsonl`/`test.jsonl`/`boe_eval.jsonl` |
+```bash
+pip install -e ".[ml,avaluacio,dev]" --extra-index-url https://download.pytorch.org/whl/cpu
+pytest                                  # doctests + proves de l'API i les ordres
+```
 
-## Com es relacionen les carpetes
+Per a canviar el lèxic, s'editen **només** els fitxers de `dades/lexic/`
+i després:
 
-Les etapes 1-4 i 6 són codi actiu (scraping, regles, benchmark, generació
-del corpus, split final); cada una llig/escriu en la seua subcarpeta
-corresponent de `dades/`. L'etapa 7 consumeix l'eixida de la 6 per a
-entrenar/avaluar models. `traductor/` és un paquet Python independent que
-viu en l'arrel, fora de `pipeline/`, perquè s'importa com a mòdul des
-d'altres parts del projecte i perquè no és una etapa d'un sol ús sinó el
-producte que totes les etapes alimenten (a més, un mòdul Python no pot
-començar per un dígit). `pipeline/05_corpus_boe/` és una font de dades
-paral·lela i independent del pipeline AVL — el seu codi viu ahí, les
-seues dades en `dades/boe/`, i no es mescla amb el corpus sintètic en
-l'entrenament: s'usa per a avaluar generalització fora de domini (veure
-`pipeline/06_dades_entrenament/README.md`).
+```bash
+python scripts/sync_data.py            # regenera src/avlizador/traductor_cat_val/data/
+python scripts/sync_data.py --check    # ha de dir "Tot sincronitzat"
+pytest
+avlizador avalua --benchmarks manual   # comparar amb la taula de resultats
+```
 
-## Nota si treballes també en un clúster remot
+La direcció valencià → català és en el codi
+(`traductor_cat_val/rules/val_cat/`, l'usa el GD) però no forma part de
+l'API pública.
 
-Esta estructura de carpetes es va reorganitzar localment (última vegada,
-14/10/2026: les etapes numerades es van moure dins de `pipeline/` i
-`boe/` va passar a ser `pipeline/05_corpus_boe/`) — si tens una còpia en
-un altre lloc (p. ex. un clúster SLURM) sincronitzada a mà amb
-`scp`/`rsync`, hauràs de replicar ahí els mateixos renombraments abans de
-la teua pròxima sincronització, o les rutes no coincidiran. L'estructura
-plana d'Abaco (`~/scrapeo/postprocesado_llm/`) es manté expressament
-independent d'este canvi — veure `pipeline/08_traduccio_corpus/postprocessat_llm/README.md`.
+## Llicència
+
+Pendent de confirmar (previsiblement Creative Commons BY 4.0). El dataset
+gplsi de `dades/benchmarks/gplsi/` és CC BY 4.0 dels seus autors (vegeu-ne
+el README).

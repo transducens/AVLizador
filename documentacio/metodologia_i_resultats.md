@@ -21,6 +21,15 @@ sección 14), para equipos con pocos recursos y sin GPU. El estado actual
 de esa dirección está en la sección 12 (motor), la 13 (capa opcional con
 modelo de lenguaje para los homógrafos) y la 17 (resumen de cifras).
 
+**Rutas (30/10/2026)**: el traductor y el GD son ahora el paquete
+instalable `avlizador` (sección 16, "Empaquetado"). En este documento,
+donde dice `traductor/` hoy es `src/avlizador/traductor_cat_val/`;
+`traductor/sync_data.py` es `scripts/sync_data.py`; `traductor/llm/` está
+en `pipeline/08_traduccio_corpus/postprocessat_llm/capa_llm/`; el GD
+(`pipeline/09_grau_dialectal/gd.py`, `gdv.py`, `gdc.py`) está en
+`src/avlizador/grau_dialectal/`, y las fuentes del léxico
+(`pipeline/02_regles_dialectals/lexic/diccionarios/`), en `dades/lexic/`.
+
 ## 1. Origen del texto (el lado "valenciano")
 
 ### 1.1 Qué es la AVL y por qué es la fuente
@@ -504,7 +513,7 @@ entre versiones de software y las GPUs concretas de este clúster. Vale la
 pena dejarlo anotado por si se repite el ejercicio con otro modelo servido
 por vLLM en el mismo nodo.
 
-## 11. El motor de reglas deterministas (`traductor/`)
+## 11. El motor de reglas deterministas (`traductor/`, hoy `avlizador.traductor_cat_val`)
 
 Las secciones 1-10 cubren las etapas 1-4 (scraping, reglas, selección de
 modelo, corpus sintético), cerradas a finales de septiembre. Desde
@@ -550,11 +559,12 @@ En valenciano → catalán, además, se protegen las palabras en mayúscula
 que no inician la frase (posibles nombres propios); en catalán →
 valenciano ya no (22/10/2026, ver sección 12).
 
-Todos los datos vienen de **dos ficheros**, `traductor/data/lexic_general.json`
-y `conjugacions_dialectals.json`, copias sincronizadas con
-`traductor/sync_data.py` desde las fuentes del proveedor
-(`pipeline/02_regles_dialectals/lexic/diccionarios/`). `traductor/` nunca
-lee esa carpeta en tiempo de ejecución, solo sus propias copias, para poder
+Todos los datos vienen de **dos ficheros**, `data/lexic_general.json`
+y `conjugacions_dialectals.json` (dentro de
+`src/avlizador/traductor_cat_val/`), copias sincronizadas con
+`scripts/sync_data.py` desde las fuentes del proveedor (`dades/lexic/`;
+antes del 30/10/2026, `pipeline/02_regles_dialectals/lexic/diccionarios/`).
+El traductor nunca lee esa carpeta en tiempo de ejecución, solo sus propias copias, para poder
 funcionar como módulo autónomo. Desde el 22/10/2026 no queda ningún fichero
 de datos hecho a mano, y en catalán → valenciano tampoco ninguna lista de
 palabras en el código (sección 12); en valenciano → catalán quedan tres
@@ -1247,6 +1257,31 @@ completa, carpeta por carpeta:
   comportamiento salvo el ya documentado en las secciones 11-12 (la
   retirada de una regla que no generalizaba más allá del propio
   benchmark).
+
+### Empaquetado (30/10/2026)
+
+El traductor catalán → valenciano y el GD pasan a ser un paquete de
+Python instalable, `avlizador` (`pyproject.toml`, diseño `src/`), con la
+orden `avlizador tradueix | gd | gdv | gdc | avalua`:
+
+- `avlizador.traductor_cat_val` (antes `traductor/`): `translate_cat_val`
+  = motor + FLOR-760M (extra `[ml]`); sin el extra, motor solo con un
+  aviso. La dirección valenciano → catalán queda en el código (el GD usa
+  sus cargadores) pero fuera de la API pública.
+- `avlizador.grau_dialectal` (antes `pipeline/09_grau_dialectal/gd.py`,
+  `gdv.py`, `gdc.py`).
+- `avlizador.avaluacio`: las métricas (exactas, BLEU, chrF, chrF++, TER,
+  WER) y la evaluación con todos los benchmarks.
+- Datos: las fuentes del léxico en `dades/lexic/` (fuente única) y copias
+  de todos los benchmarks en `dades/benchmarks/`, en git.
+- Fuera del paquete (en `pipeline/`): la capa de LLM por preguntas y las
+  herramientas de evaluación del modelo de lenguaje.
+
+Verificación: `pytest` (701 doctests y las pruebas de la API y las
+órdenes), instalación limpia en un entorno nuevo y **0 traducciones
+distintas** en los 8 benchmarks (8.329 frases) frente al código de antes
+de mover nada. Registro completo de decisiones y cambios en
+`documentacio/hoja_de_ruta_empaquetat.md`.
 
 ## 17. Estado actual (30/10/2026) y próximos pasos
 

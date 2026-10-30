@@ -120,7 +120,7 @@ def _registre(p: dict, num: int, index) -> dict:
     oriental = p["oriental"]
     fenomens = p["fenomens"]
     if font == "avl":
-        from traductor import translate
+        from avlizador.traductor_cat_val.translate import translate
 
         oriental = translate(p["occidental"])
         esborrany = True

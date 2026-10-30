@@ -46,3 +46,10 @@ pipeline/03_seleccio_de_model/resultats/*
 
 # Resultats de pipeline/09_grau_dialectal/mesura_corpus.py (desenes de MB)
 dades/grau_dialectal/
+
+# Paquet avlizador (30/10/2026): construcció i resultats de `avlizador avalua`
+build/
+dist/
+*.egg-info/
+resultats_avaluacio/
+.pytest_cache/
