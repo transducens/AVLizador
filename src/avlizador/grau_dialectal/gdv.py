@@ -1,49 +1,47 @@
 #!/usr/bin/env python3
 """
-gdc.py -- Grau Dialectal Català (GDC): quina part de les paraules d'un
-text és vàlida en català. 1.0 = totes, 0.0 = cap.
+gdv.py -- Grau Dialectal Valencià (GDV): quina part de les paraules
+d'un text és vàlida en valencià. 1.0 = totes, 0.0 = cap.
 
-    GDC = (total_orientals + neutres) / total_paraules
-        = 1 - total_occidentals / total_paraules
-
-Germà simètric d'`gdv.py` (Grau Dialectal Valencià).
+    GDV = (total_occidentals + neutres) / total_paraules
+        = 1 - total_orientals / total_paraules
 
 NEUTRES (decisió de l'usuari, 27/10/2026): les paraules que no són
 marcador de cap dialecte ("casa", "amb", "el"...) són vàlides en els
-dos, així que compten a favor del GDC (i del GDV). Només resten les
-formes valencianes (occidentals). Motiu: el GDC s'ha de poder fer servir
-de recompensa per a entrenar models, i una frase sense marcadors també
-seguix l'estàndard català. Diferència amb el GD (`gd.py`), que es queda
-tal qual: el GD només mira els marcadors (occidentals / marcades) i
-ignora les neutres. Per això ara GDV + GDC no suma 1 (amb neutres, els
-dos s'acosten a 1).
+dos, així que compten a favor del GDV (i del GDC). Només resten les
+formes catalanes (orientals). Motiu: el GDV s'ha de poder fer servir de
+recompensa per a entrenar models, i una frase sense marcadors també
+seguix l'estàndard valencià. Diferència amb el GD (`gd.py`), que es
+queda tal qual: el GD només mira els marcadors (occidentals / marcades)
+i ignora les neutres. Per això ara GDV + GDC no suma 1 (amb neutres,
+els dos s'acosten a 1).
 
 Límit: "neutra" vol dir "no està al diccionari de parells", no "és
 correcta" -- un castellanisme o una paraula dialectal que el diccionari
 no recull també hi compten com a vàlides.
 
-Text sense cap paraula: GDC = 1.0 (no hi ha res que el desmentisca).
+Text sense cap paraula: GDV = 1.0 (no hi ha res que el desmentisca).
 
 No reimplementa res: els marcadors i el recompte de paraules els fa
 `gd.py::calcula_gd` (mateix índex de parells del traductor, mateix
 filtre de POS i d'homògrafs).
 
 CORPUS: dona dos xifres:
-  - `gdc_global`: 1 - occidentals / paraules de tot el corpus (cada
+  - `gdv_global`: 1 - orientals / paraules de tot el corpus (cada
     paraula pesa igual, les frases llargues pesen més);
-  - `gdc_mitjana`: mitjana del GDC de cada frase (cada frase pesa igual).
+  - `gdv_mitjana`: mitjana del GDV de cada frase (cada frase pesa igual).
 
-ÚS com a script:
+ÚS des de la línia d'ordres (paquet `avlizador` instal·lat):
 
-    python gdc.py --text "Aquest nen vol venir avui."
-    python gdc.py --fitxer un_document.txt
-    python gdc.py --corpus ../03_seleccio_de_model/benchmark_corpus.json \
-        --camp oriental --sortida gdc.json
+    avlizador gdv --text "Este xiquet vol vindre hui."
+    avlizador gdv --fitxer un_document.txt
+    avlizador gdv --corpus ../03_seleccio_de_model/benchmark_corpus.json \
+        --camp occidental --sortida gdv.json
 
 ÚS com a mòdul:
 
-    from gdc import calcula_gdc
-    calcula_gdc("Aquest nen vol venir avui.")["gdc"]  # -> 1.0
+    from avlizador.grau_dialectal import calcula_gdv
+    calcula_gdv("Este xiquet vol vindre hui.")["gdv"]  # -> 1.0
 """
 
 from __future__ import annotations
@@ -53,34 +51,30 @@ import json
 import sys
 from pathlib import Path
 
-_DIR = str(Path(__file__).resolve().parent)
-if _DIR not in sys.path:
-    sys.path.insert(0, _DIR)
-
-from gd import Formes, _llig_jsonl, calcula_gd, carrega_formes_dialectals  # noqa: E402
+from .gd import Formes, _llig_jsonl, calcula_gd, carrega_formes_dialectals
 
 
-def calcula_gdc(text: str, formes: Formes | None = None) -> dict:
-    """Calcula el GDC d'un text solt (frase, paràgraf o document).
+def calcula_gdv(text: str, formes: Formes | None = None) -> dict:
+    """Calcula el GDV d'un text solt (frase, paràgraf o document).
 
-    >>> calcula_gdc("Aquest nen vol venir avui.")["gdc"]
+    >>> calcula_gdv("Este xiquet vol vindre hui.")["gdv"]
     1.0
 
-    4 de 5 paraules valencianes ("este", "xiquet", "vindre", "hui");
-    "vol" és neutra i compta com a catalana:
+    4 de 5 paraules catalanes ("aquest", "nen", "venir", "avui"); "vol"
+    és neutra i compta com a valenciana:
 
-    >>> calcula_gdc("Este xiquet vol vindre hui.")["gdc"]
+    >>> calcula_gdv("Aquest nen vol venir avui.")["gdv"]
     0.2
 
-    1 forma valenciana ("xiquet") de 8 paraules:
+    1 forma catalana ("nen") de 8 paraules:
 
-    >>> calcula_gdc("El xiquet jugava amb el nen del veí.")["gdc"]
+    >>> calcula_gdv("El xiquet jugava amb el nen del veí.")["gdv"]
     0.875
 
     Sense cap paraula marcada, totes són neutres:
 
-    >>> r = calcula_gdc("La casa és gran i té un jardí.")
-    >>> r["total_marcades"], r["total_neutres"], r["gdc"]
+    >>> r = calcula_gdv("La casa és gran i té un jardí.")
+    >>> r["total_marcades"], r["total_neutres"], r["gdv"]
     (0, 8, 1.0)
     """
     r = calcula_gd(text, formes)
@@ -91,16 +85,16 @@ def calcula_gdc(text: str, formes: Formes | None = None) -> dict:
         "total_orientals": r["total_orientals"],
         "total_marcades": r["total_marcades"],
         "total_neutres": total - r["total_marcades"],
-        "gdc": round(1 - r["total_occidentals"] / total, 4) if total else 1.0,
+        "gdv": round(1 - r["total_orientals"] / total, 4) if total else 1.0,
         "marcadors_occidentals": r["marcadors_occidentals"],
         "marcadors_orientals": r["marcadors_orientals"],
     }
 
 
-def calcula_gdc_corpus(
+def calcula_gdv_corpus(
     path: Path, camp: str = "text", limit: int | None = None
 ) -> dict:
-    """GDC de cada document de `path` (JSONL o JSON amb un array) i les
+    """GDV de cada document de `path` (JSONL o JSON amb un array) i les
     dos xifres globals (vore "CORPUS" al docstring del mòdul)."""
     formes = carrega_formes_dialectals()
     documents = []
@@ -108,7 +102,7 @@ def calcula_gdc_corpus(
         if limit is not None and i >= limit:
             break
         text = doc.get(camp) or ""
-        r = calcula_gdc(text, formes)
+        r = calcula_gdv(text, formes)
         documents.append({"id": doc.get("id") or doc.get("corpus_id"), "text": text, **r})
 
     total_occ = sum(d["total_occidentals"] for d in documents)
@@ -122,9 +116,9 @@ def calcula_gdc_corpus(
         "total_occidentals": total_occ,
         "total_orientals": total_or,
         "total_neutres": total_paraules - total_occ - total_or,
-        "gdc_global": round(1 - total_occ / total_paraules, 4) if total_paraules else 1.0,
-        "gdc_mitjana": (
-            round(sum(d["gdc"] for d in documents) / len(documents), 4) if documents else 1.0
+        "gdv_global": round(1 - total_or / total_paraules, 4) if total_paraules else 1.0,
+        "gdv_mitjana": (
+            round(sum(d["gdv"] for d in documents) / len(documents), 4) if documents else 1.0
         ),
         "documents": documents,
     }
@@ -132,7 +126,7 @@ def calcula_gdc_corpus(
 
 def _mostra_text(etiqueta: str, r: dict, mostra: int) -> None:
     print(etiqueta)
-    print(f"  GDC: {r['gdc']:.4f}")
+    print(f"  GDV: {r['gdv']:.4f}")
     print(
         f"  occidentals={r['total_occidentals']}  orientals={r['total_orientals']}  "
         f"neutres={r['total_neutres']}  paraules totals={r['total_paraules']}"
@@ -144,10 +138,11 @@ def _mostra_text(etiqueta: str, r: dict, mostra: int) -> None:
             print(f"  marcadors orientals:   {r['marcadors_orientals'][:mostra]}")
 
 
-def main() -> None:
+def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(
-        description="Calcula el Grau Dialectal Català (GDC) d'un text, fitxer o corpus: "
-                    "part de les paraules vàlides en català (marcadors catalans + neutres)."
+        prog="avlizador gdv",
+        description="Calcula el Grau Dialectal Valencià (GDV) d'un text, fitxer o corpus: "
+                    "part de les paraules vàlides en valencià (marcadors valencians + neutres)."
     )
     grup = parser.add_mutually_exclusive_group(required=True)
     grup.add_argument("--text", help="Frase o text solt a analitzar.")
@@ -157,19 +152,19 @@ def main() -> None:
     parser.add_argument("--limit", type=int, default=None, help="Amb --corpus: analitza només els primers N documents.")
     parser.add_argument("--sortida", type=Path, default=None, help="Amb --corpus: fitxer JSON on guardar el detall per document.")
     parser.add_argument("--mostra", type=int, default=10, help="Quants marcadors mostrar de cada dialecte (--text/--fitxer).")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     if args.text is not None:
-        _mostra_text("(text solt)", calcula_gdc(args.text), args.mostra)
+        _mostra_text("(text solt)", calcula_gdv(args.text), args.mostra)
         return
     if args.fitxer is not None:
-        _mostra_text(str(args.fitxer), calcula_gdc(args.fitxer.read_text(encoding="utf-8")), args.mostra)
+        _mostra_text(str(args.fitxer), calcula_gdv(args.fitxer.read_text(encoding="utf-8")), args.mostra)
         return
 
-    res = calcula_gdc_corpus(args.corpus, args.camp, args.limit)
+    res = calcula_gdv_corpus(args.corpus, args.camp, args.limit)
     print(f"Corpus: {args.corpus}  ({res['documents_totals']} documents, camp '{args.camp}')")
-    print(f"  GDC global (per paraula):  {res['gdc_global']}")
-    print(f"  GDC mitjana per document:  {res['gdc_mitjana']}  "
+    print(f"  GDV global (per paraula):  {res['gdv_global']}")
+    print(f"  GDV mitjana per document:  {res['gdv_mitjana']}  "
           f"({res['documents_sense_marcadors']} sense marcadors)")
     print(f"  occidentals={res['total_occidentals']}  orientals={res['total_orientals']}  "
           f"neutres={res['total_neutres']}  paraules totals={res['total_paraules']}")

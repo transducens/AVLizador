@@ -118,12 +118,13 @@ de les dades, no d'este fitxer). "afecte"/"carinyo"
 sembla un error de dades del lexicó (el mateix patró que "vesprada"/"tard"),
 pendent de confirmar -- cap dels dos es toca ací.
 
-ÚS com a script:
+ÚS des de la línia d'ordres (paquet `avlizador` instal·lat; abans,
+`python gd.py` des de `pipeline/09_grau_dialectal/`):
 
-    python gd.py --text "Este xiquet vol vindre hui."
-    python gd.py --text "Aquest nen vol venir avui." --dialecte cat
-    python gd.py --fitxer un_document.txt
-    python gd.py --corpus ../../dades/avl/final/unified.jsonl --camp text
+    avlizador gd --text "Este xiquet vol vindre hui."
+    avlizador gd --text "Aquest nen vol venir avui." --dialecte cat
+    avlizador gd --fitxer un_document.txt
+    avlizador gd --corpus ../../dades/avl/final/unified.jsonl --camp text
 
     # Informe HTML per a VORE i depurar frase a frase (paraules
     # ressaltades, verd=occidental/taronja=oriental), amb dos columnes
@@ -131,12 +132,12 @@ pendent de confirmar -- cap dels dos es toca ací.
     # del projecte, "occidental"/"oriental"; afegiu `--dialecte val
     # --dialecte-alt cat` per a comptar com a purs els textos sense
     # marcadors):
-    python gd.py --corpus ../03_seleccio_de_model/benchmark_corpus.json \
+    avlizador gd --corpus ../03_seleccio_de_model/benchmark_corpus.json \
         --camp occidental --camp-alt oriental --html informe.html
 
-ÚS com a mòdul (des d'un atre script del projecte):
+ÚS com a mòdul:
 
-    from gd import calcula_gd
+    from avlizador.grau_dialectal import calcula_gd
     calcula_gd("Este xiquet vol vindre hui.")["gd"]  # -> 1.0
 """
 
@@ -149,28 +150,20 @@ import sys
 from pathlib import Path
 from typing import Iterator
 
-# `gd.py` viu a pipeline/09_grau_dialectal/, dos nivells per
-# davall de `traductor/` (no dins d'ella) -- mateix mecanisme que
-# `pipeline/03_seleccio_de_model/evalua_models.py` per a trobar el
-# paquet quan l'script s'executa des de dins d'esta carpeta.
-_ARREL_PROJECTE = str(Path(__file__).resolve().parent.parent.parent)
-if _ARREL_PROJECTE not in sys.path:
-    sys.path.insert(0, _ARREL_PROJECTE)
-
-from traductor.rules import Token, carrega_homografs, marca_noms_propis, pos_tagger, separa_prefix_elidit, tokenize
-from traductor.rules.cat_val.demostratius import carrega_demostratius_invers
-from traductor.rules.cat_val.lexic import LEXIC_GENERAL_PATH, carrega_lexic_invers
-from traductor.rules.cat_val.numerals import carrega_numerals_invers
-from traductor.rules.cat_val.possessius import carrega_possessius_invers
-from traductor.rules.val_cat.conjugacions_dict import (
+from ..traductor_cat_val.rules import Token, carrega_homografs, marca_noms_propis, pos_tagger, separa_prefix_elidit, tokenize
+from ..traductor_cat_val.rules.cat_val.demostratius import carrega_demostratius_invers
+from ..traductor_cat_val.rules.cat_val.lexic import LEXIC_GENERAL_PATH, carrega_lexic_invers
+from ..traductor_cat_val.rules.cat_val.numerals import carrega_numerals_invers
+from ..traductor_cat_val.rules.cat_val.possessius import carrega_possessius_invers
+from ..traductor_cat_val.rules.val_cat.conjugacions_dict import (
     DEFAULT_CONJUGACIONS_PATH,
     SEMPRE_VERB,
     es_risc_mode_3a_plural,
 )
-from traductor.rules.val_cat.demostratius import carrega_demostratius
-from traductor.rules.val_cat.lexic import carrega_lexic
-from traductor.rules.val_cat.numerals import carrega_numerals
-from traductor.rules.val_cat.possessius import _carrega_possessius
+from ..traductor_cat_val.rules.val_cat.demostratius import carrega_demostratius
+from ..traductor_cat_val.rules.val_cat.lexic import carrega_lexic
+from ..traductor_cat_val.rules.val_cat.numerals import carrega_numerals
+from ..traductor_cat_val.rules.val_cat.possessius import _carrega_possessius
 
 # Nomes per a `WORD_RE` (vore `_processa_corpus`/`resalta_html`, que
 # encara necessiten un regex simple de paraula per a construir l'HTML
@@ -524,13 +517,16 @@ def calcula_gd(
     Homògrafs declarats (vore "HOMÒGRAFS ENTRE CATEGORIES" al docstring
     del mòdul): només compta la lectura dialectal. "nou" adjectiu no
     compta (spaCy tampoc reconeix mai el nom "nou" = nuez, l'etiqueta NUM,
-    així que eixa lectura es perd: fals negatiu acceptat); "manca" nom
-    (lectura dialectal, "carència") sí compta:
+    així que eixa lectura es perd: fals negatiu acceptat). "manca" nom
+    (lectura dialectal, "carència") comptava fins al 29/10/2026; des que
+    els `lemas` de l'entrada diuen "manc [adj, n]" (dada del proveïdor),
+    la categoria nom la compartixen dos lectures i ja no compta mai
+    (mateix cas que "calces" o "gandula"):
 
     >>> calcula_gd("Hem comprat un cotxe nou.")["total_marcades"]
     0
     >>> calcula_gd("Hi ha una manca de recursos.")["marcadors_orientals"]
-    ['manca']
+    []
     """
     if formes is None:
         formes = carrega_formes_dialectals()
@@ -876,8 +872,9 @@ def _processa_corpus(
         print(f"  Informe HTML guardat a {sortida_html} (GD '{camp}'={gd_a}{extra})")
 
 
-def main() -> None:
+def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(
+        prog="avlizador gd",
         description="Calcula el Grau Dialectal (GD) d'un text, fitxer o corpus JSONL."
     )
     grup = parser.add_mutually_exclusive_group(required=True)
@@ -921,7 +918,7 @@ def main() -> None:
         help="Amb --corpus: analitza nomes les primeres N files -- util per a "
              "corpus grans (p.ex. el del BOE, ~268.000 linies) abans de llançar-ho sencer.",
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     if args.text is not None:
         _mostra_text(

@@ -16,6 +16,8 @@ doctests de les regles.
 
 from __future__ import annotations
 
+import warnings
+
 from .rules.cat_val.engine import RuleEngineInvers
 
 _ENGINE_INVERS: RuleEngineInvers | None = None
@@ -43,7 +45,44 @@ def translate_cat_val(text: str) -> str:
     "En un nou procés d'expansió."
     >>> translate_cat_val("Un cop acabada la reunió, marxem.")
     'Una vegada acabada la reunió, marxem.'
+
+    Sense `torch` o `transformers` instal·lats (paquet sense l'extra
+    `[ml]`), usa el motor sol i avisa una vegada amb
+    `AvisSenseModelLlengua` (decisió del 30/10/2026).
     """
+    if not model_llengua_disponible():
+        _avisa_sense_model()
+        return translate_cat_val_motor(text)
+
     from .model_llengua import translate_cat_val_ml
 
     return translate_cat_val_ml(text)
+
+
+class AvisSenseModelLlengua(UserWarning):
+    """Avís: falta l'extra `[ml]` i `translate_cat_val` usa el motor sol."""
+
+
+_AVISAT = False
+
+
+def model_llengua_disponible() -> bool:
+    """True si estan instal·lats `torch` i `transformers` (extra `[ml]`).
+    No els importa (importar `torch` tarda uns segons)."""
+    from importlib.util import find_spec
+
+    return find_spec("torch") is not None and find_spec("transformers") is not None
+
+
+def _avisa_sense_model() -> None:
+    global _AVISAT
+    if not _AVISAT:
+        warnings.warn(
+            "No estan instal·lats 'torch' i 'transformers': s'usa el motor de "
+            "regles sense el model de llengua (FLOR-760M), que resol els "
+            "homògrafs ('cop', 'nou', 'manca'...). Per al sistema complet: "
+            'pip install "avlizador[ml]".',
+            AvisSenseModelLlengua,
+            stacklevel=3,
+        )
+        _AVISAT = True

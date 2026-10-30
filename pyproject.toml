@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "avlizador"
+version = "1.0.0"
+description = "Traductor dialectal català -> valencià (norma AVL) i Grau Dialectal (GD, GDV, GDC). Només CPU."
+readme = "README.md"
+requires-python = ">=3.10"
+# Llicència pendent de confirmar (30/10/2026: probablement CC BY 4.0).
+authors = [{ name = "Transducens, Universitat d'Alacant" }]
+keywords = ["valencià", "català", "traducció dialectal", "AVL", "spaCy"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Natural Language :: Catalan",
+    "Operating System :: OS Independent",
+    "Topic :: Text Processing :: Linguistic",
+]
+dependencies = [
+    "spacy>=3.8,<3.9",
+    # Model català de spaCy (no és a PyPI: la wheel oficial de spaCy).
+    "ca_core_news_md @ https://github.com/explosion/spacy-models/releases/download/ca_core_news_md-3.8.0/ca_core_news_md-3.8.0-py3-none-any.whl",
+]
+
+[project.optional-dependencies]
+# Model de llengua FLOR-760M per als homògrafs: el sistema principal.
+# Per a torch només CPU: --extra-index-url https://download.pytorch.org/whl/cpu
+ml = [
+    "torch>=2.2",
+    "transformers>=4.45",
+    # La 2.x va trencar transformers el 29/10/2026.
+    "huggingface_hub>=0.24,<2.0",
+]
+avaluacio = ["sacrebleu>=2.4"]
+dev = ["pytest>=8", "sacrebleu>=2.4"]
+
+[project.scripts]
+avlizador = "avlizador.cli:main"
+
+[project.urls]
+Repository = "https://github.com/transducens/AVLizador"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"avlizador.traductor_cat_val" = ["data/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--import-mode=importlib"

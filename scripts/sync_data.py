@@ -51,8 +51,11 @@ from pathlib import Path
 from typing import Callable
 
 ARREL = Path(__file__).resolve().parent.parent
-LEXICO = ARREL / "pipeline" / "02_regles_dialectals" / "lexic"
-DATA = Path(__file__).resolve().parent / "data"
+# 30/10/2026: les fonts del proveïdor viuen a `dades/lexic/` (font única;
+# abans `pipeline/02_regles_dialectals/lexic/diccionarios/`) i les còpies a
+# `src/avlizador/traductor_cat_val/data/` (abans `traductor/data/`).
+LEXIC = ARREL / "dades" / "lexic"
+DATA = ARREL / "src" / "avlizador" / "traductor_cat_val" / "data"
 
 def _marca_ambigues_dins_del_mateix_fitxer(dades: list[dict]) -> list[dict]:
     """Afig `problematica: true` a qualsevol entrada la forma valenciana de
@@ -193,7 +196,7 @@ FONTS: list[FontSpec] = [
         # `fuente == "avl_equip"` per no barrejar-se amb els demostratius
         # (que també fan servir `categoria: "det"` dins del mateix fitxer).
         dest="lexic_general.json",
-        font=LEXICO / "diccionarios" / "lexico_general.json",
+        font=LEXIC / "lexico_general.json",
         entrades=lambda d: d,
     ),
     FontSpec(
@@ -214,8 +217,8 @@ FONTS: list[FontSpec] = [
         # esborrada del tot (conservats a l'historial de git).
         dest="conjugacions_dialectals.json",
         font=(
-            LEXICO / "diccionarios" / "verbos_diferentes_conjugados.json",
-            LEXICO / "diccionarios" / "conjugaciones_general.json",
+            LEXIC / "verbos_diferentes_conjugados.json",
+            LEXIC / "conjugaciones_general.json",
         ),
         entrades=_marca_ambigues_dins_del_mateix_fitxer,
         embolica=lambda entrades: {
