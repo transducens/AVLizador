@@ -1159,6 +1159,55 @@ caso) destapó, con causa raíz confirmada en cada caso:
 4. El plural de "servici"/"servei" no está derivado del singular, que sí
    figura en el diccionario.
 
+### Benchmark manual revisado a mano: BOE y AVL (28-30/10/2026)
+
+Los benchmarks anteriores tienen dos límites: el de 151 frases es pequeño
+y el BOE "estricto" se construyó con el propio diccionario (mide
+regresiones, no huecos). Por eso se montó un benchmark nuevo, revisado
+frase a frase por personas (proceso completo en
+`documentacio/hoja_de_ruta_benchmark_manual.md`):
+
+- **BOE, 246 frases**: catalán y valenciano oficiales del BOE, elegidas
+  para cubrir los fenómenos de los diccionarios y de las reglas (léxico,
+  conjugaciones, demostrativos, posesivos, "per a", incoativos...) y
+  revisadas a mano desde el original.
+- **AVL, 212 frases**: valenciano de los textos de la AVL; el catalán se
+  generó con el traductor val→cat y se corrigió a mano.
+- **Mezcla, 458**: las dos juntas, como cifra única.
+
+Además de las exactas, BLEU y chrF, desde el 30/10/2026 se mide **TER**
+(porcentaje de ediciones de palabra, contando un bloque movido como una
+sola) y **WER** (lo mismo sin desplazamientos), los dos de corpus y
+cuanto más bajos, mejor. Resultados del sistema que se entrega (motor +
+FLOR-760M) frente al motor solo:
+
+| Benchmark | Sistema | Exactas | BLEU | chrF | TER | WER |
+|---|---|---|---|---|---|---|
+| BOE 246 | motor solo | 32 (13,0 %) | 83,53 | 93,46 | 9,50 | 10,15 |
+| BOE 246 | **motor + FLOR** | 32 (13,0 %) | 83,82 | 93,59 | **9,26** | **9,94** |
+| AVL 212 | motor solo | 182 (85,8 %) | 98,35 | 99,16 | 0,80 | 0,80 |
+| AVL 212 | **motor + FLOR** | **195 (92,0 %)** | 99,08 | 99,54 | **0,41** | **0,41** |
+| Mezcla 458 | motor solo | 214 (46,7 %) | 90,39 | 96,10 | 5,91 | 6,30 |
+| Mezcla 458 | **motor + FLOR** | **227 (49,6 %)** | 90,88 | 96,34 | **5,61** | **6,01** |
+
+Lectura:
+
+- **El modelo de lenguaje mejora los tres y no empeora ninguno.** En la
+  AVL resuelve 14 frases ("cop"→"vegada", "anou"→"nou") y pierde una
+  ("les anous").
+- **AVL, casi resuelta**: las 17 frases que fallan están a 1-3 palabras
+  de la referencia. La mitad es una decisión de registro pendiente
+  ("xic" frente a "xiquet").
+- **BOE: las exactas engañan.** Solo el 13 % de frases salen idénticas,
+  pero el TER es 9, es decir, una palabra de cada diez. La referencia es
+  el texto oficial tal cual y se separa del catalán por motivos que no
+  son dialectales: futuro donde el catalán usa presente ("pot"→"podrà",
+  "és"→"serà"), reformulaciones ("mitjançant"→"per mitjà de"), artículos
+  y orden. En este benchmark, TER, WER y chrF son la medida útil.
+
+Todas las cifras, con chrF++ y las rutas de los resultados, en
+`pipeline/03_seleccio_de_model/resultats_benchmarks_cat_val.md`.
+
 ## 16. Reestructuración del repositorio (14/10/2026)
 
 Tras varias semanas de trabajo acumulado, el repositorio tenía una
@@ -1199,31 +1248,43 @@ completa, carpeta por carpeta:
   retirada de una regla que no generalizaba más allá del propio
   benchmark).
 
-## 17. Estado actual (23/10/2026) y próximos pasos
+## 17. Estado actual (30/10/2026) y próximos pasos
 
-**Catalán → valenciano** (la dirección que se entrega):
+**Catalán → valenciano** (la dirección que se entrega). Desde el
+29-30/10/2026 el **sistema principal es motor + FLOR-760M**; el motor
+solo se mide únicamente para ver qué aporta el modelo de lenguaje.
 
-| benchmark | motor solo | motor + modelo de lenguaje |
-|---|---|---|
-| 151 (banco curado) | 146/154 | 146/154 (ningún cambio) |
-| 151 + homógrafos (`benchmark_sistema_final_cat_val.json`, 253 frases) | 190/253 (BLEU 91,5) | **227/253** (BLEU 96,5) |
-| BOE estricto completo (9.453) | 8.857 | — |
-| BOE amplio (muestra de 2.000) | 1.200 | 1.206 |
-| gplsi (1.958) | 1.479 | — |
+Sistema final en todos los benchmarks, misma versión y mismas métricas
+(30/10/2026; el de evaluación principal es el **manual mezcla**):
 
-Las cifras del motor solo en el BOE y gplsi son del 22/10/2026; desde
-entonces solo han cambiado datos que esos corpus apenas contienen ("cops",
-numerales marcados `revision`, "hamaques").
+| Benchmark | Exactas | BLEU | chrF | TER ↓ | WER ↓ |
+|---|---|---|---|---|---|
+| **Manual mezcla BOE + AVL (458)** | **227 (49,6 %)** | 90,88 | 96,34 | 5,61 | 6,01 |
+| Manual BOE (246) | 32 (13,0 %) | 83,82 | 93,59 | 9,26 | 9,94 |
+| Manual AVL (212) | 195 (92,0 %) | 99,08 | 99,54 | 0,41 | 0,41 |
+| 151 (154) | 146 (94,8 %) | 99,32 | 99,66 | 0,27 | 0,27 |
+| 151 + homógrafos (253) | 226 (89,3 %) | 96,38 | 98,21 | 0,74 | 0,74 |
+| BOE estricto, muestra (2.000) | 1.880 (94,0 %) | 98,95 | 99,64 | 0,32 | 0,59 |
+| BOE amplio, muestra (2.000) | 1.203 (60,2 %) | 88,24 | 95,54 | 3,73 | 6,00 |
+| gplsi (1.958) | 1.544 (78,9 %) | 93,52 | 97,00 | 2,77 | 2,79 |
+
+En los manuales, el motor solo da 214/458 en la mezcla (TER 5,91), 32/246
+en el BOE (TER 9,50) y 182/212 en la AVL (TER 0,80): el modelo de
+lenguaje mejora los tres. Frente a las medidas anteriores (22-23/10), el
+BOE estricto sube de 1.778 a 1.880 y gplsi de 1.486 a 1.544 por el
+trabajo de datos de la última semana; el BOE amplio baja 3 frases
+("finalitat"→"fi", dato nuevo del léxico). Detalle, ganancias y pérdidas
+en `pipeline/03_seleccio_de_model/resultats_benchmarks_cat_val.md`.
 
 Cómo se entrega:
 
-- **Motor** (`translate_cat_val`): reglas + diccionarios + spaCy. Solo CPU,
-  unos 700 MB de memoria y unas 250 frases por segundo en un núcleo. Es la
-  pieza principal y funciona sin nada más.
-- **Capa opcional** (`translate_cat_val_ml`): añade `torch`,
-  `transformers` y FLOR-760M (1,5 GB). Solo se activa en las frases con
-  "cop", "cops", "calces", "gandula" o "gandules" (en el BOE, unas 428 de
-  268.000 líneas), y solo elige entre candidatos del diccionario.
+- **Traductor** (`translate_cat_val`): reglas + diccionarios + spaCy +
+  FLOR-760M (`torch`, `transformers`, 1,5 GB). Solo CPU. El modelo solo
+  se activa en las frases con homógrafos que el diccionario declara
+  ("cop", "cops", "nou", "manca", "calces", "gandula"...) y solo elige
+  entre candidatos del diccionario: no inventa texto. El motor sin modelo
+  sigue disponible como `translate_cat_val_motor` (unos 700 MB de memoria
+  y unas 250 frases por segundo en un núcleo).
 - **GD** (sección 14): la segunda herramienta.
 
 **Valenciano → catalán**: aparcado desde el 20/10/2026. Última medida: 151

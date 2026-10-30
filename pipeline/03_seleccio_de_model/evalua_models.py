@@ -521,9 +521,41 @@ def carrega_comet_model(nom_model: str = COMET_MODEL_NAME):
 
 # ─── Mètriques ────────────────────────────────────────────────────────────────
 
+def distancia_paraules(hipotesi: str, referencia: str) -> int:
+    """Distància d'edició (Levenshtein) per paraules: substitucions,
+    insercions i esborrats. És el numerador del WER. Separa per espais,
+    distingix majúscules i la puntuació va enganxada a la paraula (igual
+    que el TER de sacrebleu per defecte).
+
+    >>> distancia_paraules("a b c d", "a x c d e")
+    2
+    >>> distancia_paraules("", "a b")
+    2
+    """
+    hip, ref = hipotesi.split(), referencia.split()
+    anterior = list(range(len(ref) + 1))
+    for i, h in enumerate(hip, 1):
+        actual = [i]
+        for j, r in enumerate(ref, 1):
+            actual.append(min(anterior[j] + 1, actual[j - 1] + 1,
+                              anterior[j - 1] + (h != r)))
+        anterior = actual
+    return anterior[-1]
+
+
 def calcula_metriques(hipotesi: str, referencia: str) -> dict:
-    """Calcula BLEU, chrF i chrF++ per a un parell hipòtesi/referència.
+    """Calcula BLEU, chrF, chrF++, TER i WER per a un parell hipòtesi/referència.
     Normalitza apòstrofs abans de comparar per no penalitzar diferències tipogràfiques.
+
+    TER i WER (30/10/2026): % d'edicions sobre les paraules de la referència,
+    com més baix millor. El TER compta també el desplaçament d'un bloc de
+    paraules com una sola edició; el WER no (un canvi d'orde costa una edició
+    per paraula). Es guarden les edicions i la llargària de la referència per
+    a poder fer la mitjana de corpus (suma d'edicions / suma de paraules).
+
+    >>> m = calcula_metriques("a b c d", "a x c d e")
+    >>> m["ter"], m["wer"], m["ter_edicions"], m["wer_edicions"], m["ref_paraules"]
+    (40.0, 40.0, 2, 2, 5)
     """
     hip = normalitza_apostrofa(hipotesi.strip().lower())
     ref = normalitza_apostrofa(referencia.strip().lower())
@@ -546,10 +578,25 @@ def calcula_metriques(hipotesi: str, referencia: str) -> dict:
     except Exception:
         chrf_pp_score = 0.0
 
+    ref_paraules = len(referencia.split())
+    try:
+        ter = sacrebleu.sentence_ter(hipotesi, [referencia])
+        ter_score, ter_edicions = ter.score, ter.num_edits
+    except Exception:
+        ter_score, ter_edicions = 100.0, float(ref_paraules)
+
+    wer_edicions = distancia_paraules(hipotesi, referencia)
+    wer_score = wer_edicions / ref_paraules * 100 if ref_paraules else 0.0
+
     return {
         "bleu":    round(bleu_score, 2),
         "chrf":    round(chrf_score, 2),
         "chrf_pp": round(chrf_pp_score, 2),
+        "ter":     round(ter_score, 2),
+        "wer":     round(wer_score, 2),
+        "ter_edicions": ter_edicions,
+        "wer_edicions": wer_edicions,
+        "ref_paraules": ref_paraules,
         "exacte":  (hip == ref),
     }
 
@@ -1158,6 +1205,7 @@ def avalua_model(
         print(
             f"  BLEU={metriques['bleu']:5.1f}  "
             f"chrF={metriques['chrf']:5.1f}  "
+            f"TER={metriques['ter']:5.1f}  "
             f"{'✓ EXACTE' if metriques['exacte'] else ''}"
         )
 
@@ -1186,6 +1234,10 @@ def avalua_model(
     chrf_mitja    = sum(r["chrf"]    for r in resultats) / len(resultats)
     chrf_pp_mitja = sum(r["chrf_pp"] for r in resultats) / len(resultats)
     exactes       = sum(1 for r in resultats if r["exacte"])
+    # TER/WER de corpus (la forma estàndard): suma d'edicions / suma de
+    # paraules de la referència, no la mitjana de les frases.
+    ter_corpus    = ter_wer_corpus(resultats, "ter_edicions")
+    wer_corpus    = ter_wer_corpus(resultats, "wer_edicions")
     comet_scores  = [r["comet"] for r in resultats if usa_comet and r.get("comet") is not None]
     comet_mitja   = round(sum(comet_scores) / len(comet_scores), 2) if comet_scores else None
 
@@ -1197,6 +1249,8 @@ def avalua_model(
             "n":      len(items_cat),
             "bleu":   round(sum(r["bleu"] for r in items_cat) / len(items_cat), 2),
             "chrf":   round(sum(r["chrf"] for r in items_cat) / len(items_cat), 2),
+            "ter":    ter_wer_corpus(items_cat, "ter_edicions"),
+            "wer":    ter_wer_corpus(items_cat, "wer_edicions"),
             "exactes": sum(1 for r in items_cat if r["exacte"]),
         }
         cat_comet = [r["comet"] for r in items_cat if r.get("comet") is not None]
@@ -1223,6 +1277,8 @@ def avalua_model(
         "bleu_mitja":     round(bleu_mitja, 2),
         "chrf_mitja":     round(chrf_mitja, 2),
         "chrf_pp_mitja":  round(chrf_pp_mitja, 2),
+        "ter_corpus":     ter_corpus,
+        "wer_corpus":     wer_corpus,
         "comet_mitja":    comet_mitja,
         "exactes":        exactes,
         "exactes_pct":    round(exactes / len(resultats) * 100, 1),
@@ -1235,11 +1291,27 @@ def avalua_model(
     print(f"BLEU:    {bleu_mitja:.2f}")
     print(f"chrF:    {chrf_mitja:.2f}")
     print(f"chrF++:  {chrf_pp_mitja:.2f}")
+    print(f"TER:     {ter_corpus:.2f}  (corpus; com més baix, millor)")
+    print(f"WER:     {wer_corpus:.2f}  (corpus; com més baix, millor)")
     if comet_mitja is not None:
         print(f"COMET:   {comet_mitja:.2f}")
     print(f"Exactes: {exactes}/{len(resultats)} ({exactes/len(resultats)*100:.1f}%)")
 
     return resum
+
+
+def ter_wer_corpus(resultats: list[dict], camp_edicions: str) -> float:
+    """TER o WER de corpus: suma d'edicions / suma de paraules de la
+    referència × 100 (`camp_edicions`: "ter_edicions" o "wer_edicions").
+
+    >>> ter_wer_corpus([{"wer_edicions": 1, "ref_paraules": 4},
+    ...                 {"wer_edicions": 0, "ref_paraules": 6}], "wer_edicions")
+    10.0
+    """
+    paraules = sum(r["ref_paraules"] for r in resultats)
+    if not paraules:
+        return 0.0
+    return round(sum(r[camp_edicions] for r in resultats) / paraules * 100, 2)
 
 
 # ─── Informe comparatiu ───────────────────────────────────────────────────────
@@ -1255,12 +1327,12 @@ def genera_informe_comparatiu(resultats_models: list[dict]) -> str:
     te_comet = any(r.get("comet_mitja") is not None for r in resultats_models)
 
     # Taula resum (ordenada per chrF descendent)
-    capcalera = f"{'Model':<25} {'BLEU':>8} {'chrF':>8} {'chrF++':>8}"
+    capcalera = f"{'Model':<25} {'BLEU':>8} {'chrF':>8} {'chrF++':>8} {'TER':>8} {'WER':>8}"
     if te_comet:
         capcalera += f" {'COMET':>8}"
     capcalera += f" {'Exactes':>10}"
     lines.append(capcalera)
-    lines.append("-" * (65 + (9 if te_comet else 0)))
+    lines.append("-" * (83 + (9 if te_comet else 0)))
 
     for r in sorted(resultats_models, key=lambda x: x["chrf_mitja"], reverse=True):
         fila = (
@@ -1268,6 +1340,8 @@ def genera_informe_comparatiu(resultats_models: list[dict]) -> str:
             f"{r['bleu_mitja']:>8.2f} "
             f"{r['chrf_mitja']:>8.2f} "
             f"{r['chrf_pp_mitja']:>8.2f} "
+            f"{r.get('ter_corpus', float('nan')):>8.2f} "
+            f"{r.get('wer_corpus', float('nan')):>8.2f} "
         )
         if te_comet:
             comet_txt = f"{r['comet_mitja']:.2f}" if r.get("comet_mitja") is not None else "-"
@@ -1284,6 +1358,8 @@ def genera_informe_comparatiu(resultats_models: list[dict]) -> str:
                 f"  {cat:<30} n={m['n']:>2}  "
                 f"BLEU={m['bleu']:>5.1f}  chrF={m['chrf']:>5.1f}"
             )
+            if "ter" in m:
+                fila += f"  TER={m['ter']:>5.1f}  WER={m['wer']:>5.1f}"
             if "comet" in m:
                 fila += f"  COMET={m['comet']:>5.1f}"
             fila += f"  exactes={m['exactes']}"

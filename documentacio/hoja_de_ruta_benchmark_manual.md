@@ -538,5 +538,115 @@ python evalua_models.py --model traductor_ml --direccio cat-val --benchmark ../.
 python evalua_models.py --model traductor_ml --direccio cat-val --benchmark ../../dades/benchmark_manual/benchmark_manual_cat_val.json
 ```
 
-**Pendiente**: decidir BM-AVL-057; evaluar el traductor
-con los tres benchmarks (todavía no se ha hecho con el BOE nuevo).
+**Pendiente**: ~~decidir BM-AVL-057~~ (se queda tal cual, 30/10);
+~~evaluar el traductor con los tres benchmarks~~ (hecho, sección 10).
+
+## 10. Evaluación del traductor en los tres benchmarks + TER y WER (30/10/2026)
+
+**Sistema principal = motor + FLOR-760M** (`traductor.translate_cat_val`,
+`evalua_models.py --model traductor_ml`; decisión del usuario, 29/10,
+confirmada el 30/10). El motor solo (`--model traductor`) se mide al lado
+solo para ver qué aporta el modelo de lenguaje.
+
+### Qué es cada benchmark
+
+| Benchmark | Fichero (`dades/benchmark_manual/`) | Frases | Origen de la referencia valenciana |
+|---|---|---|---|
+| BOE | `benchmark_manual_boe_cat_val.json` | 246 | Texto oficial del BOE en valenciano, tal cual (revisión v2 del usuario) |
+| AVL | `benchmark_manual_avl_cat_val.json` | 212 | Textos de la AVL; el catalán es el borrador val→cat corregido a mano |
+| Mezcla | `benchmark_manual_cat_val.json` | 458 | **Las 246 + las 212 juntas**, sin frases nuevas |
+
+La **mezcla** no es un tercer conjunto: es la suma de los otros dos (su
+resultado es la media de los dos ponderada por número de frases y
+palabras). Sirve como cifra única del benchmark manual, pero queda
+dominada por el BOE en TER/WER (tiene más frases y más largas: 32,3
+palabras de media frente a 26,4). Para entender qué pasa hay que mirar
+el BOE y la AVL por separado.
+
+### Métricas (nuevas en `evalua_models.py` desde el 30/10)
+
+- **Exactas**: frase idéntica a la referencia (sin distinguir mayúsculas,
+  apóstrofos normalizados). Muy dura con referencias reformuladas.
+- **BLEU / chrF / chrF++** (sacrebleu, media de las frases): coincidencia
+  de n-gramas de palabras (BLEU) o de caracteres (chrF; chrF++ añade
+  palabras). Más alto = mejor.
+- **TER** (nuevo): % de ediciones (insertar, borrar, sustituir palabra o
+  **mover un bloque**, que cuenta como 1) para llegar a la referencia.
+  `sacrebleu.sentence_ter`. Más bajo = mejor.
+- **WER** (nuevo): igual pero sin desplazamientos (Levenshtein por
+  palabras; un cambio de orden cuesta una edición por palabra).
+  `evalua_models.distancia_paraules`, sin dependencias nuevas. Más bajo =
+  mejor. WER ≥ TER siempre; si se separan, hay reordenaciones.
+- TER y WER: separación por espacios, distinguen mayúsculas, puntuación
+  pegada a la palabra. La cifra del benchmark es **de corpus** (suma de
+  ediciones / suma de palabras de la referencia; `ter_corpus`,
+  `wer_corpus` en el JSON); cada frase guarda además `ter`, `wer`,
+  `ter_edicions`, `wer_edicions` y `ref_paraules`.
+
+### Resultados (30/10/2026, 0 `ERROR:`)
+
+JSON en `pipeline/03_seleccio_de_model/resultats/benchmark_Traductor_Invers{,_ML_FLOR-760M}_20261030_081{4,6,9}.json`
+(0814 = BOE, 0816 = AVL, 0819 = mezcla).
+
+| Benchmark | Sistema | Exactas | BLEU | chrF | chrF++ | TER ↓ | WER ↓ |
+|---|---|---|---|---|---|---|---|
+| BOE 246 | motor solo | 32 (13,0 %) | 83,53 | 93,46 | 92,66 | 9,50 | 10,15 |
+| BOE 246 | **motor + FLOR** | 32 (13,0 %) | 83,82 | 93,59 | 92,82 | **9,26** | **9,94** |
+| AVL 212 | motor solo | 182 (85,8 %) | 98,35 | 99,16 | 99,12 | 0,80 | 0,80 |
+| AVL 212 | **motor + FLOR** | **195 (92,0 %)** | 99,08 | 99,54 | 99,52 | **0,41** | **0,41** |
+| Mezcla 458 | motor solo | 214 (46,7 %) | 90,39 | 96,10 | 95,65 | 5,91 | 6,30 |
+| Mezcla 458 | **motor + FLOR** | **227 (49,6 %)** | 90,88 | 96,34 | 95,92 | **5,61** | **6,01** |
+
+Ediciones (WER) por frase con motor + FLOR:
+
+| Ediciones | 0 | 1 | 2-3 | 4-6 | 7+ |
+|---|---|---|---|---|---|
+| BOE (246) | 32 | 36 | 81 | 77 | 20 |
+| AVL (212) | 195 | 11 | 6 | 0 | 0 |
+
+### Lectura
+
+1. **FLOR mejora en los tres y no empeora en ninguno.** AVL: +14 / −1
+   frases exactas ("cop/cops" → "vegada/vegades/colp", "anou" → "nou";
+   pierde BM-AVL-191, "les anous", ya conocido). TER de la AVL a la mitad
+   (0,80 → 0,41). En el BOE cambia 12 frases, todas a mejor ("Tot anou
+   depòsit" → "Tot nou depòsit", "Un cop" → "Una vegada"), pero ninguna
+   llega a exacta porque el resto de la frase ya difiere: por eso las
+   exactas no se mueven y el TER sí (9,50 → 9,26).
+2. **AVL: casi resuelto.** Los 17 fallos que quedan tienen 1-3
+   ediciones y son de tres tipos:
+   - "xic/xica/xics/xiques" (canónica del léxico) donde la AVL quiere
+     "xiquet/xiqueta" (9 frases): es el "noi"→"xic" de la sección 8, C;
+     lo decide el usuario.
+   - "reporta/reportar/reportéssim" → "genera/generar/generàrem" (3):
+     el catalán corregido a mano dice "reportar" y el léxico no tiene
+     este par; es reformulación de la referencia, no dialectal.
+   - Sueltos: "dos"→"dues" (BM-AVL-159), "El"→"La" tras un cambio de
+     palabra (BM-AVL-196), "ullada"→"colp d'ull" (BM-AVL-189), una "a"
+     de más (BM-AVL-005) y BM-AVL-191 ("anous").
+3. **BOE: las exactas engañan.** 13 % de exactas, pero TER ≈ 9: una
+   palabra de cada diez. Solo 20 frases tienen 7 o más ediciones. La
+   referencia es el texto oficial sin retocar, y gran parte de la
+   distancia no es dialectal: futuro normativo donde el catalán usa
+   presente ("pot"→"podrà" 20, "poden"→"podran" 7, "és"→"serà" 7,
+   "ha"→"haurà" 5, "tenen"→"tindran" 3, "correspon"→"correspondrà" 3,
+   "S'ha d'imposar"→"S'imposarà"), reformulaciones ("mitjançant"→"per
+   mitjà de", "forma"→"manera", "signada"→"firmada", "obtindre"→
+   "arreplegar"), artículos añadidos o quitados, este/eixe y orden
+   cambiado (por eso WER > TER). En el BOE, **TER/WER y chrF son la
+   medida útil**; las exactas, no.
+4. **Para comparar sistemas**, la cifra de referencia es el TER/WER del
+   BOE y las exactas + TER de la AVL. La mezcla, como resumen.
+
+### Cómo se reproduce
+
+```bash
+cd pipeline/03_seleccio_de_model
+for b in boe_ avl_ ""; do
+  python evalua_models.py --model traductor_ml --direccio cat-val --benchmark ../../dades/benchmark_manual/benchmark_manual_${b}cat_val.json
+  python evalua_models.py --model traductor    --direccio cat-val --benchmark ../../dades/benchmark_manual/benchmark_manual_${b}cat_val.json
+done
+```
+
+Mirar siempre que no haya líneas `ERROR:` en la salida (la frase se
+quedaría sin traducir y contaría como fallo normal).
