@@ -43,6 +43,38 @@ mayúsculas, la puntuación va pegada a la palabra. Cada frase del JSON
 guarda `ter`, `wer`, `ter_edicions`, `wer_edicions` y `ref_paraules`; el
 resumen, `ter_corpus` y `wer_corpus`.
 
+## 02/11/2026 — Baseline: AVLizador frente a LLM generalistas (manual mezcla)
+
+9 LLM usados tal cual en Abaco (Ollama, 1 GPU por modelo, instrucción
+mínima igual para todos, temperatura 0; job 2578, 0 errores) más el
+umbral de no traducir. Script, condiciones, lectura completa y tablas del
+BOE y de la AVL en `baseline_llm/` (README y `resum_baseline.md`).
+
+| Sistema | Exactas | BLEU | chrF | chrF++ | TER ↓ | WER ↓ | GD | GDV | GDC |
+|---|---|---|---|---|---|---|---|---|---|
+| *Referencia (valenciano)* | — | — | — | — | — | — | *0,9973* | *0,9998* | *0,9182* |
+| **AVLizador: motor + FLOR-760M** | **227/458 (49,6 %)** | **90,88** | **96,34** | **95,92** | **5,61** | **6,01** | **0,9936** | **0,9995** | **0,9189** |
+| AVLizador: motor solo | 214/458 (46,7 %) | 90,39 | 96,10 | 95,65 | 5,91 | 6,30 | 0,9764 | 0,9981 | 0,9194 |
+| Sin traducir (catalán tal cual) | 1/458 (0,2 %) | 69,25 | 87,97 | 86,21 | 15,76 | 16,08 | 0,0264 | 0,9200 | 0,9978 |
+| gemma3:12b | 11/458 (2,4 %) | 70,54 | 87,46 | 85,93 | 16,13 | 16,72 | 0,3889 | 0,9530 | 0,9701 |
+| llama3.1:8b | 1/458 (0,2 %) | 68,32 | 87,55 | 85,73 | 16,28 | 16,69 | 0,0601 | 0,9239 | 0,9951 |
+| gemma4:12b | 1/458 (0,2 %) | 67,49 | 87,06 | 85,23 | 16,88 | 17,22 | 0,0564 | 0,9273 | 0,9957 |
+| qwen3:8b | 1/458 (0,2 %) | 66,86 | 86,88 | 84,97 | 17,23 | 17,57 | 0,0382 | 0,9227 | 0,9969 |
+| qwen3:14b | 2/458 (0,4 %) | 66,83 | 86,81 | 84,89 | 17,32 | 17,83 | 0,0435 | 0,9227 | 0,9965 |
+| qwen2.5:7b | 1/458 (0,2 %) | 63,57 | 85,36 | 83,23 | 19,50 | 19,85 | 0,0372 | 0,9242 | 0,9971 |
+| qwen2.5:14b | 0/458 (0,0 %) | 59,04 | 82,96 | 80,57 | 22,55 | 22,93 | 0,0975 | 0,9325 | 0,9927 |
+| mistral-nemo:12b | 1/458 (0,2 %) | 59,35 | 82,89 | 80,52 | 22,86 | 23,40 | 0,1263 | 0,9365 | 0,9908 |
+| salamandra-7b-instruct | 4/458 (0,9 %) | 57,77 | 79,50 | 77,61 | 26,06 | 27,14 | 0,1517 | 0,9359 | 0,9885 |
+
+GD = formas valencianas / formas con marca; GDV = 1 − catalanas /
+palabras; GDC = 1 − valencianas / palabras (más bajo = más valenciano).
+Ningún LLM baja del TER de no traducir, y su salida sigue siendo
+catalán: GD 0,04-0,15 (gemma3, 0,39) frente a 0,994 de AVLizador; GDC
+0,99, como la entrada. Dejan "aquest(a/s/es)", "seva/seves",
+"serveis"... sin cambiar o reformulan la frase. Por partes, TER del
+sistema final frente al mejor LLM: BOE 9,26 frente a 18,83 (gemma3; sin
+traducir, 20,16); AVL 0,41 frente a 10,16 (llama3.1; sin traducir, 9,50).
+
 ## 30/10/2026 (08:41-09:02) — Sistema final en todos los benchmarks
 
 `python avalua_sistema_final.py` (motor + FLOR-760M), 0 errores. El

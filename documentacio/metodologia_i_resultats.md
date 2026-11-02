@@ -1218,6 +1218,60 @@ Lectura:
 Todas las cifras, con chrF++ y las rutas de los resultados, en
 `pipeline/03_seleccio_de_model/resultats_benchmarks_cat_val.md`.
 
+### Baseline: AVLizador frente a LLM generalistas (30/10-02/11/2026)
+
+La pregunta: ¿mejora AVLizador lo que ya existe? Se compararon 9 LLM
+abiertos que caben en una GPU de 11 GB (llama3.1:8b, qwen2.5:7b y 14b,
+qwen3:8b y 14b, gemma3:12b, gemma4:12b, salamandra-7b-instruct y
+mistral-nemo:12b), **usados tal cual** (decisión del usuario): la misma
+instrucción mínima para todos ("Traduïx el text següent del català al
+valencià. Respon només amb la traducció."), sin ejemplos, reglas ni
+glosario, temperatura 0. Se ejecutaron en Abaco con Ollama, 1 GPU por
+modelo y como mucho 2 a la vez, sobre el benchmark de evaluación (manual
+mezcla, 458) y sus partes BOE y AVL, con las métricas de siempre más el
+GDV de la salida. Como umbral, el resultado de no traducir: devolver el
+catalán tal cual. Apertium se quiso incluir y se descartó: no tiene par
+catalán → valenciano (solo hacia el valenciano desde el castellano y el
+inglés), y la vía castellano fallaba en la API pública.
+
+| Sistema (manual mezcla, 458) | Exactas | BLEU | TER ↓ | GD | GDV | GDC |
+|---|---|---|---|---|---|---|
+| *Referencia (valenciano)* | — | — | — | *0,9973* | *0,9998* | *0,9182* |
+| **AVLizador: motor + FLOR-760M** | **227 (49,6 %)** | **90,88** | **5,61** | **0,9936** | **0,9995** | **0,9189** |
+| AVLizador: motor solo | 214 (46,7 %) | 90,39 | 5,91 | 0,9764 | 0,9981 | 0,9194 |
+| Sin traducir (catalán tal cual) | 1 | 69,25 | 15,76 | 0,0264 | 0,9200 | 0,9978 |
+| Mejor LLM (gemma3:12b) | 11 (2,4 %) | 70,54 | 16,13 | 0,3889 | 0,9530 | 0,9701 |
+| Peor LLM (salamandra-7b-instruct) | 4 | 57,77 | 26,06 | 0,1517 | 0,9359 | 0,9885 |
+
+Lo que se ve:
+
+- **Ningún LLM mejora no traducir** en TER. Solo gemma3 lo supera un poco
+  en BLEU y en la parte del BOE.
+- **Su salida sigue siendo catalán.** Se mide con las tres caras del
+  grau dialectal (sección 14): el GD de los LLM va de 0,04 a 0,15
+  (gemma3, 0,39), frente a 0,997 de la referencia y 0,994 de AVLizador;
+  el GDC queda en 0,99 (casi ninguna forma valenciana), como la entrada.
+  El GDV (0,92-0,95, casi el 0,92 de la entrada) apunta a lo mismo pero
+  muy comprimido, porque divide entre todas las palabras: por eso se
+  miran los tres. Dejan sin cambiar los demostrativos ("aquest", unas
+  250 apariciones por modelo), los posesivos ("seva/seves", unas 120) y
+  "serveis".
+- **Muchos devuelven la frase igual** (llama3.1:8b 325 de 458, qwen3:8b
+  315), y **los que la cambian empeoran**: reformulan, corrigen el
+  catalán de entrada o introducen errores ("interconnected", "frontales",
+  "los nutrients").
+- AVLizador queda a un tercio del TER del mejor LLM, en CPU y más rápido
+  (0,5 s por frase con FLOR frente a 0,6-1,4 s de los LLM en GPU).
+
+Conclusión: sin ajustarlos, los LLM generalistas de este tamaño no saben
+pasar de catalán a valenciano normativo; la ventaja de AVLizador no es
+marginal. Detalle, tablas por parte y ejemplos en
+`pipeline/03_seleccio_de_model/baseline_llm/` (README y
+`resum_baseline.md`). Al revisar las salidas se vieron erratas en el
+catalán de entrada de algunas frases de la AVL (BM-AVL-003, 004, 016 y
+070: "permeto", "parin", que vienen del borrador automático val→cat);
+afectan igual a todos los sistemas y no se han tocado.
+
 ## 16. Reestructuración del repositorio (14/10/2026)
 
 Tras varias semanas de trabajo acumulado, el repositorio tenía una
@@ -1310,6 +1364,12 @@ BOE estricto sube de 1.778 a 1.880 y gplsi de 1.486 a 1.544 por el
 trabajo de datos de la última semana; el BOE amplio baja 3 frases
 ("finalitat"→"fi", dato nuevo del léxico). Detalle, ganancias y pérdidas
 en `pipeline/03_seleccio_de_model/resultats_benchmarks_cat_val.md`.
+
+**Frente a LLM generalistas** (baseline del 02/11/2026, sección 15): en
+el manual mezcla, el mejor de 9 LLM usados tal cual (gemma3:12b) da TER
+16,13 y 11 frases exactas, peor que no traducir (15,76); AVLizador, 5,61
+y 227. El GD de la salida de los LLM (0,04-0,39) dice que siguen
+escribiendo catalán; el de AVLizador, 0,994 (referencia 0,997).
 
 Cómo se entrega:
 

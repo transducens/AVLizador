@@ -84,26 +84,39 @@ def avalua_benchmark(funcio, benchmark: list[dict], verbose: bool = True) -> dic
     >>> r["exactes"], r["ter_corpus"], r["errors"]
     (1, 0.0, 0)
     """
-    resultats, errors = [], 0
+    resultats = []
     for i, item in enumerate(benchmark, 1):
         entrada = normalitza_apostrofa(item["oriental"])
         referencia = normalitza_apostrofa(item["occidental"])
+        error = False
         try:
             hipotesi = funcio(entrada)
         except Exception as exc:  # la frase compta com a fallada, no para l'avaluació
             print(f"  ERROR en {item['id']}: {exc}", file=sys.stderr)
-            hipotesi, errors = entrada, errors + 1
+            hipotesi, error = entrada, True
         metriques = calcula_metriques(hipotesi, referencia)
         resultats.append({"id": item["id"], "entrada": entrada, "referencia": referencia,
-                          "hipotesi": hipotesi, **metriques})
+                          "hipotesi": hipotesi, "error": error, **metriques})
         if verbose and (i % 100 == 0 or i == len(benchmark)):
             print(f"  {i}/{len(benchmark)}", file=sys.stderr)
+    return {**resumeix(resultats), "resultats": resultats}
 
+
+def resumeix(resultats: list[dict]) -> dict:
+    """Mètriques de conjunt d'una llista de frases ja avaluades (amb els
+    camps de `calcula_metriques` i `error`): serveix també per a un
+    subconjunt (p. ex. només les frases del BOE de la mescla).
+
+    >>> r = resumeix([{"exacte": True, "bleu": 100.0, "chrf": 100.0, "chrf_pp": 100.0,
+    ...                "ter_edicions": 0, "wer_edicions": 0, "ref_paraules": 2, "error": False}])
+    >>> r["exactes"], r["ter_corpus"], r["errors"]
+    (1, 0.0, 0)
+    """
     n = len(resultats)
     exactes = sum(r["exacte"] for r in resultats)
     return {
         "n_frases":      n,
-        "errors":        errors,
+        "errors":        sum(bool(r.get("error")) for r in resultats),
         "exactes":       exactes,
         "exactes_pct":   round(exactes / n * 100, 1) if n else 0.0,
         "bleu_mitja":    round(sum(r["bleu"] for r in resultats) / n, 2) if n else 0.0,
@@ -111,7 +124,6 @@ def avalua_benchmark(funcio, benchmark: list[dict], verbose: bool = True) -> dic
         "chrf_pp_mitja": round(sum(r["chrf_pp"] for r in resultats) / n, 2) if n else 0.0,
         "ter_corpus":    ter_wer_corpus(resultats, "ter_edicions"),
         "wer_corpus":    ter_wer_corpus(resultats, "wer_edicions"),
-        "resultats":     resultats,
     }
 
 
