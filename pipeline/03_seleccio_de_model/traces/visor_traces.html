@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trazas de AVLizador</title>
+<style>
+:root {
+  --bg: #f7f7f5; --panel: #ffffff; --text: #1d1d1b; --muted: #6b6b66; --line: #e2e1dc;
+  --accent: #2f6f9f; --accent-bg: #e6f0f7; --ok: #2e7d4f; --ok-bg: #e5f3ea; --ko: #b3412f; --ko-bg: #f9e7e3;
+  --warn: #8a6100; --warn-bg: #fbf1d6; --chip: #f0efea; --used: #2f6f9f; --used-bg: #dfeaf4; --mono: ui-monospace, "SF Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161716; --panel: #1f201f; --text: #e8e7e3; --muted: #a09f99; --line: #33342f;
+    --accent: #7db4dc; --accent-bg: #1e2f3c; --ok: #7fc79a; --ok-bg: #1d3226; --ko: #e8907f; --ko-bg: #3a221d;
+    --warn: #e2b858; --warn-bg: #3a2f14; --chip: #2a2b29; --used: #9cc8ea; --used-bg: #233a4d;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161716; --panel: #1f201f; --text: #e8e7e3; --muted: #a09f99; --line: #33342f;
+  --accent: #7db4dc; --accent-bg: #1e2f3c; --ok: #7fc79a; --ok-bg: #1d3226; --ko: #e8907f; --ko-bg: #3a221d;
+  --warn: #e2b858; --warn-bg: #3a2f14; --chip: #2a2b29; --used: #9cc8ea; --used-bg: #233a4d;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+header { padding: 14px 16px; border-bottom: 1px solid var(--line); background: var(--panel); display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+header h1 { font-size: 17px; margin: 0; }
+header .meta { color: var(--muted); font-size: 13px; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin-left: auto; }
+.controls input[type=search] { padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--text); min-width: 180px; }
+.controls label { font-size: 13px; color: var(--muted); display: flex; gap: 4px; align-items: center; }
+button, .btn { padding: 5px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--text); cursor: pointer; font: inherit; font-size: 13px; }
+.layout { display: grid; grid-template-columns: 300px 1fr; min-height: calc(100vh - 60px); }
+nav { border-right: 1px solid var(--line); overflow-y: auto; max-height: calc(100vh - 60px); background: var(--panel); }
+nav .item { padding: 8px 12px; border-bottom: 1px solid var(--line); cursor: pointer; }
+nav .item:hover { background: var(--chip); }
+nav .item.sel { background: var(--accent-bg); }
+nav .item .id { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+nav .item .txt { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+main { padding: 16px; overflow-x: hidden; min-width: 0; }
+section { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px; margin-bottom: 14px; }
+section h2 { font-size: 15px; margin: 0 0 10px; }
+section h2 .n { color: var(--muted); font-weight: normal; }
+.frases { display: grid; grid-template-columns: max-content 1fr; gap: 6px 12px; }
+.frases .k { color: var(--muted); font-size: 13px; }
+.frases .v { font-size: 15px; }
+.chg { background: var(--accent-bg); color: var(--accent); border-radius: 3px; padding: 0 2px; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 10px; margin-left: 4px; vertical-align: 1px; }
+.b-ok { background: var(--ok-bg); color: var(--ok); } .b-ko { background: var(--ko-bg); color: var(--ko); }
+.b-flor { background: var(--accent-bg); color: var(--accent); } .b-warn { background: var(--warn-bg); color: var(--warn); }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; font-size: 12px; white-space: nowrap; }
+td.mono, .mono { font-family: var(--mono); font-size: 12px; }
+.chip { display: inline-block; background: var(--chip); border-radius: 4px; padding: 0 5px; margin: 1px 2px 1px 0; font-family: var(--mono); font-size: 11.5px; white-space: nowrap; }
+.chip.used { background: var(--used-bg); color: var(--used); font-weight: 600; }
+.pos { font-family: var(--mono); font-weight: 600; }
+.pos.used { color: var(--used); }
+.dic div { margin-bottom: 2px; }
+.muted { color: var(--muted); }
+.warn { color: var(--warn); font-size: 12px; }
+.res { font-weight: 600; color: var(--accent); }
+.why { color: var(--muted); font-size: 12.5px; }
+details { margin-top: 4px; } summary { cursor: pointer; color: var(--muted); font-size: 12px; }
+.capes { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; font-size: 13px; }
+.capes .off { color: var(--muted); }
+.punt { border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin-top: 10px; }
+.punt h3 { margin: 0 0 6px; font-size: 14px; }
+.decision { margin-top: 8px; padding: 8px 10px; border-radius: 6px; background: var(--accent-bg); }
+.bar { height: 6px; background: var(--chip); border-radius: 3px; position: relative; min-width: 80px; }
+.bar > span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px; background: var(--accent); }
+tr.win td { background: var(--ok-bg); }
+.legend { font-size: 12.5px; color: var(--muted); }
+.legend b { color: var(--text); }
+.empty { padding: 40px; text-align: center; color: var(--muted); }
+@media (max-width: 760px) {
+  .layout { grid-template-columns: 1fr; }
+  nav { max-height: 220px; border-right: 0; border-bottom: 1px solid var(--line); }
+  main { padding: 12px; }
+  .controls { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Trazas de AVLizador</h1>
+  <span class="meta" id="meta"></span>
+  <div class="controls">
+    <input type="search" id="cerca" placeholder="Buscar frase o id…">
+    <label><input type="checkbox" id="f-flor"> solo con postprocesado</label>
+    <label><input type="checkbox" id="f-dist"> solo distintas de la referencia</label>
+    <label><input type="checkbox" id="f-avis"> solo con avisos</label>
+    <label class="btn">Abrir JSON<input type="file" id="fitxer" accept=".json" hidden></label>
+  </div>
+</header>
+<div class="layout">
+  <nav id="llista"></nav>
+  <main id="detall"><div class="empty">Sin datos. Genera la página con <span class="mono">traca_traduccio.py --html</span> o abre un JSON de <span class="mono">--json</span>.</div></main>
+</div>
+<script>
+let DADES = /*__DADES__*/null;
+let TRACES = [], SEL = 0;
+const USADOS = new Set(["Gender", "VerbForm"]);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const num = x => (x === null || x === undefined) ? "—" : Number(x).toFixed(2).replace(".", ",");
+
+function carrega(d) {
+  if (Array.isArray(d)) d = {traces: d};
+  DADES = d; TRACES = d.traces || [];
+  document.getElementById("meta").textContent =
+    `${TRACES.length} frases` + (d.generat ? ` · generado ${d.generat}` : "");
+  SEL = TRACES.some(t => (t.postprocessat.punts || []).length && t.referencia) ? -1 : 0; pintaLlista();
+}
+
+function teAvis(t) { return t.paraules.some(p => p.avis_emparellament); }
+function filtrades() {
+  const q = document.getElementById("cerca").value.toLowerCase();
+  const flor = document.getElementById("f-flor").checked, dist = document.getElementById("f-dist").checked,
+        avis = document.getElementById("f-avis").checked;
+  return TRACES.map((t, i) => [t, i]).filter(([t]) =>
+    (!q || (t.id + " " + t.origen + " " + t.final).toLowerCase().includes(q)) &&
+    (!flor || t.postprocessat.entra) && (!dist || t.exacta === false) && (!avis || teAvis(t)));
+}
+
+function pintaLlista() {
+  const f = filtrades(), el = document.getElementById("llista");
+  if (SEL !== -1 && !f.some(([, i]) => i === SEL) && f.length) SEL = f[0][1];
+  const teResum = TRACES.some(t => (t.postprocessat.punts || []).length);
+  el.innerHTML = (teResum ? `<div class="item ${SEL === -1 ? "sel" : ""}" data-i="-1"><b>▸ Resumen de las palabras ambiguas</b>
+      <span class="txt muted">aciertos, quién decide y diferencias frente al margen</span></div>` : "") +
+    f.map(([t, i]) => `<div class="item ${i === SEL ? "sel" : ""}" data-i="${i}">
+      <span class="id">${esc(t.id)}</span>
+      ${t.postprocessat.entra ? '<span class="badge b-flor">FLOR</span>' : ""}
+      ${t.exacta === true ? '<span class="badge b-ok">exacta</span>' : t.exacta === false ? '<span class="badge b-ko">distinta</span>' : ""}
+      ${teAvis(t) ? '<span class="badge b-warn">aviso</span>' : ""}
+      <span class="txt">${esc(t.origen)}</span></div>`).join("") || '<div class="empty">Ninguna frase con estos filtros.</div>';
+  el.querySelectorAll(".item").forEach(n => n.onclick = () => { SEL = +n.dataset.i; pintaLlista(); });
+  if (SEL === -1) pintaResum(); else pintaDetall(f.length ? TRACES[SEL] : null);
+}
+
+function vesA(id) {
+  const i = TRACES.findIndex(t => t.id === id);
+  if (i >= 0) { SEL = i; pintaLlista(); window.scrollTo(0, 0); }
+}
+
+function pintaResum() {
+  const DEC = {spacy: "spaCy", model: "FLOR", motor: "motor"};
+  const perParaula = {}, punts = [];
+  for (const t of TRACES) for (const p of t.postprocessat.punts || []) {
+    punts.push([t, p]);
+    const k = p.paraula.toLowerCase(), r = perParaula[k] ??= {n: 0, ok: 0, ko: 0, nd: 0, spacy: 0, model: 0, motor: 0, tipus: p.tipus};
+    r.n++; r[p.decidit] = (r[p.decidit] || 0) + 1;
+    if (p.encert === true) r.ok++; else if (p.encert === false) r.ko++; else r.nd++;
+  }
+  const tot = punts.length, ok = punts.filter(([, p]) => p.encert === true).length,
+        ko = punts.filter(([, p]) => p.encert === false).length;
+  const frases = TRACES.length, exactes = TRACES.filter(t => t.exacta).length,
+        ambFlor = TRACES.filter(t => t.postprocessat.entra).length;
+  let h = `<section><h2>Resumen</h2><div class="frases">
+      <span class="k">Frases</span><span class="v">${frases} · ${exactes} iguales a la referencia · ${ambFlor} con palabras ambiguas</span>
+      <span class="k">Palabras ambiguas</span><span class="v">${tot} apariciones · <b style="color:var(--ok)">${ok} aciertos</b> · <b style="color:var(--ko)">${ko} fallos</b> · ${tot - ok - ko} sin decidir por la referencia</span>
+      <span class="k">Quién decide</span><span class="v">${Object.entries(DEC).map(([k, v]) => `${v}: ${punts.filter(([, p]) => p.decidit === k).length}`).join(" · ")}</span>
+    </div><p class="legend">Acierto = el candidato elegido es el único de los dos que aparece en la referencia. "Sin decidir" = la referencia no usa ninguno de los candidatos, o usa los dos.</p></section>`;
+
+  h += `<section><h2>Por palabra</h2><div class="tablewrap"><table><thead><tr><th>palabra</th><th>tipo</th><th>apariciones</th><th>aciertos</th><th>fallos</th><th>sin decidir</th><th>decide spaCy</th><th>decide FLOR</th><th>decide el motor</th></tr></thead><tbody>`;
+  for (const [k, r] of Object.entries(perParaula).sort((a, b) => b[1].n - a[1].n))
+    h += `<tr><td><b>${esc(k)}</b></td><td>${esc(r.tipus)}</td><td>${r.n}</td><td style="color:var(--ok)">${r.ok}</td><td style="color:var(--ko)">${r.ko || ""}</td><td class="muted">${r.nd || ""}</td><td>${r.spacy || ""}</td><td>${r.model || ""}</td><td>${r.motor || ""}</td></tr>`;
+  h += `</tbody></table></div></section>`;
+
+  // diferencias de puntuación frente al margen
+  const difs = punts.filter(([, p]) => p.diferencia !== null && p.diferencia !== undefined);
+  const marge = difs.length ? difs[0][1].marge : 5;
+  const trams = [[-Infinity, 0, "≤ 0 (FLOR coincide con el motor o prefiere lo mismo)"], [0, marge, `0 – ${marge} (dentro del margen: se mantiene el motor)`],
+                 [marge, 2 * marge, `${marge} – ${2 * marge}`], [2 * marge, Infinity, `> ${2 * marge}`]];
+  h += `<section><h2>Diferencias de puntuación de FLOR <span class="n">· ${difs.length} palabras puntuadas · margen ${num(marge)}</span></h2>
+    <p class="legend">Diferencia = puntuación de la opción preferida por FLOR menos la de la opción del motor (o la segunda, si el motor no elige). Sirve para ver si el margen está bien puesto: cuántos aciertos y fallos caen en cada tramo.</p>
+    <div class="tablewrap"><table><thead><tr><th>tramo</th><th>palabras</th><th>aciertos</th><th>fallos</th></tr></thead><tbody>`;
+  for (const [a, b, nom] of trams) {
+    const en = difs.filter(([, p]) => p.diferencia > a && p.diferencia <= b);
+    h += `<tr><td>${esc(nom)}</td><td>${en.length}</td><td style="color:var(--ok)">${en.filter(([, p]) => p.encert === true).length}</td><td style="color:var(--ko)">${en.filter(([, p]) => p.encert === false).length}</td></tr>`;
+  }
+  h += `</tbody></table></div></section>`;
+
+  const fallos = punts.filter(([, p]) => p.encert === false);
+  h += `<section><h2>Fallos <span class="n">· ${fallos.length}</span></h2>${fallos.length ? `<div class="tablewrap"><table><thead><tr><th>frase</th><th>palabra</th><th>elegida</th><th>referencia</th><th>decide</th><th>spaCy</th><th>diferencia</th><th>explicación</th></tr></thead><tbody>` +
+    fallos.map(([t, p]) => `<tr><td><a href="#" onclick="vesA('${esc(t.id)}');return false">${esc(t.id)}</a></td><td><b>${esc(p.paraula)}</b></td><td>${esc(p.tria)}</td><td>${esc((p.referencia || []).join(", "))}</td><td>${esc(DEC[p.decidit] || p.decidit)}</td><td class="mono">${esc(p.spacy.pos)}</td><td class="mono">${num(p.diferencia)}</td><td class="why">${esc(p.explicacio)}</td></tr>`).join("") +
+    `</tbody></table></div>` : '<p class="muted">Ningún fallo.</p>'}</section>`;
+  document.getElementById("detall").innerHTML = h;
+}
+
+// Apóstrofos: todas las variantes cuentan igual al comparar (´ ‘ ’ ʼ ` = ').
+const normAp = s => String(s ?? "").replace(/[´‘’ʼ`]/g, "'");
+
+// Marca las palabras de `nova` que no están en `base`, alineando por
+// palabras (subsecuencia común más larga), como un diff.
+function marcaCanvis(base, nova) {
+  const a = normAp(base).split(/\s+/).filter(Boolean), b = String(nova ?? "").split(/\s+/).filter(Boolean);
+  const bn = b.map(normAp), n = a.length, m = b.length;
+  const L = Array.from({length: n + 1}, () => new Array(m + 1).fill(0));
+  for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--)
+    L[i][j] = a[i] === bn[j] ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
+  const igual = new Array(m).fill(false);
+  for (let i = 0, j = 0; i < n && j < m;) {
+    if (a[i] === bn[j]) { igual[j] = true; i++; j++; }
+    else if (L[i + 1][j] >= L[i][j + 1]) i++; else j++;
+  }
+  return b.map((w, j) => igual[j] ? esc(w) : `<span class="chg">${esc(w)}</span>`).join(" ");
+}
+
+function pintaDetall(t) {
+  const el = document.getElementById("detall");
+  if (!t) { el.innerHTML = '<div class="empty">Sin frase seleccionada.</div>'; return; }
+  const sp = t.spacy.paraules;
+  let h = `<section><h2>${esc(t.id)} ${t.exacta === true ? '<span class="badge b-ok">igual que la referencia</span>' : t.exacta === false ? '<span class="badge b-ko">distinta de la referencia</span>' : ""}</h2>
+    <div class="frases">
+      <span class="k">Origen</span><span class="v">${esc(t.origen)}</span>
+      <span class="k">Motor</span><span class="v">${marcaCanvis(t.origen, t.motor)}</span>
+      <span class="k">Final</span><span class="v"><b>${marcaCanvis(t.origen, t.final)}</b></span>
+      ${t.referencia ? `<span class="k">Referencia</span><span class="v">${marcaCanvis(t.final, t.referencia)}</span>` : ""}
+    </div></section>`;
+
+  // 1. spaCy + diccionario
+  h += `<section><h2>1. spaCy y diccionario <span class="n">· ${esc(t.spacy.model || "")} ${esc(t.spacy.versio || "")}</span></h2>
+    <p class="legend">En <b style="color:var(--used)">azul</b>, lo que el traductor usa de spaCy: la categoría (POS), el lema y los rasgos
+    ${[...USADOS].map(r => `<span class="chip used">${r}</span>`).join("")}. El resto de rasgos los calcula spaCy pero el traductor no los mira
+    (<span class="chip">Mood</span> se guarda pero ninguna regla lo consulta).</p>
+    <div class="tablewrap"><table><thead><tr><th>#</th><th>palabra</th><th>POS</th><th>etiqueta</th><th>lema</th><th>rasgos de spaCy</th><th>en el diccionario</th><th>resultado</th></tr></thead><tbody>`;
+  for (const p of t.paraules) {
+    if (!p.es_paraula) continue;
+    const s = p.spacy_i !== null && p.spacy_i !== undefined ? sp[p.spacy_i] : null;
+    const rasgos = s ? Object.entries(s.rasgos).map(([k, v]) => `<span class="chip ${USADOS.has(k) ? "used" : ""}">${esc(k)}=${esc(v)}</span>`).join("") : '<span class="muted">sin emparejar</span>';
+    const d = p.diccionari, dic = [];
+    for (const c of d.capes) {
+      let x = `<b>${esc(c.capa)}</b>: `;
+      if (c.frases) x += c.frases.map(f => `${esc(f.catala)} → ${esc(f.valencia)}`).join("; ");
+      else x += esc(c.candidat);
+      if (c.exige_verbo) x += ' <span class="badge b-warn">exige verbo</span>';
+      if (c.homografo_exige) x += ` <span class="badge b-warn">homógrafo: ${esc(c.homografo_exige.join("/"))}</span>`;
+      dic.push(`<div>${x}</div>`);
+    }
+    if (d.ambigua) dic.push(`<div><span class="badge b-flor">ambigua · ${esc(d.ambigua.tipus)}</span> ${esc(d.ambigua.candidats.join(" / "))}</div>`);
+    const crues = (d.lexic_cru || []).concat(d.conj_cru || []);
+    if (crues.length) dic.push(`<details><summary>${crues.length} entrada(s) en los ficheros de datos</summary>${crues.map(e => `<div class="mono">${esc(JSON.stringify(e))}</div>`).join("")}</details>`);
+    let res;
+    if (p.capes.length) res = `<span class="res">${esc(p.traduccio || "∅")}</span> <span class="why">(${esc(p.capes.join(", "))})</span>`;
+    else if (p.motiu) res = `<span class="muted">sin cambio</span><div class="why">${esc(p.motiu)}</div>`;
+    else res = '<span class="muted">—</span>';
+    if (p.avis_emparellament) res += `<div class="warn">⚠ ${esc(p.avis_emparellament)}</div>`;
+    h += `<tr><td class="mono">${p.i}</td><td><b>${esc(p.superficie)}</b></td>
+      <td><span class="pos used">${esc(s ? s.pos : p.pos)}</span></td><td class="mono">${esc(s ? s.tag : "")}</td>
+      <td class="mono" style="color:var(--used)">${esc(s ? s.lema : p.lema)}</td><td>${rasgos}</td>
+      <td class="dic">${dic.join("") || '<span class="muted">—</span>'}</td><td>${res}</td></tr>`;
+  }
+  h += `</tbody></table></div></section>`;
+
+  // 2. motor
+  h += `<section><h2>2. Motor de reglas <span class="n">· 9 capas en orden</span></h2><div class="capes">`;
+  for (const c of t.passos_motor) {
+    h += `<span class="${c.canvis.length ? "" : "off"}">${esc(c.capa)}</span><span class="${c.canvis.length ? "" : "off"}">${
+      c.canvis.length ? c.canvis.map(x => `${esc(x.abans)} → <b>${esc(x.despres || "∅")}</b>${x.nota ? ` <span class="why">(${esc(x.nota)})</span>` : ""}`).join(" · ") : "sin cambios"}</span>`;
+  }
+  h += `</div><p style="margin:10px 0 0">Resultado del motor: <b>${esc(t.motor)}</b></p></section>`;
+
+  // 3. postprocesado
+  const post = t.postprocessat;
+  h += `<section><h2>3. Postprocesado con FLOR-760M ${post.entra ? '<span class="badge b-flor">entra</span>' : '<span class="badge">no entra</span>'}</h2>
+    <p>${esc(post.motiu)}</p>`;
+  if (post.consumides && post.consumides.length)
+    h += `<p class="why">Palabras ambiguas que no llegan porque ya las ha cambiado otra capa: ${post.consumides.map(c => `${esc(c.paraula)} → ${esc(c.traduccio)}`).join(", ")}</p>`;
+  if (post.criteri && post.criteri.formula)
+    h += `<p class="legend"><b>Cómo puntúa:</b> ${esc(post.criteri.formula)}; λ = ${num(post.criteri.lam)}. Si el motor ya había elegido, FLOR solo lo cambia si gana por más de <b>${num(post.criteri.marge)}</b>. Modelo: ${esc(post.criteri.model)}; concordancia: ${esc(post.criteri.concordanca)}.</p>`;
+  for (const p of post.punts || []) {
+    const s = p.spacy;
+    const conPunts = p.candidats.filter(c => c.puntuacio !== undefined);
+    const min = Math.min(...conPunts.map(c => c.puntuacio)), max = Math.max(...conPunts.map(c => c.puntuacio));
+    h += `<div class="punt"><h3>«${esc(p.prefix + p.paraula)}» <span class="badge b-flor">${esc(p.tipus)}</span>
+        <span class="muted" style="font-weight:normal">· candidatos del léxico: ${esc(p.candidats_lexic.join(" / "))} · elección del motor: <b>${esc(p.motor ?? "ninguna")}</b></span></h3>
+      <div class="why">spaCy: <span class="pos used">${esc(s.pos)}</span> (categoría ${esc(s.categoria ?? "—")}) · lectura dialectal: <b>${esc(s.categoria_dialectal ?? "—")}</b> · lecturas del léxico (<span class="mono">lemas</span>): ${esc(JSON.stringify(s.lectures))}${s.decisio ? ` · <b>spaCy decide: ${esc(s.decisio)}</b>` : ""}</div>
+      <div class="tablewrap"><table style="margin-top:8px"><thead><tr><th></th><th>candidato</th><th>frase que recibe FLOR</th><th>lp</th><th>prior</th><th>puntuación</th><th></th></tr></thead><tbody>`;
+    for (const c of p.candidats) {
+      const w = c.puntuacio !== undefined && max > min ? (c.puntuacio - min) / (max - min) * 100 : (c.puntuacio !== undefined ? 100 : 0);
+      h += `<tr class="${c.triat ? "win" : ""}"><td>${c.triat ? "✔" : ""}</td><td><b>${esc(c.candidat)}</b>${c.es_del_motor ? ' <span class="badge">motor</span>' : ""}</td>
+        <td>${esc(c.frase || "")}${c.variants && c.variants.length > 1 ? `<details><summary>${c.variants.length} variantes de concordancia probadas</summary>${c.variants.map(v => `<div class="mono">${v.triada ? "▸ " : "  "}lp ${num(v.lp)} · ${esc(v.frase)}</div>`).join("")}</details>` : ""}</td>
+        <td class="mono">${num(c.lp)}</td><td class="mono">${num(c.prior)}</td><td class="mono"><b>${num(c.puntuacio)}</b></td>
+        <td>${c.puntuacio !== undefined ? `<div class="bar"><span style="width:${Math.max(4, w)}%"></span></div>` : '<span class="muted">sin FLOR</span>'}</td></tr>`;
+    }
+    h += `</tbody></table></div>
+      <div class="decision"><b>Decide: ${esc({spacy: "spaCy", model: "FLOR", motor: "el motor"}[p.decidit] || p.decidit)}</b> → <b>${esc(p.tria)}</b>
+        ${p.encert === true ? '<span class="badge b-ok">acierto</span>' : p.encert === false ? '<span class="badge b-ko">fallo</span>' : ""}
+        ${p.referencia ? `<span class="why"> · la referencia usa: ${esc(p.referencia.join(", ") || "ninguno")}</span>` : ""}
+        ${p.diferencia !== null && p.diferencia !== undefined ? ` · diferencia ${num(p.diferencia)} (margen ${num(p.marge)})` : ""}
+        <div class="why">${esc(p.explicacio)}</div></div></div>`;
+  }
+  if (post.entra && post.coincideix_amb_translate === false)
+    h += `<p class="warn">⚠ El resultado de la traza no coincide con translate_cat_val.</p>`;
+  h += `</section>`;
+  el.innerHTML = h;
+}
+
+["cerca", "f-flor", "f-dist", "f-avis"].forEach(id => document.getElementById(id).addEventListener("input", pintaLlista));
+document.getElementById("fitxer").addEventListener("change", e => {
+  const f = e.target.files[0]; if (!f) return;
+  f.text().then(t => carrega(JSON.parse(t)));
+});
+if (DADES) carrega(DADES);
+</script>
+</body>
+</html>
