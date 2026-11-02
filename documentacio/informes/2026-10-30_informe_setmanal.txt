@@ -1,0 +1,39 @@
+INFORME SEMANAL - AVLIZADOR (TRADUCTOR DIALECTAL CATALAN->VALENCIANO)
+
+Semana del 26 al 30 de octubre de 2026
+
+1. NOVEDADES DE LA SEMANA
+
+- El traductor y la metrica de grado dialectal ya se pueden instalar como un paquete. Las dos herramientas que se entregaran a la Conselleria forman ahora un paquete de Python, avlizador, que se instala con una sola orden y se usa desde la linea de ordenes (avlizador tradueix, avlizador gd, avlizador avalua) o desde codigo. Funciona solo con CPU. Se ha comprobado en Windows y en el cluster Abaco (Linux): las traducciones son identicas a las de antes en los 8 bancos de prueba (8.329 frases). El repositorio se ha ordenado: el diccionario tiene una sola ubicacion, todos los bancos de prueba estan en el repositorio y el resto del trabajo queda como registro.
+- Banco de prueba revisado a mano, terminado. Tiene 458 frases: 246 del BOE, revisadas por el equipo desde el texto original, y 212 de los textos de la AVL. Se ha elegido como banco de evaluacion del proyecto. Hay tambien un banco solo con la parte del BOE y otro solo con la de la AVL.
+- El sistema final es el motor de reglas mas el modelo de lenguaje FLOR-760M, que decide en las palabras ambiguas ("cop" -> colp o vegada, "nou" -> nou o anou). Se compararon 9 modelos de lenguaje pequenos para ese papel y FLOR-760M fue el mejor y el mas rapido.
+- Resultados en el banco de evaluacion (458 frases):
+  - Sistema final: 227 frases identicas a la referencia (49,6 %); motor solo: 214.
+  - En las frases de la AVL: 195 de 212 (92,0 %).
+  - En las del BOE: 32 de 246 (13,0 %). La cifra es baja porque la traduccion oficial del BOE reformula mucho (pone en futuro lo que el catalan dice en presente, cambia sinonimos que no son dialectales...), no por fallos dialectales. Aun asi, solo hay que corregir una de cada diez palabras.
+- Dos medidas nuevas de calidad: el TER y el WER dicen que parte de las palabras habria que editar para llegar a la referencia. En el banco de evaluacion el sistema final se queda en un 5,6 %.
+- Resultados en el resto de bancos (sistema final): banco de 151 frases, 146 de 154; banco de palabras ambiguas, 226 de 253; BOE estricto, 1.880 de 2.000 (94,0 %); dataset publico, 1.544 de 1.958 (78,9 %).
+- La metrica de grado dialectal se ha renombrado y ampliado. El antiguo Indice de Pureza Dialectal (IPD) se llama ahora Grau Dialectal (GD). Se han anadido dos indices complementarios: el GDV (cuanto de valenciano es un texto) y el GDC (cuanto de catalan), pensados tambien para evaluar la salida de un traductor. Se han medido en todos los corpus. En el banco de evaluacion, el valenciano da un GD de 0,997 y el catalan, de 0,027, que es lo esperado.
+- Ha empezado la comparacion con modelos de IA conversacionales generalistas. La pregunta es si nuestro sistema mejora lo que ya existe. Se comparan 9 modelos (llama3.1, qwen2.5, qwen3, gemma3, gemma4, salamandra y mistral-nemo, de 7.000 a 14.000 millones de parametros), usados tal cual, con la misma instruccion minima y sin ayudas. Se ejecutan en Abaco usando como mucho 2 tarjetas graficas a la vez, para no acaparar el cluster. En una prueba con 10 frases del BOE, llama3.1 no acerto ninguna y dejo palabras en catalan ("realitzi", "aquests", "seva"). Los resultados completos llegaran la semana que viene.
+
+2. TAREAS EN LAS QUE HEMOS AVANZADO
+
+- Diccionario: se ha incorporado la nueva version del lexico y de los verbos que entrego el companero. Gracias a ella, la metrica deja de contar mal la palabra "despres" y el traductor ya cambia "petit" por "xicotet" y usa "obtindre" y "mantindre".
+- Errores detectados en la metrica de grado dialectal, documentados pero todavia sin corregir:
+  - Hay formas verbales valencianas que se escriben igual que formas catalanas normales ("permet", "consideren"). Esto penaliza a los textos catalanes, y es la principal fuente de error que queda.
+  - Algunos datos nuevos del diccionario hacen que "finalitat" cuente como catalan.
+- Comparacion con Apertium descartada de momento. Apertium no tiene un par catalan -> valenciano. Se probo la via castellano, pero el servicio publico daba error en todas las peticiones.
+- Documentacion puesta al dia: metodologia, resultados de cada banco con todas las medidas, manuales del paquete y registro de las decisiones.
+
+3. TAREAS PENDIENTES
+
+- Recoger los resultados de la comparacion con los modelos de IA en cuanto terminen en Abaco y presentarlos en una tabla junto con los de nuestro sistema.
+- Analizar en detalle como decide el sistema en las palabras ambiguas: que categoria gramatical da el analizador y que elige el modelo de lenguaje en cada caso.
+- Corregir un error del analizador gramatical: a principio de frase toma algunos verbos por nombres propios ("Necessito...") y entonces el traductor no los cambia.
+- Pasar al companero del diccionario los datos que convendria revisar: la pareja "finalitat"/"fi" y "naixement"/"naixenca".
+- Avisar al equipo de la nueva ubicacion del diccionario. El correo con la nueva estructura ya esta redactado.
+- Preparar la documentacion de decisiones y el paquete final de entrega.
+
+4. ASUNTOS URGENTES
+
+- Hay que decidir la licencia del repositorio con el grupo. Hasta entonces no se publica ninguna. La propuesta es una licencia de software (Apache-2.0 o MIT) para el codigo y Creative Commons BY 4.0 para los datos y los bancos de prueba. Antes de decidir hay que confirmar que podemos licenciar el diccionario del proveedor y los textos del BOE y de la AVL.

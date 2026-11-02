@@ -241,10 +241,13 @@ salida. Job array en Abaco con `%2`. **Apertium, fuera de momento**: no
 tiene ningún par catalán → valenciano (lo que dice la tabla de abajo era
 una suposición sin comprobar); se probó la vía castellano y la API
 pública daba error 500 en todo, y en Abaco no hay pares del catalán.
-**Siguiente paso**: cuando terminen los 9 modelos (job 2578), subir los
-JSON de `resultats/` desde Abaco, generar la tabla (`baseline_cat_val.py
-resum`) y reportarla (resultados, metodología y análisis de los fallos
-típicos de los LLM). Lo de abajo es el plan inicial.
+**HECHO (02/11/2026)**: job 2578 terminado sin errores, resultados
+traídos de Abaco con `scp` y documentados (README de `baseline_llm/`,
+`resum_baseline.md`, `resultats_benchmarks_cat_val.md` y la sección 15 de
+`metodologia_i_resultats.md`). Manual mezcla: AVLizador 227/458, TER
+5,61; sin traducir, TER 15,76; mejor LLM (gemma3:12b) 11/458, TER 16,13.
+Ningún LLM mejora no traducir; su GDV de salida (0,92-0,95) es el de la
+entrada catalana. Lo de abajo es el plan inicial.
 
 ### Qué hay ya y qué falta
 

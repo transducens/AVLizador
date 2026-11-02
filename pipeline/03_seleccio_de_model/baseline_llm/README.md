@@ -62,4 +62,63 @@ python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py resum
 
 Resultados: `resultats/<sistema>.json` (cada frase con la traducción, la
 respuesta cruda y las métricas) y `resum_baseline.md` (las tres tablas).
-Las pruebas con `--limit` no entran en el resumen ni en git.
+Las pruebas con `--limit` no entran en el resumen ni en git. `--sistema
+copia` devuelve el catalán sin tocar: es el umbral que un sistema tiene
+que superar.
+
+## Resultados (02/11/2026; job 2578 en Abaco, 0 errores)
+
+Manual mezcla (458). Tablas completas, también del BOE y de la AVL, en
+`resum_baseline.md`.
+
+| Sistema | Exactas | BLEU | chrF | TER ↓ | GDV |
+|---|---|---|---|---|---|
+| **AVLizador: motor + FLOR-760M** | **227 (49,6 %)** | **90,88** | **96,34** | **5,61** | **0,9995** |
+| AVLizador: motor solo | 214 (46,7 %) | 90,39 | 96,10 | 5,91 | 0,9981 |
+| Sin traducir (catalán tal cual) | 1 (0,2 %) | 69,25 | 87,97 | 15,76 | 0,9200 |
+| gemma3:12b (el mejor LLM) | 11 (2,4 %) | 70,54 | 87,46 | 16,13 | 0,9530 |
+| llama3.1:8b | 1 | 68,32 | 87,55 | 16,28 | 0,9239 |
+| gemma4:12b | 1 | 67,49 | 87,06 | 16,88 | 0,9273 |
+| qwen3:8b / qwen3:14b | 1 / 2 | 66,86 / 66,83 | 86,88 / 86,81 | 17,23 / 17,32 | 0,9227 |
+| qwen2.5:7b | 1 | 63,57 | 85,36 | 19,50 | 0,9242 |
+| qwen2.5:14b | 0 | 59,04 | 82,96 | 22,55 | 0,9325 |
+| mistral-nemo:12b | 1 | 59,35 | 82,89 | 22,86 | 0,9365 |
+| salamandra-7b-instruct | 4 | 57,77 | 79,50 | 26,06 | 0,9359 |
+
+**Lectura**:
+
+1. **Ningún LLM mejora el no traducir nada** en TER (15,76 sin tocar el
+   catalán; el mejor LLM, gemma3, 16,13). Solo gemma3 lo supera un poco
+   en BLEU (70,54 frente a 69,25) y en la parte del BOE (TER 18,83 frente
+   a 20,16). AVLizador queda a un tercio del TER de cualquiera de ellos
+   (5,61) y es el único que acierta frases enteras (227 frente a 11).
+2. **Casi no adaptan nada al valenciano**: el GDV de su salida (0,92-0,95)
+   es prácticamente el de la entrada catalana (0,92); la referencia está
+   en 0,9998 y AVLizador en 0,9995. Las formas catalanas que más dejan
+   son las mismas en todos: "aquesta/aquest/aquests/aquestes" (unas 250
+   por modelo), "seva/seves" (unas 120) y "serveis". Solo gemma3 cambia
+   algo (GDV 0,953: "seues", "paren").
+3. **Muchos devuelven la frase tal cual**: llama3.1:8b 325 de 458, qwen3:8b
+   315, qwen3:14b 294, gemma4:12b 240, qwen2.5:7b 189.
+4. **Los que sí cambian la frase empeoran**: no hacen cambios dialectales,
+   reformulan (salamandra: "reporta"→"genera", "és necessari"→"cal"),
+   introducen errores ("interconnected", "siat", "frontales", "las
+   aprovés", "los nutrients") o corrigen el catalán de entrada. Por eso
+   qwen2.5:14b, mistral-nemo y salamandra quedan por debajo de no
+   traducir.
+5. **Velocidad** (GPU RTX 2080 Ti): 0,6-1,4 s por frase; AVLizador, 0,5 s
+   en CPU con FLOR y 0,03 s el motor solo. qwen2.5:7b sale a 9,7 s por
+   frase, una anomalía de esa tarea (probablemente la GPU compartida o
+   el modelo en CPU), no del modelo.
+
+**Conclusión**: con una instrucción mínima, los LLM generalistas de 7.000
+a 14.000 millones de parámetros no saben pasar de catalán a valenciano
+normativo: dejan el catalán casi intacto o lo reformulan. AVLizador sí lo
+hace, sin GPU y más rápido.
+
+**Aviso sobre el benchmark** (visto al revisar las salidas): algunas
+frases de la AVL tienen erratas en el catalán de entrada que vienen del
+borrador automático val→cat y no se corrigieron en la revisión:
+BM-AVL-003 ("parin", "permeto"), BM-AVL-016 y BM-AVL-070 ("permeto") y
+BM-AVL-004 ("dels l'arbres", también en el valenciano). Afectan igual a
+todos los sistemas; no se han tocado (datos del benchmark).

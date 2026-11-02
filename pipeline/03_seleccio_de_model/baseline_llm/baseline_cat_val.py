@@ -27,6 +27,7 @@ o una mescla, el GDV ho mostra encara que el BLEU siga alt.
 Ús (des de l'arrel del repo, amb el paquet instal·lat: `pip install -e ".[ml,avaluacio]"`):
     python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py tradueix --sistema avlizador
     python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py tradueix --sistema motor
+    python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py tradueix --sistema copia   # llindar: sense traduir
     python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py tradueix --sistema ollama:qwen2.5:7b --limit 10
     python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py tradueix --sistema apertium --apertium-mode apy
     python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py resum
@@ -183,6 +184,8 @@ def sistema(nom: str, args) -> tuple[str, str, callable, dict]:
     if nom == "motor":
         from avlizador.traductor_cat_val import translate_cat_val_motor
         return "motor", "AVLizador: motor solo", lambda t: (translate_cat_val_motor(t),) * 2, {}
+    if nom == "copia":  # el llindar: tornar el català sense tocar
+        return "copia", "Sin traducir (catalán tal cual)", lambda t: (t, t), {}
     if nom == "apertium":
         parells = args.apertium_parells.split(",")
         cadena = " → ".join([parells[0].split("-")[0]] + [p.split("-", 1)[1] for p in parells])
@@ -194,7 +197,7 @@ def sistema(nom: str, args) -> tuple[str, str, callable, dict]:
         clau = "ollama_" + re.sub(r"[^A-Za-z0-9.]+", "-", model)
         return (clau, model, traductor_ollama(model, args.ollama_url, args.ollama_timeout),
                 {"instruccio": INSTRUCCIO, "temperature": 0, "num_predict": 512, "think": False})
-    raise SystemExit(f"ERROR: sistema desconegut: {nom} (avlizador, motor, apertium, ollama:MODEL)")
+    raise SystemExit(f"ERROR: sistema desconegut: {nom} (avlizador, motor, copia, apertium, ollama:MODEL)")
 
 
 def afig_gdv(resultats: list[dict], formes) -> None:
@@ -303,7 +306,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     sub = parser.add_subparsers(dest="ordre", required=True)
     t = sub.add_parser("tradueix", help="Traduïx la mescla amb un sistema i en guarda les mètriques.")
-    t.add_argument("--sistema", required=True, help="avlizador, motor, apertium o ollama:MODEL")
+    t.add_argument("--sistema", required=True, help="avlizador, motor, copia, apertium o ollama:MODEL")
     t.add_argument("--limit", type=int, help="Només les N primeres frases (prova; no entra al resum).")
     t.add_argument("--ollama-url", default=OLLAMA_URL)
     t.add_argument("--ollama-timeout", type=int, default=300)
