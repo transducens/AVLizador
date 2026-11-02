@@ -19,7 +19,9 @@ equipos con pocos recursos.
 
 ## Instalación
 
-Requiere Python 3.10 o posterior. Desde una copia del repositorio:
+Guía paso a paso para Windows, Linux y macOS (entorno virtual,
+instalación, pruebas y problemas habituales): [`documentacio/guia_instalacion.md`](documentacio/guia_instalacion.md).
+En resumen, requiere Python 3.10 o posterior y, desde una copia del repositorio:
 
 ```bash
 pip install ".[ml]" --extra-index-url https://download.pytorch.org/whl/cpu
