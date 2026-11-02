@@ -4,11 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "avlizador"
-version = "1.0.0"
+version = "1.0.1"
 description = "Traductor dialectal català -> valencià (norma AVL) i Grau Dialectal (GD, GDV, GDC). Només CPU."
 readme = "README.md"
 requires-python = ">=3.10"
-# Llicència pendent de confirmar (30/10/2026: probablement CC BY 4.0).
+# Apache 2.0 (decisió del grup, 02/11/2026). Les peces de tercers (model
+# d'spaCy GPL-3.0, FLOR-760M, gplsi, BOE...) i les seues llicències: NOTICE.
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
 authors = [{ name = "Transducens, Universitat d'Alacant" }]
 keywords = ["valencià", "català", "traducció dialectal", "AVL", "spaCy"]
 classifiers = [

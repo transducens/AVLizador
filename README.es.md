@@ -142,6 +142,15 @@ de la API pública.
 
 ## Licencia
 
-Pendiente de confirmar (previsiblemente Creative Commons BY 4.0). El
-dataset gplsi de `dades/benchmarks/gplsi/` es CC BY 4.0 de sus autores
-(ver su README).
+[Apache 2.0](LICENSE): el código y los datos propios del proyecto (el
+léxico de `dades/lexic/`, recopilado a mano por el equipo, y los
+benchmarks). Las piezas de terceros mantienen su licencia y se detallan
+en [`NOTICE`](NOTICE):
+
+- el modelo catalán de spaCy (`ca_core_news_md`) es **GPL 3.0**: no se
+  incluye, pip lo instala como dependencia, y quien lo redistribuya tiene
+  que cumplir esa licencia;
+- FLOR-760M es Apache 2.0 (adaptación de BLOOM-1.1B);
+- el dataset gplsi de `dades/benchmarks/gplsi/` es CC BY 4.0 de sus
+  autores;
+- los textos del BOE y de la AVL se reutilizan citando su fuente.

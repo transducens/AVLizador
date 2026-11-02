@@ -1,0 +1,60 @@
+AVLizador
+Copyright 2026 Transducens, Universitat d'Alacant
+
+Este producte es distribuïx amb la Llicència Apache, versió 2.0 (vegeu
+LICENSE). Això inclou el codi (src/, scripts/, tests/, pipeline/) i les
+dades pròpies del projecte:
+
+- dades/lexic/ (i les còpies de src/avlizador/traductor_cat_val/data/):
+  lèxic, conjugacions i verbs català-valencià, recopilats i revisats a mà
+  per l'equip d'AVLizador.
+- Els benchmarks construïts pel projecte (manual, curat de 151 frases,
+  homògrafs, BOE estricte i ampli) i els resultats d'avaluació.
+
+Components i dades de tercers
+=============================
+
+1. Model de spaCy ca_core_news_md 3.8.0 (Explosion)
+   Llicència: GNU GPL 3.0, heretada del corpus UD Catalan AnCora.
+   És una dependència del paquet: no s'inclou en este repositori ni en el
+   paquet, i pip l'instal·la des de
+   https://github.com/explosion/spacy-models. Qui el redistribuïsca, sol o
+   junt amb AVLizador, ha de complir la GPL 3.0 per a eixe component.
+
+2. Model de llengua FLOR-760M (projecte-aina, Barcelona Supercomputing
+   Center)
+   Llicència: Apache 2.0. És una adaptació de BLOOM-1.1B (BigScience,
+   llicència BigScience RAIL 1.0). No s'inclou: es baixa de Hugging Face
+   (https://huggingface.co/projecte-aina/FLOR-760M) la primera vegada que
+   s'usa.
+
+3. Dataset gplsi/CA-VA_alignment_test (grup GPLSI, Universitat d'Alacant)
+   Llicència: Creative Commons BY 4.0. Inclòs en dades/benchmarks/gplsi/ i
+   dades/gplsi_ca_va_alignment_test/, amb la cita original en
+   README_dataset_original.md i README.md. Esta part es manté amb CC BY 4.0.
+
+4. Textos del Boletín Oficial del Estado (BOE)
+   Font: Agencia Estatal Boletín Oficial del Estado, https://www.boe.es.
+   Reutilitzats d'acord amb les seues condicions de reutilització. Són a
+   dades/benchmarks/boe_dialectal/, dades/benchmark_manual/ i
+   dades/boe_net/.
+
+5. Textos de la web de l'Acadèmia Valenciana de la Llengua (AVL)
+   Font: Acadèmia Valenciana de la Llengua, https://www.avl.gva.es.
+   Textos públics, en dades/benchmarks/manual/, dades/benchmark_manual/ i
+   dades/sintetic/.
+
+6. Eixides de models de llengua en els resultats d'avaluació
+   pipeline/03_seleccio_de_model/baseline_llm/resultats/ i dades/sintetic/
+   contenen traduccions generades per models de tercers, cadascun amb la
+   seua llicència: Qwen2.5 i Qwen3, Mistral NeMo i Salamandra (Apache
+   2.0); Gemma 3 i Gemma 4 (Gemma Terms of Use); Llama 3.1 (Llama 3.1
+   Community License).
+
+Dependències de Python (no incloses; les instal·la pip): spaCy i thinc
+(MIT), PyTorch (BSD), transformers, huggingface_hub, tokenizers,
+safetensors, sacrebleu i requests (Apache 2.0), numpy (BSD) i pytest
+(MIT).
+
+Les gramàtiques GNV (AVL) i GEIEC (IEC) es van usar com a referència
+durant el desenvolupament i no es redistribuïxen amb este repositori.

@@ -34,10 +34,12 @@ siguen allí (columna "Origen").
 - **gplsi**: CC BY 4.0, grupo GPLSI de la Universitat d'Alacant. El
   fichero original (`CA-VA_alignment_test.tsv`) y su README
   (`README_dataset_original.md`, con la cita) se conservan tal cual.
-- **BOE**: textos oficiales del Boletín Oficial del Estado.
-- **AVL**: textos públicos de la web de l'Acadèmia Valenciana de la Llengua.
-- Los benchmarks propios (manual, curado, homógrafos): licencia del
-  repositorio (pendiente de confirmar).
+- **BOE**: textos oficiales del Boletín Oficial del Estado, reutilizados
+  según sus condiciones de reutilización (citando la fuente).
+- **AVL**: textos públicos de la web de l'Acadèmia Valenciana de la Llengua
+  (citando la fuente).
+- Los benchmarks propios (manual, curado, homógrafos, BOE estricto y
+  amplio): Apache 2.0, la licencia del repositorio. Detalle en `NOTICE`.
 
 ## Reglas
 

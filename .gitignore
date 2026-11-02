@@ -53,3 +53,8 @@ dist/
 *.egg-info/
 resultats_avaluacio/
 .pytest_cache/
+
+# Gramàtiques completes (GNV de l'AVL i GEIEC de l'IEC): obres de tercers, no es redistribuïxen (02/11/2026)
+pipeline/02_regles_dialectals/docs_gramatica/gnv_complet.txt
+pipeline/02_regles_dialectals/docs_gramatica/geiec_complet.txt
+gramatica/

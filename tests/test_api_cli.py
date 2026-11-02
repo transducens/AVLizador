@@ -11,7 +11,7 @@ from avlizador.traductor_cat_val import translate_invers
 
 
 def test_versio():
-    assert avlizador.__version__ == "1.0.0"
+    assert avlizador.__version__ == "1.0.1"
 
 
 def test_api_traductor():
