@@ -1234,22 +1234,28 @@ catalán tal cual. Apertium se quiso incluir y se descartó: no tiene par
 catalán → valenciano (solo hacia el valenciano desde el castellano y el
 inglés), y la vía castellano fallaba en la API pública.
 
-| Sistema (manual mezcla, 458) | Exactas | BLEU | TER ↓ | GDV salida |
-|---|---|---|---|---|
-| **AVLizador: motor + FLOR-760M** | **227 (49,6 %)** | **90,88** | **5,61** | **0,9995** |
-| AVLizador: motor solo | 214 (46,7 %) | 90,39 | 5,91 | 0,9981 |
-| Sin traducir (catalán tal cual) | 1 | 69,25 | 15,76 | 0,9200 |
-| Mejor LLM (gemma3:12b) | 11 (2,4 %) | 70,54 | 16,13 | 0,9530 |
-| Peor LLM (salamandra-7b-instruct) | 4 | 57,77 | 26,06 | 0,9359 |
+| Sistema (manual mezcla, 458) | Exactas | BLEU | TER ↓ | GD | GDV | GDC |
+|---|---|---|---|---|---|---|
+| *Referencia (valenciano)* | — | — | — | *0,9973* | *0,9998* | *0,9182* |
+| **AVLizador: motor + FLOR-760M** | **227 (49,6 %)** | **90,88** | **5,61** | **0,9936** | **0,9995** | **0,9189** |
+| AVLizador: motor solo | 214 (46,7 %) | 90,39 | 5,91 | 0,9764 | 0,9981 | 0,9194 |
+| Sin traducir (catalán tal cual) | 1 | 69,25 | 15,76 | 0,0264 | 0,9200 | 0,9978 |
+| Mejor LLM (gemma3:12b) | 11 (2,4 %) | 70,54 | 16,13 | 0,3889 | 0,9530 | 0,9701 |
+| Peor LLM (salamandra-7b-instruct) | 4 | 57,77 | 26,06 | 0,1517 | 0,9359 | 0,9885 |
 
 Lo que se ve:
 
 - **Ningún LLM mejora no traducir** en TER. Solo gemma3 lo supera un poco
   en BLEU y en la parte del BOE.
-- **No adaptan al valenciano**: el GDV de su salida (0,92-0,95) es casi
-  el de la entrada catalana (0,92); la referencia está en 0,9998. Dejan
-  sin cambiar los demostrativos ("aquest", unas 250 apariciones por
-  modelo), los posesivos ("seva/seves", unas 120) y "serveis".
+- **Su salida sigue siendo catalán.** Se mide con las tres caras del
+  grau dialectal (sección 14): el GD de los LLM va de 0,04 a 0,15
+  (gemma3, 0,39), frente a 0,997 de la referencia y 0,994 de AVLizador;
+  el GDC queda en 0,99 (casi ninguna forma valenciana), como la entrada.
+  El GDV (0,92-0,95, casi el 0,92 de la entrada) apunta a lo mismo pero
+  muy comprimido, porque divide entre todas las palabras: por eso se
+  miran los tres. Dejan sin cambiar los demostrativos ("aquest", unas
+  250 apariciones por modelo), los posesivos ("seva/seves", unas 120) y
+  "serveis".
 - **Muchos devuelven la frase igual** (llama3.1:8b 325 de 458, qwen3:8b
   315), y **los que la cambian empeoran**: reformulan, corrigen el
   catalán de entrada o introducen errores ("interconnected", "frontales",
@@ -1362,7 +1368,8 @@ en `pipeline/03_seleccio_de_model/resultats_benchmarks_cat_val.md`.
 **Frente a LLM generalistas** (baseline del 02/11/2026, sección 15): en
 el manual mezcla, el mejor de 9 LLM usados tal cual (gemma3:12b) da TER
 16,13 y 11 frases exactas, peor que no traducir (15,76); AVLizador, 5,61
-y 227.
+y 227. El GD de la salida de los LLM (0,04-0,39) dice que siguen
+escribiendo catalán; el de AVLizador, 0,994 (referencia 0,997).
 
 Cómo se entrega:
 

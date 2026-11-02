@@ -21,8 +21,9 @@ buida (l'entrada és sempre una sola frase). La resposta crua es guarda en
 `hipotesi_crua`, i `netejada` diu si s'ha tocat.
 
 A més de les mètriques de sempre (exactes, BLEU, chrF, chrF++, TER, WER),
-el GDV de l'eixida (`avlizador.grau_dialectal`): si un sistema torna català
-o una mescla, el GDV ho mostra encara que el BLEU siga alt.
+el grau dialectal de l'eixida (`avlizador.grau_dialectal`): GD, GDV i GDC
+(02/11/2026; abans només GDV). Si un sistema torna català o una mescla, ho
+mostren encara que el BLEU siga alt; el GD és el que més separa.
 
 Ús (des de l'arrel del repo, amb el paquet instal·lat: `pip install -e ".[ml,avaluacio]"`):
     python pipeline/03_seleccio_de_model/baseline_llm/baseline_cat_val.py tradueix --sistema avlizador
@@ -52,8 +53,7 @@ from pathlib import Path
 import requests
 
 from avlizador.avaluacio.avalua import avalua_benchmark, resumeix, troba_dir_benchmarks
-from avlizador.grau_dialectal.gd import carrega_formes_dialectals
-from avlizador.grau_dialectal.gdv import calcula_gdv
+from avlizador.grau_dialectal.gd import calcula_gd, carrega_formes_dialectals
 
 for _stream in (sys.stdout, sys.stderr):
     if hasattr(_stream, "reconfigure"):
@@ -200,16 +200,33 @@ def sistema(nom: str, args) -> tuple[str, str, callable, dict]:
     raise SystemExit(f"ERROR: sistema desconegut: {nom} (avlizador, motor, copia, apertium, ollama:MODEL)")
 
 
-def afig_gdv(resultats: list[dict], formes) -> None:
+def afig_grau(resultats: list[dict], formes, camp: str = "hipotesi") -> None:
+    """Comptadors del Grau Dialectal de `camp` en cada frase (formes
+    occidentals, orientals i paraules), per a calcular GD, GDV i GDC de
+    qualsevol subconjunt amb `grau_global`."""
     for r in resultats:
-        g = calcula_gdv(r["hipotesi"], formes)
-        r["gdv"] = g["gdv"]
-        r["gdv_orientals"], r["gdv_paraules"] = g["total_orientals"], g["total_paraules"]
+        g = calcula_gd(r[camp], formes)
+        r["grau_occidentals"] = g["total_occidentals"]
+        r["grau_orientals"] = g["total_orientals"]
+        r["grau_paraules"] = g["total_paraules"]
 
 
-def gdv_global(resultats: list[dict]) -> float:
-    paraules = sum(r["gdv_paraules"] for r in resultats)
-    return round(1 - sum(r["gdv_orientals"] for r in resultats) / paraules, 4) if paraules else 1.0
+def grau_global(resultats: list[dict]) -> dict:
+    """GD (occidentals / marcades), GDV (1 − orientals / paraules) i GDC
+    (1 − occidentals / paraules) del conjunt, sumant els comptadors.
+
+    >>> grau_global([{"grau_occidentals": 3, "grau_orientals": 1, "grau_paraules": 10}])
+    {'gd': 0.75, 'gdv': 0.9, 'gdc': 0.7, 'occidentals': 3, 'orientals': 1}
+    """
+    occ = sum(r["grau_occidentals"] for r in resultats)
+    ori = sum(r["grau_orientals"] for r in resultats)
+    par = sum(r["grau_paraules"] for r in resultats)
+    return {
+        "gd": round(occ / (occ + ori), 4) if occ + ori else None,
+        "gdv": round(1 - ori / par, 4) if par else 1.0,
+        "gdc": round(1 - occ / par, 4) if par else 1.0,
+        "occidentals": occ, "orientals": ori,
+    }
 
 
 def ordre_tradueix(args) -> int:
@@ -236,12 +253,14 @@ def ordre_tradueix(args) -> int:
     for x in resultats:
         x["hipotesi_crua"] = crues.get(x["entrada"], x["hipotesi"])
         x["netejada"] = x["hipotesi_crua"].strip() != x["hipotesi"]
-    afig_gdv(resultats, carrega_formes_dialectals())
+    afig_grau(resultats, carrega_formes_dialectals())
 
     subconjunts = {}
     for sub, (descripcio, prefix) in SUBCONJUNTS.items():
         tria = [x for x in resultats if prefix is None or x["id"].startswith(prefix)]
-        subconjunts[sub] = {"descripcio": descripcio, **resumeix(tria), "gdv_global": gdv_global(tria),
+        g = grau_global(tria)
+        subconjunts[sub] = {"descripcio": descripcio, **resumeix(tria), "gd_global": g["gd"],
+                            "gdv_global": g["gdv"], "gdc_global": g["gdc"],
                             "netejades": sum(x["netejada"] for x in tria)}
 
     RESULTATS.mkdir(parents=True, exist_ok=True)
@@ -256,7 +275,8 @@ def ordre_tradueix(args) -> int:
 
     s = subconjunts["manual"]
     print(f"\n{nom}: {s['exactes']}/{s['n_frases']} exactes, BLEU {s['bleu_mitja']}, "
-          f"TER {s['ter_corpus']}, GDV {s['gdv_global']}, errors {s['errors']}, "
+          f"TER {s['ter_corpus']}, GD {s['gd_global']}, GDV {s['gdv_global']}, "
+          f"GDC {s['gdc_global']}, errors {s['errors']}, "
           f"netejades {s['netejades']}, {segons} s\nGuardat: {eixida}")
     return 0
 
@@ -271,6 +291,17 @@ def ordre_resum(args) -> int:
         print(f"No hi ha resultats en {RESULTATS}", file=sys.stderr)
         return 1
     dades = [json.loads(p.read_text(encoding="utf-8")) for p in fitxers]
+    # El grau dialectal es recalcula sempre de les traduccions guardades
+    # (els JSON anteriors al 02/11/2026 només tenien el GDV).
+    formes = carrega_formes_dialectals()
+    for d in dades:
+        afig_grau(d["resultats"], formes)
+    referencia = [dict(r) for r in dades[0]["resultats"]]
+    afig_grau(referencia, formes, camp="referencia")
+
+    def tria(resultats, prefix):
+        return [r for r in resultats if prefix is None or r["id"].startswith(prefix)]
+
     linies = [
         "# Baseline cat→val: resultados",
         "",
@@ -279,21 +310,36 @@ def ordre_resum(args) -> int:
         "",
         "> " + INSTRUCCIO.replace("\n\n", " ").replace("{text}", "«frase»"),
         "",
-        "Ordenado por TER (más bajo = mejor). GDV = Grau Dialectal Valencià de la salida "
-        "(1 = ninguna forma catalana). Limpiadas = respuestas tocadas por el postprocesado mínimo.",
+        "Ordenado por TER (más bajo = mejor). Grau dialectal de la salida, calculado sobre todas "
+        "las frases del conjunto:",
+        "",
+        "- **GD** = formas valencianas / (valencianas + catalanas): de 0 (catalán) a 1 "
+        "(valenciano). Es la medida que más separa: solo cuenta las palabras con marca dialectal.",
+        "- **GDV** = 1 − formas catalanas / palabras: 1 = no queda ninguna forma catalana.",
+        "- **GDC** = 1 − formas valencianas / palabras: cuanto más bajo, más formas valencianas "
+        "(1 = ninguna).",
+        "",
+        "La fila *Referencia* da los valores del valenciano de referencia, el objetivo. "
+        "Limpiadas = respuestas tocadas por el postprocesado mínimo.",
     ]
-    for sub, (descripcio, _) in SUBCONJUNTS.items():
+    for sub, (descripcio, prefix) in SUBCONJUNTS.items():
         files = sorted(dades, key=lambda d: d["subconjunts"][sub]["ter_corpus"])
+        g = grau_global(tria(referencia, prefix))
         linies += ["", f"## {descripcio}", "",
-                   "| Sistema | Exactas | BLEU | chrF | chrF++ | TER ↓ | WER ↓ | GDV | Errores | Limpiadas | s/frase |",
-                   "|---|---|---|---|---|---|---|---|---|---|---|"]
+                   "| Sistema | Exactas | BLEU | chrF | chrF++ | TER ↓ | WER ↓ | GD | GDV | GDC "
+                   "| Errores | Limpiadas | s/frase |",
+                   "|---|---|---|---|---|---|---|---|---|---|---|---|---|",
+                   f"| *Referencia (valenciano)* | — | — | — | — | — | — | *{_n(g['gd'], 4)}* | "
+                   f"*{_n(g['gdv'], 4)}* | *{_n(g['gdc'], 4)}* | — | — | — |"]
         for d in files:
             s = d["subconjunts"][sub]
+            g = grau_global(tria(d["resultats"], prefix))
             exactes = f"{s['exactes']}/{s['n_frases']} ({_n(s['exactes_pct'], 1)} %)"
             linies.append(
                 f"| {d['sistema']} | {exactes} | {_n(s['bleu_mitja'])} | {_n(s['chrf_mitja'])} | "
                 f"{_n(s['chrf_pp_mitja'])} | {_n(s['ter_corpus'])} | {_n(s['wer_corpus'])} | "
-                f"{_n(s['gdv_global'], 4)} | {s['errors']} | {s['netejades']} | {_n(d['segons_per_frase'])} |")
+                f"{_n(g['gd'], 4)} | {_n(g['gdv'], 4)} | {_n(g['gdc'], 4)} | "
+                f"{s['errors']} | {s['netejades']} | {_n(d['segons_per_frase'])} |")
     linies += ["", "Ficheros: " + ", ".join(f"`{p.name}`" for p in fitxers)]
     eixida = DIR / "resum_baseline.md"
     eixida.write_text("\n".join(linies) + "\n", encoding="utf-8")
