@@ -16,7 +16,7 @@ Línia d'ordres: `avlizador tradueix | gd | gdv | gdc | avalua` (vore
 `avlizador --help`).
 """
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 _API = {
     "translate_cat_val": "traductor_cat_val",

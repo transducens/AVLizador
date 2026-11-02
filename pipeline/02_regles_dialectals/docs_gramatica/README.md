@@ -14,12 +14,19 @@ de cada normativa.
 ```
 docs_gramatica/
 ├── baixar_geiec.py              scraper (Playwright) de la GEIEC
-├── geiec_complet.txt            GEIEC consolidada, 204 seccions
+├── geiec_complet.txt            GEIEC consolidada, 204 seccions (només en local, vore baix)
 ├── geiec_scraper.log            log de l'última execució del scraper
-├── gnv_complet.txt              GNV consolidada, 43 capítols
+├── gnv_complet.txt              GNV consolidada, 43 capítols (només en local, vore baix)
 ├── guia_dialectal_morfologia.md comparativa GEIEC↔GNV, per temes gramaticals
 └── guia_traduccio_dialectal.md  regles de traducció pràctiques, amb exemples abans/després
 ```
+
+**Des del 02/11/2026, `geiec_complet.txt` i `gnv_complet.txt` no estan en
+git** (`.gitignore`): són obres de l'IEC i de l'AVL i no es
+redistribuïxen amb el repositori. Cada u les genera en local amb les
+instruccions de baix (`baixar_geiec.py` per a la GEIEC; la GNV a partir de
+`avl_gnv.jsonl`). Les guies d'esta carpeta, que les resumixen i les
+citen, sí que hi són.
 
 ## Les dos fonts primàries
 
