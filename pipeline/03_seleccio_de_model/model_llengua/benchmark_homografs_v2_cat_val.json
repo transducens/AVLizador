@@ -1,0 +1,1605 @@
+{
+ "descripcio": "Benchmark d'homògrafs cat->val (generat per genera_benchmark.py; referències a revisar a mà). `occidental` = referència valenciana; `motor_sol` = el que dona hui el motor sense model.",
+ "frases": [
+  {
+   "id": "HG2-001",
+   "oriental": "Ha caigut una nou de l'arbre del pati.",
+   "paraula": "nou",
+   "esperat": "anou",
+   "tipus": "irresoluble",
+   "motor_sol": "Ha caigut una anou de l'arbre del pati.",
+   "sentit": "n: fruit (nuez)",
+   "occidental": "Ha caigut una anou de l'arbre del pati."
+  },
+  {
+   "id": "HG2-002",
+   "oriental": "Per esmorzar es menja una nou i un tros de formatge.",
+   "paraula": "nou",
+   "esperat": "anou",
+   "tipus": "irresoluble",
+   "motor_sol": "Per a esmorzar es menja una anou i un tros de formatge.",
+   "sentit": "n: fruit (nuez)",
+   "occidental": "Per a esmorzar es menja una anou i un tros de formatge."
+  },
+  {
+   "id": "HG2-003",
+   "oriental": "La nou que em vas donar estava podrida per dins.",
+   "paraula": "nou",
+   "esperat": "anou",
+   "tipus": "irresoluble",
+   "motor_sol": "L'anou que em vas donar estava podrida per dins.",
+   "sentit": "n: fruit (nuez)",
+   "occidental": "L'anou que em vas donar estava podrida per dins."
+  },
+  {
+   "id": "HG2-004",
+   "oriental": "Afegeix una nou picada a l'amanida.",
+   "paraula": "nou",
+   "esperat": "anou",
+   "tipus": "irresoluble",
+   "motor_sol": "Afig una anou picada a l'ensalada.",
+   "sentit": "n: fruit (nuez)",
+   "occidental": "Afig una anou picada a l'ensalada."
+  },
+  {
+   "id": "HG2-005",
+   "oriental": "Hem estrenat un ordinador nou a l'oficina.",
+   "paraula": "nou",
+   "esperat": "nou",
+   "tipus": "irresoluble",
+   "motor_sol": "Hem estrenat un ordinador anou a l'oficina.",
+   "sentit": "adj: nuevo",
+   "occidental": "Hem estrenat un ordinador nou a l'oficina."
+  },
+  {
+   "id": "HG2-006",
+   "oriental": "El nou director començarà a treballar dilluns.",
+   "paraula": "nou",
+   "esperat": "nou",
+   "tipus": "irresoluble",
+   "motor_sol": "L'anou director començarà a treballar dilluns.",
+   "sentit": "adj: nuevo",
+   "occidental": "El nou director començarà a treballar dilluns."
+  },
+  {
+   "id": "HG2-007",
+   "oriental": "Aquest abric encara sembla nou.",
+   "paraula": "nou",
+   "esperat": "nou",
+   "tipus": "irresoluble",
+   "motor_sol": "Este abric encara sembla anou.",
+   "sentit": "adj: nuevo",
+   "occidental": "Este abric encara sembla nou."
+  },
+  {
+   "id": "HG2-008",
+   "oriental": "Han obert un camí nou entre els dos pobles.",
+   "paraula": "nou",
+   "esperat": "nou",
+   "tipus": "irresoluble",
+   "motor_sol": "Han obert un camí anou entre els dos pobles.",
+   "sentit": "adj: nuevo",
+   "occidental": "Han obert un camí nou entre els dos pobles."
+  },
+  {
+   "id": "HG2-009",
+   "oriental": "La reunió començarà a les nou en punt.",
+   "paraula": "nou",
+   "esperat": "nou",
+   "tipus": "irresoluble",
+   "motor_sol": "La reunió començarà a les anou en punt.",
+   "sentit": "num: nueve",
+   "occidental": "La reunió començarà a les nou en punt."
+  },
+  {
+   "id": "HG2-010",
+   "oriental": "El seu fill petit té nou anys.",
+   "paraula": "nou",
+   "esperat": "nou",
+   "tipus": "irresoluble",
+   "motor_sol": "El seu fill xicotet té anou anys.",
+   "sentit": "num: nueve",
+   "occidental": "El seu fill xicotet té nou anys."
+  },
+  {
+   "id": "HG2-011",
+   "oriental": "Hi havia nou persones a la cua.",
+   "paraula": "nou",
+   "esperat": "nou",
+   "tipus": "irresoluble",
+   "motor_sol": "Hi havia anou persones a la cua.",
+   "sentit": "num: nueve",
+   "occidental": "Hi havia nou persones a la cua."
+  },
+  {
+   "id": "HG2-012",
+   "oriental": "Viu al número nou d'aquest carrer.",
+   "paraula": "nou",
+   "esperat": "nou",
+   "tipus": "irresoluble",
+   "motor_sol": "Viu al número anou d'este carrer.",
+   "sentit": "num: nueve",
+   "occidental": "Viu al número nou d'este carrer."
+  },
+  {
+   "id": "HG2-013",
+   "oriental": "Ha comprat un quilo de nous al mercat.",
+   "paraula": "nous",
+   "esperat": "anous",
+   "tipus": "irresoluble",
+   "motor_sol": "Ha comprat un quilo d'anous al mercat.",
+   "sentit": "n: fruit (nueces)",
+   "occidental": "Ha comprat un quilo d'anous al mercat."
+  },
+  {
+   "id": "HG2-014",
+   "oriental": "Les nous d'aquest any han sortit molt grosses.",
+   "paraula": "nous",
+   "esperat": "anous",
+   "tipus": "irresoluble",
+   "motor_sol": "Les anous d'este any han eixit molt grosses.",
+   "sentit": "n: fruit (nueces)",
+   "occidental": "Les anous d'este any han eixit molt grosses."
+  },
+  {
+   "id": "HG2-015",
+   "oriental": "Posa unes quantes nous al pastís de poma.",
+   "paraula": "nous",
+   "esperat": "anous",
+   "tipus": "irresoluble",
+   "motor_sol": "Posa unes quantes anous al pastís de poma.",
+   "sentit": "n: fruit (nueces)",
+   "occidental": "Posa unes quantes anous al pastís de poma."
+  },
+  {
+   "id": "HG2-016",
+   "oriental": "Cada tardor collim les nous del noguer.",
+   "paraula": "nous",
+   "esperat": "anous",
+   "tipus": "irresoluble",
+   "motor_sol": "Cada tardor collim les anous del noguer.",
+   "sentit": "n: fruit (nueces)",
+   "occidental": "Cada tardor collim les anous del noguer."
+  },
+  {
+   "id": "HG2-017",
+   "oriental": "Els alumnes nous arriben la setmana que ve.",
+   "paraula": "nous",
+   "esperat": "nous",
+   "tipus": "irresoluble",
+   "motor_sol": "Els alumnes anous arriben la setmana que ve.",
+   "sentit": "adj: nuevos",
+   "occidental": "Els alumnes nous arriben la setmana que ve."
+  },
+  {
+   "id": "HG2-018",
+   "oriental": "Necessito uns pantalons nous per a la festa.",
+   "paraula": "nous",
+   "esperat": "nous",
+   "tipus": "irresoluble",
+   "motor_sol": "Necessite uns pantalons anous per a la festa.",
+   "sentit": "adj: nuevos",
+   "occidental": "Necessite uns pantalons nous per a la festa."
+  },
+  {
+   "id": "HG2-019",
+   "oriental": "Han aparegut nous casos de grip a l'escola.",
+   "paraula": "nous",
+   "esperat": "nous",
+   "tipus": "irresoluble",
+   "motor_sol": "Han aparegut anous casos de grip a l'escola.",
+   "sentit": "adj: nuevos",
+   "occidental": "Han aparegut nous casos de grip a l'escola."
+  },
+  {
+   "id": "HG2-020",
+   "oriental": "Els veïns nous són molt amables.",
+   "paraula": "nous",
+   "esperat": "nous",
+   "tipus": "irresoluble",
+   "motor_sol": "Els veïns anous són molt amables.",
+   "sentit": "adj: nuevos",
+   "occidental": "Els veïns nous són molt amables."
+  },
+  {
+   "id": "HG2-021",
+   "oriental": "La manca de pluja ha arruïnat la collita.",
+   "paraula": "manca",
+   "esperat": "carència",
+   "tipus": "irresoluble",
+   "motor_sol": "La carència de pluja ha arruïnat la collita.",
+   "sentit": "n: carencia",
+   "occidental": "La carència de pluja ha arruïnat la collita."
+  },
+  {
+   "id": "HG2-022",
+   "oriental": "Hi ha una gran manca de metges als pobles.",
+   "paraula": "manca",
+   "esperat": "carència",
+   "tipus": "irresoluble",
+   "motor_sol": "Hi ha una gran carència de metges als pobles.",
+   "sentit": "n: carencia",
+   "occidental": "Hi ha una gran carència de metges als pobles."
+  },
+  {
+   "id": "HG2-023",
+   "oriental": "La seva manca d'experiència es nota molt.",
+   "paraula": "manca",
+   "esperat": "carència",
+   "tipus": "irresoluble",
+   "motor_sol": "La seua carència d'experiència es nota molt.",
+   "sentit": "n: carencia",
+   "occidental": "La seua carència d'experiència es nota molt."
+  },
+  {
+   "id": "HG2-024",
+   "oriental": "El projecte es va aturar per manca de diners.",
+   "paraula": "manca",
+   "esperat": "carència",
+   "tipus": "irresoluble",
+   "motor_sol": "El projecte es va aturar per carència de diners.",
+   "sentit": "n: carencia",
+   "occidental": "El projecte es va aturar per carència de diners."
+  },
+  {
+   "id": "HG2-025",
+   "oriental": "Encara manca una setmana per a les vacances.",
+   "paraula": "manca",
+   "esperat": "manca",
+   "tipus": "irresoluble",
+   "motor_sol": "Encara carència una setmana per a les vacacions.",
+   "sentit": "v: mancar (falta)",
+   "occidental": "Encara manca una setmana per a les vacacions."
+  },
+  {
+   "id": "HG2-026",
+   "oriental": "A la sopa li manca una mica de sal.",
+   "paraula": "manca",
+   "esperat": "manca",
+   "tipus": "irresoluble",
+   "motor_sol": "A la sopa li carència una mica de sal.",
+   "sentit": "v: mancar (falta)",
+   "occidental": "A la sopa li manca una mica de sal."
+  },
+  {
+   "id": "HG2-027",
+   "oriental": "A l'equip li manca un jugador per poder començar.",
+   "paraula": "manca",
+   "esperat": "manca",
+   "tipus": "irresoluble",
+   "motor_sol": "A l'equip li carència un jugador per a poder començar.",
+   "sentit": "v: mancar (falta)",
+   "occidental": "A l'equip li manca un jugador per a poder començar."
+  },
+  {
+   "id": "HG2-028",
+   "oriental": "Si en manca algun, avisa'm de seguida.",
+   "paraula": "manca",
+   "esperat": "manca",
+   "tipus": "irresoluble",
+   "motor_sol": "Si en carència algun, avisa'm de seguida.",
+   "sentit": "v: mancar (falta)",
+   "occidental": "Si en manca algun, avisa'm de seguida."
+  },
+  {
+   "id": "HG2-029",
+   "oriental": "Després de l'accident es va quedar manca del braç dret.",
+   "paraula": "manca",
+   "esperat": "manca",
+   "tipus": "irresoluble",
+   "motor_sol": "Després de l'accident es va quedar carència del braç dret.",
+   "sentit": "adj: manca (sin brazo o mano)",
+   "occidental": "Després de l'accident es va quedar manca del braç dret."
+  },
+  {
+   "id": "HG2-030",
+   "oriental": "La dona manca escrivia amb la mà esquerra.",
+   "paraula": "manca",
+   "esperat": "manca",
+   "tipus": "irresoluble",
+   "motor_sol": "La dona carència escrivia amb la mà esquerra.",
+   "sentit": "adj: manca (sin brazo o mano)",
+   "occidental": "La dona manca escrivia amb la mà esquerra."
+  },
+  {
+   "id": "HG2-031",
+   "oriental": "Va néixer manca d'una mà però toca el piano.",
+   "paraula": "manca",
+   "esperat": "manca",
+   "tipus": "irresoluble",
+   "motor_sol": "Va nàixer carència d'una mà però toca el piano.",
+   "sentit": "adj: manca (sin brazo o mano)",
+   "occidental": "Va nàixer manca d'una mà però toca el piano."
+  },
+  {
+   "id": "HG2-032",
+   "oriental": "La pirata manca portava un ganxo al canell.",
+   "paraula": "manca",
+   "esperat": "manca",
+   "tipus": "irresoluble",
+   "motor_sol": "La pirata carència portava un ganxo al canell.",
+   "sentit": "adj: manca (sin brazo o mano)",
+   "occidental": "La pirata manca portava un ganxo al canell."
+  },
+  {
+   "id": "HG2-033",
+   "oriental": "L'informe assenyala greus manques en la seguretat de l'edifici.",
+   "paraula": "manques",
+   "esperat": "carències",
+   "tipus": "irresoluble",
+   "motor_sol": "L'informe assenyala greus carències en la seguretat de l'edifici.",
+   "sentit": "n: carencias",
+   "occidental": "L'informe assenyala greus carències en la seguretat de l'edifici."
+  },
+  {
+   "id": "HG2-034",
+   "oriental": "Les manques de l'escola són evidents per a tothom.",
+   "paraula": "manques",
+   "esperat": "carències",
+   "tipus": "irresoluble",
+   "motor_sol": "Les carències de l'escola són evidents per a tothom.",
+   "sentit": "n: carencias",
+   "occidental": "Les carències de l'escola són evidents per a tothom."
+  },
+  {
+   "id": "HG2-035",
+   "oriental": "Hem detectat diverses manques en el pressupost.",
+   "paraula": "manques",
+   "esperat": "carències",
+   "tipus": "irresoluble",
+   "motor_sol": "Hem detectat diverses carències en el pressupost.",
+   "sentit": "n: carencias",
+   "occidental": "Hem detectat diverses carències en el pressupost."
+  },
+  {
+   "id": "HG2-036",
+   "oriental": "Les manques alimentàries afecten molts infants.",
+   "paraula": "manques",
+   "esperat": "carències",
+   "tipus": "irresoluble",
+   "motor_sol": "Les carències alimentàries afecten molts infants.",
+   "sentit": "n: carencias",
+   "occidental": "Les carències alimentàries afecten molts infants."
+  },
+  {
+   "id": "HG2-037",
+   "oriental": "Tu ens manques molt des que te'n vas anar.",
+   "paraula": "manques",
+   "esperat": "manques",
+   "tipus": "irresoluble",
+   "motor_sol": "Tu ens carències molt des que te'n vas anar.",
+   "sentit": "v: mancar (tú faltas)",
+   "occidental": "Tu ens manques molt des que te'n vas anar."
+  },
+  {
+   "id": "HG2-038",
+   "oriental": "Si tu manques a la reunió, no podrem votar.",
+   "paraula": "manques",
+   "esperat": "manques",
+   "tipus": "irresoluble",
+   "motor_sol": "Si tu carències a la reunió, no podrem votar.",
+   "sentit": "v: mancar (tú faltas)",
+   "occidental": "Si tu manques a la reunió, no podrem votar."
+  },
+  {
+   "id": "HG2-039",
+   "oriental": "Ara ja només hi manques tu.",
+   "paraula": "manques",
+   "esperat": "manques",
+   "tipus": "irresoluble",
+   "motor_sol": "Ara ja només hi carències tu.",
+   "sentit": "v: mancar (tú faltas)",
+   "occidental": "Ara ja només hi manques tu."
+  },
+  {
+   "id": "HG2-040",
+   "oriental": "Quan tu manques, la casa sembla buida.",
+   "paraula": "manques",
+   "esperat": "manques",
+   "tipus": "irresoluble",
+   "motor_sol": "Quan tu carències, la casa sembla buida.",
+   "sentit": "v: mancar (tú faltas)",
+   "occidental": "Quan tu manques, la casa sembla buida."
+  },
+  {
+   "id": "HG2-041",
+   "oriental": "Les dues germanes van quedar manques després de la guerra.",
+   "paraula": "manques",
+   "esperat": "manques",
+   "tipus": "irresoluble",
+   "motor_sol": "Les dos germanes van quedar carències després de la guerra.",
+   "sentit": "adj: mancas (sin brazo o mano)",
+   "occidental": "Les dos germanes van quedar manques després de la guerra."
+  },
+  {
+   "id": "HG2-042",
+   "oriental": "Les estàtues manques del museu són romanes.",
+   "paraula": "manques",
+   "esperat": "manques",
+   "tipus": "irresoluble",
+   "motor_sol": "Les estàtues carències del museu són romanes.",
+   "sentit": "adj: mancas (sin brazo o mano)",
+   "occidental": "Les estàtues manques del museu són romanes."
+  },
+  {
+   "id": "HG2-043",
+   "oriental": "Eren dues velles manques que vivien soles al mas.",
+   "paraula": "manques",
+   "esperat": "manques",
+   "tipus": "irresoluble",
+   "motor_sol": "Eren dos velles carències que vivien soles al mas.",
+   "sentit": "adj: mancas (sin brazo o mano)",
+   "occidental": "Eren dos velles manques que vivien soles al mas."
+  },
+  {
+   "id": "HG2-044",
+   "oriental": "Les figures manques del pessebre s'han de reparar.",
+   "paraula": "manques",
+   "esperat": "manques",
+   "tipus": "irresoluble",
+   "motor_sol": "Les figures carències del pesebre s'han de reparar.",
+   "sentit": "adj: mancas (sin brazo o mano)",
+   "occidental": "Les figures manques del pesebre s'han de reparar."
+  },
+  {
+   "id": "HG2-045",
+   "oriental": "A la muntanya hi ha una deu d'aigua molt freda.",
+   "paraula": "deu",
+   "esperat": "brollador",
+   "tipus": "resoluble",
+   "motor_sol": "A la muntanya hi ha una deu d'aigua molt freda.",
+   "sentit": "n: manantial",
+   "occidental": "A la muntanya hi ha un brollador d'aigua molt freda."
+  },
+  {
+   "id": "HG2-046",
+   "oriental": "Vam omplir les cantimplores a la deu del barranc.",
+   "paraula": "deu",
+   "esperat": "brollador",
+   "tipus": "resoluble",
+   "motor_sol": "Vam omplir les cantimplores a la deu del barranc.",
+   "sentit": "n: manantial",
+   "occidental": "Vam omplir les cantimplores al brollador del barranc."
+  },
+  {
+   "id": "HG2-047",
+   "oriental": "Aquesta deu no s'asseca mai, ni tan sols a l'estiu.",
+   "paraula": "deu",
+   "esperat": "brollador",
+   "tipus": "resoluble",
+   "motor_sol": "Esta brollador no s'asseca mai, ni tan sols a l'estiu.",
+   "sentit": "n: manantial",
+   "occidental": "Este brollador no s'asseca mai, ni tan sols a l'estiu."
+  },
+  {
+   "id": "HG2-048",
+   "oriental": "El poble es proveïa d'aigua d'una deu natural.",
+   "paraula": "deu",
+   "esperat": "brollador",
+   "tipus": "resoluble",
+   "motor_sol": "El poble es proveïa d'aigua d'una deu natural.",
+   "sentit": "n: manantial",
+   "occidental": "El poble es proveïa d'aigua d'una brollador natural."
+  },
+  {
+   "id": "HG2-049",
+   "oriental": "Tinc deu euros a la butxaca.",
+   "paraula": "deu",
+   "esperat": "deu",
+   "tipus": "resoluble",
+   "motor_sol": "Tinc deu euros a la butxaca.",
+   "sentit": "num: diez",
+   "occidental": "Tinc deu euros a la butxaca."
+  },
+  {
+   "id": "HG2-050",
+   "oriental": "L'autobús passa cada deu minuts.",
+   "paraula": "deu",
+   "esperat": "deu",
+   "tipus": "resoluble",
+   "motor_sol": "L'autobús passa cada deu minuts.",
+   "sentit": "num: diez",
+   "occidental": "L'autobús passa cada deu minuts."
+  },
+  {
+   "id": "HG2-051",
+   "oriental": "Vam caminar deu quilòmetres sense parar.",
+   "paraula": "deu",
+   "esperat": "deu",
+   "tipus": "resoluble",
+   "motor_sol": "Vam caminar deu quilòmetres sense parar.",
+   "sentit": "num: diez",
+   "occidental": "Vam caminar deu quilòmetres sense parar."
+  },
+  {
+   "id": "HG2-052",
+   "oriental": "Hi ha deu cadires al menjador.",
+   "paraula": "deu",
+   "esperat": "deu",
+   "tipus": "resoluble",
+   "motor_sol": "Hi ha deu cadires al menjador.",
+   "sentit": "num: diez",
+   "occidental": "Hi ha deu cadires al menjador."
+  },
+  {
+   "id": "HG2-053",
+   "oriental": "En Joan em deu cinquanta euros.",
+   "paraula": "deu",
+   "esperat": "deu",
+   "tipus": "resoluble",
+   "motor_sol": "En Joan em deu cinquanta euros.",
+   "sentit": "v: deure (debe)",
+   "occidental": "En Joan em deu cinquanta euros."
+  },
+  {
+   "id": "HG2-054",
+   "oriental": "Ja és fosc, deu ser molt tard.",
+   "paraula": "deu",
+   "esperat": "deu",
+   "tipus": "resoluble",
+   "motor_sol": "Ja és fosc, deu ser molt tard.",
+   "sentit": "v: deure (debe)",
+   "occidental": "Ja és fosc, deu ser molt tard."
+  },
+  {
+   "id": "HG2-055",
+   "oriental": "Aquest paquet deu pesar uns cinc quilos.",
+   "paraula": "deu",
+   "esperat": "deu",
+   "tipus": "resoluble",
+   "motor_sol": "Este paquet deu pesar uns cinc quilos.",
+   "sentit": "v: deure (debe)",
+   "occidental": "Este paquet deu pesar uns cinc quilos."
+  },
+  {
+   "id": "HG2-056",
+   "oriental": "La factura es deu pagar abans de divendres.",
+   "paraula": "deu",
+   "esperat": "deu",
+   "tipus": "resoluble",
+   "motor_sol": "La factura es deu pagar abans de divendres.",
+   "sentit": "v: deure (debe)",
+   "occidental": "La factura es deu pagar abans de divendres."
+  },
+  {
+   "id": "HG2-057",
+   "oriental": "Posa els llençols a la rentadora.",
+   "paraula": "rentadora",
+   "esperat": "llavadora",
+   "tipus": "irresoluble",
+   "motor_sol": "Posa els llençols a la llavadora.",
+   "sentit": "n: lavadora",
+   "occidental": "Posa els llençols a la llavadora."
+  },
+  {
+   "id": "HG2-058",
+   "oriental": "Hem comprat una rentadora que gasta poca aigua.",
+   "paraula": "rentadora",
+   "esperat": "llavadora",
+   "tipus": "irresoluble",
+   "motor_sol": "Hem comprat una llavadora que gasta poca aigua.",
+   "sentit": "n: lavadora",
+   "occidental": "Hem comprat una llavadora que gasta poca aigua."
+  },
+  {
+   "id": "HG2-059",
+   "oriental": "La roba encara és dins de la rentadora.",
+   "paraula": "rentadora",
+   "esperat": "llavadora",
+   "tipus": "irresoluble",
+   "motor_sol": "La roba encara és dins de la llavadora.",
+   "sentit": "n: lavadora",
+   "occidental": "La roba encara és dins de la llavadora."
+  },
+  {
+   "id": "HG2-060",
+   "oriental": "El tècnic ha arreglat la rentadora del pis.",
+   "paraula": "rentadora",
+   "esperat": "llavadora",
+   "tipus": "irresoluble",
+   "motor_sol": "El tècnic ha arreglat la llavadora del pis.",
+   "sentit": "n: lavadora",
+   "occidental": "El tècnic ha arreglat la llavadora del pis."
+  },
+  {
+   "id": "HG2-061",
+   "oriental": "Treballava de rentadora de plats en un restaurant.",
+   "paraula": "rentadora",
+   "esperat": "rentadora",
+   "tipus": "irresoluble",
+   "motor_sol": "Treballava de llavadora de plats en un restaurant.",
+   "sentit": "adj/n: que lava (persona, producto)",
+   "occidental": "Treballava de rentadora de plats en un restaurant."
+  },
+  {
+   "id": "HG2-062",
+   "oriental": "Una dona rentadora portava la roba al riu.",
+   "paraula": "rentadora",
+   "esperat": "rentadora",
+   "tipus": "irresoluble",
+   "motor_sol": "Una dona llavadora portava la roba al riu.",
+   "sentit": "adj/n: que lava (persona, producto)",
+   "occidental": "Una dona rentadora portava la roba al riu."
+  },
+  {
+   "id": "HG2-063",
+   "oriental": "És una crema rentadora per a pells greixoses.",
+   "paraula": "rentadora",
+   "esperat": "rentadora",
+   "tipus": "irresoluble",
+   "motor_sol": "És una crema llavadora per a pells greixoses.",
+   "sentit": "adj/n: que lava (persona, producto)",
+   "occidental": "És una crema rentadora per a pells greixoses."
+  },
+  {
+   "id": "HG2-064",
+   "oriental": "La planta rentadora de carbó va tancar fa anys.",
+   "paraula": "rentadora",
+   "esperat": "rentadora",
+   "tipus": "irresoluble",
+   "motor_sol": "La planta llavadora de carbó va tancar fa anys.",
+   "sentit": "adj/n: que lava (persona, producto)",
+   "occidental": "La planta rentadora de carbó va tancar fa anys."
+  },
+  {
+   "id": "HG2-065",
+   "oriental": "La botiga ven rentadores i assecadores.",
+   "paraula": "rentadores",
+   "esperat": "llavadores",
+   "tipus": "irresoluble",
+   "motor_sol": "La botiga ven llavadores i assecadores.",
+   "sentit": "n: lavadoras",
+   "occidental": "La botiga ven llavadores i assecadores."
+  },
+  {
+   "id": "HG2-066",
+   "oriental": "Les rentadores modernes gasten poca aigua.",
+   "paraula": "rentadores",
+   "esperat": "llavadores",
+   "tipus": "irresoluble",
+   "motor_sol": "Les llavadores modernes gasten poca aigua.",
+   "sentit": "n: lavadoras",
+   "occidental": "Les llavadores modernes gasten poca aigua."
+  },
+  {
+   "id": "HG2-067",
+   "oriental": "A la bugaderia hi ha deu rentadores.",
+   "paraula": "rentadores",
+   "esperat": "llavadores",
+   "tipus": "irresoluble",
+   "motor_sol": "A la bugaderia hi ha deu llavadores.",
+   "sentit": "n: lavadoras",
+   "occidental": "A la bugaderia hi ha deu llavadores."
+  },
+  {
+   "id": "HG2-068",
+   "oriental": "Totes les rentadores de l'edifici són al soterrani.",
+   "paraula": "rentadores",
+   "esperat": "llavadores",
+   "tipus": "irresoluble",
+   "motor_sol": "Totes les llavadores de l'edifici són al soterrani.",
+   "sentit": "n: lavadoras",
+   "occidental": "Totes les llavadores de l'edifici són al soterrani."
+  },
+  {
+   "id": "HG2-069",
+   "oriental": "Les rentadores del poble es trobaven al safareig.",
+   "paraula": "rentadores",
+   "esperat": "rentadores",
+   "tipus": "irresoluble",
+   "motor_sol": "Les llavadores del poble es trobaven al safareig.",
+   "sentit": "adj/n: que lavan (personas, productos)",
+   "occidental": "Les rentadores del poble es trobaven al safareig."
+  },
+  {
+   "id": "HG2-070",
+   "oriental": "Antigament les rentadores feien la bugada al riu.",
+   "paraula": "rentadores",
+   "esperat": "rentadores",
+   "tipus": "irresoluble",
+   "motor_sol": "Antigament les llavadores feien la bugada al riu.",
+   "sentit": "adj/n: que lavan (personas, productos)",
+   "occidental": "Antigament les rentadores feien la bugada al riu."
+  },
+  {
+   "id": "HG2-071",
+   "oriental": "Són solucions rentadores suaus per a la pell.",
+   "paraula": "rentadores",
+   "esperat": "rentadores",
+   "tipus": "irresoluble",
+   "motor_sol": "Són solucions llavadores suaus per a la pell.",
+   "sentit": "adj/n: que lavan (personas, productos)",
+   "occidental": "Són solucions rentadores suaus per a la pell."
+  },
+  {
+   "id": "HG2-072",
+   "oriental": "Les dones rentadores cantaven mentre treballaven.",
+   "paraula": "rentadores",
+   "esperat": "rentadores",
+   "tipus": "irresoluble",
+   "motor_sol": "Les dones llavadores cantaven mentre treballaven.",
+   "sentit": "adj/n: que lavan (personas, productos)",
+   "occidental": "Les dones rentadores cantaven mentre treballaven."
+  },
+  {
+   "id": "HG2-073",
+   "oriental": "De postres hi ha recuita amb mel.",
+   "paraula": "recuita",
+   "esperat": "brulla",
+   "tipus": "irresoluble",
+   "motor_sol": "De postres hi ha brulla amb mel.",
+   "sentit": "n: requesón",
+   "occidental": "De postres hi ha brulla amb mel."
+  },
+  {
+   "id": "HG2-074",
+   "oriental": "La recuita es fa amb el sèrum de la llet.",
+   "paraula": "recuita",
+   "esperat": "brulla",
+   "tipus": "irresoluble",
+   "motor_sol": "La brulla es fa amb el sèrum de la llet.",
+   "sentit": "n: requesón",
+   "occidental": "La brulla es fa amb el sèrum de la llet."
+  },
+  {
+   "id": "HG2-075",
+   "oriental": "Compra un pot de recuita fresca.",
+   "paraula": "recuita",
+   "esperat": "brulla",
+   "tipus": "irresoluble",
+   "motor_sol": "Compra un pot de brulla fresca.",
+   "sentit": "n: requesón",
+   "occidental": "Compra un pot de brulla fresca."
+  },
+  {
+   "id": "HG2-076",
+   "oriental": "Aquesta recuita d'ovella és molt suau.",
+   "paraula": "recuita",
+   "esperat": "brulla",
+   "tipus": "irresoluble",
+   "motor_sol": "Esta brulla d'ovella és molt suau.",
+   "sentit": "n: requesón",
+   "occidental": "Esta brulla d'ovella és molt suau."
+  },
+  {
+   "id": "HG2-077",
+   "oriental": "La carn ha quedat recuita i seca.",
+   "paraula": "recuita",
+   "esperat": "recuita",
+   "tipus": "irresoluble",
+   "motor_sol": "La carn ha quedat brulla i seca.",
+   "sentit": "adj: recocida",
+   "occidental": "La carn ha quedat recuita i seca."
+  },
+  {
+   "id": "HG2-078",
+   "oriental": "La pasta recuita no té bon gust.",
+   "paraula": "recuita",
+   "esperat": "recuita",
+   "tipus": "irresoluble",
+   "motor_sol": "La pasta brulla no té bon gust.",
+   "sentit": "adj: recocida",
+   "occidental": "La pasta recuita no té bon gust."
+  },
+  {
+   "id": "HG2-079",
+   "oriental": "Aquesta salsa està recuita de tant bullir.",
+   "paraula": "recuita",
+   "esperat": "recuita",
+   "tipus": "irresoluble",
+   "motor_sol": "Esta salsa està brulla de tant bullir.",
+   "sentit": "adj: recocida",
+   "occidental": "Esta salsa està recuita de tant bullir."
+  },
+  {
+   "id": "HG2-080",
+   "oriental": "La verdura recuita perd les vitamines.",
+   "paraula": "recuita",
+   "esperat": "recuita",
+   "tipus": "irresoluble",
+   "motor_sol": "La verdura brulla perd les vitamines.",
+   "sentit": "adj: recocida",
+   "occidental": "La verdura recuita perd les vitamines."
+  },
+  {
+   "id": "HG2-081",
+   "oriental": "Al mercat venen recuites de cabra i d'ovella.",
+   "paraula": "recuites",
+   "esperat": "brulles",
+   "tipus": "irresoluble",
+   "motor_sol": "Al mercat venen brulles de cabra i d'ovella.",
+   "sentit": "n: requesones",
+   "occidental": "Al mercat venen brulles de cabra i d'ovella."
+  },
+  {
+   "id": "HG2-082",
+   "oriental": "Les recuites del formatger del poble són excel·lents.",
+   "paraula": "recuites",
+   "esperat": "brulles",
+   "tipus": "irresoluble",
+   "motor_sol": "Les brulles del formatger del poble són excel·lents.",
+   "sentit": "n: requesones",
+   "occidental": "Les brulles del formatger del poble són excel·lents."
+  },
+  {
+   "id": "HG2-083",
+   "oriental": "Hem tastat tres recuites diferents.",
+   "paraula": "recuites",
+   "esperat": "brulles",
+   "tipus": "irresoluble",
+   "motor_sol": "Hem tastat tres brulles diferents.",
+   "sentit": "n: requesones",
+   "occidental": "Hem tastat tres brulles diferents."
+  },
+  {
+   "id": "HG2-084",
+   "oriental": "Les recuites s'han de menjar fresques.",
+   "paraula": "recuites",
+   "esperat": "brulles",
+   "tipus": "irresoluble",
+   "motor_sol": "Les brulles s'han de menjar fresques.",
+   "sentit": "n: requesones",
+   "occidental": "Les brulles s'han de menjar fresques."
+  },
+  {
+   "id": "HG2-085",
+   "oriental": "Les patates han quedat recuites.",
+   "paraula": "recuites",
+   "esperat": "recuites",
+   "tipus": "irresoluble",
+   "motor_sol": "Les creïlles han quedat brulles.",
+   "sentit": "adj: recocidas",
+   "occidental": "Les creïlles han quedat recuites."
+  },
+  {
+   "id": "HG2-086",
+   "oriental": "Les mongetes recuites es desfan.",
+   "paraula": "recuites",
+   "esperat": "recuites",
+   "tipus": "irresoluble",
+   "motor_sol": "Els fesols brulles es desfan.",
+   "sentit": "adj: recocidas",
+   "occidental": "Els fesols recuites es desfan."
+  },
+  {
+   "id": "HG2-087",
+   "oriental": "No m'agraden les verdures recuites.",
+   "paraula": "recuites",
+   "esperat": "recuites",
+   "tipus": "irresoluble",
+   "motor_sol": "No m'agraden les verdures brulles.",
+   "sentit": "adj: recocidas",
+   "occidental": "No m'agraden les verdures recuites."
+  },
+  {
+   "id": "HG2-088",
+   "oriental": "Les llenties han quedat recuites de tant bullir.",
+   "paraula": "recuites",
+   "esperat": "recuites",
+   "tipus": "irresoluble",
+   "motor_sol": "Les llentilles han quedat brulles de tant bullir.",
+   "sentit": "adj: recocidas",
+   "occidental": "Les llentilles han quedat recuites de tant bullir."
+  },
+  {
+   "id": "HG2-089",
+   "oriental": "Ha comprat unes calces de cotó.",
+   "paraula": "calces",
+   "esperat": "bragues",
+   "tipus": "irresoluble",
+   "motor_sol": "Ha comprat unes bragues de cotó.",
+   "sentit": "n: bragas",
+   "occidental": "Ha comprat unes bragues de cotó."
+  },
+  {
+   "id": "HG2-090",
+   "oriental": "Les calces són al calaix de la roba interior.",
+   "paraula": "calces",
+   "esperat": "bragues",
+   "tipus": "irresoluble",
+   "motor_sol": "Les bragues són al calaix de la roba interior.",
+   "sentit": "n: bragas",
+   "occidental": "Les bragues són al calaix de la roba interior."
+  },
+  {
+   "id": "HG2-091",
+   "oriental": "Es va posar unes calces netes després de la dutxa.",
+   "paraula": "calces",
+   "esperat": "bragues",
+   "tipus": "irresoluble",
+   "motor_sol": "Es va posar unes bragues netes després de la dutxa.",
+   "sentit": "n: bragas",
+   "occidental": "Es va posar unes bragues netes després de la dutxa."
+  },
+  {
+   "id": "HG2-092",
+   "oriental": "Al paquet hi ha tres calces de colors.",
+   "paraula": "calces",
+   "esperat": "bragues",
+   "tipus": "irresoluble",
+   "motor_sol": "Al paquet hi ha tres bragues de colors.",
+   "sentit": "n: bragas",
+   "occidental": "Al paquet hi ha tres bragues de colors."
+  },
+  {
+   "id": "HG2-093",
+   "oriental": "En aquesta casa, qui porta les calces és la mare.",
+   "paraula": "calces",
+   "esperat": "calces",
+   "tipus": "irresoluble",
+   "motor_sol": "En esta casa, qui porta les bragues és la mare.",
+   "sentit": "n: calzas (pantalones; 'portar les calces')",
+   "occidental": "En esta casa, qui porta les calces és la mare."
+  },
+  {
+   "id": "HG2-094",
+   "oriental": "El patge duia unes calces vermelles i una gorra.",
+   "paraula": "calces",
+   "esperat": "calces",
+   "tipus": "irresoluble",
+   "motor_sol": "El patge duia unes bragues vermelles i una gorra.",
+   "sentit": "n: calzas (pantalones; 'portar les calces')",
+   "occidental": "El patge duia unes calces vermelles i una gorra."
+  },
+  {
+   "id": "HG2-095",
+   "oriental": "Al segle XVI els nobles vestien calces i jubó.",
+   "paraula": "calces",
+   "esperat": "calces",
+   "tipus": "irresoluble",
+   "motor_sol": "Al segle XVI els nobles vestien bragues i jubó.",
+   "sentit": "n: calzas (pantalones; 'portar les calces')",
+   "occidental": "Al segle XVI els nobles vestien calces i jubó."
+  },
+  {
+   "id": "HG2-096",
+   "oriental": "L'armadura del cavaller cobria les calces de llana.",
+   "paraula": "calces",
+   "esperat": "calces",
+   "tipus": "irresoluble",
+   "motor_sol": "L'armadura del cavaller cobria les bragues de llana.",
+   "sentit": "n: calzas (pantalones; 'portar les calces')",
+   "occidental": "L'armadura del cavaller cobria les calces de llana."
+  },
+  {
+   "id": "HG2-097",
+   "oriental": "S'ha estirat a la gandula de la piscina.",
+   "paraula": "gandula",
+   "esperat": "hamaca",
+   "tipus": "irresoluble",
+   "motor_sol": "S'ha estirat a l'hamaca de la piscina.",
+   "sentit": "n: tumbona",
+   "occidental": "S'ha estirat a l'hamaca de la piscina."
+  },
+  {
+   "id": "HG2-098",
+   "oriental": "Hem comprat una gandula plegable per a la terrassa.",
+   "paraula": "gandula",
+   "esperat": "hamaca",
+   "tipus": "irresoluble",
+   "motor_sol": "Hem comprat una hamaca plegable per a la terrassa.",
+   "sentit": "n: tumbona",
+   "occidental": "Hem comprat una hamaca plegable per a la terrassa."
+  },
+  {
+   "id": "HG2-099",
+   "oriental": "La gandula és massa a prop de l'aigua.",
+   "paraula": "gandula",
+   "esperat": "hamaca",
+   "tipus": "irresoluble",
+   "motor_sol": "L'hamaca és massa a prop de l'aigua.",
+   "sentit": "n: tumbona",
+   "occidental": "L'hamaca és massa a prop de l'aigua."
+  },
+  {
+   "id": "HG2-100",
+   "oriental": "Deixa la tovallola damunt de la gandula.",
+   "paraula": "gandula",
+   "esperat": "hamaca",
+   "tipus": "irresoluble",
+   "motor_sol": "Deixa la tovallola damunt de l'hamaca.",
+   "sentit": "n: tumbona",
+   "occidental": "Deixa la tovallola damunt de l'hamaca."
+  },
+  {
+   "id": "HG2-101",
+   "oriental": "La meva germana és molt gandula i no ajuda mai.",
+   "paraula": "gandula",
+   "esperat": "gandula",
+   "tipus": "irresoluble",
+   "motor_sol": "La meua germana és molt hamaca i no ajuda mai.",
+   "sentit": "adj/n: vaga",
+   "occidental": "La meua germana és molt gandula i no ajuda mai."
+  },
+  {
+   "id": "HG2-102",
+   "oriental": "No siguis gandula i acaba els deures.",
+   "paraula": "gandula",
+   "esperat": "gandula",
+   "tipus": "irresoluble",
+   "motor_sol": "No sigues hamaca i acaba els deures.",
+   "sentit": "adj/n: vaga",
+   "occidental": "No sigues gandula i acaba els deures."
+  },
+  {
+   "id": "HG2-103",
+   "oriental": "És una gandula: es passa el dia al sofà.",
+   "paraula": "gandula",
+   "esperat": "gandula",
+   "tipus": "irresoluble",
+   "motor_sol": "És una hamaca: es passa el dia al sofà.",
+   "sentit": "adj/n: vaga",
+   "occidental": "És una gandula: es passa el dia al sofà."
+  },
+  {
+   "id": "HG2-104",
+   "oriental": "Una estudiant gandula no aprova mai.",
+   "paraula": "gandula",
+   "esperat": "gandula",
+   "tipus": "irresoluble",
+   "motor_sol": "Una estudiant hamaca no aprova mai.",
+   "sentit": "adj/n: vaga",
+   "occidental": "Una estudiant gandula no aprova mai."
+  },
+  {
+   "id": "HG2-105",
+   "oriental": "Han posat gandules noves a la platja.",
+   "paraula": "gandules",
+   "esperat": "hamaques",
+   "tipus": "irresoluble",
+   "motor_sol": "Han posat hamaques noves a la platja.",
+   "sentit": "n: tumbonas",
+   "occidental": "Han posat hamaques noves a la platja."
+  },
+  {
+   "id": "HG2-106",
+   "oriental": "Les gandules de l'hotel són molt còmodes.",
+   "paraula": "gandules",
+   "esperat": "hamaques",
+   "tipus": "irresoluble",
+   "motor_sol": "Les hamaques de l'hotel són molt còmodes.",
+   "sentit": "n: tumbonas",
+   "occidental": "Les hamaques de l'hotel són molt còmodes."
+  },
+  {
+   "id": "HG2-107",
+   "oriental": "Al jardí hi ha dues gandules i una taula.",
+   "paraula": "gandules",
+   "esperat": "hamaques",
+   "tipus": "irresoluble",
+   "motor_sol": "Al jardí hi ha dos hamaques i una taula.",
+   "sentit": "n: tumbonas",
+   "occidental": "Al jardí hi ha dos hamaques i una taula."
+  },
+  {
+   "id": "HG2-108",
+   "oriental": "Hem de plegar les gandules abans que plogui.",
+   "paraula": "gandules",
+   "esperat": "hamaques",
+   "tipus": "irresoluble",
+   "motor_sol": "Hem de plegar les hamaques abans que ploga.",
+   "sentit": "n: tumbonas",
+   "occidental": "Hem de plegar les hamaques abans que ploga."
+  },
+  {
+   "id": "HG2-109",
+   "oriental": "Les meves cosines són molt gandules.",
+   "paraula": "gandules",
+   "esperat": "gandules",
+   "tipus": "irresoluble",
+   "motor_sol": "Les meues cosines són molt hamaques.",
+   "sentit": "adj/n: vagas",
+   "occidental": "Les meues cosines són molt gandules."
+  },
+  {
+   "id": "HG2-110",
+   "oriental": "No sigueu gandules i netegeu l'habitació.",
+   "paraula": "gandules",
+   "esperat": "gandules",
+   "tipus": "irresoluble",
+   "motor_sol": "No sigueu hamaques i netegeu l'habitació.",
+   "sentit": "adj/n: vagas",
+   "occidental": "No sigueu gandules i netegeu l'habitació."
+  },
+  {
+   "id": "HG2-111",
+   "oriental": "Eren unes alumnes gandules però simpàtiques.",
+   "paraula": "gandules",
+   "esperat": "gandules",
+   "tipus": "irresoluble",
+   "motor_sol": "Eren unes alumnes hamaques però simpàtiques.",
+   "sentit": "adj/n: vagas",
+   "occidental": "Eren unes alumnes gandules però simpàtiques."
+  },
+  {
+   "id": "HG2-112",
+   "oriental": "Les gates de casa són molt gandules.",
+   "paraula": "gandules",
+   "esperat": "gandules",
+   "tipus": "irresoluble",
+   "motor_sol": "Les gates de casa són molt hamaques.",
+   "sentit": "adj/n: vagas",
+   "occidental": "Les gates de casa són molt gandules."
+  },
+  {
+   "id": "HG2-113",
+   "oriental": "Ha torrat una panotxa a la brasa.",
+   "paraula": "panotxa",
+   "esperat": "panolla",
+   "tipus": "irresoluble",
+   "motor_sol": "Ha torrat una panolla a la brasa.",
+   "sentit": "n: mazorca",
+   "occidental": "Ha torrat una panolla a la brasa."
+  },
+  {
+   "id": "HG2-114",
+   "oriental": "Cada panotxa té centenars de grans de blat de moro.",
+   "paraula": "panotxa",
+   "esperat": "panolla",
+   "tipus": "irresoluble",
+   "motor_sol": "Cada panolla té centenars de grans de dacsa.",
+   "sentit": "n: mazorca",
+   "occidental": "Cada panolla té centenars de grans de dacsa."
+  },
+  {
+   "id": "HG2-115",
+   "oriental": "Les gallines s'han menjat la panotxa sencera.",
+   "paraula": "panotxa",
+   "esperat": "panolla",
+   "tipus": "irresoluble",
+   "motor_sol": "Les gallines s'han menjat la panolla sencera.",
+   "sentit": "n: mazorca",
+   "occidental": "Les gallines s'han menjat la panolla sencera."
+  },
+  {
+   "id": "HG2-116",
+   "oriental": "Va arrencar una panotxa de la planta.",
+   "paraula": "panotxa",
+   "esperat": "panolla",
+   "tipus": "irresoluble",
+   "motor_sol": "Va arrencar una panolla de la planta.",
+   "sentit": "n: mazorca",
+   "occidental": "Va arrencar una panolla de la planta."
+  },
+  {
+   "id": "HG2-117",
+   "oriental": "La seva àvia era panotxa, de l'horta de Múrcia.",
+   "paraula": "panotxa",
+   "esperat": "panotxa",
+   "tipus": "irresoluble",
+   "motor_sol": "La seua àvia era panolla, de l'horta de Múrcia.",
+   "sentit": "adj/n: de la huerta murciana",
+   "occidental": "La seua àvia era panotxa, de l'horta de Múrcia."
+  },
+  {
+   "id": "HG2-118",
+   "oriental": "Una dona panotxa venia hortalisses al mercat.",
+   "paraula": "panotxa",
+   "esperat": "panotxa",
+   "tipus": "irresoluble",
+   "motor_sol": "Una dona panolla venia hortalisses al mercat.",
+   "sentit": "adj/n: de la huerta murciana",
+   "occidental": "Una dona panotxa venia hortalisses al mercat."
+  },
+  {
+   "id": "HG2-119",
+   "oriental": "La cultura panotxa de l'horta té moltes festes.",
+   "paraula": "panotxa",
+   "esperat": "panotxa",
+   "tipus": "irresoluble",
+   "motor_sol": "La cultura panolla de l'horta té moltes festes.",
+   "sentit": "adj/n: de la huerta murciana",
+   "occidental": "La cultura panotxa de l'horta té moltes festes."
+  },
+  {
+   "id": "HG2-120",
+   "oriental": "Cantava una cançó panotxa tradicional.",
+   "paraula": "panotxa",
+   "esperat": "panotxa",
+   "tipus": "irresoluble",
+   "motor_sol": "Cantava una cançó panolla tradicional.",
+   "sentit": "adj/n: de la huerta murciana",
+   "occidental": "Cantava una cançó panotxa tradicional."
+  },
+  {
+   "id": "HG2-121",
+   "oriental": "Hem collit vint panotxes de l'hort.",
+   "paraula": "panotxes",
+   "esperat": "panolles",
+   "tipus": "irresoluble",
+   "motor_sol": "Hem collit vint panolles de l'hort.",
+   "sentit": "n: mazorcas",
+   "occidental": "Hem collit vint panolles de l'hort."
+  },
+  {
+   "id": "HG2-122",
+   "oriental": "Les panotxes es posen a assecar al sol.",
+   "paraula": "panotxes",
+   "esperat": "panolles",
+   "tipus": "irresoluble",
+   "motor_sol": "Les panolles es posen a assecar al sol.",
+   "sentit": "n: mazorcas",
+   "occidental": "Les panolles es posen a assecar al sol."
+  },
+  {
+   "id": "HG2-123",
+   "oriental": "Venen panotxes torrades a la fira.",
+   "paraula": "panotxes",
+   "esperat": "panolles",
+   "tipus": "irresoluble",
+   "motor_sol": "Venen panolles torrades a la fira.",
+   "sentit": "n: mazorcas",
+   "occidental": "Venen panolles torrades a la fira."
+  },
+  {
+   "id": "HG2-124",
+   "oriental": "Els porcs mengen panotxes seques.",
+   "paraula": "panotxes",
+   "esperat": "panolles",
+   "tipus": "irresoluble",
+   "motor_sol": "Els porcs mengen panolles seques.",
+   "sentit": "n: mazorcas",
+   "occidental": "Els porcs mengen panolles seques."
+  },
+  {
+   "id": "HG2-125",
+   "oriental": "Les dones panotxes portaven el vestit tradicional de l'horta.",
+   "paraula": "panotxes",
+   "esperat": "panotxes",
+   "tipus": "irresoluble",
+   "motor_sol": "Les dones panolles portaven el vestit tradicional de l'horta.",
+   "sentit": "adj/n: de la huerta murciana",
+   "occidental": "Les dones panotxes portaven el vestit tradicional de l'horta."
+  },
+  {
+   "id": "HG2-126",
+   "oriental": "Les cançons panotxes parlen de la vida al camp.",
+   "paraula": "panotxes",
+   "esperat": "panotxes",
+   "tipus": "irresoluble",
+   "motor_sol": "Les cançons panolles parlen de la vida al camp.",
+   "sentit": "adj/n: de la huerta murciana",
+   "occidental": "Les cançons panotxes parlen de la vida al camp."
+  },
+  {
+   "id": "HG2-127",
+   "oriental": "Les famílies panotxes celebren la festa de l'horta.",
+   "paraula": "panotxes",
+   "esperat": "panotxes",
+   "tipus": "irresoluble",
+   "motor_sol": "Les famílies panolles celebren la festa de l'horta.",
+   "sentit": "adj/n: de la huerta murciana",
+   "occidental": "Les famílies panotxes celebren la festa de l'horta."
+  },
+  {
+   "id": "HG2-128",
+   "oriental": "Les tradicions panotxes de Múrcia són molt antigues.",
+   "paraula": "panotxes",
+   "esperat": "panotxes",
+   "tipus": "irresoluble",
+   "motor_sol": "Les tradicions panolles de Múrcia són molt antigues.",
+   "sentit": "adj/n: de la huerta murciana",
+   "occidental": "Les tradicions panotxes de Múrcia són molt antigues."
+  },
+  {
+   "id": "HG2-129",
+   "oriental": "Ahir vam fer una fartanera de marisc.",
+   "paraula": "fartanera",
+   "esperat": "fartada",
+   "tipus": "irresoluble",
+   "motor_sol": "Ahir vam fer una fartada de marisc.",
+   "sentit": "n: atracón",
+   "occidental": "Ahir vam fer una fartada de marisc."
+  },
+  {
+   "id": "HG2-130",
+   "oriental": "Després de la fartanera de Nadal no em podia ni moure.",
+   "paraula": "fartanera",
+   "esperat": "fartada",
+   "tipus": "irresoluble",
+   "motor_sol": "Després de la fartada de Nadal no em podia ni moure.",
+   "sentit": "n: atracón",
+   "occidental": "Després de la fartada de Nadal no em podia ni moure."
+  },
+  {
+   "id": "HG2-131",
+   "oriental": "Quina fartanera de pastissos que es van fer!",
+   "paraula": "fartanera",
+   "esperat": "fartada",
+   "tipus": "irresoluble",
+   "motor_sol": "Quina fartada de pastissos que es van fer!",
+   "sentit": "n: atracón",
+   "occidental": "Quina fartada de pastissos que es van fer!"
+  },
+  {
+   "id": "HG2-132",
+   "oriental": "La fartanera de la boda va durar tota la tarda.",
+   "paraula": "fartanera",
+   "esperat": "fartada",
+   "tipus": "irresoluble",
+   "motor_sol": "La fartada de la boda va durar tota la vesprada.",
+   "sentit": "n: atracón",
+   "occidental": "La fartada de la boda va durar tota la vesprada."
+  },
+  {
+   "id": "HG2-133",
+   "oriental": "La meva gossa és molt fartanera i s'ho menja tot.",
+   "paraula": "fartanera",
+   "esperat": "fartanera",
+   "tipus": "irresoluble",
+   "motor_sol": "La meua gossa és molt fartada i s'ho menja tot.",
+   "sentit": "adj/n: glotona",
+   "occidental": "La meua gossa és molt fartanera i s'ho menja tot."
+  },
+  {
+   "id": "HG2-134",
+   "oriental": "És una nena fartanera que sempre té gana.",
+   "paraula": "fartanera",
+   "esperat": "fartanera",
+   "tipus": "irresoluble",
+   "motor_sol": "És una xiqueta fartada que sempre té gana.",
+   "sentit": "adj/n: glotona",
+   "occidental": "És una xiqueta fartanera que sempre té gana."
+  },
+  {
+   "id": "HG2-135",
+   "oriental": "No siguis fartanera i deixa'n per als altres.",
+   "paraula": "fartanera",
+   "esperat": "fartanera",
+   "tipus": "irresoluble",
+   "motor_sol": "No sigues fartada i deixa'n per als altres.",
+   "sentit": "adj/n: glotona",
+   "occidental": "No sigues fartanera i deixa'n per als altres."
+  },
+  {
+   "id": "HG2-136",
+   "oriental": "Una persona fartanera no sap dir que no al menjar.",
+   "paraula": "fartanera",
+   "esperat": "fartanera",
+   "tipus": "irresoluble",
+   "motor_sol": "Una persona fartada no sap dir que no al menjar.",
+   "sentit": "adj/n: glotona",
+   "occidental": "Una persona fartanera no sap dir que no al menjar."
+  },
+  {
+   "id": "HG2-137",
+   "oriental": "A l'estiu fèiem fartaneres de síndria.",
+   "paraula": "fartaneres",
+   "esperat": "fartades",
+   "tipus": "irresoluble",
+   "motor_sol": "A l'estiu fèiem fartades de síndria.",
+   "sentit": "n: atracones",
+   "occidental": "A l'estiu fèiem fartades de síndria."
+  },
+  {
+   "id": "HG2-138",
+   "oriental": "Les fartaneres de les festes ens deixen rebentats.",
+   "paraula": "fartaneres",
+   "esperat": "fartades",
+   "tipus": "irresoluble",
+   "motor_sol": "Les fartades de les festes ens deixen rebentats.",
+   "sentit": "n: atracones",
+   "occidental": "Les fartades de les festes ens deixen rebentats."
+  },
+  {
+   "id": "HG2-139",
+   "oriental": "No són bones aquestes fartaneres de dolços.",
+   "paraula": "fartaneres",
+   "esperat": "fartades",
+   "tipus": "irresoluble",
+   "motor_sol": "No són bones estes fartades de dolços.",
+   "sentit": "n: atracones",
+   "occidental": "No són bones estes fartades de dolços."
+  },
+  {
+   "id": "HG2-140",
+   "oriental": "Recordo les fartaneres de castanyes de la tardor.",
+   "paraula": "fartaneres",
+   "esperat": "fartades",
+   "tipus": "irresoluble",
+   "motor_sol": "Recorde les fartades de castanyes de la tardor.",
+   "sentit": "n: atracones",
+   "occidental": "Recorde les fartades de castanyes de la tardor."
+  },
+  {
+   "id": "HG2-141",
+   "oriental": "Les meves nebodes són molt fartaneres.",
+   "paraula": "fartaneres",
+   "esperat": "fartaneres",
+   "tipus": "irresoluble",
+   "motor_sol": "Les meues nebodes són molt fartades.",
+   "sentit": "adj/n: glotonas",
+   "occidental": "Les meues nebodes són molt fartaneres."
+  },
+  {
+   "id": "HG2-142",
+   "oriental": "Les gates fartaneres s'han menjat el peix.",
+   "paraula": "fartaneres",
+   "esperat": "fartaneres",
+   "tipus": "irresoluble",
+   "motor_sol": "Les gates fartades s'han menjat el peix.",
+   "sentit": "adj/n: glotonas",
+   "occidental": "Les gates fartaneres s'han menjat el peix."
+  },
+  {
+   "id": "HG2-143",
+   "oriental": "Eren unes noies fartaneres i alegres.",
+   "paraula": "fartaneres",
+   "esperat": "fartaneres",
+   "tipus": "irresoluble",
+   "motor_sol": "Eren unes xiques fartades i alegres.",
+   "sentit": "adj/n: glotonas",
+   "occidental": "Eren unes xiques fartaneres i alegres."
+  },
+  {
+   "id": "HG2-144",
+   "oriental": "Les oques fartaneres no paren de menjar.",
+   "paraula": "fartaneres",
+   "esperat": "fartaneres",
+   "tipus": "irresoluble",
+   "motor_sol": "Les oques fartades no paren de menjar.",
+   "sentit": "adj/n: glotonas",
+   "occidental": "Les oques fartaneres no paren de menjar."
+  },
+  {
+   "id": "HG2-145",
+   "oriental": "Ha estat una campanya molt reeixida.",
+   "paraula": "reeixida",
+   "esperat": "exitosa",
+   "tipus": "resoluble",
+   "motor_sol": "Ha sigut una campanya molt exitosa.",
+   "sentit": "adj: exitosa",
+   "occidental": "Ha sigut una campanya molt exitosa."
+  },
+  {
+   "id": "HG2-146",
+   "oriental": "L'exposició va ser molt reeixida.",
+   "paraula": "reeixida",
+   "esperat": "exitosa",
+   "tipus": "resoluble",
+   "motor_sol": "L'exposició va ser molt exitosa.",
+   "sentit": "adj: exitosa",
+   "occidental": "L'exposició va ser molt exitosa."
+  },
+  {
+   "id": "HG2-147",
+   "oriental": "Va fer una carrera reeixida com a advocada.",
+   "paraula": "reeixida",
+   "esperat": "exitosa",
+   "tipus": "resoluble",
+   "motor_sol": "Va fer una carrera exitosa com a advocada.",
+   "sentit": "adj: exitosa",
+   "occidental": "Va fer una carrera exitosa com a advocada."
+  },
+  {
+   "id": "HG2-148",
+   "oriental": "És una adaptació reeixida de la novel·la.",
+   "paraula": "reeixida",
+   "esperat": "exitosa",
+   "tipus": "resoluble",
+   "motor_sol": "És una adaptació exitosa de la novel·la.",
+   "sentit": "adj: exitosa",
+   "occidental": "És una adaptació exitosa de la novel·la."
+  },
+  {
+   "id": "HG2-149",
+   "oriental": "La reeixida del projecte depèn de tots.",
+   "paraula": "reeixida",
+   "esperat": "reeixida",
+   "tipus": "resoluble",
+   "motor_sol": "La reeixida del projecte depén de tots.",
+   "sentit": "n: éxito",
+   "occidental": "La reeixida del projecte depén de tots."
+  },
+  {
+   "id": "HG2-150",
+   "oriental": "Celebrem la reeixida de la missió.",
+   "paraula": "reeixida",
+   "esperat": "reeixida",
+   "tipus": "resoluble",
+   "motor_sol": "Celebrem la reeixida de la missió.",
+   "sentit": "n: éxito",
+   "occidental": "Celebrem la reeixida de la missió."
+  },
+  {
+   "id": "HG2-151",
+   "oriental": "La clau de la seva reeixida és la constància.",
+   "paraula": "reeixida",
+   "esperat": "reeixida",
+   "tipus": "resoluble",
+   "motor_sol": "La clau de la seua reeixida és la constància.",
+   "sentit": "n: éxito",
+   "occidental": "La clau de la seua reeixida és la constància."
+  },
+  {
+   "id": "HG2-152",
+   "oriental": "Ningú no esperava una reeixida tan gran.",
+   "paraula": "reeixida",
+   "esperat": "reeixida",
+   "tipus": "resoluble",
+   "motor_sol": "Ningú no esperava una reeixida tan gran.",
+   "sentit": "n: éxito",
+   "occidental": "Ningú no esperava una reeixida tan gran."
+  },
+  {
+   "id": "HG2-153",
+   "oriental": "Han estat unes jornades molt reeixides.",
+   "paraula": "reeixides",
+   "esperat": "exitoses",
+   "tipus": "resoluble",
+   "motor_sol": "Han sigut unes jornades molt exitoses.",
+   "sentit": "adj: exitosas",
+   "occidental": "Han sigut unes jornades molt exitoses."
+  },
+  {
+   "id": "HG2-154",
+   "oriental": "Les dues últimes temporades van ser reeixides.",
+   "paraula": "reeixides",
+   "esperat": "exitoses",
+   "tipus": "resoluble",
+   "motor_sol": "Les dos últimes temporades van ser reeixides.",
+   "sentit": "adj: exitosas",
+   "occidental": "Les dos últimes temporades van ser exitoses."
+  },
+  {
+   "id": "HG2-155",
+   "oriental": "Són iniciatives reeixides que cal repetir.",
+   "paraula": "reeixides",
+   "esperat": "exitoses",
+   "tipus": "resoluble",
+   "motor_sol": "Són iniciatives exitoses que cal repetir.",
+   "sentit": "adj: exitosas",
+   "occidental": "Són iniciatives exitoses que cal repetir."
+  },
+  {
+   "id": "HG2-156",
+   "oriental": "Hem fet campanyes reeixides arreu del país.",
+   "paraula": "reeixides",
+   "esperat": "exitoses",
+   "tipus": "resoluble",
+   "motor_sol": "Hem fet campanyes exitoses arreu del país.",
+   "sentit": "adj: exitosas",
+   "occidental": "Hem fet campanyes exitoses arreu del país."
+  },
+  {
+   "id": "HG2-157",
+   "oriental": "Les reeixides de l'equip omplen el palmarès.",
+   "paraula": "reeixides",
+   "esperat": "reeixides",
+   "tipus": "resoluble",
+   "motor_sol": "Les reeixides de l'equip omplin el palmarés.",
+   "sentit": "n: éxitos",
+   "occidental": "Les reeixides de l'equip omplin el palmarés."
+  },
+  {
+   "id": "HG2-158",
+   "oriental": "Les seves reeixides professionals la van fer famosa.",
+   "paraula": "reeixides",
+   "esperat": "reeixides",
+   "tipus": "resoluble",
+   "motor_sol": "Les seues exitoses professionals la van fer famosa.",
+   "sentit": "n: éxitos",
+   "occidental": "Les seues reeixides professionals la van fer famosa."
+  },
+  {
+   "id": "HG2-159",
+   "oriental": "Totes les reeixides tenen un preu.",
+   "paraula": "reeixides",
+   "esperat": "reeixides",
+   "tipus": "resoluble",
+   "motor_sol": "Totes les reeixides tenen un preu.",
+   "sentit": "n: éxitos",
+   "occidental": "Totes les reeixides tenen un preu."
+  },
+  {
+   "id": "HG2-160",
+   "oriental": "Ha acumulat moltes reeixides al llarg de la carrera.",
+   "paraula": "reeixides",
+   "esperat": "reeixides",
+   "tipus": "resoluble",
+   "motor_sol": "Ha acumulat moltes exitoses al llarg de la carrera.",
+   "sentit": "n: éxitos",
+   "occidental": "Ha acumulat moltes reeixides al llarg de la carrera."
+  }
+ ]
+}
