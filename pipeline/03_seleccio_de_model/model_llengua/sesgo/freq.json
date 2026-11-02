@@ -1,0 +1,55 @@
+{
+ "valencia": {
+  "total": 8781624,
+  "paraules": {
+   "nous": 1424,
+   "vegada": 2880,
+   "nou": 4159,
+   "deu": 2027,
+   "vegades": 671,
+   "colp": 38,
+   "reeixida": 4,
+   "panolla": 2,
+   "colps": 12,
+   "calces": 10,
+   "cop": 25,
+   "cops": 1,
+   "anous": 11,
+   "anou": 10,
+   "llavadora": 10,
+   "bragues": 7,
+   "exitosa": 4,
+   "llavadores": 1,
+   "rentadora": 2,
+   "manca": 73,
+   "exitoses": 1,
+   "carències": 42,
+   "carència": 131,
+   "reeixides": 3,
+   "brollador": 3,
+   "recuita": 1
+  }
+ },
+ "catala": {
+  "total": 7262015,
+  "paraules": {
+   "vegada": 2506,
+   "nou": 3531,
+   "nous": 1091,
+   "carència": 114,
+   "deu": 1343,
+   "vegades": 234,
+   "recuita": 2,
+   "manca": 322,
+   "cop": 430,
+   "carències": 34,
+   "cops": 1,
+   "bragues": 2,
+   "calces": 3
+  }
+ },
+ "fonts": {
+  "valencia": "AVL (unified.jsonl) + BOE en valencià",
+  "catala": "BOE en català"
+ }
+}

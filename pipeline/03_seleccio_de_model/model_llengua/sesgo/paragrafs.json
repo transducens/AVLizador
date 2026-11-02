@@ -1,0 +1,27 @@
+[
+ {
+  "id": "P1",
+  "origen": "escrit a mà",
+  "text": "Este és un text escrit en valencià. Hui els xiquets han eixit prompte de l'escola i se n'han anat a casa per a vore la seua família."
+ },
+ {
+  "id": "P2",
+  "origen": "corpus AVL",
+  "text": "La corfa és una paraula eminentment valenciana, desconeguda en altres territoris del domini lingüístic. Així mateix, per analogia també s’aplica la paraula corfa a la pell dura amb què estan recobertes algunes fruites, com la taronja, el meló, el plàtan, la magrana, etc. Per similitud, també s’aplica a la capa de sang seca que es forma en les ferides."
+ },
+ {
+  "id": "P3",
+  "origen": "corpus AVL",
+  "text": "Juan Carlos Moreno Cabrera és nascut a Madrid i ha sigut catedràtic en la Universitat Autònoma d’esta ciutat. És autor de més d’una trentena de llibres i de centenars d’articles en revistes i llibres col·lectius. L’expert va explicar el concepte de bilingüisme hegemònic, que ha tingut com a base les aportacions del sociolingüista valencià Rafael Ninyoles."
+ },
+ {
+  "id": "P4",
+  "origen": "corpus AVL",
+  "text": "L’Acadèmia Valenciana de la Llengua va tancar, durant el primer trimestre del 2024, les actuacions relacionades amb els Escriptors de l’Any 2023. Així, la Facultat de Magisteri de la Universitat de València va acollir, el 2 de febrer, la jornada «L’exili valencià: història i literatura». Josep Palomero va obrir la sessió de conferències amb «Els escriptors valencians de l’exili»."
+ },
+ {
+  "id": "P5",
+  "origen": "corpus AVL",
+  "text": "La paraula altercat fa referència a una discussió o disputa apassionada, sovint amb actes de violència. És el participi substantivat del verb altercar, que significa ‘discutir acaloradament’. Este verb és el resultat de l’evolució del llatí altercare, format per derivació del pronom alter, ‘altre’."
+ }
+]
