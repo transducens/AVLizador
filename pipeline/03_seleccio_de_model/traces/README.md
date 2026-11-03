@@ -145,7 +145,28 @@ el candidato correcto, y conviene revisarla a mano. Página:
   sentido en la mayoría de casos, pero los nombres del sentido dialectal
   salen ADJ (10), NUM (4) o PROPN (4) en 18 de 72.
 
-### Posible arreglo (sin implementar): concordancia con el artículo
+### Concordancia con el artículo (APLICADA en parte el 03/11/2026)
+
+**Lo aplicado** (`model_llengua/punts.py::decisio_spacy`): si spaCy dice
+ADJ y el género del adjetivo no es el del determinante de delante ("una
+nou", "les nous": "nou" adjetivo es masculino), spaCy se ha equivocado:
+no decide y pasa a FLOR (con el margen 5, así que suele quedar lo del
+motor, "anou"). Resultado con P1: v2 122 → **124** (HG2-004 "una nou",
+HG2-016 "les nous"), manual 227 → **228** (BM-AVL-191 "les nous"),
+homógrafos 233 igual; 0 pérdidas. En los benchmarks reales (manual,
+151, BOE, gplsi) spaCy decide 157 veces en irresolubles y la regla solo
+salta en BM-AVL-191.
+
+**Lo que NO se aplica, y por qué** (usuario, 03/11): si spaCy dice NUM
+("una nou", "la nou"), el determinante no descarta nada: un numeral hace
+de nombre con cualquier artículo ("la nou" = la jugadora del dorsal
+nueve, "la nou" = la carretera). Tampoco se mira el número ("les nou" =
+las nueve). Por eso HG059, HG2-001 y HG2-003 siguen fallando. Probado de
+paso: **FLOR no distingue "nou"/"anou"**: con la nuez prefiere "nou"
+(8-11 puntos, es lo que ve en catalán) y con la jugadora casi no separa;
+el singular "nou" necesita otra señal.
+
+Planteamiento original (02/11):
 
 spaCy se equivoca con "nou", pero acierta con el artículo de delante:
 "una/la nou" (femenino singular) solo puede ser nuez; "el/un nou",

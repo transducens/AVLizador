@@ -57,6 +57,13 @@ gplsi 1.544 → 1.547; manual, 151 y BOE sin cambios. Pierde "manca" verbo
 (→ "carència") en 2 frases más. Pruebas (párrafos, frecuencias, LoRA) en
 `pipeline/03_seleccio_de_model/model_llengua/sesgo/README.md`.
 
+**Concordancia con el determinante (03/11/2026)**: si spaCy da ADJ a la
+palabra ambigua y su género no es el del determinante de delante ("una
+nou", "les nous"), la capa de spaCy no decide y pasa al modelo
+(`punts.decisio_spacy`). Con NUM no (un numeral hace de nombre con
+cualquier artículo: "la nou" = la jugadora del dorsal nueve). Homógrafos
+v2 122 → 124, manual 227 → 228, homógrafos 233 igual. Detalle en
+`pipeline/03_seleccio_de_model/traces/README.md`.
 
 **Resultados (23/10/2026)**:
 

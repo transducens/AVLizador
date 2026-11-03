@@ -43,6 +43,21 @@ mayúsculas, la puntuación va pegada a la palabra. Cada frase del JSON
 guarda `ter`, `wer`, `ter_edicions`, `wer_edicions` y `ref_paraules`; el
 resumen, `ter_corpus` y `wer_corpus`.
 
+## 03/11/2026 10:40 — P1 + concordancia del adjetivo con el determinante
+
+Si spaCy da ADJ a la palabra ambigua y su género no concuerda con el
+determinante ("una nou", "les nous"), decide FLOR en vez de spaCy
+(`punts.decisio_spacy`; detalle en `traces/README.md`). Solo se midieron
+estos tres benchmarks: en el resto la regla no salta (comprobado con
+spaCy). Frente a las 09:41: v2 +2 (HG2-004, HG2-016), manual +1
+(BM-AVL-191), 0 pérdidas.
+
+| Benchmark | Sistema | Exactas | BLEU | chrF | chrF++ | TER ↓ | WER ↓ | Errors |
+|---|---|---|---|---|---|---|---|---|
+| 151 + homógrafos (253) | Motor + FLOR-760M (P1 + det.) | 233/253 (92,1 %) | 97,57 | 98,97 | 98,92 | 0,49 | 0,49 | 0 |
+| Homógrafos v2, equilibrado por sentido (160) | Motor + FLOR-760M (P1 + det.) | **124/160 (77,5 %)** | 91,90 | 95,92 | 95,89 | 3,24 | 3,24 | 0 |
+| Manual mezcla BOE + AVL (458) | Motor + FLOR-760M (P1 + det.) | **228/458 (49,8 %)** | 90,90 | 96,35 | 95,93 | 5,60 | 6,00 | 0 |
+
 ## 03/11/2026 09:41 — Sistema final con párrafo valenciano delante (P1)
 
 Desde el 03/11 FLOR puntúa cada frase como continuación de un párrafo
