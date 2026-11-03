@@ -181,7 +181,44 @@ Arreglaría unas 5 de las 8 frases de "nou/nous" fruto de la v2 (y quizá
 del léxico ("nou [n, f]") o calculado con spaCy a partir de la palabra
 valenciana. Antes de aplicarlo, medirlo en la v1, la v2 y el manual.
 
-### Posibles arreglos (sin implementar): el sesgo de FLOR hacia la palabra frecuente
+### FLOR no distingue sentidos (03/11/2026) — tema cerrado de momento
+
+Análisis de los 35 fallos de la v2 (P1 + regla del adjetivo, 124/160).
+Para cada palabra se miró la diferencia de FLOR, nota(palabra catalana)
+− nota(valenciana), cuando la referencia quiere el sentido dialectal
+(debería ser negativa) y cuando quiere el otro sentido (positiva). **Solo
+separa los dos grupos en 3 de 17 palabras**: "gandula" (+0,2…+2,4 frente
+a +10,1…+15,2), "manques" y "recuites". En las demás se solapan: "nou"
+−0,3…+10,8 frente a +5,1…+18,3; "panotxes" incluso al revés (prefiere
+más "panotxes" cuando es mazorca); "calces", "rentadora(es)", "recuita",
+"fartanera(es)", "panotxa", "gandules", "manca" mezclados.
+
+**Por qué**: FLOR mide si la frase suena normal, y casi todo lo que sabe
+es catalán. "Ha caigut una nou de l'arbre" es una frase catalana
+perfecta con el sentido de nuez: la pregunta "¿anou o nou?" la contesta
+por el idioma, no por el sentido. En estas palabras quien decide de
+verdad es el margen 5 (deja la traducción del motor salvo que FLOR esté
+muy seguro).
+
+Fallos de la v2 por causa: ~20 FLOR no distingue y gana el lado
+equivocado; 8 spaCy ("de nous", "unes quantes nous" ADJ sin determinante
+justo delante; "greus manques", "recuites de cabra" ADJ, que además son
+formas reales del adjetivo; "una nou" NUM); ~4 datos o referencias
+discutibles ("les rentadores del poble", "reeixides" nombre).
+
+**Decisión del usuario (03/11/2026)**: se asume que FLOR es así y se
+deja aquí. Posible siguiente experimento (opción 2, sin fecha): comparar
+SENTIDOS y no palabras, con una glosa breve por cada lectura de los
+`lemas` del léxico ("nou [n] = fruit sec", "nou [adj] = recent"),
+añadida por el usuario y su compañero (no en el código); con eso, FLOR
+puntuaría la frase con la glosa de cada sentido.
+
+### Posibles arreglos (02/11/2026): el sesgo de FLOR hacia la palabra frecuente
+
+**Actualización 03/11**: la opción B (párrafo delante, P1) está aplicada
+en el paquete; el LoRA y la frecuencia se probaron y se descartaron (ver
+`../model_llengua/sesgo/README.md`). Lo que sigue es el planteamiento
+del 02/11.
 
 FLOR prefiere la forma que ha visto más veces ("rentadora" frente a
 "llavadora", "deu" frente a "brollador", "nou" frente a "anou"), porque
