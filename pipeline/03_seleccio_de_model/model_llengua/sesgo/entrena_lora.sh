@@ -40,14 +40,24 @@ echo "GPU: $CUDA_VISIBLE_DEVICES"
 export PYTHONIOENCODING=utf-8
 export HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}"
 
-# 1) entrenament, amb torch CUDA
+# 1) entrenament, amb torch CUDA. El driver d'Abaco és CUDA 12.9: el torch
+# de PyPI per defecte ve compilat per a un CUDA més nou i no veu la GPU
+# (job 2646: va entrenar en CPU i el va tallar el límit de 6 h). Per això
+# s'instal·la des de l'índex de PyTorch per a CUDA 12.8.
 VENV_GPU="${VENV_GPU:-$HOME/venvs/flor-gpu}"
+TORCH_INDEX="${TORCH_INDEX:-https://download.pytorch.org/whl/cu128}"
 if [[ ! -x "$VENV_GPU/bin/python" ]]; then
     python3 -m venv "$VENV_GPU"
     "$VENV_GPU/bin/pip" install -q -U pip
-    "$VENV_GPU/bin/pip" install -q torch "transformers>=4.45" "huggingface_hub<2.0" peft accelerate
+    "$VENV_GPU/bin/pip" install -q "transformers>=4.45" "huggingface_hub<2.0" peft accelerate
+fi
+if ! "$VENV_GPU/bin/python" -c "import torch, sys; sys.exit(0 if torch.cuda.is_available() else 1)" 2>/dev/null; then
+    echo "torch no veu la GPU: es reinstal·la des de $TORCH_INDEX"
+    "$VENV_GPU/bin/pip" install -q --force-reinstall torch --index-url "$TORCH_INDEX"
 fi
 "$VENV_GPU/bin/python" -c "import torch; print('torch', torch.__version__, 'cuda', torch.cuda.is_available())"
+"$VENV_GPU/bin/python" -c "import torch, sys; sys.exit(0 if torch.cuda.is_available() else 1)" \
+    || { echo "ERROR: torch continua sense CUDA; no s'entrena en CPU." >&2; exit 1; }
 "$VENV_GPU/bin/python" "$SCRIPT_DIR/entrena_lora.py" \
     --dades "$SCRIPT_DIR/entrenament_valencia.txt" --eixida "$SCRIPT_DIR/lora_valencia"
 

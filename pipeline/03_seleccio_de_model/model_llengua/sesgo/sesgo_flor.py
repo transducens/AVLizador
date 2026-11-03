@@ -52,18 +52,50 @@ BENCH_PROVA = ("homografs_v2", "manual")
 
 class ModelAmbParagraf:
     """Un `ModelLlengua` que puntua cada text com a continuació de `paragraf`:
-    log P(text | paràgraf) = log P(paràgraf + text) − log P(paràgraf)."""
+    log P(text | paràgraf) = log P(paràgraf + text) − log P(paràgraf).
+
+    El paràgraf passa per FLOR una sola vegada: se'n guarden els
+    `past_key_values` i, per a cada text, només es calculen els tokens del
+    text. Si el tokenitzador no talla el paràgraf igual dins de
+    "paràgraf + text", es calcula tot sencer (el resultat és el mateix)."""
 
     def __init__(self, base, paragraf: str | None):
         self.base, self.paragraf = base, paragraf
         self.model_id = base.model_id
+        self._cache: dict[str, tuple[float, int]] = {}
+        self.sense_kv = 0  # textos calculats sencers (tall diferent)
+        if paragraf:
+            torch = base._torch
+            self._ids_p = [base.bos] + base.tok(paragraf, add_special_tokens=False)["input_ids"]
+            with torch.no_grad():
+                eix = base.lm(torch.tensor([self._ids_p]), use_cache=True)
+            self._kv = eix.past_key_values
+            self._ultim = eix.logits[0, -1].float()
 
     def logprob(self, text: str) -> tuple[float, int]:
         if not self.paragraf:
             return self.base.logprob(text)
-        lp_p, n_p = self.base.logprob(self.paragraf)
-        lp, n = self.base.logprob(self.paragraf + " " + text)
-        return lp - lp_p, n - n_p
+        if text in self._cache:
+            return self._cache[text]
+        base, torch = self.base, self.base._torch
+        ids = [base.bos] + base.tok(self.paragraf + " " + text, add_special_tokens=False)["input_ids"]
+        n_p = len(self._ids_p)
+        if ids[:n_p] != self._ids_p:
+            self.sense_kv += 1
+            lp_p, np_ = base.logprob(self.paragraf)
+            lp, n = base.logprob(self.paragraf + " " + text)
+            self._cache[text] = (lp - lp_p, n - np_)
+            return self._cache[text]
+        nous = ids[n_p:]
+        with torch.no_grad():
+            eix = base.lm(torch.tensor([nous]), past_key_values=self._kv, use_cache=True,
+                          attention_mask=torch.ones(1, len(ids), dtype=torch.long))
+        # la caché creix amb els tokens nous: es retalla al paràgraf
+        self._kv.crop(-len(nous))
+        logits = torch.cat([self._ultim[None], eix.logits[0, :-1].float()])
+        lp = torch.log_softmax(logits, -1)[torch.arange(len(nous)), torch.tensor(nous)].sum().item()
+        self._cache[text] = (lp, len(nous))
+        return self._cache[text]
 
 
 def carrega_model(model_id: str | None, adaptador: str | None):

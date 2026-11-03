@@ -61,12 +61,18 @@ def main() -> int:
     ap.add_argument("--lr", type=float, default=2e-4)
     ap.add_argument("--rang", type=int, default=16)
     ap.add_argument("--llavor", type=int, default=21)
+    ap.add_argument("--permet-cpu", action="store_true",
+                    help="Entrenar en CPU si no hi ha GPU (per defecte s'atura: és massa lent).")
     args = ap.parse_args()
 
     random.seed(args.llavor)
     torch.manual_seed(args.llavor)
     dispositiu = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Dispositiu: {dispositiu}", flush=True)
+    if dispositiu.type == "cpu" and not args.permet_cpu:
+        print("ERROR: torch no veu cap GPU (driver o versió de torch); --permet-cpu per a entrenar en CPU.",
+              flush=True)
+        return 1
 
     frases = [l.strip() for l in Path(args.dades).read_text(encoding="utf-8").splitlines() if l.strip()]
     random.shuffle(frases)
@@ -76,7 +82,7 @@ def main() -> int:
     print(f"{len(frases)} frases -> {len(entrenament)} blocs d'entrenament, {len(validacio)} de validació",
           flush=True)
 
-    model = AutoModelForCausalLM.from_pretrained(args.model, torch_dtype=torch.float32).to(dispositiu)
+    model = AutoModelForCausalLM.from_pretrained(args.model, dtype=torch.float32).to(dispositiu)
     model = get_peft_model(model, LoraConfig(
         r=args.rang, lora_alpha=2 * args.rang, lora_dropout=0.05, task_type="CAUSAL_LM",
         target_modules=["query_key_value", "dense_h_to_4h", "dense_4h_to_h"]))
