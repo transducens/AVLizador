@@ -292,6 +292,92 @@ equipos sin internet: `docker save avlizador:1.1.0 > avlizador.tar` y
   redistribuye.
 - **XCOMET-XL** no va en la imagen (solo evaluación, CC BY-NC-SA).
 
+### 7.5 Tarea: avisos de licencias para la imagen (con la fase 4)
+
+Ya existen `NOTICE` (terceros: spaCy, FLOR, gplsi, BOE, AVL, salidas de
+LLM, dependencias de Python) y la sección "Llicència" / "Licencia" de
+los dos README. **Se amplían, no se sustituyen** (si se reemplazaran,
+se perderían gplsi, BOE, AVL y las salidas de los LLM).
+
+**1. `NOTICE`**: añadir al final un apartado para la imagen Docker y
+completar las versiones reales al construirla. Texto propuesto (en
+valenciano de la AVL, como el resto del fichero):
+
+```text
+Imatge Docker
+=============
+
+La imatge Docker d'AVLizador inclou, a més del codi i les dades del
+projecte, estos components de tercers:
+
+1. Model d'spaCy ca_core_news_md
+   Versió: 3.8.0
+   Llicència: GNU General Public License v3.0 (GPL-3.0)
+   Codi font: https://github.com/explosion/spacy-models
+   Qui redistribuïsca una imatge que el continga ha de complir la GPL-3.0
+   per a este component (incloure'n la llicència i donar accés al codi
+   font).
+
+2. Model de llengua FLOR-760M (projecte-aina)
+   Versió: [revisió de Hugging Face usada en la imatge]
+   Llicència: Apache 2.0; és una adaptació de BLOOM, amb la llicència
+   BigScience RAIL 1.0, que inclou restriccions d'ús:
+   https://huggingface.co/spaces/bigscience/license
+   Cal revisar estes restriccions abans de redistribuir la imatge o de
+   canviar-ne l'ús previst.
+
+3. Programari del servidor web
+   FastAPI (MIT), Starlette (BSD-3-Clause), uvicorn (BSD-3-Clause),
+   Pydantic (MIT). Vegeu els repositoris respectius.
+
+El codi d'AVLizador es distribuïx amb la llicència Apache 2.0.
+```
+
+- Versiones: spaCy `ca_core_news_md` 3.8.0 (la de `pyproject.toml`);
+  FLOR-760M, el *commit* de Hugging Face que se descargue al construir
+  la imagen (fijarlo en el Dockerfile con `revision=`); FastAPI, uvicorn,
+  Starlette y Pydantic, las de `pip freeze` dentro de la imagen.
+- **No se incluye** (a propósito) una frase del tipo "el código de
+  AVLizador no queda afectado por la GPL-3.0 por ser un programa
+  independiente": AVLizador importa el modelo de spaCy en el mismo
+  proceso, y si eso es o no una obra combinada es justo lo que se
+  discute con la GPL. Tampoco se afirma que el uso institucional sea
+  "compatible" con RAIL. **Las dos cuestiones las tiene que revisar el
+  servicio jurídico de la Universidad** antes de publicar una imagen.
+
+**2. README (valenciano y castellano)**: añadir a la sección "Llicència"
+/ "Licencia" un párrafo con estas cuatro ideas:
+
+- El código del proyecto es Apache 2.0.
+- Incluye o usa componentes de terceros con otras licencias (ver
+  `NOTICE`).
+- Distribuir la imagen Docker con los modelos dentro obliga a cumplir la
+  GPL-3.0 para `ca_core_news_md` (y a respetar las restricciones RAIL de
+  FLOR).
+- **Recomendación: construir la imagen en local** (`docker compose
+  build`) y no distribuirla.
+
+Texto propuesto (valenciano):
+
+> **Imatge Docker.** El codi d'AVLizador és Apache 2.0, però la imatge
+> Docker inclou components de tercers amb altres llicències (vegeu
+> [`NOTICE`](NOTICE)), entre els quals el model d'spaCy
+> `ca_core_news_md`, amb llicència GPL-3.0, i FLOR-760M, amb les
+> restriccions d'ús de la llicència RAIL de BLOOM. Qui distribuïsca una
+> imatge amb estos models dins ha de complir eixes llicències. Per això
+> recomanem construir la imatge en local (`docker compose build`) en
+> compte de distribuir-la.
+
+Castellano:
+
+> **Imagen Docker.** El código de AVLizador es Apache 2.0, pero la
+> imagen Docker incluye componentes de terceros con otras licencias (ver
+> [`NOTICE`](NOTICE)), entre ellos el modelo de spaCy `ca_core_news_md`,
+> con licencia GPL-3.0, y FLOR-760M, con las restricciones de uso de la
+> licencia RAIL de BLOOM. Quien distribuya una imagen con estos modelos
+> dentro tiene que cumplir esas licencias. Por eso recomendamos construir
+> la imagen en local (`docker compose build`) en lugar de distribuirla.
+
 ## 8. Seguridad y privacidad
 
 - No registrar el contenido de los textos (solo métricas: longitud,
@@ -335,7 +421,7 @@ equipos sin internet: `docker save avlizador:1.1.0 > avlizador.tar` y
 | 1 | Función de cambios palabra a palabra en el paquete + API FastAPI con pruebas | `pytest` en verde |
 | 2 | Página de traducir, accesible, valenciano/castellano | pasa axe y el recorrido con teclado y NVDA |
 | 3 | Pantalla de GD y "Sobre" | ídem |
-| 4 | Dockerfile + compose + healthcheck; prueba sin red | `docker compose up` funciona en un equipo limpio |
+| 4 | Dockerfile + compose + healthcheck; prueba sin red; avisos de licencias en `NOTICE` y los README (7.5) | `docker compose up` funciona en un equipo limpio y las versiones de `NOTICE` coinciden con las de la imagen |
 | 5 | Subir ficheros (`.txt`, quizá `.docx`) | ídem |
 | 6 | Documentación de instalación para la Conselleria + declaración de accesibilidad (plantilla) | revisado por el equipo |
 
@@ -353,6 +439,7 @@ equipos sin internet: `docker save avlizador:1.1.0 > avlizador.tar` y
 | D8 | ¿Modo rápido (solo motor) visible para el usuario? | sí, como opción avanzada |
 | D9 | ¿Rama propia para todo esto? | sí, `interfaz` desde `main` (este documento se mueve allí) |
 | D10 | ¿Quién hace la prueba manual con lector de pantalla? | por decidir en el equipo |
+| D11 | ¿Quién revisa las licencias de la imagen (GPL-3.0 de spaCy en el mismo proceso, RAIL de FLOR) antes de publicarla? | el servicio jurídico de la Universidad; mientras tanto, solo construcción en local (7.5) |
 
 ## Registro
 
@@ -363,3 +450,7 @@ equipos sin internet: `docker save avlizador:1.1.0 > avlizador.tar` y
   campos de entrada) y semáforo `MAX_TRADUCCIONS_SIMULTANIES` (2) con
   HTTP 429 si está lleno; añadidos a la API (5), las variables de entorno
   (7.1), la seguridad (8) y las pruebas (9).
+- 03/11/2026: tarea de avisos de licencias de la imagen (7.5): ampliar
+  `NOTICE` y la sección "Llicència" de los README (no sustituirlos),
+  recomendación de construir la imagen en local; decisión D11 (revisión
+  jurídica).
