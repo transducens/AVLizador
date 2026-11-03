@@ -259,7 +259,7 @@ puntuaciones de las trazas, en la v1 (101 palabras ambiguas) y la v2
 
 En las 31 frases del manual mezcla que pasan por FLOR, la traza coincide
 con `translate_cat_val` en las 31. Además salieron tres problemas del
-traductor (1 y 3 **arreglados el 03/11/2026**; 2 sigue abierto):
+traductor (los tres **arreglados el 03/11/2026**):
 
 1. **"Necessito" a principio de frase** sale PROPN (nombre propio) y la
    capa de conjugaciones no la traduce. Es el error conocido del 28/10.
@@ -278,6 +278,16 @@ traductor (1 y 3 **arreglados el 03/11/2026**; 2 sigue abierto):
    "el" pronombre recibe la de artículo (BM-BOE-233), "que" relativo la
    de conjunción, o "capacitat" la de PROPN de un "Capacitat" anterior
    (BM-AVL-168).
+   **Arreglado (03/11)**: `etiqueta` busca la palabra solo entre los
+   tokens de spaCy que caen dentro del token (`Token.start`, `d.idx`); si
+   spaCy lo tokeniza distinto, toma el token de spaCy donde empieza la
+   palabra. Cambia la etiqueta de 4.273 de 114.472 palabras (3,7 %) en
+   todos los benchmarks, pero el motor cat→val solo cambia 2 frases, las
+   dos a exactas (BOE estricto: "del Sigut" → "de l'Estat", "per
+   inscriure's" → "per a inscriure's"); 0 pérdidas, ninguna decisión de
+   spaCy en palabras ambiguas cambia. GD (también usa `etiqueta`): 3
+   frases cambian, las tres a mejor (reconoce "vinga", "siga" y
+   "creéssim" como verbos); 151 val 0,9853 → 0,9855, el resto igual.
 3. **Dos palabras ambiguas en la misma frase**: si la segunda cambia el
    apóstrofo ("d'anous" → "de nous"), `aplica_tries` (`_fusiona`) pierde
    ese cambio porque cambia el número de palabras. Ejemplo: "Hem comprat
