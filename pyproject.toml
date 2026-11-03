@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "avlizador"
-version = "1.0.1"
+version = "1.1.0"
 description = "Traductor dialectal català -> valencià (norma AVL) i Grau Dialectal (GD, GDV, GDC). Només CPU."
 readme = "README.md"
 requires-python = ">=3.10"
