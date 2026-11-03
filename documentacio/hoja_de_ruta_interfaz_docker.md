@@ -332,16 +332,44 @@ la diferencia.
 - Usuario **sin privilegios** (no root), sistema de ficheros de solo
   lectura salvo `/tmp` y la caché de modelos.
 - `HEALTHCHECK` contra `/api/salut`.
-- Variables de entorno:
+- Variables de entorno: definidas en el `Dockerfile` (`ENV`, con los
+  valores por defecto) y repetidas en `docker-compose.yml`
+  (`environment:`), para que se vean y se cambien sin reconstruir:
 
-  | Variable | Por defecto | Qué hace |
-  |---|---|---|
-  | `AVLIZADOR_MODE` | `complet` | `complet` (motor + FLOR) o `motor` |
-  | `MAX_CARACTERS` | 20000 | longitud máxima de texto por petición (D5) |
-  | `MAX_TRADUCCIONS_SIMULTANIES` | 2 | traducciones a la vez; si se supera, HTTP 429 (sección 4) |
-  | `OMP_NUM_THREADS` / `TORCH_NUM_THREADS` | núcleos del equipo | núcleos que usa FLOR |
-  | `HF_HUB_OFFLINE` | `1` con los modelos dentro | no intentar conectarse a Hugging Face |
+  ```yaml
+  environment:
+    AVLIZADOR_MODE: complet          # "complet" (amb FLOR) o "motor" (sense FLOR)
+    MAX_CARACTERS: 20000             # límit de text per petició
+    MAX_TRADUCCIONS_SIMULTANIES: 2   # semàfor de concurrència (vore main.py)
+    OMP_NUM_THREADS: 2               # nuclis per a FLOR/PyTorch
+    TORCH_NUM_THREADS: 2
+    HF_HUB_OFFLINE: 1                # cap crida a Hugging Face en producció
+    UVICORN_LOG_LEVEL: warning       # cap línia per petició
+  ```
+
+  | Variable | Por defecto | Qué hace | Cuándo cambiarla |
+  |---|---|---|---|
+  | `AVLIZADOR_MODE` | `complet` | `complet` = motor + FLOR; `motor` = solo reglas (sin cargar FLOR: ~1,5 GB menos de RAM y arranque más rápido) | `motor` en equipos con menos de 4 GB de RAM o si hace falta rapidez antes que acertar los homógrafos |
+  | `MAX_CARACTERS` | 20000 | longitud máxima de texto por petición; si se pasa, HTTP 413 con un mensaje (D5) | subirla si se traducen documentos largos y el equipo lo aguanta; bajarla si las peticiones tardan demasiado |
+  | `MAX_TRADUCCIONS_SIMULTANIES` | 2 | traducciones a la vez; si ya hay tantas, HTTP 429 (sección 4) | según los núcleos (regla de abajo); 1 en equipos de 2 núcleos |
+  | `OMP_NUM_THREADS` | 2 | hilos de cálculo de PyTorch (y de otras librerías numéricas) | según los núcleos (regla de abajo) |
+  | `TORCH_NUM_THREADS` | 2 | hilos que usa FLOR: **la lee nuestro código** y la pasa a `ModelLlengua(fils=...)` (`torch.set_num_threads`); PyTorch no la lee por sí solo | igual que `OMP_NUM_THREADS`; normalmente el mismo valor |
+  | `HF_HUB_OFFLINE` | `1` | no intentar conectarse a Hugging Face; **solo con los modelos dentro de la imagen** (opción A de 7.2) | `0` con la opción B (volumen): el primer arranque descarga los modelos |
+  | `UVICORN_LOG_LEVEL` | `warning` | nivel de los mensajes del servidor (arranque, avisos, errores). **No** vuelve a activar las líneas por petición: `main.py` fija `uvicorn.access` en `warning` siempre (privacidad, sección 4) | `info` o `debug` solo para depurar un problema de arranque |
+
+  **Regla de los núcleos**: `MAX_TRADUCCIONS_SIMULTANIES` ×
+  `TORCH_NUM_THREADS` ≤ núcleos del equipo (con los valores por defecto,
+  4 núcleos). Si se pasa, las traducciones compiten por los mismos
+  núcleos y todas van más lentas.
 - Tamaño estimado: ~1,5 GB sin FLOR, ~3 GB con FLOR dentro.
+
+**Tarea (fase 4): sección de variables en los README.** Una sección
+"Variables d'entorn" en `README.md` y "Variables de entorno" en
+`README.es.md`, con la tabla de arriba (variable, valor por defecto,
+qué hace y cuándo cambiarla) y la regla de los núcleos, junto a las
+instrucciones de `docker compose up`. Las dos tablas (README y
+`docker-compose.yml`) tienen que coincidir: se comprueba al cerrar la
+fase 4.
 
 ### 7.2 Dónde van los modelos (decisión D2)
 
@@ -507,7 +535,7 @@ Castellano:
 | 1 | Función de cambios palabra a palabra en el paquete + API FastAPI con pruebas | `pytest` en verde |
 | 2 | Página de traducir, accesible, valenciano/castellano | pasa axe y el recorrido con teclado y NVDA |
 | 3 | Pantalla de GD y "Sobre"; `resalta_html` accesible (6.5) | ídem, y el resaltado se entiende sin color |
-| 4 | Dockerfile + compose + healthcheck; prueba sin red; avisos de licencias en `NOTICE` y los README (7.5) | `docker compose up` funciona en un equipo limpio y las versiones de `NOTICE` coinciden con las de la imagen |
+| 4 | Dockerfile + compose + healthcheck con las variables de entorno (7.1); prueba sin red; avisos de licencias en `NOTICE` y los README (7.5); sección de variables en los README | `docker compose up` funciona en un equipo limpio; las versiones de `NOTICE` y las variables de los README coinciden con la imagen |
 | 5 | Subir ficheros (`.txt`, quizá `.docx`) | ídem |
 | 6 | Documentación de instalación para la Conselleria + declaración de accesibilidad (plantilla) | revisado por el equipo |
 
@@ -544,3 +572,9 @@ Castellano:
   `paraula-valenciana`/`paraula-catalana` junto a las de ahora, subrayado
   continuo/de puntos además del color, texto oculto para lectores de
   pantalla en lugar de `aria-label`/`title`, nota en el docstring.
+- 03/11/2026: variables de entorno completas en 7.1 (Dockerfile +
+  `docker-compose.yml`: `AVLIZADOR_MODE`, `MAX_CARACTERS`,
+  `MAX_TRADUCCIONS_SIMULTANIES`, `OMP_NUM_THREADS`, `TORCH_NUM_THREADS`,
+  `HF_HUB_OFFLINE`, `UVICORN_LOG_LEVEL`), con cuándo cambiar cada una y
+  la regla de los núcleos; tarea de la sección "Variables d'entorn" en
+  los README.
