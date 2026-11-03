@@ -46,6 +46,18 @@ formas sospechosas del léxico.
 Criterio por defecto (`Criteri()`): FLOR-760M, PMI 0,5, suma, margen 5,
 concordancia `variants`, puntuación de la frase entera.
 
+**Párrafo valenciano delante (03/11/2026)**: FLOR prefiere la forma que ha
+visto más veces, casi siempre la catalana ("vegada" frente a "colp",
+"rentadora" frente a "llavadora"). Desde el 03/11 cada frase se puntúa
+como continuación de un párrafo corto en valenciano
+(`puntuador.CONTEXT_PER_DEFECTE`; `ModelLlengua(context=None)` lo quita).
+El párrafo pasa por el modelo una sola vez (`past_key_values`): no cuesta
+tiempo. 151 + homógrafos 226 → **233/253**, homógrafos v2 111 → **122/160**,
+gplsi 1.544 → 1.547; manual, 151 y BOE sin cambios. Pierde "manca" verbo
+(→ "carència") en 2 frases más. Pruebas (párrafos, frecuencias, LoRA) en
+`pipeline/03_seleccio_de_model/model_llengua/sesgo/README.md`.
+
+
 **Resultados (23/10/2026)**:
 
 | benchmark | motor solo | sistema final |

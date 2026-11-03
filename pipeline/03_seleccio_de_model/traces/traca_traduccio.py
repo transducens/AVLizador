@@ -318,8 +318,10 @@ def traca_postprocessat(rec: Recursos, text: str, tokens_motor) -> dict:
         "consumides": consumides,
         "criteri": {"lam": criteri.lam, "norma": criteri.norma, "marge": criteri.marge,
                     "concordanca": CONCORDANCA_PER_DEFECTE, "model": rec.model.model_id,
+                    "context": getattr(rec.model, "context", None),
                     "formula": "puntuació = lp − lam × prior (lp: log-probabilitat de la frase; "
-                               "prior: log-probabilitat de la paraula sola)"},
+                               "prior: log-probabilitat de la paraula sola; les dos, darrere del "
+                               "paràgraf de context si n'hi ha)"},
         "punts": punts,
         "text_motor_base": text_motor,
         "final": final,

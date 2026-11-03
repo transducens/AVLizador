@@ -101,7 +101,8 @@ class ModelAmbParagraf:
 def carrega_model(model_id: str | None, adaptador: str | None):
     from avlizador.traductor_cat_val.model_llengua.puntuador import MODEL_PER_DEFECTE, ModelLlengua
 
-    m = ModelLlengua(model_id or MODEL_PER_DEFECTE)
+    # sense el context per defecte del paquet (03/11/2026): el paràgraf el posa `ModelAmbParagraf`
+    m = ModelLlengua(model_id or MODEL_PER_DEFECTE, context=None)
     if adaptador:
         from peft import PeftModel
 

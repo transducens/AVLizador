@@ -270,7 +270,7 @@ function pintaDetall(t) {
   if (post.consumides && post.consumides.length)
     h += `<p class="why">Palabras ambiguas que no llegan porque ya las ha cambiado otra capa: ${post.consumides.map(c => `${esc(c.paraula)} → ${esc(c.traduccio)}`).join(", ")}</p>`;
   if (post.criteri && post.criteri.formula)
-    h += `<p class="legend"><b>Cómo puntúa:</b> ${esc(post.criteri.formula)}; λ = ${num(post.criteri.lam)}. Si el motor ya había elegido, FLOR solo lo cambia si gana por más de <b>${num(post.criteri.marge)}</b>. Modelo: ${esc(post.criteri.model)}; concordancia: ${esc(post.criteri.concordanca)}.</p>`;
+    h += `<p class="legend"><b>Cómo puntúa:</b> ${esc(post.criteri.formula)}; λ = ${num(post.criteri.lam)}. Si el motor ya había elegido, FLOR solo lo cambia si gana por más de <b>${num(post.criteri.marge)}</b>. Modelo: ${esc(post.criteri.model)}; concordancia: ${esc(post.criteri.concordanca)}.${post.criteri.context ? ` Cada frase se puntúa detrás del párrafo: <i>${esc(post.criteri.context)}</i>` : " Sin párrafo de contexto."}</p>`;
   for (const p of post.punts || []) {
     const s = p.spacy;
     const conPunts = p.candidats.filter(c => c.puntuacio !== undefined);
