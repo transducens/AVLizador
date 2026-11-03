@@ -77,7 +77,45 @@ navegador ──HTTP──► contenedor avlizador
   servidor: *mejora progresiva*).
 - **Un solo proceso** de uvicorn (cada proceso cargaría otra copia de
   FLOR) con las traducciones en un hilo aparte para no bloquear el
-  servidor, y un límite de peticiones a la vez.
+  servidor, y un límite de peticiones a la vez (abajo).
+
+### Requisitos fijos del arranque de FastAPI (`main.py`)
+
+Decididos el 03/11/2026; se implementan así desde la fase 1.
+
+**1. Logs seguros.** Los textos que traducen los usuarios pueden ser
+sensibles (documentos de la Administración) y **no deben aparecer nunca
+en los logs**:
+
+- El logger `uvicorn.access` va en nivel `warning`: ni una línea por
+  petición, solo advertencias y errores. (uvicorn no registra los
+  cuerpos de las peticiones por defecto, pero así tampoco quedan rutas,
+  IP ni horas de uso.)
+- Ningún middleware de logging propio registra `request.body()` ni
+  ningún campo de los modelos Pydantic de entrada (`text`...).
+- Las excepciones se registran sin el texto de entrada: el manejador de
+  errores escribe el tipo de error y la longitud del texto, no el texto
+  (un *traceback* puede llevar los argumentos de la función).
+- El motivo se deja como comentario en el propio `main.py`, junto a la
+  configuración.
+
+**2. Semáforo de concurrencia.** Un `asyncio.Semaphore` creado al
+arrancar la aplicación limita las traducciones simultáneas a
+`MAX_TRADUCCIONS_SIMULTANIES` (variable de entorno, por defecto **2**):
+con un solo proceso y FLOR en CPU, más traducciones a la vez solo
+reparten los mismos núcleos y todas van más lentas.
+
+- Se usa en `POST /api/tradueix` con `async with semaphore`; dentro, la
+  traducción va a un hilo (`run_in_threadpool`) para no bloquear el
+  servidor.
+- **Si está lleno, no se espera: se rechaza.** `async with` por sí solo
+  haría esperar la petición; por eso antes se comprueba
+  `semaphore.locked()` y, si no queda hueco, se devuelve al momento
+  **HTTP 429** con:
+  `{"error": "El servei està ocupat. Torna-ho a intentar en uns segons."}`
+  (en castellano si la interfaz está en castellano; ver 6.4).
+- La interfaz muestra ese mensaje en la región de avisos
+  (`aria-live`) y deja el botón de traducir activo para reintentar.
 
 ### Alternativas descartadas (de momento)
 
@@ -98,6 +136,8 @@ navegador ──HTTP──► contenedor avlizador
 | `GET /api/versio` | — | versión del paquete, de FLOR y de spaCy |
 
 - **Límite de longitud** por petición (p. ej. 20.000 caracteres; D5).
+- **HTTP 429** en `/api/tradueix` (y en `/api/tradueix-fitxer`) cuando ya
+  hay `MAX_TRADUCCIONS_SIMULTANIES` traducciones en marcha (sección 4).
 - `ambigues[]`: por cada palabra ambigua, los candidatos, cuál se ha
   elegido, quién ha decidido y si hay duda (margen pequeño), para que la
   interfaz pueda **avisar** y dejar elegir la otra opción.
@@ -206,9 +246,15 @@ navegador ──HTTP──► contenedor avlizador
 - Usuario **sin privilegios** (no root), sistema de ficheros de solo
   lectura salvo `/tmp` y la caché de modelos.
 - `HEALTHCHECK` contra `/api/salut`.
-- Variables de entorno: `AVLIZADOR_MODE` (complet/motor), `MAX_CARACTERS`,
-  `OMP_NUM_THREADS` / `TORCH_NUM_THREADS` (núcleos para FLOR),
-  `HF_HUB_OFFLINE=1` cuando los modelos ya estén dentro.
+- Variables de entorno:
+
+  | Variable | Por defecto | Qué hace |
+  |---|---|---|
+  | `AVLIZADOR_MODE` | `complet` | `complet` (motor + FLOR) o `motor` |
+  | `MAX_CARACTERS` | 20000 | longitud máxima de texto por petición (D5) |
+  | `MAX_TRADUCCIONS_SIMULTANIES` | 2 | traducciones a la vez; si se supera, HTTP 429 (sección 4) |
+  | `OMP_NUM_THREADS` / `TORCH_NUM_THREADS` | núcleos del equipo | núcleos que usa FLOR |
+  | `HF_HUB_OFFLINE` | `1` con los modelos dentro | no intentar conectarse a Hugging Face |
 - Tamaño estimado: ~1,5 GB sin FLOR, ~3 GB con FLOR dentro.
 
 ### 7.2 Dónde van los modelos (decisión D2)
@@ -249,10 +295,11 @@ equipos sin internet: `docker save avlizador:1.1.0 > avlizador.tar` y
 ## 8. Seguridad y privacidad
 
 - No registrar el contenido de los textos (solo métricas: longitud,
-  tiempo, errores).
+  tiempo, errores). Cómo se garantiza: sección 4, "Logs seguros".
 - Sin llamadas externas en tiempo de ejecución.
-- Límite de tamaño de petición y de peticiones simultáneas (evitar que
-  un texto enorme bloquee el servicio).
+- Límite de tamaño de petición (`MAX_CARACTERS`) y de traducciones
+  simultáneas (`MAX_TRADUCCIONS_SIMULTANIES`, HTTP 429): un texto enorme
+  o muchas peticiones a la vez no bloquean el servicio.
 - Cabeceras de seguridad (Content-Security-Policy sin JavaScript en
   línea, `X-Content-Type-Options`), sin recursos de terceros (fuentes y
   scripts servidos desde el propio contenedor: también evita llamadas
@@ -264,7 +311,12 @@ equipos sin internet: `docker save avlizador:1.1.0 > avlizador.tar` y
 
 - **API**: `pytest` con el cliente de pruebas de FastAPI (traducción,
   GD, límites, errores), con el modo motor para que sean rápidas y una
-  prueba con FLOR marcada como lenta.
+  prueba con FLOR marcada como lenta. Dos pruebas fijas de los
+  requisitos de la sección 4: (1) se traduce un texto con una marca
+  reconocible y se comprueba que no aparece en los logs capturados
+  (`caplog`), tampoco cuando la traducción falla; (2) con
+  `MAX_TRADUCCIONS_SIMULTANIES=1` y una traducción en marcha, la
+  siguiente petición recibe 429 con el JSON del mensaje.
 - **Accesibilidad automática**: axe-core (con Playwright) y Lighthouse en
   la integración continua; cero errores de nivel A/AA.
 - **Accesibilidad manual** (la automática solo detecta ~30-40 %): recorrido
@@ -306,3 +358,8 @@ equipos sin internet: `docker save avlizador:1.1.0 > avlizador.tar` y
 
 - 03/11/2026: primera versión del plan (rama `comet`, se moverá a la
   rama de la interfaz).
+- 03/11/2026: requisitos fijos del arranque de FastAPI (sección 4): logs
+  sin los textos (`uvicorn.access` en `warning`, nada de cuerpos ni
+  campos de entrada) y semáforo `MAX_TRADUCCIONS_SIMULTANIES` (2) con
+  HTTP 429 si está lleno; añadidos a la API (5), las variables de entorno
+  (7.1), la seguridad (8) y las pruebas (9).
