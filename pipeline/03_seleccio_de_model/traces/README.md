@@ -222,10 +222,19 @@ puntuaciones de las trazas, en la v1 (101 palabras ambiguas) y la v2
 
 En las 31 frases del manual mezcla que pasan por FLOR, la traza coincide
 con `translate_cat_val` en las 31. Además salieron tres problemas del
-traductor, documentados y **sin arreglar**:
+traductor (1 y 3 **arreglados el 03/11/2026**; 2 sigue abierto):
 
 1. **"Necessito" a principio de frase** sale PROPN (nombre propio) y la
    capa de conjugaciones no la traduce. Es el error conocido del 28/10.
+   **Arreglado (03/11)**: en `cat_val/conjugacions_dict.py::_pos_admet`
+   el PROPN solo bloquea si la palabra va en mayúscula y no es la primera
+   de la frase (`_inici_de_frase`: antes solo hay espacios, comillas o
+   paréntesis y luego el inicio del texto o ". ! ? …"). Un PROPN en
+   minúscula es un error de spaCy ("sanciono", "sol·licitin"). Motor, en
+   todos los benchmarks: 17 frases cambian, **+10 exactas / −1**
+   ("Necessito", "Estudio", "Afirmin", "Transmetin", "Sapigueu… sanciono"
+   ×6; pierde "E. coli", que va en minúscula y ahora se traduce como
+   verbo).
 2. **Emparejamiento con spaCy**: `pos_tagger.etiqueta` da a cada palabra
    la etiqueta de la **primera** aparición de esa palabra en la frase,
    no la de su posición. En 8 de las 31 frases la etiqueta cambia: un
@@ -238,3 +247,9 @@ traductor, documentados y **sin arreglar**:
    un cotxe nou i un sac de nous." → "...un sac d'anous", aunque spaCy
    decide "nous". Aquí, por casualidad, el resultado es el correcto: en
    "un sac de nous" son nueces, pero spaCy las etiqueta ADJ.
+   **Arreglado (03/11)**: `_fusiona` alinea el texto del motor con el
+   actual y coloca cada cambio, sea del tamaño que sea, sobre las palabras
+   que ningún punto anterior ha tocado (si las ha tocado, no lo aplica).
+   En todos los benchmarks hay 8 frases con 2+ palabras ambiguas; cambian
+   2 (BOE amplio: "d'anou a setze mesos" → "de nou", "de l'anou model" →
+   "del nou model"), las dos a la palabra de la referencia; 0 pérdidas.

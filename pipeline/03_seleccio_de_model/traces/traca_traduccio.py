@@ -335,20 +335,25 @@ def _explica(punt, criteri, cat_spacy, d_spacy, _valor) -> tuple[str, float | No
                 f"ese sentido no es posible → se deja la palabra catalana '{punt.tria}' sin preguntar a FLOR"), None
     if not punt.puntuacions:
         return "este tipo de palabra no se manda a FLOR: se queda la elección del motor", None
+    previ = ""
+    if (punt.tipus == "irresoluble" and punt.pos == "ADJ" and punt.genere and punt.genere_det
+            and punt.genere != punt.genere_det and cat_spacy != punt.categoria):
+        previ = (f"spaCy da ADJ ({punt.genere}), pero el determinante de delante es {punt.genere_det}: "
+                 f"no puede ser el adjetivo, así que no se hace caso a spaCy y decide FLOR. ")
     valors = {c: _valor(d, criteri, False) for c, d in punt.puntuacions.items()}
     millor = max(valors, key=valors.get)
     if punt.motor is None:
         segon = sorted(valors.values())[-2] if len(valors) > 1 else valors[millor]
         dif = round(valors[millor] - segon, 3)
-        return (f"el motor no elige (colisión): gana la frase con más puntuación de FLOR, '{millor}', "
+        return (previ + f"el motor no elige (colisión): gana la frase con más puntuación de FLOR, '{millor}', "
                 f"por {dif}"), dif
     dif = round(valors[millor] - valors[punt.motor], 3)
     if millor == punt.motor:
-        return f"FLOR prefiere lo mismo que el motor ('{punt.motor}'): no cambia nada", dif
+        return previ + f"FLOR prefiere lo mismo que el motor ('{punt.motor}'): no cambia nada", dif
     if dif <= criteri.marge:
-        return (f"FLOR prefiere '{millor}', pero solo por {dif} (margen {criteri.marge}): "
+        return (previ + f"FLOR prefiere '{millor}', pero solo por {dif} (margen {criteri.marge}): "
                 f"se mantiene la del motor, '{punt.motor}'"), dif
-    return f"FLOR prefiere '{millor}' por {dif}, más que el margen {criteri.marge}: cambia la del motor", dif
+    return previ + f"FLOR prefiere '{millor}' por {dif}, más que el margen {criteri.marge}: cambia la del motor", dif
 
 
 # ─── Traza completa de una frase ─────────────────────────────────────────────

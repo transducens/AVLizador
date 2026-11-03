@@ -214,16 +214,48 @@ def aplica_tries(text_motor: str, trobats: list[Punt], criteri: Criteri) -> str:
 
 def _fusiona(actual: str, motor: str, nova: str) -> str:
     """Aplica a `actual` el canvi que `nova` fa respecte de `motor` (per a
-    frases amb més d'un punt). Es fa per paraules."""
+    frases amb més d'un punt). Es fa per paraules: les paraules del motor
+    que encara estan igual en `actual` donen la posició on va el canvi.
+
+    Abans (fins al 03/11/2026) només es copiaven els canvis d'igual nombre
+    de paraules, i es perdia el que desfà un apòstrof ("d'anous" -> "de
+    nous"):
+
+    >>> motor = "Hem comprat un cotxe anou i un sac d'anous."
+    >>> actual = "Hem comprat un cotxe nou i un sac d'anous."
+    >>> _fusiona(actual, motor, "Hem comprat un cotxe anou i un sac de nous.")
+    'Hem comprat un cotxe nou i un sac de nous.'
+    >>> _fusiona("Una vegada més, d'anous.", "Un cop més, d'anous.", "Un cop més, de nous.")
+    'Una vegada més, de nous.'
+    """
     import difflib
 
     a, m, n = actual.split(" "), motor.split(" "), nova.split(" ")
-    if len(a) != len(m):
-        return actual
+    # paraula del motor -> la mateixa paraula en `actual` (les no tocades)
+    mapa = {}
+    for op, i1, i2, j1, _ in difflib.SequenceMatcher(a=m, b=a, autojunk=False).get_opcodes():
+        if op == "equal":
+            mapa.update({i1 + k: j1 + k for k in range(i2 - i1)})
+    canvis = []
+    for op, i1, i2, j1, j2 in difflib.SequenceMatcher(a=m, b=n, autojunk=False).get_opcodes():
+        if op == "equal":
+            continue
+        if i1 == i2:  # inserció: just abans de la paraula i1 (o després de la i1-1)
+            if i1 in mapa:
+                inici = fi = mapa[i1]
+            elif i1 - 1 in mapa:
+                inici = fi = mapa[i1 - 1] + 1
+            else:
+                continue
+        else:
+            posicions = [mapa.get(k) for k in range(i1, i2)]
+            if None in posicions or posicions != list(range(posicions[0], posicions[0] + len(posicions))):
+                continue  # el canvi toca paraules que ja ha canviat un punt anterior
+            inici, fi = posicions[0], posicions[-1] + 1
+        canvis.append((inici, fi, n[j1:j2]))
     resultat = list(a)
-    for op, i1, i2, j1, j2 in difflib.SequenceMatcher(a=m, b=n).get_opcodes():
-        if op == "replace" and i2 - i1 == j2 - j1:
-            resultat[i1:i2] = n[j1:j2]
+    for inici, fi, paraules in sorted(canvis, reverse=True):
+        resultat[inici:fi] = paraules
     return " ".join(resultat)
 
 
