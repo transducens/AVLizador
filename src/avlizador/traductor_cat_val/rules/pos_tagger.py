@@ -137,14 +137,15 @@ def etiqueta(tokens: list[Token]) -> None:
 
     Es crida ABANS de qualsevol regla (per aixo fa falta `tok.surface`, no
     `tok.translated` -- en eixe moment son identics). Cerca cada paraula
-    pel seu TEXT dins del document d'spaCy (mateix mecanisme ja validat a
-    `pipeline/08_traduccio_corpus/postprocessat_llm/benchmark_integrat.py`,
-    `pos_de_paraula()`): primera coincidencia insensible a majuscules,
-    sense alinear índexs -- la tokenitzacio d'spaCy no coincidix sempre
-    amb la nostra (p.ex. "s'oferisca" es UN token nostre pero DOS per a
-    spaCy), aixi que s'intenta primer amb la paraula sencera i, si no es
-    troba, amb la part DESPRES d'un prefix elidit ("s'oferisca" ->
-    "oferisca").
+    pel seu TEXT entre els tokens d'spaCy que cauen DINS del token (per
+    posició: `tok.start` i `d.idx`; des del 03/11/2026 -- abans es prenia
+    la primera aparició de la paraula a tota la frase, i un "el" pronom
+    rebia l'etiqueta d'un "el" article anterior). La tokenitzacio d'spaCy
+    no coincidix sempre amb la nostra (p.ex. "s'oferisca" es UN token
+    nostre pero DOS per a spaCy), aixi que s'intenta primer amb la paraula
+    sencera i, si no es troba, amb la part DESPRES d'un prefix elidit
+    ("s'oferisca" -> "oferisca"); si tampoc, el token d'spaCy on comença
+    la paraula.
 
     Si spaCy no esta disponible, no fa res -- tots els tokens es queden
     amb `pos == ""` (el valor per defecte de `Token`).
@@ -225,10 +226,17 @@ def etiqueta(tokens: list[Token]) -> None:
         sufix_resta = separa_sufix_elidit(buscada)
         if sufix_resta is not None:
             candidates.append(sufix_resta[0].lower())
-        dt = next(
-            (d for buscada_min in candidates for d in doc if d.text.lower() == buscada_min),
-            None,
-        )
+        # Per POSICIÓ (03/11/2026): només els tokens d'spaCy que cauen dins
+        # d'este token. Abans es buscava la paraula a tot el document i es
+        # prenia la PRIMERA aparició: "el" pronom rebia l'etiqueta d'un
+        # "el" article anterior, "capacitat" la de "Capacitat" PROPN...
+        fi = tok.start + len(tok.surface)
+        dins = [d for d in doc if tok.start <= d.idx < fi]
+        dt = next((d for buscada_min in candidates for d in dins if d.text.lower() == buscada_min), None)
+        if dt is None:
+            # tokenització distinta: el token d'spaCy on comença la paraula
+            inici = tok.start + len(tok.surface) - len(buscada)
+            dt = next((d for d in doc if d.idx <= inici < d.idx + len(d.text)), None)
         if dt is None:
             continue
         tok.pos = dt.pos_

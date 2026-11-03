@@ -43,6 +43,42 @@ mayúsculas, la puntuación va pegada a la palabra. Cada frase del JSON
 guarda `ter`, `wer`, `ter_edicions`, `wer_edicions` y `ref_paraules`; el
 resumen, `ter_corpus` y `wer_corpus`.
 
+## 03/11/2026 10:40 — P1 + concordancia del adjetivo con el determinante
+
+Si spaCy da ADJ a la palabra ambigua y su género no concuerda con el
+determinante ("una nou", "les nous"), decide FLOR en vez de spaCy
+(`punts.decisio_spacy`; detalle en `traces/README.md`). Solo se midieron
+estos tres benchmarks: en el resto la regla no salta (comprobado con
+spaCy). Frente a las 09:41: v2 +2 (HG2-004, HG2-016), manual +1
+(BM-AVL-191), 0 pérdidas.
+
+| Benchmark | Sistema | Exactas | BLEU | chrF | chrF++ | TER ↓ | WER ↓ | Errors |
+|---|---|---|---|---|---|---|---|---|
+| 151 + homógrafos (253) | Motor + FLOR-760M (P1 + det.) | 233/253 (92,1 %) | 97,57 | 98,97 | 98,92 | 0,49 | 0,49 | 0 |
+| Homógrafos v2, equilibrado por sentido (160) | Motor + FLOR-760M (P1 + det.) | **124/160 (77,5 %)** | 91,90 | 95,92 | 95,89 | 3,24 | 3,24 | 0 |
+| Manual mezcla BOE + AVL (458) | Motor + FLOR-760M (P1 + det.) | **228/458 (49,8 %)** | 90,90 | 96,35 | 95,93 | 5,60 | 6,00 | 0 |
+
+## 03/11/2026 09:41 — Sistema final con párrafo valenciano delante (P1)
+
+Desde el 03/11 FLOR puntúa cada frase como continuación de un párrafo
+corto en valenciano (`ModelLlengua(context=...)`, `CONTEXT_PER_DEFECTE`)
+para reducir su sesgo hacia la forma catalana. Pruebas y comparación
+frase a frase en `model_llengua/sesgo/README.md`. Respecto al 30/10 solo
+cambian homógrafos (+7), gplsi (+3) y la v2 (111 → 122, +15/−4); el
+resto, idéntico.
+
+| Benchmark | Sistema | Exactas | BLEU | chrF | chrF++ | TER ↓ | WER ↓ | Errors |
+|---|---|---|---|---|---|---|---|---|
+| Manual mezcla BOE + AVL (458) | Motor + FLOR-760M (P1) | 227/458 (49,6 %) | 90,88 | 96,34 | 95,92 | 5,61 | 6,01 | 0 |
+| Manual BOE (246) | Motor + FLOR-760M (P1) | 32/246 (13,0 %) | 83,82 | 93,59 | 92,82 | 9,26 | 9,94 | 0 |
+| Manual AVL (212) | Motor + FLOR-760M (P1) | 195/212 (92,0 %) | 99,08 | 99,54 | 99,52 | 0,41 | 0,41 | 0 |
+| 151 (banco curado) | Motor + FLOR-760M (P1) | 146/154 (94,8 %) | 99,32 | 99,66 | 99,65 | 0,27 | 0,27 | 0 |
+| 151 + homógrafos (253) | Motor + FLOR-760M (P1) | **233/253 (92,1 %)** | 97,57 | 98,97 | 98,92 | 0,49 | 0,49 | 0 |
+| Homógrafos v2, equilibrado por sentido (160) | Motor + FLOR-760M (P1) | **122/160 (76,2 %)** | 91,27 | 95,79 | 95,72 | 3,41 | 3,41 | 0 |
+| BOE estricto, muestra (2.000) | Motor + FLOR-760M (P1) | 1880/2000 (94,0 %) | 98,95 | 99,64 | 99,56 | 0,32 | 0,59 | 0 |
+| BOE amplio, muestra (2.000) | Motor + FLOR-760M (P1) | 1203/2000 (60,2 %) | 88,24 | 95,54 | 94,75 | 3,73 | 6,00 | 0 |
+| gplsi (1.958) | Motor + FLOR-760M (P1) | **1547/1958 (79,0 %)** | 93,61 | 97,05 | 96,91 | 2,74 | 2,75 | 0 |
+
 ## 02/11/2026 — Baseline: AVLizador frente a LLM generalistas (manual mezcla)
 
 9 LLM usados tal cual en Abaco (Ollama, 1 GPU por modelo, instrucción

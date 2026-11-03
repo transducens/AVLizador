@@ -22,6 +22,7 @@ siguen allí (columna "Origen").
 | `curat_151/benchmark_corpus.json` | 154 | Banco curado: cada frase ilustra un fenómeno dialectal | `pipeline/03_seleccio_de_model/benchmark_corpus.json` |
 | `homografs/benchmark_sistema_final_cat_val.json` | 253 | 151 + 98 homógrafos inventados ("cop", "nou", "manca", "gandula"...) + 1 de gplsi | `pipeline/03_seleccio_de_model/construeix_benchmark_sistema_final.py` |
 | `homografs/benchmark_homografs_cat_val.json` | 98 | Solo los homógrafos (para el modelo de lenguaje) | `pipeline/03_seleccio_de_model/model_llengua/genera_benchmark.py` |
+| `homografs/benchmark_homografs_v2_cat_val.json` | 160 | **Homógrafos v2** (`homografs_v2`): las 18 formas de homonimia léxica que pasan por el postprocesado, **4 frases por cada sentido** ("nou": nuez / nuevo / nueve; "deu": manantial / diez / deber...). Campos extra: `paraula`, `sentit`, `esperat`, `motor_sol` | ídem, con `--v2` (desde `frases_homografs_v2.json`) |
 | `boe_dialectal/benchmark_boe_dialectal_estricte.json` | 2.000 | BOE, pares con solo diferencias dialectales seguras (**regresiones**) | `pipeline/05_corpus_boe/construeix_boe_dialectal.py` (ver `README_construccio.es.md`) |
 | `boe_dialectal/benchmark_boe_dialectal_estricte_complet.json` | 9.453 | El estricto entero | ídem |
 | `boe_dialectal/benchmark_boe_dialectal_ampli.json` | 2.000 | BOE, pares sin reformulación (**huecos** del diccionario) | ídem |

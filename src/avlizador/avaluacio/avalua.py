@@ -42,6 +42,7 @@ BENCHMARKS = {
     "manual_avl":   ("Manual AVL (212)", "manual/benchmark_manual_avl_cat_val.json"),
     "151":          ("151 (banco curado)", "curat_151/benchmark_corpus.json"),
     "homografs":    ("151 + homógrafos (253)", "homografs/benchmark_sistema_final_cat_val.json"),
+    "homografs_v2": ("Homógrafos v2, equilibrado por sentido (160)", "homografs/benchmark_homografs_v2_cat_val.json"),
     "boe_estricte": ("BOE estricto, muestra (2.000)", "boe_dialectal/benchmark_boe_dialectal_estricte.json"),
     "boe_ampli":    ("BOE amplio, muestra (2.000)", "boe_dialectal/benchmark_boe_dialectal_ampli.json"),
     "gplsi":        ("gplsi (1.958)", "gplsi/benchmark_gplsi.json"),

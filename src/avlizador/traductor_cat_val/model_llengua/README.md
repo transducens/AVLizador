@@ -56,6 +56,25 @@ mateix dia els resolubles també passen pel model i "nou", "manca",
 "recuita"… són irresolubles (els `lemas` diuen que l'adjectiu també fa de
 nom).
 
+**Paràgraf valencià davant (03/11/2026)**: FLOR preferix la forma que ha
+vist més vegades, quasi sempre la catalana ("vegada" davant de "colp",
+"rentadora" davant de "llavadora"). Des del 03/11 cada frase es puntua
+com a continuació d'un paràgraf curt en valencià
+(`puntuador.CONTEXT_PER_DEFECTE`; `ModelLlengua(context=None)` el lleva).
+El paràgraf passa pel model una sola vegada (`past_key_values`): no costa
+temps. 151 + homògrafs 226 → **233/253**, homògrafs v2 111 → **122/160**,
+gplsi 1.544 → 1.547; manual, 151 i BOE sense canvis. Perd "manca" verb
+(→ "carència") en 2 frases més. Proves (paràgrafs, freqüències, LoRA) en
+`pipeline/03_seleccio_de_model/model_llengua/sesgo/README.md`.
+
+**Concordança amb el determinant (03/11/2026)**: si spaCy dona ADJ a la
+paraula ambigua i el seu gènere no és el del determinant d'abans ("una
+nou", "les nous"), la capa d'spaCy no decidix i passa al model
+(`punts.decisio_spacy`). Amb NUM no (un numeral fa de nom amb qualsevol
+article: "la nou" = la jugadora del dorsal nou). Homògrafs v2 122 → 124,
+manual 227 → 228, homògrafs 233 igual. Detall en
+`pipeline/03_seleccio_de_model/traces/README.md`.
+
 Models: `projecte-aina/FLOR-760M` per defecte (1,5 GB, CPU) i
 `BSC-LT/salamandra-2b` (4,5 GB).
 

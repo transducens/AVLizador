@@ -234,6 +234,23 @@ def _descompon(surface: str) -> list[tuple[str | None, str, str | None]]:
     return opcions
 
 
+def _inici_de_frase(tokens: list[Token], i: int) -> bool:
+    """El token `i` és la primera paraula d'una frase: abans només hi ha
+    espais, cometes o parèntesis d'obertura, i després l'inici del text o
+    un final de frase (". ! ? …").
+
+    >>> from .. import tokenize
+    >>> toks = tokenize("Hola. «Necessito ajuda», va dir Mano.")
+    >>> [t.surface for j, t in enumerate(toks) if t.surface[:1].isalpha() and _inici_de_frase(toks, j)]
+    ['Hola', 'Necessito']
+    """
+    for t in reversed(tokens[:i]):
+        if t.surface.isspace() or t.surface in ("«", "“", '"', "(", "—", "-"):
+            continue
+        return t.surface[-1:] in (".", "!", "?", "…")
+    return True
+
+
 class ConjugacionsDictInversRule:
     """Substitueix formes verbals catalanes conegudes per la seua forma
     valenciana (vore docstring del mòdul). Mai toca un token ja traduït
@@ -365,14 +382,24 @@ class ConjugacionsDictInversRule:
         # al diccionari + totes les de verbs d'arrel distinta.
         self._amb_filtre_pos = carrega_homografs_conjugacions(path) | carrega_formes_arrel_distinta(path)
 
-    def _pos_admet(self, tok: Token, arrel: str) -> bool:
-        """Vore "Homògrafs segons el diccionari" al docstring del mòdul."""
+    def _pos_admet(self, tokens: list[Token], i: int, arrel: str) -> bool:
+        """Vore "Homògrafs segons el diccionari" al docstring del mòdul.
+
+        PROPN (03/11/2026): només bloqueja si la paraula comença en
+        majúscula i no és la primera de la frase ("París", "Mano"). spaCy
+        també diu PROPN a verbs que no coneix quan comencen frase
+        ("Necessito...", gplsi_45688) o fins i tot en minúscula
+        ("sol·licitin", "importin"): eixos es tradueixen.
+        """
+        tok = tokens[i]
         if arrel.lower() in self._amb_filtre_pos:
             # Participi usat com a adjectiu ("les condicions establertes"):
             # spaCy l'etiqueta ADJ amb VerbForm=Part (21/10/2026).
             es_participi = tok.pos == "ADJ" and tok.verb_form == "Part"
             return tok.pos in ("VERB", "AUX") or es_participi
-        return tok.pos != "PROPN"
+        if tok.pos != "PROPN":
+            return True
+        return not (tok.surface[:1].isupper() and not _inici_de_frase(tokens, i))
 
     def apply(self, tokens: list[Token]) -> list[Token]:
         for i, tok in enumerate(tokens):
@@ -382,7 +409,7 @@ class ConjugacionsDictInversRule:
                 forma = self._lookup.get(arrel.lower())
                 if forma is None:
                     continue
-                if not self._pos_admet(tok, arrel):
+                if not self._pos_admet(tokens, i, arrel):
                     break
                 if prefix is None:
                     tok.translated = preserva_majuscula(arrel, forma) + (sufix or "")

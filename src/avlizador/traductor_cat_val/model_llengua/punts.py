@@ -108,6 +108,8 @@ class Punt:
     categoria: str | None = None   # categoria de la lectura dialectal (la de l'entrada)
     lectures: list = field(default_factory=list)  # categories de cada lectura (`lemas`)
     decidit: str = ""      # "spacy", "model" o "motor": qui ha fet la tria
+    genere: str = ""       # Gender d'spaCy de la paraula ("Masc", "Fem" o "")
+    genere_det: str = ""   # Gender d'spaCy del determinant just d'abans (si n'hi ha)
 
 
 _CATEGORIA_PER_POS = {pos: cat for cat, poss in _POS_PER_CATEGORIA.items() for pos in poss}
@@ -128,6 +130,14 @@ def decisio_spacy(punt: Punt) -> str | None:
     altra lectura dels `lemas`: "manca" VERB passava al model i, sense
     guanyar per `marge`, quedava "carència".
 
+    Concordança amb el determinant (03/11/2026): si spaCy diu ADJ però el
+    gènere de l'adjectiu no és el del determinant d'abans ("una nou", "les
+    nous": "nou" adjectiu és masculí), la lectura d'adjectiu és impossible
+    i spaCy s'ha equivocat: no decidix i passa al model. Només amb ADJ i
+    només el gènere: un numeral pot fer de nom amb qualsevol article ("la
+    nou" = la jugadora del dorsal nou), i "les nou" (hores) no s'ha de
+    tocar.
+
     >>> p = Punt(0, "gandula", "", "irresoluble", ["hamaca", "gandula"], "hamaca",
     ...          categoria="n", lectures=[{"adj", "n"}, {"n"}])
     >>> p.pos = "ADJ"; decisio_spacy(p)
@@ -138,9 +148,21 @@ def decisio_spacy(punt: Punt) -> str | None:
     'gandula'
     >>> p.pos = "PUNCT"; decisio_spacy(p) is None
     True
+
+    Determinant: adjectiu masculí darrere de determinant femení -> al model;
+    amb el mateix gènere, o amb NUM, spaCy decidix igual que abans:
+
+    >>> p.pos, p.genere, p.genere_det = "ADJ", "Masc", "Fem"; decisio_spacy(p) is None
+    True
+    >>> p.genere_det = "Masc"; decisio_spacy(p)
+    'gandula'
+    >>> p.pos, p.genere_det = "NUM", "Fem"; decisio_spacy(p)
+    'gandula'
     """
     cat = _CATEGORIA_PER_POS.get(punt.pos)
     if not cat or cat == punt.categoria:
+        return None
+    if punt.pos == "ADJ" and punt.genere and punt.genere_det and punt.genere != punt.genere_det:
         return None
     return next(c for c in punt.candidats if c.lower() == punt.paraula.lower())
 
@@ -176,8 +198,11 @@ def detecta(tokens: list[Token], punts: dict[str, dict], tipus=TIPUS_PER_DEFECTE
             if actual not in {c.lower() for c in info["candidats"]}:
                 continue
             motor = actual
+        abans = next((t for t in reversed(tokens[:i]) if not t.surface.isspace()), None)
+        genere_det = abans.gender if abans is not None and abans.pos == "DET" else ""
         trobats.append(Punt(i, paraula, prefix, info["tipus"], list(info["candidats"]), motor,
-                            pos=tok.pos, categoria=info["categoria"], lectures=info["lectures"]))
+                            pos=tok.pos, categoria=info["categoria"], lectures=info["lectures"],
+                            genere=tok.gender, genere_det=genere_det))
     return trobats
 
 
