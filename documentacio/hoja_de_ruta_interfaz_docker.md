@@ -222,8 +222,94 @@ reparten los mismos núcleos y todas van más lentas.
 **Contenido**
 - Lenguaje claro; los términos técnicos (GD, homógrafo, model de
   llengua) explicados en la propia página.
-- El resaltado de `resalta_html` se revisa: hoy usa colores; habrá que
-  añadirle texto alternativo o etiquetas para que sea accesible.
+- El resaltado de `resalta_html` se revisa: hoy usa solo colores; tarea
+  concreta en 6.5.
+
+### 6.5 Tarea: `resalta_html` sin depender solo del color (WCAG 1.4.1)
+
+**Problema.** `grau_dialectal/gd.py::resalta_html()` envuelve cada
+palabra marcada en `<span class="mk-occ">` (valenciana) o
+`<span class="mk-or">` (catalana), y los estilos (en el informe de
+`gd.py --html` y en `pipeline/09_grau_dialectal/visor_gd.html`) solo
+cambian el **color**: fondo verde `#d7f3d9` / texto `#16652b` para la
+valenciana y fondo naranja `#ffe2c7` / texto `#9c4b0a` para la catalana
+(con sus versiones de modo oscuro). Incumple **WCAG 1.4.1** (el color no
+puede ser la única señal): quien no distingue verde de naranja no ve
+la diferencia.
+
+**Cambios (fase 3, con la pantalla de GD):**
+
+1. **HTML de `resalta_html()`**: se mantiene el color y se añaden
+   - una **clase nueva** junto a la vieja: `class="mk-occ paraula-valenciana"`
+     y `class="mk-or paraula-catalana"`. Se conservan `mk-occ`/`mk-or`
+     para no romper el informe de `gd.py --html`, `visor_gd.html` ni el
+     doctest;
+   - un **texto oculto visualmente** para los lectores de pantalla:
+     `<span class="visualment-amagat"> (valencià)</span>` /
+     `(català)`. **No `aria-label` ni `title`**: `aria-label` en un
+     `<span>` o `<mark>` no se lee de forma fiable (ARIA no deja dar
+     nombre a esos elementos) y `title` solo aparece al pasar el ratón,
+     no con teclado ni en el móvil. Opción del parámetro
+     (`text_lector=True` por defecto) para poder quitarlo donde moleste
+     (por ejemplo, en un texto con muchas marcas, en el que basta la
+     lista de palabras de la pantalla de GD).
+
+   Resultado:
+
+   ```html
+   El <span class="mk-occ paraula-valenciana">xiquet<span class="visualment-amagat"> (valencià)</span></span>
+   i el <span class="mk-or paraula-catalana">nen<span class="visualment-amagat"> (català)</span></span>
+   ```
+
+   (`<span>` o `<mark>`: da igual para la accesibilidad, porque los
+   lectores de pantalla no suelen anunciar `<mark>` por defecto; se
+   queda `<span>` para no cambiar más de lo necesario.)
+
+2. **Docstring de `resalta_html()`**: nota de que el HTML asume que la
+   hoja de estilos de quien lo usa define `.paraula-valenciana` y
+   `.paraula-catalana` con **subrayado además del color** (WCAG 1.4.1) y
+   la clase `.visualment-amagat`; y doctest actualizado al HTML nuevo.
+
+3. **CSS** de la interfaz, del informe de `gd.py --html` y de
+   `visor_gd.html` (los mismos colores de ahora):
+
+   ```css
+   .paraula-valenciana {            /* fons verd + subratllat continu */
+     background-color: var(--mk-occ-bg);   /* #d7f3d9; fosc #163a22 */
+     color: var(--mk-occ-text);            /* #16652b; fosc #7fe39a */
+     text-decoration: underline solid;
+     text-decoration-thickness: 2px;
+     text-underline-offset: 0.2em;
+   }
+   .paraula-catalana {              /* fons taronja + subratllat de punts */
+     background-color: var(--mk-or-bg);    /* #ffe2c7; fosc #4a2f16 */
+     color: var(--mk-or-text);             /* #9c4b0a; fosc #f0a35e */
+     text-decoration: underline dotted;
+     text-decoration-thickness: 2px;
+     text-underline-offset: 0.2em;
+   }
+   .visualment-amagat {             /* només per a lectors de pantalla */
+     position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+     overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+   }
+   ```
+
+   Subrayado **continuo** para el valenciano y **de puntos** para el
+   catalán: se distinguen también en blanco y negro y con daltonismo.
+   Grosor de 2 px para que el punteado se vea al 100 % de zoom.
+
+**Comprobaciones:**
+
+- Contraste: texto ≥ 4,5:1 sobre su fondo (los colores actuales: medir
+  con axe en claro y oscuro) y el subrayado ≥ 3:1 sobre el fondo.
+- **Que no parezcan enlaces**: en la interfaz, los enlaces llevan otro
+  estilo (color propio y subrayado solo en enlaces, por ejemplo con
+  icono o en negrita) y las palabras marcadas no cambian al pasar el
+  ratón (`cursor: auto`, sin `:hover`).
+- Leyenda visible junto al texto ("subratllat continu = valencià,
+  de punts = català"): sin ella, el subrayado tampoco dice nada.
+- Prueba en escala de grises (simulador de daltonismo de las
+  herramientas del navegador) y con NVDA (que lea "xiquet (valencià)").
 
 ### 6.4 Idiomas de la interfaz
 
@@ -420,7 +506,7 @@ Castellano:
 | 0 | Decidir las preguntas de la sección 11 | tabla rellena |
 | 1 | Función de cambios palabra a palabra en el paquete + API FastAPI con pruebas | `pytest` en verde |
 | 2 | Página de traducir, accesible, valenciano/castellano | pasa axe y el recorrido con teclado y NVDA |
-| 3 | Pantalla de GD y "Sobre" | ídem |
+| 3 | Pantalla de GD y "Sobre"; `resalta_html` accesible (6.5) | ídem, y el resaltado se entiende sin color |
 | 4 | Dockerfile + compose + healthcheck; prueba sin red; avisos de licencias en `NOTICE` y los README (7.5) | `docker compose up` funciona en un equipo limpio y las versiones de `NOTICE` coinciden con las de la imagen |
 | 5 | Subir ficheros (`.txt`, quizá `.docx`) | ídem |
 | 6 | Documentación de instalación para la Conselleria + declaración de accesibilidad (plantilla) | revisado por el equipo |
@@ -454,3 +540,7 @@ Castellano:
   `NOTICE` y la sección "Llicència" de los README (no sustituirlos),
   recomendación de construir la imagen en local; decisión D11 (revisión
   jurídica).
+- 03/11/2026: tarea de `resalta_html` accesible (6.5, WCAG 1.4.1): clases
+  `paraula-valenciana`/`paraula-catalana` junto a las de ahora, subrayado
+  continuo/de puntos además del color, texto oculto para lectores de
+  pantalla en lugar de `aria-label`/`title`, nota en el docstring.
