@@ -13,9 +13,13 @@ construya.
   que pasar textos del catalán al valenciano de la AVL, sin conocimientos
   técnicos. Secundariamente, el equipo del proyecto para revisar
   traducciones.
-- **Qué tiene que poder hacer**: pegar o subir un texto, obtener la
-  traducción, ver qué se ha cambiado y por qué, copiar o descargar el
-  resultado, y comprobar el Grau Dialectal de un texto.
+- **Qué tiene que poder hacer**: elegir los idiomas, pegar un texto y
+  obtener **solo la traducción** (como cualquier traductor: una caja de
+  entrada y otra de salida, sin explicar qué ha cambiado ni cómo); y,
+  en una pantalla aparte, comprobar el Grau Dialectal de un texto.
+  **Decisión del usuario (03/11/2026)**: la pantalla de traducir no
+  muestra nada del funcionamiento interno (ni palabras cambiadas, ni
+  dudosas, ni GD).
 - **Dónde se ejecuta**: en sus equipos o en un servidor interno, **solo
   CPU**, posiblemente **sin internet** (red de la Administración).
 
@@ -38,23 +42,19 @@ existe.
 
 | Función | Dónde | Para la interfaz |
 |---|---|---|
-| `translate_cat_val(text)` | `avlizador.traductor_cat_val` | traducción final (motor + FLOR) |
-| `translate_cat_val_motor(text)` | ídem | modo rápido sin FLOR |
-| `tradueix_cat_val_ml(text, model)` | `…model_llengua` | traducción **y** las palabras ambiguas con sus candidatos y quién decidió (spaCy, FLOR, motor) |
-| `calcula_gd`, `calcula_gdv`, `calcula_gdc` | `avlizador.grau_dialectal` | GD del texto de entrada y de la salida |
-| `resalta_html(text)` | `grau_dialectal.gd` | marca las palabras valencianas/catalanas (hay que revisar su HTML para la accesibilidad) |
+| `translate_cat_val(text)` | `avlizador.traductor_cat_val` | la traducción català → valencià (motor + FLOR) |
+| `translate_cat_val_motor(text)` | ídem | sin FLOR, si `AVLIZADOR_MODE=motor` (no se elige en la pantalla) |
+| `calcula_gd`, `calcula_gdv`, `calcula_gdc` | `avlizador.grau_dialectal` | pantalla del GD |
+| `resalta_html(text)` | `grau_dialectal.gd` | pantalla del GD: marca las palabras valencianas/catalanas (6.5) |
 | CLI `avlizador tradueix / gd / avalua` | `avlizador.cli` | no se usa en la web; útil dentro del contenedor |
 
-Lo que **falta** en el paquete para una buena interfaz:
+Lo que **falta** en el paquete:
 
-- La lista de **cambios palabra a palabra** (qué palabra catalana pasó a
-  qué valenciana y qué regla lo hizo). Hoy solo lo saca
-  `pipeline/03_seleccio_de_model/traces/traca_traduccio.py`, fuera del
-  paquete. Propuesta: una función pequeña en el paquete que devuelva los
-  cambios (posición, original, traducción, capa), sin el detalle completo
-  de las trazas.
 - Partir un **texto largo** en frases/párrafos y traducirlo conservando
   saltos de línea (la CLI ya va línea a línea).
+- Nada más: como la pantalla de traducir solo enseña la traducción, ya
+  **no hace falta** una función de "cambios palabra a palabra" (se
+  propuso en la primera versión del plan y se descarta).
 
 ## 4. Arquitectura
 
@@ -129,7 +129,8 @@ reparten los mismos núcleos y todas van más lentas.
 
 | Método y ruta | Entrada | Salida |
 |---|---|---|
-| `POST /api/tradueix` | `{text, mode: "complet"\|"motor", detall: bool}` | `{traduccio, canvis[], ambigues[], gd_entrada, gd_eixida, segons}` |
+| `GET /api/idiomes` | — | los pares disponibles, p. ej. `[{"origen": "ca", "desti": "ca-valencia", "nom": "Català → Valencià"}]` (hoy solo uno) |
+| `POST /api/tradueix` | `{text, origen: "ca", desti: "ca-valencia"}` | `{traduccio}` (solo la traducción) |
 | `POST /api/gd` | `{text}` | `{gd, gdv, gdc, marcadors_occidentals, marcadors_orientals, total_paraules}` |
 | `POST /api/tradueix-fitxer` | fichero `.txt` (y quizá `.docx`, decisión D6) | el fichero traducido |
 | `GET /api/salut` | — | `{estat: "ok", models_carregats: bool}` (para el `HEALTHCHECK` de Docker) |
@@ -138,9 +139,15 @@ reparten los mismos núcleos y todas van más lentas.
 - **Límite de longitud** por petición (p. ej. 20.000 caracteres; D5).
 - **HTTP 429** en `/api/tradueix` (y en `/api/tradueix-fitxer`) cuando ya
   hay `MAX_TRADUCCIONS_SIMULTANIES` traducciones en marcha (sección 4).
-- `ambigues[]`: por cada palabra ambigua, los candidatos, cuál se ha
-  elegido, quién ha decidido y si hay duda (margen pequeño), para que la
-  interfaz pueda **avisar** y dejar elegir la otra opción.
+- Un par de idiomas que no existe → HTTP 400 con un mensaje.
+- **Preparada para más idiomas**: cada par es una entrada de un
+  registro en el servidor (`origen`, `desti`, nombre que se muestra y la
+  función que traduce). Hoy solo hay `ca` → `ca-valencia`
+  (`translate_cat_val`); añadir un par (por ejemplo, castellano →
+  valenciano cuando exista el traductor del repo de *finetuning*) es
+  añadir una entrada, sin tocar la interfaz, que construye los
+  selectores con `GET /api/idiomes`. El val→cat del repo existe pero
+  está congelado: no se ofrece.
 - Errores en JSON con un mensaje comprensible (y traducido).
 
 ## 6. Interfaz y accesibilidad
@@ -156,24 +163,40 @@ reparten los mismos núcleos y todas van más lentas.
 
 ### 6.2 Pantallas
 
-1. **Traducir** (pantalla principal)
-   - Área de texto de entrada (catalán) con su etiqueta visible,
-     contador de caracteres y límite.
-   - Botón "Traduir" (y atajo de teclado documentado, sin capturar teclas
-     del lector de pantalla).
-   - Interruptor "Modo ràpid (sense model de llengua)".
-   - Resultado: área de texto de solo lectura + botones "Copiar" y
-     "Descarregar".
-   - **Cambios**: el texto traducido con las palabras cambiadas marcadas
-     y, además, una **lista de cambios** ("aquest → este", "cop → vegada:
-     decidit pel model de llengua"). La lista es lo que hace accesible la
-     información para quien no ve el resaltado.
-   - **Palabras dudosas**: aviso cuando una palabra ambigua se ha decidido
-     con poca diferencia, con un botón para usar la otra opción.
-   - GD de la entrada y de la salida (con una frase que lo explique, no
-     solo el número).
-2. **Grau Dialectal**: pegar un texto y ver GD, GDV, GDC y las palabras
-   marcadas (como lista, además de resaltadas).
+1. **Traduir** (pantalla principal). **Solo la traducción** (decisión
+   del usuario, 03/11/2026):
+
+   ```
+   ┌───────────────────────────────────────────────────────────┐
+   │ Idioma d'origen [Català ▾]        Idioma de destí [Valencià ▾] │
+   ├─────────────────────────────┬─────────────────────────────┤
+   │ Text original               │ Traducció                   │
+   │ ┌─────────────────────────┐ │ ┌─────────────────────────┐ │
+   │ │                         │ │ │ (només lectura)         │ │
+   │ │                         │ │ │                         │ │
+   │ └─────────────────────────┘ │ └─────────────────────────┘ │
+   │ 0 / 20.000 caràcters        │                             │
+   ├─────────────────────────────┴─────────────────────────────┤
+   │                       [ Traduir ]                         │
+   └───────────────────────────────────────────────────────────┘
+   ```
+
+   - **Selectores de idioma** (`<select>` con etiqueta): hoy solo
+     "Català" → "Valencià"; se llenan con `GET /api/idiomes`, así que
+     cuando haya más pares aparecen solos. El de destino solo ofrece los
+     destinos posibles para el origen elegido. Con un solo par, los dos
+     se ven igualmente (dejan claro qué hace el traductor y la interfaz
+     ya está lista para ampliarse).
+   - **Caja de entrada** con su etiqueta visible, contador de caracteres
+     y límite (`MAX_CARACTERS`).
+   - **Botón "Traduir"**.
+   - **Caja de salida** de solo lectura con la traducción. **Nada más**:
+     ni palabras cambiadas, ni palabras dudosas, ni GD, ni el modo sin
+     FLOR (el modo se fija con `AVLIZADOR_MODE` al desplegar).
+   - Opcional, por decidir (D7): un botón "Copiar" junto a la salida.
+   - En pantallas estrechas, las dos cajas una encima de la otra.
+2. **Grau Dialectal** (pantalla aparte): pegar un texto y ver GD, GDV,
+   GDC y las palabras marcadas (como lista, además de resaltadas; 6.5).
 3. **Sobre**: qué hace el sistema, límites conocidos (homógrafos, "nou"
    como nuez…), versión, licencias y aviso de privacidad ("el texto no
    se guarda").
@@ -182,9 +205,10 @@ reparten los mismos núcleos y todas van más lentas.
 
 **Estructura y semántica**
 - `<html lang="ca-valencia">` (o `es` en la versión castellana) y `lang`
-  en los fragmentos en otro idioma: el texto de **entrada** en catalán
-  (`lang="ca"`) y la **salida** en valenciano (`lang="ca-valencia"`), para
-  que el lector de pantalla los pronuncie bien.
+  en las dos cajas según los idiomas elegidos: hoy la **entrada** en
+  catalán (`lang="ca"`) y la **salida** en valenciano
+  (`lang="ca-valencia"`); el atributo cambia con los selectores, para que
+  el lector de pantalla pronuncie bien cada caja.
 - Un solo `<h1>`, jerarquía de títulos sin saltos, regiones `header`,
   `nav`, `main`, `footer`.
 - Enlace "Saltar al contingut" como primer elemento enfocable.
@@ -200,7 +224,7 @@ reparten los mismos núcleos y todas van más lentas.
 
 **Estados y avisos**
 - Región `aria-live="polite"` que anuncie "Traduint…" y "Traducció
-  feta: 3 canvis, 1 paraula dudosa".
+  feta" (sin más detalle: la traducción se lee en la caja de salida).
 - Errores con `role="alert"`, junto al campo, con texto que diga qué
   hacer.
 - El botón se desactiva mientras traduce, pero sin quitarlo del orden de
@@ -210,8 +234,9 @@ reparten los mismos núcleos y todas van más lentas.
 **Color, contraste y visual**
 - Contraste de texto ≥ 4,5:1 (≥ 3:1 en texto grande y en componentes de
   interfaz y gráficos).
-- **El color nunca es la única señal**: los cambios se marcan con fondo
-  **y** subrayado o `<mark>`/`<ins>`/`<del>`, y además van en la lista.
+- **El color nunca es la única señal**: en la pantalla del GD, las
+  palabras marcadas llevan fondo **y** subrayado (6.5), y además van en
+  una lista.
 - Modo oscuro con `prefers-color-scheme` y contrastes revisados en los
   dos.
 - Usable al 200 % de zoom y a 320 px de ancho sin desplazamiento
@@ -532,7 +557,7 @@ Castellano:
 | Fase | Contenido | Hecho cuando |
 |---|---|---|
 | 0 | Decidir las preguntas de la sección 11 | tabla rellena |
-| 1 | Función de cambios palabra a palabra en el paquete + API FastAPI con pruebas | `pytest` en verde |
+| 1 | API FastAPI (`/api/idiomes`, `/api/tradueix`, `/api/gd`, salud y versión) con el registro de pares de idiomas, y sus pruebas | `pytest` en verde |
 | 2 | Página de traducir, accesible, valenciano/castellano | pasa axe y el recorrido con teclado y NVDA |
 | 3 | Pantalla de GD y "Sobre"; `resalta_html` accesible (6.5) | ídem, y el resaltado se entiende sin color |
 | 4 | Dockerfile + compose + healthcheck con las variables de entorno (7.1); prueba sin red; avisos de licencias en `NOTICE` y los README (7.5); sección de variables en los README | `docker compose up` funciona en un equipo limpio; las versiones de `NOTICE` y las variables de los README coinciden con la imagen |
@@ -549,8 +574,9 @@ Castellano:
 | D4 | ¿Interfaz en valenciano y castellano desde el principio? | sí |
 | D5 | Límite de texto por petición | 20.000 caracteres (a medir) |
 | D6 | ¿Subir `.docx` (conservando el formato) o solo `.txt`? | `.txt` en la primera versión; `.docx` después (más complejo) |
-| D7 | ¿Dejar elegir la otra opción en las palabras dudosas? | sí: es donde el sistema falla y el usuario sabe el sentido |
-| D8 | ¿Modo rápido (solo motor) visible para el usuario? | sí, como opción avanzada |
+| D7 | ¿Botón "Copiar" junto a la caja de salida? (lo único que se añadiría a las dos cajas) | por decidir; es habitual en los traductores y no explica nada del funcionamiento |
+| D8 | ~~¿Modo rápido visible?~~ | **decidido (usuario, 03/11)**: no; solo `AVLIZADOR_MODE` al desplegar |
+| D12 | ~~¿Mostrar palabras cambiadas, dudosas o GD al traducir?~~ | **decidido (usuario, 03/11)**: no; la pantalla de traducir solo da la traducción, el GD va en su pantalla |
 | D9 | ¿Rama propia para todo esto? | sí, `interfaz` desde `main` (este documento se mueve allí) |
 | D10 | ¿Quién hace la prueba manual con lector de pantalla? | por decidir en el equipo |
 | D11 | ¿Quién revisa las licencias de la imagen (GPL-3.0 de spaCy en el mismo proceso, RAIL de FLOR) antes de publicarla? | el servicio jurídico de la Universidad; mientras tanto, solo construcción en local (7.5) |
@@ -578,3 +604,11 @@ Castellano:
   `HF_HUB_OFFLINE`, `UVICORN_LOG_LEVEL`), con cuándo cambiar cada una y
   la regla de los núcleos; tarea de la sección "Variables d'entorn" en
   los README.
+- 03/11/2026 (decisión del usuario): la pantalla de traducir es **solo
+  la traducción**: selectores de idioma de origen y destino (hoy solo
+  català → valencià, preparados para más pares con `GET /api/idiomes` y
+  un registro de pares en el servidor), caja de entrada, botón y caja de
+  salida. Fuera: lista de cambios, palabras dudosas, GD en la traducción
+  y el interruptor de modo (D8 y D12 decididos; D7 pasa a ser el botón
+  "Copiar"). `POST /api/tradueix` devuelve solo `{traduccio}`. El GD,
+  en su pantalla.
