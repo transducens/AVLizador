@@ -9,7 +9,7 @@
 # Llançar-ho (des de ~/scrapeo/AVLizador/pipeline/03_seleccio_de_model/jutge_llm):
 #   LIMIT=10 sbatch --array=0 jutge_llm.sh   # prova: 10 frases per sistema
 #   sbatch --array=0 jutge_llm.sh            # Qwen 3.6 35B-A3B (català a la llista oficial de Qwen3)
-#   sbatch --array=1 jutge_llm.sh            # Gemma 4 31B (el millor obert del WMT26)
+#   sbatch --array=1 jutge_llm.sh            # Gemma 4 31B (descartat el 04/11/2026)
 #   PENSA=1 sbatch --array=0 jutge_llm.sh    # amb raonament en la fase 1 (molt més lent)
 # Si el job s'acaba per temps, es torna a llançar igual: continua des de la
 # memòria cau (resultats/<model>/cache.jsonl).

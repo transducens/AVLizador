@@ -26,9 +26,9 @@ oberts:
 | Qwen 3.6 35B-A3B (MoE, 3B actius) | tasca 1: 14-21 (29,8 amb raonament, 24,6 sense); tasca 2: 11-18 | Sí: el català és a la llista oficial de 119 idiomes de Qwen3 | `qwen3.6:35b-a3b`, ~23 GB |
 
 Criteri de l'usuari: obert i amb català → **Qwen 3.6** (`--array=0`).
-Gemma 4 queda preparat (`--array=1`) perquè és el millor obert del WMT26;
-el mateix parell contrastiu dirà si sap valencià encara que la fitxa no
-el nomene. Cap dels dos es va avaluar en català al WMT26 (no hi havia cap
+Gemma 4 quedava preparat (`--array=1`) perquè és el millor obert del WMT26,
+però **es descarta** (decisió de l'usuari, 04/11/2026): Qwen 3.6 ja dona
+la resposta i no s'espera que Gemma la canvie. Cap dels dos es va avaluar en català al WMT26 (no hi havia cap
 direcció cap al català).
 
 ## Què s'hi fa
@@ -67,7 +67,7 @@ cd pipeline/03_seleccio_de_model/jutge_llm
 LIMIT=10 sbatch --array=0 jutge_llm.sh     # prova: 10 frases per sistema
 cat logs/<jobid>_0_jutge_llm.out           # s/text i la taula
 sbatch --array=0 jutge_llm.sh              # Qwen 3.6, tot
-sbatch --array=1 jutge_llm.sh              # Gemma 4 31B, tot (opcional)
+sbatch --array=1 jutge_llm.sh              # Gemma 4 31B (descartat, no s'ha llançat)
 ```
 
 Demana 2 GPU (els models no caben en una d'11 GB); Ollama reparteix les
@@ -125,4 +125,5 @@ l'AVL:
   està en la frase (BM-AVL-079: dubta d'un "fauen" que no existix; la
   frase diu "facen").
 
-Gemma 4 31B (`--array=1`): sense llançar.
+Gemma 4 31B (`--array=1`): **descartat**, no s'ha llançat (decisió de
+l'usuari, 04/11/2026).

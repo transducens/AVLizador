@@ -140,7 +140,7 @@ Para separar el problema del modelo del de cómo se le plantea la tarea,
   de cada frase, y el resumen dice en cuántas gana el valenciano.
 
 XCOMET no tiene un modo de "solo la traducción". Para eso está el juez
-LLM de `../jutge_llm/` (GEMBA-ESA con Qwen 3.6 o Gemma 4, del WMT26).
+LLM de `../jutge_llm/` (GEMBA-ESA con Qwen 3.6, del WMT26; Gemma 4 descartado).
 
 ```bash
 MODE=ref sbatch comet.sh
