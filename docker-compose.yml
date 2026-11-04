@@ -1,0 +1,30 @@
+# AVLizador en Docker: docker compose up --build  ->  http://localhost:8000
+# Variables d'entorn: README.md (secció "Variables d'entorn") /
+# README.es.md ("Variables de entorno"). Les dues taules i esta llista han
+# de coincidir.
+services:
+  avlizador:
+    build: .
+    image: avlizador:1.1.0
+    ports:
+      # Només des d'este equip. Per a obrir-lo a la xarxa: "8000:8000"
+      # (millor amb un proxy HTTPS davant).
+      - "127.0.0.1:8000:8000"
+    environment:
+      AVLIZADOR_MODE: complet          # "complet" (amb FLOR) o "motor" (sense FLOR)
+      MAX_CARACTERS: 20000             # límit de text per petició
+      MAX_TRADUCCIONS_SIMULTANIES: 2   # semàfor de concurrència (vore main.py)
+      OMP_NUM_THREADS: 2               # nuclis per a FLOR/PyTorch
+      TORCH_NUM_THREADS: 2
+      HF_HUB_OFFLINE: 1                # cap crida a Hugging Face en producció
+      UVICORN_LOG_LEVEL: warning       # cap línia per petició
+    # Sistema de fitxers de només lectura, sense privilegis.
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 4g
+    restart: unless-stopped

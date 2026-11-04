@@ -562,7 +562,7 @@ Castellano:
 | 1 | API FastAPI (`/api/idiomes`, `/api/tradueix`, `/api/gd`, salud y versión) con el registro de pares de idiomas, y sus pruebas | `pytest` en verde (**hecho 04/11**, ver registro) |
 | 2 | Página de traducir, accesible, valenciano/castellano | pasa axe y el recorrido con teclado y NVDA (**hecho 04/11 salvo NVDA/VoiceOver**, D10) |
 | 3 | Pantalla de GD y "Sobre"; `resalta_html` accesible (6.5) | ídem, y el resaltado se entiende sin color (**hecho 04/11 salvo NVDA/VoiceOver**, D10) |
-| 4 | Dockerfile + compose + healthcheck con las variables de entorno (7.1); prueba sin red; avisos de licencias en `NOTICE` y los README (7.5); sección de variables en los README | `docker compose up` funciona en un equipo limpio; las versiones de `NOTICE` y las variables de los README coinciden con la imagen |
+| 4 | Dockerfile + compose + healthcheck con las variables de entorno (7.1); prueba sin red; avisos de licencias en `NOTICE` y los README (7.5); sección de variables en los README | `docker compose up` funciona en un equipo limpio; las versiones de `NOTICE` y las variables de los README coinciden con la imagen (**hecho 04/11**; probado por el usuario en su equipo, falta un equipo limpio) |
 | 5 | Subir ficheros (`.txt`, quizá `.docx`) | ídem |
 | 6 | Documentación de instalación para la Conselleria + declaración de accesibilidad (plantilla) | revisado por el equipo |
 
@@ -684,3 +684,26 @@ Castellano:
   las tres pantallas a 320 y 640 px sin desplazamiento horizontal.
   Pruebas: 8 más en `tests/test_web_pagina.py`; suite completa 85 en
   verde.
+- 04/11/2026: **fase 4, imagen construida (falta arrancarla y la prueba
+  sin red, las hace el usuario)**. `Dockerfile` en dos fases
+  (`python:3.12-slim`; torch instalado primero y solo desde el índice
+  de CPU, para que pip no elija el de PyPI con CUDA; usuario
+  `avlizador` sin root; `HEALTHCHECK` contra `/api/salut` con
+  `start-period` de 120 s), `docker/descarrega_flor.py` (FLOR-760M a la
+  revisión fija `d47b56bd…`, la de todas las mediciones, y `refs/main`
+  apuntando a ella para que cargue con `HF_HUB_OFFLINE=1`),
+  `.dockerignore` (solo `pyproject.toml`, README, `LICENSE`, `NOTICE`,
+  `src/` y `docker/`) y `docker-compose.yml` (variables de 7.1, puerto
+  solo en `127.0.0.1`, `read_only` + `tmpfs` `/tmp`, `cap_drop: ALL`,
+  `no-new-privileges`, 4 GB, `restart: unless-stopped`). Construida en
+  local (Docker 25.0.3): `avlizador:1.1.0`, **3,1 GB**, torch
+  `2.15.0+cpu`. `NOTICE` ampliado con el apartado "Imatge Docker" y las
+  versiones reales de la imagen (sacadas con `docker create` + `docker
+  cp`, sin arrancarla); la dependencia web también en la lista general.
+  README (valenciano y castellano): sección "Interfície web i Docker" /
+  "Interfaz web y Docker" con `docker save`/`load` para equipos sin
+  internet, tabla de variables (incluida `AVLIZADOR_DOCS`) y regla de
+  los núcleos, y el párrafo de licencias de la imagen.
+- 04/11/2026: el usuario arranca la imagen en su equipo y la da por
+  buena ("diría que funciona bien"). Falta la prueba en un equipo limpio
+  (sin el repositorio ni la caché de modelos) antes de la entrega.
