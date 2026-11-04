@@ -26,6 +26,12 @@ Pos_tagger (spaCy) es crida igual que en `rules/val_cat/engine.py` -- i ací amb
 MES fiabilitat, perquè l'entrada ja és català real (vore hoja de ruta,
 secció sobre spaCy).
 
+**`clitic_lhi.py` (04/11/2026)**: descompon el resultat "li'l" que deixa
+`LexicInversRule` quan tradueix el grup proclític "l'hi": separa "li" (que
+queda sol) i "l'" (que s'apostrofa cap a la dreta sobre el verb o mot
+seguent, o es desfà en "el" si el mot comença en consonant). Vore
+`clitic_lhi.py` per a l'explicació completa.
+
 **`preposicions_locucions.py` RETIRADA del pipeline (14/10/2026)**: vore
 `rules/val_cat/engine.py` per l'explicació completa (la regla "a"/"en"
 no generalitzava i la regla general C1 mesurada contra els dos
@@ -47,6 +53,7 @@ from .concordanca_dos_dues import ConcordancaDosDuesInversRule
 from .conjugacions_dict import ConjugacionsDictInversRule
 from .demostratius import DemostratiusInversRule
 from .incoatius import IncoatiusInversRule
+from .clitic_lhi import CliticLhiRule
 from .lexic import LexicInversRule
 from .numerals import NumeralsInversRule
 from .per_a_infinitiu import PerAInfinitiuInversRule
@@ -70,6 +77,7 @@ class RuleEngineInvers:
     def __init__(self) -> None:
         self._regles = [
             LexicInversRule(),
+            CliticLhiRule(),
             ConjugacionsDictInversRule(),
             PossessiusInversRule(),
             NumeralsInversRule(),
