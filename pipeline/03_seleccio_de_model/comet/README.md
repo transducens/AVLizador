@@ -146,3 +146,32 @@ LLM de `../jutge_llm/` (GEMBA-ESA con Qwen 3.6 o Gemma 4, del WMT26).
 MODE=ref sbatch comet.sh
 MODE=qe sbatch comet.sh
 ```
+
+### Modo `ref`: sin ver el catalán (04/11/2026, prueba `LIMIT=10` y completo)
+
+Solo traducción + referencia valenciana; la referencia entra también como
+sistema, comparada consigo misma (debería ser el techo):
+
+| Sistema | Mezcla | BOE | AVL | Frases con error |
+|---|---|---|---|---|
+| **Sin traducir** (catalán tal cual) | **97,17** | 97,81 | 96,44 | 204/458 |
+| qwen3:14b | 97,12 | 97,76 | 96,37 | 209/458 |
+| llama3.1:8b | 97,11 | 97,77 | 96,34 | 209/458 |
+| qwen3:8b | 97,04 | 97,58 | 96,41 | 211/458 |
+| gemma4:12b | 96,89 | 97,48 | 96,21 | 232/458 |
+| salamandra-7b-instruct | 96,73 | 97,61 | 95,70 | 200/458 |
+| AVLizador 1.1.0 | 96,69 | 97,25 | 96,05 | 227/458 |
+| AVLizador 1.0.1 | 96,68 | 97,24 | 96,04 | 228/458 |
+| Motor solo | 96,61 | 97,14 | 96,00 | 231/458 |
+| **Referencia valenciana** (= la referencia) | **96,54** | 96,86 | 96,16 | 187/458 |
+| gemma3:12b … qwen2.5:14b | 96,51 … 93,54 | | | 253-349/458 |
+
+**La referencia, comparada consigo misma, queda por debajo del catalán
+sin traducir y XCOMET marca error en 187 de sus 458 frases** (hipótesis y
+referencia son el mismo texto). En la prueba de 10 frases pasaba igual
+(97,31 frente a 98,20). Es decir, XCOMET no mide el parecido con la
+referencia: castiga las formas valencianas por sí mismas, venga o no el
+original catalán. **Queda descartado del todo para esta tarea**, en
+cualquier modo; `MODE=qe` no se lanza (con el catalán delante y sin
+referencia solo puede ir a peor). El juez LLM de `../jutge_llm/` (Qwen
+3.6, GEMBA-ESA solo con la traducción) da lo mismo: prefiere el catalán.
