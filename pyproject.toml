@@ -36,7 +36,9 @@ ml = [
     "huggingface_hub>=0.24,<2.0",
 ]
 avaluacio = ["sacrebleu>=2.4"]
-dev = ["pytest>=8", "sacrebleu>=2.4"]
+# Interfície web i API (`avlizador web`; vore documentacio/hoja_de_ruta_interfaz_docker.md).
+web = ["fastapi>=0.110", "uvicorn>=0.29", "jinja2>=3.1"]
+dev = ["pytest>=8", "sacrebleu>=2.4", "fastapi>=0.110", "uvicorn>=0.29", "jinja2>=3.1", "httpx>=0.27"]
 
 [project.scripts]
 avlizador = "avlizador.cli:main"
@@ -49,6 +51,7 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 "avlizador.traductor_cat_val" = ["data/*.json"]
+"avlizador.web" = ["plantilles/*.html", "static/*", "textos/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

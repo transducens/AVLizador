@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block titol %}{{ t.titol_pagina_sobre }}{% endblock %}
+{% block contingut %}
+<div class="encapcalat-pagina">
+  <h1>{{ t.titol_pagina_sobre }}</h1>
+</div>
+<div class="sobre panell">
+  {% for seccio in t.sobre %}
+  <section aria-labelledby="sobre-{{ loop.index }}">
+    <h2 id="sobre-{{ loop.index }}">{{ seccio.titol }}</h2>
+    {% for p in seccio.paragrafs %}<p>{{ p.format(versio=versio) }}</p>{% endfor %}
+  </section>
+  {% endfor %}
+</div>
+{% endblock %}

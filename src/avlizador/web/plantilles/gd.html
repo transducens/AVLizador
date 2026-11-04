@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block titol %}{{ t.titol_pagina_gd }}{% endblock %}
+{% block contingut %}
+<div class="encapcalat-pagina">
+  <h1>{{ t.titol_gd }}</h1>
+  <p class="intro">{{ t.intro_gd }}</p>
+</div>
+
+<form class="formulari-gd panell" method="post" action="/gd?idioma={{ idioma }}#resultat" novalidate>
+  <div class="camp">
+    <label for="text">{{ t.text_gd }}</label>
+    <p id="ajuda-text" class="ajuda">{{ t.ajuda_gd }}</p>
+    <textarea id="text" name="text" rows="7" lang="ca" spellcheck="false"
+              aria-describedby="ajuda-text comptador{% if error_camp %} error-text{% endif %}"
+              {% if error_camp %}aria-invalid="true"{% endif %}>
+{{ text }}</textarea>
+    <div class="barra-caixa">
+      <p id="comptador" class="comptador">{{ comptador }}</p>
+      <button type="submit" class="boto">{{ t.calcular }}</button>
+    </div>
+    <p id="error-text" class="error" {% if not error_camp %}hidden{% endif %}>{{ error_camp or "" }}</p>
+    <div id="avisos" class="avisos" role="alert">{% if error %}<p>{{ error }}</p>{% endif %}</div>
+  </div>
+</form>
+
+{% if resultat %}
+<section id="resultat" class="resultat panell" aria-labelledby="titol-resultat" tabindex="-1">
+  <h2 id="titol-resultat">{{ t.resultat }}</h2>
+  <p>{{ resultat.recompte }}</p>
+  <dl class="indexs">
+    <div class="index">
+      <dt>{{ t.gd_nom }}</dt>
+      <dd class="valor">{{ resultat.gd if resultat.gd is not none else "—" }}</dd>
+      <dd class="ajuda">{{ t.gd_expl if resultat.gd is not none else t.gd_sense }}</dd>
+    </div>
+    <div class="index">
+      <dt>{{ t.gdv_nom }}</dt>
+      <dd class="valor">{{ resultat.gdv }}</dd>
+      <dd class="ajuda">{{ t.gdv_expl }}</dd>
+    </div>
+    <div class="index">
+      <dt>{{ t.gdc_nom }}</dt>
+      <dd class="valor">{{ resultat.gdc }}</dd>
+      <dd class="ajuda">{{ t.gdc_expl }}</dd>
+    </div>
+  </dl>
+
+  <h3>{{ t.text_marcat }}</h3>
+  <p class="llegenda"><span class="visualment-amagat">{{ t.llegenda }}: </span>
+    <span class="mostra-llegenda paraula-valenciana mk-occ">{{ t.llegenda_val }}</span>
+    <span class="mostra-llegenda paraula-catalana mk-or">{{ t.llegenda_cat }}</span>
+  </p>
+  <div class="text-marcat" lang="ca">{{ resultat.html }}</div>
+
+  <div class="llistes">
+    <div>
+      <h3>{{ t.paraules_val.format(n=resultat.n_val) }}</h3>
+      {% if resultat.val %}
+      <ul>{% for paraula, n in resultat.val %}<li lang="ca-valencia">{{ paraula }}{% if n > 1 %} <span class="vegades">({{ t.vegades.format(n=n) }})</span>{% endif %}</li>{% endfor %}</ul>
+      {% else %}<p>{{ t.cap_paraula }}</p>{% endif %}
+    </div>
+    <div>
+      <h3>{{ t.paraules_cat.format(n=resultat.n_cat) }}</h3>
+      {% if resultat.cat %}
+      <ul>{% for paraula, n in resultat.cat %}<li lang="ca">{{ paraula }}{% if n > 1 %} <span class="vegades">({{ t.vegades.format(n=n) }})</span>{% endif %}</li>{% endfor %}</ul>
+      {% else %}<p>{{ t.cap_paraula }}</p>{% endif %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

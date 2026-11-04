@@ -595,20 +595,49 @@ def _esc(s: str) -> str:
     )
 
 
-def resalta_html(text: str, formes: Formes | None = None) -> str:
+def resalta_html(
+    text: str,
+    formes: Formes | None = None,
+    text_lector: bool = True,
+    etiquetes: tuple[str, str] = ("valencià", "català"),
+) -> str:
     """Torna `text` com a HTML amb cada paraula marcada envoltada en un
-    `<span>` (classe `mk-occ` les occidentals, `mk-or` les orientals) --
-    pensat per a `--html` (vore baix), per a poder VORE d'un colp d'ull
-    quines paraules concretes fan pujar o baixar el GD d'una frase, en
-    compte de només el número final. Fa EXACTAMENT la mateixa
-    classificació que `calcula_gd` (mateix filtre de POS per als
-    marcadors verbals -- vore "BUG REAL" al docstring del mòdul), perquè
-    el ressaltat visual i el número calculat mai es contradiguen.
+    `<span>` (classes `mk-occ paraula-valenciana` les occidentals,
+    `mk-or paraula-catalana` les orientals) -- pensat per a `--html`
+    (vore baix) i per a la pantalla del GD de la interfície web, per a
+    poder VORE d'un colp d'ull quines paraules concretes fan pujar o
+    baixar el GD d'una frase, en compte de només el número final. Fa
+    EXACTAMENT la mateixa classificació que `calcula_gd` (mateix filtre
+    de POS per als marcadors verbals -- vore "BUG REAL" al docstring del
+    mòdul), perquè el ressaltat visual i el número calculat mai es
+    contradiguen.
+
+    ACCESSIBILITAT (WCAG 1.4.1, el color no pot ser l'única senyal; vore
+    la secció 6.5 de `documentacio/hoja_de_ruta_interfaz_docker.md`):
+    - El full d'estils de qui use este HTML ha de definir
+      `.paraula-valenciana` i `.paraula-catalana` amb SUBRATLLAT a més
+      del color (continu per al valencià, de punts per al català) i la
+      classe `.visualment-amagat` (text només per a lectors de pantalla).
+      `mk-occ`/`mk-or` es mantenen per als estils de color de sempre.
+    - Amb `text_lector=True` (per defecte), cada paraula porta darrere un
+      text ocult amb la varietat (" (valencià)" / " (català)", o les
+      `etiquetes` que es passen, p. ex. en castellà). No `aria-label` ni
+      `title`: en un `<span>` els lectors de pantalla no els lligen de
+      forma fiable, i `title` només ix amb el ratolí. Es pot llevar on hi
+      haja moltes marques i ja hi haja una llista de les paraules.
 
     >>> formes = Formes(frozenset({"xiquet", "hui"}), frozenset({"nen"}), frozenset(), frozenset())
-    >>> resalta_html("El xiquet i el nen juguen hui.", formes)
-    'El <span class="mk-occ">xiquet</span> i el <span class="mk-or">nen</span> juguen <span class="mk-occ">hui</span>.'
+    >>> resalta_html("El xiquet i el nen juguen hui.", formes, text_lector=False)
+    'El <span class="mk-occ paraula-valenciana">xiquet</span> i el <span class="mk-or paraula-catalana">nen</span> juguen <span class="mk-occ paraula-valenciana">hui</span>.'
+    >>> resalta_html("El nen.", formes)
+    'El <span class="mk-or paraula-catalana">nen<span class="visualment-amagat"> (català)</span></span>.'
+    >>> resalta_html("El xiquet.", formes, etiquetes=("valenciano", "catalán"))
+    'El <span class="mk-occ paraula-valenciana">xiquet<span class="visualment-amagat"> (valenciano)</span></span>.'
     """
+    def marca(paraula: str, classes: str, etiqueta: str) -> str:
+        amagat = f'<span class="visualment-amagat"> ({_esc(etiqueta)})</span>' if text_lector else ""
+        return f'<span class="{classes}">{_esc(paraula)}{amagat}</span>'
+
     if formes is None:
         formes = carrega_formes_dialectals()
 
@@ -622,9 +651,9 @@ def resalta_html(text: str, formes: Formes | None = None) -> str:
 
         classe = _classifica_token(tok, formes)
         if classe == "occ":
-            out.append(f'<span class="mk-occ">{_esc(paraula)}</span>')
+            out.append(marca(paraula, "mk-occ paraula-valenciana", etiquetes[0]))
         elif classe == "or":
-            out.append(f'<span class="mk-or">{_esc(paraula)}</span>')
+            out.append(marca(paraula, "mk-or paraula-catalana", etiquetes[1]))
         else:
             out.append(_esc(paraula))
     out.append(_esc(text[pos:]))
@@ -779,17 +808,21 @@ def genera_informe_html(
   td.txt {{ line-height:1.5; }}
   .mk-occ {{ background:var(--mk-occ-bg); color:var(--mk-occ-text); padding:0 2px; border-radius:3px; }}
   .mk-or {{ background:var(--mk-or-bg); color:var(--mk-or-text); padding:0 2px; border-radius:3px; }}
+  /* WCAG 1.4.1: a més del color, subratllat continu (valencià) i de punts (català) */
+  .paraula-valenciana {{ text-decoration:underline solid; text-decoration-thickness:2px; text-underline-offset:.2em; }}
+  .paraula-catalana {{ text-decoration:underline dotted; text-decoration-thickness:2px; text-underline-offset:.2em; }}
+  .visualment-amagat {{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }}
 </style>
 </head>
 <body>
   <h1>Informe GD -- {_esc(path.name)}</h1>
-  <p class="subt">{len(res_a)} documents. Verd = marcador occidental (valencià), taronja = marcador oriental (català).</p>
+  <p class="subt">{len(res_a)} documents. Verd i subratllat continu = marcador occidental (valencià); taronja i subratllat de punts = marcador oriental (català).</p>
   <div class="cards">
     <div class="card"><div class="label">GD global "{_esc(camp)}"</div>
       <div class="value" style="color:{_gd_color(gd_a)}">{_html_gd(gd_a)}</div></div>
     {resum_b}
   </div>
-  <div class="legend"><span class="mk-occ">occidental</span><span class="mk-or">oriental</span></div>
+  <div class="legend"><span class="mk-occ paraula-valenciana">occidental (subratllat continu)</span><span class="mk-or paraula-catalana">oriental (subratllat de punts)</span></div>
   <input id="cerca" type="search" placeholder="Cerca per id o text...">
   <div style="overflow-x:auto">
   <table id="taula">
