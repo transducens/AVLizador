@@ -193,7 +193,8 @@ reparten los mismos núcleos y todas van más lentas.
    - **Caja de salida** de solo lectura con la traducción. **Nada más**:
      ni palabras cambiadas, ni palabras dudosas, ni GD, ni el modo sin
      FLOR (el modo se fija con `AVLIZADOR_MODE` al desplegar).
-   - Opcional, por decidir (D7): un botón "Copiar" junto a la salida.
+   - Botón **"Copiar"** junto a la salida (D7, decidido): copia la
+     traducción y lo anuncia ("Copiat") en la región `aria-live`.
    - En pantallas estrechas, las dos cajas una encima de la otra.
 2. **Grau Dialectal** (pantalla aparte): pegar un texto y ver GD, GDV,
    GDC y las palabras marcadas (como lista, además de resaltadas; 6.5).
@@ -381,6 +382,7 @@ la diferencia.
   | `TORCH_NUM_THREADS` | 2 | hilos que usa FLOR: **la lee nuestro código** y la pasa a `ModelLlengua(fils=...)` (`torch.set_num_threads`); PyTorch no la lee por sí solo | igual que `OMP_NUM_THREADS`; normalmente el mismo valor |
   | `HF_HUB_OFFLINE` | `1` | no intentar conectarse a Hugging Face; **solo con los modelos dentro de la imagen** (opción A de 7.2) | `0` con la opción B (volumen): el primer arranque descarga los modelos |
   | `UVICORN_LOG_LEVEL` | `warning` | nivel de los mensajes del servidor (arranque, avisos, errores). **No** vuelve a activar las líneas por petición: `main.py` fija `uvicorn.access` en `warning` siempre (privacidad, sección 4) | `info` o `debug` solo para depurar un problema de arranque |
+  | `AVLIZADOR_DOCS` | `0` | `1` = documentación interactiva de la API en `/docs` (Swagger carga JavaScript de un CDN y queda fuera de la CSP) | solo en desarrollo; nunca en la imagen de la Conselleria |
 
   **Regla de los núcleos**: `MAX_TRADUCCIONS_SIMULTANIES` ×
   `TORCH_NUM_THREADS` ≤ núcleos del equipo (con los valores por defecto,
@@ -556,8 +558,8 @@ Castellano:
 
 | Fase | Contenido | Hecho cuando |
 |---|---|---|
-| 0 | Decidir las preguntas de la sección 11 | tabla rellena |
-| 1 | API FastAPI (`/api/idiomes`, `/api/tradueix`, `/api/gd`, salud y versión) con el registro de pares de idiomas, y sus pruebas | `pytest` en verde |
+| 0 | Decidir las preguntas de la sección 11 | tabla rellena (**hecho 04/11**, quedan D10 y D11) |
+| 1 | API FastAPI (`/api/idiomes`, `/api/tradueix`, `/api/gd`, salud y versión) con el registro de pares de idiomas, y sus pruebas | `pytest` en verde (**hecho 04/11**, ver registro) |
 | 2 | Página de traducir, accesible, valenciano/castellano | pasa axe y el recorrido con teclado y NVDA |
 | 3 | Pantalla de GD y "Sobre"; `resalta_html` accesible (6.5) | ídem, y el resaltado se entiende sin color |
 | 4 | Dockerfile + compose + healthcheck con las variables de entorno (7.1); prueba sin red; avisos de licencias en `NOTICE` y los README (7.5); sección de variables en los README | `docker compose up` funciona en un equipo limpio; las versiones de `NOTICE` y las variables de los README coinciden con la imagen |
@@ -568,16 +570,16 @@ Castellano:
 
 | # | Pregunta | Propuesta |
 |---|---|---|
-| D1 | ¿FastAPI + HTML propio, o Gradio para ir más rápido? | FastAPI + HTML propio (accesibilidad) |
-| D2 | ¿Modelos dentro de la imagen o en un volumen? | dentro para la Conselleria, volumen en desarrollo |
-| D3 | ¿Se publica la imagen (GitHub Container Registry) o cada uno la construye? | primero construirla en local; publicar cuando esté resuelta la licencia (7.4) |
-| D4 | ¿Interfaz en valenciano y castellano desde el principio? | sí |
-| D5 | Límite de texto por petición | 20.000 caracteres (a medir) |
-| D6 | ¿Subir `.docx` (conservando el formato) o solo `.txt`? | `.txt` en la primera versión; `.docx` después (más complejo) |
-| D7 | ¿Botón "Copiar" junto a la caja de salida? (lo único que se añadiría a las dos cajas) | por decidir; es habitual en los traductores y no explica nada del funcionamiento |
+| D1 | ~~¿FastAPI + HTML propio, o Gradio?~~ | **decidido (usuario, 04/11)**: FastAPI + HTML propio |
+| D2 | ~~¿Modelos dentro de la imagen o en un volumen?~~ | **decidido (usuario, 04/11)**: dentro de la imagen (funciona sin internet) |
+| D3 | ~~¿Se publica la imagen o cada uno la construye?~~ | **decidido (usuario, 04/11)**: se construye en local; no se publica hasta la revisión jurídica (D11) |
+| D4 | ~~¿Interfaz en valenciano y castellano desde el principio?~~ | **decidido (usuario, 04/11)**: sí, las dos |
+| D5 | Límite de texto por petición | 20.000 caracteres por defecto (`MAX_CARACTERS`; se toma la propuesta, a medir en la fase 4) |
+| D6 | ¿Subir `.docx` (conservando el formato) o solo `.txt`? | `.txt` en la primera versión (se toma la propuesta); `.docx` se decide en la fase 5 |
+| D7 | ~~¿Botón "Copiar" junto a la caja de salida?~~ | **decidido (usuario, 04/11)**: sí; anuncia "Copiat" en la región `aria-live` |
 | D8 | ~~¿Modo rápido visible?~~ | **decidido (usuario, 03/11)**: no; solo `AVLIZADOR_MODE` al desplegar |
 | D12 | ~~¿Mostrar palabras cambiadas, dudosas o GD al traducir?~~ | **decidido (usuario, 03/11)**: no; la pantalla de traducir solo da la traducción, el GD va en su pantalla |
-| D9 | ¿Rama propia para todo esto? | sí, `interfaz` desde `main` (este documento se mueve allí) |
+| D9 | ~~¿Rama propia para todo esto?~~ | **hecho (04/11)**: rama `interfaz` desde `main`, con este documento |
 | D10 | ¿Quién hace la prueba manual con lector de pantalla? | por decidir en el equipo |
 | D11 | ¿Quién revisa las licencias de la imagen (GPL-3.0 de spaCy en el mismo proceso, RAIL de FLOR) antes de publicarla? | el servicio jurídico de la Universidad; mientras tanto, solo construcción en local (7.5) |
 
@@ -612,3 +614,24 @@ Castellano:
   y el interruptor de modo (D8 y D12 decididos; D7 pasa a ser el botón
   "Copiar"). `POST /api/tradueix` devuelve solo `{traduccio}`. El GD,
   en su pantalla.
+- 04/11/2026: rama `interfaz` (desde `main`, con este documento).
+  Decididos D1 (FastAPI + HTML propio), D2 (modelos dentro de la
+  imagen), D3 (construir en local, no publicar), D4 (valenciano y
+  castellano), D7 (botón "Copiar"); D5 y D6 con la propuesta. **Fase 1
+  hecha**: subpaquete `src/avlizador/web/` (`main.py`, `idiomes.py`
+  = registro de pares, `missatges.py` = mensajes en las dos lenguas,
+  elegidas con `?idioma=` o `Accept-Language`), orden `avlizador web`
+  (uvicorn sin log de acceso, un proceso), extra `[web]` (FastAPI +
+  uvicorn; httpx en `dev`). Además de lo previsto: el error de
+  validación (422) y el cuerpo no JSON (400) responden con nuestro
+  mensaje y **sin repetir el texto** (la respuesta por defecto de
+  FastAPI lo devuelve en `input`); `/api/gd` calcula GD, GDV y GDC con
+  una sola pasada de spaCy (prueba de que coinciden con `calcula_gdv` y
+  `calcula_gdc`); cabeceras de seguridad (CSP, `nosniff`,
+  `no-referrer`); `/docs` apagado salvo `AVLIZADOR_DOCS=1` (Swagger
+  carga JavaScript de un CDN). Pruebas: `tests/test_web.py` (13, modo
+  motor, con las dos fijas de la sección 9); suite completa en verde.
+  Probado en local con FLOR: arranca en ~13 s, "Un cop acabada…" →
+  "Una vegada acabada…" en ~3 s, sin ninguna línea de log por petición.
+  Aviso visto: sin `HF_HUB_OFFLINE=1`, transformers consulta Hugging Face
+  al arrancar (en la imagen va a 1, sección 7.1).
