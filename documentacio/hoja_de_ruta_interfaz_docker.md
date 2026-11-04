@@ -193,7 +193,8 @@ reparten los mismos núcleos y todas van más lentas.
    - **Caja de salida** de solo lectura con la traducción. **Nada más**:
      ni palabras cambiadas, ni palabras dudosas, ni GD, ni el modo sin
      FLOR (el modo se fija con `AVLIZADOR_MODE` al desplegar).
-   - Opcional, por decidir (D7): un botón "Copiar" junto a la salida.
+   - Botón **"Copiar"** junto a la salida (D7, decidido): copia la
+     traducción y lo anuncia ("Copiat") en la región `aria-live`.
    - En pantallas estrechas, las dos cajas una encima de la otra.
 2. **Grau Dialectal** (pantalla aparte): pegar un texto y ver GD, GDV,
    GDC y las palabras marcadas (como lista, además de resaltadas; 6.5).
@@ -381,6 +382,7 @@ la diferencia.
   | `TORCH_NUM_THREADS` | 2 | hilos que usa FLOR: **la lee nuestro código** y la pasa a `ModelLlengua(fils=...)` (`torch.set_num_threads`); PyTorch no la lee por sí solo | igual que `OMP_NUM_THREADS`; normalmente el mismo valor |
   | `HF_HUB_OFFLINE` | `1` | no intentar conectarse a Hugging Face; **solo con los modelos dentro de la imagen** (opción A de 7.2) | `0` con la opción B (volumen): el primer arranque descarga los modelos |
   | `UVICORN_LOG_LEVEL` | `warning` | nivel de los mensajes del servidor (arranque, avisos, errores). **No** vuelve a activar las líneas por petición: `main.py` fija `uvicorn.access` en `warning` siempre (privacidad, sección 4) | `info` o `debug` solo para depurar un problema de arranque |
+  | `AVLIZADOR_DOCS` | `0` | `1` = documentación interactiva de la API en `/docs` (Swagger carga JavaScript de un CDN y queda fuera de la CSP) | solo en desarrollo; nunca en la imagen de la Conselleria |
 
   **Regla de los núcleos**: `MAX_TRADUCCIONS_SIMULTANIES` ×
   `TORCH_NUM_THREADS` ≤ núcleos del equipo (con los valores por defecto,
@@ -556,11 +558,11 @@ Castellano:
 
 | Fase | Contenido | Hecho cuando |
 |---|---|---|
-| 0 | Decidir las preguntas de la sección 11 | tabla rellena |
-| 1 | API FastAPI (`/api/idiomes`, `/api/tradueix`, `/api/gd`, salud y versión) con el registro de pares de idiomas, y sus pruebas | `pytest` en verde |
-| 2 | Página de traducir, accesible, valenciano/castellano | pasa axe y el recorrido con teclado y NVDA |
-| 3 | Pantalla de GD y "Sobre"; `resalta_html` accesible (6.5) | ídem, y el resaltado se entiende sin color |
-| 4 | Dockerfile + compose + healthcheck con las variables de entorno (7.1); prueba sin red; avisos de licencias en `NOTICE` y los README (7.5); sección de variables en los README | `docker compose up` funciona en un equipo limpio; las versiones de `NOTICE` y las variables de los README coinciden con la imagen |
+| 0 | Decidir las preguntas de la sección 11 | tabla rellena (**hecho 04/11**, quedan D10 y D11) |
+| 1 | API FastAPI (`/api/idiomes`, `/api/tradueix`, `/api/gd`, salud y versión) con el registro de pares de idiomas, y sus pruebas | `pytest` en verde (**hecho 04/11**, ver registro) |
+| 2 | Página de traducir, accesible, valenciano/castellano | pasa axe y el recorrido con teclado y NVDA (**hecho 04/11 salvo NVDA/VoiceOver**, D10) |
+| 3 | Pantalla de GD y "Sobre"; `resalta_html` accesible (6.5) | ídem, y el resaltado se entiende sin color (**hecho 04/11 salvo NVDA/VoiceOver**, D10) |
+| 4 | Dockerfile + compose + healthcheck con las variables de entorno (7.1); prueba sin red; avisos de licencias en `NOTICE` y los README (7.5); sección de variables en los README | `docker compose up` funciona en un equipo limpio; las versiones de `NOTICE` y las variables de los README coinciden con la imagen (**hecho 04/11**; probado por el usuario en su equipo, falta un equipo limpio) |
 | 5 | Subir ficheros (`.txt`, quizá `.docx`) | ídem |
 | 6 | Documentación de instalación para la Conselleria + declaración de accesibilidad (plantilla) | revisado por el equipo |
 
@@ -568,16 +570,16 @@ Castellano:
 
 | # | Pregunta | Propuesta |
 |---|---|---|
-| D1 | ¿FastAPI + HTML propio, o Gradio para ir más rápido? | FastAPI + HTML propio (accesibilidad) |
-| D2 | ¿Modelos dentro de la imagen o en un volumen? | dentro para la Conselleria, volumen en desarrollo |
-| D3 | ¿Se publica la imagen (GitHub Container Registry) o cada uno la construye? | primero construirla en local; publicar cuando esté resuelta la licencia (7.4) |
-| D4 | ¿Interfaz en valenciano y castellano desde el principio? | sí |
-| D5 | Límite de texto por petición | 20.000 caracteres (a medir) |
-| D6 | ¿Subir `.docx` (conservando el formato) o solo `.txt`? | `.txt` en la primera versión; `.docx` después (más complejo) |
-| D7 | ¿Botón "Copiar" junto a la caja de salida? (lo único que se añadiría a las dos cajas) | por decidir; es habitual en los traductores y no explica nada del funcionamiento |
+| D1 | ~~¿FastAPI + HTML propio, o Gradio?~~ | **decidido (usuario, 04/11)**: FastAPI + HTML propio |
+| D2 | ~~¿Modelos dentro de la imagen o en un volumen?~~ | **decidido (usuario, 04/11)**: dentro de la imagen (funciona sin internet) |
+| D3 | ~~¿Se publica la imagen o cada uno la construye?~~ | **decidido (usuario, 04/11)**: se construye en local; no se publica hasta la revisión jurídica (D11) |
+| D4 | ~~¿Interfaz en valenciano y castellano desde el principio?~~ | **decidido (usuario, 04/11)**: sí, las dos |
+| D5 | Límite de texto por petición | 20.000 caracteres por defecto (`MAX_CARACTERS`; se toma la propuesta, a medir en la fase 4) |
+| D6 | ¿Subir `.docx` (conservando el formato) o solo `.txt`? | `.txt` en la primera versión (se toma la propuesta); `.docx` se decide en la fase 5 |
+| D7 | ~~¿Botón "Copiar" junto a la caja de salida?~~ | **decidido (usuario, 04/11)**: sí; anuncia "Copiat" en la región `aria-live` |
 | D8 | ~~¿Modo rápido visible?~~ | **decidido (usuario, 03/11)**: no; solo `AVLIZADOR_MODE` al desplegar |
 | D12 | ~~¿Mostrar palabras cambiadas, dudosas o GD al traducir?~~ | **decidido (usuario, 03/11)**: no; la pantalla de traducir solo da la traducción, el GD va en su pantalla |
-| D9 | ¿Rama propia para todo esto? | sí, `interfaz` desde `main` (este documento se mueve allí) |
+| D9 | ~~¿Rama propia para todo esto?~~ | **hecho (04/11)**: rama `interfaz` desde `main`, con este documento |
 | D10 | ¿Quién hace la prueba manual con lector de pantalla? | por decidir en el equipo |
 | D11 | ¿Quién revisa las licencias de la imagen (GPL-3.0 de spaCy en el mismo proceso, RAIL de FLOR) antes de publicarla? | el servicio jurídico de la Universidad; mientras tanto, solo construcción en local (7.5) |
 
@@ -612,3 +614,96 @@ Castellano:
   y el interruptor de modo (D8 y D12 decididos; D7 pasa a ser el botón
   "Copiar"). `POST /api/tradueix` devuelve solo `{traduccio}`. El GD,
   en su pantalla.
+- 04/11/2026: rama `interfaz` (desde `main`, con este documento).
+  Decididos D1 (FastAPI + HTML propio), D2 (modelos dentro de la
+  imagen), D3 (construir en local, no publicar), D4 (valenciano y
+  castellano), D7 (botón "Copiar"); D5 y D6 con la propuesta. **Fase 1
+  hecha**: subpaquete `src/avlizador/web/` (`main.py`, `idiomes.py`
+  = registro de pares, `missatges.py` = mensajes en las dos lenguas,
+  elegidas con `?idioma=` o `Accept-Language`), orden `avlizador web`
+  (uvicorn sin log de acceso, un proceso), extra `[web]` (FastAPI +
+  uvicorn; httpx en `dev`). Además de lo previsto: el error de
+  validación (422) y el cuerpo no JSON (400) responden con nuestro
+  mensaje y **sin repetir el texto** (la respuesta por defecto de
+  FastAPI lo devuelve en `input`); `/api/gd` calcula GD, GDV y GDC con
+  una sola pasada de spaCy (prueba de que coinciden con `calcula_gdv` y
+  `calcula_gdc`); cabeceras de seguridad (CSP, `nosniff`,
+  `no-referrer`); `/docs` apagado salvo `AVLIZADOR_DOCS=1` (Swagger
+  carga JavaScript de un CDN). Pruebas: `tests/test_web.py` (13, modo
+  motor, con las dos fijas de la sección 9); suite completa en verde.
+  Probado en local con FLOR: arranca en ~13 s, "Un cop acabada…" →
+  "Una vegada acabada…" en ~3 s, sin ninguna línea de log por petición.
+  Aviso visto: sin `HF_HUB_OFFLINE=1`, transformers consulta Hugging Face
+  al arrancar (en la imagen va a 1, sección 7.1).
+- 04/11/2026: **fase 2 hecha** (falta la prueba manual con lector de
+  pantalla, D10). Página `GET /` en `web/plantilles/` (Jinja2, nuevo en
+  el extra `[web]`), `web/static/estil.css` y `traductor.js`; textos de
+  la interfaz y de la API en `web/textos/{ca-valencia,es}.json` (mismas
+  claves, comprobado en las pruebas). Funciona **sin JavaScript**
+  (`POST /`, formulario normal, mismos límites y semáforo que la API) y,
+  con él, traduce sin recargar, cuenta caracteres, avisa de lo que pasa
+  (`role="status"`: "S'està traduint…", a los 4 s "Encara s'està
+  traduint…", "Traducció feta.") y tiene el botón "Copiar" (D7; sin JS no
+  se muestra). Errores: el del campo (vacío, demasiado largo) junto a la
+  caja con `aria-invalid` y `aria-describedby`; los del servidor (429,
+  500, red) en la región `role="alert"`, siempre presente en el DOM.
+  Idioma de la interfaz con enlaces "Valencià | Castellano" (`lang`,
+  `hreflang`, `aria-current`) y galleta técnica `idioma`; `lang` de cada
+  caja según el par. El botón "Traduir" va bajo la caja de entrada: orden
+  de tabulación texto → Traduir → traducción → Copiar. **Comprobado en
+  Chrome** con `scripts/comprova_accessibilitat.py` (Playwright +
+  axe-core 4.10.2): 0 infracciones en valenciano y castellano, claro y
+  oscuro, y tras traducir; foco de 3 px; 320 y 640 px sin desplazamiento
+  horizontal; sin JS traduce. Contrastes de todos los pares de colores
+  calculados (mínimo 4,51:1 en bordes, 6,1:1 en texto). Pruebas
+  `tests/test_web_pagina.py` (12). **Bug real encontrado**: en Windows,
+  Python toma el tipo MIME del registro y servía `traductor.js` como
+  `text/plain`; con `nosniff` el navegador no lo ejecutaba. Se fijan los
+  tipos en `main.py` (y hay prueba). Pendiente: NVDA (Windows) y
+  VoiceOver (macOS), zoom real al 200/400 % y alto contraste de Windows
+  (la hoja ya tiene `forced-colors`).
+- 04/11/2026: **fase 3 hecha** (falta la prueba con lector de pantalla,
+  D10). (1) `resalta_html` accesible como en 6.5: clases
+  `paraula-valenciana`/`paraula-catalana` junto a `mk-occ`/`mk-or`,
+  texto oculto `visualment-amagat` (parámetro `text_lector=True`) y,
+  además de lo previsto, `etiquetes=` para el castellano ("(valenciano)",
+  "(catalán)"); doctests nuevos; subrayado continuo/de puntos y leyenda
+  también en el informe de `gd.py --html` y en `visor_gd.html`.
+  Contraste de los colores de siempre medido: 4,95-8,03:1. (2) Pantalla
+  `/gd` (sin JavaScript: formulario que vuelve a `#resultat`, sección
+  con `tabindex="-1"`): GD, GDV y GDC explicados con lenguaje claro y
+  con coma decimal, texto resaltado con leyenda y listas de palabras
+  valencianas y catalanas con el número de veces. (3) Página `/sobre`
+  (qué hace, cómo funciona, límites conocidos, privacidad, accesibilidad,
+  versión y licencias con remisión a `NOTICE`, sin afirmaciones legales).
+  Menú con las tres pantallas; el pie dice "El text que escrius…" (vale
+  para las dos pantallas). `scripts/comprova_accessibilitat.py` ampliado:
+  0 infracciones de axe en `/gd` (vacía y con resultado) y `/sobre`, en
+  valenciano y castellano, claro y oscuro; el resaltado se distingue sin
+  color (estilo de subrayado comprobado y captura en `forced-colors`);
+  las tres pantallas a 320 y 640 px sin desplazamiento horizontal.
+  Pruebas: 8 más en `tests/test_web_pagina.py`; suite completa 85 en
+  verde.
+- 04/11/2026: **fase 4, imagen construida (falta arrancarla y la prueba
+  sin red, las hace el usuario)**. `Dockerfile` en dos fases
+  (`python:3.12-slim`; torch instalado primero y solo desde el índice
+  de CPU, para que pip no elija el de PyPI con CUDA; usuario
+  `avlizador` sin root; `HEALTHCHECK` contra `/api/salut` con
+  `start-period` de 120 s), `docker/descarrega_flor.py` (FLOR-760M a la
+  revisión fija `d47b56bd…`, la de todas las mediciones, y `refs/main`
+  apuntando a ella para que cargue con `HF_HUB_OFFLINE=1`),
+  `.dockerignore` (solo `pyproject.toml`, README, `LICENSE`, `NOTICE`,
+  `src/` y `docker/`) y `docker-compose.yml` (variables de 7.1, puerto
+  solo en `127.0.0.1`, `read_only` + `tmpfs` `/tmp`, `cap_drop: ALL`,
+  `no-new-privileges`, 4 GB, `restart: unless-stopped`). Construida en
+  local (Docker 25.0.3): `avlizador:1.1.0`, **3,1 GB**, torch
+  `2.15.0+cpu`. `NOTICE` ampliado con el apartado "Imatge Docker" y las
+  versiones reales de la imagen (sacadas con `docker create` + `docker
+  cp`, sin arrancarla); la dependencia web también en la lista general.
+  README (valenciano y castellano): sección "Interfície web i Docker" /
+  "Interfaz web y Docker" con `docker save`/`load` para equipos sin
+  internet, tabla de variables (incluida `AVLIZADOR_DOCS`) y regla de
+  los núcleos, y el párrafo de licencias de la imagen.
+- 04/11/2026: el usuario arranca la imagen en su equipo y la da por
+  buena ("diría que funciona bien"). Falta la prueba en un equipo limpio
+  (sin el repositorio ni la caché de modelos) antes de la entrega.

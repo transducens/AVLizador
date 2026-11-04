@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block contingut %}
+<div class="encapcalat-pagina">
+  <h1>{{ t.titol_traduir }}</h1>
+  <p id="ajuda-text" class="intro">{{ t.ajuda_text }}</p>
+</div>
+
+<form id="traductor" class="traductor panell" method="post" action="/?idioma={{ idioma }}" novalidate
+      data-maxim="{{ maxim }}" data-idioma="{{ idioma }}">
+  <div class="fila-idiomes">
+    <div class="camp camp-idioma">
+      <label for="origen">{{ t.idioma_origen }}</label>
+      <select id="origen" name="origen">
+        {% for p in origens %}
+        <option value="{{ p.origen }}" {% if p.origen == origen %}selected{% endif %}>{{ p.nom_origen }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <span class="fletxa" aria-hidden="true">→</span>
+    <div class="camp camp-idioma">
+      <label for="desti">{{ t.idioma_desti }}</label>
+      <select id="desti" name="desti">
+        {% for p in parells if p.origen == origen %}
+        <option value="{{ p.desti }}" {% if p.desti == desti %}selected{% endif %}>{{ p.nom_desti }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div class="fila-caixes">
+    <div class="camp caixa">
+      <label for="text">{{ t.text_original }}</label>
+      <textarea id="text" name="text" rows="12" lang="{{ origen }}" spellcheck="false"
+                aria-describedby="ajuda-text comptador{% if error_camp %} error-text{% endif %}"
+                {% if error_camp %}aria-invalid="true"{% endif %}>
+{{ text }}</textarea>
+      <div class="barra-caixa">
+        <p id="comptador" class="comptador">{{ comptador }}</p>
+        <button type="submit" id="boto-traduir" class="boto">{{ t.traduir }}</button>
+      </div>
+      <p id="error-text" class="error" {% if not error_camp %}hidden{% endif %}>{{ error_camp or "" }}</p>
+    </div>
+    <span class="separador" aria-hidden="true"></span>
+    <div class="camp caixa">
+      <label for="traduccio">{{ t.traduccio }}</label>
+      <textarea id="traduccio" class="eixida" rows="12" lang="{{ desti }}" readonly>
+{{ traduccio }}</textarea>
+      <div class="barra-caixa barra-eixida">
+        <button type="button" id="copiar" class="boto boto-secundari" hidden>{{ t.copiar }}</button>
+      </div>
+    </div>
+  </div>
+
+  <p id="estat" class="estat" role="status" aria-live="polite">{{ estat or "" }}</p>
+  <div id="avisos" class="avisos" role="alert">{% if error %}<p>{{ error }}</p>{% endif %}</div>
+</form>
+
+<script type="application/json" id="dades-pagina">{{ dades_js | tojson }}</script>
+{% endblock %}
+{% block scripts %}<script src="/static/traductor.js" defer></script>{% endblock %}

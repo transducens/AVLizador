@@ -1,0 +1,11 @@
+# Només entra en el context de construcció el que necessita la imatge.
+*
+!pyproject.toml
+!README.md
+!LICENSE
+!NOTICE
+!src/
+!docker/
+**/__pycache__
+**/*.pyc
+src/*.egg-info
