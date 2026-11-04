@@ -15,7 +15,16 @@ milions de paràmetres: en fp32 ocupa ~14 GB, i les GPU d'Abaco en tenen
 
     python puntua_comet.py ../baseline_llm/resultats/*.json entrades/*.json
     python puntua_comet.py --limit 10 entrades/avlizador_1.1.0.json      # prova
-    python puntua_comet.py --sense-referencia ...                        # QE: només entrada + traducció
+    python puntua_comet.py --mode qe ...     # QE: només entrada (català) + traducció
+    python puntua_comet.py --mode ref ...    # només traducció + referència (sense l'original català)
+
+Modes (04/11/2026): `complet` (origen + traducció + referència, el de
+sempre), `qe` (sense referència) i `ref` (sense origen: així el "sense
+traduir" no té l'avantatge de ser idèntic a l'origen). Amb `qe` i `ref`
+s'afig el pseudo-sistema "referencia" (el valencià revisat com a
+traducció): en `qe`, el parell referència / "sense traduir" és el parell
+contrastiu valencià / català (en `ref` la referència es compara amb ella
+mateixa i només fa de control).
 
 Necessita `unbabel-comet` i torch amb CUDA (no el paquet avlizador), i
 haver acceptat les condicions de `Unbabel/XCOMET-XL` a Hugging Face amb
@@ -64,9 +73,21 @@ def mitjana(valors: list[float]) -> float | None:
     return round(sum(valors) / len(valors), 2) if valors else None
 
 
-def puntua(model, frases: list[dict], amb_referencia: bool, lot: int, gpus: int) -> list[dict]:
-    mostres = [{"src": f["entrada"], "mt": f["hipotesi"], **({"ref": f["referencia"]} if amb_referencia else {})}
-               for f in frases]
+def mostra(f: dict, mode: str) -> dict:
+    """
+    >>> f = {"entrada": "c", "hipotesi": "h", "referencia": "r"}
+    >>> mostra(f, "complet"), mostra(f, "qe"), mostra(f, "ref")
+    ({'src': 'c', 'mt': 'h', 'ref': 'r'}, {'src': 'c', 'mt': 'h'}, {'mt': 'h', 'ref': 'r'})
+    """
+    m = {} if mode == "ref" else {"src": f["entrada"]}
+    m["mt"] = f["hipotesi"]
+    if mode != "qe":
+        m["ref"] = f["referencia"]
+    return m
+
+
+def puntua(model, frases: list[dict], mode: str, lot: int, gpus: int) -> list[dict]:
+    mostres = [mostra(f, mode) for f in frases]
     eixida = model.predict(mostres, batch_size=lot, gpus=gpus, progress_bar=False)
     # `Prediction` és un dict; només XCOMET hi posa `metadata.error_spans`
     spans = (eixida.get("metadata") or {}).get("error_spans")
@@ -97,28 +118,38 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--precisio", choices=["fp32", "fp16", "bf16"], default="fp16")
     ap.add_argument("--lot", type=int, default=8, help="Frases per lot en la GPU.")
     ap.add_argument("--gpus", type=int, default=1, help="0 = CPU (molt lent amb XCOMET-XL).")
-    ap.add_argument("--sense-referencia", action="store_true", help="Mode QE: només entrada i traducció.")
+    ap.add_argument("--mode", choices=["complet", "qe", "ref"], default="complet",
+                    help="complet: origen+traducció+referència; qe: sense referència; ref: sense origen.")
+    ap.add_argument("--sense-referencia", action="store_true", help="Igual que --mode qe (compatibilitat).")
     ap.add_argument("--limit", type=int, help="Només les N primeres frases de cada fitxer (prova).")
     ap.add_argument("--eixida", type=Path, default=AQUI / "resultats")
     args = ap.parse_args(argv)
 
+    if args.sense_referencia:
+        args.mode = "qe"
     fitxers = [f for f in args.fitxers if "_limit" not in f.stem]
-    curt = args.model.split("/")[-1] + ("_qe" if args.sense_referencia else "") + (f"_limit{args.limit}" if args.limit else "")
+    curt = (args.model.split("/")[-1] + ("" if args.mode == "complet" else f"_{args.mode}")
+            + (f"_limit{args.limit}" if args.limit else ""))
     args.eixida.mkdir(parents=True, exist_ok=True)
     inici = time.time()
     print(f"Carregant {args.model} ({args.precisio})...", flush=True)
     model = carrega_model(args.model, args.precisio)
     print(f"  carregat en {time.time() - inici:.0f} s", flush=True)
 
-    files = []
-    for fitxer in fitxers:
-        nom, frases = llig(fitxer, args.limit)
+    entrades = [(f.stem, *llig(f, args.limit)) for f in fitxers]
+    if args.mode != "complet" and entrades:
+        frases0 = entrades[0][2]
+        entrades.insert(0, ("referencia", "Referencia valenciana (manual)",
+                            [{**f, "hipotesi": f["referencia"]} for f in frases0]))
+    files, per_clau = [], {}
+    for stem, nom, frases in entrades:
         t0 = time.time()
-        puntuades = puntua(model, frases, not args.sense_referencia, args.lot, args.gpus)
+        puntuades = puntua(model, frases, args.mode, args.lot, args.gpus)
+        per_clau[stem] = puntuades
         r = resum(puntuades)
-        (args.eixida / f"{fitxer.stem}__{curt}.json").write_text(json.dumps({
-            "sistema": nom, "fitxer": fitxer.name, "model": args.model, "precisio": args.precisio,
-            "amb_referencia": not args.sense_referencia, "timestamp": datetime.now().isoformat(timespec="seconds"),
+        (args.eixida / f"{stem}__{curt}.json").write_text(json.dumps({
+            "sistema": nom, "fitxer": f"{stem}.json", "model": args.model, "precisio": args.precisio,
+            "mode": args.mode, "amb_referencia": args.mode != "qe", "timestamp": datetime.now().isoformat(timespec="seconds"),
             "segons": round(time.time() - t0, 1), "resum": r, "resultats": puntuades,
         }, ensure_ascii=False, indent=1), encoding="utf-8")
         files.append((nom, r))
@@ -126,7 +157,7 @@ def main(argv: list[str] | None = None) -> int:
 
     files.sort(key=lambda x: -(x[1]["total"] or 0))
     linies = [f"## {datetime.now():%d/%m/%Y %H:%M} — {args.model} ({args.precisio}"
-              f"{', sense referència' if args.sense_referencia else ''})", "",
+              f", mode {args.mode})", "",
               "| Sistema | Mescla | BOE | AVL | Frases amb error |", "|---|---|---|---|---|"]
     def n(x):
         return "—" if x is None else x
@@ -134,6 +165,13 @@ def main(argv: list[str] | None = None) -> int:
     for nom, r in files:
         linies.append(f"| {nom} | {n(r['total'])} | {n(r['BOE'])} | {n(r['AVL'])} | "
                       f"{r.get('frases_amb_error', '—')}/{r['n']} |")
+    if args.mode == "qe" and "referencia" in per_clau and "copia" in per_clau:
+        cat = {p["id"]: p["comet"] for p in per_clau["copia"]}
+        dif = [p["comet"] - cat[p["id"]] for p in per_clau["referencia"] if p["id"] in cat]
+        linies += ["", "Parells contrastius, referència valenciana − català sense traduir: "
+                   f"guanya el valencià en {sum(d > 0.5 for d in dif)}, empat (±0,5) en "
+                   f"{sum(abs(d) <= 0.5 for d in dif)}, guanya el català en {sum(d < -0.5 for d in dif)}; "
+                   f"diferència mitjana {round(sum(dif) / len(dif), 2)} (n={len(dif)})."]
     taula = "\n".join(linies) + "\n"
     (args.eixida / f"resum__{curt}.md").write_text(taula, encoding="utf-8")
     print("\n" + taula)

@@ -81,6 +81,68 @@ scp -r nmartin@abaco:scrapeo/AVLizador/pipeline/03_seleccio_de_model/comet/resul
 - **Sin probar en local** (decisión del usuario): solo se comprobó el
   script con un modelo falso.
 
-## Resultados
+## Resultados (jobs 2682 de prueba y 2697 completo, 03/11/2026)
 
-*Pendiente.*
+Los dos jobs acabaron sin errores (GPU en uso, fp16; el `.err` solo trae
+avisos de Lightning). Unos 37 s por sistema. Tabla completa en
+`resultats/resum__XCOMET-XL.md`:
+
+| Sistema | Mezcla | BOE | AVL | Frases con error |
+|---|---|---|---|---|
+| **Sin traducir** (catalán tal cual) | **97,41** | 98,22 | 96,47 | 147/458 |
+| AVLizador 1.0.1 | 97,40 | 98,00 | 96,70 | 175/458 |
+| AVLizador 1.1.0 | 97,40 | 98,01 | 96,70 | 174/458 |
+| qwen3:14b | 97,37 | 98,18 | 96,43 | 162/458 |
+| llama3.1:8b | 97,32 | 98,13 | 96,37 | 152/458 |
+| Motor solo | 97,29 | 97,85 | 96,64 | 182/458 |
+| gemma4:12b … qwen2.5:14b | 97,19 … 93,26 | | | 184-347/458 |
+
+**Conclusión: XCOMET-XL no ve el dialecto y no sirve para evaluar esta
+tarea.** El "sin traducir" queda primero, empatado con AVLizador, y los
+LLM que casi no tocan el catalán (qwen3:14b, llama3.1:8b) quedan por
+delante del motor solo. Los datos:
+
+- **Casi no castiga las formas catalanas.** En el "sin traducir" hay 245
+  "aquest*" y solo marca 3 como error. Marca alguna vez "noi" (5),
+  "tenir" (3) y "seva/meva/teva" (1 cada una); el resto de los errores
+  que marca son preposiciones y artículos.
+- **Castiga el valenciano correcto.** AVLizador acierta exactamente la
+  referencia en 229 frases, y aun así XCOMET marca errores en 84 de
+  ellas. En 31 da menos de 95 y en 109 puntúa mejor el catalán sin
+  traducir que la traducción idéntica a la referencia. Marca como error
+  "vostés", "Orde", "servici", "tindre", "llavada", "abellix", "estes",
+  "xic/xics", "gastos"… Caso extremo: BM-AVL-012, idéntica a la
+  referencia, 64,75 (el catalán sin traducir, 74,23).
+- **Diferencia frase a frase entre AVLizador 1.1.0 y el "sin
+  traducir"**: −0,01 de media. AVLizador gana en 58 frases, el "sin
+  traducir" en 103 y hay 297 empates (±0,5).
+- La AVL puntúa más baja que el BOE en todos los sistemas: el texto es
+  más literario y más dialectal.
+
+En resumen, XCOMET mide si se conserva el significado y se fía de un
+valenciano "estándar" cercano al catalán. Para presentar resultados se
+quedan las métricas de superficie (exactas, BLEU, chrF, TER, WER) y el
+**GD/GDV/GDC**, que son las que separan a AVLizador del "sin traducir"
+(TER 5,57 frente a 15,76; GD 0,99 frente a 0,03). XCOMET puede servir,
+como mucho, de control de que una traducción no rompe el significado:
+ningún sistema nuestro baja de los LLM malos en eso.
+
+### Siguiente: dos modos más y pares contrastivos (04/11/2026, petición del supervisor)
+
+Para separar el problema del modelo del de cómo se le plantea la tarea,
+`puntua_comet.py` tiene ahora `--mode` (en el job, `MODE=`):
+
+- `MODE=ref`: traducción + referencia, **sin el original catalán**. Así el
+  "sin traducir" deja de tener ventaja por ser idéntico al origen.
+- `MODE=qe`: origen + traducción, sin referencia (estimación de calidad).
+  Se añade la **referencia valenciana como un sistema más**: el par
+  referencia / "sin traducir" es el par contrastivo valenciano / catalán
+  de cada frase, y el resumen dice en cuántas gana el valenciano.
+
+XCOMET no tiene un modo de "solo la traducción". Para eso está el juez
+LLM de `../jutge_llm/` (GEMBA-ESA con Qwen 3.6 o Gemma 4, del WMT26).
+
+```bash
+MODE=ref sbatch comet.sh
+MODE=qe sbatch comet.sh
+```

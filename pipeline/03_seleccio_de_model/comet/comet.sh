@@ -12,7 +12,8 @@
 #   LIMIT=10 sbatch comet.sh     # prova ràpida: 10 frases per sistema
 #   sbatch comet.sh              # tot
 #   PRECISIO=fp32 sbatch comet.sh   # si fp16 dona problemes (cal GPU de 16 GB)
-#   QE=1 sbatch comet.sh         # sense referència (només entrada + traducció)
+#   MODE=qe sbatch comet.sh      # sense referència (només entrada + traducció)
+#   MODE=ref sbatch comet.sh     # sense origen (només traducció + referència)
 # Resultats: resultats/ (un JSON per sistema + resum__*.md); baixar-los amb
 # scp (vore README.md). Logs: logs/.
 #
@@ -63,7 +64,8 @@ fi
 
 OPCIONS=(--precisio "${PRECISIO:-fp16}" --lot "${LOT:-8}")
 [[ -n "${LIMIT:-}" ]] && OPCIONS+=(--limit "$LIMIT")
-[[ -n "${QE:-}" ]] && OPCIONS+=(--sense-referencia)
+[[ -n "${QE:-}" ]] && OPCIONS+=(--mode qe)
+[[ -n "${MODE:-}" ]] && OPCIONS+=(--mode "$MODE")
 
 cd "$SCRIPT_DIR"
 "$VENV/bin/python" puntua_comet.py "${OPCIONS[@]}" \
