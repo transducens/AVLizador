@@ -101,15 +101,56 @@ with sync_playwright() as p:
     page.screenshot(path=str(OUT / "error_buit.png"), full_page=True)
     ctx.close()
 
+    # Grau Dialectal i "Sobre" (fase 3)
+    TEXT_GD = "El xiquet jugava amb el nen del veí. Hui els xiquets han eixit prompte."
+    for esquema in ("light", "dark"):
+        for idioma in ("ca-valencia", "es"):
+            ctx = nav.new_context(bypass_csp=True, color_scheme=esquema, viewport={"width": 1280, "height": 900})
+            page = ctx.new_page()
+            page.goto(f"{URL}/gd?idioma={idioma}")
+            axe(page, f"GD buida, {idioma}, {esquema}")
+            page.fill("#text", TEXT_GD)
+            page.click("button[type=submit]")
+            page.wait_for_selector("#resultat")
+            axe(page, f"GD amb resultat, {idioma}, {esquema}")
+            page.screenshot(path=str(OUT / f"gd_{idioma}_{esquema}.png"), full_page=True)
+            page.goto(f"{URL}/sobre?idioma={idioma}")
+            axe(page, f"Sobre, {idioma}, {esquema}")
+            ctx.close()
+    ctx = nav.new_context(bypass_csp=True)
+    page = ctx.new_page()
+    page.goto(URL + "/gd?idioma=ca-valencia")
+    page.fill("#text", TEXT_GD)
+    page.click("button[type=submit]")
+    page.wait_for_selector("#resultat")
+    comprova(page.evaluate("() => document.activeElement.id") == "resultat"
+             or page.evaluate("() => location.hash") == "#resultat", "després de calcular es va al resultat")
+    estils = page.evaluate("""() => ['.text-marcat .paraula-valenciana', '.text-marcat .paraula-catalana'].map(
+        s => { const e = document.querySelector(s); const c = getComputedStyle(e);
+               return [c.textDecorationLine, c.textDecorationStyle, e.textContent]; })""")
+    comprova(estils[0][:2] == ["underline", "solid"] and estils[1][:2] == ["underline", "dotted"],
+             f"sense color també es distingixen: {estils}")
+    comprova(estils[0][2].endswith("(valencià)") and estils[1][2].endswith("(català)"),
+             "text ocult per al lector de pantalla")
+    page.emulate_media(forced_colors="active")
+    page.screenshot(path=str(OUT / "gd_alt_contrast.png"), full_page=True)
+    ctx.close()
+
     # 320 px d'amplària (equivalent al 400 % de zoom en 1280 px): sense desplaçament horitzontal
     for amplaria in (320, 640):
-        ctx = nav.new_context(bypass_csp=True, viewport={"width": amplaria, "height": 800})
-        page = ctx.new_page()
-        page.goto(URL + "/")
-        sw = page.evaluate("() => document.documentElement.scrollWidth")
-        comprova(sw <= amplaria, f"{amplaria} px: scrollWidth {sw}")
-        page.screenshot(path=str(OUT / f"estreta_{amplaria}.png"), full_page=True)
-        ctx.close()
+        for ruta in ("/", "/gd", "/sobre"):
+            ctx = nav.new_context(bypass_csp=True, viewport={"width": amplaria, "height": 800})
+            page = ctx.new_page()
+            page.goto(URL + ruta)
+            if ruta == "/gd":
+                page.fill("#text", TEXT_GD)
+                page.click("button[type=submit]")
+                page.wait_for_selector("#resultat")
+            sw = page.evaluate("() => document.documentElement.scrollWidth")
+            comprova(sw <= amplaria, f"{ruta} a {amplaria} px: scrollWidth {sw}")
+            nom = ruta.strip("/") or "inici"
+            page.screenshot(path=str(OUT / f"estreta_{nom}_{amplaria}.png"), full_page=True)
+            ctx.close()
 
     # Sense JavaScript: el formulari funciona igualment
     ctx = nav.new_context(bypass_csp=True, java_script_enabled=False)

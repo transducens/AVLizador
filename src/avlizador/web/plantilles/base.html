@@ -27,6 +27,8 @@
     <nav class="principal amplada" aria-label="{{ t.nav_principal }}">
       <ul>
         <li><a href="/" {% if pagina == "traduir" %}aria-current="page"{% endif %}>{{ t.nav_traduir }}</a></li>
+        <li><a href="/gd" {% if pagina == "gd" %}aria-current="page"{% endif %}>{{ t.nav_gd }}</a></li>
+        <li><a href="/sobre" {% if pagina == "sobre" %}aria-current="page"{% endif %}>{{ t.nav_sobre }}</a></li>
       </ul>
     </nav>
   </header>

@@ -24,8 +24,78 @@
   "res_per_copiar": "Encara no hi ha cap traducció per a copiar.",
   "text_buit": "Escriu un text per a traduir.",
   "error_xarxa": "No s'ha pogut connectar amb el servidor. Comprova la connexió i torna-ho a intentar.",
-  "privacitat": "El text que traduïxes no es guarda ni es registra en cap lloc.",
+  "privacitat": "El text que escrius no es guarda ni es registra en cap lloc.",
   "versio": "Versió {versio}",
+  "nav_gd": "Grau Dialectal",
+  "nav_sobre": "Sobre AVLizador",
+  "titol_pagina_gd": "Grau Dialectal: AVLizador",
+  "titol_gd": "Grau Dialectal d'un text",
+  "intro_gd": "Mesura fins a quin punt un text està escrit en valencià o en català, a partir de les paraules que tenen una forma pròpia en cada varietat (per exemple, «xiquet» i «nen»).",
+  "text_gd": "Text que vols analitzar",
+  "ajuda_gd": "Escriu o apega un text en valencià o en català.",
+  "calcular": "Calcular",
+  "text_buit_gd": "Escriu un text per a analitzar.",
+  "resultat": "Resultat",
+  "gd_nom": "Grau Dialectal (GD)",
+  "gd_expl": "De 0 a 1. Compta només les paraules marcades: 1 vol dir que totes són valencianes, i 0, que totes són catalanes.",
+  "gd_sense": "No es pot calcular: el text no té cap paraula marcada.",
+  "gdv_nom": "Grau Dialectal Valencià (GDV)",
+  "gdv_expl": "De 0 a 1. Compta totes les paraules, també les comunes a les dues varietats: 1 vol dir que no n'hi ha cap de catalana.",
+  "gdc_nom": "Grau Dialectal Català (GDC)",
+  "gdc_expl": "De 0 a 1, com el GDV però al revés: 1 vol dir que no hi ha cap paraula valenciana.",
+  "recompte": "{total} paraules, de les quals {marcades} marcades.",
+  "text_marcat": "Text amb les paraules marcades",
+  "llegenda": "Llegenda",
+  "llegenda_val": "paraula valenciana (subratllat continu)",
+  "llegenda_cat": "paraula catalana (subratllat de punts)",
+  "etiqueta_val": "valencià",
+  "etiqueta_cat": "català",
+  "paraules_val": "Paraules valencianes ({n})",
+  "paraules_cat": "Paraules catalanes ({n})",
+  "cap_paraula": "Cap.",
+  "vegades": "{n} vegades",
+  "titol_pagina_sobre": "Sobre AVLizador",
+  "sobre": [
+    {
+      "titol": "Què fa",
+      "paragrafs": [
+        "AVLizador convertix un text en català (norma de l'Institut d'Estudis Catalans) en valencià segons la norma de l'Acadèmia Valenciana de la Llengua: canvia les paraules i les formes verbals que són diferents en cada varietat («aquest» → «este», «noi» → «xic», «serveix» → «servix»…) i deixa igual la resta. No traduïx entre idiomes diferents."
+      ]
+    },
+    {
+      "titol": "Com funciona",
+      "paragrafs": [
+        "Un motor de regles aplica els diccionaris de parells català–valencià recopilats pel projecte i l'anàlisi gramatical d'spaCy. Quan una paraula té més d'una traducció possible, un model de llengua (FLOR-760M) tria la que fa més natural la frase.",
+        "La pantalla del Grau Dialectal fa servir els mateixos diccionaris per a comptar quantes paraules marcades d'un text són valencianes i quantes catalanes."
+      ]
+    },
+    {
+      "titol": "Límits coneguts",
+      "paragrafs": [
+        "Algunes paraules amb diversos significats no sempre es resolen bé: per exemple, «nou» (fruit, nou o nombre) o «calces».",
+        "«Aquest» es convertix sempre en «este», encara que de vegades seria millor «eixe».",
+        "Convé revisar el resultat abans d'usar-lo en un document oficial."
+      ]
+    },
+    {
+      "titol": "Privacitat",
+      "paragrafs": [
+        "El text que escrius no es guarda ni es registra, i no s'envia a cap servei extern: es processa en el moment i s'oblida. L'única galeta que es fa servir guarda la llengua de la interfície."
+      ]
+    },
+    {
+      "titol": "Accessibilitat",
+      "paragrafs": [
+        "Esta interfície vol complir les pautes WCAG 2.2 de nivell AA. Es pot fer servir només amb el teclat i amb lectors de pantalla. La declaració d'accessibilitat la publica l'organisme que oferisca el servei."
+      ]
+    },
+    {
+      "titol": "Versió i llicències",
+      "paragrafs": [
+        "{versio}. Desenvolupat per Transducens (Universitat d'Alacant). El codi té la llicència Apache 2.0 i fa servir components de tercers amb altres llicències (el model d'spaCy ca_core_news_md, amb llicència GPL-3.0, i FLOR-760M, derivat de BLOOM amb la llicència RAIL): vegeu el fitxer NOTICE del projecte."
+      ]
+    }
+  ],
   "api": {
     "ocupat": "El servei està ocupat. Torna-ho a intentar en uns segons.",
     "massa_llarg": "El text és massa llarg: el màxim és de {maxim} caràcters i en té {n}.",

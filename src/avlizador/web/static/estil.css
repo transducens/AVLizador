@@ -16,6 +16,11 @@
   --error: #b3261e;
   --error-fons: #fdecea;
   --enllac: #0b5cad;
+  /* Ressaltat del GD (els mateixos colors que gd.py --html i visor_gd.html) */
+  --mk-occ-bg: #d7f3d9;
+  --mk-occ-text: #16652b;
+  --mk-or-bg: #ffe2c7;
+  --mk-or-text: #9c4b0a;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -32,6 +37,10 @@
     --error: #ff8a80;
     --error-fons: #3a1714;
     --enllac: #8cc2ff;
+    --mk-occ-bg: #163a22;
+    --mk-occ-text: #7fe39a;
+    --mk-or-bg: #4a2f16;
+    --mk-or-text: #f0a35e;
   }
 }
 
@@ -177,6 +186,71 @@ textarea[aria-invalid="true"] { border-color: var(--error); }
 }
 .avisos p { margin: 0; }
 
+/* Grau Dialectal */
+.intro { max-width: 48rem; margin: 0 0 1.25rem; }
+.formulari-gd { max-width: 48rem; }
+.resultat { margin-top: 2rem; }
+.resultat:focus { outline: none; }
+h2 { font-size: 1.375rem; margin: 0 0 0.75rem; }
+h3 { font-size: 1.125rem; margin: 1.5rem 0 0.5rem; }
+
+.indexs {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  margin: 1rem 0;
+}
+@media (min-width: 48rem) { .indexs { grid-template-columns: repeat(3, 1fr); } }
+.index {
+  border: 1px solid var(--vora);
+  border-radius: 0.25rem;
+  background: var(--superficie);
+  padding: 0.75rem 1rem;
+}
+.index dt { font-weight: 700; }
+.index dd { margin: 0; }
+.index .valor { font-size: 2rem; font-weight: 700; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+/* Paraules marcades: color + subratllat (continu = valencià, de punts =
+   català) perquè el color no siga l'única senyal (WCAG 1.4.1). No canvien
+   en passar-hi el ratolí: no són enllaços. */
+.paraula-valenciana, .paraula-catalana {
+  padding: 0 0.125rem;
+  border-radius: 0.125rem;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+  cursor: auto;
+}
+.paraula-valenciana {
+  background-color: var(--mk-occ-bg);
+  color: var(--mk-occ-text);
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+}
+.paraula-catalana {
+  background-color: var(--mk-or-bg);
+  color: var(--mk-or-text);
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+}
+.llegenda { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin: 0 0 0.75rem; }
+.mostra-llegenda { padding: 0.125rem 0.375rem; }
+.text-marcat {
+  border: 1px solid var(--vora);
+  border-radius: 0.25rem;
+  padding: 0.75rem 1rem;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+.llistes { display: grid; gap: 0 1.5rem; grid-template-columns: 1fr; }
+@media (min-width: 48rem) { .llistes { grid-template-columns: 1fr 1fr; } }
+.llistes ul { margin: 0; padding-left: 1.25rem; }
+.vegades { color: var(--suau); }
+
+/* Sobre */
+.sobre { max-width: 48rem; }
+.sobre section + section { margin-top: 1.5rem; }
+
 /* Peu */
 .peu { border-top: 1px solid var(--vora); background: var(--superficie); color: var(--suau); }
 .peu p { margin: 0.5rem 0; }
@@ -197,5 +271,7 @@ textarea[aria-invalid="true"] { border-color: var(--error); }
 /* Mode d'alt contrast de Windows: les vores i el focus es mantenen. */
 @media (forced-colors: active) {
   .boto, select, textarea { border: 2px solid ButtonText; }
+  /* Sense colors, el subratllat continu / de punts continua distingint-les. */
+  .paraula-valenciana, .paraula-catalana { forced-color-adjust: auto; }
   :focus-visible { outline: 3px solid Highlight; }
 }

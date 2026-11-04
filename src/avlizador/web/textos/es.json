@@ -24,8 +24,78 @@
   "res_per_copiar": "Todavía no hay ninguna traducción que copiar.",
   "text_buit": "Escribe un texto para traducir.",
   "error_xarxa": "No se ha podido conectar con el servidor. Comprueba la conexión y vuelve a intentarlo.",
-  "privacitat": "El texto que traduces no se guarda ni se registra en ningún sitio.",
+  "privacitat": "El texto que escribes no se guarda ni se registra en ningún sitio.",
   "versio": "Versión {versio}",
+  "nav_gd": "Grado Dialectal",
+  "nav_sobre": "Acerca de AVLizador",
+  "titol_pagina_gd": "Grado Dialectal: AVLizador",
+  "titol_gd": "Grado Dialectal de un texto",
+  "intro_gd": "Mide hasta qué punto un texto está escrito en valenciano o en catalán, a partir de las palabras que tienen una forma propia en cada variedad (por ejemplo, «xiquet» y «nen»).",
+  "text_gd": "Texto que quieres analizar",
+  "ajuda_gd": "Escribe o pega un texto en valenciano o en catalán.",
+  "calcular": "Calcular",
+  "text_buit_gd": "Escribe un texto para analizar.",
+  "resultat": "Resultado",
+  "gd_nom": "Grado Dialectal (GD)",
+  "gd_expl": "De 0 a 1. Cuenta solo las palabras marcadas: 1 significa que todas son valencianas, y 0, que todas son catalanas.",
+  "gd_sense": "No se puede calcular: el texto no tiene ninguna palabra marcada.",
+  "gdv_nom": "Grado Dialectal Valenciano (GDV)",
+  "gdv_expl": "De 0 a 1. Cuenta todas las palabras, también las comunes a las dos variedades: 1 significa que no hay ninguna catalana.",
+  "gdc_nom": "Grado Dialectal Catalán (GDC)",
+  "gdc_expl": "De 0 a 1, como el GDV pero al revés: 1 significa que no hay ninguna palabra valenciana.",
+  "recompte": "{total} palabras, de las cuales {marcades} marcadas.",
+  "text_marcat": "Texto con las palabras marcadas",
+  "llegenda": "Leyenda",
+  "llegenda_val": "palabra valenciana (subrayado continuo)",
+  "llegenda_cat": "palabra catalana (subrayado de puntos)",
+  "etiqueta_val": "valenciano",
+  "etiqueta_cat": "catalán",
+  "paraules_val": "Palabras valencianas ({n})",
+  "paraules_cat": "Palabras catalanas ({n})",
+  "cap_paraula": "Ninguna.",
+  "vegades": "{n} veces",
+  "titol_pagina_sobre": "Acerca de AVLizador",
+  "sobre": [
+    {
+      "titol": "Qué hace",
+      "paragrafs": [
+        "AVLizador convierte un texto en catalán (norma del Institut d'Estudis Catalans) en valenciano según la norma de la Acadèmia Valenciana de la Llengua: cambia las palabras y las formas verbales que son distintas en cada variedad («aquest» → «este», «noi» → «xic», «serveix» → «servix»…) y deja igual el resto. No traduce entre idiomas distintos."
+      ]
+    },
+    {
+      "titol": "Cómo funciona",
+      "paragrafs": [
+        "Un motor de reglas aplica los diccionarios de pares catalán–valenciano recopilados por el proyecto y el análisis gramatical de spaCy. Cuando una palabra tiene más de una traducción posible, un modelo de lenguaje (FLOR-760M) elige la que hace más natural la frase.",
+        "La pantalla del Grado Dialectal usa los mismos diccionarios para contar cuántas palabras marcadas de un texto son valencianas y cuántas catalanas."
+      ]
+    },
+    {
+      "titol": "Límites conocidos",
+      "paragrafs": [
+        "Algunas palabras con varios significados no siempre se resuelven bien: por ejemplo, «nou» (nuez, nuevo o nueve) o «calces».",
+        "«Aquest» se convierte siempre en «este», aunque a veces sería mejor «eixe».",
+        "Conviene revisar el resultado antes de usarlo en un documento oficial."
+      ]
+    },
+    {
+      "titol": "Privacidad",
+      "paragrafs": [
+        "El texto que escribes no se guarda ni se registra, y no se envía a ningún servicio externo: se procesa en el momento y se olvida. La única cookie que se usa guarda el idioma de la interfaz."
+      ]
+    },
+    {
+      "titol": "Accesibilidad",
+      "paragrafs": [
+        "Esta interfaz quiere cumplir las pautas WCAG 2.2 de nivel AA. Se puede usar solo con el teclado y con lectores de pantalla. La declaración de accesibilidad la publica el organismo que ofrezca el servicio."
+      ]
+    },
+    {
+      "titol": "Versión y licencias",
+      "paragrafs": [
+        "{versio}. Desarrollado por Transducens (Universidad de Alicante). El código tiene la licencia Apache 2.0 y usa componentes de terceros con otras licencias (el modelo de spaCy ca_core_news_md, con licencia GPL-3.0, y FLOR-760M, derivado de BLOOM con la licencia RAIL): ver el fichero NOTICE del proyecto."
+      ]
+    }
+  ],
   "api": {
     "ocupat": "El servicio está ocupado. Vuelve a intentarlo en unos segundos.",
     "massa_llarg": "El texto es demasiado largo: el máximo es de {maxim} caracteres y tiene {n}.",

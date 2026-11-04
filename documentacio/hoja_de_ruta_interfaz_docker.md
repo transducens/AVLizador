@@ -561,7 +561,7 @@ Castellano:
 | 0 | Decidir las preguntas de la sección 11 | tabla rellena (**hecho 04/11**, quedan D10 y D11) |
 | 1 | API FastAPI (`/api/idiomes`, `/api/tradueix`, `/api/gd`, salud y versión) con el registro de pares de idiomas, y sus pruebas | `pytest` en verde (**hecho 04/11**, ver registro) |
 | 2 | Página de traducir, accesible, valenciano/castellano | pasa axe y el recorrido con teclado y NVDA (**hecho 04/11 salvo NVDA/VoiceOver**, D10) |
-| 3 | Pantalla de GD y "Sobre"; `resalta_html` accesible (6.5) | ídem, y el resaltado se entiende sin color |
+| 3 | Pantalla de GD y "Sobre"; `resalta_html` accesible (6.5) | ídem, y el resaltado se entiende sin color (**hecho 04/11 salvo NVDA/VoiceOver**, D10) |
 | 4 | Dockerfile + compose + healthcheck con las variables de entorno (7.1); prueba sin red; avisos de licencias en `NOTICE` y los README (7.5); sección de variables en los README | `docker compose up` funciona en un equipo limpio; las versiones de `NOTICE` y las variables de los README coinciden con la imagen |
 | 5 | Subir ficheros (`.txt`, quizá `.docx`) | ídem |
 | 6 | Documentación de instalación para la Conselleria + declaración de accesibilidad (plantilla) | revisado por el equipo |
@@ -662,3 +662,25 @@ Castellano:
   tipos en `main.py` (y hay prueba). Pendiente: NVDA (Windows) y
   VoiceOver (macOS), zoom real al 200/400 % y alto contraste de Windows
   (la hoja ya tiene `forced-colors`).
+- 04/11/2026: **fase 3 hecha** (falta la prueba con lector de pantalla,
+  D10). (1) `resalta_html` accesible como en 6.5: clases
+  `paraula-valenciana`/`paraula-catalana` junto a `mk-occ`/`mk-or`,
+  texto oculto `visualment-amagat` (parámetro `text_lector=True`) y,
+  además de lo previsto, `etiquetes=` para el castellano ("(valenciano)",
+  "(catalán)"); doctests nuevos; subrayado continuo/de puntos y leyenda
+  también en el informe de `gd.py --html` y en `visor_gd.html`.
+  Contraste de los colores de siempre medido: 4,95-8,03:1. (2) Pantalla
+  `/gd` (sin JavaScript: formulario que vuelve a `#resultat`, sección
+  con `tabindex="-1"`): GD, GDV y GDC explicados con lenguaje claro y
+  con coma decimal, texto resaltado con leyenda y listas de palabras
+  valencianas y catalanas con el número de veces. (3) Página `/sobre`
+  (qué hace, cómo funciona, límites conocidos, privacidad, accesibilidad,
+  versión y licencias con remisión a `NOTICE`, sin afirmaciones legales).
+  Menú con las tres pantallas; el pie dice "El text que escrius…" (vale
+  para las dos pantallas). `scripts/comprova_accessibilitat.py` ampliado:
+  0 infracciones de axe en `/gd` (vacía y con resultado) y `/sobre`, en
+  valenciano y castellano, claro y oscuro; el resaltado se distingue sin
+  color (estilo de subrayado comprobado y captura en `forced-colors`);
+  las tres pantallas a 320 y 640 px sin desplazamiento horizontal.
+  Pruebas: 8 más en `tests/test_web_pagina.py`; suite completa 85 en
+  verde.

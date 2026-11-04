@@ -107,3 +107,60 @@ def test_comptador_amb_milers(idioma):
     with client() as c:
         html = c.get(f"/?idioma={idioma}").text
     assert "0 de 20.000 car" in html
+
+
+# --- Fase 3: Grau Dialectal i "Sobre" ----------------------------------------
+
+def test_menu_amb_les_tres_pantalles():
+    with client() as c:
+        html = c.get("/gd").text
+    assert 'href="/gd" aria-current="page"' in html
+    assert 'href="/"' in html and 'href="/sobre"' in html
+
+
+def test_gd_calcula_i_marca_sense_dependre_del_color():
+    with client() as c:
+        html = c.post("/gd", data={"text": "El xiquet jugava amb el nen. El nen del veí."}).text
+    assert 'id="resultat"' in html and 'tabindex="-1"' in html
+    # GD = 1 occidental / 3 marcades; GDV i GDC amb coma decimal
+    assert ">0,3333<" in html
+    assert 'class="mk-occ paraula-valenciana">xiquet<span class="visualment-amagat"> (valencià)</span>' in html
+    assert 'class="mk-or paraula-catalana">nen<span class="visualment-amagat"> (català)</span>' in html
+    assert "subratllat continu" in html and "subratllat de punts" in html
+    assert "Paraules catalanes (2)" in html and "(2 vegades)" in html
+
+
+def test_gd_en_castella():
+    with client() as c:
+        html = c.post("/gd?idioma=es", data={"text": "El xiquet i el nen."}).text
+    assert '<span class="visualment-amagat"> (valenciano)</span>' in html
+    assert "Grado Dialectal Valenciano (GDV)" in html
+
+
+def test_gd_sense_paraules_marcades():
+    with client() as c:
+        html = c.post("/gd", data={"text": "La casa és gran."}).text
+    assert "No es pot calcular: el text no té cap paraula marcada." in html
+    assert "Cap." in html
+
+
+def test_gd_errors_del_camp():
+    with client(max_caracters=5) as c:
+        buit = c.post("/gd", data={"text": " "})
+        llarg = c.post("/gd", data={"text": "abcdefgh"})
+    assert 'aria-invalid="true"' in buit.text and "Escriu un text per a analitzar." in buit.text
+    assert llarg.status_code == 413 and "el màxim és de 5 caràcters" in llarg.text
+
+
+def test_gd_escapa_el_text():
+    with client() as c:
+        html = c.post("/gd", data={"text": "<b>nen</b>"}).text
+    assert "<b>nen" not in html and "&lt;b&gt;" in html
+
+
+@pytest.mark.parametrize("idioma,titol", [("ca-valencia", "Límits coneguts"), ("es", "Límites conocidos")])
+def test_sobre(idioma, titol):
+    with client() as c:
+        html = c.get(f"/sobre?idioma={idioma}").text
+    assert titol in html and "NOTICE" in html and "1.1.0" in html
+    assert html.count("<h1") == 1 and 'href="/sobre" aria-current="page"' in html

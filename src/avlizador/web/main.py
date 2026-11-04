@@ -26,6 +26,7 @@ import logging
 import mimetypes
 import os
 import re
+from collections import Counter
 from contextlib import asynccontextmanager
 from dataclasses import dataclass, field
 from importlib.metadata import PackageNotFoundError, version
@@ -37,6 +38,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+from markupsafe import Markup
 from pydantic import BaseModel
 from starlette.concurrency import run_in_threadpool
 from starlette.exceptions import HTTPException as StarletteHTTPException
@@ -156,6 +158,18 @@ def resum_gd(text: str) -> dict:
         "total_paraules": total,
         "total_marcades": r["total_marcades"],
     }
+
+
+def format_index(valor: float | None) -> str | None:
+    """Un índex amb coma decimal i sense zeros sobrants (com s'escriu en
+    valencià i en castellà).
+
+    >>> format_index(1.0), format_index(0.875), format_index(0.12345), format_index(None)
+    ('1', '0,875', '0,1235', None)
+    """
+    if valor is None:
+        return None
+    return f"{valor:.4f}".rstrip("0").rstrip(".").replace(".", ",")
 
 
 def _versio(paquet: str) -> str | None:
@@ -290,6 +304,23 @@ def create_app(config: Configuracio | None = None,
 
     # --- Pàgines -------------------------------------------------------------
 
+    def renderitza(request: Request, plantilla: str, pagina: str, codi: int = 200, **context) -> HTMLResponse:
+        """El que comparten totes les pàgines: textos, llengua, menú, versió i
+        la galeta tècnica de la llengua."""
+        idioma = idioma_de(request)
+        t = textos(idioma)
+        html = plantilles.get_template(plantilla).render(
+            t=t, idioma=idioma, pagina=pagina, versio=t["versio"].format(versio=__version__),
+            llengues=[(c, textos(c)["nom_llengua"]) for c in IDIOMES_INTERFICIE], **context)
+        resposta = HTMLResponse(html, status_code=codi)
+        if request.query_params.get("idioma") in IDIOMES_INTERFICIE:
+            # Galeta tècnica (només la llengua triada): no cal avís de galetes.
+            resposta.set_cookie("idioma", idioma, max_age=365 * 24 * 3600, httponly=True, samesite="lax")
+        return resposta
+
+    def comptador(t: dict, text: str) -> str:
+        return t["comptador"].format(n=nombre(len(text)), maxim=nombre(config.max_caracters))
+
     def pagina_traduir(request: Request, codi: int = 200, text: str = "", traduccio: str = "",
                        origen: str | None = None, desti: str | None = None, error: str | None = None,
                        error_camp: str | None = None, avis_estat: str | None = None) -> HTMLResponse:
@@ -301,18 +332,12 @@ def create_app(config: Configuracio | None = None,
         desti = desti if desti in destins else destins[0]
         dades_js = {"textos": {c: t[c] for c in CLAUS_JS} | {"massa_llarg": t["api"]["massa_llarg"]},
                     "maxim": config.max_caracters, "idioma": idioma, "parells": parells}
-        html = plantilles.get_template("traduir.html").render(
-            t=t, idioma=idioma, pagina="traduir", versio=t["versio"].format(versio=__version__),
-            llengues=[(c, textos(c)["nom_llengua"]) for c in IDIOMES_INTERFICIE],
+        return renderitza(
+            request, "traduir.html", "traduir", codi,
             origens=list({p["origen"]: p for p in parells}.values()), parells=parells,
             origen=origen, desti=desti, text=text, traduccio=traduccio, maxim=config.max_caracters,
-            comptador=t["comptador"].format(n=nombre(len(text)), maxim=nombre(config.max_caracters)),
-            error=error, error_camp=error_camp, estat=avis_estat, dades_js=dades_js)
-        resposta = HTMLResponse(html, status_code=codi)
-        if request.query_params.get("idioma") in IDIOMES_INTERFICIE:
-            # Galeta tècnica (només la llengua triada): no cal avís de galetes.
-            resposta.set_cookie("idioma", idioma, max_age=365 * 24 * 3600, httponly=True, samesite="lax")
-        return resposta
+            comptador=comptador(t, text), error=error, error_camp=error_camp, estat=avis_estat,
+            dades_js=dades_js)
 
     @app.get("/", response_class=HTMLResponse)
     async def inici(request: Request):
@@ -338,6 +363,55 @@ def create_app(config: Configuracio | None = None,
                 return pagina_traduir(request, e.codi, text, "", origen, desti, error_camp=msg)
             return pagina_traduir(request, e.codi, text, "", origen, desti, error=msg)
         return pagina_traduir(request, 200, text, traduccio, origen, desti, avis_estat=t["traduccio_feta"])
+
+    def pagina_gd(request: Request, codi: int = 200, text: str = "", resultat: dict | None = None,
+                  error: str | None = None, error_camp: str | None = None) -> HTMLResponse:
+        t = textos(idioma_de(request))
+        return renderitza(request, "gd.html", "gd", codi, text=text, comptador=comptador(t, text),
+                          resultat=resultat, error=error, error_camp=error_camp)
+
+    def resultat_gd(text: str, t: dict) -> dict:
+        """GD, GDV i GDC, el text amb les paraules marcades i les llistes,
+        preparats per a la plantilla. `resalta_html` escapa el text."""
+        from ..grau_dialectal.gd import resalta_html
+
+        r = resum_gd(text)
+        html = resalta_html(text, etiquetes=(t["etiqueta_val"], t["etiqueta_cat"]))
+        return {
+            "gd": format_index(r["gd"]), "gdv": format_index(r["gdv"]), "gdc": format_index(r["gdc"]),
+            "recompte": t["recompte"].format(total=nombre(r["total_paraules"]),
+                                             marcades=nombre(r["total_marcades"])),
+            "html": Markup(html.replace("\n", "<br>\n")),
+            "val": list(Counter(r["marcadors_occidentals"]).items()),
+            "cat": list(Counter(r["marcadors_orientals"]).items()),
+            "n_val": len(r["marcadors_occidentals"]), "n_cat": len(r["marcadors_orientals"]),
+        }
+
+    @app.get("/gd", response_class=HTMLResponse)
+    async def gd_pagina(request: Request):
+        return pagina_gd(request)
+
+    @app.post("/gd", response_class=HTMLResponse)
+    async def gd_formulari(request: Request):
+        camps = parse_qs((await request.body()).decode("utf-8", errors="replace"), keep_blank_values=True)
+        text = camps.get("text", [""])[0]
+        idioma = idioma_de(request)
+        t = textos(idioma)
+        if not text.strip():
+            return pagina_gd(request, 200, text, error_camp=t["text_buit_gd"])
+        try:
+            comprova_longitud(text)
+            resultat = await run_in_threadpool(resultat_gd, text, t)
+        except ErrorPeticio as e:
+            return pagina_gd(request, e.codi, text, error_camp=missatge(idioma, e.clau, **e.valors))
+        except Exception as e:  # noqa: BLE001 -- es registra sense el text
+            log.error("Error en calcular el GD: %s, %d caràcters.", type(e).__name__, len(text))
+            return pagina_gd(request, 500, text, error=missatge(idioma, "error_gd"))
+        return pagina_gd(request, 200, text, resultat)
+
+    @app.get("/sobre", response_class=HTMLResponse)
+    async def sobre(request: Request):
+        return renderitza(request, "sobre.html", "sobre")
 
     # --- API -----------------------------------------------------------------
 
