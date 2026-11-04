@@ -66,7 +66,7 @@ with sync_playwright() as p:
     page = ctx.new_page()
     page.goto(URL + "/?idioma=ca-valencia")
     ordre = []
-    for _ in range(12):
+    for _ in range(16):
         page.keyboard.press("Tab")
         ordre.append(page.evaluate("() => { const e = document.activeElement; "
                                    "return e.id || e.textContent.trim().slice(0, 20) || e.tagName; }"))

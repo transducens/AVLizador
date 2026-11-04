@@ -1,14 +1,20 @@
 /* AVLizador: estils de la interfície (WCAG 2.2 AA).
-   Contrastos (sobre --fons): --text i --suau >= 4,5:1; --vora i el focus
-   >= 3:1. Revisats en clar i en fosc. Sense animacions. */
+   Contrastos mesurats (scripts/comprova_accessibilitat.py i el càlcul de la
+   hoja de ruta): text >= 4,5:1 sobre el seu fons, vores dels camps i focus
+   >= 3:1, en mode clar i fosc. Sense animacions. */
 
 :root {
   color-scheme: light dark;
-  --fons: #ffffff;
-  --superficie: #f3f5f7;
-  --text: #1a1a1a;
-  --suau: #4a4f55;
-  --vora: #6b7178;
+  --fons: #f3f5f9;          /* fons de la pàgina */
+  --panell: #ffffff;        /* targetes */
+  --superficie: #eef2f7;    /* caixa de la traducció, índexs */
+  --text: #1a1d21;
+  --suau: #4a5260;
+  --vora: #6b7178;          /* vores dels camps (>= 3:1) */
+  --vora-suau: #d5dbe3;     /* vores decoratives de les targetes */
+  --marca: #0b3d73;         /* banda de la capçalera */
+  --marca-text: #ffffff;
+  --marca-suau: #c9d8ea;
   --primari: #0b5cad;
   --primari-text: #ffffff;
   --primari-hover: #084a8c;
@@ -16,6 +22,7 @@
   --error: #b3261e;
   --error-fons: #fdecea;
   --enllac: #0b5cad;
+  --ombra: 0 1px 2px rgba(16, 24, 40, 0.06), 0 6px 20px rgba(16, 24, 40, 0.07);
   /* Ressaltat del GD (els mateixos colors que gd.py --html i visor_gd.html) */
   --mk-occ-bg: #d7f3d9;
   --mk-occ-text: #16652b;
@@ -25,11 +32,16 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --fons: #121417;
-    --superficie: #1c2025;
+    --fons: #0f1216;
+    --panell: #171b21;
+    --superficie: #1f252d;
     --text: #eceff1;
     --suau: #b8bec4;
     --vora: #8a939b;
+    --vora-suau: #2c333d;
+    --marca: #0a2a52;
+    --marca-text: #f3f6fa;
+    --marca-suau: #b9cbe3;
     --primari: #6cb0ff;
     --primari-text: #0b1a2b;
     --primari-hover: #9cc9ff;
@@ -37,6 +49,7 @@
     --error: #ff8a80;
     --error-fons: #3a1714;
     --enllac: #8cc2ff;
+    --ombra: 0 1px 2px rgba(0, 0, 0, 0.4), 0 6px 20px rgba(0, 0, 0, 0.35);
     --mk-occ-bg: #163a22;
     --mk-occ-text: #7fe39a;
     --mk-or-bg: #4a2f16;
@@ -50,6 +63,9 @@ html { font-size: 100%; }
 
 body {
   margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: var(--fons);
   color: var(--text);
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
@@ -57,7 +73,8 @@ body {
   line-height: 1.5;
 }
 
-.amplada { max-width: 72rem; margin: 0 auto; padding: 0 1rem; }
+.amplada { width: 100%; max-width: 72rem; margin: 0 auto; padding: 0 1rem; }
+@media (min-width: 48rem) { .amplada { padding: 0 1.5rem; } }
 
 a { color: var(--enllac); text-decoration: underline; text-underline-offset: 0.15em; }
 a:hover { text-decoration-thickness: 2px; }
@@ -75,85 +92,179 @@ main:focus { outline: none; }
   top: -10rem;
   z-index: 10;
   padding: 0.75rem 1rem;
-  background: var(--fons);
+  border-radius: 0.5rem;
+  background: var(--panell);
   color: var(--text);
   border: 2px solid var(--focus);
 }
 .saltar:focus { top: 1rem; }
 
-/* Capçalera */
-.capcalera { background: var(--superficie); border-bottom: 1px solid var(--vora); }
-.capcalera > .amplada {
+/* --- Capçalera -------------------------------------------------------- */
+.capcalera { background: var(--marca); color: var(--marca-text); }
+/* Dins de la banda fosca, el focus és clar per a mantindre el contrast. */
+.capcalera :focus-visible { outline-color: var(--marca-text); }
+
+.fila-marca {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
+  gap: 0.75rem 1.5rem;
   align-items: center;
   justify-content: space-between;
   padding-top: 1rem;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.75rem;
 }
-.nom { margin: 0; font-size: 1.5rem; font-weight: 700; }
-.subtitol { margin: 0; color: var(--suau); }
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--marca-text);
+  text-decoration: none;
+  min-height: 2.75rem;
+}
+.marca:hover .nom { text-decoration: underline; }
+.logo {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.6rem;
+  background: var(--marca-text);
+  color: var(--marca);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.marca-text { display: flex; flex-direction: column; }
+.nom { font-size: 1.375rem; font-weight: 700; line-height: 1.2; }
+.subtitol { color: var(--marca-suau); font-size: 0.9375rem; }
 
 .llengues ul, .principal ul {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem 1rem;
-  margin: 0;
-  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
   list-style: none;
 }
-.llengues a, .principal a {
-  display: inline-block;
+.llengues ul { gap: 0.5rem; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; }
+.llengues a {
+  display: inline-flex;
+  align-items: center;
   min-height: 2.75rem;
-  padding: 0.6rem 0.25rem;
+  padding: 0.4rem 1rem;
+  border: 2px solid var(--marca-suau);
+  border-radius: 999px;
+  color: var(--marca-text);
+  text-decoration: none;
 }
-.llengues a[aria-current], .principal a[aria-current] {
+.llengues a:hover { text-decoration: underline; }
+.llengues a[aria-current] {
+  background: var(--marca-text);
+  border-color: var(--marca-text);
+  color: var(--marca);
   font-weight: 700;
-  text-decoration-thickness: 3px;
 }
-.principal { padding-bottom: 0.25rem; }
 
-/* Contingut */
-main { padding-top: 1.5rem; padding-bottom: 2rem; }
-h1 { font-size: 1.75rem; line-height: 1.25; margin: 0 0 1.25rem; }
+.principal { border-top: 1px solid rgba(255, 255, 255, 0.18); }
+.principal ul { gap: 0 0.25rem; }
+/* La primera pestanya, alineada amb el contingut (el seu text, no la vora). */
+.principal li:first-child a { margin-left: -0.875rem; }
+.principal a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3rem;
+  padding: 0.5rem 0.875rem;
+  color: var(--marca-text);
+  text-decoration: none;
+  border-bottom: 4px solid transparent;
+}
+.principal a:hover { text-decoration: underline; }
+.principal a[aria-current="page"] {
+  font-weight: 700;
+  border-bottom-color: var(--marca-text);
+}
 
-.idiomes, .caixes {
-  display: grid;
-  gap: 1rem 1.5rem;
-  grid-template-columns: 1fr;
+/* --- Contingut -------------------------------------------------------- */
+main.amplada { flex: 1; padding-top: 2rem; padding-bottom: 2.5rem; }
+.encapcalat-pagina { margin-bottom: 1.5rem; }
+h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 0.5rem; }
+h2 { font-size: 1.375rem; line-height: 1.3; margin: 0 0 0.75rem; }
+h3 { font-size: 1.125rem; margin: 1.5rem 0 0.5rem; }
+.intro { max-width: 48rem; margin: 0; color: var(--suau); font-size: 1.0625rem; }
+
+.panell {
+  background: var(--panell);
+  border: 1px solid var(--vora-suau);
+  border-radius: 0.75rem;
+  box-shadow: var(--ombra);
+  padding: 1.25rem;
 }
-.idiomes { margin-bottom: 1.25rem; }
-@media (min-width: 48rem) {
-  .idiomes, .caixes { grid-template-columns: 1fr 1fr; }
-}
+@media (min-width: 48rem) { .panell { padding: 1.5rem; } }
 
 .camp { display: flex; flex-direction: column; min-width: 0; }
-label { font-weight: 700; margin-bottom: 0.25rem; }
-.ajuda { margin: 0.25rem 0; color: var(--suau); font-size: 0.9375rem; }
+label { font-weight: 700; margin-bottom: 0.375rem; }
+.ajuda { margin: 0 0 0.5rem; color: var(--suau); font-size: 0.9375rem; }
 
 select, textarea {
   font: inherit;
   color: var(--text);
-  background: var(--fons);
+  background: var(--panell);
   border: 2px solid var(--vora);
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   width: 100%;
 }
-select { min-height: 2.75rem; padding: 0.4rem 0.5rem; }
-textarea { padding: 0.6rem; resize: vertical; min-height: 12rem; }
-textarea[readonly] { background: var(--superficie); }
+select { min-height: 2.75rem; padding: 0.4rem 0.75rem; }
+textarea {
+  padding: 0.75rem 0.875rem;
+  resize: vertical;
+  min-height: 16rem;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+textarea.eixida, textarea[readonly] { background: var(--superficie); }
 textarea[aria-invalid="true"] { border-color: var(--error); }
 
+/* Traductor: dues columnes iguals (origen | fletxa | destí) perquè les dues
+   caixes queden exactament a la mateixa altura. */
+.fila-idiomes, .fila-caixes {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+.fila-idiomes { margin-bottom: 1.25rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--vora-suau); }
+.fletxa, .separador { display: none; }
+@media (min-width: 48rem) {
+  .fila-idiomes, .fila-caixes { grid-template-columns: 1fr 2.5rem 1fr; gap: 0 1rem; }
+  .fila-idiomes { align-items: end; }
+  .fletxa {
+    display: grid;
+    place-items: center;
+    height: 2.75rem;
+    color: var(--suau);
+    font-size: 1.5rem;
+  }
+  .separador { display: block; }
+}
+
+.barra-caixa {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  min-height: 2.75rem;
+  margin-top: 0.75rem;
+}
+.barra-eixida { justify-content: flex-end; }
+.comptador { margin: 0; color: var(--suau); font-size: 0.9375rem; }
+
 .error {
-  margin: 0.25rem 0 0;
+  margin: 0.5rem 0 0;
   color: var(--error);
   font-weight: 700;
 }
 .error::before { content: "⚠ " / ""; }  /* la icona no es llig */
-
-.accions, .accions-eixida { margin-top: 0.75rem; }
-.accions { margin-top: 1.25rem; }
 
 .boto {
   font: inherit;
@@ -161,18 +272,19 @@ textarea[aria-invalid="true"] { border-color: var(--error); }
   min-height: 2.75rem;
   min-width: 2.75rem;
   padding: 0.6rem 1.5rem;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   border: 2px solid var(--primari);
   background: var(--primari);
   color: var(--primari-text);
   cursor: pointer;
 }
 .boto:hover { background: var(--primari-hover); border-color: var(--primari-hover); }
-.boto-secundari { background: transparent; color: var(--enllac); }
-.boto-secundari:hover { background: var(--superficie); color: var(--enllac); }
+.boto-secundari { background: var(--panell); color: var(--enllac); }
+.boto-secundari:hover { background: var(--superficie); color: var(--enllac); border-color: var(--primari); }
 .boto[aria-disabled="true"] { opacity: 0.65; cursor: progress; }
 
-.estat { min-height: 1.5rem; margin: 0.75rem 0 0; color: var(--suau); }
+.estat { min-height: 1.5rem; margin: 1rem 0 0; color: var(--suau); }
+.estat:empty { margin-top: 0.5rem; }
 /* La regió d'avisos (role="alert") és sempre al DOM i visible: només rep
    estil quan té contingut (una regió amagada no s'anuncia bé en omplir-la). */
 .avisos { margin: 0; }
@@ -181,35 +293,36 @@ textarea[aria-invalid="true"] { border-color: var(--error); }
   padding: 0.75rem 1rem;
   border: 2px solid var(--error);
   border-left-width: 0.5rem;
+  border-radius: 0.5rem;
   background: var(--error-fons);
   color: var(--text);
 }
 .avisos p { margin: 0; }
 
-/* Grau Dialectal */
-.intro { max-width: 48rem; margin: 0 0 1.25rem; }
-.formulari-gd { max-width: 48rem; }
-.resultat { margin-top: 2rem; }
+/* --- Grau Dialectal --------------------------------------------------- */
+.formulari-gd textarea { min-height: 10rem; }
+.resultat { margin-top: 1.5rem; }
 .resultat:focus { outline: none; }
-h2 { font-size: 1.375rem; margin: 0 0 0.75rem; }
-h3 { font-size: 1.125rem; margin: 1.5rem 0 0.5rem; }
+.resultat:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 
 .indexs {
   display: grid;
   gap: 1rem;
   grid-template-columns: 1fr;
-  margin: 1rem 0;
+  margin: 1rem 0 0.5rem;
 }
 @media (min-width: 48rem) { .indexs { grid-template-columns: repeat(3, 1fr); } }
 .index {
-  border: 1px solid var(--vora);
-  border-radius: 0.25rem;
+  border: 1px solid var(--vora-suau);
+  border-top: 4px solid var(--primari);
+  border-radius: 0.5rem;
   background: var(--superficie);
-  padding: 0.75rem 1rem;
+  padding: 0.875rem 1rem;
 }
 .index dt { font-weight: 700; }
 .index dd { margin: 0; }
-.index .valor { font-size: 2rem; font-weight: 700; line-height: 1.3; font-variant-numeric: tabular-nums; }
+.index .valor { font-size: 2.25rem; font-weight: 700; line-height: 1.25; font-variant-numeric: tabular-nums; }
+.index .ajuda { margin: 0.25rem 0 0; }
 
 /* Paraules marcades: color + subratllat (continu = valencià, de punts =
    català) perquè el color no siga l'única senyal (WCAG 1.4.1). No canvien
@@ -234,12 +347,14 @@ h3 { font-size: 1.125rem; margin: 1.5rem 0 0.5rem; }
   text-decoration-style: dotted;
 }
 .llegenda { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin: 0 0 0.75rem; }
-.mostra-llegenda { padding: 0.125rem 0.375rem; }
+.mostra-llegenda { padding: 0.125rem 0.5rem; border-radius: 0.375rem; }
 .text-marcat {
-  border: 1px solid var(--vora);
-  border-radius: 0.25rem;
-  padding: 0.75rem 1rem;
+  border: 1px solid var(--vora-suau);
+  border-radius: 0.5rem;
+  background: var(--panell);
+  padding: 0.875rem 1rem;
   line-height: 1.9;
+  font-size: 1.0625rem;
   overflow-wrap: anywhere;
 }
 .llistes { display: grid; gap: 0 1.5rem; grid-template-columns: 1fr; }
@@ -247,14 +362,16 @@ h3 { font-size: 1.125rem; margin: 1.5rem 0 0.5rem; }
 .llistes ul { margin: 0; padding-left: 1.25rem; }
 .vegades { color: var(--suau); }
 
-/* Sobre */
-.sobre { max-width: 48rem; }
-.sobre section + section { margin-top: 1.5rem; }
+/* --- Sobre ------------------------------------------------------------ */
+.sobre { max-width: 52rem; }
+.sobre section + section { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--vora-suau); }
+.sobre p { margin: 0 0 0.75rem; }
+.sobre p:last-child { margin-bottom: 0; }
 
-/* Peu */
-.peu { border-top: 1px solid var(--vora); background: var(--superficie); color: var(--suau); }
-.peu p { margin: 0.5rem 0; }
-.peu .amplada { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+/* --- Peu -------------------------------------------------------------- */
+.peu { border-top: 1px solid var(--vora-suau); background: var(--panell); color: var(--suau); }
+.peu p { margin: 0.25rem 0; }
+.peu .amplada { padding-top: 1rem; padding-bottom: 1rem; }
 
 /* Només per a lectors de pantalla */
 .visualment-amagat {
@@ -270,8 +387,10 @@ h3 { font-size: 1.125rem; margin: 1.5rem 0 0.5rem; }
 
 /* Mode d'alt contrast de Windows: les vores i el focus es mantenen. */
 @media (forced-colors: active) {
-  .boto, select, textarea { border: 2px solid ButtonText; }
+  .boto, select, textarea, .llengues a, .panell { border: 2px solid ButtonText; }
+  .principal a[aria-current="page"] { border-bottom-color: Highlight; }
+  .logo { border: 2px solid ButtonText; }
   /* Sense colors, el subratllat continu / de punts continua distingint-les. */
   .paraula-valenciana, .paraula-catalana { forced-color-adjust: auto; }
-  :focus-visible { outline: 3px solid Highlight; }
+  :focus-visible, .capcalera :focus-visible { outline: 3px solid Highlight; }
 }

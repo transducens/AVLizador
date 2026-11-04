@@ -35,7 +35,7 @@ def test_estructura_accessible():
     # Cada camp té la seua etiqueta
     for camp in ("origen", "desti", "text", "traduccio"):
         assert f'<label for="{camp}">' in html and f'id="{camp}"' in html
-    assert 'lang="ca"' in html and 'id="traduccio" rows="10" lang="ca-valencia"' in html
+    assert 'lang="ca"' in html and 'id="traduccio" class="eixida" rows="12" lang="ca-valencia"' in html
     assert 'role="status" aria-live="polite"' in html and 'role="alert"' in html
     assert "tabindex=\"1" not in html and "placeholder" not in html
 

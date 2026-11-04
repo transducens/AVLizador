@@ -10,11 +10,14 @@
 <body>
   <a class="saltar" href="#contingut">{{ t.saltar }}</a>
   <header class="capcalera">
-    <div class="amplada">
-      <div class="marca">
-        <p class="nom">{{ t.titol }}</p>
-        <p class="subtitol">{{ t.subtitol }}</p>
-      </div>
+    <div class="amplada fila-marca">
+      <a class="marca" href="/">
+        <span class="logo" aria-hidden="true">AV</span>
+        <span class="marca-text">
+          <span class="nom">{{ t.titol }}</span>
+          <span class="subtitol">{{ t.subtitol }}</span>
+        </span>
+      </a>
       <nav class="llengues" aria-label="{{ t.llengua_interficie }}">
         <ul>
           {% for codi, nom in llengues %}
@@ -24,8 +27,8 @@
         </ul>
       </nav>
     </div>
-    <nav class="principal amplada" aria-label="{{ t.nav_principal }}">
-      <ul>
+    <nav class="principal" aria-label="{{ t.nav_principal }}">
+      <ul class="amplada">
         <li><a href="/" {% if pagina == "traduir" %}aria-current="page"{% endif %}>{{ t.nav_traduir }}</a></li>
         <li><a href="/gd" {% if pagina == "gd" %}aria-current="page"{% endif %}>{{ t.nav_gd }}</a></li>
         <li><a href="/sobre" {% if pagina == "sobre" %}aria-current="page"{% endif %}>{{ t.nav_sobre }}</a></li>

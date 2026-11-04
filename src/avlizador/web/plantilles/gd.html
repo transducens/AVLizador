@@ -1,28 +1,30 @@
 {% extends "base.html" %}
 {% block titol %}{{ t.titol_pagina_gd }}{% endblock %}
 {% block contingut %}
-<h1>{{ t.titol_gd }}</h1>
-<p class="intro">{{ t.intro_gd }}</p>
+<div class="encapcalat-pagina">
+  <h1>{{ t.titol_gd }}</h1>
+  <p class="intro">{{ t.intro_gd }}</p>
+</div>
 
-<form class="formulari-gd" method="post" action="/gd?idioma={{ idioma }}#resultat" novalidate>
+<form class="formulari-gd panell" method="post" action="/gd?idioma={{ idioma }}#resultat" novalidate>
   <div class="camp">
     <label for="text">{{ t.text_gd }}</label>
     <p id="ajuda-text" class="ajuda">{{ t.ajuda_gd }}</p>
-    <textarea id="text" name="text" rows="8" lang="ca" spellcheck="false"
+    <textarea id="text" name="text" rows="7" lang="ca" spellcheck="false"
               aria-describedby="ajuda-text comptador{% if error_camp %} error-text{% endif %}"
               {% if error_camp %}aria-invalid="true"{% endif %}>
 {{ text }}</textarea>
-    <p id="comptador" class="ajuda">{{ comptador }}</p>
-    <p id="error-text" class="error" {% if not error_camp %}hidden{% endif %}>{{ error_camp or "" }}</p>
-    <div class="accions">
+    <div class="barra-caixa">
+      <p id="comptador" class="comptador">{{ comptador }}</p>
       <button type="submit" class="boto">{{ t.calcular }}</button>
     </div>
+    <p id="error-text" class="error" {% if not error_camp %}hidden{% endif %}>{{ error_camp or "" }}</p>
     <div id="avisos" class="avisos" role="alert">{% if error %}<p>{{ error }}</p>{% endif %}</div>
   </div>
 </form>
 
 {% if resultat %}
-<section id="resultat" class="resultat" aria-labelledby="titol-resultat" tabindex="-1">
+<section id="resultat" class="resultat panell" aria-labelledby="titol-resultat" tabindex="-1">
   <h2 id="titol-resultat">{{ t.resultat }}</h2>
   <p>{{ resultat.recompte }}</p>
   <dl class="indexs">
