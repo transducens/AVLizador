@@ -21,6 +21,15 @@ sección 14), para equipos con pocos recursos y sin GPU. El estado actual
 de esa dirección está en la sección 12 (motor), la 13 (capa opcional con
 modelo de lenguaje para los homógrafos) y la 17 (resumen de cifras).
 
+**Rutas (30/10/2026)**: el traductor y el GD son ahora el paquete
+instalable `avlizador` (sección 16, "Empaquetado"). En este documento,
+donde dice `traductor/` hoy es `src/avlizador/traductor_cat_val/`;
+`traductor/sync_data.py` es `scripts/sync_data.py`; `traductor/llm/` está
+en `pipeline/08_traduccio_corpus/postprocessat_llm/capa_llm/`; el GD
+(`pipeline/09_grau_dialectal/gd.py`, `gdv.py`, `gdc.py`) está en
+`src/avlizador/grau_dialectal/`, y las fuentes del léxico
+(`pipeline/02_regles_dialectals/lexic/diccionarios/`), en `dades/lexic/`.
+
 ## 1. Origen del texto (el lado "valenciano")
 
 ### 1.1 Qué es la AVL y por qué es la fuente
@@ -504,7 +513,7 @@ entre versiones de software y las GPUs concretas de este clúster. Vale la
 pena dejarlo anotado por si se repite el ejercicio con otro modelo servido
 por vLLM en el mismo nodo.
 
-## 11. El motor de reglas deterministas (`traductor/`)
+## 11. El motor de reglas deterministas (`traductor/`, hoy `avlizador.traductor_cat_val`)
 
 Las secciones 1-10 cubren las etapas 1-4 (scraping, reglas, selección de
 modelo, corpus sintético), cerradas a finales de septiembre. Desde
@@ -550,11 +559,12 @@ En valenciano → catalán, además, se protegen las palabras en mayúscula
 que no inician la frase (posibles nombres propios); en catalán →
 valenciano ya no (22/10/2026, ver sección 12).
 
-Todos los datos vienen de **dos ficheros**, `traductor/data/lexic_general.json`
-y `conjugacions_dialectals.json`, copias sincronizadas con
-`traductor/sync_data.py` desde las fuentes del proveedor
-(`pipeline/02_regles_dialectals/lexic/diccionarios/`). `traductor/` nunca
-lee esa carpeta en tiempo de ejecución, solo sus propias copias, para poder
+Todos los datos vienen de **dos ficheros**, `data/lexic_general.json`
+y `conjugacions_dialectals.json` (dentro de
+`src/avlizador/traductor_cat_val/`), copias sincronizadas con
+`scripts/sync_data.py` desde las fuentes del proveedor (`dades/lexic/`;
+antes del 30/10/2026, `pipeline/02_regles_dialectals/lexic/diccionarios/`).
+El traductor nunca lee esa carpeta en tiempo de ejecución, solo sus propias copias, para poder
 funcionar como módulo autónomo. Desde el 22/10/2026 no queda ningún fichero
 de datos hecho a mano, y en catalán → valenciano tampoco ninguna lista de
 palabras en el código (sección 12); en valenciano → catalán quedan tres
@@ -1159,6 +1169,109 @@ caso) destapó, con causa raíz confirmada en cada caso:
 4. El plural de "servici"/"servei" no está derivado del singular, que sí
    figura en el diccionario.
 
+### Benchmark manual revisado a mano: BOE y AVL (28-30/10/2026)
+
+Los benchmarks anteriores tienen dos límites: el de 151 frases es pequeño
+y el BOE "estricto" se construyó con el propio diccionario (mide
+regresiones, no huecos). Por eso se montó un benchmark nuevo, revisado
+frase a frase por personas (proceso completo en
+`documentacio/hoja_de_ruta_benchmark_manual.md`):
+
+- **BOE, 246 frases**: catalán y valenciano oficiales del BOE, elegidas
+  para cubrir los fenómenos de los diccionarios y de las reglas (léxico,
+  conjugaciones, demostrativos, posesivos, "per a", incoativos...) y
+  revisadas a mano desde el original.
+- **AVL, 212 frases**: valenciano de los textos de la AVL; el catalán se
+  generó con el traductor val→cat y se corrigió a mano.
+- **Mezcla, 458**: las dos juntas, como cifra única.
+
+Además de las exactas, BLEU y chrF, desde el 30/10/2026 se mide **TER**
+(porcentaje de ediciones de palabra, contando un bloque movido como una
+sola) y **WER** (lo mismo sin desplazamientos), los dos de corpus y
+cuanto más bajos, mejor. Resultados del sistema que se entrega (motor +
+FLOR-760M) frente al motor solo:
+
+| Benchmark | Sistema | Exactas | BLEU | chrF | TER | WER |
+|---|---|---|---|---|---|---|
+| BOE 246 | motor solo | 32 (13,0 %) | 83,53 | 93,46 | 9,50 | 10,15 |
+| BOE 246 | **motor + FLOR** | 32 (13,0 %) | 83,82 | 93,59 | **9,26** | **9,94** |
+| AVL 212 | motor solo | 182 (85,8 %) | 98,35 | 99,16 | 0,80 | 0,80 |
+| AVL 212 | **motor + FLOR** | **195 (92,0 %)** | 99,08 | 99,54 | **0,41** | **0,41** |
+| Mezcla 458 | motor solo | 214 (46,7 %) | 90,39 | 96,10 | 5,91 | 6,30 |
+| Mezcla 458 | **motor + FLOR** | **227 (49,6 %)** | 90,88 | 96,34 | **5,61** | **6,01** |
+
+Lectura:
+
+- **El modelo de lenguaje mejora los tres y no empeora ninguno.** En la
+  AVL resuelve 14 frases ("cop"→"vegada", "anou"→"nou") y pierde una
+  ("les anous").
+- **AVL, casi resuelta**: las 17 frases que fallan están a 1-3 palabras
+  de la referencia. La mitad es una decisión de registro pendiente
+  ("xic" frente a "xiquet").
+- **BOE: las exactas engañan.** Solo el 13 % de frases salen idénticas,
+  pero el TER es 9, es decir, una palabra de cada diez. La referencia es
+  el texto oficial tal cual y se separa del catalán por motivos que no
+  son dialectales: futuro donde el catalán usa presente ("pot"→"podrà",
+  "és"→"serà"), reformulaciones ("mitjançant"→"per mitjà de"), artículos
+  y orden. En este benchmark, TER, WER y chrF son la medida útil.
+
+Todas las cifras, con chrF++ y las rutas de los resultados, en
+`pipeline/03_seleccio_de_model/resultats_benchmarks_cat_val.md`.
+
+### Baseline: AVLizador frente a LLM generalistas (30/10-02/11/2026)
+
+La pregunta: ¿mejora AVLizador lo que ya existe? Se compararon 9 LLM
+abiertos que caben en una GPU de 11 GB (llama3.1:8b, qwen2.5:7b y 14b,
+qwen3:8b y 14b, gemma3:12b, gemma4:12b, salamandra-7b-instruct y
+mistral-nemo:12b), **usados tal cual** (decisión del usuario): la misma
+instrucción mínima para todos ("Traduïx el text següent del català al
+valencià. Respon només amb la traducció."), sin ejemplos, reglas ni
+glosario, temperatura 0. Se ejecutaron en Abaco con Ollama, 1 GPU por
+modelo y como mucho 2 a la vez, sobre el benchmark de evaluación (manual
+mezcla, 458) y sus partes BOE y AVL, con las métricas de siempre más el
+GDV de la salida. Como umbral, el resultado de no traducir: devolver el
+catalán tal cual. Apertium se quiso incluir y se descartó: no tiene par
+catalán → valenciano (solo hacia el valenciano desde el castellano y el
+inglés), y la vía castellano fallaba en la API pública.
+
+| Sistema (manual mezcla, 458) | Exactas | BLEU | TER ↓ | GD | GDV | GDC |
+|---|---|---|---|---|---|---|
+| *Referencia (valenciano)* | — | — | — | *0,9973* | *0,9998* | *0,9182* |
+| **AVLizador: motor + FLOR-760M** | **227 (49,6 %)** | **90,88** | **5,61** | **0,9936** | **0,9995** | **0,9189** |
+| AVLizador: motor solo | 214 (46,7 %) | 90,39 | 5,91 | 0,9764 | 0,9981 | 0,9194 |
+| Sin traducir (catalán tal cual) | 1 | 69,25 | 15,76 | 0,0264 | 0,9200 | 0,9978 |
+| Mejor LLM (gemma3:12b) | 11 (2,4 %) | 70,54 | 16,13 | 0,3889 | 0,9530 | 0,9701 |
+| Peor LLM (salamandra-7b-instruct) | 4 | 57,77 | 26,06 | 0,1517 | 0,9359 | 0,9885 |
+
+Lo que se ve:
+
+- **Ningún LLM mejora no traducir** en TER. Solo gemma3 lo supera un poco
+  en BLEU y en la parte del BOE.
+- **Su salida sigue siendo catalán.** Se mide con las tres caras del
+  grau dialectal (sección 14): el GD de los LLM va de 0,04 a 0,15
+  (gemma3, 0,39), frente a 0,997 de la referencia y 0,994 de AVLizador;
+  el GDC queda en 0,99 (casi ninguna forma valenciana), como la entrada.
+  El GDV (0,92-0,95, casi el 0,92 de la entrada) apunta a lo mismo pero
+  muy comprimido, porque divide entre todas las palabras: por eso se
+  miran los tres. Dejan sin cambiar los demostrativos ("aquest", unas
+  250 apariciones por modelo), los posesivos ("seva/seves", unas 120) y
+  "serveis".
+- **Muchos devuelven la frase igual** (llama3.1:8b 325 de 458, qwen3:8b
+  315), y **los que la cambian empeoran**: reformulan, corrigen el
+  catalán de entrada o introducen errores ("interconnected", "frontales",
+  "los nutrients").
+- AVLizador queda a un tercio del TER del mejor LLM, en CPU y más rápido
+  (0,5 s por frase con FLOR frente a 0,6-1,4 s de los LLM en GPU).
+
+Conclusión: sin ajustarlos, los LLM generalistas de este tamaño no saben
+pasar de catalán a valenciano normativo; la ventaja de AVLizador no es
+marginal. Detalle, tablas por parte y ejemplos en
+`pipeline/03_seleccio_de_model/baseline_llm/` (README y
+`resum_baseline.md`). Al revisar las salidas se vieron erratas en el
+catalán de entrada de algunas frases de la AVL (BM-AVL-003, 004, 016 y
+070: "permeto", "parin", que vienen del borrador automático val→cat);
+afectan igual a todos los sistemas y no se han tocado.
+
 ## 16. Reestructuración del repositorio (14/10/2026)
 
 Tras varias semanas de trabajo acumulado, el repositorio tenía una
@@ -1199,31 +1312,74 @@ completa, carpeta por carpeta:
   retirada de una regla que no generalizaba más allá del propio
   benchmark).
 
-## 17. Estado actual (23/10/2026) y próximos pasos
+### Empaquetado (30/10/2026)
 
-**Catalán → valenciano** (la dirección que se entrega):
+El traductor catalán → valenciano y el GD pasan a ser un paquete de
+Python instalable, `avlizador` (`pyproject.toml`, diseño `src/`), con la
+orden `avlizador tradueix | gd | gdv | gdc | avalua`:
 
-| benchmark | motor solo | motor + modelo de lenguaje |
-|---|---|---|
-| 151 (banco curado) | 146/154 | 146/154 (ningún cambio) |
-| 151 + homógrafos (`benchmark_sistema_final_cat_val.json`, 253 frases) | 190/253 (BLEU 91,5) | **227/253** (BLEU 96,5) |
-| BOE estricto completo (9.453) | 8.857 | — |
-| BOE amplio (muestra de 2.000) | 1.200 | 1.206 |
-| gplsi (1.958) | 1.479 | — |
+- `avlizador.traductor_cat_val` (antes `traductor/`): `translate_cat_val`
+  = motor + FLOR-760M (extra `[ml]`); sin el extra, motor solo con un
+  aviso. La dirección valenciano → catalán queda en el código (el GD usa
+  sus cargadores) pero fuera de la API pública.
+- `avlizador.grau_dialectal` (antes `pipeline/09_grau_dialectal/gd.py`,
+  `gdv.py`, `gdc.py`).
+- `avlizador.avaluacio`: las métricas (exactas, BLEU, chrF, chrF++, TER,
+  WER) y la evaluación con todos los benchmarks.
+- Datos: las fuentes del léxico en `dades/lexic/` (fuente única) y copias
+  de todos los benchmarks en `dades/benchmarks/`, en git.
+- Fuera del paquete (en `pipeline/`): la capa de LLM por preguntas y las
+  herramientas de evaluación del modelo de lenguaje.
 
-Las cifras del motor solo en el BOE y gplsi son del 22/10/2026; desde
-entonces solo han cambiado datos que esos corpus apenas contienen ("cops",
-numerales marcados `revision`, "hamaques").
+Verificación: `pytest` (701 doctests y las pruebas de la API y las
+órdenes), instalación limpia en un entorno nuevo y **0 traducciones
+distintas** en los 8 benchmarks (8.329 frases) frente al código de antes
+de mover nada. Registro completo de decisiones y cambios en
+`documentacio/hoja_de_ruta_empaquetat.md`.
+
+## 17. Estado actual (30/10/2026) y próximos pasos
+
+**Catalán → valenciano** (la dirección que se entrega). Desde el
+29-30/10/2026 el **sistema principal es motor + FLOR-760M**; el motor
+solo se mide únicamente para ver qué aporta el modelo de lenguaje.
+
+Sistema final en todos los benchmarks, misma versión y mismas métricas
+(30/10/2026; el de evaluación principal es el **manual mezcla**):
+
+| Benchmark | Exactas | BLEU | chrF | TER ↓ | WER ↓ |
+|---|---|---|---|---|---|
+| **Manual mezcla BOE + AVL (458)** | **227 (49,6 %)** | 90,88 | 96,34 | 5,61 | 6,01 |
+| Manual BOE (246) | 32 (13,0 %) | 83,82 | 93,59 | 9,26 | 9,94 |
+| Manual AVL (212) | 195 (92,0 %) | 99,08 | 99,54 | 0,41 | 0,41 |
+| 151 (154) | 146 (94,8 %) | 99,32 | 99,66 | 0,27 | 0,27 |
+| 151 + homógrafos (253) | 226 (89,3 %) | 96,38 | 98,21 | 0,74 | 0,74 |
+| BOE estricto, muestra (2.000) | 1.880 (94,0 %) | 98,95 | 99,64 | 0,32 | 0,59 |
+| BOE amplio, muestra (2.000) | 1.203 (60,2 %) | 88,24 | 95,54 | 3,73 | 6,00 |
+| gplsi (1.958) | 1.544 (78,9 %) | 93,52 | 97,00 | 2,77 | 2,79 |
+
+En los manuales, el motor solo da 214/458 en la mezcla (TER 5,91), 32/246
+en el BOE (TER 9,50) y 182/212 en la AVL (TER 0,80): el modelo de
+lenguaje mejora los tres. Frente a las medidas anteriores (22-23/10), el
+BOE estricto sube de 1.778 a 1.880 y gplsi de 1.486 a 1.544 por el
+trabajo de datos de la última semana; el BOE amplio baja 3 frases
+("finalitat"→"fi", dato nuevo del léxico). Detalle, ganancias y pérdidas
+en `pipeline/03_seleccio_de_model/resultats_benchmarks_cat_val.md`.
+
+**Frente a LLM generalistas** (baseline del 02/11/2026, sección 15): en
+el manual mezcla, el mejor de 9 LLM usados tal cual (gemma3:12b) da TER
+16,13 y 11 frases exactas, peor que no traducir (15,76); AVLizador, 5,61
+y 227. El GD de la salida de los LLM (0,04-0,39) dice que siguen
+escribiendo catalán; el de AVLizador, 0,994 (referencia 0,997).
 
 Cómo se entrega:
 
-- **Motor** (`translate_cat_val`): reglas + diccionarios + spaCy. Solo CPU,
-  unos 700 MB de memoria y unas 250 frases por segundo en un núcleo. Es la
-  pieza principal y funciona sin nada más.
-- **Capa opcional** (`translate_cat_val_ml`): añade `torch`,
-  `transformers` y FLOR-760M (1,5 GB). Solo se activa en las frases con
-  "cop", "cops", "calces", "gandula" o "gandules" (en el BOE, unas 428 de
-  268.000 líneas), y solo elige entre candidatos del diccionario.
+- **Traductor** (`translate_cat_val`): reglas + diccionarios + spaCy +
+  FLOR-760M (`torch`, `transformers`, 1,5 GB). Solo CPU. El modelo solo
+  se activa en las frases con homógrafos que el diccionario declara
+  ("cop", "cops", "nou", "manca", "calces", "gandula"...) y solo elige
+  entre candidatos del diccionario: no inventa texto. El motor sin modelo
+  sigue disponible como `translate_cat_val_motor` (unos 700 MB de memoria
+  y unas 250 frases por segundo en un núcleo).
 - **GD** (sección 14): la segunda herramienta.
 
 **Valenciano → catalán**: aparcado desde el 20/10/2026. Última medida: 151

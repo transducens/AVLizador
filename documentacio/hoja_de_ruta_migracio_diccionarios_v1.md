@@ -29,8 +29,8 @@ nuevo gana siempre".
 | `possessius_general.json` | `posesivos_cat_val.json` | probablemente `lexico_general.json`, `categoria: "prn"` — **pendiente confirmar cobertura completa**, solo 6 entradas en `prn` vistas, parece insuficiente para posesivos completos (meu/meua/meus/meues...) |
 | `demostratius_avl.json` (val_cat, hardcoded "aquest" default) | curado a mano | `lexico_general.json`, `categoria: "det"` (8 entradas: este/esta/estos/estes/eixe/eixa/eixos/eixes) — **⚠️ ver sección 4, conflicto real** |
 | `conjugacions_dialectals.json` | 4 fuentes fusionadas (`verbos_no_ambiguos.json` + `conjugaciones_limpio.json` + `verbos_todos_anotados.json` + `conjugaciones_nuevo.json`, con lógica de orden/colisión en `sync_data.py`) | `conjugaciones_general.json` — **posible simplificación grande**: si este fichero ya es el consolidado del proveedor, buena parte de la lógica de fusión/orden actual de `sync_data.py` podría quedar obsoleta. Falta confirmar que es un superconjunto real antes de borrar esa lógica. |
-| Verbos de raíz distinta (ya integrados dentro de `conjugacions_dialectals.json` hoy, causaban el bug de locuciones "digues adéu" en el IPD) | mezclados en las mismas 4 fuentes de arriba | `verbos_diferentes_conjugados.json`, ahora SEPARADO — esto probablemente arregla solo, de raíz, el bug de locuciones multi-palabra que encontramos ayer en el IPD (ya no estarán mezcladas con las conjugaciones de raíz única). |
-| `categoria_gramatical_lexic.json` (hoy solo `"anou": "NOUN"`, a mano) | curado a mano, 1 sola entrada | el campo `categoria` de `lexico_general.json` ya lo da para TODO el léxico (no solo "anou") — esto es lo que más impacto puede tener: resolvería de raíz el hueco que encontramos el 16/10 con "nou" en el IPD. |
+| Verbos de raíz distinta (ya integrados dentro de `conjugacions_dialectals.json` hoy, causaban el bug de locuciones "digues adéu" en el GD) | mezclados en las mismas 4 fuentes de arriba | `verbos_diferentes_conjugados.json`, ahora SEPARADO — esto probablemente arregla solo, de raíz, el bug de locuciones multi-palabra que encontramos ayer en el GD (ya no estarán mezcladas con las conjugaciones de raíz única). |
+| `categoria_gramatical_lexic.json` (hoy solo `"anou": "NOUN"`, a mano) | curado a mano, 1 sola entrada | el campo `categoria` de `lexico_general.json` ya lo da para TODO el léxico (no solo "anou") — esto es lo que más impacto puede tener: resolvería de raíz el hueco que encontramos el 16/10 con "nou" en el GD. |
 | `canvi_genere_lexic_avl.json`, `flexio_genere_avl.json` | curados a mano | sin equivalente visto todavía en los 3 ficheros nuevos — **pendiente de confirmar si el proveedor los cubre en otra entrega o si se quedan como están** |
 
 ## 3. Qué hay que seguir filtrando (igual disciplina que siempre)
@@ -463,5 +463,5 @@ proyecto.
 3. Fase 2: comprobar una por una las decisiones ya validadas con evidencia (empezando por la de la sección 4) contra los datos nuevos.
 4. Fase 3: migrar módulo a módulo (numerals primero, demostratius el último), doctests + benchmark 151 + gplsi en cada paso.
 5. Fase 4: evaluar si `morfologia` (ya descifrado, ver sección 5) puede sustituir la heurística de sufijo de `es_risc_mode_3a_plural`/el filtro spaCy por un chequeo directo sobre los datos — mejora posible, no urgente, no empezada.
-6. Fase 5: repuntar `sync_data.py` e `ipd.py`.
+6. Fase 5: repuntar `sync_data.py` e `gd.py`.
 7. Fase 6: verificación final completa y limpieza (borrar JSON viejos, mover los 3 nuevos a `lexic/`, borrar `diccionarios_v1/`).

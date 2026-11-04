@@ -67,7 +67,7 @@ herramienta de base.
 3. TAREAS PENDIENTES
 
 - Completar la clasificacion manual del diccionario del traductor (en
-curso por un colaborador externo, Mauricio) antes de ampliar varias
+curso por un colaborador externo, el proveedor de datos) antes de ampliar varias
 reglas que dependen de esa clasificacion.
 - Investigar si la ambiguedad gramatical indicativo/subjuntivo (ya
 corregida en valenciano->catalan para un caso concreto) aparece tambien

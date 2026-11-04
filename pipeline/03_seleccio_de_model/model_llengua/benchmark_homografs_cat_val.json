@@ -1,0 +1,894 @@
+{
+ "descripcio": "Benchmark d'homògrafs cat->val (generat per genera_benchmark.py; referències a revisar a mà). `occidental` = referència valenciana; `motor_sol` = el que dona hui el motor sense model.",
+ "frases": [
+  {
+   "id": "HG001",
+   "oriental": "Li va donar un cop al cap amb un bastó.",
+   "paraula": "cop",
+   "esperat": "colp",
+   "tipus": "colisio",
+   "motor_sol": "Li va donar un cop al cap amb un bastó.",
+   "occidental": "Li va donar un colp al cap amb un bastó."
+  },
+  {
+   "id": "HG002",
+   "oriental": "El cop d'estat va fracassar en poques hores.",
+   "paraula": "cop",
+   "esperat": "colp",
+   "tipus": "colisio",
+   "motor_sol": "El cop d'estat va fracassar en poques hores.",
+   "occidental": "El colp d'estat va fracassar en poques hores."
+  },
+  {
+   "id": "HG003",
+   "oriental": "La porta es va tancar de cop.",
+   "paraula": "cop",
+   "esperat": "colp",
+   "tipus": "colisio",
+   "motor_sol": "La porta es va tancar de cop.",
+   "occidental": "La porta es va tancar de colp."
+  },
+  {
+   "id": "HG004",
+   "oriental": "Amb un cop de martell va clavar el clau.",
+   "paraula": "cop",
+   "esperat": "colp",
+   "tipus": "colisio",
+   "motor_sol": "Amb un cop de martell va clavar el clau.",
+   "occidental": "Amb un colp de martell va clavar el clau."
+  },
+  {
+   "id": "HG005",
+   "oriental": "El cotxe va rebre un cop fort al lateral.",
+   "paraula": "cop",
+   "esperat": "colp",
+   "tipus": "colisio",
+   "motor_sol": "El cotxe va rebre un cop fort al lateral.",
+   "occidental": "El cotxe va rebre un colp fort al lateral."
+  },
+  {
+   "id": "HG006",
+   "oriental": "La mort del seu pare va ser un cop molt dur per a la família.",
+   "paraula": "cop",
+   "esperat": "colp",
+   "tipus": "colisio",
+   "motor_sol": "La mort del seu pare va ser un cop molt dur per a la família.",
+   "occidental": "La mort del seu pare va ser un colp molt dur per a la família."
+  },
+  {
+   "id": "HG007",
+   "oriental": "Un cop de sort li va canviar la vida.",
+   "paraula": "cop",
+   "esperat": "colp",
+   "tipus": "colisio",
+   "motor_sol": "Un cop de sort li va canviar la vida.",
+   "occidental": "Un colp de sort li va canviar la vida."
+  },
+  {
+   "id": "HG008",
+   "oriental": "Es va fer un cop al genoll jugant a futbol.",
+   "paraula": "cop",
+   "esperat": "colp",
+   "tipus": "colisio",
+   "motor_sol": "Es va fer un cop al genoll jugant a futbol.",
+   "occidental": "Es va fer un colp al genoll jugant a futbol."
+  },
+  {
+   "id": "HG009",
+   "oriental": "Els lladres van preparar un últim cop al banc.",
+   "paraula": "cop",
+   "esperat": "colp",
+   "tipus": "colisio",
+   "motor_sol": "Els lladres van preparar un últim cop al banc.",
+   "occidental": "Els lladres van preparar un últim colp al banc."
+  },
+  {
+   "id": "HG010",
+   "oriental": "L'actriu no es va recuperar mai d'aquell cop.",
+   "paraula": "cop",
+   "esperat": "colp",
+   "tipus": "colisio",
+   "motor_sol": "L'actriu no es va recuperar mai d'aquell cop.",
+   "occidental": "L'actriu no es va recuperar mai d'aquell colp."
+  },
+  {
+   "id": "HG011",
+   "oriental": "Un cop acabada la reunió, vam marxar.",
+   "paraula": "cop",
+   "esperat": "vegada",
+   "tipus": "colisio",
+   "motor_sol": "Un cop acabada la reunió, vam marxar.",
+   "occidental": "Una vegada acabada la reunió, vam marxar."
+  },
+  {
+   "id": "HG012",
+   "oriental": "Cada cop hi ha més gent a la platja.",
+   "paraula": "cop",
+   "esperat": "vegada",
+   "tipus": "colisio",
+   "motor_sol": "Cada cop hi ha més gent a la platja.",
+   "occidental": "Cada vegada hi ha més gent a la platja."
+  },
+  {
+   "id": "HG013",
+   "oriental": "Ho he intentat un cop i no ha funcionat.",
+   "paraula": "cop",
+   "esperat": "vegada",
+   "tipus": "colisio",
+   "motor_sol": "Ho he intentat un cop i no ha funcionat.",
+   "occidental": "Ho he intentat una vegada i no ha funcionat."
+  },
+  {
+   "id": "HG014",
+   "oriental": "Un altre cop has arribat tard.",
+   "paraula": "cop",
+   "esperat": "vegada",
+   "tipus": "colisio",
+   "motor_sol": "Un altre cop has arribat tard.",
+   "occidental": "Una altra vegada has arribat tard.",
+   "revisat": true
+  },
+  {
+   "id": "HG015",
+   "oriental": "Un cop transcorregut el termini, es resoldrà la sol·licitud.",
+   "paraula": "cop",
+   "esperat": "vegada",
+   "tipus": "colisio",
+   "motor_sol": "Un cop transcorregut el termini, es resoldrà la sol·licitud.",
+   "occidental": "Una vegada transcorregut el termini, es resoldrà la sol·licitud."
+  },
+  {
+   "id": "HG016",
+   "oriental": "Aquest cop no em deixaré enganyar.",
+   "paraula": "cop",
+   "esperat": "vegada",
+   "tipus": "colisio",
+   "motor_sol": "Este cop no em deixaré enganyar.",
+   "occidental": "Esta vegada no em deixaré enganyar."
+  },
+  {
+   "id": "HG017",
+   "oriental": "Per primer cop, l'equip ha guanyat la lliga.",
+   "paraula": "cop",
+   "esperat": "vegada",
+   "tipus": "colisio",
+   "motor_sol": "Per primer cop, l'equip ha guanyat la lliga.",
+   "occidental": "Per primera vegada, l'equip ha guanyat la lliga.",
+   "revisat": true
+  },
+  {
+   "id": "HG018",
+   "oriental": "Cada cop que el veig, em saluda.",
+   "paraula": "cop",
+   "esperat": "vegada",
+   "tipus": "colisio",
+   "motor_sol": "Cada cop que el veig, em saluda.",
+   "occidental": "Cada vegada que el veig, em saluda."
+  },
+  {
+   "id": "HG019",
+   "oriental": "Un cop més, el govern ha ajornat la decisió.",
+   "paraula": "cop",
+   "esperat": "vegada",
+   "tipus": "colisio",
+   "motor_sol": "Un cop més, el govern ha ajornat la decisió.",
+   "occidental": "Una vegada més, el govern ha ajornat la decisió."
+  },
+  {
+   "id": "HG020",
+   "oriental": "Recordo un cop que vam anar a la muntanya.",
+   "paraula": "cop",
+   "esperat": "vegada",
+   "tipus": "colisio",
+   "motor_sol": "Recorde un cop que vam anar a la muntanya.",
+   "occidental": "Recorde una vegada que vam anar a la muntanya."
+  },
+  {
+   "id": "HG021",
+   "oriental": "Va sentir uns cops forts a la porta.",
+   "paraula": "cops",
+   "esperat": "colps",
+   "tipus": "colisio",
+   "motor_sol": "Va sentir uns cops forts a la porta.",
+   "occidental": "Va sentir uns colps forts a la porta."
+  },
+  {
+   "id": "HG022",
+   "oriental": "El boxejador va rebre molts cops a la cara.",
+   "paraula": "cops",
+   "esperat": "colps",
+   "tipus": "colisio",
+   "motor_sol": "El boxejador va rebre molts cops a la cara.",
+   "occidental": "El boxejador va rebre molts colps a la cara."
+  },
+  {
+   "id": "HG023",
+   "oriental": "Els cops de vent van tombar diversos arbres.",
+   "paraula": "cops",
+   "esperat": "colps",
+   "tipus": "colisio",
+   "motor_sol": "Els cops de vent van tombar diversos arbres.",
+   "occidental": "Els colps de vent van tombar diversos arbres."
+  },
+  {
+   "id": "HG024",
+   "oriental": "Li van donar cops amb un pal.",
+   "paraula": "cops",
+   "esperat": "colps",
+   "tipus": "colisio",
+   "motor_sol": "Li van donar cops amb un pal.",
+   "occidental": "Li van donar colps amb un pal."
+  },
+  {
+   "id": "HG025",
+   "oriental": "La fruita tenia cops i no es podia vendre.",
+   "paraula": "cops",
+   "esperat": "colps",
+   "tipus": "colisio",
+   "motor_sol": "La fruita tenia cops i no es podia vendre.",
+   "occidental": "La fruita tenia colps i no es podia vendre."
+  },
+  {
+   "id": "HG026",
+   "oriental": "A cops de destral van obrir la porta.",
+   "paraula": "cops",
+   "esperat": "colps",
+   "tipus": "colisio",
+   "motor_sol": "A cops de destral van obrir la porta.",
+   "occidental": "A colps de destral van obrir la porta."
+  },
+  {
+   "id": "HG027",
+   "oriental": "Hi hem anat tres cops aquest any.",
+   "paraula": "cops",
+   "esperat": "vegades",
+   "tipus": "colisio",
+   "motor_sol": "Hi hem anat tres cops este any.",
+   "occidental": "Hi hem anat tres vegades este any."
+  },
+  {
+   "id": "HG028",
+   "oriental": "Molts cops no sabem què fer.",
+   "paraula": "cops",
+   "esperat": "vegades",
+   "tipus": "colisio",
+   "motor_sol": "Molts cops no sabem què fer.",
+   "occidental": "Moltes vegades no sabem què fer.",
+   "revisat": true
+  },
+  {
+   "id": "HG029",
+   "oriental": "Ens veiem dos cops per setmana.",
+   "paraula": "cops",
+   "esperat": "vegades",
+   "tipus": "colisio",
+   "motor_sol": "Ens veiem dos cops per setmana.",
+   "occidental": "Ens veiem dos vegades per setmana."
+  },
+  {
+   "id": "HG030",
+   "oriental": "Alguns cops arriba tard a la feina.",
+   "paraula": "cops",
+   "esperat": "vegades",
+   "tipus": "colisio",
+   "motor_sol": "Alguns cops arriba tard a la faena.",
+   "occidental": "Algunes vegades arriba tard a la faena.",
+   "revisat": true
+  },
+  {
+   "id": "HG031",
+   "oriental": "Ho he repetit diversos cops.",
+   "paraula": "cops",
+   "esperat": "vegades",
+   "tipus": "colisio",
+   "motor_sol": "Ho he repetit diversos cops.",
+   "occidental": "Ho he repetit diverses vegades.",
+   "revisat": true
+  },
+  {
+   "id": "HG032",
+   "oriental": "Quants cops t'ho he de dir?",
+   "paraula": "cops",
+   "esperat": "vegades",
+   "tipus": "colisio",
+   "motor_sol": "Quants cops t'ho he de dir?",
+   "occidental": "Quantes vegades t'ho he de dir?",
+   "revisat": true
+  },
+  {
+   "id": "HG033",
+   "oriental": "Les calces de la nena estan brutes.",
+   "paraula": "calces",
+   "esperat": "bragues",
+   "tipus": "irresoluble",
+   "motor_sol": "Les bragues de la xiqueta estan brutes.",
+   "occidental": "Les bragues de la xiqueta estan brutes."
+  },
+  {
+   "id": "HG034",
+   "oriental": "Ha comprat unes calces de cotó al mercat.",
+   "paraula": "calces",
+   "esperat": "bragues",
+   "tipus": "irresoluble",
+   "motor_sol": "Ha comprat unes bragues de cotó al mercat.",
+   "occidental": "Ha comprat unes bragues de cotó al mercat."
+  },
+  {
+   "id": "HG035",
+   "oriental": "Porta les calces i el sostenidor a la bossa del gimnàs.",
+   "paraula": "calces",
+   "esperat": "bragues",
+   "tipus": "irresoluble",
+   "motor_sol": "Porta les bragues i el sostenidor a la bossa del gimnàs.",
+   "occidental": "Porta les bragues i el sostenidor a la bossa del gimnàs."
+  },
+  {
+   "id": "HG036",
+   "oriental": "Es va posar unes calces netes després de la dutxa.",
+   "paraula": "calces",
+   "esperat": "bragues",
+   "tipus": "irresoluble",
+   "motor_sol": "Es va posar unes bragues netes després de la dutxa.",
+   "occidental": "Es va posar unes bragues netes després de la dutxa."
+  },
+  {
+   "id": "HG037",
+   "oriental": "Al calaix guarda les calces i els mitjons.",
+   "paraula": "calces",
+   "esperat": "bragues",
+   "tipus": "irresoluble",
+   "motor_sol": "Al calaix guarda les bragues i els calcetins.",
+   "occidental": "Al calaix guarda les bragues i els calcetins."
+  },
+  {
+   "id": "HG038",
+   "oriental": "Els cavallers medievals portaven calces de seda fins als genolls.",
+   "paraula": "calces",
+   "esperat": "calces",
+   "tipus": "irresoluble",
+   "motor_sol": "Els cavallers medievals portaven bragues de seda fins als genolls.",
+   "occidental": "Els cavallers medievals portaven calces de seda fins als genolls."
+  },
+  {
+   "id": "HG039",
+   "oriental": "Les calces dels soldats del segle XVI eren de colors vius.",
+   "paraula": "calces",
+   "esperat": "calces",
+   "tipus": "irresoluble",
+   "motor_sol": "Les bragues dels soldats del segle XVI eren de colors vius.",
+   "occidental": "Les calces dels soldats del segle XVI eren de colors vius."
+  },
+  {
+   "id": "HG040",
+   "oriental": "Al segle XV els homes portaven calces ajustades a les cames.",
+   "paraula": "calces",
+   "esperat": "calces",
+   "tipus": "irresoluble",
+   "motor_sol": "Al segle XV els homes portaven bragues ajustades a les cames.",
+   "occidental": "Al segle XV els homes portaven calces ajustades a les cames."
+  },
+  {
+   "id": "HG041",
+   "oriental": "El sastre cosia calces i gipons per als nobles.",
+   "paraula": "calces",
+   "esperat": "calces",
+   "tipus": "irresoluble",
+   "motor_sol": "El sastre cosia bragues i gipons per als nobles.",
+   "occidental": "El sastre cosia calces i gipons per als nobles."
+  },
+  {
+   "id": "HG042",
+   "oriental": "Els patges duien calces de dos colors.",
+   "paraula": "calces",
+   "esperat": "calces",
+   "tipus": "irresoluble",
+   "motor_sol": "Els patges duien bragues de dos colors.",
+   "occidental": "Els patges duien calces de dos colors."
+  },
+  {
+   "id": "HG043",
+   "oriental": "Aquest estiu he comprat una gandula per a la terrassa.",
+   "paraula": "gandula",
+   "esperat": "hamaca",
+   "tipus": "irresoluble",
+   "motor_sol": "Este estiu he comprat una hamaca per a la terrassa.",
+   "occidental": "Este estiu he comprat una hamaca per a la terrassa."
+  },
+  {
+   "id": "HG044",
+   "oriental": "Es va estirar a la gandula de la piscina tota la tarda.",
+   "paraula": "gandula",
+   "esperat": "hamaca",
+   "tipus": "irresoluble",
+   "motor_sol": "Es va estirar a l'hamaca de la piscina tota la vesprada.",
+   "occidental": "Es va estirar a l'hamaca de la piscina tota la vesprada."
+  },
+  {
+   "id": "HG045",
+   "oriental": "La gandula plegable cap al maleter del cotxe.",
+   "paraula": "gandula",
+   "esperat": "hamaca",
+   "tipus": "irresoluble",
+   "motor_sol": "L'hamaca plegable cap al maleter del cotxe.",
+   "occidental": "L'hamaca plegable cap al maleter del cotxe."
+  },
+  {
+   "id": "HG046",
+   "oriental": "Va deixar la tovallola damunt de la gandula.",
+   "paraula": "gandula",
+   "esperat": "hamaca",
+   "tipus": "irresoluble",
+   "motor_sol": "Va deixar la tovallola damunt de l'hamaca.",
+   "occidental": "Va deixar la tovallola damunt de l'hamaca."
+  },
+  {
+   "id": "HG047",
+   "oriental": "Aquesta noia és molt gandula i no vol sortir de casa.",
+   "paraula": "gandula",
+   "esperat": "gandula",
+   "tipus": "irresoluble",
+   "motor_sol": "Esta xica és molt hamaca i no vol eixir de casa.",
+   "occidental": "Esta xica és molt gandula i no vol eixir de casa."
+  },
+  {
+   "id": "HG048",
+   "oriental": "No siguis gandula i ajuda'ns a recollir la taula.",
+   "paraula": "gandula",
+   "esperat": "gandula",
+   "tipus": "irresoluble",
+   "motor_sol": "No sigues hamaca i ajuda'ns a arreplegar la taula.",
+   "occidental": "No sigues gandula i ajuda'ns a arreplegar la taula."
+  },
+  {
+   "id": "HG049",
+   "oriental": "La gata és tan gandula que dorm tot el dia.",
+   "paraula": "gandula",
+   "esperat": "gandula",
+   "tipus": "irresoluble",
+   "motor_sol": "La gata és tan hamaca que dorm tot el dia.",
+   "occidental": "La gata és tan gandula que dorm tot el dia."
+  },
+  {
+   "id": "HG050",
+   "oriental": "És una gandula: mai fa els deures.",
+   "paraula": "gandula",
+   "esperat": "gandula",
+   "tipus": "irresoluble",
+   "motor_sol": "És una hamaca: mai fa els deures.",
+   "occidental": "És una gandula: mai fa els deures."
+  },
+  {
+   "id": "HG051",
+   "oriental": "L'hotel lloga gandules i para-sols a la platja.",
+   "paraula": "gandules",
+   "esperat": "hamaques",
+   "tipus": "irresoluble",
+   "motor_sol": "L'hotel lloga hamaques i para-sols a la platja.",
+   "occidental": "L'hotel lloga hamaques i para-sols a la platja."
+  },
+  {
+   "id": "HG052",
+   "oriental": "Vam plegar les gandules abans que comencés a ploure.",
+   "paraula": "gandules",
+   "esperat": "hamaques",
+   "tipus": "irresoluble",
+   "motor_sol": "Vam plegar les hamaques abans que començara a ploure.",
+   "occidental": "Vam plegar les hamaques abans que començara a ploure."
+  },
+  {
+   "id": "HG053",
+   "oriental": "Han posat gandules al voltant de la piscina.",
+   "paraula": "gandules",
+   "esperat": "hamaques",
+   "tipus": "irresoluble",
+   "motor_sol": "Han posat hamaques al voltant de la piscina.",
+   "occidental": "Han posat hamaques al voltant de la piscina."
+  },
+  {
+   "id": "HG054",
+   "oriental": "Les meves cosines són una mica gandules per estudiar.",
+   "paraula": "gandules",
+   "esperat": "gandules",
+   "tipus": "irresoluble",
+   "motor_sol": "Les meues cosines són una mica hamaques per a estudiar.",
+   "occidental": "Les meues cosines són una mica gandules per a estudiar."
+  },
+  {
+   "id": "HG055",
+   "oriental": "Aquelles alumnes eren gandules i no estudiaven.",
+   "paraula": "gandules",
+   "esperat": "gandules",
+   "tipus": "irresoluble",
+   "motor_sol": "Aquelles alumnes eren hamaques i no estudiaven.",
+   "occidental": "Aquelles alumnes eren gandules i no estudiaven."
+  },
+  {
+   "id": "HG056",
+   "oriental": "No sigueu gandules i aneu a treballar.",
+   "paraula": "gandules",
+   "esperat": "gandules",
+   "tipus": "irresoluble",
+   "motor_sol": "No sigueu hamaques i aneu a treballar.",
+   "occidental": "No sigueu gandules i aneu a treballar."
+  },
+  {
+   "id": "HG057",
+   "oriental": "Va trencar una nou amb les dents.",
+   "paraula": "nou",
+   "esperat": "anou",
+   "tipus": "resoluble",
+   "motor_sol": "Va trencar una anou amb les dents.",
+   "occidental": "Va trencar una anou amb les dents."
+  },
+  {
+   "id": "HG058",
+   "oriental": "El pastís porta nou i panses.",
+   "paraula": "nou",
+   "esperat": "anou",
+   "tipus": "resoluble",
+   "motor_sol": "El pastís porta nou i panses.",
+   "occidental": "El pastís porta anou i panses."
+  },
+  {
+   "id": "HG059",
+   "oriental": "Es va menjar una nou del calaix.",
+   "paraula": "nou",
+   "esperat": "anou",
+   "tipus": "resoluble",
+   "motor_sol": "Es va menjar una nou del calaix.",
+   "occidental": "Es va menjar una anou del calaix."
+  },
+  {
+   "id": "HG060",
+   "oriental": "La closca de la nou és molt dura.",
+   "paraula": "nou",
+   "esperat": "anou",
+   "tipus": "resoluble",
+   "motor_sol": "La closca de l'anou és molt dura.",
+   "occidental": "La closca de l'anou és molt dura."
+  },
+  {
+   "id": "HG061",
+   "oriental": "Hem comprat un cotxe nou.",
+   "paraula": "nou",
+   "esperat": "nou",
+   "tipus": "resoluble",
+   "motor_sol": "Hem comprat un cotxe nou.",
+   "occidental": "Hem comprat un cotxe nou."
+  },
+  {
+   "id": "HG062",
+   "oriental": "Tinc nou germans.",
+   "paraula": "nou",
+   "esperat": "nou",
+   "tipus": "resoluble",
+   "motor_sol": "Tinc nou germans.",
+   "occidental": "Tinc nou germans."
+  },
+  {
+   "id": "HG063",
+   "oriental": "És un projecte nou de l'ajuntament.",
+   "paraula": "nou",
+   "esperat": "nou",
+   "tipus": "resoluble",
+   "motor_sol": "És un projecte nou de l'ajuntament.",
+   "occidental": "És un projecte nou de l'ajuntament."
+  },
+  {
+   "id": "HG064",
+   "oriental": "Arribarem a les nou del matí.",
+   "paraula": "nou",
+   "esperat": "nou",
+   "tipus": "resoluble",
+   "motor_sol": "Arribarem a les nou del matí.",
+   "occidental": "Arribarem a les nou del matí."
+  },
+  {
+   "id": "HG065",
+   "oriental": "Les nous d'aquest arbre són molt bones.",
+   "paraula": "nous",
+   "esperat": "anous",
+   "tipus": "resoluble",
+   "motor_sol": "Les anous d'este arbre són molt bones.",
+   "occidental": "Les anous d'este arbre són molt bones."
+  },
+  {
+   "id": "HG066",
+   "oriental": "Ha collit un sac de nous.",
+   "paraula": "nous",
+   "esperat": "anous",
+   "tipus": "resoluble",
+   "motor_sol": "Ha collit un sac de nous.",
+   "occidental": "Ha collit un sac d'anous."
+  },
+  {
+   "id": "HG067",
+   "oriental": "Els llibres nous són a la taula.",
+   "paraula": "nous",
+   "esperat": "nous",
+   "tipus": "resoluble",
+   "motor_sol": "Els llibres nous són a la taula.",
+   "occidental": "Els llibres nous són a la taula."
+  },
+  {
+   "id": "HG068",
+   "oriental": "Hi ha nous casos de grip.",
+   "paraula": "nous",
+   "esperat": "nous",
+   "tipus": "resoluble",
+   "motor_sol": "Hi ha nous casos de grip.",
+   "occidental": "Hi ha nous casos de grip."
+  },
+  {
+   "id": "HG069",
+   "oriental": "Hi ha una manca greu de personal.",
+   "paraula": "manca",
+   "esperat": "carència",
+   "tipus": "resoluble",
+   "motor_sol": "Hi ha una carència greu de personal.",
+   "occidental": "Hi ha una carència greu de personal."
+  },
+  {
+   "id": "HG070",
+   "oriental": "La manca de pluja afecta els cultius.",
+   "paraula": "manca",
+   "esperat": "carència",
+   "tipus": "resoluble",
+   "motor_sol": "La carència de pluja carinya els cultius.",
+   "occidental": "La carència de pluja afecta els cultius.",
+   "revisat": true
+  },
+  {
+   "id": "HG071",
+   "oriental": "Pateix una gran manca afectiva.",
+   "paraula": "manca",
+   "esperat": "carència",
+   "tipus": "resoluble",
+   "motor_sol": "Patix una gran carència afectiva.",
+   "occidental": "Patix una gran carència afectiva."
+  },
+  {
+   "id": "HG072",
+   "oriental": "Li manca experiència per a aquesta feina.",
+   "paraula": "manca",
+   "esperat": "manca",
+   "tipus": "resoluble",
+   "motor_sol": "Li manca experiència per a esta faena.",
+   "occidental": "Li manca experiència per a esta faena."
+  },
+  {
+   "id": "HG073",
+   "oriental": "Encara manca una setmana per a les vacances.",
+   "paraula": "manca",
+   "esperat": "manca",
+   "tipus": "resoluble",
+   "motor_sol": "Encara manca una setmana per a les vacacions.",
+   "occidental": "Encara manca una setmana per a les vacacions."
+  },
+  {
+   "id": "HG074",
+   "oriental": "Aquesta regió manca de grans ciutats.",
+   "paraula": "manca",
+   "esperat": "manca",
+   "tipus": "resoluble",
+   "motor_sol": "Esta regió manca de grans ciutats.",
+   "occidental": "Esta regió manca de grans ciutats."
+  },
+  {
+   "id": "HG075",
+   "oriental": "Les manques del sistema educatiu són evidents.",
+   "paraula": "manques",
+   "esperat": "carències",
+   "tipus": "resoluble",
+   "motor_sol": "Les carències del sistema educatiu són evidents.",
+   "occidental": "Les carències del sistema educatiu són evidents."
+  },
+  {
+   "id": "HG076",
+   "oriental": "L'informe detalla les manques del servei.",
+   "paraula": "manques",
+   "esperat": "carències",
+   "tipus": "resoluble",
+   "motor_sol": "L'informe detalla les carències del servici.",
+   "occidental": "L'informe detalla les carències del servici."
+  },
+  {
+   "id": "HG077",
+   "oriental": "Tu manques de paciència.",
+   "paraula": "manques",
+   "esperat": "manques",
+   "tipus": "resoluble",
+   "motor_sol": "Tu carències de paciència.",
+   "occidental": "Tu manques de paciència."
+  },
+  {
+   "id": "HG078",
+   "oriental": "Si manques a la reunió, avisa'ns.",
+   "paraula": "manques",
+   "esperat": "manques",
+   "tipus": "resoluble",
+   "motor_sol": "Si manques a la reunió, avisa'ns.",
+   "occidental": "Si manques a la reunió, avisa'ns."
+  },
+  {
+   "id": "HG079",
+   "oriental": "Van beure aigua de la deu del bosc.",
+   "paraula": "deu",
+   "esperat": "brollador",
+   "tipus": "resoluble",
+   "motor_sol": "Van beure aigua de la deu del bosc.",
+   "occidental": "Van beure aigua del brollador del bosc."
+  },
+  {
+   "id": "HG080",
+   "oriental": "La deu de la font s'ha assecat.",
+   "paraula": "deu",
+   "esperat": "brollador",
+   "tipus": "resoluble",
+   "motor_sol": "La deu de la font s'ha assecat.",
+   "occidental": "El brollador de la font s'ha assecat."
+  },
+  {
+   "id": "HG081",
+   "oriental": "A la muntanya hi ha una deu d'aigua freda.",
+   "paraula": "deu",
+   "esperat": "brollador",
+   "tipus": "resoluble",
+   "motor_sol": "A la muntanya hi ha una deu d'aigua freda.",
+   "occidental": "A la muntanya hi ha un brollador d'aigua freda."
+  },
+  {
+   "id": "HG082",
+   "oriental": "Tinc deu euros a la butxaca.",
+   "paraula": "deu",
+   "esperat": "deu",
+   "tipus": "resoluble",
+   "motor_sol": "Tinc deu euros a la butxaca.",
+   "occidental": "Tinc deu euros a la butxaca."
+  },
+  {
+   "id": "HG083",
+   "oriental": "Ell em deu diners des de fa mesos.",
+   "paraula": "deu",
+   "esperat": "deu",
+   "tipus": "resoluble",
+   "motor_sol": "Ell em deu diners des de fa mesos.",
+   "occidental": "Ell em deu diners des de fa mesos."
+  },
+  {
+   "id": "HG084",
+   "oriental": "Són les deu de la nit.",
+   "paraula": "deu",
+   "esperat": "deu",
+   "tipus": "resoluble",
+   "motor_sol": "Són les deu de la nit.",
+   "occidental": "Són les deu de la nit."
+  },
+  {
+   "id": "HG085",
+   "oriental": "Va ser una campanya molt reeixida.",
+   "paraula": "reeixida",
+   "esperat": "exitosa",
+   "tipus": "resoluble",
+   "motor_sol": "Va ser una campanya molt exitosa.",
+   "occidental": "Va ser una campanya molt exitosa."
+  },
+  {
+   "id": "HG086",
+   "oriental": "L'exposició ha estat molt reeixida.",
+   "paraula": "reeixida",
+   "esperat": "exitosa",
+   "tipus": "resoluble",
+   "motor_sol": "L'exposició ha sigut molt exitosa.",
+   "occidental": "L'exposició ha sigut molt exitosa."
+  },
+  {
+   "id": "HG087",
+   "oriental": "La reeixida del projecte depèn de tots.",
+   "paraula": "reeixida",
+   "esperat": "reeixida",
+   "tipus": "resoluble",
+   "motor_sol": "La reeixida del projecte depén de tots.",
+   "occidental": "La reeixida del projecte depén de tots."
+  },
+  {
+   "id": "HG088",
+   "oriental": "Celebren la reeixida de la missió.",
+   "paraula": "reeixida",
+   "esperat": "reeixida",
+   "tipus": "resoluble",
+   "motor_sol": "Celebren la reeixida de la missió.",
+   "occidental": "Celebren la reeixida de la missió."
+  },
+  {
+   "id": "HG089",
+   "oriental": "Per postres hi havia recuita amb mel.",
+   "paraula": "recuita",
+   "esperat": "brulla",
+   "tipus": "resoluble",
+   "motor_sol": "Per postres hi havia brulla amb mel.",
+   "occidental": "Per postres hi havia brulla amb mel."
+  },
+  {
+   "id": "HG090",
+   "oriental": "La recuita es fa amb llet d'ovella.",
+   "paraula": "recuita",
+   "esperat": "brulla",
+   "tipus": "resoluble",
+   "motor_sol": "La brulla es fa amb llet d'ovella.",
+   "occidental": "La brulla es fa amb llet d'ovella."
+  },
+  {
+   "id": "HG091",
+   "oriental": "La carn recuita no té bon gust.",
+   "paraula": "recuita",
+   "esperat": "recuita",
+   "tipus": "resoluble",
+   "motor_sol": "La carn brulla no té bon gust.",
+   "occidental": "La carn recuita no té bon gust."
+  },
+  {
+   "id": "HG092",
+   "oriental": "Aquesta salsa està recuita.",
+   "paraula": "recuita",
+   "esperat": "recuita",
+   "tipus": "resoluble",
+   "motor_sol": "Esta salsa està brulla.",
+   "occidental": "Esta salsa està recuita."
+  },
+  {
+   "id": "HG093",
+   "oriental": "Ens vam fer una fartanera de marisc.",
+   "paraula": "fartanera",
+   "esperat": "fartada",
+   "tipus": "resoluble",
+   "motor_sol": "Ens vam fer una fartada de marisc.",
+   "occidental": "Ens vam fer una fartada de marisc."
+  },
+  {
+   "id": "HG094",
+   "oriental": "Després de la fartanera de Nadal, toca fer dieta.",
+   "paraula": "fartanera",
+   "esperat": "fartada",
+   "tipus": "resoluble",
+   "motor_sol": "Després de la fartada de Nadal, toca fer dieta.",
+   "occidental": "Després de la fartada de Nadal, toca fer dieta."
+  },
+  {
+   "id": "HG095",
+   "oriental": "La seva germana és molt fartanera.",
+   "paraula": "fartanera",
+   "esperat": "fartanera",
+   "tipus": "resoluble",
+   "motor_sol": "La seua germana és molt fartanera.",
+   "occidental": "La seua germana és molt fartanera."
+  },
+  {
+   "id": "HG096",
+   "oriental": "Aquesta gossa és molt fartanera.",
+   "paraula": "fartanera",
+   "esperat": "fartanera",
+   "tipus": "resoluble",
+   "motor_sol": "Esta gossa és molt fartanera.",
+   "occidental": "Esta gossa és molt fartanera."
+  },
+  {
+   "id": "HG097",
+   "oriental": "El Servei de Salut ha publicat les despeses de l'any.",
+   "paraula": null,
+   "esperat": null,
+   "tipus": null,
+   "motor_sol": "El Servici de Salut ha publicat els gastos de l'any.",
+   "occidental": "El Servici de Salut ha publicat els gastos de l'any."
+  },
+  {
+   "id": "HG098",
+   "oriental": "Demà anirem a la platja amb els amics.",
+   "paraula": null,
+   "esperat": null,
+   "tipus": null,
+   "motor_sol": "Demà anirem a la platja amb els amics.",
+   "occidental": "Demà anirem a la platja amb els amics."
+  }
+ ]
+}

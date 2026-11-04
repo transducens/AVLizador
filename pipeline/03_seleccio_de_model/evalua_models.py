@@ -112,16 +112,6 @@ for _stream in (sys.stdout, sys.stderr):
 # ' / ' (cometes tipogràfiques). Els normalitzem a ' estàndard (U+0027) per
 # evitar que el regex \b i el lookup fallin en contextos com d´este o l´edat.
 
-def normalitza_apostrofa(text: str) -> str:
-    """Normalitza totes les variants d'apòstrof a l'apòstrof estàndard ASCII."""
-    return (
-        text
-        .replace('\u00b4', "'")   # ´ accent agut (el bug principal del benchmark)
-        .replace('\u2018', "'")   # ' cometa tipogràfica esquerra
-        .replace('\u2019', "'")   # ' cometa tipogràfica dreta
-        .replace('\u02bc', "'")   # ʼ modificador carta apòstrof
-        .replace('\u0060', "'")   # ` accent greu
-    )
 
 
 # ─── Instal·lació automàtica de dependències ──────────────────────────────────
@@ -161,6 +151,11 @@ def instala_si_cal():
 instala_si_cal()
 
 import sacrebleu
+
+# Mètriques i normalització d'apòstrofs: les del paquet (30/10/2026).
+from avlizador.avaluacio.metriques import (  # noqa: E402
+    calcula_metriques, distancia_paraules, normalitza_apostrofa, ter_wer_corpus,
+)
 import requests
 
 # ─── Configuració ─────────────────────────────────────────────────────────────
@@ -520,39 +515,9 @@ def carrega_comet_model(nom_model: str = COMET_MODEL_NAME):
 
 
 # ─── Mètriques ────────────────────────────────────────────────────────────────
-
-def calcula_metriques(hipotesi: str, referencia: str) -> dict:
-    """Calcula BLEU, chrF i chrF++ per a un parell hipòtesi/referència.
-    Normalitza apòstrofs abans de comparar per no penalitzar diferències tipogràfiques.
-    """
-    hip = normalitza_apostrofa(hipotesi.strip().lower())
-    ref = normalitza_apostrofa(referencia.strip().lower())
-    # Usa les versions normalitzades també per BLEU/chrF
-    hipotesi = normalitza_apostrofa(hipotesi.strip())
-    referencia = normalitza_apostrofa(referencia.strip())
-
-    try:
-        bleu_score = sacrebleu.sentence_bleu(hipotesi, [referencia]).score
-    except Exception:
-        bleu_score = 0.0
-
-    try:
-        chrf_score = sacrebleu.sentence_chrf(hipotesi, [referencia]).score
-    except Exception:
-        chrf_score = 0.0
-
-    try:
-        chrf_pp_score = sacrebleu.sentence_chrf(hipotesi, [referencia], word_order=2).score
-    except Exception:
-        chrf_pp_score = 0.0
-
-    return {
-        "bleu":    round(bleu_score, 2),
-        "chrf":    round(chrf_score, 2),
-        "chrf_pp": round(chrf_pp_score, 2),
-        "exacte":  (hip == ref),
-    }
-
+# Des del 30/10/2026 viuen al paquet (`avlizador.avaluacio.metriques`, importades
+# a dalt): normalitza_apostrofa, distancia_paraules, calcula_metriques i
+# ter_wer_corpus.
 
 # ─── Adaptadors de model ──────────────────────────────────────────────────────
 
@@ -1040,7 +1005,7 @@ def tradueix_traductor_nou(frase: str) -> str:
     if arrel_projecte not in sys.path:
         sys.path.insert(0, arrel_projecte)
 
-    from traductor.translate import translate
+    from avlizador.traductor_cat_val.translate import translate
     return translate(frase)
 
 
@@ -1048,7 +1013,12 @@ def tradueix_traductor_invers(frase: str) -> str:
     """Adaptador cap a la direcció INVERSA del paquet `traductor/`
     (`translate_cat_val`, afegida 08/10/2026 -- vore
     `documentacio/hoja_de_ruta_traductor_invers.md`). Mateix mecanisme
-    d'import peresós que `tradueix_traductor_nou`, mateix motiu."""
+    d'import peresós que `tradueix_traductor_nou`, mateix motiu.
+
+    És el MOTOR SOL (`translate_cat_val_motor`): des del 29/10/2026
+    `translate_cat_val` inclou el model de llengua, i este adaptador es
+    queda en el motor per a comparar amb les mesures d'abans. El sistema
+    final s'avalua amb `--model traductor_ml`."""
     import sys
     from pathlib import Path
 
@@ -1056,8 +1026,8 @@ def tradueix_traductor_invers(frase: str) -> str:
     if arrel_projecte not in sys.path:
         sys.path.insert(0, arrel_projecte)
 
-    from traductor.translate_invers import translate_cat_val
-    return translate_cat_val(frase)
+    from avlizador.traductor_cat_val.translate_invers import translate_cat_val_motor
+    return translate_cat_val_motor(frase)
 
 
 MODEL_LLENGUA_ID = None  # --model-llengua (None = el per defecte de traductor/model_llengua)
@@ -1076,7 +1046,7 @@ def tradueix_traductor_ml(frase: str) -> str:
     if arrel_projecte not in sys.path:
         sys.path.insert(0, arrel_projecte)
 
-    from traductor.model_llengua import Criteri, translate_cat_val_ml
+    from avlizador.traductor_cat_val.model_llengua import Criteri, translate_cat_val_ml
     return translate_cat_val_ml(frase, MODEL_LLENGUA_ID, Criteri(model_irresolubles=MODEL_IRRESOLUBLES))
 
 
@@ -1153,6 +1123,7 @@ def avalua_model(
         print(
             f"  BLEU={metriques['bleu']:5.1f}  "
             f"chrF={metriques['chrf']:5.1f}  "
+            f"TER={metriques['ter']:5.1f}  "
             f"{'✓ EXACTE' if metriques['exacte'] else ''}"
         )
 
@@ -1181,6 +1152,10 @@ def avalua_model(
     chrf_mitja    = sum(r["chrf"]    for r in resultats) / len(resultats)
     chrf_pp_mitja = sum(r["chrf_pp"] for r in resultats) / len(resultats)
     exactes       = sum(1 for r in resultats if r["exacte"])
+    # TER/WER de corpus (la forma estàndard): suma d'edicions / suma de
+    # paraules de la referència, no la mitjana de les frases.
+    ter_corpus    = ter_wer_corpus(resultats, "ter_edicions")
+    wer_corpus    = ter_wer_corpus(resultats, "wer_edicions")
     comet_scores  = [r["comet"] for r in resultats if usa_comet and r.get("comet") is not None]
     comet_mitja   = round(sum(comet_scores) / len(comet_scores), 2) if comet_scores else None
 
@@ -1192,6 +1167,8 @@ def avalua_model(
             "n":      len(items_cat),
             "bleu":   round(sum(r["bleu"] for r in items_cat) / len(items_cat), 2),
             "chrf":   round(sum(r["chrf"] for r in items_cat) / len(items_cat), 2),
+            "ter":    ter_wer_corpus(items_cat, "ter_edicions"),
+            "wer":    ter_wer_corpus(items_cat, "wer_edicions"),
             "exactes": sum(1 for r in items_cat if r["exacte"]),
         }
         cat_comet = [r["comet"] for r in items_cat if r.get("comet") is not None]
@@ -1218,6 +1195,8 @@ def avalua_model(
         "bleu_mitja":     round(bleu_mitja, 2),
         "chrf_mitja":     round(chrf_mitja, 2),
         "chrf_pp_mitja":  round(chrf_pp_mitja, 2),
+        "ter_corpus":     ter_corpus,
+        "wer_corpus":     wer_corpus,
         "comet_mitja":    comet_mitja,
         "exactes":        exactes,
         "exactes_pct":    round(exactes / len(resultats) * 100, 1),
@@ -1230,6 +1209,8 @@ def avalua_model(
     print(f"BLEU:    {bleu_mitja:.2f}")
     print(f"chrF:    {chrf_mitja:.2f}")
     print(f"chrF++:  {chrf_pp_mitja:.2f}")
+    print(f"TER:     {ter_corpus:.2f}  (corpus; com més baix, millor)")
+    print(f"WER:     {wer_corpus:.2f}  (corpus; com més baix, millor)")
     if comet_mitja is not None:
         print(f"COMET:   {comet_mitja:.2f}")
     print(f"Exactes: {exactes}/{len(resultats)} ({exactes/len(resultats)*100:.1f}%)")
@@ -1250,12 +1231,12 @@ def genera_informe_comparatiu(resultats_models: list[dict]) -> str:
     te_comet = any(r.get("comet_mitja") is not None for r in resultats_models)
 
     # Taula resum (ordenada per chrF descendent)
-    capcalera = f"{'Model':<25} {'BLEU':>8} {'chrF':>8} {'chrF++':>8}"
+    capcalera = f"{'Model':<25} {'BLEU':>8} {'chrF':>8} {'chrF++':>8} {'TER':>8} {'WER':>8}"
     if te_comet:
         capcalera += f" {'COMET':>8}"
     capcalera += f" {'Exactes':>10}"
     lines.append(capcalera)
-    lines.append("-" * (65 + (9 if te_comet else 0)))
+    lines.append("-" * (83 + (9 if te_comet else 0)))
 
     for r in sorted(resultats_models, key=lambda x: x["chrf_mitja"], reverse=True):
         fila = (
@@ -1263,6 +1244,8 @@ def genera_informe_comparatiu(resultats_models: list[dict]) -> str:
             f"{r['bleu_mitja']:>8.2f} "
             f"{r['chrf_mitja']:>8.2f} "
             f"{r['chrf_pp_mitja']:>8.2f} "
+            f"{r.get('ter_corpus', float('nan')):>8.2f} "
+            f"{r.get('wer_corpus', float('nan')):>8.2f} "
         )
         if te_comet:
             comet_txt = f"{r['comet_mitja']:.2f}" if r.get("comet_mitja") is not None else "-"
@@ -1279,6 +1262,8 @@ def genera_informe_comparatiu(resultats_models: list[dict]) -> str:
                 f"  {cat:<30} n={m['n']:>2}  "
                 f"BLEU={m['bleu']:>5.1f}  chrF={m['chrf']:>5.1f}"
             )
+            if "ter" in m:
+                fila += f"  TER={m['ter']:>5.1f}  WER={m['wer']:>5.1f}"
             if "comet" in m:
                 fila += f"  COMET={m['comet']:>5.1f}"
             fila += f"  exactes={m['exactes']}"
@@ -1318,7 +1303,9 @@ def main():
         required=True,
         help="Model a avaluar. 'traductor_ml' (només --direccio cat-val, "
              "23/10/2026): el sistema final, motor + model de llengua per als "
-             "homògrafs (traductor/model_llengua/)."
+             "homògrafs (traductor/model_llengua/; és el que fa "
+             "traductor.translate_cat_val des del 29/10/2026). 'traductor' "
+             "amb --direccio cat-val: el motor sol, per a comparar."
     )
     parser.add_argument(
         "--model-llengua", default=None,

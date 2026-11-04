@@ -1,3 +1,10 @@
+> **30/10/2026: les fonts del lèxic (`diccionarios/`) s'han mogut a
+> [`dades/lexic/`](../../../dades/lexic/), la font única**, i la còpia del
+> paquet és `src/avlizador/traductor_cat_val/data/` (abans
+> `traductor/data/`). `sync_data.py` és ara `scripts/sync_data.py`. On
+> baix diu `diccionarios/X`, llegiu `dades/lexic/X`. Ací es queden
+> `palabras_traducidas.json` i el seu script.
+
 # Fonts de dades del traductor — estat 19/10/2026
 
 Este directori conté TOTS els fitxers font que `traductor/sync_data.py`

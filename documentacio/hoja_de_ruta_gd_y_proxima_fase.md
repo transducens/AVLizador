@@ -10,11 +10,11 @@
 > sí — el redactado original, los ejemplos concretos y buena parte del
 > razonamiento intermedio se han perdido.
 
-# Hoja de ruta: IPD y próxima fase
+# Hoja de ruta: GD y próxima fase
 
 Plan de 3 pasos, en el orden exacto que pidió el usuario:
 
-1. **Índice de Puresa Dialectal (IPD)** primero — una métrica propia
+1. **Grado Dialectal (GD)** primero — una métrica propia
    (ratio de ocurrencias de formas occidentales sobre el total de
    ocurrencias marcadas), reemplazando el enfoque basado en reglas de
    `estudi_dialectal.py` por uno basado en el índice de palabras del
@@ -27,7 +27,7 @@ Plan de 3 pasos, en el orden exacto que pidió el usuario:
 ## Paso 1 — HECHO (13/10/2026)
 
 Implementado como hito propio del proyecto, etapa 9:
-`pipeline/09_index_puresa_dialectal/ipd.py` + README.md (valencià) + README.es.md
+`pipeline/09_grau_dialectal/gd.py` + README.md (valencià) + README.es.md
 (castellano) — ver esos ficheros para el detalle técnico completo
 (fórmula, fuentes de datos, limitaciones conocidas), que SÍ siguen
 existiendo y no se han perdido.
@@ -45,7 +45,7 @@ Resumen de lo más importante:
   "poden", "base"...); (2) el prefijo elidido ("d'aquestes" nunca casaba
   con la entrada "aquestes" porque el tokenizador trata el apóstrofo
   como parte de la palabra).
-- Validado contra el benchmark de 151 frases: IPD 0,9339 en el lado
+- Validado contra el benchmark de 151 frases: GD 0,9339 en el lado
   valenciano, 0,0153 en el catalán.
 - Confirmado a mayor escala con el corpus del BOE y, más tarde
   (14/10/2026), con el dataset `gplsi/CA-VA_alignment_test` (1.958
@@ -55,9 +55,9 @@ Resumen de lo más importante:
 
 > **Nota 14/10/2026**: el Paso 1 se siguió ampliando después de escrito
 > este resumen — validación contra el dataset gplsi, un filtrado del
-> corpus por IPD para separar sinonimia de fallos reales del motor, y 4
+> corpus por GD para separar sinonimia de fallos reales del motor, y 4
 > bugs reales nuevos encontrados en el propio diccionario del traductor
-> (no en el IPD) gracias a esa validación. Todo esto está documentado
+> (no en el GD) gracias a esa validación. Todo esto está documentado
 > con mucho más detalle y de primera mano en `CLAUDE.md` — es la fuente
 > más completa y fiable a partir de esa fecha, más que este documento
 > reconstruido.
@@ -76,15 +76,15 @@ Probar con un dataset distinto del benchmark de 151: se hizo el
 14/10/2026 con `gplsi/CA-VA_alignment_test` (Hugging Face, CC BY 4.0,
 1.958 frases) en vez de con el BOE que se había identificado como
 candidato original — ver `CLAUDE.md` para los resultados completos
-(IPD, benchmark de traducción completo y filtrado, análisis de fallos).
+(GD, benchmark de traducción completo y filtrado, análisis de fallos).
 El BOE a gran escala (el corpus `corpus_entrenamiento.jsonl` completo,
 ~268.000 líneas) se probó después, el 15/10/2026: ver la sección
 siguiente.
 
-## Estado del IPD a 21/10/2026
+## Estado del GD a 21/10/2026
 
-Resumen de todo lo hecho en el IPD desde el 14/10/2026. El detalle
-técnico vive en el docstring de `pipeline/09_index_puresa_dialectal/ipd.py`
+Resumen de todo lo hecho en el GD desde el 14/10/2026. El detalle
+técnico vive en el docstring de `pipeline/09_grau_dialectal/gd.py`
 y en sus dos README.
 
 ### 15/10/2026 — BOE completo y marcadores no fiables por registro
@@ -94,7 +94,7 @@ valenciano): 0,8071, bastante por debajo del benchmark y de gplsi. Medido
 contra frecuencias reales, "qué" aparece 1 vez por cada 17.584 "què" y
 "açò" 65 veces por cada 5.708 "això": son pares reales (el traductor los
 convierte bien), pero no son señal de dialecto en registro formal. Se
-excluyen solo del IPD (`_MARCADORS_NO_FIABLES_REGISTRE`), sin tocar el
+excluyen solo del GD (`_MARCADORS_NO_FIABLES_REGISTRE`), sin tocar el
 traductor. BOE completo: **0,8071 → 0,9219**.
 
 ### 16/10/2026 — Tres mejoras identificadas y aparcadas
@@ -110,7 +110,7 @@ traductor. BOE completo: **0,8071 → 0,9219**.
 
 ### 21/10/2026 — Revisión tras la migración a los diccionarios del proveedor
 
-**Sincronización: correcta.** El IPD no lee los JSON por su cuenta:
+**Sincronización: correcta.** El GD no lee los JSON por su cuenta:
 reutiliza los cargadores del traductor, así que cualquier cambio de datos
 le llega solo. `python -m traductor.sync_data --check` confirma que
 `traductor/data/` coincide con `diccionarios/`. La regla de la forma
@@ -150,7 +150,7 @@ cada lectura) y `categoria` (la de la lectura dialectal).
   "gandules"), spaCy no puede decidir y la forma no cuenta nunca.
 - El resto de palabras no pasa por spaCy.
 
-Implementado en `ipd.py::_carrega_homografs` y `_classifica_token`. Sin
+Implementado en `gd.py::_carrega_homografs` y `_classifica_token`. Sin
 listas a mano: todo sale de campos del diccionario.
 
 **Resultados:**
@@ -160,7 +160,7 @@ listas a mano: todo sale de campos del diccionario.
 | Benchmark 151 | 0,9647 → **0,9749** | 0,1135 → **0,1115** |
 | gplsi (1.958) | 0,9341 → **0,9387** | 0,0685 → **0,0632** |
 
-32/32 doctests de `ipd.py`. La traducción no cambia (cat→val 137/154).
+32/32 doctests de `gd.py`. La traducción no cambia (cat→val 137/154).
 
 ### Lo que queda abierto
 
@@ -171,7 +171,7 @@ listas a mano: todo sale de campos del diccionario.
   el lado catalán bajaría a unos 0,05 en los dos corpus. **Decisión del
   usuario (21/10/2026): dejarlo así de momento.**
 - **`E0537`/`E0538` (tancada/tancades)** tienen `categoria: "adj"`, pero la
-  lectura dialectal es el nombre ("vallado"); con el dato así, el IPD
+  lectura dialectal es el nombre ("vallado"); con el dato así, el GD
   cuenta "tancada" adjetivo, que es compartido.
 - **"nou" (nuez) no cuenta nunca**: spaCy etiqueta "nou" como NUM incluso
   cuando es nombre ("la nou és dura"). Falso negativo aceptado.
@@ -181,7 +181,63 @@ listas a mano: todo sale de campos del diccionario.
   decisión de registro pendiente en el traductor.
 - **"petit"/"menut" mal emparejado** en los datos (36 marcadores falsos
   en gplsi). Solo se arregla en origen.
-- **Incoativos**: el IPD no los cuenta. Medido con el mecanismo de
+- **Incoativos**: el GD no los cuenta. Medido con el mecanismo de
   `cat_val/incoatius.py` (spaCy + infinitivos de los JSON): +215
   marcadores catalanes y +55 valencianos en gplsi, con un solo error
   ("conquereix"). Preparado, no aplicado.
+
+## 26/10/2026 — Textos sin marcadores, GDV e GDC
+
+Decisiones del usuario sobre los textos sin ninguna palabra marcada,
+que antes daban `None`:
+
+- **0,5, descartado**: se confunde con un texto mezclado a partes
+  iguales ("El xiquet jugava amb el nen del veí." también da 0,5).
+- **`gd.py`, tres modos con el parámetro `dialecte`**: sin él (por
+  defecto), `None`, que es la medida neutra y no entra en las medias.
+  Con `"val"` → 1,0 y con `"cat"` → 0,0: el texto cuenta como puro en el
+  dialecto evaluado. Este resultado depende de la tarea, así que no
+  sirve para comparar dialectos. CLI: `--dialecte` y `--dialecte-alt`,
+  los dos sin valor por defecto.
+- **`gdv.py` e `gdc.py`, dos índices simétricos nuevos**, de 0 (nada
+  puro) a 1 (puro): GDV = occidentales / marcadas, GDC = orientales /
+  marcadas. Sin marcadores, 1 en los dos. Reutilizan `calcula_gd`
+  (mismos marcadores). Para un corpus dan `*_global` (suma de
+  marcadores) y `*_mitjana` (media por frase, sin marcadores = 1).
+
+| Benchmark 151 | global | media | frases sin marcadores |
+|---|---|---|---|
+| GDV, lado valenciano | 0,9863 | 0,9930 | 14 |
+| GDC, lado catalán | 0,8733 | 0,8937 | 15 |
+
+En todos los casos, `total_marcades == 0` indica que el valor no viene
+de ningún marcador. **Decisión del usuario (26/10/2026): `gdv.py` e
+`gdc.py` entran en la entrega a la Conselleria junto a `gd.py`** (no
+funcionan sin él: reutilizan `calcula_gd`).
+
+### 27/10/2026: GDV y GDC cuentan las palabras neutras
+
+**Decisión del usuario**: el GD se queda como está (solo marcadores,
+neutras fuera). El GDV y el GDC pasan a contar las palabras neutras
+(las que no son marcador de ningún dialecto) como válidas en los dos
+dialectos:
+
+- GDV = (occidentales + neutras) / palabras = 1 − orientales / palabras
+- GDC = (orientales + neutras) / palabras = 1 − occidentales / palabras
+
+Motivo: usarlos como recompensa para entrenar modelos. Una frase sin
+marcadores también sigue el estándar, y con la fórmula del 26/10 no
+aportaba nada. Consecuencias: GDV + GDC ya no suma 1, y los dos quedan
+cerca de 1 porque la gran mayoría de las palabras son neutras. Corpus:
+`*_global` por palabra y `*_mitjana` por frase. Límite: "neutra" = "no
+está en el diccionario de pares", no "correcta". 33/33 doctests de
+`gd.py`/`gdv.py`/`gdc.py`.
+
+| Corpus | GDV | GDC | Palabras | occ / or |
+|---|---|---|---|---|
+| 151, lado valenciano (global / media) | 0,9991 / 0,9989 | — | 4.302 | 287 / 4 |
+| 151, lado catalán (global / media) | — | 0,9914 / 0,9909 | 4.303 | 37 / 255 |
+| GNV (texto entero) | 0,9983 | 0,9885 | 66.146 | 760 / 114 |
+| GEIEC (texto entero) | 0,9832 | 0,9951 | 92.719 | 456 / 1.562 |
+
+Detalle y análisis por corpus: `documentacio/resultats_gd_gdv_gdc.md`.

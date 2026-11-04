@@ -69,7 +69,7 @@
 ## 3. Tareas pendientes
 
 - Completar la clasificación manual del diccionario del traductor (en
-  curso por un colaborador externo, Mauricio) antes de ampliar varias
+  curso por un colaborador externo, el proveedor de datos) antes de ampliar varias
   reglas que dependen de esa clasificación.
 - Investigar si la ambigüedad gramatical indicativo/subjuntivo (ya
   corregida en valenciano→catalán para un caso concreto) aparece también

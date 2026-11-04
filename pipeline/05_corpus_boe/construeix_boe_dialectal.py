@@ -71,14 +71,14 @@ from pathlib import Path
 ARREL = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ARREL))
 
-from traductor.rules import separa_prefix_elidit, separa_sufix_elidit  # noqa: E402
-from traductor.rules.cat_val.incoatius import carrega_infinitius_ir, converteix_incoatiu  # noqa: E402
+from avlizador.traductor_cat_val.rules import separa_prefix_elidit, separa_sufix_elidit  # noqa: E402
+from avlizador.traductor_cat_val.rules.cat_val.incoatius import carrega_infinitius_ir, converteix_incoatiu  # noqa: E402
 
 BOE = ARREL / "dades" / "boe"
 CAT = BOE / "catala" / "corpus_entrenamiento.catala.txt"
 VAL = BOE / "valencia" / "corpus_entrenamiento.valencia.txt"
 DADES = BOE / "benchmarks"
-DATA = ARREL / "traductor" / "data"
+DATA = ARREL / "src" / "avlizador" / "traductor_cat_val" / "data"
 TOK = re.compile(r"[\wàèéíòóúïüç·'-]+|[^\w\s]", re.UNICODE)
 MOSTRA = 2000
 LLAVOR = 21

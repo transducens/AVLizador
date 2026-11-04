@@ -25,10 +25,9 @@ from pathlib import Path
 
 AQUI = Path(__file__).resolve().parent
 ARREL = AQUI.parents[2]
-sys.path.insert(0, str(ARREL / "pipeline" / "09_grau_dialectal"))
 sys.path.insert(0, str(AQUI))
 
-import gd  # noqa: E402
+from avlizador.grau_dialectal import gd  # noqa: E402
 from fenomens import (carrega_index, detecta_parell, detecta_regles_parell, detecta_regles_valencia,  # noqa: E402
                       detecta_valencia, paraules)
 

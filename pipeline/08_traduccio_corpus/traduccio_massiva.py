@@ -31,7 +31,7 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT_DIR))  # traductor/ viu a l'arrel del projecte, dos nivells amunt
 
-from traductor.translate import translate  # noqa: E402
+from avlizador.traductor_cat_val.translate import translate  # noqa: E402
 
 DEFAULT_INPUT = ROOT_DIR / "dades" / "avl" / "final" / "dialectal" / "corpus_occidental_net.jsonl"
 DEFAULT_OUTPUT = Path(__file__).resolve().parent / "eixides" / "corpus_traduit_regles.jsonl"

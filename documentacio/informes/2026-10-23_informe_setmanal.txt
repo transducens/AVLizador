@@ -1,0 +1,40 @@
+INFORME SEMANAL - AVLIZADOR (traductor dialectal valenciano-catalan)
+Semana del 19 al 23 de octubre de 2026
+
+1. NOVEDADES DE LA SEMANA
+
+- El trabajo se centra ya solo en la direccion catalan->valenciano, que es la que se entregara a la Conselleria junto con el Indice de Pureza Dialectal (IPD), para equipos con pocos recursos y sin tarjeta grafica. La direccion valenciano->catalan queda aparcada.
+- El traductor funciona ya solo con los diccionarios oficiales del proveedor de datos. Se completo la integracion de sus conjugaciones verbales (mas de 43.000 formas) y se retiraron todos los ficheros y listas de palabras que el equipo habia hecho a mano. Algunas de esas listas tapaban errores de datos en vez de corregirlos. Ahora cada decision sale del propio diccionario o del analisis gramatical automatico, y no hay palabras escritas a mano en el codigo.
+- Nuevos bancos de prueba a partir del BOE completo. Se han construido dos conjuntos de pares catalan/valenciano reales del BOE: uno "estricto" (9.453 pares en los que solo cambian rasgos dialectales, para detectar errores) y uno "amplio" (para ver que le falta al traductor). Desde esta semana son la referencia principal, junto con el banco de 151 frases y el dataset publico de 1.958 frases.
+- Resultados actuales de catalan->valenciano:
+  - BOE estricto: 8.857 de 9.453 frases identicas a la oficial (93,7%).
+  - Dataset publico: 1.479 de 1.958 (75,5%), frente a 1.212 la semana pasada.
+  - Banco de 151 frases: 146 de 154. No es comparable con semanas anteriores, porque esta semana se corrigieron sus referencias para que sigan la norma.
+- Las reglas de la guia de traduccion se contrastaron con los textos oficiales (AVL y BOE). De las reglas de la guia, solo tres se cumplen de verdad en el valenciano oficial ("per a" delante de infinitivo, "aci" en lugar de "aqui" y "on" sin "a"), y son las que se han aplicado. Las demas se midieron y se descartaron con datos.
+- Palabras ambiguas resueltas con un modelo de lenguaje pequeno. Hay unas pocas palabras catalanas con dos traducciones posibles segun el sentido: "cop" puede ser "colp" (golpe) o "vegada" (vez), y "gandula" puede ser "hamaca" o persona vaga. Se ha anadido una capa opcional que construye las dos frases posibles y deja que un modelo de lenguaje pequeno (FLOR, del proyecto AINA) elija la mas natural. Este modelo no escribe nada: solo elige entre traducciones del diccionario. Funciona sin tarjeta grafica y solo se activa en las frases con esas palabras. En el banco de prueba de estas palabras se pasa de 190 a 227 frases correctas de 253, sin cambiar ninguna de las demas.
+- Un primer intento con modelos de IA conversacionales (LLM) no dio resultado en esta direccion: los modelos que caben en un ordenador normal no conocian esas palabras, y el que si las conocia tardaba unos 12 segundos por respuesta. Por eso se cambio al metodo del punto anterior.
+- El traductor es ahora mas del doble de rapido (de unas 87 a unas 250 frases por segundo en un solo nucleo) sin cambiar ninguna traduccion.
+
+2. TAREAS EN LAS QUE HEMOS AVANZADO
+
+- Errores de datos encontrados y corregidos en origen, con el permiso correspondiente: una palabra mal escrita en el diccionario ("hamaces" por "hamaques") y dos identificadores repetidos o erroneos. El primero es instructivo: el modelo de lenguaje parecia no entender la palabra, y en realidad lo que fallaba era el dato. El modelo sirve asi tambien para encontrar formas sospechosas del diccionario.
+- Documentacion puesta al dia: la metodologia completa del proyecto, los manuales del traductor y de cada parte describen ya la estructura y los resultados actuales.
+- Nuevo encargo: un banco de prueba revisado a mano, con 200 frases del BOE y 200 de los textos de la AVL de todos los tipos (notas de prensa, acuerdos normativos, boletin, gramatica, glosario...), elegidas para que contengan los rasgos dialectales que el traductor debe resolver y distintas del banco de 151 frases. Hecho esta semana:
+  - el plan completo paso a paso;
+  - el detector automatico de los rasgos de cada frase;
+  - una primera seleccion de 760 frases candidatas de la AVL.
+
+3. TAREAS PENDIENTES
+
+- Terminar el banco de prueba revisado a mano: seleccionar las candidatas del BOE (la extraccion quedo a medias y hay que hacerla mas rapida), elegir 250 candidatas de cada fuente y repartirlas en el equipo para revisarlas y corregirlas a mano.
+- Guardar en el repositorio el trabajo de los ultimos dias, que todavia no esta confirmado.
+- Pasar al proveedor de datos los problemas encontrados que no podemos corregir nosotros:
+  - una palabra que el diccionario aplica tambien cuando es un verbo ("afecta" -> "carinya");
+  - los numerales ordinales del BOE ("octava", "desset"), que el diccionario escribe de otra forma;
+  - algunos toponimos que coinciden con palabras comunes ("les Garrigues").
+- Preparar la entrega a la Conselleria: instalacion sencilla y forma de uso desde la linea de ordenes o como servicio.
+
+4. ASUNTOS URGENTES
+
+- No hay incidencias bloqueantes esta semana.
+- Hay que confirmar con el equipo el criterio de reparto del banco de prueba manual (cuantas frases de cada tipo de rasgo) antes de empezar la revision.

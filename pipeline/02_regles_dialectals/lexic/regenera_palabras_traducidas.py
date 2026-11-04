@@ -31,7 +31,8 @@ import sys
 from pathlib import Path
 
 LEXIC = Path(__file__).resolve().parent
-LEXICO_GENERAL = LEXIC / "diccionarios" / "lexico_general.json"
+# 30/10/2026: la font única del lèxic és dades/lexic/ (abans diccionarios/ d'esta carpeta).
+LEXICO_GENERAL = LEXIC.parents[2] / "dades" / "lexic" / "lexico_general.json"
 DESTINO = LEXIC / "palabras_traducidas.json"
 
 

@@ -28,7 +28,7 @@ pipeline/
   06_dades_entrenament/
   07_entrenament_de_models/
   08_traduccio_corpus/
-  09_index_puresa_dialectal/
+  09_grau_dialectal/
 dades/                   # transversal, lo consumen varias etapas
 documentacio/            # transversal
 README.md / README.es.md
@@ -113,7 +113,7 @@ retirados el 30/09/2026 según `val_cat/lexic.py`):
       única mención en todo el repo era un comentario, no una carga de
       fichero; los 5 ficheros llevaban desde el 01/10 sin tocarse).
 - [x] `metrica_puresa_dialectal.md` → eliminado (superado por
-      `pipeline/09_index_puresa_dialectal/README.md`, ya implementado y validado).
+      `pipeline/09_grau_dialectal/README.md`, ya implementado y validado).
 
 **Borrado definitivo**: `lexic/apertium_368_val_cat.json`,
 `lexic/contrastius_paula_guerrero.json`, `lexic/lexico_fiable.json`,
@@ -150,7 +150,7 @@ y de `traductor/` (valencià/català y castellano).
 - [ ] `08_traduccio_corpus/` (ya sabemos que `postprocessat_llm/` tiene
       bastante acumulado de exploración puntual, ver conversación del
       14/10/2026)
-- [ ] `09_index_puresa_dialectal/` (ya movidas las pruebas a `proves/`
+- [ ] `09_grau_dialectal/` (ya movidas las pruebas a `proves/`
       el 14/10/2026; quedan sueltos los `informe_*.html`/`resultado_*.json`
       de hoy, regenerables)
 - [ ] `dades/` (revisar solapamiento conceptual con `pipeline/05_corpus_boe/`

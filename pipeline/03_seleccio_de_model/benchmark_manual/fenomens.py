@@ -33,7 +33,7 @@ from collections import defaultdict
 from pathlib import Path
 
 ARREL = Path(__file__).resolve().parents[3]
-DATA = ARREL / "traductor" / "data"
+DATA = ARREL / "src" / "avlizador" / "traductor_cat_val" / "data"
 
 _CODIS_MODE = {
     "prs": "CONJ_SUBJ", "pis": "CONJ_SUBJ",
@@ -169,14 +169,14 @@ _regles_cache: dict = {}
 def _regles():
     if not _regles_cache:
         sys.path.insert(0, str(ARREL))
-        from traductor.rules import detokenize, marca_noms_propis, pos_tagger, tokenize
-        from traductor.rules.cat_val.accentuacio import AccentuacioInversRule
-        from traductor.rules.cat_val.concordanca_dos_dues import ConcordancaDosDuesInversRule
-        from traductor.rules.cat_val.incoatius import IncoatiusInversRule
-        from traductor.rules.cat_val.per_a_infinitiu import PerAInfinitiuInversRule
-        from traductor.rules.val_cat.accentuacio import AccentuacioRule
-        from traductor.rules.val_cat.concordanca_dos_dues import ConcordancaDosDuesRule
-        from traductor.rules.val_cat.incoatius import IncoatiusRule
+        from avlizador.traductor_cat_val.rules import detokenize, marca_noms_propis, pos_tagger, tokenize
+        from avlizador.traductor_cat_val.rules.cat_val.accentuacio import AccentuacioInversRule
+        from avlizador.traductor_cat_val.rules.cat_val.concordanca_dos_dues import ConcordancaDosDuesInversRule
+        from avlizador.traductor_cat_val.rules.cat_val.incoatius import IncoatiusInversRule
+        from avlizador.traductor_cat_val.rules.cat_val.per_a_infinitiu import PerAInfinitiuInversRule
+        from avlizador.traductor_cat_val.rules.val_cat.accentuacio import AccentuacioRule
+        from avlizador.traductor_cat_val.rules.val_cat.concordanca_dos_dues import ConcordancaDosDuesRule
+        from avlizador.traductor_cat_val.rules.val_cat.incoatius import IncoatiusRule
 
         _regles_cache.update(
             tokenize=tokenize, detokenize=detokenize, marca=marca_noms_propis, pos=pos_tagger,

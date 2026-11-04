@@ -11,7 +11,13 @@ sacado del mismo corpus limpio de la etapa 1).
 
 `pipeline/03_seleccio_de_model/evalua_models.py` — benchmarquea el modelo que le indiques
 contra las 150 frases, calculando BLEU/chrF/chrF++ y % de traducciones
-exactas. Uso:
+exactas; desde el 30/10/2026 también **TER y WER** (de corpus: ediciones /
+palabras de la referencia, más bajo = mejor; detalle y resultados en
+`documentacio/hoja_de_ruta_benchmark_manual.md`, sección 10). Tabla de
+consulta rápida con todas las métricas de cada ejecución cat→val:
+[`resultats_benchmarks_cat_val.md`](resultats_benchmarks_cat_val.md).
+Para evaluar el sistema final (motor + FLOR-760M) en todos los benchmarks
+de una vez: `python avalua_sistema_final.py` (ver el fichero anterior). Uso:
 
 ```bash
 python evalua_models.py --model ollama --ollama-model qwen2.5:14b

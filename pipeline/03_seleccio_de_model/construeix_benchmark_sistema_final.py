@@ -33,7 +33,7 @@ ARREL = AQUI.parent.parent
 sys.path.insert(0, str(ARREL))
 
 BENCHMARK_151 = AQUI / "benchmark_corpus.json"
-DIR_ML = ARREL / "traductor" / "model_llengua"
+DIR_ML = ARREL / "pipeline" / "03_seleccio_de_model" / "model_llengua"
 HOMOGRAFS = DIR_ML / "benchmark_homografs_cat_val.json"
 FRASES = DIR_ML / "frases_homografs.json"
 EIXIDA = AQUI / "benchmark_sistema_final_cat_val.json"
@@ -45,9 +45,9 @@ def _frases_noves(ja: set[str]) -> list[dict]:
                 if f["text"] not in ja and f["paraula"]]
     if not pendents:
         return []
-    from traductor.model_llengua.punts import TIPUS, aplica_candidat, base_neutra, carrega_punts, detecta
-    from traductor.rules import detokenize
-    from traductor.rules.cat_val.engine import RuleEngineInvers
+    from avlizador.traductor_cat_val.model_llengua.punts import TIPUS, aplica_candidat, base_neutra, carrega_punts, detecta
+    from avlizador.traductor_cat_val.rules import detokenize
+    from avlizador.traductor_cat_val.rules.cat_val.engine import RuleEngineInvers
 
     motor, punts = RuleEngineInvers(), carrega_punts()
     noves = []

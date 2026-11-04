@@ -128,7 +128,7 @@ def calcula_ambiguitats_3a_plural() -> dict[str, dict[str, str]]:
     ha la fila de subjuntiu, que es l'unica que veu `conjugacions_dialectals.json`).
     """
     sys.path.insert(0, str(ARREL))
-    from traductor.rules.val_cat.conjugacions_dict import (  # noqa: E402
+    from avlizador.traductor_cat_val.rules.val_cat.conjugacions_dict import (  # noqa: E402
         DEFAULT_CONJUGACIONS_PATH,
         EXCLUSIONS_HOMOGRAF,
         SEMPRE_VERB,

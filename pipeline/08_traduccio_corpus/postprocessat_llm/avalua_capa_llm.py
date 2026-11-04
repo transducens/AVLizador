@@ -40,8 +40,10 @@ ARREL = Path(_ENV) if _ENV else Path(__file__).resolve().parents[3]
 DIR_03 = ARREL / "03_seleccio_de_model" if _ENV else ARREL / "pipeline" / "03_seleccio_de_model"
 sys.path.insert(0, str(ARREL))
 sys.path.insert(0, str(DIR_03))
+# capa_llm/ (abans traductor/llm/, 30/10/2026) viu al costat d'este script.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from traductor.llm import ClientLLM, tradueix_val_cat  # noqa: E402
+from capa_llm import ClientLLM, tradueix_val_cat  # noqa: E402
 from evalua_models import calcula_metriques  # noqa: E402
 
 
