@@ -13191,5 +13191,37 @@
     "fuente": "misc",
     "id": "E1669",
     "categoria": "adj"
+  },
+  {
+    "valenciano": "Li la",
+    "catalan": "La hi",
+    "tipo": "v:lexic_val",
+    "fuente": "geiec",
+    "id": "E1670",
+    "categoria": "prn"
+  },
+  {
+    "valenciano": "Li'l",
+    "catalan": "L'hi",
+    "tipo": "v:lexic_val",
+    "fuente": "geiec",
+    "id": "E1671",
+    "categoria": "prn"
+  },
+  {
+    "valenciano": "Li'ls",
+    "catalan": "Els hi",
+    "tipo": "v:lexic_val",
+    "fuente": "geiec",
+    "id": "E1672",
+    "categoria": "prn"
+  },
+  {
+    "valenciano": "Li les",
+    "catalan": "Les hi",
+    "tipo": "v:lexic_val",
+    "fuente": "geiec",
+    "id": "E1673",
+    "categoria": "prn"
   }
 ]
