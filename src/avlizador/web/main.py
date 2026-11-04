@@ -23,22 +23,33 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import mimetypes
 import os
 import re
 from contextlib import asynccontextmanager
 from dataclasses import dataclass, field
 from importlib.metadata import PackageNotFoundError, version
+from pathlib import Path
+from urllib.parse import parse_qs
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pydantic import BaseModel
 from starlette.concurrency import run_in_threadpool
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from .. import __version__
 from .idiomes import Parell, parells_per_defecte
-from .missatges import missatge, tria_idioma
+from .missatges import IDIOMES_INTERFICIE, missatge, nombre, textos, tria_idioma
+
+CARPETA = Path(__file__).resolve().parent
+# Textos que necessita `static/traductor.js` (van en un bloc JSON de la
+# pàgina, no en JavaScript en línia).
+CLAUS_JS = ("comptador", "traduint", "tardant", "traduccio_feta", "copiada", "no_copiada",
+            "res_per_copiar", "text_buit", "error_xarxa")
 
 # PRIVACITAT (requisit fix, 03/11/2026): els textos que es traduïxen poden
 # ser documents de l'Administració i NO poden aparéixer mai en els logs.
@@ -51,6 +62,12 @@ from .missatges import missatge, tria_idioma
 #   text ni amb el traceback (pot portar els arguments de la funció).
 logging.getLogger("uvicorn.access").setLevel(logging.WARNING)
 log = logging.getLogger("avlizador.web")
+
+# Windows pren els tipus MIME del registre, i hi pot dir que un .js és
+# `text/plain`: amb `X-Content-Type-Options: nosniff` el navegador no
+# l'executa (vist el 04/11/2026). Es fixen ací.
+for _tipus, _extensio in (("text/javascript", ".js"), ("text/css", ".css"), ("image/svg+xml", ".svg")):
+    mimetypes.add_type(_tipus, _extensio)
 
 
 def _enter(nom: str, per_defecte: int) -> int:
@@ -89,6 +106,14 @@ class Estat:
     mode_efectiu: str = ""
     models_carregats: bool = False
     versions: dict = field(default_factory=dict)
+
+
+class ErrorPeticio(Exception):
+    """Una petició que no es pot atendre: codi HTTP + clau del missatge."""
+
+    def __init__(self, codi: int, clau: str, **valors):
+        super().__init__(clau)
+        self.codi, self.clau, self.valors = codi, clau, valors
 
 
 # --- Peticions i respostes -------------------------------------------------
@@ -199,11 +224,43 @@ def create_app(config: Configuracio | None = None,
     )
     app.state.avlizador = estat
 
+    plantilles = Environment(loader=FileSystemLoader(CARPETA / "plantilles"),
+                             autoescape=select_autoescape(["html"]))
+    app.mount("/static", StaticFiles(directory=CARPETA / "static"), name="static")
+
     def idioma_de(request: Request) -> str:
-        return tria_idioma(request.query_params.get("idioma"), request.headers.get("accept-language"))
+        return tria_idioma(request.query_params.get("idioma"), request.headers.get("accept-language"),
+                           request.cookies.get("idioma"))
 
     def error(request: Request, codi: int, clau: str, **valors) -> JSONResponse:
         return JSONResponse({"error": missatge(idioma_de(request), clau, **valors)}, status_code=codi)
+
+    def comprova_longitud(text: str) -> None:
+        if len(text) > config.max_caracters:
+            raise ErrorPeticio(413, "massa_llarg", maxim=nombre(config.max_caracters), n=nombre(len(text)))
+
+    async def tradueix_text(text: str, origen: str, desti: str) -> str:
+        """El que fan igual la API i el formulari sense JavaScript: parell,
+        longitud, semàfor i traducció en un fil."""
+        parell = estat.parells.get((origen, desti))
+        if parell is None:
+            raise ErrorPeticio(400, "parell_desconegut")
+        comprova_longitud(text)
+        # Si no queda lloc, es rebutja al moment (no s'espera). Entre
+        # `locked()` i l'`async with` no hi ha cap `await`: és atòmic.
+        if estat.semafor.locked():
+            raise ErrorPeticio(429, "ocupat")
+        async with estat.semafor:
+            try:
+                return await run_in_threadpool(tradueix_per_linies, text, parell.tradueix)
+            except Exception as e:  # noqa: BLE001 -- es registra sense el text
+                log.error("Error en traduir (%s -> %s): %s, %d caràcters.",
+                          origen, desti, type(e).__name__, len(text))
+                raise ErrorPeticio(500, "error_traduccio") from None
+
+    @app.exception_handler(ErrorPeticio)
+    async def error_peticio(request: Request, exc: ErrorPeticio):
+        return error(request, exc.codi, exc.clau, **exc.valors)
 
     @app.middleware("http")
     async def capcaleres_seguretat(request: Request, call_next):
@@ -231,6 +288,59 @@ def create_app(config: Configuracio | None = None,
             return error(request, 400, "peticio_no_valida")
         return JSONResponse({"error": exc.detail}, status_code=exc.status_code, headers=exc.headers)
 
+    # --- Pàgines -------------------------------------------------------------
+
+    def pagina_traduir(request: Request, codi: int = 200, text: str = "", traduccio: str = "",
+                       origen: str | None = None, desti: str | None = None, error: str | None = None,
+                       error_camp: str | None = None, avis_estat: str | None = None) -> HTMLResponse:
+        idioma = idioma_de(request)
+        t = textos(idioma)
+        parells = [p.descriu(idioma) for p in estat.parells.values()]
+        origen = origen if any(p["origen"] == origen for p in parells) else parells[0]["origen"]
+        destins = [p["desti"] for p in parells if p["origen"] == origen]
+        desti = desti if desti in destins else destins[0]
+        dades_js = {"textos": {c: t[c] for c in CLAUS_JS} | {"massa_llarg": t["api"]["massa_llarg"]},
+                    "maxim": config.max_caracters, "idioma": idioma, "parells": parells}
+        html = plantilles.get_template("traduir.html").render(
+            t=t, idioma=idioma, pagina="traduir", versio=t["versio"].format(versio=__version__),
+            llengues=[(c, textos(c)["nom_llengua"]) for c in IDIOMES_INTERFICIE],
+            origens=list({p["origen"]: p for p in parells}.values()), parells=parells,
+            origen=origen, desti=desti, text=text, traduccio=traduccio, maxim=config.max_caracters,
+            comptador=t["comptador"].format(n=nombre(len(text)), maxim=nombre(config.max_caracters)),
+            error=error, error_camp=error_camp, estat=avis_estat, dades_js=dades_js)
+        resposta = HTMLResponse(html, status_code=codi)
+        if request.query_params.get("idioma") in IDIOMES_INTERFICIE:
+            # Galeta tècnica (només la llengua triada): no cal avís de galetes.
+            resposta.set_cookie("idioma", idioma, max_age=365 * 24 * 3600, httponly=True, samesite="lax")
+        return resposta
+
+    @app.get("/", response_class=HTMLResponse)
+    async def inici(request: Request):
+        return pagina_traduir(request)
+
+    @app.post("/", response_class=HTMLResponse)
+    async def inici_formulari(request: Request):
+        # Formulari sense JavaScript (millora progressiva): mateixos límits
+        # que la API. Es llig a mà per no dependre de python-multipart.
+        camps = parse_qs((await request.body()).decode("utf-8", errors="replace"), keep_blank_values=True)
+        text = camps.get("text", [""])[0]
+        origen = camps.get("origen", ["ca"])[0]
+        desti = camps.get("desti", ["ca-valencia"])[0]
+        idioma = idioma_de(request)
+        t = textos(idioma)
+        if not text.strip():
+            return pagina_traduir(request, 200, text, "", origen, desti, error_camp=t["text_buit"])
+        try:
+            traduccio = await tradueix_text(text, origen, desti)
+        except ErrorPeticio as e:
+            msg = missatge(idioma, e.clau, **e.valors)
+            if e.clau == "massa_llarg":
+                return pagina_traduir(request, e.codi, text, "", origen, desti, error_camp=msg)
+            return pagina_traduir(request, e.codi, text, "", origen, desti, error=msg)
+        return pagina_traduir(request, 200, text, traduccio, origen, desti, avis_estat=t["traduccio_feta"])
+
+    # --- API -----------------------------------------------------------------
+
     @app.get("/api/salut")
     async def salut():
         return {"estat": "ok" if estat.models_carregats else "carregant",
@@ -246,31 +356,13 @@ def create_app(config: Configuracio | None = None,
         return [p.descriu(idioma) for p in estat.parells.values()]
 
     @app.post("/api/tradueix")
-    async def tradueix(peticio: PeticioTraduccio, request: Request):
-        parell = estat.parells.get((peticio.origen, peticio.desti))
-        if parell is None:
-            return error(request, 400, "parell_desconegut")
-        n = len(peticio.text)
-        if n > config.max_caracters:
-            return error(request, 413, "massa_llarg", maxim=config.max_caracters, n=n)
-        # Si no queda lloc, es rebutja al moment (no s'espera). Entre
-        # `locked()` i l'`async with` no hi ha cap `await`: és atòmic.
-        if estat.semafor.locked():
-            return error(request, 429, "ocupat")
-        async with estat.semafor:
-            try:
-                traduccio = await run_in_threadpool(tradueix_per_linies, peticio.text, parell.tradueix)
-            except Exception as e:  # noqa: BLE001 -- es registra sense el text
-                log.error("Error en traduir (%s -> %s): %s, %d caràcters.",
-                          peticio.origen, peticio.desti, type(e).__name__, n)
-                return error(request, 500, "error_traduccio")
-        return {"traduccio": traduccio}
+    async def tradueix(peticio: PeticioTraduccio):
+        return {"traduccio": await tradueix_text(peticio.text, peticio.origen, peticio.desti)}
 
     @app.post("/api/gd")
     async def gd(peticio: PeticioGD, request: Request):
         n = len(peticio.text)
-        if n > config.max_caracters:
-            return error(request, 413, "massa_llarg", maxim=config.max_caracters, n=n)
+        comprova_longitud(peticio.text)
         try:
             return await run_in_threadpool(resum_gd, peticio.text)
         except Exception as e:  # noqa: BLE001

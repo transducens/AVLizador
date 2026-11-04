@@ -560,7 +560,7 @@ Castellano:
 |---|---|---|
 | 0 | Decidir las preguntas de la sección 11 | tabla rellena (**hecho 04/11**, quedan D10 y D11) |
 | 1 | API FastAPI (`/api/idiomes`, `/api/tradueix`, `/api/gd`, salud y versión) con el registro de pares de idiomas, y sus pruebas | `pytest` en verde (**hecho 04/11**, ver registro) |
-| 2 | Página de traducir, accesible, valenciano/castellano | pasa axe y el recorrido con teclado y NVDA |
+| 2 | Página de traducir, accesible, valenciano/castellano | pasa axe y el recorrido con teclado y NVDA (**hecho 04/11 salvo NVDA/VoiceOver**, D10) |
 | 3 | Pantalla de GD y "Sobre"; `resalta_html` accesible (6.5) | ídem, y el resaltado se entiende sin color |
 | 4 | Dockerfile + compose + healthcheck con las variables de entorno (7.1); prueba sin red; avisos de licencias en `NOTICE` y los README (7.5); sección de variables en los README | `docker compose up` funciona en un equipo limpio; las versiones de `NOTICE` y las variables de los README coinciden con la imagen |
 | 5 | Subir ficheros (`.txt`, quizá `.docx`) | ídem |
@@ -635,3 +635,30 @@ Castellano:
   "Una vegada acabada…" en ~3 s, sin ninguna línea de log por petición.
   Aviso visto: sin `HF_HUB_OFFLINE=1`, transformers consulta Hugging Face
   al arrancar (en la imagen va a 1, sección 7.1).
+- 04/11/2026: **fase 2 hecha** (falta la prueba manual con lector de
+  pantalla, D10). Página `GET /` en `web/plantilles/` (Jinja2, nuevo en
+  el extra `[web]`), `web/static/estil.css` y `traductor.js`; textos de
+  la interfaz y de la API en `web/textos/{ca-valencia,es}.json` (mismas
+  claves, comprobado en las pruebas). Funciona **sin JavaScript**
+  (`POST /`, formulario normal, mismos límites y semáforo que la API) y,
+  con él, traduce sin recargar, cuenta caracteres, avisa de lo que pasa
+  (`role="status"`: "S'està traduint…", a los 4 s "Encara s'està
+  traduint…", "Traducció feta.") y tiene el botón "Copiar" (D7; sin JS no
+  se muestra). Errores: el del campo (vacío, demasiado largo) junto a la
+  caja con `aria-invalid` y `aria-describedby`; los del servidor (429,
+  500, red) en la región `role="alert"`, siempre presente en el DOM.
+  Idioma de la interfaz con enlaces "Valencià | Castellano" (`lang`,
+  `hreflang`, `aria-current`) y galleta técnica `idioma`; `lang` de cada
+  caja según el par. El botón "Traduir" va bajo la caja de entrada: orden
+  de tabulación texto → Traduir → traducción → Copiar. **Comprobado en
+  Chrome** con `scripts/comprova_accessibilitat.py` (Playwright +
+  axe-core 4.10.2): 0 infracciones en valenciano y castellano, claro y
+  oscuro, y tras traducir; foco de 3 px; 320 y 640 px sin desplazamiento
+  horizontal; sin JS traduce. Contrastes de todos los pares de colores
+  calculados (mínimo 4,51:1 en bordes, 6,1:1 en texto). Pruebas
+  `tests/test_web_pagina.py` (12). **Bug real encontrado**: en Windows,
+  Python toma el tipo MIME del registro y servía `traductor.js` como
+  `text/plain`; con `nosniff` el navegador no lo ejecutaba. Se fijan los
+  tipos en `main.py` (y hay prueba). Pendiente: NVDA (Windows) y
+  VoiceOver (macOS), zoom real al 200/400 % y alto contraste de Windows
+  (la hoja ya tiene `forced-colors`).

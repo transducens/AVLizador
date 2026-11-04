@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="{{ idioma }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titol %}{{ t.titol_pagina }}{% endblock %}</title>
+  <link rel="icon" href="/static/icona.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/estil.css">
+</head>
+<body>
+  <a class="saltar" href="#contingut">{{ t.saltar }}</a>
+  <header class="capcalera">
+    <div class="amplada">
+      <div class="marca">
+        <p class="nom">{{ t.titol }}</p>
+        <p class="subtitol">{{ t.subtitol }}</p>
+      </div>
+      <nav class="llengues" aria-label="{{ t.llengua_interficie }}">
+        <ul>
+          {% for codi, nom in llengues %}
+          <li><a href="?idioma={{ codi }}" lang="{{ codi }}" hreflang="{{ codi }}"
+                 {% if codi == idioma %}aria-current="true"{% endif %}>{{ nom }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
+    <nav class="principal amplada" aria-label="{{ t.nav_principal }}">
+      <ul>
+        <li><a href="/" {% if pagina == "traduir" %}aria-current="page"{% endif %}>{{ t.nav_traduir }}</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="contingut" class="amplada" tabindex="-1">
+    {% block contingut %}{% endblock %}
+  </main>
+  <footer class="peu">
+    <div class="amplada">
+      <p>{{ t.privacitat }}</p>
+      <p>{{ t.titol }} · {{ versio }}</p>
+    </div>
+  </footer>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

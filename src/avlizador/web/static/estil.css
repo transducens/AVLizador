@@ -1,0 +1,201 @@
+/* AVLizador: estils de la interfície (WCAG 2.2 AA).
+   Contrastos (sobre --fons): --text i --suau >= 4,5:1; --vora i el focus
+   >= 3:1. Revisats en clar i en fosc. Sense animacions. */
+
+:root {
+  color-scheme: light dark;
+  --fons: #ffffff;
+  --superficie: #f3f5f7;
+  --text: #1a1a1a;
+  --suau: #4a4f55;
+  --vora: #6b7178;
+  --primari: #0b5cad;
+  --primari-text: #ffffff;
+  --primari-hover: #084a8c;
+  --focus: #003a75;
+  --error: #b3261e;
+  --error-fons: #fdecea;
+  --enllac: #0b5cad;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fons: #121417;
+    --superficie: #1c2025;
+    --text: #eceff1;
+    --suau: #b8bec4;
+    --vora: #8a939b;
+    --primari: #6cb0ff;
+    --primari-text: #0b1a2b;
+    --primari-hover: #9cc9ff;
+    --focus: #9cc9ff;
+    --error: #ff8a80;
+    --error-fons: #3a1714;
+    --enllac: #8cc2ff;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { font-size: 100%; }
+
+body {
+  margin: 0;
+  background: var(--fons);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.amplada { max-width: 72rem; margin: 0 auto; padding: 0 1rem; }
+
+a { color: var(--enllac); text-decoration: underline; text-underline-offset: 0.15em; }
+a:hover { text-decoration-thickness: 2px; }
+
+/* Focus sempre visible: 3 px, contrast >= 3:1 (WCAG 2.4.7 i 2.4.11). */
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+main:focus { outline: none; }
+
+.saltar {
+  position: absolute;
+  left: 1rem;
+  top: -10rem;
+  z-index: 10;
+  padding: 0.75rem 1rem;
+  background: var(--fons);
+  color: var(--text);
+  border: 2px solid var(--focus);
+}
+.saltar:focus { top: 1rem; }
+
+/* Capçalera */
+.capcalera { background: var(--superficie); border-bottom: 1px solid var(--vora); }
+.capcalera > .amplada {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+}
+.nom { margin: 0; font-size: 1.5rem; font-weight: 700; }
+.subtitol { margin: 0; color: var(--suau); }
+
+.llengues ul, .principal ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.llengues a, .principal a {
+  display: inline-block;
+  min-height: 2.75rem;
+  padding: 0.6rem 0.25rem;
+}
+.llengues a[aria-current], .principal a[aria-current] {
+  font-weight: 700;
+  text-decoration-thickness: 3px;
+}
+.principal { padding-bottom: 0.25rem; }
+
+/* Contingut */
+main { padding-top: 1.5rem; padding-bottom: 2rem; }
+h1 { font-size: 1.75rem; line-height: 1.25; margin: 0 0 1.25rem; }
+
+.idiomes, .caixes {
+  display: grid;
+  gap: 1rem 1.5rem;
+  grid-template-columns: 1fr;
+}
+.idiomes { margin-bottom: 1.25rem; }
+@media (min-width: 48rem) {
+  .idiomes, .caixes { grid-template-columns: 1fr 1fr; }
+}
+
+.camp { display: flex; flex-direction: column; min-width: 0; }
+label { font-weight: 700; margin-bottom: 0.25rem; }
+.ajuda { margin: 0.25rem 0; color: var(--suau); font-size: 0.9375rem; }
+
+select, textarea {
+  font: inherit;
+  color: var(--text);
+  background: var(--fons);
+  border: 2px solid var(--vora);
+  border-radius: 0.25rem;
+  width: 100%;
+}
+select { min-height: 2.75rem; padding: 0.4rem 0.5rem; }
+textarea { padding: 0.6rem; resize: vertical; min-height: 12rem; }
+textarea[readonly] { background: var(--superficie); }
+textarea[aria-invalid="true"] { border-color: var(--error); }
+
+.error {
+  margin: 0.25rem 0 0;
+  color: var(--error);
+  font-weight: 700;
+}
+.error::before { content: "⚠ " / ""; }  /* la icona no es llig */
+
+.accions, .accions-eixida { margin-top: 0.75rem; }
+.accions { margin-top: 1.25rem; }
+
+.boto {
+  font: inherit;
+  font-weight: 700;
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: 0.25rem;
+  border: 2px solid var(--primari);
+  background: var(--primari);
+  color: var(--primari-text);
+  cursor: pointer;
+}
+.boto:hover { background: var(--primari-hover); border-color: var(--primari-hover); }
+.boto-secundari { background: transparent; color: var(--enllac); }
+.boto-secundari:hover { background: var(--superficie); color: var(--enllac); }
+.boto[aria-disabled="true"] { opacity: 0.65; cursor: progress; }
+
+.estat { min-height: 1.5rem; margin: 0.75rem 0 0; color: var(--suau); }
+/* La regió d'avisos (role="alert") és sempre al DOM i visible: només rep
+   estil quan té contingut (una regió amagada no s'anuncia bé en omplir-la). */
+.avisos { margin: 0; }
+.avisos:not(:empty) {
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--error);
+  border-left-width: 0.5rem;
+  background: var(--error-fons);
+  color: var(--text);
+}
+.avisos p { margin: 0; }
+
+/* Peu */
+.peu { border-top: 1px solid var(--vora); background: var(--superficie); color: var(--suau); }
+.peu p { margin: 0.5rem 0; }
+.peu .amplada { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+
+/* Només per a lectors de pantalla */
+.visualment-amagat {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+[hidden] { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* Mode d'alt contrast de Windows: les vores i el focus es mantenen. */
+@media (forced-colors: active) {
+  .boto, select, textarea { border: 2px solid ButtonText; }
+  :focus-visible { outline: 3px solid Highlight; }
+}
