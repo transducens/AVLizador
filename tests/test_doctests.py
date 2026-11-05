@@ -18,6 +18,8 @@ MODULS = sorted(
 
 @pytest.mark.parametrize("nom", MODULS)
 def test_doctests(nom):
+    if nom.startswith("avlizador.web"):
+        pytest.importorskip("fastapi", reason="extra [web] no instal·lat")
     modul = importlib.import_module(nom)
     resultat = doctest.testmod(modul, optionflags=doctest.ELLIPSIS)
     assert resultat.failed == 0, f"{resultat.failed} doctests fallats en {nom}"

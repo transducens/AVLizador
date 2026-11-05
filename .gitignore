@@ -52,6 +52,7 @@ build/
 dist/
 *.egg-info/
 resultats_avaluacio/
+resultats_release_*/
 .pytest_cache/
 
 # Gramàtiques completes (GNV de l'AVL i GEIEC de l'IEC): obres de tercers, no es redistribuïxen (02/11/2026)

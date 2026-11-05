@@ -65,6 +65,63 @@ avlizador avalua --benchmarks manual                   # evaluación (necesita [
 avlizador --help
 ```
 
+## Interfaz web y Docker
+
+Una interfaz web accesible (WCAG 2.2 AA), en valenciano y castellano,
+con tres pantallas: traducir, Grado Dialectal y "Acerca de". Los textos
+no se guardan ni se registran.
+
+Sin Docker, desde una copia del repositorio:
+
+```bash
+pip install ".[ml,web]" --extra-index-url https://download.pytorch.org/whl/cpu
+avlizador web          # http://127.0.0.1:8000
+```
+
+Con Docker (la imagen lleva spaCy y FLOR-760M dentro y funciona **sin
+internet**; la primera construcción descarga unos 2 GB):
+
+```bash
+docker compose up --build     # http://localhost:8000
+```
+
+Para un equipo sin internet, la imagen se copia como un fichero:
+
+```bash
+docker save avlizador:1.1.0 > avlizador.tar   # en el equipo donde se ha construido
+docker load < avlizador.tar                   # en el equipo de destino
+docker compose up                             # con docker-compose.yml al lado
+```
+
+Por defecto solo se puede entrar desde el mismo equipo
+(`127.0.0.1:8000`); para abrirla a la red, cambiad el puerto en
+`docker-compose.yml` (y, fuera de una red interna, poned un proxy HTTPS
+delante). La imagen se ejecuta sin root y con el sistema de ficheros de
+solo lectura. Detalle del diseño:
+[`documentacio/hoja_de_ruta_interfaz_docker.md`](documentacio/hoja_de_ruta_interfaz_docker.md).
+
+### Variables de entorno
+
+Se cambian en `docker-compose.yml` (`environment:`) sin reconstruir la
+imagen; fuera de Docker, como variables de entorno antes de
+`avlizador web`.
+
+| Variable | Por defecto | Qué hace | Cuándo cambiarla |
+|---|---|---|---|
+| `AVLIZADOR_MODE` | `complet` | `complet` = motor + FLOR; `motor` = solo reglas (sin cargar FLOR: ~1,5 GB menos de RAM y arranque más rápido) | `motor` en equipos con menos de 4 GB de RAM o si hace falta rapidez antes que acertar los homógrafos |
+| `MAX_CARACTERS` | 20000 | longitud máxima del texto por petición; si se pasa, HTTP 413 con un mensaje | subirla si se traducen documentos largos y el equipo lo aguanta; bajarla si las peticiones tardan demasiado |
+| `MAX_TRADUCCIONS_SIMULTANIES` | 2 | traducciones a la vez; si ya hay tantas, HTTP 429 ("El servicio está ocupado") | según los núcleos (regla de abajo); 1 en equipos de 2 núcleos |
+| `OMP_NUM_THREADS` | 2 | hilos de cálculo de PyTorch (y de otras librerías numéricas) | según los núcleos (regla de abajo) |
+| `TORCH_NUM_THREADS` | 2 | hilos que usa FLOR: la lee AVLizador (`torch.set_num_threads`); PyTorch no la lee por sí solo | igual que `OMP_NUM_THREADS`; normalmente el mismo valor |
+| `HF_HUB_OFFLINE` | `1` | no intentar conectarse a Hugging Face (los modelos ya están dentro de la imagen) | no hace falta cambiarla en Docker |
+| `UVICORN_LOG_LEVEL` | `warning` | nivel de los mensajes del servidor (arranque, avisos, errores). No vuelve a activar las líneas por petición: no se registran nunca (privacidad) | `info` o `debug` solo para investigar un problema de arranque |
+| `AVLIZADOR_DOCS` | `0` | `1` = documentación interactiva de la API en `/docs` (carga JavaScript de un CDN) | solo en desarrollo, nunca en producción |
+
+**Regla de los núcleos**: `MAX_TRADUCCIONS_SIMULTANIES` ×
+`TORCH_NUM_THREADS` ≤ núcleos del equipo (con los valores por defecto, 4
+núcleos). Si se pasa, las traducciones compiten por los mismos núcleos y
+todas van más lentas.
+
 ## Resultados
 
 Benchmark de evaluación: **manual mezcla** (458 frases del BOE y de la
@@ -156,3 +213,11 @@ en [`NOTICE`](NOTICE):
 - el dataset gplsi de `dades/benchmarks/gplsi/` es CC BY 4.0 de sus
   autores;
 - los textos del BOE y de la AVL se reutilizan citando su fuente.
+
+**Imagen Docker.** El código de AVLizador es Apache 2.0, pero la
+imagen Docker incluye componentes de terceros con otras licencias (ver
+[`NOTICE`](NOTICE)), entre ellos el modelo de spaCy `ca_core_news_md`,
+con licencia GPL-3.0, y FLOR-760M, con las restricciones de uso de la
+licencia RAIL de BLOOM. Quien distribuya una imagen con estos modelos
+dentro tiene que cumplir esas licencias. Por eso recomendamos construir
+la imagen en local (`docker compose build`) en lugar de distribuirla.
