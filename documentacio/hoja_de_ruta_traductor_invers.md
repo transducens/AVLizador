@@ -866,3 +866,36 @@ palabras). En su lugar, paquete opcional `traductor/model_llengua/` (ver su
 - **Pendiente**: homógrafos que el léxico no marca (E0251 "afecta"→"carinya",
   correcto como adjetivo, se aplica al verbo); los numerales del BOE
   ("octava", "dèsset", "dènou") frente a "huitena", "dessetena", "denovena".
+
+## 05/11/2026 — PENDIENTE: la entrada de datos y las frases largas en FLOR
+
+Petición de los responsables del proyecto. **Queda por revisar** cómo
+entra el texto al sistema y si FLOR aguanta una entrada grande. No se ha
+medido nada todavía; lo que hay hoy:
+
+- **Cómo entra el texto**: la CLI (`avlizador tradueix --fitxer`) y la web
+  (`web/main.py::tradueix_per_linies`) traducen **línea a línea**; no se
+  parte en frases. Un párrafo en una sola línea llega entero al motor y a
+  FLOR. La web limita la entrada a `MAX_CARACTERS` (20.000) en total, no
+  por línea.
+- **Qué hace FLOR con eso**: para cada palabra ambigua del léxico ("cop",
+  "manca", "nou"…), puntúa la **línea entera** una vez por candidato (y por
+  variante de concordancia), con el párrafo valenciano P1 delante. Con una
+  línea larga y varias palabras ambiguas, son varias pasadas sobre todo el
+  texto.
+
+**Preguntas a responder**:
+1. **Cuánto texto admite FLOR-760M**: comprobar en la ficha y la
+   configuración del modelo el contexto máximo con el que se entrenó, y
+   qué pasa por encima (error, truncado o puntuaciones peores).
+2. **Calidad con frases largas**: ¿la decisión de FLOR sigue siendo buena
+   cuando la palabra ambigua está dentro de un párrafo largo? Todas las
+   mediciones hasta ahora son con frases (benchmarks de una frase por
+   entrada).
+3. **Tiempo y memoria en CPU** con párrafos largos y muchas palabras
+   ambiguas (equipos de la Conselleria; límite de la web).
+4. **Cómo debería entrar el texto**: partir en frases antes del motor y de
+   FLOR (con qué segmentador: spaCy ya está cargado) conservando el
+   formato (saltos de línea, espacios), o puntuar solo una ventana
+   alrededor de la palabra ambigua. Decidir con el usuario después de
+   medir 1-3.
