@@ -90,6 +90,7 @@ from pathlib import Path
 
 from .. import (
     Token,
+    adapta_enclitic,
     aplica_amb_prefix_elidit,
     corregeix_article_abans,
     corregeix_contraccio_al_abans,
@@ -411,6 +412,8 @@ class ConjugacionsDictInversRule:
                     continue
                 if not self._pos_admet(tokens, i, arrel):
                     break
+                if sufix:
+                    sufix = adapta_enclitic(forma, sufix)  # "tenir-los" -> "tindre'ls"
                 if prefix is None:
                     tok.translated = preserva_majuscula(arrel, forma) + (sufix or "")
                     corregeix_contraccio_al_abans(tokens, i)
