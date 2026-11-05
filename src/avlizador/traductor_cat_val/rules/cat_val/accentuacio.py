@@ -30,6 +30,12 @@ import re
 from .. import Token, preserva_majuscula
 
 _SUFIX_ES_RE = re.compile(r"ès$", re.IGNORECASE)
+# -èn -> -én (05/11/2026): 3a persona del present de "-prendre" i
+# "-vendre" ("comprèn"->"comprén", "emprèn", "aprèn", "revèn"), que
+# `conjugaciones_general.json` no porta. BOE valencià: 31.485 paraules en
+# -és/-én i 5 en -ès/-èn (topònims); "comprèn" 367 en el BOE català,
+# "comprén" 237 i "comprèn" 0 en el valencià.
+_SUFIX_EN_RE = re.compile(r"èn$", re.IGNORECASE)
 _SUFIX_EIXER_RE = re.compile(r"èixer$", re.IGNORECASE)
 
 
@@ -60,6 +66,14 @@ class AccentuacioInversRule:
     >>> [(t.surface, t.translated) for t in toks if t.is_translated]
     [('conèixer', 'conéixer'), ('parèixer', 'paréixer'), ('aparèixer', 'aparéixer')]
 
+    Patró 3, -èn -> -én (05/11/2026):
+
+    >>> toks = tokenize("La llei comprèn tres apartats i l'empresa n'aprèn.")
+    >>> marca_noms_propis(toks)
+    >>> toks = AccentuacioInversRule().apply(toks)
+    >>> [(t.surface, t.translated) for t in toks if t.is_translated]
+    [('comprèn', 'comprén'), ("n'aprèn", "n'aprén")]
+
     Paraula enganxada a un prefix elidit:
 
     >>> toks = tokenize("Vaig sentir parlar d'aparèixer i d'anglès.")
@@ -84,6 +98,12 @@ class AccentuacioInversRule:
 
             if paraula.endswith("ès"):
                 nova = _SUFIX_ES_RE.sub("és", minuscules)
+                tok.translated = preserva_majuscula(tok.surface, nova)
+                tok.is_translated = True
+                continue
+
+            if paraula.endswith("èn"):
+                nova = _SUFIX_EN_RE.sub("én", minuscules)
                 tok.translated = preserva_majuscula(tok.surface, nova)
                 tok.is_translated = True
         return tokens

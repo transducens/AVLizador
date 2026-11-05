@@ -627,6 +627,14 @@ def corregeix_determinant_abans(tokens: list[Token], index: int, genere_nou: str
     >>> corregeix_determinant_abans(toks, 4, "m")
     >>> detokenize(toks)
     'de el eixit'
+
+    Amb "d'" davant del determinant:
+
+    >>> toks = tokenize("d'un cop")
+    >>> toks[2].translated = "ullada"
+    >>> corregeix_determinant_abans(toks, 2, "f")
+    >>> detokenize(toks)
+    "d'una ullada"
     """
     i_anterior = _index_anterior_real(tokens, index)
     if i_anterior is None:
@@ -640,6 +648,13 @@ def corregeix_determinant_abans(tokens: list[Token], index: int, genere_nou: str
     taula = DET_FEM_A_MASC if genere_nou == "m" else DET_MASC_A_FEM
     nova_forma = taula.get(actual)
     if nova_forma is None:
+        # Determinant amb "d'" davant ("d'un cop d'ull" -> "d'una ullada",
+        # 04/11/2026): es canvia el determinant i es manté la preposició.
+        m = re.match(r"^(d['’ʼ])(.+)$", anterior.translated, re.IGNORECASE)
+        if m and m.group(2).lower() in taula:
+            nou = preserva_majuscula(m.group(2), taula[m.group(2).lower()])
+            anterior.translated = m.group(1) + nou
+            anterior.is_translated = True
         return
     anterior.translated = preserva_majuscula(anterior.translated, nova_forma)
     anterior.is_translated = True
@@ -701,6 +716,45 @@ def separa_sufix_elidit(surface: str) -> tuple[str, str] | None:
         return None
     arrel, connector, sufix = m.groups()
     return arrel, connector + sufix
+
+
+# Forma plena (després de consonant o de -u) <-> forma reduïda (després de
+# vocal) dels pronoms enclítics que en tenen (GNV; la resta, "-la", "-les",
+# "-li", "-ho", "-hi", "-vos", no canvien). Mesurat 04/11/2026 en el BOE
+# valencià, infinitius en "-re": 'ls 145, 'l 108, 'n 101, 's 893, sense cap
+# "-los", "-lo" ni "-ne" (i 9 "-se").
+_ENCLITIC_PLE_A_REDUIT = {
+    "-lo": "'l", "-los": "'ls", "-ne": "'n", "-me": "'m",
+    "-te": "'t", "-se": "'s", "-nos": "'ns",
+}
+_ENCLITIC_REDUIT_A_PLE = {v: k for k, v in _ENCLITIC_PLE_A_REDUIT.items()}
+
+
+def adapta_enclitic(forma: str, sufix: str) -> str:
+    """El pronom enclític `sufix` ("-los", "'l"...) en la forma que pertoca
+    darrere del verb nou `forma`: reduïda si acaba en vocal (menys -u),
+    plena si acaba en consonant o en -u. Fa falta quan el verb canvia la
+    lletra final ("tenir-los" -> "tindre'ls"). Respecta les majúscules del
+    sufix i el tipus d'apòstrof no es conserva (queda "'").
+
+    >>> adapta_enclitic("tindre", "-los"), adapta_enclitic("obtindre", "-ne")
+    ("'ls", "'n")
+    >>> adapta_enclitic("tindre", "-la"), adapta_enclitic("tindre", "'s")
+    ('-la', "'s")
+    >>> adapta_enclitic("fer", "'l"), adapta_enclitic("servix", "-lo")
+    ('-lo', '-lo')
+    >>> adapta_enclitic("creu", "'l")
+    '-lo'
+    """
+    if not forma or not sufix:
+        return sufix
+    clau = sufix.lower().replace("’", "'").replace("ʼ", "'")
+    acaba_en_vocal = forma[-1].lower() in "aeioàèéíòóúï"
+    taula = _ENCLITIC_PLE_A_REDUIT if acaba_en_vocal else _ENCLITIC_REDUIT_A_PLE
+    nou = taula.get(clau)
+    if nou is None:
+        return sufix
+    return nou.upper() if sufix.isupper() and len(sufix) > 2 else nou
 
 
 def paraula_anterior_es(tokens: list[Token], index: int, paraula: str) -> bool:
