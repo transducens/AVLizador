@@ -412,7 +412,7 @@ def _classifica_token(tok: Token, formes: Formes) -> str | None:
 
     # Homògraf declarat pel proveïdor (vore "HOMÒGRAFS ENTRE CATEGORIES" al
     # docstring del mòdul): només compta si spaCy li dona la categoria de
-    # la lectura dialectal ("manca" NOUN = carència; "manca" VERB/ADJ no).
+    # la lectura dialectal ("manca" NOUN = falta; "manca" VERB/ADJ no).
     # Sense etiqueta d'spaCy, no compta (preferix fals negatiu).
     lectura_dialectal = formes.homografs.get(baix)
     if lectura_dialectal is not None and tok.pos not in lectura_dialectal:

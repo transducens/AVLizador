@@ -27,7 +27,7 @@ token abans de l'intent d'una sola paraula.
 lèxic diuen quina forma és ambigua i quines lectures té ("nou": adj, n,
 num). Si la categoria de l'entrada no la comparteix cap altra lectura,
 només es tradueix quan spaCy li dona eixa categoria ("manca" NOUN ->
-"carència"; "manca" VERB, no). Vore `rules/__init__.py::carrega_homografs`.
+"falta"; "manca" VERB, no). Vore `rules/__init__.py::carrega_homografs`.
 
 **Gènere i article (22/10/2026)**: quan un nom canvia de gènere en
 traduir-se ("el blat de moro" -> "la dacsa", "les despeses" -> "els
@@ -237,9 +237,9 @@ class LexicInversRule:
     >>> tradueix("En un nou procés d'expansió.")
     "En un anou procés d'expansió."
     >>> tradueix("Aquesta regió manca relativament de grans cràters.")
-    'Aquesta regió carència relativament de grans cràters.'
+    'Aquesta regió falta relativament de grans cràters.'
     >>> tradueix("Patix una gran manca afectiva.")
-    'Patix una gran carència afectiva.'
+    'Patix una gran falta afectiva.'
 
     Nom del lèxic que spaCy dona com a participi: no es tradueix
     (05/11/2026; vore `carrega_formes_nominals`):
