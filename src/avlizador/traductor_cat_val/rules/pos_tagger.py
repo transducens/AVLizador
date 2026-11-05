@@ -249,6 +249,40 @@ def etiqueta(tokens: list[Token]) -> None:
         tok.lemma = dt.lemma_.lower()
 
 
+def es_participi(tokens: list[Token], i: int) -> bool:
+    """`tokens[i]` és un participi segons spaCy? Si la paraula comença en
+    majúscula, es torna a preguntar amb la paraula en minúscula: spaCy dona
+    "Durada" de títol com a participi ("Durada de la mesura...") i en
+    minúscula com a nom; el participi absolut ("Rebudes les
+    conformitats...") seguix sent participi (05/11/2026).
+
+    >>> from . import tokenize, marca_noms_propis
+    >>> def prova(text, paraula):
+    ...     toks = tokenize(text)
+    ...     marca_noms_propis(toks)
+    ...     etiqueta(toks)
+    ...     return es_participi(toks, next(i for i, t in enumerate(toks) if t.surface == paraula))
+    >>> prova("Durada de la mesura.", "Durada"), prova("Rebudes les conformitats, el jutge resol.", "Rebudes")
+    (False, True)
+    >>> prova("La carta rebuda ahir.", "rebuda"), prova("La rebuda de la carta.", "rebuda")
+    (True, False)
+    """
+    tok = tokens[i]
+    if tok.verb_form != "Part":
+        return False
+    if not tok.surface[:1].isupper():
+        return True
+    nlp = _carrega_spacy()
+    if nlp is None:
+        return True
+    text = "".join(
+        t.surface[:1].lower() + t.surface[1:] if j == i else t.surface
+        for j, t in enumerate(tokens)
+    ).replace("ʼ", "’")
+    dt = next((d for d in nlp(text) if d.idx == tok.start), None)
+    return dt is None or "Part" in dt.morph.get("VerbForm")
+
+
 _GENERE_CURT = {"Masc": "m", "Fem": "f"}
 
 

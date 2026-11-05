@@ -60,7 +60,7 @@ from .. import (
     preserva_majuscula,
     separa_prefix_elidit,
 )
-from ..pos_tagger import genere_tras_substitucio
+from ..pos_tagger import es_participi, genere_tras_substitucio
 
 _DATA = Path(__file__).resolve().parent.parent.parent / "data"
 LEXIC_GENERAL_PATH = _DATA / "lexic_general.json"
@@ -149,6 +149,26 @@ def carrega_lexic_invers(lexic_general_path: Path = LEXIC_GENERAL_PATH) -> dict[
     return {cat: val for cat, val in _invertix_sense_ambiguitat(entrades).items() if cat != val}
 
 
+def carrega_formes_nominals(path: Path = LEXIC_GENERAL_PATH) -> set[str]:
+    """Formes catalanes d'una paraula que el lèxic només dona com a nom
+    (`categoria: "n"` en TOTES les seues entrades). Si spaCy diu que el
+    token és un participi (`VerbForm=Part`), no és eixe nom: "la carta
+    rebuda" no és "la rebuda" (05/11/2026). El participi, si és dialectal,
+    el tradueix la capa de conjugacions.
+
+    >>> noms = carrega_formes_nominals()
+    >>> "rebuda" in noms, "sortida" in noms, "reeixida" in noms
+    (True, True, False)
+    """
+    dades = json.loads(Path(path).read_text(encoding="utf-8"))
+    categories: dict[str, set] = {}
+    for entrada in dades:
+        catalan = (entrada.get("catalan") or "").strip().lower()
+        if catalan and " " not in catalan:
+            categories.setdefault(catalan, set()).add(entrada.get("categoria"))
+    return {cat for cat, cats in categories.items() if cats == {"n"}}
+
+
 def carrega_frases_invers(path: Path = LEXIC_GENERAL_PATH) -> dict[tuple[str, ...], str]:
     """Entrades on el català és 2-3 paraules i el valencià UNA:
     `{(paraula1, paraula2, ...): forma_valenciana}`, en minúscules.
@@ -221,6 +241,16 @@ class LexicInversRule:
     >>> tradueix("Patix una gran manca afectiva.")
     'Patix una gran carència afectiva.'
 
+    Nom del lèxic que spaCy dona com a participi: no es tradueix
+    (05/11/2026; vore `carrega_formes_nominals`):
+
+    >>> tradueix("La rebuda de la sol·licitud.")
+    'La recepció de la sol·licitud.'
+    >>> tradueix("La carta rebuda ahir.")
+    'La carta rebuda ahir.'
+    >>> tradueix("Durada de la mesura.")  # títol: spaCy diu participi en majúscula
+    'Duració de la mesura.'
+
     Contracció "al" desfeta en "a l'" quan la paraula nova comença en vocal,
     i "de" apostrofat (22/10/2026; abans "de investigació"):
 
@@ -245,6 +275,7 @@ class LexicInversRule:
     ) -> None:
         self._lookup = carrega_lexic_invers(lexic_general_path)
         self._homografs, _ = carrega_homografs(lexic_general_path)
+        self._noms = carrega_formes_nominals(lexic_general_path)
         frases = carrega_frases_invers(frases_path)
         self._frases_per_inici: dict[str, list[tuple[tuple[str, ...], str]]] = {}
         for paraules, forma in frases.items():
@@ -293,6 +324,8 @@ class LexicInversRule:
             if forma is not None:
                 if not homograf_compatible(tok.pos, minuscules, self._homografs):
                     continue
+                if minuscules in self._noms and es_participi(tokens, i):
+                    continue
                 tok.translated = preserva_majuscula(tok.surface, forma)
                 tok.is_translated = True
                 self._concorda(tokens, i, forma)
@@ -303,6 +336,8 @@ class LexicInversRule:
             prefix, resta = prefix_resta
             forma = self._lookup.get(resta.lower())
             if forma is None or not homograf_compatible(tok.pos, resta.lower(), self._homografs):
+                continue
+            if resta.lower() in self._noms and es_participi(tokens, i):
                 continue
             genere, _ = genere_tras_substitucio(tok, forma, resta)
             aplica_amb_prefix_elidit(tokens, i, prefix, resta, forma, genere)
