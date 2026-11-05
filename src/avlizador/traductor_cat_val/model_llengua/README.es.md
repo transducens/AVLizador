@@ -25,7 +25,8 @@ ninguna palabra escrita en el código:
   categorías tiene cada lectura ("gandula": `gandul [adj, n]` y `gandula
   [n]`). Si spaCy da una categoría que solo tiene la otra lectura ("molt
   gandula": ADJ), se deja la palabra catalana. (2) Si no, **el modelo**, que
-  solo cambia lo que hizo el motor si gana por más de `marge` (5).
+  solo cambia lo que hizo el motor si gana por más de `marge` (5; desde el
+  05/11/2026, margen 2 con la catalana por defecto, ver más abajo).
 - `resoluble` ("nou", "manca"…): spaCy dentro del motor, como siempre.
 
 Historia de la decisión sobre los irresolubles: primero se quitó el modelo,
@@ -43,8 +44,61 @@ Irresolubles: 14/24 sin el modelo, **18/24** con él. Se puede quitar con
 improbable sea cual sea el sentido. El modelo sirve también para encontrar
 formas sospechosas del léxico.
 
-Criterio por defecto (`Criteri()`): FLOR-760M, PMI 0,5, suma, margen 5,
-concordancia `variants`, puntuación de la frase entera.
+Criterio por defecto (`Criteri()`): FLOR-760M, PMI 0,5, suma, **margen 2
+con la palabra catalana por defecto** (`per_defecte="catala"`, desde el
+05/11/2026), concordancia `variants`, puntuación de la frase entera.
+
+### Margen 2 con la catalana por defecto (05/11/2026, decisión del usuario)
+
+En los homógrafos que llegan a FLOR (irresolubles y resolubles con NOUN;
+"cop/cops" y lo que decide spaCy no cambian), **solo se traduce si FLOR ve
+la traducción más probable que la palabra catalana por más de 2 puntos**
+de log-probabilidad (unas 7 veces más probable, e² ≈ 7,4). Si no, se deja
+la palabra catalana. Antes era al revés (`per_defecte="motor"`, margen 5):
+se quedaba la traducción del motor salvo que FLOR prefiriera la catalana
+por más de 5. Para volver: `Criteri(per_defecte="motor", marge=5.0)`.
+
+**Por qué la catalana por defecto**: los dos fallos no pesan igual.
+Traducir cuando no toca cambia el sentido ("calces" de época → "bragues",
+"gandules" vagas → "hamaques", "manca" verbo → "falta"). No traducir deja
+la palabra catalana ("rentadora", "manca", "reeixida"), menos dialectal
+pero con el mismo sentido y a menudo válida también en valenciano. El
+usuario prefiere no traducir a traducir mal.
+
+**Por qué 2 y no 0**: diferencia de FLOR (traducción − catalana) en las
+trazas con P1 de homógrafos v1 + v2, 159 palabras que decide el modelo:
+
+| Diferencia | La referencia quiere la valenciana | Quiere la catalana |
+|---|---|---|
+| ≤ −4 | 11 | 32 |
+| −4 a 0 | 52 | 22 |
+| 0 a 2 | 10 | 7 |
+| > 2 | 23 | 2 |
+
+Cuando la buena es la catalana, FLOR suele decirlo claro (mediana −4,3);
+cuando es la valenciana, casi nunca (mediana −1,1: el sesgo hacia la forma
+frecuente). Entre 0 y 2 FLOR ya prefiere la traducción pero acierta 10 de
+17 (cara o cruz); por encima de 2, 23 de 25. Con margen 0 se traduciría en
+esa zona de duda. Simulación del margen con la catalana por defecto:
+
+| Margen | Traduce sin tocar (error de sentido) | Deja la catalana cuando tocaba traducir | Aciertos |
+|---|---|---|---|
+| antes (motor, 5) | 28/63 | 9/96 | 122/159 |
+| 0 | 9/63 | 63/96 | 87/159 |
+| 1 | 5/63 | 71/96 | 83/159 |
+| **2** | **2/63** | 73/96 | 84/159 |
+| 5 | 1/63 | 85/96 | 73/159 |
+
+Depende de la palabra: FLOR separa bien "deu" (mediana +8,3 si toca
+traducir frente a −18,8 si no), "gandula", "manques" y "nou"; no separa
+"calces", "reeixida(es)", "panotxa(es)" ni "recuita", que casi nunca se
+traducirán. Límites: el 2 sale de estos mismos benchmarks (equilibrados
+50/50 por sentido, no del uso real) y la simulación usa las trazas del
+03/11. Benchmark manual (ejecutado, no simulado): 229 → **228/458**
+(BLEU 90,93 → 90,91, TER 5,58 → 5,59). Cambian dos frases: BM-AVL-191 "les
+anous" → "les nous" (la pierde: FLOR prefería "anous" por menos de 2) y
+BM-BOE-219 "falta" → "manca" (falla igual: la referencia pone "carència").
+Con margen 0 o 1 el manual quedaba en 229.
 
 **Párrafo valenciano delante (03/11/2026)**: FLOR prefiere la forma que ha
 visto más veces, casi siempre la catalana ("vegada" frente a "colp",
@@ -106,8 +160,9 @@ Opciones del criterio (`Criteri`), para probar con `avalua.py`:
 - `lam` (PMI): resta `lam` × log P(candidato solo), para compensar que una
   palabra sea más frecuente que la otra en general. 0 = sin corrección.
 - `norma`: `suma` (toda la frase) o `mitjana` (por token).
-- `marge`: en los homógrafos, el motor ya ha elegido; el modelo solo lo
-  cambia si gana por más de `marge` puntos.
+- `marge` y `per_defecte`: en los homógrafos, la forma por defecto
+  (`catala`: la palabra catalana; `motor`: la traducción del motor) solo
+  cambia si la otra gana por más de `marge` puntos.
 - `concordanca`: `motor` (solo el determinante inmediatamente anterior,
   como el motor) o `variants` (propone las formas del otro género de las
   dos palabras anteriores, "molts"→"moltes", "altre"→"altra", y el modelo
