@@ -100,6 +100,21 @@ anous" → "les nous" (la pierde: FLOR prefería "anous" por menos de 2) y
 BM-BOE-219 "falta" → "manca" (falla igual: la referencia pone "carència").
 Con margen 0 o 1 el manual quedaba en 229.
 
+**Homógrafos, ejecutado (06/11/2026)**, frente al margen 5 a favor del
+motor (03/11): 151 + homógrafos 233 → **218/253**, homógrafos v2 124 →
+**95/160**; manual 228/458 y BOE estricto/amplio sin cambios por el
+margen. Es lo que anunciaba la simulación: en el v2 (equilibrado por
+sentido) las frases cuya referencia **deja la palabra catalana** pasan de
+42 a **57 de 59** (+16, −1), y las que **piden la valenciana** caen de 82
+a **38 de 101** (+5, −49). Casi todos los errores de sentido desaparecen;
+a cambio, muchas palabras valencianas quedan sin traducir ("anou",
+"llavadora", "brulla", "panolla", "exitosa"...). Es el precio aceptado
+de la decisión. Cifras con el léxico del 05/11 (género, "mencionar",
+"contindre") y el arreglo de `te_problema` del 06/11: el léxico nuevo
+trae `problema` como lista en 10 entradas (`["homonimia_lexica",
+"cambio_genero"]`), y sin ese arreglo "nou", "deu" y "cop" dejaban de
+pasar por spaCy y FLOR (v2 82/160, igual que el motor solo).
+
 **Párrafo valenciano delante (03/11/2026)**: FLOR prefiere la forma que ha
 visto más veces, casi siempre la catalana ("vegada" frente a "colp",
 "rentadora" frente a "llavadora"). Desde el 03/11 cada frase se puntúa

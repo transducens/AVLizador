@@ -29,7 +29,10 @@ permís de l'usuari). Criteri per defecte: FLOR-760M, PMI 0,5, suma, marge
 05/11/2026: només es tradueix si FLOR veu la traducció més probable per
 més de 2 punts; si no, es queda la paraula catalana; abans, marge 5 a
 favor del motor; vore la secció "Margen 2 con la catalana por defecto" del
-README.es.md), concordança `variants`. Resultats: benchmark combinat motor 190/253 →
+README.es.md), concordança `variants`. Mesurat el 06/11/2026 frente al
+marge 5: 151 + homògrafs 233 → 218/253, homògrafs v2 124 → 95/160 (les
+frases que deixen la catalana, 42 → 57/59; les que demanen la
+valenciana, 82 → 38/101), manual 228/458 sense canvis. Resultats: benchmark combinat motor 190/253 →
 sistema 227/253 (151 sense cap canvi, colisio 0 → 31/33, irresoluble 12 →
 18/24; "calces" no la separa); BOE ampli 1.206/2.000. La
 funció és `translate_cat_val_ml(text)`; `evalua_models.py --model
