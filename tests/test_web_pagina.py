@@ -162,5 +162,5 @@ def test_gd_escapa_el_text():
 def test_sobre(idioma, titol):
     with client() as c:
         html = c.get(f"/sobre?idioma={idioma}").text
-    assert titol in html and "NOTICE" in html and "1.1.0" in html
+    assert titol in html and "NOTICE" in html and "1.2.0" in html
     assert html.count("<h1") == 1 and 'href="/sobre" aria-current="page"' in html

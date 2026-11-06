@@ -5,7 +5,7 @@
 services:
   avlizador:
     build: .
-    image: avlizador:1.1.0
+    image: avlizador:1.2.0
     ports:
       # Només des d'este equip. Per a obrir-lo a la xarxa: "8000:8000"
       # (millor amb un proxy HTTPS davant).
