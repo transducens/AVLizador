@@ -88,7 +88,7 @@ docker compose up --build     # http://localhost:8000
 Per a un equip sense internet, la imatge es copia com un fitxer:
 
 ```bash
-docker save avlizador:1.1.0 > avlizador.tar   # en l'equip on s'ha construït
+docker save avlizador:1.2.0 > avlizador.tar   # en l'equip on s'ha construït
 docker load < avlizador.tar                   # en l'equip de destí
 docker compose up                             # amb docker-compose.yml al costat
 ```

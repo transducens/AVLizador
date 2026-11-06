@@ -65,7 +65,7 @@ Imatge Docker
 
 La imatge Docker d'AVLizador (Dockerfile, docker-compose.yml) inclou, a més
 del codi i les dades del projecte, estos components de tercers. Versions
-de la imatge avlizador:1.1.0 construïda el 04/11/2026 (la llista completa
+de la imatge avlizador:1.2.0 construïda el 06/11/2026 (la llista completa
 de paquets de Python és dins de la imatge, en /opt/versions_python.txt):
 
 1. Model d'spaCy ca_core_news_md

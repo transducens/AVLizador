@@ -58,7 +58,7 @@ Igual en els tres sistemes (amb l'entorn activat):
 ```bash
 python -m pip install -U pip
 pip install -e ".[ml,avaluacio,dev]" --extra-index-url https://download.pytorch.org/whl/cpu
-avlizador --version        # -> avlizador 1.1.0
+avlizador --version        # -> avlizador 1.2.0
 ```
 
 - `[ml]`: torch (versió CPU), transformers i FLOR-760M, el model de
