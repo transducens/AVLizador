@@ -7,6 +7,51 @@ sección propone una opción y deja abiertas las preguntas que tiene que
 contestar el equipo. Se irá actualizando a medida que se decida y se
 construya.
 
+## 0. PENDIENTE (05/11/2026): nombre y estructura de páginas
+
+**Petición de los responsables del proyecto.** No está hecho todavía: es
+lo siguiente de la interfaz. Lo que tiene que quedar:
+
+1. **Título**: quitar "AVLizador" como título de la interfaz y poner
+   **"Traductor Transducens"** (cabecera, `<title>` de las páginas y
+   textos de `web/textos/*.json`).
+2. **Varias páginas**, con un menú:
+
+   ```
+   Traductor Transducens
+   ├── Traducció d'idiomes           ← página escalable a otros idiomas
+   │                                   (no es la nuestra: la llenarán
+   │                                   otros sistemas cuando los haya)
+   ├── Traducció de dialectes        ← LA NUESTRA, con un submenú:
+   │   ├── Adaptador dialectal català → valencià
+   │   └── Grau Dialectal (GD / GDV / GDC)
+   └── Sobre
+   ```
+
+   - **Traducción de idiomas**: una página pensada para crecer al resto
+     de idiomas (otros pares, otros traductores). Hoy no tiene ningún par
+     nuestro.
+   - **Traducción de dialectos**: aquí va todo lo nuestro. Submenú con
+     (a) el **adaptador dialectal del catalán al valenciano** (lo que hoy
+     es la pantalla "Traduir", 6.2) y (b) el **Grau Dialectal** (hoy la
+     pantalla aparte de GD, 6.2).
+3. **Debe quedar claro que NO traducimos entre idiomas, sino entre
+   dialectos**: el catalán y el valenciano son el mismo idioma; nuestro
+   sistema adapta un texto catalán a la variedad valenciana de la AVL. La
+   interfaz no lo puede presentar como una traducción entre dos idiomas.
+
+**A revisar al implementarlo** (no decidido):
+- Los textos de la página nuestra: hoy dice "Idioma d'origen [Català]" →
+  "Idioma de destí [Valencià]" (6.2); en la sección de dialectos debería
+  hablar de variedades o dialectos, no de idiomas.
+- La API: `GET /api/idiomes` y el registro de pares tratan cat→val como un
+  par de idiomas (5). Habrá que separar pares de idiomas y de dialectos
+  (p. ej. un campo `tipus` en el registro, o rutas distintas) para que
+  cada página muestre los suyos.
+- Plantillas Jinja2, navegación accesible (menú con `<nav>`, página
+  actual marcada con `aria-current`), las pruebas de `tests/test_web_*` y
+  `scripts/comprova_accessibilitat.py` (axe) con las páginas nuevas.
+
 ## 1. Objetivo y para quién
 
 - **Quién lo usa**: personal de la Administración (Conselleria) que tiene
@@ -565,6 +610,7 @@ Castellano:
 | 4 | Dockerfile + compose + healthcheck con las variables de entorno (7.1); prueba sin red; avisos de licencias en `NOTICE` y los README (7.5); sección de variables en los README | `docker compose up` funciona en un equipo limpio; las versiones de `NOTICE` y las variables de los README coinciden con la imagen (**hecho 04/11**; probado por el usuario en su equipo, falta un equipo limpio) |
 | 5 | Subir ficheros (`.txt`, quizá `.docx`) | ídem |
 | 6 | Documentación de instalación para la Conselleria + declaración de accesibilidad (plantilla) | revisado por el equipo |
+| 7 | **PENDIENTE (05/11, petición de los responsables)**: título "Traductor Transducens" y páginas: traducción de idiomas (escalable) y traducción de dialectos con submenú adaptador cat→val + GD (sección 0) | las páginas nuevas pasan axe, teclado y las pruebas; ningún texto presenta cat→val como traducción entre idiomas |
 
 ## 11. Decisiones pendientes
 
@@ -707,3 +753,10 @@ Castellano:
 - 04/11/2026: el usuario arranca la imagen en su equipo y la da por
   buena ("diría que funciona bien"). Falta la prueba en un equipo limpio
   (sin el repositorio ni la caché de modelos) antes de la entrega.
+- 05/11/2026: **pendiente nuevo, petición de los responsables** (sección
+  0 y fase 7): título "Traductor Transducens" en vez de "AVLizador" y
+  varias páginas: traducción de idiomas (escalable al resto de idiomas) y
+  traducción de dialectos con submenú (adaptador dialectal català →
+  valencià y Grau Dialectal). Debe quedar claro que nuestro sistema no
+  traduce entre idiomas sino entre dialectos. Solo planificado, sin
+  código.

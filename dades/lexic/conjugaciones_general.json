@@ -423384,6 +423384,120 @@
     "id": "28642"
   },
   {
+    "verbo": "mantenir",
+    "catalan": "mantinguéssim",
+    "valenciano": "mantinguérem",
+    "morfologia": [
+      "pis",
+      "p1",
+      "pl"
+    ],
+    "id": "28643"
+  },
+  {
+    "verbo": "mantenir",
+    "catalan": "mantinguéssiu",
+    "valenciano": "mantinguéreu",
+    "morfologia": [
+      "pis",
+      "p2",
+      "pl"
+    ],
+    "id": "28644"
+  },
+  {
+    "verbo": "mantenir",
+    "catalan": "mantinguessis",
+    "valenciano": "mantingueres",
+    "morfologia": [
+      "pis",
+      "p2",
+      "sg"
+    ],
+    "id": "28645"
+  },
+  {
+    "verbo": "mantenir",
+    "catalan": "mantinguessin",
+    "valenciano": "mantingueren",
+    "morfologia": [
+      "pis",
+      "p3",
+      "pl"
+    ],
+    "id": "28646"
+  },
+  {
+    "verbo": "mantenir",
+    "catalan": "mantinguis",
+    "valenciano": "mantingues",
+    "morfologia": [
+      "prs",
+      "p2",
+      "sg"
+    ],
+    "id": "28647"
+  },
+  {
+    "verbo": "mantenir",
+    "catalan": "mantinguin",
+    "valenciano": "mantinguen",
+    "morfologia": [
+      [
+        "imp",
+        "p3",
+        "pl"
+      ],
+      [
+        "prs",
+        "p3",
+        "pl"
+      ]
+    ],
+    "id": "28648"
+  },
+  {
+    "verbo": "mantenir",
+    "catalan": "mantingui",
+    "valenciano": "mantinga",
+    "morfologia": [
+      [
+        "imp",
+        "p3",
+        "sg"
+      ],
+      [
+        "prs",
+        "p1",
+        "sg"
+      ],
+      [
+        "prs",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "28649"
+  },
+  {
+    "verbo": "mantenir",
+    "catalan": "mantingués",
+    "valenciano": "mantinguera",
+    "morfologia": [
+      [
+        "pis",
+        "p1",
+        "sg"
+      ],
+      [
+        "pis",
+        "p3",
+        "sg"
+      ]
+    ],
+    "id": "28650"
+  },
+  {
     "verbo": "manufacturar",
     "catalan": "manufacturéssim",
     "valenciano": "manufacturàrem",

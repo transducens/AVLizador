@@ -21,11 +21,18 @@ paraula escrita al codi:
 "cops") → model de llengua; `irresoluble` ("calces", "gandula/es") → (1)
 spaCy, si dona una categoria que només té l'altra lectura dels `lemas`
 ("molt gandula": ADJ → no es tradueix), i (2) si no, el model, que només
-canvia el motor si guanya per més de 5; `resoluble` → spaCy dins del motor.
+canvia el motor si guanya per més de 5 (des del 05/11/2026, marge 2 amb la catalana per defecte); `resoluble` → spaCy dins del motor.
 El model es va descartar primer als irresolubles, però la causa era un
 error de dades (E0592 "hamaces"; el plural és "hamaques", corregit amb
 permís de l'usuari). Criteri per defecte: FLOR-760M, PMI 0,5, suma, marge
-5, concordança `variants`. Resultats: benchmark combinat motor 190/253 →
+2 amb la paraula catalana per defecte (`per_defecte="catala"`, des del
+05/11/2026: només es tradueix si FLOR veu la traducció més probable per
+més de 2 punts; si no, es queda la paraula catalana; abans, marge 5 a
+favor del motor; vore la secció "Margen 2 con la catalana por defecto" del
+README.es.md), concordança `variants`. Mesurat el 06/11/2026 frente al
+marge 5: 151 + homògrafs 233 → 218/253, homògrafs v2 124 → 95/160 (les
+frases que deixen la catalana, 42 → 57/59; les que demanen la
+valenciana, 82 → 38/101), manual 228/458 sense canvis. Resultats: benchmark combinat motor 190/253 →
 sistema 227/253 (151 sense cap canvi, colisio 0 → 31/33, irresoluble 12 →
 18/24; "calces" no la separa); BOE ampli 1.206/2.000. La
 funció és `translate_cat_val_ml(text)`; `evalua_models.py --model
@@ -45,8 +52,9 @@ traductor_ml --direccio cat-val` l'avalua sobre
 
 Opcions del criteri (`Criteri`), per a provar amb `avalua.py`: `lam` (PMI,
 es resta `lam` × log P(candidat sol)), `norma` (`suma` / `mitjana` per
-token), `marge` (als homògrafs el model només canvia el motor si guanya
-per més de `marge` punts) i `concordanca` (`motor` o `variants`,
+token), `marge` i `per_defecte` (als homògrafs la forma per defecte,
+`catala` o `motor`, només canvia si l'altra guanya per més de `marge`
+punts) i `concordanca` (`motor` o `variants`,
 experimental: formes de l'altre gènere de les dos paraules d'abans, i el
 model tria).
 

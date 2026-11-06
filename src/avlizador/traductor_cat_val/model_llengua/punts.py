@@ -36,6 +36,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from ..rules import (
+    te_problema,
     _CATEGORIES_LEMA_RE,
     _POS_PER_CATEGORIA,
     LEXIC_GENERAL_PATH,
@@ -79,12 +80,12 @@ def carrega_punts(path: Path = LEXIC_GENERAL_PATH) -> dict[str, dict]:
         valencia = (e.get("valenciano") or "").strip()
         if not forma or forma != catalan or not valencia or " " in valencia:
             continue
-        if e.get("problema") == "colision_homonima":
+        if te_problema(e, "colision_homonima"):
             p = punts.setdefault(forma, {"tipus": "colisio", "candidats": [], "categoria": e.get("categoria"),
                                          "lectures": []})
             if valencia not in p["candidats"]:
                 p["candidats"].append(valencia)
-        elif e.get("problema") == "homonimia_lexica":
+        elif te_problema(e, "homonimia_lexica"):
             tipus = "resoluble" if forma in resolubles else "irresoluble"
             lectures = [{c.strip() for c in m.group(1).split(",")}
                         for lema in e.get("lemas") or [] for m in [_CATEGORIES_LEMA_RE.search(lema)] if m]

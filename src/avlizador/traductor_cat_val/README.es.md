@@ -75,7 +75,7 @@ texto catalán
   └─ 3. model_llengua (translate_cat_val_ml) — solo si hay una palabra ambigua del léxico:
          cop / cops (colision_homonima) ........ FLOR puntúa "Una vegada…" frente a "Un colp…"
          homógrafos (homonimia_lexica: nou, manca, calces, gandula…) spaCy por categoría de los
-                                                   `lemas`; con NOUN, FLOR con margen 5
+                                                   `lemas`; con NOUN, FLOR (margen 2 con la catalana por defecto)
 ```
 
 Detalle de la capa 3: `model_llengua/README.es.md`. Detalle de las capas

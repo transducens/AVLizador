@@ -420,7 +420,11 @@ class ConjugacionsDictInversRule:
                     corregeix_article_abans(tokens, i)
                     corregeix_elisio_de_abans(tokens, i)  # "de sortir" -> "d'eixir"
                 else:
-                    aplica_amb_prefix_elidit(tokens, i, prefix, arrel, forma)
+                    # Participi femení (06/11/2026): "a l'esmentada" ->
+                    # "a la mencionada", no "al mencionada". El participi nou
+                    # té el gènere de l'original, que spaCy ja dona bé.
+                    genere = "f" if tok.verb_form == "Part" and tok.gender == "Fem" else ""
+                    aplica_amb_prefix_elidit(tokens, i, prefix, arrel, forma, genere)
                     if sufix:
                         tok.translated += sufix
                 tok.is_translated = True

@@ -886,6 +886,25 @@ _POS_PER_CATEGORIA = {
 _CATEGORIES_LEMA_RE = re.compile(r"\[([^\]]*)\]")
 
 
+def te_problema(entrada: dict, *tipus: str) -> bool:
+    """Si l'entrada del lèxic té algun dels `problema` donats. Des del
+    05/11/2026 el camp pot ser una cadena o una llista (p. ex.
+    `["homonimia_lexica", "cambio_genero"]` en "nou"/"anou").
+
+    >>> te_problema({"problema": "homonimia_lexica"}, "homonimia_lexica")
+    True
+    >>> te_problema({"problema": ["homonimia_lexica", "cambio_genero"]}, "homonimia_lexica")
+    True
+    >>> te_problema({"problema": ["colision", "cambio_genero"]}, "homonimia_lexica", "colision_homonima")
+    False
+    >>> te_problema({}, "homonimia_lexica")
+    False
+    """
+    valor = entrada.get("problema")
+    valors = valor if isinstance(valor, list) else [valor]
+    return any(v in tipus for v in valors)
+
+
 def carrega_homografs(
     path: Path = LEXIC_GENERAL_PATH,
 ) -> tuple[dict[str, frozenset[str]], frozenset[str]]:
@@ -914,7 +933,7 @@ def carrega_homografs(
     resolubles: dict[str, frozenset[str]] = {}
     irresolubles: set[str] = set()
     for entrada in dades:
-        if entrada.get("problema") != "homonimia_lexica":
+        if not te_problema(entrada, "homonimia_lexica"):
             continue
         forma = (entrada.get("forma_problematica") or "").strip().lower()
         categoria = entrada.get("categoria")

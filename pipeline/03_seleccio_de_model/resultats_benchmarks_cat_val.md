@@ -43,6 +43,46 @@ mayúsculas, la puntuación va pegada a la palabra. Cada frase del JSON
 guarda `ter`, `wer`, `ter_edicions`, `wer_edicions` y `ref_paraules`; el
 resumen, `ter_corpus` y `wer_corpus`.
 
+## 06/11/2026 09:31 — Margen 2 con la catalana por defecto + léxico del 05/11
+
+`avlizador avalua` (sistema final, 0 errores). Cambios frente a la
+última tabla: FLOR solo traduce los homógrafos si ve la traducción >2
+puntos más probable que la catalana (antes, margen 5 a favor del motor;
+ver `src/avlizador/traductor_cat_val/model_llengua/README.es.md`,
+"Margen 2 con la catalana por defecto"); léxico del compañero del 05/11
+(género, "esmentar"→"mencionar", "contenir"→"contindre"), con las 8
+formas de subjuntivo de "mantenir" recuperadas (`cc1791d`); arreglos de
+`b0f493f` (`problema` en lista y participio femenino con apóstrofo).
+
+| Benchmark | Sistema | Exactas | BLEU | chrF | chrF++ | TER ↓ | WER ↓ | Errors |
+|---|---|---|---|---|---|---|---|---|
+| Manual mezcla BOE + AVL (458) | Motor + FLOR-760M | 228/458 (49,8 %) | 90,93 | 96,33 | 95,92 | 5,59 | 5,98 | 0 |
+| Manual BOE (246) | Motor + FLOR-760M | 33/246 (13,4 %) | 83,90 | 93,56 | 92,81 | 9,24 | 9,89 | 0 |
+| Manual AVL (212) | Motor + FLOR-760M | 195/212 (92,0 %) | 99,08 | 99,54 | 99,52 | 0,41 | 0,41 | 0 |
+| BOE estricto, muestra (2.000) | Motor + FLOR-760M | 1887/2000 (94,3 %) | 99,03 | 99,65 | 99,58 | 0,30 | 0,57 | 0 |
+| BOE amplio, muestra (2.000) | Motor + FLOR-760M | 1212/2000 (60,6 %) | 88,35 | 95,57 | 94,80 | 3,66 | 5,92 | 0 |
+| 151 + homógrafos (253) | Motor + FLOR-760M | 218/253 (86,2 %) | 95,14 | 97,54 | 97,54 | 0,88 | 0,88 | 0 |
+| Homógrafos v2, equilibrado por sentido (160) | Motor + FLOR-760M | 95/160 (59,4 %) | 84,29 | 92,29 | 92,22 | 5,82 | 5,82 | 0 |
+
+Frente al 05/11 (margen 5, léxico anterior: manual 229, BOE 32, AVL 196,
+estricto 1.888, amplio 1.213, homógrafos 233, v2 124):
+
+- **Margen 2**: homógrafos −15 y v2 −29. En el v2, las frases que dejan
+  la catalana 42 → 57/59 y las que piden la valenciana 82 → 38/101: menos
+  errores de sentido, más palabras sin traducir (precio aceptado). En el
+  manual pierde BM-AVL-191 ("les anous" → "les nous").
+- **"mantenir"** (formas recuperadas): +2 exactas (BM-BOE-113,
+  boe_164913).
+- **"esmentar" → "mencionar"**: unas 30 frases cambian, −1 exacta en el
+  estricto (boe_122224). Las fuentes oficiales prefieren "esmentar":
+  corpus AVL 231 "esment*" / 65 "mencion*", BOE valenciano 5.166 / 3.310
+  (BOE catalán 11.133 / 109). Pendiente de hablarlo con el compañero.
+- **Participio femenino**: "a l'esmentada" ya da "a la mencionada" (antes
+  "al mencionada"), 4 frases, ninguna llega a exacta (la referencia dice
+  "esmentada").
+- Ejecución anterior de hoy sin el arreglo de `te_problema` (no válida):
+  manual 213, v2 82 (= motor solo).
+
 ## 03/11/2026 10:40 — P1 + concordancia del adjetivo con el determinante
 
 Si spaCy da ADJ a la palabra ambigua y su género no concuerda con el

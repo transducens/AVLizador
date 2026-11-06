@@ -14,7 +14,8 @@ Sistema per tipus de punt (decisió de l'usuari, 23/10/2026):
 - `irresoluble` ("calces", "gandula", "gandules"): dos capes. (1) spaCy, si
   dona una categoria que només té l'altra lectura ("molt gandula": ADJ ->
   no es tradueix; `punts.decisio_spacy`); (2) si no, el model, que només
-  canvia el motor si guanya per més de `marge` (5). Primer es va descartar
+  canvia el motor si guanya per més de `marge` (5; des del 05/11/2026, vore
+  `per_defecte` més avall). Primer es va descartar
   el model ací (no separava "gandules" tumbona/persona), però la causa era
   un error de dades: E0592 deia "hamaces" (forma incorrecta; el plural és
   "hamaques") i el model la castigava sempre. Corregida (permís de
@@ -43,8 +44,16 @@ Criteri (`Criteri`); el valor per defecte és el millor de l'avaluació del
 - `lam` (PMI): es resta `lam` x log P(candidat sol), per a compensar que
   una paraula siga més freqüent que l'altra en general.
 - `norma`: "suma" (log-probabilitat de tota la frase) o "mitjana" (per token).
-- `marge`: quan el motor ja ha triat (homògrafs), el model només el canvia
-  si el guanya per més de `marge` punts de log-probabilitat.
+- `marge` i `per_defecte`: als homògrafs (el motor ja ha traduït), la
+  forma per defecte només canvia si l'altra guanya per més de `marge` punts
+  de log-probabilitat. Des del 05/11/2026 (decisió de l'usuari) és
+  `per_defecte="catala"` amb `marge=2`: només es tradueix si el model veu
+  la traducció més probable per més de 2 punts (unes 7 vegades més
+  probable); si no, es queda la paraula catalana. Criteri: és millor no
+  traduir (la paraula catalana, sovint vàlida també en valencià) que
+  traduir malament (canvia el sentit: "calces" d'època -> "bragues").
+  Abans era `per_defecte="motor"` amb `marge=5`. Detall i xifres al README
+  (secció "Margen 2 con la catalana por defecto").
 - `puntuacio`: "frase" (tota la frase) o "dreta" (experimental: només el
   que ve DESPRÉS de la paraula, condicionat a la paraula; deixa fora el
   terme "com de freqüent és la paraula ací", on hi ha el biaix del model
@@ -69,11 +78,16 @@ CONCORDANCA_PER_DEFECTE = "variants"
 class Criteri:
     lam: float = 0.5
     norma: str = "suma"
-    marge: float = 5.0
+    marge: float = 2.0  # 05/11/2026, decisió de l'usuari (abans 5,0 amb `per_defecte="motor"`)
     tipus: tuple[str, ...] = TIPUS_PER_DEFECTE
     puntuacio: str = "frase"
     spacy_irresolubles: bool = True
     model_irresolubles: bool = True  # decisió de l'usuari, 23/10/2026 (després de corregir E0592)
+    # Què es queda quan el model no guanya per més de `marge`: "catala" (la
+    # paraula catalana sense traduir, si és un dels candidats; decisió de
+    # l'usuari, 05/11/2026) o "motor" (la tria del motor, normalment la
+    # traducció; el criteri d'abans, amb `marge=5.0`).
+    per_defecte: str = "catala"
 
 
 def _valor(d: dict, criteri: Criteri, normalitza: bool = True) -> float:
@@ -110,9 +124,24 @@ def tria(punt: Punt, criteri: Criteri) -> str | None:
     >>> p = Punt(0, "calces", "", "irresoluble", ["bragues", "calces"], "bragues")
     >>> p.puntuacions = {"bragues": {"lp": -30.0, "n": 9, "prior": 0.0},
     ...                  "calces": {"lp": -28.0, "n": 9, "prior": 0.0}}
-    >>> amb_model = dict(model_irresolubles=True)
+    >>> amb_model = dict(model_irresolubles=True, per_defecte="motor")
     >>> tria(p, Criteri(marge=0.0, **amb_model)), tria(p, Criteri(marge=5.0, **amb_model)), p.decidit
     ('calces', 'bragues', 'motor')
+
+    Amb `per_defecte="catala"` és al revés: es queda la paraula catalana i
+    la traducció només entra si guanya per més de `marge`:
+
+    >>> p.puntuacions["bragues"]["lp"] = -26.0
+    >>> tria(p, Criteri(per_defecte="catala", marge=1.0)), p.decidit
+    ('bragues', 'model')
+    >>> tria(p, Criteri(per_defecte="catala", marge=5.0)), p.decidit
+    ('calces', 'catala')
+    >>> tria(p, Criteri()), p.decidit
+    ('calces', 'catala')
+    >>> p.puntuacions["bragues"]["lp"] = -25.0
+    >>> tria(p, Criteri()), p.decidit
+    ('bragues', 'model')
+    >>> p.puntuacions["bragues"]["lp"] = -30.0
 
     Capa d'spaCy dels irresolubles: "molt gandula" (ADJ) no es tradueix,
     sense mirar el model:
@@ -144,11 +173,16 @@ def tria(punt: Punt, criteri: Criteri) -> str | None:
         return punt.motor
     valors = {c: puntuacio(d, criteri) for c, d in punt.puntuacions.items()}
     millor = max(valors, key=valors.get)
-    if punt.motor in valors and millor != punt.motor:
-        diferencia = _valor(punt.puntuacions[millor], criteri, False) - _valor(punt.puntuacions[punt.motor], criteri, False)
+    defecte, qui = punt.motor, "motor"
+    if criteri.per_defecte == "catala" and punt.motor is not None:
+        catala = next((c for c in punt.candidats if c.lower() == punt.paraula.lower()), None)
+        if catala is not None:
+            defecte, qui = catala, "catala"
+    if defecte in valors and millor != defecte:
+        diferencia = _valor(punt.puntuacions[millor], criteri, False) - _valor(punt.puntuacions[defecte], criteri, False)
         if diferencia <= criteri.marge:
-            punt.decidit = "motor"
-            return punt.motor
+            punt.decidit = qui
+            return defecte
     punt.decidit = "model"
     return millor
 

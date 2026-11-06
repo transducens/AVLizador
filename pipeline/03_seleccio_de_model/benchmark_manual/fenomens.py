@@ -94,7 +94,9 @@ def carrega_index() -> tuple[dict, dict]:
     for e in json.loads((DATA / "lexic_general.json").read_text(encoding="utf-8")):
         if e.get("tipo") == "v:top_gva":
             continue
-        hom = e.get("problema") in ("homonimia_lexica", "colision_homonima")
+        problema = e.get("problema")
+        problemes = problema if isinstance(problema, list) else [problema]
+        hom = any(p in ("homonimia_lexica", "colision_homonima") for p in problemes)
         afig(e.get("catalan"), e.get("valenciano"), _fenomen_lexic(e), hom)
     conj = json.loads((DATA / "conjugacions_dialectals.json").read_text(encoding="utf-8"))["entradas"]
     for e in conj:

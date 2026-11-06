@@ -31,7 +31,7 @@ from __future__ import annotations
 import json
 import re
 
-from avlizador.traductor_cat_val.rules import LEXIC_GENERAL_PATH, Token, carrega_homografs, detokenize, separa_prefix_elidit
+from avlizador.traductor_cat_val.rules import LEXIC_GENERAL_PATH, Token, carrega_homografs, te_problema, detokenize, separa_prefix_elidit
 from avlizador.traductor_cat_val.rules.cat_val.engine import RuleEngineInvers
 from .punts import PuntAmbigu, resol
 
@@ -56,7 +56,7 @@ def carrega_homografs_llm() -> dict[str, dict]:
     dades = json.loads(LEXIC_GENERAL_PATH.read_text(encoding="utf-8"))
     resultat: dict[str, dict] = {}
     for entrada in dades:
-        if entrada.get("problema") != "homonimia_lexica":
+        if not te_problema(entrada, "homonimia_lexica"):
             continue
         forma = (entrada.get("forma_problematica") or "").strip().lower()
         catalan = (entrada.get("catalan") or "").strip().lower()
