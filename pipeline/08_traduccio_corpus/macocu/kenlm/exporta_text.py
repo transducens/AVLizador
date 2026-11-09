@@ -1,0 +1,121 @@
+"""
+exporta_text.py -- Passa MaCoCu-ca 1.0 SENCER (sense filtre de GD ni de
+qualitat) a text pla per a entrenar KenLM: una frase per línia,
+normalitzada amb `normalitza` (09/11/2026, primera prova de substituir
+FLOR per KenLM).
+
+Normalització (la MATEIXA s'ha d'aplicar a les frases que puntue el
+model després; per això està en una funció a banda):
+- minúscules; apòstrof tipogràfic (’ ʼ) -> ';
+- l'apòstrof queda pegat a la paraula d'abans ("d'una" -> "d' una");
+- els números, a "0" (menys vocabulari);
+- la puntuació, separada en tokens.
+
+Per defecte entra TOT: qualsevol qualitat jusText, títols inclosos. Només
+es lleven els paràgrafs d'un altre idioma (`lang` distint de "ca" i de
+"?"; els "short" no tenen idioma) i les frases de menys de 3 tokens.
+`--nomes-bons` deixa només els paràgrafs `good` en català.
+
+Ús (des de l'arrel del repositori):
+    python pipeline/08_traduccio_corpus/macocu/kenlm/exporta_text.py --processos 8
+    python pipeline/08_traduccio_corpus/macocu/kenlm/exporta_text.py --limit-mb 50   # prova
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import multiprocessing as mp
+import re
+import sys
+import time
+from collections import Counter
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from filtra_macocu import DIR, XML, _SEPARA, paragrafs  # noqa: E402
+
+EIXIDA = DIR / "kenlm" / "macocu_tot.txt"
+MIN_TOKENS = 3
+
+_APOSTROF = str.maketrans({"’": "'", "ʼ": "'", "´": "'", "`": "'"})
+_TOKEN = re.compile(r"[^\W\d_]+(?:[·\-][^\W\d_]+)*'?|\d+(?:[.,]\d+)*|[^\w\s]")
+_DIGITS = re.compile(r"\d+(?:[.,]\d+)*")
+
+
+def normalitza(text: str) -> str:
+    """Frase -> tokens separats per espais, com en el text d'entrenament.
+
+    >>> normalitza("D’una vegada, l'home va fer-ho el 2022!")
+    "d' una vegada , l' home va fer-ho el 0 !"
+    """
+    toks = _TOKEN.findall(text.translate(_APOSTROF).lower())
+    return " ".join("0" if _DIGITS.fullmatch(t) else t for t in toks)
+
+
+def _lot(paragrafs_: list[str]) -> tuple[list[str], int]:
+    linies, curtes = [], 0
+    for text in paragrafs_:
+        for frase in _SEPARA.split(text):
+            n = normalitza(frase)
+            if n.count(" ") + 1 < MIN_TOKENS:
+                curtes += 1
+                continue
+            linies.append(n)
+    return linies, curtes
+
+
+def main(argv: list[str] | None = None) -> None:
+    p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+    p.add_argument("--eixida", type=Path, default=EIXIDA)
+    p.add_argument("--processos", type=int, default=max(1, mp.cpu_count() - 1))
+    p.add_argument("--lot", type=int, default=5000, help="paràgrafs per lot")
+    p.add_argument("--nomes-bons", action="store_true", help="només paràgrafs good en català")
+    p.add_argument("--limit-mb", type=int, default=0, help="llegir només els primers N MB (proves)")
+    args = p.parse_args(argv)
+
+    args.eixida.parent.mkdir(parents=True, exist_ok=True)
+    est: Counter = Counter()
+    limit = args.limit_mb * 1_000_000 if args.limit_mb else None
+    t0 = time.time()
+
+    def escriu(res, out) -> None:
+        linies, curtes = res
+        est["frases"] += len(linies)
+        est["frases_curtes_llevades"] += curtes
+        est["tokens"] += sum(l.count(" ") + 1 for l in linies)
+        if linies:
+            out.write("\n".join(linies) + "\n")
+
+    with mp.Pool(args.processos) as pool, open(args.eixida, "w", encoding="utf-8") as out:
+        lot: list[str] = []
+        pendents = []
+        for _, par, text in paragrafs(XML, limit):
+            est["paragrafs"] += 1
+            lang = par.get("lang", "?")
+            if args.nomes_bons and not (par.get("quality") == "good" and lang == "ca"):
+                continue
+            if lang not in ("ca", "?"):
+                est["paragrafs_altre_idioma"] += 1
+                continue
+            lot.append(text)
+            if len(lot) >= args.lot:
+                pendents.append(pool.apply_async(_lot, (lot,)))
+                lot = []
+                while len(pendents) > args.processos * 2:
+                    escriu(pendents.pop(0).get(), out)
+            if est["paragrafs"] % 2_000_000 == 0:
+                print(f"  {est['paragrafs']:,} paràgrafs, {est['frases']:,} frases, "
+                      f"{est['tokens']:,} tokens, {time.time() - t0:,.0f} s", flush=True)
+        if lot:
+            pendents.append(pool.apply_async(_lot, (lot,)))
+        for r in pendents:
+            escriu(r.get(), out)
+    est["segons"] = round(time.time() - t0)
+    resum = {"nomes_bons": args.nomes_bons, "limit_mb": args.limit_mb, **est}
+    args.eixida.with_suffix(".json").write_text(json.dumps(resum, indent=2), encoding="utf-8")
+    print(json.dumps(resum, indent=2))
+
+
+if __name__ == "__main__":
+    main()
