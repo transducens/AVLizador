@@ -38,9 +38,9 @@ GD de l'eixida amb `dialecte="val"` (sense marcadors = 1,0); GDV = 1 -
 orientals / paraules (com `gdv.calcula_gdv`, sense tornar a passar spaCy).
 
 Ús (des de l'arrel del repositori):
-    python pipeline/08_traduccio_corpus/macocu/tradueix_macocu.py motor --processos 6
-    python pipeline/08_traduccio_corpus/macocu/tradueix_macocu.py motor --processos 6 --maxim 10000   # prova
-    python pipeline/08_traduccio_corpus/macocu/tradueix_macocu.py flor --processos 2 --fils 3
+    python pipeline/08_traduccio_corpus/macocu/catala/tradueix_macocu.py motor --processos 6
+    python pipeline/08_traduccio_corpus/macocu/catala/tradueix_macocu.py motor --processos 6 --maxim 10000   # prova
+    python pipeline/08_traduccio_corpus/macocu/catala/tradueix_macocu.py flor --processos 2 --fils 3
 """
 
 from __future__ import annotations
@@ -56,7 +56,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Iterator
 
-ARREL = Path(__file__).resolve().parents[3]
+ARREL = Path(__file__).resolve().parents[4]
 DIR = ARREL / "dades" / "macocu"
 CATALA_PUR = DIR / "catala_pur.jsonl"
 PARALEL_MOTOR = DIR / "paralel_motor.jsonl"

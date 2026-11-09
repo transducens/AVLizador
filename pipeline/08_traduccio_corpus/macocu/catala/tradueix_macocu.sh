@@ -14,7 +14,7 @@
 #   git fetch && git checkout macocu && git pull
 #   (catala_pur.jsonl ja hi és, de filtra_macocu.sh)
 #
-# Llançar-ho (des de ~/scrapeo/AVLizador/pipeline/08_traduccio_corpus/macocu):
+# Llançar-ho (des de ~/scrapeo/AVLizador/pipeline/08_traduccio_corpus/macocu/catala):
 #   MAXIM=20000 sbatch tradueix_macocu.sh          # prova: unes 20.000 línies
 #   sbatch tradueix_macocu.sh                      # pas 1 sencer
 #   PAS=flor MAXIM=2000 sbatch tradueix_macocu.sh  # prova del pas 2
@@ -46,7 +46,7 @@ PAS="${PAS:-motor}"
 MAXIM="${MAXIM:-0}"
 EXTRA=()
 [[ -n "${REINICIA:-}" ]] && EXTRA+=(--reinicia)
-SCRIPT="$ARREL_REPO/pipeline/08_traduccio_corpus/macocu/tradueix_macocu.py"
+SCRIPT="$ARREL_REPO/pipeline/08_traduccio_corpus/macocu/catala/tradueix_macocu.py"
 cd "$ARREL_REPO"
 
 T0=$(date +%s)

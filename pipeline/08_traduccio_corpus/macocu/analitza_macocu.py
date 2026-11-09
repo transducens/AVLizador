@@ -52,7 +52,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from filtra_macocu import (  # noqa: E402
+from comu import (  # noqa: E402
     DIR,
     XML,
     _PARAULA,

@@ -33,7 +33,7 @@ from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from filtra_macocu import DIR, XML, _SEPARA, paragrafs  # noqa: E402
+from comu import DIR, XML, _SEPARA, paragrafs  # noqa: E402
 
 EIXIDA = DIR / "kenlm" / "macocu_tot.txt"
 MIN_TOKENS = 3

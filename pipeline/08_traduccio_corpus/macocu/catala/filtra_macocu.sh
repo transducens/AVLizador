@@ -12,7 +12,7 @@
 #   md5sum MaCoCu-ca-1.0.xml.zip    # ee39dfa0d626432ae5c44aa9071908bb
 # No cal descomprimir-lo: el script el llig directament del .zip.
 #
-# Llançar-ho (des de ~/scrapeo/AVLizador/pipeline/08_traduccio_corpus/macocu):
+# Llançar-ho (des de ~/scrapeo/AVLizador/pipeline/08_traduccio_corpus/macocu/catala):
 #   sbatch filtra_macocu.sh                      # totes les candidates
 #   FRACCIO=0.2 sbatch filtra_macocu.sh          # mostra del 20 %
 # Resultats: ~/scrapeo/AVLizador/dades/macocu/catala_pur.jsonl (+ estadistiques_*.json)
@@ -41,7 +41,7 @@ export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TORCH_NUM_THREADS=1
 CPUS="${SLURM_CPUS_PER_TASK:-8}"
 PROCESSOS=$(( CPUS > 1 ? CPUS - 1 : 1 ))
 FRACCIO="${FRACCIO:-1.0}"
-SCRIPT="$ARREL_REPO/pipeline/08_traduccio_corpus/macocu/filtra_macocu.py"
+SCRIPT="$ARREL_REPO/pipeline/08_traduccio_corpus/macocu/catala/filtra_macocu.py"
 cd "$ARREL_REPO"
 
 if [[ ! -s dades/macocu/candidates.jsonl ]]; then
