@@ -172,6 +172,56 @@ referencia son el mismo texto). En la prueba de 10 frases pasaba igual
 (97,31 frente a 98,20). Es decir, XCOMET no mide el parecido con la
 referencia: castiga las formas valencianas por sí mismas, venga o no el
 original catalán. **Queda descartado del todo para esta tarea**, en
-cualquier modo; `MODE=qe` no se lanza (con el catalán delante y sin
-referencia solo puede ir a peor). El juez LLM de `../jutge_llm/` (Qwen
+cualquier modo (`MODE=qe` se lanzó al final, el 09/11/2026, y lo
+confirma: ver la sección siguiente). El juez LLM de `../jutge_llm/` (Qwen
 3.6, GEMBA-ESA solo con la traducción) da lo mismo: prefiere el catalán.
+
+### Modo `qe`: sin referencia (09/11/2026, completo)
+
+Solo catalán de origen + traducción (como un usuario que no tiene
+referencia). Lanzado al final para cerrar los tres modos; la referencia
+valenciana entra como un sistema más (`referencia__XCOMET-XL_qe.json`):
+
+| Sistema | Mezcla | BOE | AVL | Frases con error |
+|---|---|---|---|---|
+| qwen3:14b | **97,12** | 97,75 | 96,39 | 196/458 |
+| salamandra-7b-instruct | 97,11 | 97,98 | 96,09 | 185/458 |
+| llama3.1:8b | 97,09 | 97,70 | 96,37 | 193/458 |
+| **Sin traducir** (catalán tal cual) | 97,04 | 97,66 | 96,32 | 184/458 |
+| AVLizador 1.0.1 | 97,00 | 97,49 | 96,43 | 284/458 |
+| gemma4:12b | 96,98 | 97,51 | 96,38 | 238/458 |
+| AVLizador 1.1.0 | 96,98 | 97,49 | 96,40 | 285/458 |
+| qwen3:8b | 96,95 | 97,43 | 96,39 | 209/458 |
+| Motor solo | 96,91 | 97,42 | 96,32 | 291/458 |
+| gemma3:12b | 96,87 | 97,49 | 96,14 | 259/458 |
+| **Referencia valenciana** (manual) | **96,82** | 97,07 | 96,52 | 280/458 |
+| qwen2.5:7b | 95,72 | 96,31 | 95,03 | 274/458 |
+| mistral-nemo:12b | 95,39 | 96,11 | 94,55 | 319/458 |
+| qwen2.5:14b | 93,56 | 94,04 | 93,00 | 356/458 |
+
+Pares contrastivos (referencia valenciana − catalán sin traducir, misma
+frase): gana el valenciano en 91, empate (±0,5) en 175, gana el catalán
+en 192; diferencia media −0,22.
+
+Lectura:
+
+- **La referencia valenciana queda por debajo de 10 de los 13 sistemas**,
+  también del catalán sin traducir (96,82 frente a 97,04), y XCOMET marca
+  error en 280 de sus 458 frases. Es el resultado que se esperaba: sin
+  referencia, con el catalán delante, lo que se aparta del original se
+  castiga.
+- **Sigue sin ver el dialecto**: en el "sin traducir" marca como error
+  solo 4 de las 245 apariciones de *aquest\**; en cambio, de las 227
+  frases en que AVLizador 1.0.1 coincide exactamente con la referencia,
+  marca error en 126. Los trozos marcados en la referencia caen en formas
+  valencianas normativas: *servicis/servici*, *esta*, *estos*,
+  *arreplega*, *duració*, *díhuit*... (los `error_spans` salen partidos
+  en subpalabras: "s", "x", "ix", "ci").
+- Las diferencias entre los sistemas buenos son de décimas (96,9-97,1),
+  menores que la que separa a la referencia del "sin traducir".
+
+**Conclusión: XCOMET-XL descartado en los tres modos** (completo, `ref` y
+`qe`). En los tres, el catalán sin traducir puntúa igual o mejor que
+AVLizador y que la propia referencia valenciana. Para esta tarea se
+quedan las métricas de superficie (exactas, BLEU, chrF, TER, WER) junto
+con el GD, que es el único que separa el valenciano del catalán.
