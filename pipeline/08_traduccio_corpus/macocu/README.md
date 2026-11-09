@@ -31,3 +31,25 @@ vàlides, el 88 % de les quals són catalanes pures, i no en perd cap; el
 pas 1 fa 200 MB en 49 s (~5 M candidates en total); el pas 2, ~90-100
 candidates/s amb 6 processos (totes: ~13-15 h; el 20 %: ~3 h). Detall en
 [README.es.md](README.es.md).
+
+Execució completa en Abaco (09/11/2026): 5.224.279 candidates →
+**4.489.982 frases en català pur (85,9 %)**; el pas 2 va tardar 54 min
+amb 15 processos. La qualitat de les dades es documenta en
+[README.es.md](README.es.md), secció "Calidad de los datos".
+
+**Decisió (09/11/2026)**: en mostrejar per a traduir es lleven 4 dominis
+amb text roín: pdfslide.tips i dokumen.tips (PDF mal extret, falten
+lletres) i ca.eferrit.com i ca.whattalking.com (traducció automàtica de
+l'anglés, amb calcs i errors). AVLizador només canvia el que és
+dialectal, de manera que eixos errors passarien als dos costats del
+corpus paral·lel. Queden **4.423.594 frases** (−66.388, −1,5 %).
+`catala_pur.jsonl` no es toca.
+
+**Traducció (`tradueix_macocu.py` + `tradueix_macocu.sh`)**: es tradueix
+tot, sense tope per document ni per domini. El pas `motor` (motor +
+spaCy) dona ja la traducció final de les frases sense paraules ambigües
+(`paralel_motor.jsonl`). El pas `flor` passa per FLOR les que en tenen
+(~6,5 %, `paralel_flor.jsonl`), etiquetades amb qui ha decidit cada
+paraula (`decidit`) i `revisar`, per a revisar-les; no es lleven
+(decisió de l'usuari). FLOR en CPU va a ~5 s per frase i procés: cal
+mesurar-ho en Abaco. Detall en [README.es.md](README.es.md).
