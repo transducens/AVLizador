@@ -15,6 +15,7 @@ queda per defecte). Ací cada model és un puntuador:
 | `kenlm_cat30`   | ídem amb el model del 30 % de MaCoCu (efecte de la grandària) |
 | `kenlm_val`     | log P_val (KenLM valencià, totes les frases del filtre) |
 | `kenlm_val_net` | log P_val (KenLM valencià net: ≥ 2 marcadors o el seu document) |
+| `kenlm_val_net_dogv` | ídem, més el DOGV 2025-2026 filtrat (documents de GD ≥ 0,8; `dogv_apunt/prepara_dogv.py`) |
 | `diff`          | log P_val − log P_cat (el que més guanya en valencià)  |
 | `diff_net`      | ídem amb el valencià net                               |
 | `fasttext`      | logit(val) − logit(cat) del classificador (sense la saturació de `predict`) |
@@ -75,7 +76,8 @@ BENCHMARKS = {
 }
 TIPUS_MODEL = ("colisio", "irresoluble")
 LN10 = math.log(10)
-MODELS = ("motor", "flor", "kenlm_cat", "kenlm_cat30", "kenlm_val", "kenlm_val_net", "diff", "diff_net", "fasttext")
+MODELS = ("motor", "flor", "kenlm_cat", "kenlm_cat30", "kenlm_val", "kenlm_val_net", "kenlm_val_net_dogv",
+          "diff", "diff_net", "fasttext")
 
 
 # --------------------------------------------------------------------------
@@ -190,6 +192,8 @@ class Carregador:
             return KenLM(self._kenlm("macocu_30pc"), -1.0)
         if clau == "kenlm_val":
             return KenLM(self._kenlm("valencia"))
+        if clau == "kenlm_val_net_dogv":
+            return KenLM(self._kenlm("valencia_net_dogv"))
         if clau == "kenlm_val_net":
             return KenLM(self._kenlm("valencia_net"))
         if clau == "diff":
@@ -208,6 +212,7 @@ class Carregador:
     def fitxers(self, clau: str) -> list[str]:
         return {"flor": ["flor"], "kenlm_cat": ["macocu_tot"], "kenlm_cat30": ["macocu_30pc"],
                 "kenlm_val": ["valencia"], "kenlm_val_net": ["valencia_net"],
+                "kenlm_val_net_dogv": ["valencia_net_dogv"],
                 "diff": ["valencia", "macocu_tot"], "diff_net": ["valencia_net", "macocu_tot"],
                 "fasttext": ["fasttext"]}.get(clau, [])
 
@@ -322,16 +327,22 @@ def detall(puntuats: list, criteri: Criteri | None) -> list[dict]:
         hip = text_motor if criteri is None else aplica_tries(text_motor, punts, criteri)
         p = punt_avaluat(it, punts)
         tria = (p.motor if criteri is None else p.tria) if p is not None else None
-        valors = {}
+        valors, brut = {}, {}
         if p is not None and criteri is not None and p.puntuacions:
             from avlizador.traductor_cat_val.model_llengua import puntuacio
 
             valors = {c: round(puntuacio(d, criteri), 2) for c, d in p.puntuacions.items()}
+            # En brut (10/11/2026), per a simular en local qualsevol marge i lam:
+            # puntuació = lp - lam * prior (norma suma).
+            brut = {c: {"lp": round(d["lp"], 3), "prior": round(d["prior"], 3), "n": d["n"]}
+                    for c, d in p.puntuacions.items()}
         files.append({"id": it["id"], "paraula": it["paraula"], "tipus": it.get("tipus"),
                       "sentit": it.get("sentit"), "esperat": it["esperat"], "tria": tria,
                       "classe": classifica(it["paraula"], it["esperat"], tria),
                       "decidit": "motor" if criteri is None else (p.decidit if p is not None else "no detectada"),
-                      "puntuacions": valors, "oriental": it["oriental"], "hipotesi": hip})
+                      "puntuacions": valors, "brut": brut if valors else {},
+                      "motor": p.motor if p is not None else None, "candidats": p.candidats if p is not None else [],
+                      "oriental": it["oriental"], "hipotesi": hip})
     return files
 
 
