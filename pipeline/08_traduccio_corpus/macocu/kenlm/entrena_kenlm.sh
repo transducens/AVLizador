@@ -11,6 +11,7 @@
 #   sbatch entrena_kenlm.sh                         # ordre 5, poda de singletons
 #   ORDRE=4 sbatch entrena_kenlm.sh
 #   LIMIT_MB=500 NOM=prova sbatch entrena_kenlm.sh  # prova xicoteta
+#   JSONL=dades/macocu/valencia/valencia.jsonl NOM=valencia sbatch entrena_kenlm.sh  # KenLM valencià
 # Variables: ORDRE (5), PODA ("0 1 1 1 1": lleva els n-grames d'1 aparició
 # des dels bigrames; "" = sense poda), MEM_LMPLZ (70%
 # de la memòria del job), NOM (macocu_tot), KENLM (~/kenlm), TMPDIR_LM.
@@ -44,6 +45,9 @@ ORDRE="${ORDRE:-5}"
 PODA="${PODA-0$(printf ' 1%.0s' $(seq 2 "$ORDRE"))}"
 NOM="${NOM:-macocu_tot}"
 LIMIT_MB="${LIMIT_MB:-0}"
+# JSONL: frases d'un JSONL (camp text, relatiu a l'arrel del repo) en lloc de MaCoCu sencer.
+OPC_JSONL=()
+[[ -n "${JSONL:-}" ]] && OPC_JSONL=(--jsonl "$JSONL")
 DIR_LM="$ARREL_REPO/dades/macocu/kenlm"
 TEXT="$DIR_LM/$NOM.txt"
 ARPA="$DIR_LM/${NOM}_o${ORDRE}.arpa"
@@ -60,7 +64,7 @@ T0=$(date +%s)
 if [[ ! -s "$TEXT" || ! -s "${TEXT%.txt}.json" ]]; then
     echo "=== 1. exporta el text ($TEXT) ==="
     python -u pipeline/08_traduccio_corpus/macocu/kenlm/exporta_text.py \
-        --processos "$CPUS" --limit-mb "$LIMIT_MB" --eixida "$TEXT"
+        --processos "$CPUS" --limit-mb "$LIMIT_MB" --eixida "$TEXT" ${OPC_JSONL[@]+"${OPC_JSONL[@]}"}
 else
     echo "=== 1. el text ja hi és: $TEXT ($(du -h "$TEXT" | cut -f1)) ==="
 fi

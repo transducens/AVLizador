@@ -107,6 +107,25 @@ para la prueba pequeña), `MEM_LMPLZ=16G`.
 scp nmartin@abaco:scrapeo/AVLizador/dades/macocu/kenlm/macocu_tot_o5.binary dades/macocu/kenlm/
 ```
 
+## KenLM valenciano (10/11/2026)
+
+Mismo script, con las frases del filtro valenciano en vez de MaCoCu
+entero (`--jsonl` en `exporta_text.py`, variable `JSONL` en el `.sh`).
+Decisión del usuario: **todas** las de `valencia.jsonl` (GD > 0,5 con ≥ 1
+marcador), aunque con un solo marcador muchas sean catalán con un falso
+marcador ("vegada", "permet"). `--min-gd` y `--min-marcadors` filtran si
+hace falta.
+
+```bash
+cd ~/scrapeo/AVLizador/pipeline/08_traduccio_corpus/macocu/kenlm
+JSONL=dades/macocu/valencia/valencia.jsonl NOM=valencia MEM_LMPLZ=8G \
+    sbatch --cpus-per-task=4 --mem=12000M --time=02:00:00 entrena_kenlm.sh
+```
+
+Salida: `dades/macocu/kenlm/valencia_o5.binary`. Uso previsto: gana el
+candidato **más probable** (con el KenLM catalán, el **menos** probable;
+y la diferencia valenciano − catalán).
+
 ## Siguiente (cuando esté el modelo)
 
 Medirlo como a FLOR: las frases candidatas de los homógrafos v1 (253) y

@@ -16,3 +16,8 @@ entrenat amb **tot MaCoCu-ca sense filtrar** (decisió de l'usuari).
 
 Els passos (compilar KenLM, prova xicoteta, model sencer) estan en
 [README.es.md](README.es.md).
+
+**KenLM valencià (10/11/2026)**: el mateix script amb les frases del
+filtre valencià (totes les de `valencia.jsonl`, decisió de l'usuari):
+`JSONL=dades/macocu/valencia/valencia.jsonl NOM=valencia sbatch entrena_kenlm.sh`
+(vore README.es.md).

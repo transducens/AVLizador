@@ -16,9 +16,16 @@ es lleven els paràgrafs d'un altre idioma (`lang` distint de "ca" i de
 "?"; els "short" no tenen idioma) i les frases de menys de 3 tokens.
 `--nomes-bons` deixa només els paràgrafs `good` en català.
 
+`--jsonl FITXER` (10/11/2026) llig les frases d'un JSONL (camp `text`) en
+lloc del XML: per a entrenar el KenLM valencià amb
+`dades/macocu/valencia/valencia.jsonl` (decisió de l'usuari: totes, GD >
+0,5 amb >= 1 marcador). `--min-gd` i `--min-marcadors` (camps `gd` i
+`occ`) filtren si cal.
+
 Ús (des de l'arrel del repositori):
     python pipeline/08_traduccio_corpus/macocu/kenlm/exporta_text.py --processos 8
     python pipeline/08_traduccio_corpus/macocu/kenlm/exporta_text.py --limit-mb 50   # prova
+    python pipeline/08_traduccio_corpus/macocu/kenlm/exporta_text.py         --jsonl dades/macocu/valencia/valencia.jsonl --eixida dades/macocu/kenlm/valencia.txt
 """
 
 from __future__ import annotations
@@ -65,6 +72,17 @@ def _lot(paragrafs_: list[str]) -> tuple[list[str], int]:
     return linies, curtes
 
 
+def _frases_jsonl(args, est: Counter):
+    """Com `paragrafs`, però des d'un JSONL de frases (`--jsonl`)."""
+    with open(args.jsonl, encoding="utf-8") as f:
+        for linia in f:
+            r = json.loads(linia)
+            if (args.min_gd is not None and r.get("gd", 1.0) < args.min_gd) or r.get("occ", 0) < args.min_marcadors:
+                est["jsonl_filtrades"] += 1
+                continue
+            yield None, {"lang": "ca"}, r["text"]
+
+
 def main(argv: list[str] | None = None) -> None:
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     p.add_argument("--eixida", type=Path, default=EIXIDA)
@@ -72,6 +90,9 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--lot", type=int, default=5000, help="paràgrafs per lot")
     p.add_argument("--nomes-bons", action="store_true", help="només paràgrafs good en català")
     p.add_argument("--limit-mb", type=int, default=0, help="llegir només els primers N MB (proves)")
+    p.add_argument("--jsonl", type=Path, help="frases d'un JSONL (camp text) en lloc del XML")
+    p.add_argument("--min-gd", type=float, default=None, help="amb --jsonl: GD mínim (camp gd)")
+    p.add_argument("--min-marcadors", type=int, default=0, help="amb --jsonl: marcadors mínims (camp occ)")
     args = p.parse_args(argv)
 
     args.eixida.parent.mkdir(parents=True, exist_ok=True)
@@ -94,7 +115,7 @@ def main(argv: list[str] | None = None) -> None:
     with mp.Pool(args.processos) as pool, open(part, "w", encoding="utf-8") as out:
         lot: list[str] = []
         pendents = []
-        for _, par, text in paragrafs(XML, limit):
+        for _, par, text in (_frases_jsonl(args, est) if args.jsonl else paragrafs(XML, limit)):
             est["paragrafs"] += 1
             lang = par.get("lang", "?")
             if args.nomes_bons and not (par.get("quality") == "good" and lang == "ca"):
@@ -117,7 +138,8 @@ def main(argv: list[str] | None = None) -> None:
             escriu(r.get(), out)
     part.replace(args.eixida)
     est["segons"] = round(time.time() - t0)
-    resum = {"nomes_bons": args.nomes_bons, "limit_mb": args.limit_mb, **est}
+    resum = {"nomes_bons": args.nomes_bons, "limit_mb": args.limit_mb, "jsonl": str(args.jsonl or ""),
+             "min_gd": args.min_gd, "min_marcadors": args.min_marcadors, **est}
     args.eixida.with_suffix(".json").write_text(json.dumps(resum, indent=2), encoding="utf-8")
     print(json.dumps(resum, indent=2))
 
