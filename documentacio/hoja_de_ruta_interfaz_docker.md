@@ -7,10 +7,10 @@ sección propone una opción y deja abiertas las preguntas que tiene que
 contestar el equipo. Se irá actualizando a medida que se decida y se
 construya.
 
-## 0. PENDIENTE (05/11/2026): nombre y estructura de páginas
+## 0. HECHO (10/11/2026, rama `interfaz-transducens`): nombre y estructura de páginas
 
-**Petición de los responsables del proyecto.** No está hecho todavía: es
-lo siguiente de la interfaz. Lo que tiene que quedar:
+**Petición de los responsables del proyecto (05/11).** Hecho el 10/11
+(fase 7): ver "Cómo quedó" al final de esta sección. Lo que se pidió:
 
 1. **Título**: quitar "AVLizador" como título de la interfaz y poner
    **"Traductor Transducens"** (cabecera, `<title>` de las páginas y
@@ -51,6 +51,45 @@ lo siguiente de la interfaz. Lo que tiene que quedar:
 - Plantillas Jinja2, navegación accesible (menú con `<nav>`, página
   actual marcada con `aria-current`), las pruebas de `tests/test_web_*` y
   `scripts/comprova_accessibilitat.py` (axe) con las páginas nuevas.
+
+**Cómo quedó (10/11/2026; decisiones del usuario: portada con dos
+tarjetas, segunda fila de pestañas sin desplegables, aviso en la página
+de idiomas):**
+
+| Ruta | Página |
+|---|---|
+| `/` | Portada: título, qué distingue idiomas de dialectos y dos tarjetas (idiomas: "todavía ninguno" o cuántos pares hay; dialectos: enlaces al adaptador y al GD) |
+| `/idiomes` | Traducción de idiomas: aviso de que aún no hay ninguno y enlace al adaptador; en cuanto se registre un par `tipus="idioma"`, muestra el traductor sin tocar plantillas |
+| `/dialectes` | Redirige (307) a `/dialectes/adaptador` |
+| `/dialectes/adaptador` | Adaptador dialectal del catalán al valenciano (la antigua pantalla "Traduir"): "Varietat d'origen/destí", botón "Adaptar", "Text adaptat" |
+| `/dialectes/gd` | Grau Dialectal (antes `/gd`) |
+| `/sobre` | Sobre el Traductor Transducens ("Què fa" reescrito: idiomas frente a dialectos; AVLizador es el adaptador) |
+| `POST /`, `/gd` | Rutas de la 1.2.0: redirigen (308 conserva el formulario, 301 en GET) |
+
+- Menú: fila principal "Traducció d'idiomes · Adaptador dialectal ·
+  Sobre" (decisión del usuario, 10/11: "Adaptador dialectal" en vez de
+  "Traducció de dialectes", también en la tarjeta de la portada) (la sección activa con `aria-current="true"`) y, dentro de
+  dialectos, una segunda `<nav class="subnav">` con "Adaptador del català
+  al valencià · Grau Dialectal" (`aria-current="page"`; negrita y borde,
+  no solo color; también en alto contraste).
+- Registro (`web/idiomes.py`): `Parell.tipus` = `"idioma"` o
+  `"dialecte"` (cat→val es `dialecte`). Cada página solo ofrece y
+  traduce los pares de su tipus (otro tipus → 400 "Este parell no està
+  disponible").
+- API: nuevo `GET /api/parells?tipus=idioma|dialecte` (cada par lleva
+  `tipus`); `GET /api/idiomes` se mantiene con la misma respuesta;
+  `POST /api/tradueix` no cambia.
+- Textos: los de la pantalla de traducir van por tipus en
+  `textos/*.json` (`traductor.idioma` / `traductor.dialecte`); el
+  JavaScript recibe las mismas claves de siempre. Mensajes de la API sin
+  "idiomes" ("Este parell no està disponible", "Comprova el text i el
+  parell triat", "No s'ha pogut processar el text"). Icono "TT".
+- Comprobado: `pytest` 94 en verde (8 pruebas nuevas: portada, idiomas
+  con y sin pares, pares cruzados, textos de variedades, menú de dos
+  niveles, redirecciones, `tipus` en la API);
+  `scripts/comprova_accessibilitat.py` (axe 4.10.2, valenciano y
+  castellano, claro y oscuro; teclado, 320 px, sin JavaScript): **0
+  problemas**. Falta la prueba con lector de pantalla (D10).
 
 ## 1. Objetivo y para quién
 
@@ -610,7 +649,7 @@ Castellano:
 | 4 | Dockerfile + compose + healthcheck con las variables de entorno (7.1); prueba sin red; avisos de licencias en `NOTICE` y los README (7.5); sección de variables en los README | `docker compose up` funciona en un equipo limpio; las versiones de `NOTICE` y las variables de los README coinciden con la imagen (**hecho 04/11**; probado por el usuario en su equipo, falta un equipo limpio) |
 | 5 | Subir ficheros (`.txt`, quizá `.docx`) | ídem |
 | 6 | Documentación de instalación para la Conselleria + declaración de accesibilidad (plantilla) | revisado por el equipo |
-| 7 | **PENDIENTE (05/11, petición de los responsables)**: título "Traductor Transducens" y páginas: traducción de idiomas (escalable) y traducción de dialectos con submenú adaptador cat→val + GD (sección 0) | las páginas nuevas pasan axe, teclado y las pruebas; ningún texto presenta cat→val como traducción entre idiomas |
+| 7 | **HECHO (10/11, rama `interfaz-transducens`)**: título "Traductor Transducens" y páginas: traducción de idiomas (escalable) y traducción de dialectos con submenú adaptador cat→val + GD (sección 0) | las páginas nuevas pasan axe, teclado y las pruebas; ningún texto presenta cat→val como traducción entre idiomas |
 
 ## 11. Decisiones pendientes
 
@@ -760,3 +799,9 @@ Castellano:
   valencià y Grau Dialectal). Debe quedar claro que nuestro sistema no
   traduce entre idiomas sino entre dialectos. Solo planificado, sin
   código.
+- 10/11/2026: **fase 7 hecha** (rama `interfaz-transducens`, sección 0,
+  "Cómo quedó"): "Traductor Transducens", portada con dos tarjetas,
+  `/idiomes` (aviso), `/dialectes/adaptador` y `/dialectes/gd` con
+  segunda fila de pestañas, `Parell.tipus`, `GET /api/parells?tipus=`,
+  redirecciones de las rutas de la 1.2.0. 94 pruebas y axe con 0
+  problemas.

@@ -1,5 +1,11 @@
-"""API web d'AVLizador (FastAPI): traducció català -> valencià i Grau
-Dialectal. Pla complet: `documentacio/hoja_de_ruta_interfaz_docker.md`.
+"""Interfície web "Traductor Transducens" (FastAPI) amb AVLizador:
+adaptació dialectal català -> valencià i Grau Dialectal. Pla complet:
+`documentacio/hoja_de_ruta_interfaz_docker.md`.
+
+Pàgines (fase 7, 10/11/2026): `/` portada; `/idiomes` traducció entre
+idiomes (encara cap parell); `/dialectes/adaptador` i `/dialectes/gd`
+(adaptador català -> valencià i Grau Dialectal); `/sobre`. Les rutes de la
+1.2.0 (`POST /`, `/gd`) redirigixen a les noves.
 
     avlizador web                                  # http://127.0.0.1:8000
     uvicorn avlizador.web.main:app --no-access-log # el mateix, a mà
@@ -35,7 +41,7 @@ from urllib.parse import parse_qs
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from markupsafe import Markup
@@ -44,14 +50,13 @@ from starlette.concurrency import run_in_threadpool
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from .. import __version__
-from .idiomes import Parell, parells_per_defecte
+from .idiomes import TIPUS, Parell, parells_per_defecte
 from .missatges import IDIOMES_INTERFICIE, missatge, nombre, textos, tria_idioma
 
 CARPETA = Path(__file__).resolve().parent
 # Textos que necessita `static/traductor.js` (van en un bloc JSON de la
 # pàgina, no en JavaScript en línia).
-CLAUS_JS = ("comptador", "traduint", "tardant", "traduccio_feta", "copiada", "no_copiada",
-            "res_per_copiar", "text_buit", "error_xarxa")
+CLAUS_JS = ("comptador", "error_xarxa")  # + els del tipus de parell (`pagina_traduir`)
 
 # PRIVACITAT (requisit fix, 03/11/2026): els textos que es traduïxen poden
 # ser documents de l'Administració i NO poden aparéixer mai en els logs.
@@ -229,7 +234,7 @@ def create_app(config: Configuracio | None = None,
         yield
 
     app = FastAPI(
-        title="AVLizador",
+        title="Traductor Transducens (AVLizador)",
         version=__version__,
         lifespan=lifespan,
         docs_url="/docs" if config.docs else None,
@@ -304,13 +309,22 @@ def create_app(config: Configuracio | None = None,
 
     # --- Pàgines -------------------------------------------------------------
 
+    # Fase 7 (10/11/2026): "Traductor Transducens" amb dos seccions. Cada
+    # pàgina diu la seua secció (per al menú) i la ruta del formulari.
+    SECCIO = {"inici": "inici", "idiomes": "idiomes", "adaptador": "dialectes", "gd": "dialectes",
+              "sobre": "sobre"}
+    RUTA_TRADUCTOR = {"idioma": ("/idiomes", "idiomes"), "dialecte": ("/dialectes/adaptador", "adaptador")}
+
+    def parells_de(tipus: str) -> list[Parell]:
+        return [p for p in estat.parells.values() if p.tipus == tipus]
+
     def renderitza(request: Request, plantilla: str, pagina: str, codi: int = 200, **context) -> HTMLResponse:
         """El que comparten totes les pàgines: textos, llengua, menú, versió i
         la galeta tècnica de la llengua."""
         idioma = idioma_de(request)
         t = textos(idioma)
         html = plantilles.get_template(plantilla).render(
-            t=t, idioma=idioma, pagina=pagina, versio=t["versio"].format(versio=__version__),
+            t=t, idioma=idioma, pagina=pagina, seccio=SECCIO[pagina], versio=t["versio"].format(versio=__version__),
             llengues=[(c, textos(c)["nom_llengua"]) for c in IDIOMES_INTERFICIE], **context)
         resposta = HTMLResponse(html, status_code=codi)
         if request.query_params.get("idioma") in IDIOMES_INTERFICIE:
@@ -321,48 +335,103 @@ def create_app(config: Configuracio | None = None,
     def comptador(t: dict, text: str) -> str:
         return t["comptador"].format(n=nombre(len(text)), maxim=nombre(config.max_caracters))
 
-    def pagina_traduir(request: Request, codi: int = 200, text: str = "", traduccio: str = "",
+    def pagina_traduir(request: Request, tipus: str, codi: int = 200, text: str = "", traduccio: str = "",
                        origen: str | None = None, desti: str | None = None, error: str | None = None,
                        error_camp: str | None = None, avis_estat: str | None = None) -> HTMLResponse:
+        """La pantalla de traduir amb els parells d'un `tipus` ("idioma" o
+        "dialecte") i els seus textos (`t["traductor"][tipus]`)."""
         idioma = idioma_de(request)
         t = textos(idioma)
-        parells = [p.descriu(idioma) for p in estat.parells.values()]
+        tt = t["traductor"][tipus]
+        accio, pagina = RUTA_TRADUCTOR[tipus]
+        parells = [p.descriu(idioma) for p in parells_de(tipus)]
+        if not parells:  # només pot passar en "idioma": encara no n'hi ha cap
+            return renderitza(request, "idiomes.html", pagina, codi)
         origen = origen if any(p["origen"] == origen for p in parells) else parells[0]["origen"]
         destins = [p["desti"] for p in parells if p["origen"] == origen]
         desti = desti if desti in destins else destins[0]
-        dades_js = {"textos": {c: t[c] for c in CLAUS_JS} | {"massa_llarg": t["api"]["massa_llarg"]},
-                    "maxim": config.max_caracters, "idioma": idioma, "parells": parells}
+        # Les claus que llig `static/traductor.js` (les mateixes de sempre).
+        textos_js = {c: t[c] for c in CLAUS_JS} | {"massa_llarg": t["api"]["massa_llarg"]}
+        textos_js |= {c: tt[c] for c in ("traduint", "tardant", "copiada", "no_copiada", "res_per_copiar",
+                                          "text_buit")} | {"traduccio_feta": tt["feta"]}
+        dades_js = {"textos": textos_js, "maxim": config.max_caracters, "idioma": idioma, "parells": parells}
         return renderitza(
-            request, "traduir.html", "traduir", codi,
+            request, "traduir.html", pagina, codi, tt=tt, accio=accio,
             origens=list({p["origen"]: p for p in parells}.values()), parells=parells,
             origen=origen, desti=desti, text=text, traduccio=traduccio, maxim=config.max_caracters,
             comptador=comptador(t, text), error=error, error_camp=error_camp, estat=avis_estat,
             dades_js=dades_js)
 
-    @app.get("/", response_class=HTMLResponse)
-    async def inici(request: Request):
-        return pagina_traduir(request)
-
-    @app.post("/", response_class=HTMLResponse)
-    async def inici_formulari(request: Request):
+    async def formulari_traduir(request: Request, tipus: str) -> HTMLResponse:
         # Formulari sense JavaScript (millora progressiva): mateixos límits
         # que la API. Es llig a mà per no dependre de python-multipart.
         camps = parse_qs((await request.body()).decode("utf-8", errors="replace"), keep_blank_values=True)
         text = camps.get("text", [""])[0]
-        origen = camps.get("origen", ["ca"])[0]
-        desti = camps.get("desti", ["ca-valencia"])[0]
+        origen = camps.get("origen", [""])[0]
+        desti = camps.get("desti", [""])[0]
         idioma = idioma_de(request)
-        t = textos(idioma)
+        tt = textos(idioma)["traductor"][tipus]
+        if not parells_de(tipus):
+            return pagina_traduir(request, tipus, 400)
         if not text.strip():
-            return pagina_traduir(request, 200, text, "", origen, desti, error_camp=t["text_buit"])
+            return pagina_traduir(request, tipus, 200, text, "", origen, desti, error_camp=tt["text_buit"])
+        parell = estat.parells.get((origen, desti))
+        if parell is None or parell.tipus != tipus:
+            # Un parell d'un altre tipus (o inexistent) no es traduïx en esta pàgina.
+            return pagina_traduir(request, tipus, 400, text, "", origen, desti,
+                                  error=missatge(idioma, "parell_desconegut"))
         try:
             traduccio = await tradueix_text(text, origen, desti)
         except ErrorPeticio as e:
             msg = missatge(idioma, e.clau, **e.valors)
             if e.clau == "massa_llarg":
-                return pagina_traduir(request, e.codi, text, "", origen, desti, error_camp=msg)
-            return pagina_traduir(request, e.codi, text, "", origen, desti, error=msg)
-        return pagina_traduir(request, 200, text, traduccio, origen, desti, avis_estat=t["traduccio_feta"])
+                return pagina_traduir(request, tipus, e.codi, text, "", origen, desti, error_camp=msg)
+            return pagina_traduir(request, tipus, e.codi, text, "", origen, desti, error=msg)
+        return pagina_traduir(request, tipus, 200, text, traduccio, origen, desti, avis_estat=tt["feta"])
+
+    def redirigix(request: Request, ruta: str, codi: int) -> RedirectResponse:
+        """Redirigix a `ruta` conservant els paràmetres (`?idioma=`)."""
+        consulta = request.url.query
+        return RedirectResponse(ruta + (f"?{consulta}" if consulta else ""), status_code=codi)
+
+    @app.get("/", response_class=HTMLResponse)
+    async def inici(request: Request):
+        return renderitza(request, "inici.html", "inici", n_idiomes=len(parells_de("idioma")))
+
+    @app.get("/idiomes", response_class=HTMLResponse)
+    async def idiomes_pagina(request: Request):
+        return pagina_traduir(request, "idioma")
+
+    @app.post("/idiomes", response_class=HTMLResponse)
+    async def idiomes_formulari(request: Request):
+        return await formulari_traduir(request, "idioma")
+
+    @app.get("/dialectes")
+    async def dialectes(request: Request):
+        return redirigix(request, "/dialectes/adaptador", 307)
+
+    @app.get("/dialectes/adaptador", response_class=HTMLResponse)
+    async def adaptador(request: Request):
+        return pagina_traduir(request, "dialecte")
+
+    @app.post("/dialectes/adaptador", response_class=HTMLResponse)
+    async def adaptador_formulari(request: Request):
+        return await formulari_traduir(request, "dialecte")
+
+    # Rutes de la versió 1.2.0: el formulari de traduir era en `/` i el GD en
+    # `/gd`. Es redirigixen (308 conserva el POST i el cos) perquè no es
+    # trenquen enllaços ni pàgines obertes.
+    @app.post("/")
+    async def inici_formulari_antic(request: Request):
+        return redirigix(request, "/dialectes/adaptador", 308)
+
+    @app.get("/gd")
+    async def gd_antic(request: Request):
+        return redirigix(request, "/dialectes/gd", 301)
+
+    @app.post("/gd")
+    async def gd_formulari_antic(request: Request):
+        return redirigix(request, "/dialectes/gd", 308)
 
     def pagina_gd(request: Request, codi: int = 200, text: str = "", resultat: dict | None = None,
                   error: str | None = None, error_camp: str | None = None) -> HTMLResponse:
@@ -387,11 +456,11 @@ def create_app(config: Configuracio | None = None,
             "n_val": len(r["marcadors_occidentals"]), "n_cat": len(r["marcadors_orientals"]),
         }
 
-    @app.get("/gd", response_class=HTMLResponse)
+    @app.get("/dialectes/gd", response_class=HTMLResponse)
     async def gd_pagina(request: Request):
         return pagina_gd(request)
 
-    @app.post("/gd", response_class=HTMLResponse)
+    @app.post("/dialectes/gd", response_class=HTMLResponse)
     async def gd_formulari(request: Request):
         camps = parse_qs((await request.body()).decode("utf-8", errors="replace"), keep_blank_values=True)
         text = camps.get("text", [""])[0]
@@ -424,10 +493,18 @@ def create_app(config: Configuracio | None = None,
     async def versio():
         return estat.versions or {"avlizador": __version__}
 
-    @app.get("/api/idiomes")
-    async def idiomes(request: Request):
+    @app.get("/api/parells")
+    async def api_parells(request: Request, tipus: str | None = None):
+        """Els parells disponibles; `?tipus=idioma|dialecte` per a filtrar."""
+        if tipus is not None and tipus not in TIPUS:
+            raise ErrorPeticio(422, "peticio_no_valida")
         idioma = idioma_de(request)
-        return [p.descriu(idioma) for p in estat.parells.values()]
+        return [p.descriu(idioma) for p in estat.parells.values() if tipus in (None, p.tipus)]
+
+    @app.get("/api/idiomes")
+    async def idiomes(request: Request, tipus: str | None = None):
+        # Nom de la versió 1.2.0: es manté (mateixa resposta que /api/parells).
+        return await api_parells(request, tipus)
 
     @app.post("/api/tradueix")
     async def tradueix(peticio: PeticioTraduccio):

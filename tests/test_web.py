@@ -28,17 +28,33 @@ def client(**kw):
 def client_amb(tradueix, **kw):
     """Un client amb una funció de traduir de prova en el parell ca -> ca-valencia."""
     base = parells_per_defecte("motor")[("ca", "ca-valencia")]
-    parell = Parell(base.origen, base.desti, base.nom_origen, base.nom_desti, tradueix)
+    parell = Parell(base.origen, base.desti, base.nom_origen, base.nom_desti, tradueix, "dialecte")
     config = Configuracio(mode="motor", precarrega=False, **kw)
     return TestClient(create_app(config, {("ca", "ca-valencia"): parell}))
 
 
-def test_idiomes_en_les_dues_llengues():
+def test_parells_en_les_dues_llengues():
+    esperat = [{"origen": "ca", "desti": "ca-valencia", "nom_origen": "Català", "nom_desti": "Valencià",
+                "tipus": "dialecte"}]
     with client() as c:
-        assert c.get("/api/idiomes").json() == [
-            {"origen": "ca", "desti": "ca-valencia", "nom_origen": "Català", "nom_desti": "Valencià"}]
-        es = c.get("/api/idiomes", headers={"Accept-Language": "es-ES"}).json()
+        assert c.get("/api/parells").json() == esperat
+        # El nom de la 1.2.0 es manté
+        assert c.get("/api/idiomes").json() == esperat
+        es = c.get("/api/parells", headers={"Accept-Language": "es-ES"}).json()
         assert es[0]["nom_origen"] == "Catalán" and es[0]["nom_desti"] == "Valenciano"
+
+
+def test_parells_per_tipus():
+    with client() as c:
+        assert [p["desti"] for p in c.get("/api/parells?tipus=dialecte").json()] == ["ca-valencia"]
+        # Català -> valencià és un dialecte, no un parell d'idiomes
+        assert c.get("/api/parells?tipus=idioma").json() == []
+        assert c.get("/api/parells?tipus=altre").status_code == 422
+
+
+def test_tipus_de_parell_valid():
+    with pytest.raises(ValueError):
+        Parell("a", "b", {"ca-valencia": "A"}, {"ca-valencia": "B"}, str, "llengua")
 
 
 def test_tradueix_nomes_torna_la_traduccio():
@@ -58,7 +74,7 @@ def test_parell_desconegut_400():
     with client() as c:
         r = c.post("/api/tradueix", json={"text": "Hola", "origen": "ca-valencia", "desti": "ca"})
     assert r.status_code == 400
-    assert r.json() == {"error": "Este parell d'idiomes no està disponible."}
+    assert r.json() == {"error": "Este parell no està disponible."}
 
 
 def test_text_massa_llarg_413_en_castella():
@@ -79,7 +95,7 @@ def test_cos_que_no_es_json_400_amb_el_nostre_missatge():
     with client() as c:
         r = c.post("/api/tradueix", content=b"{no es json", headers={"Content-Type": "application/json"})
         assert r.status_code in (400, 422)
-        assert r.json() == {"error": "La petició no és vàlida. Comprova el text i els idiomes triats."}
+        assert r.json() == {"error": "La petició no és vàlida. Comprova el text i el parell triat."}
         assert c.get("/no-existix").json() == {"error": "Not Found"}
 
 
@@ -123,7 +139,7 @@ def test_el_text_no_apareix_en_els_logs_quan_falla(caplog):
     with client_amb(falla) as c:
         r = c.post("/api/tradueix", json={"text": MARCA})
     assert r.status_code == 500
-    assert r.json() == {"error": "No s'ha pogut traduir el text. Torna-ho a intentar."}
+    assert r.json() == {"error": "No s'ha pogut processar el text. Torna-ho a intentar."}
     assert "XYZ123" not in caplog.text
     assert "ValueError" in caplog.text and f"{len(MARCA)} caràcters" in caplog.text
 

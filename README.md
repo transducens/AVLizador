@@ -68,8 +68,13 @@ avlizador --help
 ## Interfície web i Docker
 
 Una interfície web accessible (WCAG 2.2 AA), en valencià i castellà, amb
-tres pantalles: traduir, Grau Dialectal i "Sobre". Els textos no es
-guarden ni es registren.
+el títol **Traductor Transducens**: una portada, "Traducció d'idiomes"
+(preparada per a altres traductors; encara cap parell), "Adaptador
+dialectal" amb l'adaptació del català al valencià (`/dialectes/adaptador`)
+i el Grau Dialectal (`/dialectes/gd`), i "Sobre". El català i el valencià
+són la mateixa llengua: la interfície ho presenta com una adaptació entre
+dialectes, no com una traducció entre idiomes. Els textos no es guarden
+ni es registren.
 
 Sense Docker, des d'una còpia del repositori:
 

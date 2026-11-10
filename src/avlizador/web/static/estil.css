@@ -180,10 +180,59 @@ main:focus { outline: none; }
   border-bottom: 4px solid transparent;
 }
 .principal a:hover { text-decoration: underline; }
-.principal a[aria-current="page"] {
+.principal a[aria-current="page"],
+.principal a[aria-current="true"] {
   font-weight: 700;
   border-bottom-color: var(--marca-text);
 }
+
+/* Segona fila (fase 7): les pàgines de la secció "Adaptador dialectal".
+   Sense desplegables; la pàgina actual es marca amb negreta i una vora,
+   no només amb el color. */
+.subnav { background: var(--panell); border-bottom: 1px solid var(--vora-suau); }
+.subnav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.25rem;
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+.subnav li:first-child a { margin-left: -0.875rem; }
+.subnav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.875rem;
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+}
+.subnav a:hover { text-decoration: underline; }
+.subnav a[aria-current="page"] {
+  font-weight: 700;
+  color: var(--primari);
+  border-bottom-color: var(--primari);
+}
+
+/* Portada: dos targetes (idiomes | dialectes). */
+.targetes {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 48rem) { .targetes { grid-template-columns: 1fr 1fr; } }
+.targeta h2 { margin-bottom: 0.5rem; }
+.targeta p { margin: 0 0 0.75rem; }
+.targeta .ajuda { margin-bottom: 0; }
+.enllacos-targeta { margin: 0; padding-left: 1.25rem; }
+.enllacos-targeta li { margin: 0.25rem 0; }
+.enllacos-targeta a { display: inline-block; padding: 0.375rem 0; }
+.avis-buit p { margin: 0 0 0.75rem; }
+.avis-buit p:last-child { margin-bottom: 0; }
 
 /* --- Contingut -------------------------------------------------------- */
 main.amplada { flex: 1; padding-top: 2rem; padding-bottom: 2.5rem; }
@@ -388,7 +437,8 @@ textarea[aria-invalid="true"] { border-color: var(--error); }
 /* Mode d'alt contrast de Windows: les vores i el focus es mantenen. */
 @media (forced-colors: active) {
   .boto, select, textarea, .llengues a, .panell { border: 2px solid ButtonText; }
-  .principal a[aria-current="page"] { border-bottom-color: Highlight; }
+  .principal a[aria-current="page"], .principal a[aria-current="true"],
+  .subnav a[aria-current="page"] { border-bottom-color: Highlight; }
   .logo { border: 2px solid ButtonText; }
   /* Sense colors, el subratllat continu / de punts continua distingint-les. */
   .paraula-valenciana, .paraula-catalana { forced-color-adjust: auto; }

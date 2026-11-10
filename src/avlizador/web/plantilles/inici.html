@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block contingut %}
+<div class="encapcalat-pagina">
+  <h1>{{ t.titol_inici }}</h1>
+  <p class="intro">{{ t.intro_inici }}</p>
+</div>
+
+<ul class="targetes">
+  <li class="targeta panell">
+    <h2><a href="/idiomes">{{ t.nav_idiomes }}</a></h2>
+    <p>{{ t.targeta_idiomes_text }}</p>
+    <p class="ajuda">{{ t.targeta_idiomes_n.format(n=n_idiomes) if n_idiomes else t.targeta_idiomes_cap }}</p>
+  </li>
+  <li class="targeta panell">
+    <h2><a href="/dialectes/adaptador">{{ t.nav_dialectes }}</a></h2>
+    <p>{{ t.targeta_dialectes_text }}</p>
+    <ul class="enllacos-targeta">
+      <li><a href="/dialectes/adaptador">{{ t.nav_adaptador }}</a></li>
+      <li><a href="/dialectes/gd">{{ t.nav_gd }}</a></li>
+    </ul>
+  </li>
+</ul>
+{% endblock %}
