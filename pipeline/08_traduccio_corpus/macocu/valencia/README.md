@@ -33,3 +33,7 @@ els primers 100 MB donen 18.119 frases (6,9 % de les vàlides), ~3 M en
 el corpus sencer. El 83 % tenen un sol marcador, sovint dels falsos
 ("vegada", "fem", "permet", "alcalde"); amb ≥2 marcadors queda el 17 %.
 Detall en [README.es.md](README.es.md).
+
+**Anàlisi de l'eixida (10/11/2026)**: `analitza_valencia.py` escriu
+`dades/macocu/valencia/analisi_valencia.md` (marcadors, dominis, longitud,
+exemples; vore README.es.md).

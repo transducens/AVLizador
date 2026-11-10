@@ -99,3 +99,16 @@ MIN_MARCADORS=2 REINICIA=1 sbatch filtra_valencia.sh   # más exigente, desde ce
   bla"). Antes de usarlas, decidir el criterio (por ejemplo, ≥2
   marcadores o excluir los falsos marcadores conocidos del GD, ver
   `documentacio/resultats_gd_gdv_gdc.md`).
+
+## Análisis de la salida (10/11/2026)
+
+`analitza_valencia.py` lee `valencia.jsonl` (sin spaCy: cada frase ya trae
+sus marcadores) y escribe `dades/macocu/valencia/analisi_valencia.md` y
+`.json`: frases por número de marcadores valencianos y cuántas llevan
+también alguno catalán, marcadores más frecuentes (en total y en las
+frases de un solo marcador, donde están los falsos), dominios y TLD,
+longitud, `lm_score` y ejemplos al azar de cada grupo.
+
+```bash
+srun --mem=4000M python pipeline/08_traduccio_corpus/macocu/valencia/analitza_valencia.py
+```
