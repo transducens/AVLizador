@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block titol %}{{ t.titol_pagina_idiomes }}{% endblock %}
+{% block contingut %}
+<div class="encapcalat-pagina">
+  <h1>{{ t.nav_idiomes }}</h1>
+  <p class="intro">{{ t.intro_idiomes }}</p>
+</div>
+
+<div class="panell avis-buit">
+  <p>{{ t.cap_idioma }}</p>
+  <p>{{ t.idiomes_a_dialectes }}
+    <a href="/dialectes/adaptador">{{ t.nav_adaptador }}</a>.</p>
+</div>
+{% endblock %}

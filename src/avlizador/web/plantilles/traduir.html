@@ -1,15 +1,16 @@
 {% extends "base.html" %}
+{% block titol %}{{ tt.titol_pagina }}{% endblock %}
 {% block contingut %}
 <div class="encapcalat-pagina">
-  <h1>{{ t.titol_traduir }}</h1>
-  <p id="ajuda-text" class="intro">{{ t.ajuda_text }}</p>
+  <h1>{{ tt.titol }}</h1>
+  <p id="ajuda-text" class="intro">{{ tt.ajuda }}</p>
 </div>
 
-<form id="traductor" class="traductor panell" method="post" action="/?idioma={{ idioma }}" novalidate
+<form id="traductor" class="traductor panell" method="post" action="{{ accio }}?idioma={{ idioma }}" novalidate
       data-maxim="{{ maxim }}" data-idioma="{{ idioma }}">
   <div class="fila-idiomes">
     <div class="camp camp-idioma">
-      <label for="origen">{{ t.idioma_origen }}</label>
+      <label for="origen">{{ tt.origen }}</label>
       <select id="origen" name="origen">
         {% for p in origens %}
         <option value="{{ p.origen }}" {% if p.origen == origen %}selected{% endif %}>{{ p.nom_origen }}</option>
@@ -18,7 +19,7 @@
     </div>
     <span class="fletxa" aria-hidden="true">→</span>
     <div class="camp camp-idioma">
-      <label for="desti">{{ t.idioma_desti }}</label>
+      <label for="desti">{{ tt.desti }}</label>
       <select id="desti" name="desti">
         {% for p in parells if p.origen == origen %}
         <option value="{{ p.desti }}" {% if p.desti == desti %}selected{% endif %}>{{ p.nom_desti }}</option>
@@ -29,24 +30,24 @@
 
   <div class="fila-caixes">
     <div class="camp caixa">
-      <label for="text">{{ t.text_original }}</label>
+      <label for="text">{{ tt.text_original }}</label>
       <textarea id="text" name="text" rows="12" lang="{{ origen }}" spellcheck="false"
                 aria-describedby="ajuda-text comptador{% if error_camp %} error-text{% endif %}"
                 {% if error_camp %}aria-invalid="true"{% endif %}>
 {{ text }}</textarea>
       <div class="barra-caixa">
         <p id="comptador" class="comptador">{{ comptador }}</p>
-        <button type="submit" id="boto-traduir" class="boto">{{ t.traduir }}</button>
+        <button type="submit" id="boto-traduir" class="boto">{{ tt.boto }}</button>
       </div>
       <p id="error-text" class="error" {% if not error_camp %}hidden{% endif %}>{{ error_camp or "" }}</p>
     </div>
     <span class="separador" aria-hidden="true"></span>
     <div class="camp caixa">
-      <label for="traduccio">{{ t.traduccio }}</label>
+      <label for="traduccio">{{ tt.eixida }}</label>
       <textarea id="traduccio" class="eixida" rows="12" lang="{{ desti }}" readonly>
 {{ traduccio }}</textarea>
       <div class="barra-caixa barra-eixida">
-        <button type="button" id="copiar" class="boto boto-secundari" hidden>{{ t.copiar }}</button>
+        <button type="button" id="copiar" class="boto boto-secundari" hidden>{{ tt.copiar }}</button>
       </div>
     </div>
   </div>
