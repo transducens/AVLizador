@@ -22,10 +22,19 @@ lloc del XML: per a entrenar el KenLM valencià amb
 0,5 amb >= 1 marcador). `--min-gd` i `--min-marcadors` (camps `gd` i
 `occ`) filtren si cal.
 
+`--marcadors-doc N` (10/11/2026, segon KenLM valencià, més net): una frase
+entra si té >= N marcadors occidentals o si el seu DOCUMENT té alguna frase
+amb >= N (una web que sí que escriu en valencià). Motiu
+(`dades/macocu/valencia/analisi_valencia.md`): el 84 % de les frases
+d'`valencia.jsonl` només tenen 1 marcador, quasi sempre fals ("vegada",
+"permet", "pertany"...). Amb N = 2: 457.963 + 753.241 = 1.211.204 frases.
+
 Ús (des de l'arrel del repositori):
     python pipeline/08_traduccio_corpus/macocu/kenlm/exporta_text.py --processos 8
     python pipeline/08_traduccio_corpus/macocu/kenlm/exporta_text.py --limit-mb 50   # prova
     python pipeline/08_traduccio_corpus/macocu/kenlm/exporta_text.py         --jsonl dades/macocu/valencia/valencia.jsonl --eixida dades/macocu/kenlm/valencia.txt
+    python pipeline/08_traduccio_corpus/macocu/kenlm/exporta_text.py --marcadors-doc 2 \
+        --jsonl dades/macocu/valencia/valencia.jsonl --eixida dades/macocu/kenlm/valencia_net.txt
 """
 
 from __future__ import annotations
@@ -73,13 +82,31 @@ def _lot(paragrafs_: list[str]) -> tuple[list[str], int]:
 
 
 def _frases_jsonl(args, est: Counter):
-    """Com `paragrafs`, però des d'un JSONL de frases (`--jsonl`)."""
+    """Com `paragrafs`, però des d'un JSONL de frases (`--jsonl`). Amb
+    `--marcadors-doc N`, una primera passada apunta els documents amb alguna
+    frase de >= N marcadors."""
+    docs_bons: set = set()
+    if args.marcadors_doc:
+        with open(args.jsonl, encoding="utf-8") as f:
+            for linia in f:
+                r = json.loads(linia)
+                if r.get("occ", 0) >= args.marcadors_doc:
+                    docs_bons.add(r.get("doc"))
+        est["documents_amb_frase_de_n_marcadors"] = len(docs_bons)
     with open(args.jsonl, encoding="utf-8") as f:
         for linia in f:
             r = json.loads(linia)
             if (args.min_gd is not None and r.get("gd", 1.0) < args.min_gd) or r.get("occ", 0) < args.min_marcadors:
                 est["jsonl_filtrades"] += 1
                 continue
+            if args.marcadors_doc:
+                if r.get("occ", 0) >= args.marcadors_doc:
+                    est["jsonl_per_la_frase"] += 1
+                elif r.get("doc") in docs_bons:
+                    est["jsonl_pel_document"] += 1
+                else:
+                    est["jsonl_filtrades"] += 1
+                    continue
             yield None, {"lang": "ca"}, r["text"]
 
 
@@ -93,6 +120,8 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--jsonl", type=Path, help="frases d'un JSONL (camp text) en lloc del XML")
     p.add_argument("--min-gd", type=float, default=None, help="amb --jsonl: GD mínim (camp gd)")
     p.add_argument("--min-marcadors", type=int, default=0, help="amb --jsonl: marcadors mínims (camp occ)")
+    p.add_argument("--marcadors-doc", type=int, default=0,
+                   help="amb --jsonl: >= N marcadors en la frase o en alguna frase del document")
     args = p.parse_args(argv)
 
     args.eixida.parent.mkdir(parents=True, exist_ok=True)
@@ -139,7 +168,8 @@ def main(argv: list[str] | None = None) -> None:
     part.replace(args.eixida)
     est["segons"] = round(time.time() - t0)
     resum = {"nomes_bons": args.nomes_bons, "limit_mb": args.limit_mb, "jsonl": str(args.jsonl or ""),
-             "min_gd": args.min_gd, "min_marcadors": args.min_marcadors, **est}
+             "min_gd": args.min_gd, "min_marcadors": args.min_marcadors,
+             "marcadors_doc": args.marcadors_doc, **est}
     args.eixida.with_suffix(".json").write_text(json.dumps(resum, indent=2), encoding="utf-8")
     print(json.dumps(resum, indent=2))
 

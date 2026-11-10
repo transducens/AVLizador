@@ -21,3 +21,6 @@ Els passos (compilar KenLM, prova xicoteta, model sencer) estan en
 filtre valencià (totes les de `valencia.jsonl`, decisió de l'usuari):
 `JSONL=dades/macocu/valencia/valencia.jsonl NOM=valencia sbatch entrena_kenlm.sh`
 (vore README.es.md).
+
+**KenLM valencià net (10/11/2026)**: `MARCADORS_DOC=2 NOM=valencia_net` (frases de
+>= 2 marcadors o del mateix document que una d'elles: 1.211.204 frases).

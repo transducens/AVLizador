@@ -12,6 +12,7 @@
 #   ORDRE=4 sbatch entrena_kenlm.sh
 #   LIMIT_MB=500 NOM=prova sbatch entrena_kenlm.sh  # prova xicoteta
 #   JSONL=dades/macocu/valencia/valencia.jsonl NOM=valencia sbatch entrena_kenlm.sh  # KenLM valencià
+#   JSONL=dades/macocu/valencia/valencia.jsonl MARCADORS_DOC=2 NOM=valencia_net sbatch entrena_kenlm.sh
 # Variables: ORDRE (5), PODA ("0 1 1 1 1": lleva els n-grames d'1 aparició
 # des dels bigrames; "" = sense poda), MEM_LMPLZ (70%
 # de la memòria del job), NOM (macocu_tot), KENLM (~/kenlm), TMPDIR_LM.
@@ -48,6 +49,8 @@ LIMIT_MB="${LIMIT_MB:-0}"
 # JSONL: frases d'un JSONL (camp text, relatiu a l'arrel del repo) en lloc de MaCoCu sencer.
 OPC_JSONL=()
 [[ -n "${JSONL:-}" ]] && OPC_JSONL=(--jsonl "$JSONL")
+# MARCADORS_DOC: amb JSONL, frases de >= N marcadors o del mateix document que una d'elles.
+[[ -n "${MARCADORS_DOC:-}" ]] && OPC_JSONL+=(--marcadors-doc "$MARCADORS_DOC")
 DIR_LM="$ARREL_REPO/dades/macocu/kenlm"
 TEXT="$DIR_LM/$NOM.txt"
 ARPA="$DIR_LM/${NOM}_o${ORDRE}.arpa"

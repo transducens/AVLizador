@@ -122,7 +122,24 @@ JSONL=dades/macocu/valencia/valencia.jsonl NOM=valencia MEM_LMPLZ=8G \
     sbatch --cpus-per-task=4 --mem=12000M --time=02:00:00 entrena_kenlm.sh
 ```
 
-Salida: `dades/macocu/kenlm/valencia_o5.binary`. Uso previsto: gana el
+Salida: `dades/macocu/kenlm/valencia_o5.binary` (136 MB; 163 s).
+
+**Segundo modelo, más limpio (`valencia_net`, 10/11/2026)**. El análisis
+de `valencia.jsonl` (`../valencia/analitza_valencia.py`) muestra que el
+84 % de las frases tiene un solo marcador, casi siempre falso: medido con
+los propios datos, los falsos ("permet", "vegades", "pertany", "fem"...)
+van acompañados de otro marcador valenciano en el 13-22 % de sus frases,
+y los auténticos ("seua", "esta", "sigut", "hui", "xiquets"...) en el
+30-66 %. `--marcadors-doc 2` (variable `MARCADORS_DOC`) deja las frases
+con ≥ 2 marcadores (457.963) y las de 1 cuyo documento tiene alguna de
+≥ 2 (753.241): **1.211.204 frases**, 34,7 M de tokens, 178 MB.
+
+```bash
+JSONL=dades/macocu/valencia/valencia.jsonl MARCADORS_DOC=2 NOM=valencia_net MEM_LMPLZ=8G \
+    sbatch --cpus-per-task=4 --mem=12000M --time=01:00:00 entrena_kenlm.sh
+```
+
+Uso previsto de los dos: gana el
 candidato **más probable** (con el KenLM catalán, el **menos** probable;
 y la diferencia valenciano − catalán).
 
