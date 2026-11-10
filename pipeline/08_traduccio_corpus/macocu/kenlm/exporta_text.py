@@ -87,7 +87,11 @@ def main(argv: list[str] | None = None) -> None:
         if linies:
             out.write("\n".join(linies) + "\n")
 
-    with mp.Pool(args.processos) as pool, open(args.eixida, "w", encoding="utf-8") as out:
+    # S'escriu en un `.part` i només es renomena en acabar: si el job es talla,
+    # no queda un text a mitges amb el nom bo (10/11/2026: el job 2943 es va
+    # tallar al 30 % i el següent el va donar per bo i va entrenar amb ell).
+    part = args.eixida.with_name(args.eixida.name + ".part")
+    with mp.Pool(args.processos) as pool, open(part, "w", encoding="utf-8") as out:
         lot: list[str] = []
         pendents = []
         for _, par, text in paragrafs(XML, limit):
@@ -111,6 +115,7 @@ def main(argv: list[str] | None = None) -> None:
             pendents.append(pool.apply_async(_lot, (lot,)))
         for r in pendents:
             escriu(r.get(), out)
+    part.replace(args.eixida)
     est["segons"] = round(time.time() - t0)
     resum = {"nomes_bons": args.nomes_bons, "limit_mb": args.limit_mb, **est}
     args.eixida.with_suffix(".json").write_text(json.dumps(resum, indent=2), encoding="utf-8")

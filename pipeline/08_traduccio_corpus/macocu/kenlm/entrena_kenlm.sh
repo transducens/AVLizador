@@ -55,7 +55,9 @@ mkdir -p "$DIR_LM" "$TMPDIR_LM"
 cd "$ARREL_REPO"
 
 T0=$(date +%s)
-if [[ ! -s "$TEXT" ]]; then
+# El .json l'escriu exporta_text.py només quan acaba: sense ell, el text
+# pot estar a mitges i es torna a exportar.
+if [[ ! -s "$TEXT" || ! -s "${TEXT%.txt}.json" ]]; then
     echo "=== 1. exporta el text ($TEXT) ==="
     python -u pipeline/08_traduccio_corpus/macocu/kenlm/exporta_text.py \
         --processos "$CPUS" --limit-mb "$LIMIT_MB" --eixida "$TEXT"
