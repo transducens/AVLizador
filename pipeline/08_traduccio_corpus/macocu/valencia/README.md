@@ -19,6 +19,8 @@ lectura del corpus ([`../comu.py`](../comu.py)).
   Des del 10/11/2026, unes 3 vegades més ràpid amb el mateix resultat
   (idèntic byte a byte en 64.064 candidates): spaCy només per a les frases
   amb formes verbals o homògrafs (~80 %) i per lots (`nlp.pipe`).
+  El pas 1 (`extreu --processos N`) també va en paral·lel (mateixa
+  eixida; 1,7 vegades més ràpid amb 4 processos).
 
 ```bash
 python pipeline/08_traduccio_corpus/macocu/valencia/filtra_valencia.py extreu

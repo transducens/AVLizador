@@ -40,6 +40,7 @@ Dos passos (vore README.es.md d'esta carpeta):
 Ús (des de l'arrel del repositori):
     python pipeline/08_traduccio_corpus/macocu/valencia/filtra_valencia.py extreu
     python pipeline/08_traduccio_corpus/macocu/valencia/filtra_valencia.py extreu --limit-mb 200   # prova
+    python pipeline/08_traduccio_corpus/macocu/valencia/filtra_valencia.py extreu --processos 4
     python pipeline/08_traduccio_corpus/macocu/valencia/filtra_valencia.py gd --processos 6
 """
 
@@ -126,33 +127,53 @@ class Prefiltre:
 # Pas 1: extreu
 # --------------------------------------------------------------------------
 
+_PRE: Prefiltre | None = None
+
+
+def _inicia_extreu(min_marcadors: int, min_gd: float) -> None:
+    global _PRE
+    _PRE = Prefiltre(min_marcadors, min_gd)
+
+
+def _extreu_lot(lot: list[tuple[dict, dict, str]]) -> list[tuple[dict, dict, int, list]]:
+    """La part cara d'`extreu` (frases vàlides + prefiltre) per a un lot de
+    paràgrafs, en un procés treballador. Torna, per paràgraf, quantes
+    frases té i, per a cada frase vàlida, (número, text, clau, passa el
+    tall de paraules, passa el prefiltre). Les repetides les decidix el
+    procés principal, en ordre: l'eixida és la mateixa que en un procés."""
+    eixida = []
+    for doc, par, text in lot:
+        trossos = _SEPARA.split(text)
+        valides = []
+        for i, frase in enumerate(trossos, 1):
+            frase = frase.strip()
+            if not frase or not frase_valida(frase):
+                continue
+            tall = _PRE.possibles_occidentals(frase) >= _PRE.min_marcadors
+            valides.append((i, frase, clau_repetida(frase), tall, tall and _PRE.passa(frase)))
+        eixida.append((doc, par, len(trossos), valides))
+    return eixida
+
+
 def extreu(args: argparse.Namespace) -> None:
-    pre = Prefiltre(args.min_marcadors, args.min_gd)
     est: Counter = Counter()
     vistes: set[bytes] = set()
     dominis: Counter = Counter()
     limit = args.limit_mb * 1_000_000 if args.limit_mb else None
     t0 = time.time()
-    with open(CANDIDATES, "w", encoding="utf-8") as out:
-        for doc, par, text in paragrafs(XML, limit):
-            est["paragrafs"] += 1
-            if not paragraf_bo(par, args.lm_min):
-                continue
-            est["paragrafs_bons"] += 1
-            for i, frase in enumerate(_SEPARA.split(text), 1):
-                frase = frase.strip()
-                est["frases"] += 1
-                if not frase or not frase_valida(frase):
-                    continue
+
+    def escriu(resultats, out) -> None:
+        for doc, par, n_frases, valides in resultats:
+            est["frases"] += n_frases
+            for i, frase, clau, tall, passa in valides:
                 est["frases_valides"] += 1
-                clau = clau_repetida(frase)
                 if clau in vistes:
                     est["repetides"] += 1
                     continue
-                if pre.possibles_occidentals(frase) < args.min_marcadors:
+                if not tall:
                     continue
                 est["passen_tall_paraules"] += 1
-                if not pre.passa(frase):
+                if not passa:
                     continue
                 vistes.add(clau)
                 est["candidates"] += 1
@@ -165,9 +186,31 @@ def extreu(args: argparse.Namespace) -> None:
                     "lm_score": float(par.get("lm_score", 0)),
                     "text": frase,
                 }, ensure_ascii=False) + "\n")
+
+    # El procés principal llig el XML (~5 % del temps) i escriu en ordre;
+    # els treballadors fan el prefiltre (~95 %).
+    with mp.Pool(args.processos, initializer=_inicia_extreu, initargs=(args.min_marcadors, args.min_gd)) as pool, \
+            open(CANDIDATES, "w", encoding="utf-8") as out:
+        lot: list = []
+        pendents: list = []
+        for doc, par, text in paragrafs(XML, limit):
+            est["paragrafs"] += 1
+            if paragraf_bo(par, args.lm_min):
+                est["paragrafs_bons"] += 1
+                lot.append(({k: doc[k] for k in ("id", "domain", "url") if k in doc},
+                            {k: par[k] for k in ("id", "lm_score") if k in par}, text))
+                if len(lot) >= 2000:
+                    pendents.append(pool.apply_async(_extreu_lot, (lot,)))
+                    lot = []
+                    while len(pendents) > args.processos * 3:
+                        escriu(pendents.pop(0).get(), out)
             if est["paragrafs"] % 500_000 == 0:
                 print(f"  {est['paragrafs']:,} paràgrafs, {est['candidates']:,} candidates, "
                       f"{time.time() - t0:,.0f} s", flush=True)
+        if lot:
+            pendents.append(pool.apply_async(_extreu_lot, (lot,)))
+        for r in pendents:
+            escriu(r.get(), out)
     est["segons"] = round(time.time() - t0)
     resum = {"lm_min": args.lm_min, "min_gd": args.min_gd, "min_marcadors": args.min_marcadors,
              "limit_mb": args.limit_mb, **est, "dominis_amb_mes_candidates": dominis.most_common(30)}
@@ -321,6 +364,8 @@ def main(argv: list[str] | None = None) -> None:
         if nom == "extreu":
             s.add_argument("--lm-min", type=float, default=0.7, help="fluïdesa mínima del paràgraf (0,7)")
             s.add_argument("--limit-mb", type=int, default=0, help="llegir només els primers N MB (proves)")
+            s.add_argument("--processos", type=int, default=max(1, mp.cpu_count() - 2),
+                           help="processos per al prefiltre (el principal llig el XML)")
         else:
             s.add_argument("--processos", type=int, default=max(1, mp.cpu_count() - 2))
             s.add_argument("--lot", type=int, default=20_000, help="candidates per lot (es guarda el progrés)")

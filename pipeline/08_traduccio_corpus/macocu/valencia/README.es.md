@@ -46,6 +46,10 @@ spaCy solo pasa por las frases con alguna palabra que lo necesita (formas
 verbales y homógrafos, ~80 %) y por lotes (`nlp.pipe`) en vez de una
 llamada por frase. Medido en local: 187 → 583 frases/s con 1 proceso,
 395 → 552 frases/s con 4. El `.sh` lanza un proceso por CPU.
+El paso 1 (`extreu --processos N`) también va en paralelo: el proceso
+principal lee el XML (~5 % del tiempo) y los trabajadores hacen el
+prefiltro; misma salida y mismas estadísticas (comprobado en 150 MB),
+1,7 veces más rápido con 4 procesos (600 MB: 136 → 81 s).
 
 Salida: `dades/macocu/valencia/valencia.jsonl` y `estadistiques_gd.json`.
 Cada línea guarda los marcadores, para poder filtrar después sin volver a

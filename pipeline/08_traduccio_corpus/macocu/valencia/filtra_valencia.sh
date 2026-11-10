@@ -48,7 +48,7 @@ cd "$ARREL_REPO"
 if [[ -n "${REINICIA:-}" || ! -s "$CANDIDATES" ]]; then
     echo "=== 1. extreu (GD > $MIN_GD, >= $MIN_MARCADORS marcadors) ==="
     T0=$(date +%s)
-    python -u "$SCRIPT" extreu "${OPCIONS[@]}"
+    python -u "$SCRIPT" extreu --processos "$PROCESSOS" "${OPCIONS[@]}"
     echo "Temps extreu: $(( $(date +%s) - T0 )) s"
 else
     echo "=== 1. extreu: ja fet ($(wc -l < "$CANDIDATES") candidates) ==="
