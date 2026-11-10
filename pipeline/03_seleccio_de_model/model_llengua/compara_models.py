@@ -30,7 +30,7 @@ Mètriques, per benchmark:
   mateix, només en col·lisions + irresolubles (on decidix el model).
 - exactes, BLEU, chrF, TER i WER (`avlizador.avaluacio`).
 - GD i GDV de l'eixida (global, sumant marcadors) en el manual.
-- cost: segons per frase del model (descomptat el motor), memòria que
+- cost: temps dins del model (per frase i per crida), memòria que
   ocupa en carregar-lo (VmRSS) i grandària del fitxer.
 
 El "millor criteri" de cada model es tria per `sentit_model` dels
@@ -225,8 +225,26 @@ def carrega_benchmark(clau: str, limit: int | None) -> list[dict]:
     return files[:limit] if limit else files
 
 
+class Cronometre:
+    """Embolcalla un puntuador i suma el temps que passa dins de `logprob`
+    (el cost del model sol: el del motor no és comparable entre passades,
+    perquè reaprofita càlculs ja fets)."""
+
+    def __init__(self, model) -> None:
+        self.model, self.segons, self.crides = model, 0.0, 0
+
+    def logprob(self, text: str):
+        t0 = time.perf_counter()
+        try:
+            return self.model.logprob(text)
+        finally:
+            self.segons += time.perf_counter() - t0
+            self.crides += 1
+
+
 def puntua(benchmark: list[dict], model) -> tuple[list, float]:
-    """(frase, text del motor, punts puntuats) de cada frase; segons/frase."""
+    """(frase, text del motor, punts puntuats) de cada frase; segons/frase
+    (total). Si `model` és un `Cronometre`, hi queda el temps del model."""
     t0 = time.time()
     eixida = []
     for it in benchmark:
@@ -311,7 +329,6 @@ def main(argv: list[str] | None = None) -> None:
     resultat: dict = {"data": datetime.now().isoformat(timespec="minutes"), "limit": args.limit,
                       "criteri_fix": {"marge": fix.marge, "per_defecte": fix.per_defecte, "lam": fix.lam},
                       "models": {}}
-    temps_motor = {}
     # Calfa el motor i spaCy abans de cronometrar res (si no, la primera
     # frase del primer benchmark porta la càrrega d'spaCy i dels diccionaris).
     puntua([{"id": "_", "oriental": "Un cop acabada la reunió, marxem.", "occidental": ""}], None)
@@ -323,12 +340,14 @@ def main(argv: list[str] | None = None) -> None:
             resultat["fasttext_puntuacio"] = (f"logits (pèrdua {model.perdua})" if model.logits
                                               else f"probabilitats (pèrdua {model.perdua})")
             print(f"  fastText: {resultat['fasttext_puntuacio']}", flush=True)
-        puntuats, segons = {}, {}
+        puntuats, segons, model_ms, crides = {}, {}, {}, {}
         for b, files in benchmarks.items():
-            puntuats[b], segons[b] = puntua(files, model)
-            if clau == "motor":
-                temps_motor[b] = segons[b]
-            print(f"  {b}: {segons[b] * 1000:.1f} ms/frase", flush=True)
+            crono = Cronometre(model) if model is not None else None
+            puntuats[b], segons[b] = puntua(files, crono)
+            model_ms[b] = round(crono.segons / len(files) * 1000, 2) if crono else 0.0
+            crides[b] = crono.crides if crono else 0
+            print(f"  {b}: {segons[b] * 1000:.1f} ms/frase en total, {model_ms[b]} ms/frase del model "
+                  f"({crides[b]} crides)", flush=True)
 
         files_criteris = [("motor sol", None)] if clau == "motor" else llista
         taula = []
@@ -358,7 +377,9 @@ def main(argv: list[str] | None = None) -> None:
             return d
 
         cost = {"ms_frase": {b: round(segons[b] * 1000, 1) for b in benchmarks},
-                "ms_frase_model": {b: round((segons[b] - temps_motor.get(b, 0)) * 1000, 1) for b in benchmarks},
+                "ms_frase_model": model_ms,
+                "ms_crida": {b: round(model_ms[b] * len(benchmarks[b]) / crides[b], 3) if crides[b] else 0.0
+                             for b in benchmarks},
                 "fitxers": {f: carregador.cost.get(f) for f in carregador.fitxers(clau)}}
         resultat["models"][clau] = {
             "millor": descriu(millor), "fix": descriu(fila_fix), "cost": cost,
@@ -384,7 +405,7 @@ def informe(resultat: dict, benchmarks: dict) -> str:
     if resultat["limit"]:
         md += [f"**Prova amb només {resultat['limit']} frases per benchmark.**", ""]
     md += ["`sentit` = candidat esperat en col·lisions + irresolubles (on decidix el model); "
-           "TER/WER, com més baix millor. El cost en ms/frase és el del model (descomptat el motor).", ""]
+           "TER/WER, com més baix millor. El cost és el temps dins del model.", ""]
     for tipus, titol in (("fix", "Amb el criteri del sistema (marge 2, la catalana per defecte)"),
                          ("millor", "Amb el millor criteri de cada model (triat sobre els homògrafs)")):
         md += [f"## {titol}", ""]
@@ -404,15 +425,20 @@ def informe(resultat: dict, benchmarks: dict) -> str:
             fila += [num(v.get("ter_corpus")), num(v.get("wer_corpus")), num(v.get("gd"), 4), num(v.get("gdv"), 4)]
             md.append("| " + " | ".join(fila) + " |")
         md.append("")
-    md += ["## Cost en CPU", "", "| Model | ms/frase del model (manual) | Memòria (MB) | Fitxer (MB) | Càrrega (s) |",
-           "|---|---|---|---|---|"]
+    md += ["## Cost en CPU", "",
+           "Temps dins del model (no el del motor), per frase en el manual i en els homògrafs v2 (on totes "
+           "porten paraula ambigua), i per crida (una frase candidata).", "",
+           "| Model | ms/frase (manual) | ms/frase (v2) | ms/crida | Memòria (MB) | Fitxer (MB) | Càrrega (s) |",
+           "|---|---|---|---|---|---|---|"]
     for clau, m in resultat["models"].items():
         fitxers = [c for c in m["cost"]["fitxers"].values() if c]
         memoria = sum(c["memoria_mb"] for c in fitxers) if fitxers else 0
         fitxer = sum(c["fitxer_mb"] or 0 for c in fitxers) if fitxers else 0
         carrega = sum(c["carrega_s"] for c in fitxers) if fitxers else 0
-        ms = m["cost"]["ms_frase_model"].get("manual", next(iter(m["cost"]["ms_frase_model"].values())))
-        md.append(f"| {clau} | {num(ms, 1)} | {memoria} | {fitxer or '—'} | {num(carrega, 1)} |")
+        ms = m["cost"]["ms_frase_model"]
+        crida = max(m["cost"]["ms_crida"].values(), default=0.0)
+        md.append(f"| {clau} | {num(ms.get('manual'), 2)} | {num(ms.get('homografs_v2'), 2)} | {num(crida, 3)} | "
+                  f"{memoria} | {fitxer or '—'} | {num(carrega, 1)} |")
     md += ["", "Memòria: la que afig cada fitxer de model en carregar-lo (VmRSS), sumant tots els que "
            "necessita el model (`diff` = valencià + català). `motor` no carrega cap model."]
     if any("fasttext" in m["cost"]["fitxers"] for m in resultat["models"].values()):
