@@ -286,6 +286,109 @@ def avalua(puntuats: list, criteri: Criteri | None) -> dict:
     return r
 
 
+CLASSES = ("encert", "traduida_sense_caldre", "sense_traduir", "candidat_erroni")
+
+
+def classifica(paraula: str, esperat: str, tria: str | None) -> str:
+    """Tipus d'encert o d'error d'una decisió (`paraula` = la forma catalana).
+
+    - `traduida_sense_caldre`: calia deixar la catalana i s'ha traduït
+      (l'error que es volia evitar el 05/11: "calces" d'època -> "bragues");
+    - `sense_traduir`: calia traduir i s'ha quedat la catalana (error lleu);
+    - `candidat_erroni`: s'ha traduït, però a l'altra opció ("colp" per "vegada").
+
+    >>> classifica("calces", "calces", "bragues"), classifica("nou", "anou", "nou")
+    ('traduida_sense_caldre', 'sense_traduir')
+    >>> classifica("cop", "vegada", "colp"), classifica("cop", "colp", "colp")
+    ('candidat_erroni', 'encert')
+    """
+    cat, esperat, tria = paraula.lower(), esperat.lower(), (tria or "").lower()
+    if tria == esperat:
+        return "encert"
+    if esperat == cat:
+        return "traduida_sense_caldre"
+    if tria == cat or not tria:
+        return "sense_traduir"
+    return "candidat_erroni"
+
+
+def detall(puntuats: list, criteri: Criteri | None) -> list[dict]:
+    """Cada decisió avaluable (frases amb paraula i candidat esperat) amb el
+    seu tipus d'encert o error i qui l'ha presa."""
+    files = []
+    for it, text_motor, punts in puntuats:
+        if not it.get("esperat") or (it.get("tipus") or "") == "control":
+            continue
+        hip = text_motor if criteri is None else aplica_tries(text_motor, punts, criteri)
+        p = punt_avaluat(it, punts)
+        tria = (p.motor if criteri is None else p.tria) if p is not None else None
+        valors = {}
+        if p is not None and criteri is not None and p.puntuacions:
+            from avlizador.traductor_cat_val.model_llengua import puntuacio
+
+            valors = {c: round(puntuacio(d, criteri), 2) for c, d in p.puntuacions.items()}
+        files.append({"id": it["id"], "paraula": it["paraula"], "tipus": it.get("tipus"),
+                      "sentit": it.get("sentit"), "esperat": it["esperat"], "tria": tria,
+                      "classe": classifica(it["paraula"], it["esperat"], tria),
+                      "decidit": "motor" if criteri is None else (p.decidit if p is not None else "no detectada"),
+                      "puntuacions": valors, "oriental": it["oriental"], "hipotesi": hip})
+    return files
+
+
+def informe_detall(detalls: dict, benchmarks: dict) -> str:
+    """detalls[model][criteri][benchmark] = llista de `detall`."""
+    md = ["# Desglossament de les decisions per tipus d'error", "",
+          "Només les frases amb paraula ambigua i candidat esperat (homògrafs v1 i v2), totes les "
+          "decisions (també les que pren spaCy o el motor). `traduïda sense caldre` = l'error greu "
+          "(canvia el sentit); `sense traduir` = es queda la catalana; `candidat erroni` = l'altra traducció.", ""]
+    for tipus in ("fix", "millor"):
+        md += [f"## Criteri {'del sistema' if tipus == 'fix' else 'millor de cada model'}", "",
+               "| Model | Criteri | Encerts | Traduïda sense caldre | Sense traduir | Candidat erroni | Decidix el model |",
+               "|---|---|---|---|---|---|---|"]
+        for model, per_criteri in detalls.items():
+            nom, per_bench = per_criteri[tipus]
+            files = [f for b in benchmarks if b in per_bench for f in per_bench[b]]
+            n = {c: sum(f["classe"] == c for f in files) for c in CLASSES}
+            pel_model = sum(f["decidit"] == "model" for f in files)
+            md.append(f"| {model} | {nom} | {n['encert']}/{len(files)} | {n['traduida_sense_caldre']} | "
+                      f"{n['sense_traduir']} | {n['candidat_erroni']} | {pel_model} |")
+        md.append("")
+    # Per paraula, amb el criteri del sistema
+    models = list(detalls)
+    per_paraula: dict = {}
+    for model in models:
+        for b, files in detalls[model]["fix"][1].items():
+            for f in files:
+                d = per_paraula.setdefault(f["paraula"].lower(), {"n": 0, **{m: 0 for m in models}})
+                d[model] += f["classe"] == "encert"
+                if model == models[0]:
+                    d["n"] += 1
+    md += ["## Encerts per paraula (criteri del sistema)", "",
+           "| Paraula | Casos | " + " | ".join(models) + " |", "|---|---|" + "---|" * len(models)]
+    for paraula, d in sorted(per_paraula.items(), key=lambda x: -x[1]["n"]):
+        md.append(f"| {paraula} | {d['n']} | " + " | ".join(str(d[m]) for m in models) + " |")
+    md.append("")
+    # Casos on els models no coincidixen (criteri del sistema)
+    if len(models) >= 2:
+        md += ["## Casos on els models no fan el mateix (criteri del sistema)", "",
+               "| Benchmark | Id | Paraula | Sentit | Esperat | " + " | ".join(models) + " | Frase |",
+               "|---|---|---|---|---|" + "---|" * len(models) + "---|"]
+        for b in benchmarks:
+            per_id = {}
+            for model in models:
+                for f in detalls[model]["fix"][1].get(b, []):
+                    per_id.setdefault(f["id"], {})[model] = f
+            for id_, fs in per_id.items():
+                if len({fs[m]["tria"] for m in models if m in fs}) > 1:
+                    f0 = next(iter(fs.values()))
+                    celes = [f"{fs[m]['tria']} ({fs[m]['classe'].replace('_', ' ')}, {fs[m]['decidit']})"
+                             if m in fs else "—" for m in models]
+                    md.append(f"| {b} | {id_} | {f0['paraula']} | {f0.get('sentit') or ''} | {f0['esperat']} | "
+                              + " | ".join(celes) + f" | {f0['oriental']} |")
+        md.append("")
+    return "\n".join(md) + "\n"
+
+
 def gd_eixida(hipotesis: list[str]) -> dict:
     """GD i GDV globals de l'eixida (sumant marcadors i paraules)."""
     from avlizador.grau_dialectal import calcula_gd
@@ -320,6 +423,8 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--dir-models", type=Path, default=DIR_MODELS)
     p.add_argument("--fils", type=int, default=None, help="fils de torch per a FLOR")
     p.add_argument("--limit", type=int, default=None, help="només les N primeres frases de cada benchmark (proves)")
+    p.add_argument("--detall", nargs="*", default=None, choices=MODELS,
+                   help="models dels quals es guarda cada decisió (sense valors: tots els de --models)")
     args = p.parse_args(argv)
 
     benchmarks = {b: carrega_benchmark(b, args.limit) for b in args.benchmarks}
@@ -333,6 +438,7 @@ def main(argv: list[str] | None = None) -> None:
     # frase del primer benchmark porta la càrrega d'spaCy i dels diccionaris).
     puntua([{"id": "_", "oriental": "Un cop acabada la reunió, marxem.", "occidental": ""}], None)
 
+    detalls: dict = {}
     for clau in args.models:
         print(f"\n=== {clau} ===", flush=True)
         model = carregador.puntuador(clau)
@@ -389,6 +495,11 @@ def main(argv: list[str] | None = None) -> None:
         print(f"  millor: {millor[0]} -> " + ", ".join(
             f"{b}: sentit {millor[2][b]['sentit_model']}/{millor[2][b]['n_model']}, exactes {millor[2][b]['exactes']}"
             for b in benchmarks), flush=True)
+        if args.detall is not None and (not args.detall or clau in args.detall):
+            detalls[clau] = {
+                "fix": (fila_fix[0], {b: detall(puntuats[b], fila_fix[1]) for b in benchmarks if b.startswith("homografs")}),
+                "millor": (millor[0], {b: detall(puntuats[b], millor[1]) for b in benchmarks if b.startswith("homografs")}),
+            }
         del puntuats, taula
         gc.collect()
 
@@ -397,6 +508,12 @@ def main(argv: list[str] | None = None) -> None:
     (RESULTATS / f"compara_models_{sufix}.json").write_text(json.dumps(resultat, ensure_ascii=False, indent=1),
                                                           encoding="utf-8")
     (RESULTATS / f"compara_models_{sufix}.md").write_text(informe(resultat, benchmarks), encoding="utf-8")
+    if detalls:
+        (RESULTATS / f"compara_models_{sufix}_detall.json").write_text(
+            json.dumps(detalls, ensure_ascii=False, indent=1), encoding="utf-8")
+        (RESULTATS / f"compara_models_{sufix}_detall.md").write_text(informe_detall(detalls, benchmarks),
+                                                                     encoding="utf-8")
+        print(f"-> {RESULTATS / f'compara_models_{sufix}_detall.md'}")
     print(f"\n-> {RESULTATS / f'compara_models_{sufix}.md'}")
 
 
