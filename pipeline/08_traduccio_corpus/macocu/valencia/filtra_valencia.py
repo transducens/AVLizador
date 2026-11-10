@@ -34,7 +34,8 @@ Dos passos (vore README.es.md d'esta carpeta):
    queden les de GD > `--min-gd` (0,5) amb almenys `--min-marcadors` (1).
    Eixida: `dades/macocu/valencia/valencia.jsonl` + `estadistiques_gd.json`,
    amb `gd`, `occ`, `ori`, `marcadors_occidentals`, `marcadors_orientals`
-   i `total_paraules`.
+   i `total_paraules`. Des del 10/11/2026 no crida `calcula_gd` frase a
+   frase sinó `_gd_lot` (mateix resultat, ~3 vegades més ràpid).
 
 Ús (des de l'arrel del repositori):
     python pipeline/08_traduccio_corpus/macocu/valencia/filtra_valencia.py extreu
@@ -182,27 +183,93 @@ def extreu(args: argparse.Namespace) -> None:
 
 _MIN_GD = 0.5
 _MIN_MARCADORS = 1
+_FORMES = None
+_NECESSITA_SPACY: frozenset[str] = frozenset()
 
 
 def _inicia_treballador(min_gd: float, min_marcadors: int) -> None:
-    global _MIN_GD, _MIN_MARCADORS
-    from avlizador.grau_dialectal.gd import calcula_gd
+    global _MIN_GD, _MIN_MARCADORS, _FORMES, _NECESSITA_SPACY
+    from avlizador.grau_dialectal import gd
+    from avlizador.traductor_cat_val.rules import pos_tagger
 
     _MIN_GD, _MIN_MARCADORS = min_gd, min_marcadors
-    calcula_gd("Este servici és nou.")  # carrega l'índex i spaCy una vegada
+    _FORMES = gd.carrega_formes_dialectals()
+    # spaCy només canvia el resultat de `_classifica_token` en les formes
+    # verbals i els homògrafs; la resta de paraules no el miren.
+    _NECESSITA_SPACY = frozenset(_FORMES.occ_verbal | _FORMES.or_verbal | set(_FORMES.homografs))
+    pos_tagger._carrega_spacy()
 
 
-def _gd_de(linia: str) -> str | None:
-    from avlizador.grau_dialectal.gd import calcula_gd
+class _DocsPrecalculats:
+    """Fa de `nlp` per a `pos_tagger.etiqueta`: torna el Doc ja calculat
+    per `nlp.pipe` (si no hi és, el calcula com sempre)."""
 
-    r = json.loads(linia)
-    g = calcula_gd(r["text"])
-    if g["gd"] is None or g["gd"] <= _MIN_GD or g["total_marcades"] < _MIN_MARCADORS:
-        return None
-    r.update(gd=g["gd"], occ=g["total_occidentals"], ori=g["total_orientals"],
-             marcadors_occidentals=g["marcadors_occidentals"], marcadors_orientals=g["marcadors_orientals"],
-             total_paraules=g["total_paraules"])
-    return json.dumps(r, ensure_ascii=False)
+    def __init__(self, nlp, docs: dict) -> None:
+        self.nlp, self.docs = nlp, docs
+
+    def __call__(self, text: str):
+        doc = self.docs.get(text)
+        return doc if doc is not None else self.nlp(text)
+
+
+def _gd_lot(linies: list[str]) -> list[str | None]:
+    """El mateix que `calcula_gd(text)` per a cada línia (mateixos
+    marcadors i GD; comprovat en 10.000 candidates, 10/11/2026), però
+    ~3 vegades més ràpid: (1) spaCy només per a les frases amb alguna
+    paraula que el necessita (~80 %) i (2) per lots amb `nlp.pipe` en
+    compte d'una crida per frase."""
+    from avlizador.grau_dialectal import gd
+    from avlizador.traductor_cat_val.rules import marca_noms_propis, pos_tagger, tokenize
+
+    regs, toks_l, pendents = [], [], []
+    for linia in linies:
+        r = json.loads(linia)
+        toks = tokenize(r["text"])
+        marca_noms_propis(toks)
+        cal = False
+        for tok in toks:
+            if tok.surface.isspace() or tok.is_proper_noun:
+                continue
+            p = gd._paraula_per_lookup(tok.surface)
+            if p is not None and p.lower() in _NECESSITA_SPACY:
+                cal = True
+                break
+        regs.append(r)
+        toks_l.append((toks, cal))
+        if cal:  # el mateix text que construïx `pos_tagger.etiqueta`
+            pendents.append("".join(t.surface for t in toks).replace("ʼ", "’"))
+
+    nlp = pos_tagger._carrega_spacy()
+    if nlp is not None and pendents:
+        pos_tagger._NLP = _DocsPrecalculats(nlp, dict(zip(pendents, nlp.pipe(pendents, batch_size=256))))
+    try:
+        eixida = []
+        for r, (toks, cal) in zip(regs, toks_l):
+            if cal:
+                pos_tagger.etiqueta(toks)
+            occ, ori, total = [], [], 0
+            for tok in toks:  # el bucle de `calcula_gd`
+                if tok.surface.isspace():
+                    continue
+                p = gd._paraula_per_lookup(tok.surface)
+                if p is None:
+                    continue
+                total += 1
+                classe = gd._classifica_token(tok, _FORMES)
+                if classe == "occ":
+                    occ.append(p.lower())
+                elif classe == "or":
+                    ori.append(p.lower())
+            g = gd._gd(len(occ), len(ori))
+            if g is None or g <= _MIN_GD or len(occ) + len(ori) < _MIN_MARCADORS:
+                eixida.append(None)
+                continue
+            r.update(gd=g, occ=len(occ), ori=len(ori), marcadors_occidentals=occ,
+                     marcadors_orientals=ori, total_paraules=total)
+            eixida.append(json.dumps(r, ensure_ascii=False))
+        return eixida
+    finally:
+        pos_tagger._NLP = nlp
 
 
 def gd(args: argparse.Namespace) -> None:
@@ -226,10 +293,12 @@ def gd(args: argparse.Namespace) -> None:
             lot = [l for _, l in zip(range(args.lot), f)]
             if not lot:
                 break
-            for res in pool.imap(_gd_de, lot, chunksize=64):
-                if res is not None:
-                    out.write(res + "\n")
-                    seleccionades += 1
+            trossos = [lot[i:i + 500] for i in range(0, len(lot), 500)]
+            for resultats in pool.imap(_gd_lot, trossos):
+                for res in resultats:
+                    if res is not None:
+                        out.write(res + "\n")
+                        seleccionades += 1
             out.flush()
             linies += len(lot)
             PROGRES_GD.write_text(json.dumps({"linies": linies, "mida": out.tell(), "valencianes": seleccionades,

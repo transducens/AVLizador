@@ -16,6 +16,9 @@ lectura del corpus ([`../comu.py`](../comu.py)).
 - **Pas 2, `gd`** (spaCy, en paral·lel i reprenible): GD > `--min-gd`
   (0,5) amb almenys `--min-marcadors` (1). Eixida:
   `dades/macocu/valencia/valencia.jsonl`, amb els marcadors de cada frase.
+  Des del 10/11/2026, unes 3 vegades més ràpid amb el mateix resultat
+  (idèntic byte a byte en 64.064 candidates): spaCy només per a les frases
+  amb formes verbals o homògrafs (~80 %) i per lots (`nlp.pipe`).
 
 ```bash
 python pipeline/08_traduccio_corpus/macocu/valencia/filtra_valencia.py extreu

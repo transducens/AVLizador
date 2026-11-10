@@ -40,6 +40,13 @@ se quedan las de GD > `--min-gd` (0,5) con al menos `--min-marcadores`
 (1). Si se corta, al relanzarlo sigue donde lo dejó (`--reinicia` para
 empezar de cero).
 
+Desde el 10/11/2026 va unas 3 veces más rápido con el mismo resultado
+(salida idéntica byte a byte a la de `calcula_gd` en 64.064 candidatas):
+spaCy solo pasa por las frases con alguna palabra que lo necesita (formas
+verbales y homógrafos, ~80 %) y por lotes (`nlp.pipe`) en vez de una
+llamada por frase. Medido en local: 187 → 583 frases/s con 1 proceso,
+395 → 552 frases/s con 4. El `.sh` lanza un proceso por CPU.
+
 Salida: `dades/macocu/valencia/valencia.jsonl` y `estadistiques_gd.json`.
 Cada línea guarda los marcadores, para poder filtrar después sin volver a
 pasar spaCy:

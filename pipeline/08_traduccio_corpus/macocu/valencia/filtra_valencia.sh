@@ -36,7 +36,8 @@ export PYTHONIOENCODING=utf-8
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TORCH_NUM_THREADS=1
 
 CPUS="${SLURM_CPUS_PER_TASK:-8}"
-PROCESSOS=$(( CPUS > 1 ? CPUS - 1 : 1 ))
+# El procés principal només llig i escriu: un treballador per CPU.
+PROCESSOS="$CPUS"
 MIN_GD="${MIN_GD:-0.5}"
 MIN_MARCADORS="${MIN_MARCADORS:-1}"
 SCRIPT="$ARREL_REPO/pipeline/08_traduccio_corpus/macocu/valencia/filtra_valencia.py"
