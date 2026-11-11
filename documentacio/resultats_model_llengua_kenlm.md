@@ -502,6 +502,113 @@ real del manual, sobre las trazas de `compara_models_20261111_1232`:
 - En el sistema necesitaría spaCy (ya está en el traductor) y una tabla de
   ~260 KB.
 
+### 4.12 Ejecución real: base, C1 y C2 (11/11, `compara_models_20261111_1430`)
+Modelos: FLOR, `kenlm_val_net_dogv` (base), `kenlm_val_net_dogv_bi` (C2) y
+`kenlm_val_net_dogv_c1` (C1). Benchmarks: homógrafos v1 y v2, manual, 151,
+BOE estricto y gplsi. **Primera ejecución con el prior de frecuencia
+aplicado de verdad** («colp» −9,86, «vegada» −6,25) y con el clasificador
+cargado.
+
+**257 decisiones de los homógrafos** con el criterio de la base (margen 3,
+λ 1,5 en homógrafos, λ 0,75 en colisiones). Ya no es simulado:
+
+| Modelo | Aciertos | Graves | Leves | Graves por palabra |
+|---|---|---|---|---|
+| FLOR (sistema) | 168 | 3 | 86 | manca, rentadores, recuita |
+| Base KenLM | 189 | 4 | 64 | cop, cops, manca ×2 |
+| C2 (dos sentidos) | 188 | 5 | 64 | cop, cops ×2, manca ×2 |
+| **C1, desempate < 2** | **191** | **2** | 64 | manca ×2 (los dudosos) |
+| C1, desempate < 1 / < 3 | 189 / 190 | 4 / 3 | 64 | |
+
+**Frases exactas** (medida real; FLOR con este mismo criterio / FLOR con
+el del sistema):
+
+| | Homógrafos v1 | v2 | Manual | 151 | BOE estricto | gplsi |
+|---|---|---|---|---|---|---|
+| FLOR | 219 / 219 | 102 / 95 | 229 / 228 | 146 | 1.887 | 1.554 |
+| Base KenLM | 225 | 110 | 228 | 145 | 1.887 | 1.552 |
+| C2 | 224 | 110 | 228 | 145 | 1.887 | 1.552 |
+| **C1 (< 2)** | **227** | **110** | **229** | 145 | 1.887 | 1.553 |
+
+**«cop» en texto real, por sentido** (manual 19 + gplsi 16):
+
+| | Aciertos | Fallos |
+|---|---|---|
+| FLOR | 35 / 35 | — |
+| **C1 (< 2)** | **33 / 35** | gplsi «planejar un últim cop» (Δ 2,63), «Un tercer cop destrueix la nau» (Δ 5,77) |
+| Base KenLM | 31 / 35 | los dos anteriores, «no es recuperaria d'aquest cop», BM-AVL-139 «dues cops» |
+
+**gplsi usa «colp» con el sentido de «vez»** en su referencia («cada colp
+més», «tres colps per setmana», «per primer colp», «un colp acabat el
+torneig»; 8 de sus 16 «cop»). Es un uso coloquial valenciano; nuestro
+criterio para «cop» = vez es «vegada». Por eso:
+
+- en la tabla de arriba gplsi se cuenta **por sentido**;
+- con la etiqueta literal de la referencia, FLOR se queda en 8/16;
+- de ahí también que las exactas de gplsi bajen igual para todos.
+
+**Lectura:**
+
+- **El prior de frecuencia funciona en la ejecución real**: la base da
+  189 / 4, igual que la simulación.
+- **C2 no aporta**: 188 / 5, con el doble de memoria (147 MB). Descartado.
+- **C1 es la mejor opción sin FLOR**:
+  - 191 aciertos y 2 graves (los dos dudosos de «manca») en los homógrafos;
+  - más exactas que FLOR en los homógrafos (v1 +8, v2 +15 frente al sistema
+    actual) y en el manual (+1);
+  - BOE igual; −1 en el 151 (RC025, «rentadora», leve) y −1 en gplsi.
+  - En «cop» real falla 2 de 35, donde FLOR no falla ninguno. Los dos son
+    golpes con KenLM seguro de lo contrario por más de 2 puntos: el
+    clasificador no llega a intervenir.
+- Coste: el de KenLM (0,02-0,1 ms por frase, 74 MB) más el clasificador
+  (~260 KB). Sin torch.
+
+### 4.13 Veto del clasificador y revisión de «manca» (11/11)
+**Veto (simulado).** Idea: dejar que el clasificador contradiga a KenLM
+cuando esté muy seguro, aunque KenLM gane por más de 2 puntos. **No ayuda.**
+
+- En los dos «cop» reales que fallan, el clasificador tampoco está seguro:
+  «planejar un últim cop» +1,26 y «Un tercer cop destrueix la nau» +0,85.
+- Un veto bajo (|voto| ≥ 3) añade un error (BM-AVL-190); uno alto no cambia
+  nada.
+- La regla se queda en «desempate < 2».
+
+Etiqueta por sentido usada para gplsi (asignada leyendo cada frase): colp =
+46635, 42260, 25379, 62509, 33288; el resto, vegada.
+
+**Revisión de «manca» (34 decisiones).** El léxico es incoherente entre el
+singular y el plural:
+
+| Entrada | Catalán | Valenciano |
+|---|---|---|
+| E0247 | manca | **falta** |
+| E0248 | manques | **carències** |
+
+El benchmark (y la referencia BM-BOE-219) espera «carència» en singular, que
+el sistema no puede producir: para el sustantivo «manca» solo hay «falta» o
+dejar «manca».
+
+- **Verbo y adjetivo**: todos los modelos aciertan (casi siempre spaCy).
+- **Sustantivo singular** (7, esperan «carència»): imposible. Todos dejan
+  «manca» (leve), salvo C1 en HG069: «una falta greu de personal», que es la
+  traducción del léxico y cuenta como grave.
+- **Sustantivo plural** (6, esperan «carències»): C1 1/6 (HG075), FLOR 0/6.
+- **HG2-028** «Si en manca algun» (verbo): C1 y FLOR ponen «Si en falta
+  algun», correcto y con el mismo sentido; cuenta como grave para los dos.
+
+| | Graves ahora | Contando HG069 y HG2-028 como correctos |
+|---|---|---|
+| FLOR | 3 (HG2-028, rentadores, recuita) | 2 |
+| C1 | 2 (HG069, HG2-028) | 0 |
+
+Propuesta, pendiente del usuario (no se ha tocado nada):
+
+1. **Léxico (compañero)**: E0247 «manca» → «carència», coherente con E0248,
+   el benchmark y el BOE.
+2. **Benchmark**: aceptar «falta» en HG2-028 (y en HG069 si el léxico se
+   queda en «falta»). Hoy el benchmark no admite más de una respuesta
+   correcta.
+
 ---
 
 ## 5. Cautelas
@@ -577,6 +684,32 @@ Después de elegir la base KenLM (sección 4.10), el único punto débil es
 
 Orden propuesto: C1 primero (local).
 
+**Esquema de C2 (KenLM en los dos sentidos):**
+
+```
+ENTRENAMIENTO (Abaco)
+  valencia_net_dogv.txt              «el boxejador va rebre molts colps a la cara .»
+    → cada frase al revés            «. cara la a colps molts rebre va boxejador el»
+    → lmplz igual que la base        → valencia_net_dogv_inv_o5.binary
+
+USO  «El boxejador va rebre molts cops a la cara.»
+  1. Candidatas: A «...molts colps a la cara.»   B «...moltes vegades a la cara.»
+  2. Cada una se puntúa dos veces:
+       izq→der (KenLM normal):   P(colps | va rebre molts)    ← ve la izquierda
+       der→izq (KenLM invertido): P(colps | a la cara .)       ← ve la derecha
+  3. Puntuación = media de las dos − λ · log P(palabra) (mismo prior y criterio)
+  4. Gana la mayor, con el margen de siempre
+```
+
+| | C1 (clasificador) | C2 (dos sentidos) |
+|---|---|---|
+| Qué mira | todas las palabras a ±8, sin orden | 4 palabras a cada lado, en orden |
+| Cuándo actúa | solo en «cop/cops» y solo si KenLM duda | en todas las palabras ambiguas, siempre |
+| Qué aprende | qué palabras van con cada sentido | secuencias valencianas |
+| Coste | ~260 KB + spaCy (ya está) | otro KenLM (~77 MB) |
+
+Son compatibles: si C2 mejora la base, C1 puede desempatar encima.
+
 ---
 
 ## 8. Registro de decisiones y resultados
@@ -603,3 +736,8 @@ Orden propuesto: C1 primero (local).
 | 11/11 | Los 2 graves de «manca» son dudosos (etiqueta del benchmark) | «carència» no es candidata; «Si en falta algun» es correcto. Pendiente de revisión del usuario. |
 | 11/11 | Siguiente: camino C (clasificador de sentido para «cop», KenLM en dos sentidos) | Sección 7.2. Propuesto empezar por C1. |
 | 11/11 | C1 funciona: «KenLM; si gana por < 2, clasificador» iguala a FLOR en las 52 colisiones | Sección 4.11. Total estimado 191 / 2 sin FLOR. Falta validarlo en más texto real. C2 (KenLM en dos sentidos), pendiente del entrenamiento en Abaco. |
+| 11/11 | Ejecución real (`1430`): base 189 / 4 confirmada; C1 191 / 2; C2 188 / 5 | Sección 4.12. **C2 descartado** (no mejora, doble de memoria). |
+| 11/11 | gplsi usa «colp» = «vez» en su referencia | 8 de 16 «cop»; se evalúa por sentido. En «cop» real (35): FLOR 35, C1 33, base 31. |
+| 11/11 | Veto del clasificador: descartado | En los 2 «cop» que fallan el clasificador tampoco está seguro (sección 4.13). |
+| 11/11 | «manca»: incoherencia del léxico (E0247 manca→falta frente a E0248 manques→carències) | Los 2 graves de C1 vienen de ahí (sección 4.13). Propuesto al usuario: E0247 → «carència» (compañero) y aceptar «falta» en HG2-028. Pendiente. |
+| 11/11 | **Se integra KenLM + C1 en el paquete como opción complementaria** (FLOR sigue por defecto) | Decisión del usuario. Diseño: `--model kenlm`, ficheros en `AVLIZADOR_KENLM_DIR`, extra `[kenlm]`, clasificador intercambiable. Se hace el 12/11 en la rama `kenlm`. |
