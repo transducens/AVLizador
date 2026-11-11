@@ -43,6 +43,18 @@ el criteri fix del sistema (marge 2, la catalana per defecte).
     python pipeline/03_seleccio_de_model/model_llengua/compara_models.py
     python pipeline/03_seleccio_de_model/model_llengua/compara_models.py --models motor kenlm_val fasttext --limit 20
 Eixida: `pipeline/03_seleccio_de_model/resultats/compara_models_<data>.{md,json}`.
+
+Amb `--detall`, cada decisió dels homògrafs classificada (`*_detall.{md,json}`,
+amb les puntuacions en brut per a `simula_marges.py`). Amb `--traces`
+(11/11/2026), un JSON per model (`*_traces_<model>.json`) amb cada frase que
+té paraules ambigües: per a cada candidat, la frase puntuada, lp, prior,
+puntuació i la log P de cada token (FLOR: tokens del seu tokenitzador;
+KenLM: paraules normalitzades amb l'ordre de l'n-grama trobat). S'obrin amb
+`visor_compara_models.html` (uns quants alhora, un per model).
+
+Prior (11/11/2026): log P(candidat sol). KenLM el dona sense <s> ni </s>
+(`KenLM.prior`, l'unigrama); abans era log P("<s> colp </s>"), que no seguix
+la freqüència, i `lam` no canviava res en KenLM.
 """
 
 from __future__ import annotations
@@ -94,6 +106,62 @@ class KenLM:
     def logprob(self, text: str) -> tuple[float, int]:
         frase = normalitza(text)
         return self.signe * self.model.score(frase, bos=True, eos=True) * LN10, len(frase.split()) + 1
+
+    def prior(self, paraula: str) -> tuple[float, int]:
+        """log P(paraula) sense <s> ni </s> (l'unigrama: la freqüència). Amb
+        `logprob` el prior era log P("<s> colp </s>"), que no seguix la
+        freqüència ("colp" −20,95 > "vegada" −22,27, quan "vegada" és 35
+        voltes més freqüent): per això `lam` no canviava res (11/11/2026)."""
+        frase = normalitza(paraula)
+        return self.signe * self.model.score(frase, bos=False, eos=False) * LN10, len(frase.split())
+
+    def tokens(self, text: str, prior: bool = False) -> list[dict]:
+        """log P (natural) de cada paraula de la frase normalitzada (i de
+        </s>), amb l'ordre de l'n-grama que ha trobat el model (5 = el
+        context sencer; 1 = només l'unigrama) i si és desconeguda."""
+        frase = normalitza(text)
+        paraules = frase.split() + ([] if prior else ["</s>"])
+        puntuacions = self.model.full_scores(frase, bos=not prior, eos=not prior)
+        return [{"t": w, "lp": round(self.signe * s * LN10, 3), "ngram": n, "oov": bool(oov)}
+                for w, (s, n, oov) in zip(paraules, puntuacions)]
+
+
+def tokens_flor(model, text: str) -> list[dict]:
+    """log P de cada token de FLOR (el context P1 davant, com en `logprob`,
+    però sense la memòria cau: només per a les traces)."""
+    import copy
+
+    cau = model.__dict__.setdefault("_cau_tokens", {})
+    if text in cau:
+        return cau[text]
+    torch = model._torch
+    if model.context:
+        ids = [model.bos] + model.tok(model.context + " " + text, add_special_tokens=False)["input_ids"]
+        inici = len(model._ids_context)
+    else:
+        ids = [model.bos] + model.tok(text, add_special_tokens=False)["input_ids"]
+        inici = 1
+    nous = ids[inici:]
+    with torch.no_grad():
+        if model.context and ids[:inici] == model._ids_context:  # sobre el context ja calculat
+            eixida = model.lm(torch.tensor([nous]), past_key_values=copy.deepcopy(model._kv_context),
+                              use_cache=True, attention_mask=torch.ones(1, len(ids), dtype=torch.long))
+            logits = torch.cat([model._ultim_context[None], eixida.logits[0, :-1].float()])
+        else:
+            logits = model.lm(torch.tensor([ids])).logits[0, inici - 1:-1].float()
+        valors = torch.log_softmax(logits, -1)[torch.arange(len(nous)), torch.tensor(nous)]
+    cau[text] = [{"t": model.tok.decode([t]), "lp": round(v, 3)} for t, v in zip(nous, valors.tolist())]
+    return cau[text]
+
+
+def tokens_model(model, text: str, prior: bool = False) -> list[dict] | None:
+    """Probabilitat de cada token, si el model la sap donar (FLOR i KenLM;
+    fastText i les diferències, no)."""
+    if isinstance(model, KenLM):
+        return model.tokens(text, prior)
+    if hasattr(model, "lm") and hasattr(model, "tok"):
+        return tokens_flor(model, text)
+    return None
 
 
 class Diferencia:
@@ -346,6 +414,48 @@ def detall(puntuats: list, criteri: Criteri | None) -> list[dict]:
     return files
 
 
+def traces(puntuats: dict, model, criteri: Criteri) -> list[dict]:
+    """Traça de cada frase amb paraules ambigües (11/11/2026, per a
+    `visor_compara_models.html`): per a cada punt, cada candidat amb la frase
+    que ha puntuat el model, lp, prior, puntuació amb `criteri` i la
+    probabilitat de cada token (de la frase i del prior), la tria i qui la
+    pren. Les decisions són les de `criteri` (el del sistema)."""
+    from avlizador.traductor_cat_val.model_llengua import puntuacio, tria
+
+    eixida = []
+    for b, files in puntuats.items():
+        for it, text_motor, punts in files:
+            if not punts:
+                continue
+            avaluat = punt_avaluat(it, punts)
+            registres = []
+            for p in punts:
+                if not p.puntuacions:
+                    triat = tria(p, criteri)
+                    registres.append({"paraula": p.paraula, "tipus": p.tipus, "motor": p.motor,
+                                      "candidats": list(p.candidats), "tria": triat, "decidit": p.decidit,
+                                      "pos": getattr(p, "pos", None), "puntuacions": {}})
+                    continue
+                triat = tria(p, criteri)
+                cands = {}
+                for c, d in p.puntuacions.items():
+                    cands[c] = {"frase": d.get("frase"), "lp": round(d["lp"], 3), "prior": round(d["prior"], 3),
+                                "n": d["n"], "puntuacio": round(puntuacio(d, criteri), 3),
+                                "tokens": tokens_model(model, d["frase"]) if d.get("frase") else None,
+                                "tokens_prior": tokens_model(model, c.lower(), prior=True)}
+                r = {"paraula": p.paraula, "tipus": p.tipus, "motor": p.motor, "candidats": list(p.candidats),
+                     "tria": triat, "decidit": p.decidit, "pos": getattr(p, "pos", None), "puntuacions": cands}
+                if p is avaluat and it.get("esperat"):
+                    r["esperat"] = it["esperat"]
+                    r["sentit"] = it.get("sentit")
+                    r["classe"] = classifica(p.paraula, it["esperat"], triat)
+                registres.append(r)
+            eixida.append({"benchmark": b, "id": it["id"], "tipus": it.get("tipus"), "oriental": it["oriental"],
+                           "referencia": it.get("occidental"), "motor": text_motor,
+                           "hipotesi": aplica_tries(text_motor, punts, criteri), "punts": registres})
+    return eixida
+
+
 def informe_detall(detalls: dict, benchmarks: dict) -> str:
     """detalls[model][criteri][benchmark] = llista de `detall`."""
     md = ["# Desglossament de les decisions per tipus d'error", "",
@@ -436,7 +546,12 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--limit", type=int, default=None, help="només les N primeres frases de cada benchmark (proves)")
     p.add_argument("--detall", nargs="*", default=None, choices=MODELS,
                    help="models dels quals es guarda cada decisió (sense valors: tots els de --models)")
+    p.add_argument("--traces", nargs="*", default=None, choices=MODELS,
+                   help="models dels quals es guarda la traça (probabilitat de cada token de cada frase "
+                        "candidata, per a visor_compara_models.html; sense valors: tots els de --models)")
     args = p.parse_args(argv)
+    sufix = f"{datetime.now():%Y%m%d_%H%M}" + (f"_limit{args.limit}" if args.limit else "")
+    RESULTATS.mkdir(parents=True, exist_ok=True)
 
     benchmarks = {b: carrega_benchmark(b, args.limit) for b in args.benchmarks}
     carregador = Carregador(args.dir_models, args.fils)
@@ -511,11 +626,18 @@ def main(argv: list[str] | None = None) -> None:
                 "fix": (fila_fix[0], {b: detall(puntuats[b], fila_fix[1]) for b in benchmarks if b.startswith("homografs")}),
                 "millor": (millor[0], {b: detall(puntuats[b], millor[1]) for b in benchmarks if b.startswith("homografs")}),
             }
+        if model is not None and args.traces is not None and (not args.traces or clau in args.traces):
+            t0 = time.time()
+            fitxer = RESULTATS / f"compara_models_{sufix}_traces_{clau}.json"
+            fitxer.write_text(json.dumps({"model": clau, "data": resultat["data"],
+                                          "criteri": {"marge": fix.marge, "per_defecte": fix.per_defecte,
+                                                      "lam": fix.lam},
+                                          "frases": traces(puntuats, model, fix)}, ensure_ascii=False, indent=1),
+                              encoding="utf-8")
+            print(f"  traces -> {fitxer.name} ({time.time() - t0:.0f} s)", flush=True)
         del puntuats, taula
         gc.collect()
 
-    RESULTATS.mkdir(parents=True, exist_ok=True)
-    sufix = f"{datetime.now():%Y%m%d_%H%M}" + (f"_limit{args.limit}" if args.limit else "")
     (RESULTATS / f"compara_models_{sufix}.json").write_text(json.dumps(resultat, ensure_ascii=False, indent=1),
                                                           encoding="utf-8")
     (RESULTATS / f"compara_models_{sufix}.md").write_text(informe(resultat, benchmarks), encoding="utf-8")

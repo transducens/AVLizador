@@ -11,7 +11,11 @@
 #   sbatch --dependency=afterok:<job del KenLM valencià net> compara_models.sh
 #   LIMIT=10 sbatch --time=00:30:00 compara_models.sh          # prova
 #   MODELS="motor kenlm_val fasttext" sbatch compara_models.sh
+#   MODELS="flor kenlm_val_net kenlm_val_net_dogv" EXTRA="--lams 0 0.5 0.75 1 1.5 2 --detall --traces" sbatch compara_models.sh
 # Variables: MODELS (tots), LIMIT (cap), EXTRA (més opcions de compara_models.py).
+# `--traces` (11/11/2026): un JSON per model amb la probabilitat de cada token
+# de cada frase candidata (resultats/compara_models_<data>_traces_<model>.json),
+# per a obrir-los amb visor_compara_models.html.
 
 #SBATCH --job-name=compara-lm
 #SBATCH --output=%j_compara_models.out
@@ -38,7 +42,7 @@ export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
 
 cd "$ARREL_REPO"
 for f in kenlm/macocu_tot_o5.binary kenlm/macocu_30pc_o5.binary kenlm/valencia_o5.binary \
-         kenlm/valencia_net_o5.binary fasttext/autotune.bin; do
+         kenlm/valencia_net_o5.binary kenlm/valencia_net_dogv_o5.binary fasttext/autotune.bin; do
     [[ -s "dades/macocu/$f" ]] || echo "AVÍS: falta dades/macocu/$f (el model que el necessita fallarà)" >&2
 done
 

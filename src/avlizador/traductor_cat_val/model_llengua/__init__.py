@@ -226,7 +226,9 @@ def puntua_punts(text: str, model, tipus=TIPUS_PER_DEFECTE,
                 if millor is None or lp > millor["lp"]:
                     lp_fins, n_fins = model.logprob(detokenize(toks[: punt.index + 1]))
                     millor = {"frase": frase, "lp": lp, "n": n, "dreta": lp - lp_fins, "n_dreta": n - n_fins}
-            millor["prior"] = model.logprob(candidat.lower())[0]
+            # Prior = log P(candidat sol). Un model pot donar el seu (`prior`):
+            # KenLM amb <s> i </s> no dona la freqüència de la paraula.
+            millor["prior"] = getattr(model, "prior", model.logprob)(candidat.lower())[0]
             punt.puntuacions[candidat] = millor
             punt.frases[candidat] = millor["frase"]
     return detokenize(tokens), trobats
