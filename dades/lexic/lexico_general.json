@@ -553,18 +553,6 @@
     "categoria": "adv"
   },
   {
-    "espanol": "chocolate blanco",
-    "catalan": "xocolata blanca",
-    "valenciano": "xocolate blanc",
-    "tipo": "v:lexic_val",
-    "fuente": "unificado",
-    "id": "E0066",
-    "categoria": "n",
-    "genero_cat": "f",
-    "genero_val": "m",
-    "problema": "cambio_genero"
-  },
-  {
     "espanol": "tamarillo",
     "catalan": "tomàquet d'arbre",
     "valenciano": "tomaca d'arbre",
@@ -2346,39 +2334,6 @@
     ],
     "genero_cat": "f",
     "genero_val": "f"
-  },
-  {
-    "espanol": "cariño",
-    "catalan": "afecte",
-    "valenciano": "carinyo",
-    "tipo": "v:lexic_val_gva",
-    "fuente": "unificado",
-    "id": "E0249",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": "m"
-  },
-  {
-    "espanol": "cariño",
-    "catalan": "afectes",
-    "valenciano": "carinyos",
-    "tipo": "v:lexic_val_gva",
-    "fuente": "unificado",
-    "id": "E0250",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": "m"
-  },
-  {
-    "espanol": "cariño",
-    "catalan": "afecta",
-    "valenciano": "carinya",
-    "tipo": "v:lexic_val_gva",
-    "fuente": "unificado",
-    "id": "E0251",
-    "categoria": "adj",
-    "genero_cat": "f",
-    "genero_val": null
   },
   {
     "espanol": "castigo",
