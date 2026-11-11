@@ -131,7 +131,9 @@ def main():
 
         if a.priors and model.startswith("kenlm_val"):
             p = json.loads(Path(a.priors).read_text(encoding="utf-8"))
-            corpus = ["net", "dogv"] if model.endswith("_dogv") else ["net"]
+            # el text de cada model: net; + DOGV; + AVL + UA (`tot`)
+            corpus = (["net", "dogv", "avl", "ua"] if "_tot" in model
+                      else ["net", "dogv"] if "_dogv" in model else ["net"])
             total = sum(p["total"][c] for c in corpus)
             for f in files:
                 for c, dd in (f.get("brut") or {}).items():

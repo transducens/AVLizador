@@ -93,7 +93,7 @@ BENCHMARKS_PER_DEFECTE = ("homografs", "homografs_v2", "manual")
 TIPUS_MODEL = ("colisio", "irresoluble")
 LN10 = math.log(10)
 MODELS = ("motor", "flor", "kenlm_cat", "kenlm_cat30", "kenlm_val", "kenlm_val_net", "kenlm_val_net_dogv",
-          "kenlm_val_net_dogv_np", "kenlm_val_tot_np", "diff", "diff_net", "fasttext")
+          "kenlm_val_net_dogv_np", "kenlm_val_tot_np", "kenlm_val_net_dogv_bi", "diff", "diff_net", "fasttext")
 # Fitxer de cada KenLM (dades/macocu/kenlm/<nom>_o5.binary i, si n'hi ha, <nom>_freq.json).
 # 11/11/2026: `_np` = sense poda; `valencia_tot_np` = net + DOGV + AVL + UA (GD >= 0,8), sense poda.
 FITXERS_KENLM = {"kenlm_cat": "macocu_tot", "kenlm_cat30": "macocu_30pc", "kenlm_val": "valencia",
@@ -181,6 +181,36 @@ def tokens_model(model, text: str, prior: bool = False) -> list[dict] | None:
     if hasattr(model, "lm") and hasattr(model, "tok"):
         return tokens_flor(model, text)
     return None
+
+
+class Bidireccional:
+    """KenLM en els dos sentits (11/11/2026, camí C2): mitjana de log P de la
+    frase d'esquerra a dreta i de la frase al revés amb un KenLM entrenat amb
+    el text invertit (cada paraula condicionada per les 4 de la DRETA). Així
+    el candidat també es puntua pel que ve després ("tres cops aquest any").
+    El prior és el del model d'esquerra a dreta (la freqüència no canvia).
+
+    >>> class M:
+    ...     def score(self, frase, bos, eos): return -float(len(frase.split()))
+    >>> b = Bidireccional(KenLM(M()), M())
+    >>> b.logprob("un colp fort")[1], b.invertix("un colp fort")
+    (4, 'fort colp un')
+    """
+
+    def __init__(self, ltr: KenLM, rtl) -> None:
+        self.ltr, self.rtl = ltr, rtl
+
+    @staticmethod
+    def invertix(text: str) -> str:
+        return " ".join(reversed(normalitza(text).split()))
+
+    def logprob(self, text: str) -> tuple[float, int]:
+        a, n = self.ltr.logprob(text)
+        b = self.rtl.score(self.invertix(text), bos=True, eos=True) * LN10
+        return (a + b) / 2, n
+
+    def prior(self, paraula: str) -> tuple[float, int]:
+        return self.ltr.prior(paraula)
 
 
 class Diferencia:
@@ -283,6 +313,9 @@ class Carregador:
 
                 self._mesura("flor", None, lambda: ModelLlengua(fils=self.fils))
             return self.cache["flor"]
+        if clau == "kenlm_val_net_dogv_bi":
+            return Bidireccional(KenLM(self._kenlm("valencia_net_dogv"), 1.0, self._freq("valencia_net_dogv")),
+                                 self._kenlm("valencia_net_dogv_inv"))
         if clau in FITXERS_KENLM:
             nom = FITXERS_KENLM[clau]
             return KenLM(self._kenlm(nom), -1.0 if clau.startswith("kenlm_cat") else 1.0, self._freq(nom))
@@ -300,6 +333,8 @@ class Carregador:
         raise ValueError(clau)
 
     def fitxers(self, clau: str) -> list[str]:
+        if clau == "kenlm_val_net_dogv_bi":
+            return ["valencia_net_dogv", "valencia_net_dogv_inv"]
         if clau in FITXERS_KENLM:
             return [FITXERS_KENLM[clau]]
         return {"flor": ["flor"], "diff": ["valencia", "macocu_tot"], "diff_net": ["valencia_net", "macocu_tot"],
@@ -334,6 +369,22 @@ class Cronometre:
         finally:
             self.segons += time.perf_counter() - t0
             self.crides += 1
+
+    def __getattr__(self, nom: str):
+        """La resta (`prior`...) passa al model. Sense això, `puntua_punts` no
+        veia el `prior` de KenLM i usava `logprob` (bug del 11/11/2026: les
+        execucions 0931 i 1232 tenen el prior antic).
+
+        >>> class M:
+        ...     def logprob(self, t): return (-1.0, 1)
+        ...     def prior(self, t): return (-2.0, 1)
+        >>> c = Cronometre(M())
+        >>> getattr(c, "prior", c.logprob)("x"), hasattr(Cronometre(object()), "prior")
+        ((-2.0, 1), False)
+        """
+        if nom == "model":
+            raise AttributeError(nom)
+        return getattr(self.model, nom)
 
 
 def puntua(benchmark: list[dict], model) -> tuple[list, float]:
