@@ -23,6 +23,12 @@ paraules i el valencià en una ("blat de moro"->"dacsa", "gall
 dindi"->"polit"...). Es busca la frase MES LLARGA que comence en cada
 token abans de l'intent d'una sola paraula.
 
+**Lèxic multi-paraula valencià (10/11/2026)**: el cas contrari, un nom
+català d'una paraula que en valencià en són diverses ("cirerol" ->
+"tomaca cherry", "síndria" -> "meló d'Alger"). Abans s'excloïa i eixos
+noms no es traduïen. Ara entren al lookup normal, només si són noms
+(`categoria: "n"`); vore `carrega_lexic_invers`.
+
 **Homògrafs (22/10/2026)**: les entrades `problema: "homonimia_lexica"` del
 lèxic diuen quina forma és ambigua i quines lectures té ("nou": adj, n,
 num). Si la categoria de l'entrada no la comparteix cap altra lectura,
@@ -136,17 +142,49 @@ def carrega_lexic_invers(lexic_general_path: Path = LEXIC_GENERAL_PATH) -> dict[
 
     >>> "què" in lookup, "mentre" in lookup
     (False, False)
+
+    Noms d'una paraula en català i diverses en valencià (10/11/2026; abans
+    s'excloïen tots i "cirerol", "síndria", "xatrac"... no es traduïen mai),
+    amb les majúscules del lèxic. Només noms: "sota" -> "davall de" (pr)
+    donaria "davall de el pont" o "davall de de":
+
+    >>> lookup["cirerol"], lookup["síndria"]
+    ('tomaca cherry', "meló d'Alger")
+    >>> "sota" in lookup
+    False
     """
+    noms_multi = _noms_valencians_multiparaula(lexic_general_path)
     entrades = [
         (val, cat, canonica)
         for val, cat, canonica in _entrades_lexic(lexic_general_path)
-        if " " not in val and " " not in cat
+        if " " not in cat and (" " not in val or val in noms_multi)
     ]
     # Les entrades IDÈNTIQUES als dos costats (21/10/2026) participen en la
     # tria per `canonica` i es lleven DESPRÉS: si la canònica d'un grup és
     # "mentre"->"mentre" (E1647, en col·lisió amb E0040 "mentres"->"mentre"),
     # vol dir "no traduïsques".
-    return {cat: val for cat, val in _invertix_sense_ambiguitat(entrades).items() if cat != val}
+    return {
+        cat: noms_multi.get(val, val)
+        for cat, val in _invertix_sense_ambiguitat(entrades).items()
+        if cat != val
+    }
+
+
+def _noms_valencians_multiparaula(path: Path) -> dict[str, str]:
+    """`{forma valenciana en minúscules: forma original}` de les entrades
+    amb `categoria: "n"`, el català d'UNA paraula i el valencià de
+    diverses ("cirerol" -> "tomaca cherry"). La forma original conserva
+    les majúscules internes ("meló d'Alger"), que `_entrades_lexic` perd."""
+    dades = json.loads(Path(path).read_text(encoding="utf-8"))
+    resultat: dict[str, str] = {}
+    for entrada in dades:
+        if entrada.get("categoria") != "n" or entrada.get("tipo") == "v:top_gva":
+            continue
+        val = (entrada.get("valenciano") or "").strip()
+        cat = (entrada.get("catalan") or "").strip()
+        if " " in val and cat and " " not in cat:
+            resultat[val.lower()] = val
+    return resultat
 
 
 def carrega_formes_nominals(path: Path = LEXIC_GENERAL_PATH) -> set[str]:
@@ -185,6 +223,51 @@ def carrega_frases_invers(path: Path = LEXIC_GENERAL_PATH) -> dict[tuple[str, ..
         if " " not in val and " " in cat
     ]
     return _invertix_sense_ambiguitat(entrades)
+
+
+# Determinants femenins singulars: un cardinal no els porta mai davant ("la
+# deu" és el nom), i un nom sí. Sense "el"/"un": "el deu de febrer" és la
+# data (11/11/2026).
+_DET_FEM_SG = frozenset({"la", "una", "aquesta", "esta", "aquella", "eixa", "aqueixa"})
+
+
+def _anterior(tokens: list[Token], i: int) -> Token | None:
+    """Token-paraula immediatament anterior a `tokens[i]` (saltant espais)."""
+    return next((t for t in reversed(tokens[:i]) if not t.surface.isspace()), None)
+
+
+def _participi_nominal(tokens: list[Token], i: int) -> bool:
+    """spaCy fa participi una paraula que va just darrere d'un determinant:
+    és un nom ("Les embranzides finals", benchmark_genero #65; "els
+    detinguts"). Un participi de veritat no va mai darrere de l'article.
+
+    >>> from .. import tokenize
+    >>> toks = tokenize("Les embranzides"); toks[0].pos = "DET"
+    >>> _participi_nominal(toks, 2), _participi_nominal(tokenize("Han embranzides"), 2)
+    (True, False)
+    """
+    anterior = _anterior(tokens, i)
+    return anterior is not None and anterior.pos == "DET"
+
+
+def _numeral_nominal(tokens: list[Token], i: int, lectura) -> bool:
+    """spaCy fa numeral un homògraf la lectura dialectal del qual és un nom
+    i porta davant un determinant femení singular ("La deu de muntanya",
+    benchmark_genero #67): és el nom.
+
+    >>> from .. import tokenize
+    >>> nom = frozenset({"NOUN", "PROPN"})
+    >>> toks = tokenize("La deu"); toks[2].pos = "NUM"
+    >>> _numeral_nominal(toks, 2, nom)
+    True
+    >>> toks = tokenize("el deu de febrer"); toks[2].pos = "NUM"
+    >>> _numeral_nominal(toks, 2, nom)
+    False
+    """
+    if tokens[i].pos != "NUM" or lectura is None or "NOUN" not in lectura:
+        return False
+    anterior = _anterior(tokens, i)
+    return anterior is not None and anterior.surface.lower() in _DET_FEM_SG
 
 
 class LexicInversRule:
@@ -322,9 +405,10 @@ class LexicInversRule:
             minuscules = tok.surface.lower()
             forma = self._lookup.get(minuscules)
             if forma is not None:
-                if not homograf_compatible(tok.pos, minuscules, self._homografs):
+                if not homograf_compatible(tok.pos, minuscules, self._homografs) and not _numeral_nominal(
+                        tokens, i, self._homografs.get(minuscules)):
                     continue
-                if minuscules in self._noms and es_participi(tokens, i):
+                if minuscules in self._noms and es_participi(tokens, i) and not _participi_nominal(tokens, i):
                     continue
                 tok.translated = preserva_majuscula(tok.surface, forma)
                 tok.is_translated = True
@@ -337,7 +421,9 @@ class LexicInversRule:
             forma = self._lookup.get(resta.lower())
             if forma is None or not homograf_compatible(tok.pos, resta.lower(), self._homografs):
                 continue
-            if resta.lower() in self._noms and es_participi(tokens, i):
+            # Amb l'article apostrofat dins del token ("l'embranzida"), un
+            # supost participi és un nom (vore `_participi_nominal`).
+            if resta.lower() in self._noms and es_participi(tokens, i) and prefix.lower()[:1] != "l":
                 continue
             genere, _ = genere_tras_substitucio(tok, forma, resta)
             aplica_amb_prefix_elidit(tokens, i, prefix, resta, forma, genere)

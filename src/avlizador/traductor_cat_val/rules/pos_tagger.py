@@ -119,16 +119,37 @@ def _carrega_spacy():
         return None
     for model in MODELS_SPACY:
         try:
-            # Sense "parser" ni "ner": cap regla usa dependencies (`.dep_`,
-            # `.head`), entitats (`.ents`) ni oracions (`.sents`), nomes
-            # POS, morfologia i lema. Mesurat 21/10/2026: 79->147 frases/s
-            # en CPU i traduccions identiques a les 4.112 frases de
-            # 151+gplsi+BOE.
-            _NLP = spacy.load(model, exclude=["parser", "ner"])
+            # Sense "ner": cap regla usa entitats. El "parser" es carrega
+            # (10/11/2026) perquè `concordanca_genere_sn.py` necessita
+            # dependències, pero NO s'executa per defecte: `analitza()` el
+            # desactiva en cada crida si no es demana (mesurat 21/10/2026:
+            # sense parser 79->147 frases/s). Un sol model en memòria: un
+            # segon model amb parser costava ~550 MB més, i amb FLOR el procés
+            # ja passa de 2,7 GB.
+            _NLP = spacy.load(model, exclude=["ner"])
             break
         except Exception:
             continue
     return _NLP
+
+
+def analitza(text: str, amb_parser: bool = False):
+    """Doc d'spaCy de `text`, o `None` si spaCy no hi és. Sense
+    `amb_parser`, el parser no s'executa (POS, morfologia i lema, igual que
+    abans del 10/11/2026); amb `amb_parser`, el doc porta `.dep_`/`.head`.
+    `disable` va per crida, no canvia el model compartit (segur entre fils).
+
+    >>> [t.dep_ for t in analitza("El poal estava ple.")]
+    ['', '', '', '', '']
+    >>> all(t.dep_ for t in analitza("El poal estava ple.", amb_parser=True))
+    True
+    """
+    nlp = _carrega_spacy()
+    if nlp is None:
+        return None
+    if amb_parser:
+        return nlp(text)
+    return nlp(text, disable=[p for p in ("parser",) if p in nlp.pipe_names])
 
 
 def etiqueta(tokens: list[Token]) -> None:
@@ -210,13 +231,12 @@ def etiqueta(tokens: list[Token]) -> None:
     >>> [(t.surface, t.pos, t.verb_form) for t in toks if t.surface == "fer-ho"]
     [('fer-ho', 'VERB', 'Inf')]
     """
-    nlp = _carrega_spacy()
-    if nlp is None:
-        return
     # "ʼ" (U+02BC) -> "’": spaCy només partix "l’Estat" amb l'apòstrof
     # habitual; el canvi no mou cap posició (un caràcter per un altre).
     text = "".join(t.surface for t in tokens).replace("ʼ", "’")
-    doc = nlp(text)
+    doc = analitza(text)
+    if doc is None:
+        return
     for tok in tokens:
         if not tok.surface[:1].isalpha():
             continue
@@ -272,14 +292,14 @@ def es_participi(tokens: list[Token], i: int) -> bool:
         return False
     if not tok.surface[:1].isupper():
         return True
-    nlp = _carrega_spacy()
-    if nlp is None:
-        return True
     text = "".join(
         t.surface[:1].lower() + t.surface[1:] if j == i else t.surface
         for j, t in enumerate(tokens)
     ).replace("ʼ", "’")
-    dt = next((d for d in nlp(text) if d.idx == tok.start), None)
+    doc = analitza(text)
+    if doc is None:
+        return True
+    dt = next((d for d in doc if d.idx == tok.start), None)
     return dt is None or "Part" in dt.morph.get("VerbForm")
 
 
@@ -312,13 +332,12 @@ def genere_de(paraula: str) -> str:
     >>> genere_de("dacsa"), genere_de("gasto"), genere_de("bresquilla")
     ('', '', '')
     """
-    nlp = _carrega_spacy()
-    if nlp is None or not paraula:
+    if _carrega_spacy() is None or not paraula:
         return ""
     articles = ("els", "les") if paraula.lower().endswith("s") else ("el", "la")
     generes = set()
     for article in articles:
-        doc = nlp(f"Veig {article} {paraula} ara.")
+        doc = analitza(f"Veig {article} {paraula} ara.")
         trobat = next((t for t in doc if t.text.lower() == paraula.lower()), None)
         if trobat is None:
             return ""
