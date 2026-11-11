@@ -111,6 +111,7 @@ class Punt:
     decidit: str = ""      # "spacy", "model" o "motor": qui ha fet la tria
     genere: str = ""       # Gender d'spaCy de la paraula ("Masc", "Fem" o "")
     genere_det: str = ""   # Gender d'spaCy del determinant just d'abans (si n'hi ha)
+    sentit: str | None = None  # candidat que tria un classificador de sentit (col·lisions; 11/11/2026)
 
 
 _CATEGORIA_PER_POS = {pos: cat for cat, poss in _POS_PER_CATEGORIA.items() for pos in poss}

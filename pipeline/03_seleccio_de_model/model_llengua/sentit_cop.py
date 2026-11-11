@@ -14,7 +14,9 @@ evaluación) con "colp(s)" o "vegada(es)". La palabra se sustituye por un
 hueco y la etiqueta es el sentido. Las palabras de alrededor se pasan a
 LEMA con spaCy (una→un, dues→dos, última→últim): en valenciano concuerdan
 con el sentido ("una vegada" / "un colp"), pero en la entrada catalana
-"cop" es siempre masculino, así que la concordancia no puede ser una pista.
+"cop" es siempre masculino, así que la concordancia no puede ser una pista;
+como spaCy no lematiza "una"/"dues", las palabras con género (rasgo
+`Gender`) se sustituyen por su categoría (`<DET>`, `<NUM>`, `<ADJ>`...).
 Se excluye lo parecido a cualquier benchmark (como `termes_ambigus.py`).
 
 Modelo: Naive Bayes multinomial (Python puro; recuentos en JSON), con
@@ -63,6 +65,9 @@ FREQ = ARREL / "dades" / "macocu" / "kenlm" / "termes" / "termes.json"
 SENTIT = {"colp": "colp", "colps": "colp", "vegada": "vegada", "vegades": "vegada"}
 CLASSES = ("colp", "vegada")
 HUECO = "__X__"
+# Categories que concorden amb el nom ("una/dues/última vegada"): només
+# estes s'amaguen. Els noms ("banc", "cara") tenen gènere propi i són pistes.
+CONCORDEN = {"DET", "NUM", "ADJ", "PRON"}
 
 
 # --------------------------------------------------------------------------
@@ -72,7 +77,7 @@ HUECO = "__X__"
 class Lematitzador:
     """Lemas de spaCy sobre tokens ya separados (uno por token, alineados)."""
 
-    def __init__(self) -> None:
+    def __init__(self, genere: bool = False) -> None:
         import spacy
         from spacy.tokens import Doc
 
@@ -85,10 +90,21 @@ class Lematitzador:
             except OSError:
                 continue
         self.Doc = Doc
+        self.genere = genere  # True: deja las palabras con género (sin ocultarlas)
 
     def lemes(self, llistes: list[list[str]], lot: int = 256) -> list[list[str]]:
         docs = (self.Doc(self.nlp.vocab, words=t) for t in llistes)
-        return [[(t.lemma_ or t.text).lower() for t in d] for d in self.nlp.pipe(docs, batch_size=lot)]
+        return [[self.forma(t) for t in d] for d in self.nlp.pipe(docs, batch_size=lot)]
+
+    def forma(self, t) -> str:
+        """Lema; si la palabra tiene género (concuerda: un/una, dos/dues,
+        molts/moltes, últim/última), solo su categoría: en valenciano la
+        concordancia delata el sentido ("dues vegades" / "dos colps") y en la
+        entrada catalana "cop" siempre es masculino. spaCy no pasa "una" ni
+        "dues" a "un"/"dos", así que el lema no basta."""
+        if not self.genere and t.text != HUECO and t.morph.get("Gender") and t.pos_ in CONCORDEN:
+            return f"<{t.pos_}>"
+        return (t.lemma_ or t.text).lower()
 
 
 def rasgos(lemes: list[str], i: int, finestra: int) -> list[str]:
@@ -126,9 +142,16 @@ class NaiveBayes:
         self.total[classe] += len(f)
 
     def logodds(self, f: list[str]) -> float:
-        v = len(set(self.n["colp"]) | set(self.n["vegada"])) or 1
+        """Suma de log P(x|colp) − log P(x|vegada). Los rasgos que no salen en
+        el entrenamiento se ignoran: con el suavizado y "colp" con 13 veces
+        menos datos, un rasgo desconocido empujaba +2,5 hacia "colp" (11/11)."""
+        if getattr(self, "_v", None) is None:
+            self._v = len(set(self.n["colp"]) | set(self.n["vegada"])) or 1
+        v = self._v
         s = 0.0
         for x in f:
+            if not self.n["colp"][x] and not self.n["vegada"][x]:
+                continue
             pc = (self.n["colp"][x] + self.alpha) / (self.total["colp"] + self.alpha * v)
             pv = (self.n["vegada"][x] + self.alpha) / (self.total["vegada"] + self.alpha * v)
             s += math.log(pc) - math.log(pv)
@@ -204,7 +227,7 @@ def es_dev(toks: list[str]) -> bool:
 def entrena(args) -> None:
     EIXIDA.mkdir(parents=True, exist_ok=True)
     exemples = recull(args.max_vegada, args.llavor)
-    lem = Lematitzador()
+    lem = Lematitzador(args.genere)
     lemes = lem.lemes([[HUECO if i in e["pos"] else t for i, t in enumerate(e["toks"])] for e in exemples])
     nb = NaiveBayes(args.alpha)
     dev = []
@@ -217,10 +240,10 @@ def entrena(args) -> None:
                 dev.append((f, e["classe"], e["font"], " ".join(e["toks"])))
             else:
                 nb.afig(f, e["classe"])
-    nb.desa(EIXIDA / "nb.json")
+    nb.desa(EIXIDA / f"{args.nom}.json")
     # Dev: frases reales apartadas
     resultat = {"args": vars(args), "dev": avalua_dev(nb, dev), "informatius": nb.mes_informatius()}
-    (EIXIDA / "entrenament.json").write_text(json.dumps(resultat, ensure_ascii=False, indent=1), encoding="utf-8")
+    (EIXIDA / f"{args.nom}_entrenament.json").write_text(json.dumps(resultat, ensure_ascii=False, indent=1), encoding="utf-8")
     d = resultat["dev"]
     print(f"dev: {d['n']} usos; acierto colp {d['colp']['acerts']}/{d['colp']['n']}, "
           f"vegada {d['vegada']['acerts']}/{d['vegada']['n']} (balanceado {d['balancejat']:.3f})")
@@ -282,8 +305,8 @@ def entrada(punt: dict, lem: Lematitzador, finestra: int) -> list[str] | None:
 
 
 def avalua(args) -> None:
-    nb = NaiveBayes.carrega(EIXIDA / "nb.json")
-    lem = Lematitzador()
+    nb = NaiveBayes.carrega(EIXIDA / f"{args.nom}.json")
+    lem = Lematitzador(args.genere)
     prior = prior_freq()
     carrega = lambda m: {(f["benchmark"], f["id"]): f for f in json.loads(
         Path(f"{args.traces}{m}.json").read_text(encoding="utf-8"))["frases"]}
@@ -322,7 +345,7 @@ def avalua(args) -> None:
         puntua(f"KenLM + {w} · clasificador", lambda c, w=w: sentit(c["dk"] + w * c["lo"]))
     for t in (1.0, 2.0, 3.0):
         puntua(f"KenLM; si |Δ| < {t}, clasificador", lambda c, t=t: sentit(c["lo"] if abs(c["dk"]) < t else c["dk"]))
-    (EIXIDA / "avaluacio.json").write_text(json.dumps(casos, ensure_ascii=False, indent=1), encoding="utf-8")
+    (EIXIDA / f"{args.nom}_avaluacio.json").write_text(json.dumps(casos, ensure_ascii=False, indent=1), encoding="utf-8")
     print("\n  detalle (gold, flor, Δ KenLM, log-odds):")
     for c in casos:
         print(f"    {c['bench']:13s} {c['id']:11s} {c['gold']:6s} flor={c['flor'] or '-':6s} Δk={c['dk']:6.2f} lo={c['lo']:6.2f}  {c['text'][:70]}")
@@ -336,7 +359,9 @@ def main(argv: list[str] | None = None) -> None:
     e.add_argument("--finestra", type=int, default=8)
     e.add_argument("--alpha", type=float, default=0.5)
     e.add_argument("--llavor", type=int, default=11)
-    a = sub.add_parser("avalua")
+    for x in (e, a := sub.add_parser("avalua")):
+        x.add_argument("--nom", default="nb", help="nombre del modelo (dades/macocu/kenlm/sentit_cop/<nom>.json)")
+        x.add_argument("--genere", action="store_true", help="no ocultar las palabras con género")
     a.add_argument("--traces", required=True, help="prefijo de los JSON de trazas (…_traces_)")
     a.add_argument("--kenlm", default="kenlm_val_net_dogv")
     a.add_argument("--lam-col", type=float, default=0.75)

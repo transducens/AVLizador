@@ -401,6 +401,107 @@ Errores graves de la base:
   - Pendiente de revisión del usuario; no se toca el benchmark. Si se acepta,
     la base tiene **2 graves reales** (los de «cop»).
 
+### 4.11 Camino C1: clasificador de sentido para «cop» (11/11, local)
+Script: `pipeline/03_seleccio_de_model/model_llengua/sentit_cop.py`. Modelos
+en `dades/macocu/kenlm/sentit_cop/`: `nb.json` (259 KB) y `nb_genere.json`
+(493 KB).
+
+**Cómo funciona:**
+- Naive Bayes en Python puro, entrenado con frases valencianas reales: net +
+  DOGV + AVL, sin nada parecido a la evaluación. Son 3.123 usos de
+  «colp(s)» y una muestra de 40.000 de «vegada(es)».
+- La palabra se sustituye por un hueco.
+- Rasgos: lemas de spaCy de las 2 palabras de cada lado, los bigramas de al
+  lado y la bolsa de palabras a ±8.
+- **Se ocultan las palabras que concuerdan** (determinantes, numerales,
+  adjetivos y pronombres con género → `<DET>`, `<NUM>`, `<ADJ>`, `<PRON>`):
+  en valenciano la concordancia delata el sentido («dues vegades»), pero en
+  la entrada catalana «cop» es siempre masculino. spaCy no lematiza «una» ni
+  «dues», así que el lema no basta. Los sustantivos no se ocultan («banc»,
+  «cara» son pistas).
+
+**Esquema (ejemplo real, HG009):**
+
+```
+ENTRENAMIENTO (una vez)
+  texto valenciano (net + DOGV + AVL, sin la evaluación)
+    → frases con colp(s) [3.123] o vegada(es) [muestra de 40.000]
+    → la palabra → hueco __X__; etiqueta = colp | vegada
+    → spaCy: lemas; las palabras que concuerdan → su categoría
+    → rasgos: 2 palabras a cada lado (con posición), bigramas de al lado,
+      palabras a ±8
+    → cuántas veces sale cada rasgo con colp y con vegada → nb.json (~260 KB)
+    (10 % de las frases apartado para medir: 83 % de acierto equilibrado)
+
+USO (cada «cop/cops» del texto catalán)
+  «Els lladres van preparar un últim cop al banc.»
+  1. El motor genera las dos frases candidatas:
+       A «...un últim colp al banc.»     B «...una última vegada al banc.»
+  2. KenLM (base) las puntúa: log P(frase) − 0,75 · log P(palabra)
+       gana B por 1,35 puntos
+  3. ¿Gana por 2 puntos o más?  → sí: decide KenLM (la mayoría de casos)
+                                 → no: lo decide el clasificador (paso 4)
+  4. Clasificador sobre «<DET> lladre anar preparar <DET> <ADJ> __X__ <DET> banc .»
+       cada rasgo suma log(frecuencia con colp / frecuencia con vegada):
+         L1=<ADJ> −0,78   R1=<DET> −0,82   W=lladre +1,92   W=preparar +0,99
+         W=banc +0,31   W=anar +0,28   ...   (los rasgos nunca vistos se ignoran)
+       total +1,53 > 0 → colp
+  5. «Els lladres van preparar un últim colp al banc.»  ✓
+```
+
+**Lo que aprende:**
+- colp ← «d'estat», «d'ull», «de puny», «pegar un», «fort», «dur», «amb»,
+  «rebre un», «militar».
+- vegada ← «hi ha», «més», «cada», «tal», «altre», «per primera», «mil».
+
+**Dos fallos encontrados y corregidos por el camino:**
+1. **Rasgos desconocidos.** Con el suavizado y 13 veces menos datos de
+   «colp», cada palabra que no salía en el entrenamiento empujaba +2,5 hacia
+   «colp». Ahora se ignoran.
+2. **La concordancia** se colaba (ver arriba).
+3. **Se ocultaban también los sustantivos** («banc» → `<NOUN>`), porque
+   tienen género. Ahora solo se ocultan las categorías que concuerdan. El
+   acierto en los usos apartados no cambia (83,1 %); la regla sigue en
+   33/33 + 19/19.
+
+Integración (11/11): `Criteri.desempat` en el paquete (por defecto `None`,
+no cambia nada) y `Punt.sentit`. En el comparador, el modelo
+`kenlm_val_net_dogv_c1` (KenLM de la base + clasificador) con
+`--desempats` y `--model-sentit`, y el benchmark opcional `gplsi` (16
+frases reales con «cop»).
+
+**Usos reales apartados del corpus** (4.739, 10 %), clasificador solo:
+83,1 % equilibrado ocultando el género (colp 69 %, vegada 97 %) y 87,2 %
+sin ocultarlo. Esta última cifra está inflada por la concordancia.
+
+**Colisiones de los benchmarks**: 33 de homógrafos (inventadas) y 19 de texto
+real del manual, sobre las trazas de `compara_models_20261111_1232`:
+
+| Regla | Homógrafos | Texto real | Errores |
+|---|---|---|---|
+| FLOR | 33/33 | 19/19 | — |
+| Base KenLM (λ 0,75) | 31/33 | 18/19 | HG009, HG022, BM-AVL-139 |
+| Clasificador solo | 32/33 | 17/19 | HG025, BM-AVL-141, BM-AVL-190 |
+| KenLM + 0,5 · clasificador | 32/33 | 19/19 | HG009 |
+| **KenLM; si gana por < 2 puntos, decide el clasificador** | **33/33** | **19/19** | — |
+| ídem con < 3 puntos | 32/33 | 19/19 | HG025 |
+
+- La regla «KenLM decide; si gana por menos de 2 puntos, decide el
+  clasificador» **iguala a FLOR en los 52 casos de «cop»**, en las dos
+  variantes (con y sin ocultar el género).
+- Arregla «últim cop al banc», «boxejador... molts cops» y «mastegar dues
+  cops».
+- Aplicada a la base (189 / 4), las colisiones pasarían a 33/33: en total
+  **191 aciertos / 2 graves**, lo mismo que el híbrido, **sin FLOR**. Los 2
+  graves que quedan son los dudosos de «manca».
+
+**Cautelas:**
+- El umbral (2) y los pesos se eligen sobre estos mismos 52 casos.
+- Muestra pequeña: falta validar en más texto real (gplsi, BOE, usos del
+  corpus con KenLM).
+- En el sistema necesitaría spaCy (ya está en el traductor) y una tabla de
+  ~260 KB.
+
 ---
 
 ## 5. Cautelas
@@ -501,3 +602,4 @@ Orden propuesto: C1 primero (local).
 | 11/11 | **Base = KenLM solo** (`valencia_net_dogv`, margen 3, λ 0,75 colisiones / 1,5 homógrafos, prior de frecuencia) | Decisión del usuario. 189 / 4 (simulado); 1 grave en texto real. Las mejoras se miden contra esta base (sección 4.10). |
 | 11/11 | Los 2 graves de «manca» son dudosos (etiqueta del benchmark) | «carència» no es candidata; «Si en falta algun» es correcto. Pendiente de revisión del usuario. |
 | 11/11 | Siguiente: camino C (clasificador de sentido para «cop», KenLM en dos sentidos) | Sección 7.2. Propuesto empezar por C1. |
+| 11/11 | C1 funciona: «KenLM; si gana por < 2, clasificador» iguala a FLOR en las 52 colisiones | Sección 4.11. Total estimado 191 / 2 sin FLOR. Falta validarlo en más texto real. C2 (KenLM en dos sentidos), pendiente del entrenamiento en Abaco. |

@@ -91,6 +91,11 @@ class Criteri:
     # λ per a les col·lisions ("cop"); `None` = el mateix `lam` (11/11/2026:
     # amb KenLM, el millor λ de les col·lisions no és el dels homògrafs).
     lam_colisio: float | None = None
+    # Desempat de les col·lisions (11/11/2026, camí C1): si el model guanya
+    # per menys de `desempat` punts i el punt porta la tria d'un
+    # classificador de sentit (`Punt.sentit`), decidix el classificador.
+    # `None` = no s'usa.
+    desempat: float | None = None
 
 
 def criteri_del_punt(punt: Punt, criteri: Criteri) -> Criteri:
@@ -134,6 +139,14 @@ def tria(punt: Punt, criteri: Criteri) -> str | None:
     ...                  "vegada": {"lp": -25.0, "n": 9, "prior": -20.0}}
     >>> tria(p, Criteri(lam=0.0)), tria(p, Criteri(lam=1.0)), p.decidit
     ('vegada', 'colp', 'model')
+
+    Desempat amb un classificador de sentit (col·lisions): amb `lam=0`
+    "vegada" guanya per 5 punts; amb `desempat=6` decidix `p.sentit`:
+
+    >>> p.sentit = "colp"
+    >>> tria(p, Criteri(lam=0.0, desempat=2.0)), tria(p, Criteri(lam=0.0, desempat=6.0)), p.decidit
+    ('vegada', 'colp', 'sentit')
+    >>> p.sentit = None
 
     Amb el motor ja decidit, el model només el canvia si guanya per més de
     `marge`:
@@ -191,6 +204,12 @@ def tria(punt: Punt, criteri: Criteri) -> str | None:
         return punt.motor
     valors = {c: puntuacio(d, criteri) for c, d in punt.puntuacions.items()}
     millor = max(valors, key=valors.get)
+    if (criteri.desempat is not None and punt.tipus == "colisio" and punt.sentit in valors
+            and len(valors) > 1):
+        segon = max(v for c, v in valors.items() if c != millor)
+        if valors[millor] - segon < criteri.desempat:
+            punt.decidit = "sentit"
+            return punt.sentit
     defecte, qui = punt.motor, "motor"
     if criteri.per_defecte == "catala" and punt.motor is not None:
         catala = next((c for c in punt.candidats if c.lower() == punt.paraula.lower()), None)

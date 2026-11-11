@@ -88,12 +88,13 @@ BENCHMARKS = {
     # 11/11/2026, per a les regressions (no per defecte; el 151 ja va dins de `homografs`):
     "151": ("Benchmark de 151 (154)", "curat_151/benchmark_corpus.json"),
     "boe_estricte": ("BOE estricte, mostra (2.000)", "boe_dialectal/benchmark_boe_dialectal_estricte.json"),
+    "gplsi": ("gplsi CA-VA (1.958; 16 amb cop/cops)", "gplsi/benchmark_gplsi.json"),
 }
 BENCHMARKS_PER_DEFECTE = ("homografs", "homografs_v2", "manual")
 TIPUS_MODEL = ("colisio", "irresoluble")
 LN10 = math.log(10)
 MODELS = ("motor", "flor", "kenlm_cat", "kenlm_cat30", "kenlm_val", "kenlm_val_net", "kenlm_val_net_dogv",
-          "kenlm_val_net_dogv_np", "kenlm_val_tot_np", "kenlm_val_net_dogv_bi", "diff", "diff_net", "fasttext")
+          "kenlm_val_net_dogv_np", "kenlm_val_tot_np", "kenlm_val_net_dogv_bi", "kenlm_val_net_dogv_c1", "diff", "diff_net", "fasttext")
 # Fitxer de cada KenLM (dades/macocu/kenlm/<nom>_o5.binary i, si n'hi ha, <nom>_freq.json).
 # 11/11/2026: `_np` = sense poda; `valencia_tot_np` = net + DOGV + AVL + UA (GD >= 0,8), sense poda.
 FITXERS_KENLM = {"kenlm_cat": "macocu_tot", "kenlm_cat30": "macocu_30pc", "kenlm_val": "valencia",
@@ -313,6 +314,8 @@ class Carregador:
 
                 self._mesura("flor", None, lambda: ModelLlengua(fils=self.fils))
             return self.cache["flor"]
+        if clau == "kenlm_val_net_dogv_c1":  # camí C1: el KenLM de la base + classificador de "cop"
+            return KenLM(self._kenlm("valencia_net_dogv"), 1.0, self._freq("valencia_net_dogv"))
         if clau == "kenlm_val_net_dogv_bi":
             return Bidireccional(KenLM(self._kenlm("valencia_net_dogv"), 1.0, self._freq("valencia_net_dogv")),
                                  self._kenlm("valencia_net_dogv_inv"))
@@ -335,6 +338,8 @@ class Carregador:
     def fitxers(self, clau: str) -> list[str]:
         if clau == "kenlm_val_net_dogv_bi":
             return ["valencia_net_dogv", "valencia_net_dogv_inv"]
+        if clau == "kenlm_val_net_dogv_c1":
+            return ["valencia_net_dogv"]
         if clau in FITXERS_KENLM:
             return [FITXERS_KENLM[clau]]
         return {"flor": ["flor"], "diff": ["valencia", "macocu_tot"], "diff_net": ["valencia_net", "macocu_tot"],
@@ -402,6 +407,31 @@ def puntua(benchmark: list[dict], model) -> tuple[list, float]:
             text_motor, punts = puntua_punts(text, model, TIPUS)
         eixida.append((it, text_motor, punts))
     return eixida, (time.time() - t0) / max(len(benchmark), 1)
+
+
+def afig_sentit(puntuats: dict, model_nb: Path) -> int:
+    """Camí C1 (11/11/2026): posa en cada col·lisió (`Punt.sentit`) el
+    candidat que tria el classificador de sentit de `sentit_cop.py`
+    (Naive Bayes; la frase valenciana d'un candidat amb el buit). Amb
+    `Criteri.desempat`, decidix quan el model guanya per poc."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import sentit_cop
+
+    nb = sentit_cop.NaiveBayes.carrega(model_nb)
+    lem = sentit_cop.Lematitzador(genere="genere" in model_nb.stem)
+    n = 0
+    for files in puntuats.values():
+        for _it, _text, punts in files:
+            for p in punts:
+                if p.tipus != "colisio" or not p.puntuacions:
+                    continue
+                f = sentit_cop.entrada({"puntuacions": p.puntuacions}, lem, 8)
+                if f is None:
+                    continue
+                sentit = "colp" if nb.logodds(f) > 0 else "vegada"
+                p.sentit = next((c for c in p.candidats if sentit_cop.SENTIT.get(c.lower()) == sentit), None)
+                n += p.sentit is not None
+    return n
 
 
 def punt_avaluat(it: dict, punts: list):
@@ -482,6 +512,7 @@ def detall(puntuats: list, criteri: Criteri | None) -> list[dict]:
                       "decidit": "motor" if criteri is None else (p.decidit if p is not None else "no detectada"),
                       "puntuacions": valors, "brut": brut if valors else {},
                       "motor": p.motor if p is not None else None, "candidats": p.candidats if p is not None else [],
+                      "sentit_c1": getattr(p, "sentit", None) if p is not None else None,
                       "oriental": it["oriental"], "hipotesi": hip})
     return files
 
@@ -596,10 +627,12 @@ def gd_eixida(hipotesis: list[str]) -> dict:
 
 def criteris(args) -> list[tuple[str, Criteri]]:
     eixida = []
-    for marge, defecte, lam, lam_col in itertools.product(args.marges, args.per_defecte, args.lams,
-                                                          args.lams_colisio or [None]):
-        nom = f"marge={marge:g} defecte={defecte} lam={lam:g}" + (f" lam_col={lam_col:g}" if lam_col is not None else "")
-        eixida.append((nom, Criteri(marge=marge, per_defecte=defecte, lam=lam, lam_colisio=lam_col)))
+    for marge, defecte, lam, lam_col, desempat in itertools.product(
+            args.marges, args.per_defecte, args.lams, args.lams_colisio or [None], args.desempats or [None]):
+        nom = (f"marge={marge:g} defecte={defecte} lam={lam:g}" + (f" lam_col={lam_col:g}" if lam_col is not None else "")
+               + (f" desempat={desempat:g}" if desempat is not None else ""))
+        eixida.append((nom, Criteri(marge=marge, per_defecte=defecte, lam=lam, lam_colisio=lam_col,
+                                    desempat=desempat)))
     return eixida
 
 
@@ -616,6 +649,12 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--lams", nargs="+", type=float, default=[0.0, 0.5])
     p.add_argument("--lams-colisio", nargs="+", type=float, default=None,
                    help="λ propi de les col·lisions (cop); sense l'opció, el mateix de --lams")
+    p.add_argument("--desempats", nargs="+", type=float, default=None,
+                   help="camí C1: si el model guanya una col·lisió per menys d'això, decidix el classificador "
+                        "de sentit (només els models *_c1)")
+    p.add_argument("--model-sentit", type=Path,
+                   default=ARREL / "dades" / "macocu" / "kenlm" / "sentit_cop" / "nb.json",
+                   help="classificador de sentit de sentit_cop.py")
     p.add_argument("--prior-kenlm", choices=["freq", "unigrama"], default="freq",
                    help="prior de KenLM: freqüència del text d'entrenament (<nom>_freq.json) o l'unigrama de KenLM")
     p.add_argument("--dir-models", type=Path, default=DIR_MODELS)
@@ -658,6 +697,9 @@ def main(argv: list[str] | None = None) -> None:
             print(f"  {b}: {segons[b] * 1000:.1f} ms/frase en total, {model_ms[b]} ms/frase del model "
                   f"({crides[b]} crides)", flush=True)
 
+        if clau.endswith("_c1"):
+            n = afig_sentit(puntuats, args.model_sentit)
+            print(f"  classificador de sentit: {n} col·lisions ({args.model_sentit.name})", flush=True)
         files_criteris = [("motor sol", None)] if clau == "motor" else llista
         taula = []
         for nom, criteri in files_criteris:
