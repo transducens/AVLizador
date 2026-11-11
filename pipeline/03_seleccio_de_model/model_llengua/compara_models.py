@@ -85,11 +85,20 @@ BENCHMARKS = {
     "homografs": ("Homògrafs v1 + 151 (253)", "homografs/benchmark_sistema_final_cat_val.json"),
     "homografs_v2": ("Homògrafs v2 (160)", "homografs/benchmark_homografs_v2_cat_val.json"),
     "manual": ("Manual BOE + AVL (458)", "manual/benchmark_manual_cat_val.json"),
+    # 11/11/2026, per a les regressions (no per defecte; el 151 ja va dins de `homografs`):
+    "151": ("Benchmark de 151 (154)", "curat_151/benchmark_corpus.json"),
+    "boe_estricte": ("BOE estricte, mostra (2.000)", "boe_dialectal/benchmark_boe_dialectal_estricte.json"),
 }
+BENCHMARKS_PER_DEFECTE = ("homografs", "homografs_v2", "manual")
 TIPUS_MODEL = ("colisio", "irresoluble")
 LN10 = math.log(10)
 MODELS = ("motor", "flor", "kenlm_cat", "kenlm_cat30", "kenlm_val", "kenlm_val_net", "kenlm_val_net_dogv",
-          "diff", "diff_net", "fasttext")
+          "kenlm_val_net_dogv_np", "kenlm_val_tot_np", "diff", "diff_net", "fasttext")
+# Fitxer de cada KenLM (dades/macocu/kenlm/<nom>_o5.binary i, si n'hi ha, <nom>_freq.json).
+# 11/11/2026: `_np` = sense poda; `valencia_tot_np` = net + DOGV + AVL + UA (GD >= 0,8), sense poda.
+FITXERS_KENLM = {"kenlm_cat": "macocu_tot", "kenlm_cat30": "macocu_30pc", "kenlm_val": "valencia",
+                 "kenlm_val_net": "valencia_net", "kenlm_val_net_dogv": "valencia_net_dogv",
+                 "kenlm_val_net_dogv_np": "valencia_net_dogv_np", "kenlm_val_tot_np": "valencia_tot_np"}
 
 
 # --------------------------------------------------------------------------
@@ -100,19 +109,29 @@ class KenLM:
     """log P (natural) d'una frase normalitzada com el text d'entrenament.
     `signe=-1`: gana la menys probable (KenLM català)."""
 
-    def __init__(self, model, signe: float = 1.0) -> None:
-        self.model, self.signe = model, signe
+    def __init__(self, model, signe: float = 1.0, freq: dict | None = None) -> None:
+        self.model, self.signe, self.freq = model, signe, freq
 
     def logprob(self, text: str) -> tuple[float, int]:
         frase = normalitza(text)
         return self.signe * self.model.score(frase, bos=True, eos=True) * LN10, len(frase.split()) + 1
 
     def prior(self, paraula: str) -> tuple[float, int]:
-        """log P(paraula) sense <s> ni </s> (l'unigrama: la freqüència). Amb
-        `logprob` el prior era log P("<s> colp </s>"), que no seguix la
-        freqüència ("colp" −20,95 > "vegada" −22,27, quan "vegada" és 35
-        voltes més freqüent): per això `lam` no canviava res (11/11/2026)."""
+        """log P(paraula sola), per a `lam` (11/11/2026). Abans era log
+        P("<s> colp </s>"), que no seguix la freqüència ("colp" −20,95 >
+        "vegada" −22,27, quan "vegada" és 35 voltes més freqüent): `lam` no
+        canviava res. Amb `freq` (de `freq_unigrames.py`): ln((n + 1) /
+        tokens). Sense: l'unigrama de KenLM sense <s> ni </s>, que tampoc és
+        la freqüència (Kneser-Ney: "colp" −10,66, "vegada" −9,89).
+
+        >>> k = KenLM(None, freq={"tokens": 100, "freq": {"colp": 1, "vegada": 39}})
+        >>> [round(k.prior(w)[0], 3) for w in ("colp", "vegada", "gandula")]
+        [-3.912, -0.916, -4.605]
+        """
         frase = normalitza(paraula)
+        if self.freq is not None and " " not in frase:
+            n = self.freq["freq"].get(frase, 0)
+            return self.signe * math.log((n + 1) / self.freq["tokens"]), 1
         return self.signe * self.model.score(frase, bos=False, eos=False) * LN10, len(frase.split())
 
     def tokens(self, text: str, prior: bool = False) -> list[dict]:
@@ -225,8 +244,8 @@ class Carregador:
     """Carrega cada fitxer de model una sola vegada i apunta el temps, la
     memòria que hi afig i la grandària del fitxer."""
 
-    def __init__(self, dir_models: Path, fils: int | None) -> None:
-        self.dir, self.fils = dir_models, fils
+    def __init__(self, dir_models: Path, fils: int | None, prior_kenlm: str = "freq") -> None:
+        self.dir, self.fils, self.prior_kenlm = dir_models, fils, prior_kenlm
         self.cache: dict[str, object] = {}
         self.cost: dict[str, dict] = {}
 
@@ -237,6 +256,16 @@ class Carregador:
             path = self.dir / "kenlm" / f"{nom}_o5.binary"
             self._mesura(nom, path, lambda: kenlm.Model(str(path)))
         return self.cache[nom]
+
+    def _freq(self, nom: str) -> dict | None:
+        """Freqüències del text d'entrenament (`<nom>_freq.json`) per al prior."""
+        if self.prior_kenlm != "freq":
+            return None
+        path = self.dir / "kenlm" / f"{nom}_freq.json"
+        if not path.exists():
+            print(f"  AVÍS: no hi ha {path.name}: el prior serà l'unigrama de KenLM", flush=True)
+            return None
+        return json.loads(path.read_text(encoding="utf-8"))
 
     def _mesura(self, nom: str, path: Path | None, carrega) -> None:
         gc.collect()
@@ -254,16 +283,9 @@ class Carregador:
 
                 self._mesura("flor", None, lambda: ModelLlengua(fils=self.fils))
             return self.cache["flor"]
-        if clau == "kenlm_cat":
-            return KenLM(self._kenlm("macocu_tot"), -1.0)
-        if clau == "kenlm_cat30":
-            return KenLM(self._kenlm("macocu_30pc"), -1.0)
-        if clau == "kenlm_val":
-            return KenLM(self._kenlm("valencia"))
-        if clau == "kenlm_val_net_dogv":
-            return KenLM(self._kenlm("valencia_net_dogv"))
-        if clau == "kenlm_val_net":
-            return KenLM(self._kenlm("valencia_net"))
+        if clau in FITXERS_KENLM:
+            nom = FITXERS_KENLM[clau]
+            return KenLM(self._kenlm(nom), -1.0 if clau.startswith("kenlm_cat") else 1.0, self._freq(nom))
         if clau == "diff":
             return Diferencia(self._kenlm("valencia"), self._kenlm("macocu_tot"))
         if clau == "diff_net":
@@ -278,10 +300,9 @@ class Carregador:
         raise ValueError(clau)
 
     def fitxers(self, clau: str) -> list[str]:
-        return {"flor": ["flor"], "kenlm_cat": ["macocu_tot"], "kenlm_cat30": ["macocu_30pc"],
-                "kenlm_val": ["valencia"], "kenlm_val_net": ["valencia_net"],
-                "kenlm_val_net_dogv": ["valencia_net_dogv"],
-                "diff": ["valencia", "macocu_tot"], "diff_net": ["valencia_net", "macocu_tot"],
+        if clau in FITXERS_KENLM:
+            return [FITXERS_KENLM[clau]]
+        return {"flor": ["flor"], "diff": ["valencia", "macocu_tot"], "diff_net": ["valencia_net", "macocu_tot"],
                 "fasttext": ["fasttext"]}.get(clau, [])
 
 
@@ -397,9 +418,9 @@ def detall(puntuats: list, criteri: Criteri | None) -> list[dict]:
         tria = (p.motor if criteri is None else p.tria) if p is not None else None
         valors, brut = {}, {}
         if p is not None and criteri is not None and p.puntuacions:
-            from avlizador.traductor_cat_val.model_llengua import puntuacio
+            from avlizador.traductor_cat_val.model_llengua import criteri_del_punt, puntuacio
 
-            valors = {c: round(puntuacio(d, criteri), 2) for c, d in p.puntuacions.items()}
+            valors = {c: round(puntuacio(d, criteri_del_punt(p, criteri)), 2) for c, d in p.puntuacions.items()}
             # En brut (10/11/2026), per a simular en local qualsevol marge i lam:
             # puntuació = lp - lam * prior (norma suma).
             brut = {c: {"lp": round(d["lp"], 3), "prior": round(d["prior"], 3), "n": d["n"]}
@@ -420,7 +441,7 @@ def traces(puntuats: dict, model, criteri: Criteri) -> list[dict]:
     que ha puntuat el model, lp, prior, puntuació amb `criteri` i la
     probabilitat de cada token (de la frase i del prior), la tria i qui la
     pren. Les decisions són les de `criteri` (el del sistema)."""
-    from avlizador.traductor_cat_val.model_llengua import puntuacio, tria
+    from avlizador.traductor_cat_val.model_llengua import criteri_del_punt, puntuacio, tria
 
     eixida = []
     for b, files in puntuats.items():
@@ -440,7 +461,7 @@ def traces(puntuats: dict, model, criteri: Criteri) -> list[dict]:
                 cands = {}
                 for c, d in p.puntuacions.items():
                     cands[c] = {"frase": d.get("frase"), "lp": round(d["lp"], 3), "prior": round(d["prior"], 3),
-                                "n": d["n"], "puntuacio": round(puntuacio(d, criteri), 3),
+                                "n": d["n"], "puntuacio": round(puntuacio(d, criteri_del_punt(p, criteri)), 3),
                                 "tokens": tokens_model(model, d["frase"]) if d.get("frase") else None,
                                 "tokens_prior": tokens_model(model, c.lower(), prior=True)}
                 r = {"paraula": p.paraula, "tipus": p.tipus, "motor": p.motor, "candidats": list(p.candidats),
@@ -524,9 +545,10 @@ def gd_eixida(hipotesis: list[str]) -> dict:
 
 def criteris(args) -> list[tuple[str, Criteri]]:
     eixida = []
-    for marge, defecte, lam in itertools.product(args.marges, args.per_defecte, args.lams):
-        eixida.append((f"marge={marge:g} defecte={defecte} lam={lam:g}",
-                       Criteri(marge=marge, per_defecte=defecte, lam=lam)))
+    for marge, defecte, lam, lam_col in itertools.product(args.marges, args.per_defecte, args.lams,
+                                                          args.lams_colisio or [None]):
+        nom = f"marge={marge:g} defecte={defecte} lam={lam:g}" + (f" lam_col={lam_col:g}" if lam_col is not None else "")
+        eixida.append((nom, Criteri(marge=marge, per_defecte=defecte, lam=lam, lam_colisio=lam_col)))
     return eixida
 
 
@@ -537,10 +559,14 @@ def num(x, dec: int = 2) -> str:
 def main(argv: list[str] | None = None) -> None:
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     p.add_argument("--models", nargs="+", default=list(MODELS), choices=MODELS)
-    p.add_argument("--benchmarks", nargs="+", default=list(BENCHMARKS), choices=list(BENCHMARKS))
+    p.add_argument("--benchmarks", nargs="+", default=list(BENCHMARKS_PER_DEFECTE), choices=list(BENCHMARKS))
     p.add_argument("--marges", nargs="+", type=float, default=[0, 0.5, 1, 2, 3, 5, 8, 12])
     p.add_argument("--per-defecte", nargs="+", default=["catala", "motor"], choices=["catala", "motor"])
     p.add_argument("--lams", nargs="+", type=float, default=[0.0, 0.5])
+    p.add_argument("--lams-colisio", nargs="+", type=float, default=None,
+                   help="λ propi de les col·lisions (cop); sense l'opció, el mateix de --lams")
+    p.add_argument("--prior-kenlm", choices=["freq", "unigrama"], default="freq",
+                   help="prior de KenLM: freqüència del text d'entrenament (<nom>_freq.json) o l'unigrama de KenLM")
     p.add_argument("--dir-models", type=Path, default=DIR_MODELS)
     p.add_argument("--fils", type=int, default=None, help="fils de torch per a FLOR")
     p.add_argument("--limit", type=int, default=None, help="només les N primeres frases de cada benchmark (proves)")
@@ -554,7 +580,7 @@ def main(argv: list[str] | None = None) -> None:
     RESULTATS.mkdir(parents=True, exist_ok=True)
 
     benchmarks = {b: carrega_benchmark(b, args.limit) for b in args.benchmarks}
-    carregador = Carregador(args.dir_models, args.fils)
+    carregador = Carregador(args.dir_models, args.fils, args.prior_kenlm)
     llista = criteris(args)
     fix = Criteri()  # el criteri del sistema: marge 2, la catalana per defecte, lam 0,5
     resultat: dict = {"data": datetime.now().isoformat(timespec="minutes"), "limit": args.limit,

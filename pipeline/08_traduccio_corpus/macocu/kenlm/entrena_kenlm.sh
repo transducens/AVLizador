@@ -13,9 +13,14 @@
 #   LIMIT_MB=500 NOM=prova sbatch entrena_kenlm.sh  # prova xicoteta
 #   JSONL=dades/macocu/valencia/valencia.jsonl NOM=valencia sbatch entrena_kenlm.sh  # KenLM valencià
 #   JSONL=dades/macocu/valencia/valencia.jsonl MARCADORS_DOC=2 NOM=valencia_net sbatch entrena_kenlm.sh
+#   TEXT=dades/macocu/kenlm/valencia_net_dogv.txt NOM=valencia_net_dogv_np PODA="" sbatch entrena_kenlm.sh  # sense poda
 # Variables: ORDRE (5), PODA ("0 1 1 1 1": lleva els n-grames d'1 aparició
 # des dels bigrames; "" = sense poda), MEM_LMPLZ (70%
-# de la memòria del job), NOM (macocu_tot), KENLM (~/kenlm), TMPDIR_LM.
+# de la memòria del job), NOM (macocu_tot), KENLM (~/kenlm), TMPDIR_LM,
+# TEXT (11/11/2026: un text ja normalitzat, relatiu a l'arrel del repo, en
+# lloc de dades/macocu/kenlm/<NOM>.txt; no s'exporta res).
+# Pas 4 (11/11/2026): <NOM>_freq.json, la freqüència de les paraules
+# candidates en el text (el prior de compara_models.py; freq_unigrames.py).
 
 #SBATCH --job-name=kenlm
 #SBATCH --output=%j_kenlm.out
@@ -52,7 +57,9 @@ OPC_JSONL=()
 # MARCADORS_DOC: amb JSONL, frases de >= N marcadors o del mateix document que una d'elles.
 [[ -n "${MARCADORS_DOC:-}" ]] && OPC_JSONL+=(--marcadors-doc "$MARCADORS_DOC")
 DIR_LM="$ARREL_REPO/dades/macocu/kenlm"
-TEXT="$DIR_LM/$NOM.txt"
+TEXT_DONAT="${TEXT:-}"
+TEXT="${TEXT:+$(cd "$ARREL_REPO" && realpath "$TEXT")}"
+TEXT="${TEXT:-$DIR_LM/$NOM.txt}"
 ARPA="$DIR_LM/${NOM}_o${ORDRE}.arpa"
 BIN="$DIR_LM/${NOM}_o${ORDRE}.binary"
 TMPDIR_LM="${TMPDIR_LM:-$DIR_LM/tmp}"
@@ -64,7 +71,10 @@ cd "$ARREL_REPO"
 T0=$(date +%s)
 # El .json l'escriu exporta_text.py només quan acaba: sense ell, el text
 # pot estar a mitges i es torna a exportar.
-if [[ ! -s "$TEXT" || ! -s "${TEXT%.txt}.json" ]]; then
+if [[ -n "$TEXT_DONAT" ]]; then
+    [[ -s "$TEXT" ]] || { echo "No trobe el text $TEXT" >&2; exit 1; }
+    echo "=== 1. text donat: $TEXT ($(du -h "$TEXT" | cut -f1)) ==="
+elif [[ ! -s "$TEXT" || ! -s "${TEXT%.txt}.json" ]]; then
     echo "=== 1. exporta el text ($TEXT) ==="
     python -u pipeline/08_traduccio_corpus/macocu/kenlm/exporta_text.py \
         --processos "$CPUS" --limit-mb "$LIMIT_MB" --eixida "$TEXT" ${OPC_JSONL[@]+"${OPC_JSONL[@]}"}
@@ -85,4 +95,7 @@ echo "=== 3. build_binary (trie, quantitzat 8 bits) ==="
 "$BUILD_BINARY" -T "$TMPDIR_LM" trie -q 8 -b 8 "$ARPA" "$BIN"
 ls -lh "$BIN"
 echo "L'arpa es pot esborrar si el .binary funciona: rm $ARPA"
+
+echo "=== 4. freqüència de les paraules candidates (prior) ==="
+python -u pipeline/08_traduccio_corpus/macocu/kenlm/freq_unigrames.py "$TEXT" --eixida "$DIR_LM/${NOM}_freq.json"
 echo "Temps total: $(( $(date +%s) - T0 )) s"

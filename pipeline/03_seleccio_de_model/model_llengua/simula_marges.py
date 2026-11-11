@@ -31,9 +31,13 @@ GREUS = ("traduida_sense_caldre", "candidat_erroni")
 
 
 def llig_criteri(text):
-    """'marge=2 defecte=catala lam=0.5' -> (2.0, 'catala', 0.5)"""
+    """'marge=2 defecte=catala lam=0.5 [lam_col=1]' -> (2.0, 'catala', 0.5, 1.0 o 0.5).
+    "fix" = el criteri del sistema (`Criteri()`)."""
+    if text == "fix":
+        return 2.0, "catala", 0.5, 0.5
     camps = dict(p.split("=") for p in text.split())
-    return float(camps["marge"]), camps["defecte"], float(camps["lam"])
+    lam = float(camps["lam"])
+    return float(camps["marge"]), camps["defecte"], lam, float(camps.get("lam_col", lam))
 
 
 def decidix(f, marge, defecte, lam_col, lam_hom):
@@ -52,11 +56,16 @@ def decidix(f, marge, defecte, lam_col, lam_hom):
     return millor
 
 
-def avalua(files, marge, defecte, lam_col, lam_hom):
+def avalua(files, marge, defecte, lam_col, lam_hom, hibrid=None):
+    """`hibrid`: {(benchmark, id): tria} d'un altre model per a les col·lisions."""
     n = Counter()
     greus_per_paraula = Counter()
     for f in files:
-        c = classifica(f["paraula"], f["esperat"], decidix(f, marge, defecte, lam_col, lam_hom))
+        if hibrid is not None and f["tipus"] == "colisio":
+            tria = hibrid[(f["_bench"], f["id"])]
+        else:
+            tria = decidix(f, marge, defecte, lam_col, lam_hom)
+        c = classifica(f["paraula"], f["esperat"], tria)
         n[c] += 1
         if c in GREUS:
             greus_per_paraula[f["paraula"].lower()] += 1
@@ -73,6 +82,12 @@ def main():
     ap.add_argument("--defecte", nargs="*", default=["catala", "motor"])
     ap.add_argument("--max-greus", type=int, default=3)
     ap.add_argument("--top", type=int, default=10)
+    ap.add_argument("--prior-traces", action="store_true",
+                    help="substituïx el prior dels models KenLM per la suma de `tokens_prior` de "
+                         "<detall>_traces_<model>.json (l'unigrama real de KenLM, sense <s> ni </s>)")
+    ap.add_argument("--hibrid", metavar="MODEL",
+                    help="les col·lisions (cop/cops) les decidix MODEL (p. ex. flor) amb el seu criteri del "
+                         "sistema; la resta, el model simulat")
     ap.add_argument("--priors", help="JSON {total: {corpus: n}, corpus: {paraula: freq}}: substituïx el prior "
                     "dels models KenLM per ln((freq + 1) / total) (unigrama, sense <s> ni </s>)")
     a = ap.parse_args()
@@ -80,17 +95,39 @@ def main():
     d = json.loads(Path(a.detall).read_text(encoding="utf-8"))
     models = a.models or [m for m in d if m != "motor"]
 
+    hibrid = None
+    if a.hibrid:
+        hibrid = {(b, f["id"]): f["tria"] for b, fs in d[a.hibrid]["fix"][1].items() for f in fs}
+        models = [m for m in models if m != a.hibrid]
+        print(f"HÍBRID: les col·lisions les decidix {a.hibrid} ({d[a.hibrid]['fix'][0]})\n")
+
     for model in models:
         criteri, benchmarks = d[model]["fix"]
-        files = [f for b in benchmarks.values() for f in b]
-        marge, defecte, lam = llig_criteri(criteri)
-        iguals = sum(decidix(f, marge, defecte, lam, lam) == f["tria"] for f in files)
+        files = [dict(f, _bench=b) for b, fs in benchmarks.items() for f in fs]
+        marge, defecte, lam, lam_c = llig_criteri(criteri)
+        iguals = sum(decidix(f, marge, defecte, lam_c, lam) == f["tria"] for f in files)
         print(f"comprovació {model} ({criteri}): {iguals}/{len(files)} iguals")
         assert iguals == len(files), "el simulador no reprodueix el sistema"
-        n, g = avalua(files, marge, defecte, lam, lam)
+        n, g = avalua(files, marge, defecte, lam_c, lam)
         print(f"  sistema: encerts {n['encert']}, greus {n[GREUS[0]] + n[GREUS[1]]} "
               f"(trad. sense caldre {n[GREUS[0]]}, candidat erroni {n[GREUS[1]]}), "
               f"sense traduir {n['sense_traduir']}  {dict(g)}")
+
+        traces = Path(str(a.detall).removesuffix("_detall.json") + f"_traces_{model}.json")
+        if a.prior_traces and model.startswith("kenlm") and traces.exists():
+            t = json.loads(traces.read_text(encoding="utf-8"))
+            priors = {}
+            for fr in t["frases"]:
+                for pt in fr["punts"]:
+                    for c, v in pt["puntuacions"].items():
+                        if v.get("tokens_prior"):
+                            priors[c.lower()] = sum(x["lp"] for x in v["tokens_prior"])
+            canviats = 0
+            for f in files:
+                for c, dd in (f.get("brut") or {}).items():
+                    if c.lower() in priors:
+                        dd["prior"], canviats = priors[c.lower()], canviats + 1
+            print(f"  prior substituït per l'unigrama de KenLM ({traces.name}): {canviats} puntuacions")
 
         if a.priors and model.startswith("kenlm_val"):
             p = json.loads(Path(a.priors).read_text(encoding="utf-8"))
@@ -104,7 +141,7 @@ def main():
 
         resultats = []
         for marge, defecte, lc, lh in itertools.product(a.marges, a.defecte, a.lams_colisio, a.lams_homograf):
-            n, g = avalua(files, marge, defecte, lc, lh)
+            n, g = avalua(files, marge, defecte, lc, lh, hibrid)
             greus = n[GREUS[0]] + n[GREUS[1]]
             resultats.append((n["encert"], -greus, marge, defecte, lc, lh, n, g))
 

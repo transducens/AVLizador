@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visor de modelos de lengua</title>
+<!-- Abre los JSON de `compara_models.py --traces` (uno por modelo:
+     compara_models_<fecha>_traces_<modelo>.json) y muestra, para cada frase
+     con palabra ambigua, la probabilidad que da cada modelo a cada token de
+     cada frase candidata. 11/11/2026. -->
+<style>
+:root {
+  --bg: #f7f7f5; --panel: #ffffff; --text: #1d1d1b; --muted: #6b6b66; --line: #e2e1dc;
+  --accent: #2f6f9f; --accent-bg: #e6f0f7; --ok: #2e7d4f; --ok-bg: #e5f3ea; --ko: #b3412f; --ko-bg: #f9e7e3;
+  --warn: #8a6100; --warn-bg: #fbf1d6; --chip: #f0efea; --mono: ui-monospace, "SF Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161716; --panel: #1f201f; --text: #e8e7e3; --muted: #a09f99; --line: #33342f;
+    --accent: #7db4dc; --accent-bg: #1e2f3c; --ok: #7fc79a; --ok-bg: #1d3226; --ko: #e8907f; --ko-bg: #3a221d;
+    --warn: #e2b858; --warn-bg: #3a2f14; --chip: #2a2b29;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161716; --panel: #1f201f; --text: #e8e7e3; --muted: #a09f99; --line: #33342f;
+  --accent: #7db4dc; --accent-bg: #1e2f3c; --ok: #7fc79a; --ok-bg: #1d3226; --ko: #e8907f; --ko-bg: #3a221d;
+  --warn: #e2b858; --warn-bg: #3a2f14; --chip: #2a2b29;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+header { padding: 12px 16px; border-bottom: 1px solid var(--line); background: var(--panel); display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+header h1 { font-size: 17px; margin: 0; }
+.meta { color: var(--muted); font-size: 13px; }
+.controls { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; margin-left: auto; }
+.controls input[type=search], .controls select { padding: 4px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--text); font: inherit; font-size: 13px; }
+.controls input[type=search] { min-width: 170px; }
+.controls label { font-size: 13px; color: var(--muted); display: flex; gap: 4px; align-items: center; }
+.btn { padding: 5px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--text); cursor: pointer; font-size: 13px; }
+.layout { display: grid; grid-template-columns: 300px 1fr; min-height: calc(100vh - 58px); }
+nav { border-right: 1px solid var(--line); overflow-y: auto; max-height: calc(100vh - 58px); background: var(--panel); }
+nav .item { padding: 7px 12px; border-bottom: 1px solid var(--line); cursor: pointer; }
+nav .item:hover { background: var(--chip); }
+nav .item.sel { background: var(--accent-bg); }
+nav .id { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+nav .txt { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+main { padding: 16px; min-width: 0; }
+section { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px; margin-bottom: 14px; }
+section h2 { font-size: 15px; margin: 0 0 10px; }
+h3 { font-size: 14px; margin: 14px 0 6px; }
+.frases { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; }
+.frases .k { color: var(--muted); font-size: 13px; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 10px; margin-left: 3px; vertical-align: 1px; white-space: nowrap; }
+.b-ok { background: var(--ok-bg); color: var(--ok); } .b-ko { background: var(--ko-bg); color: var(--ko); }
+.b-warn { background: var(--warn-bg); color: var(--warn); } .b-info { background: var(--accent-bg); color: var(--accent); }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; font-size: 12px; white-space: nowrap; }
+td.n { font-family: var(--mono); font-size: 12px; text-align: right; white-space: nowrap; }
+tr.win td { background: var(--ok-bg); }
+.model { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin-top: 10px; }
+.model > .cap { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
+.model > .cap b { font-size: 14px; }
+.toks { display: flex; flex-wrap: wrap; gap: 3px; margin: 6px 0 2px; align-items: flex-end; }
+.tok { display: inline-flex; flex-direction: column; align-items: center; border-radius: 4px; padding: 1px 4px; font-family: var(--mono); font-size: 12px; border: 1px solid transparent; }
+.tok .w { white-space: pre; }
+.tok .p { font-size: 10px; color: var(--muted); }
+.tok.diff { border-color: var(--accent); }
+.tok.oov .w { text-decoration: underline wavy var(--ko); }
+.cand { font-size: 12.5px; color: var(--muted); margin-top: 8px; }
+.cand b { color: var(--text); }
+.resum { font-size: 12.5px; margin-top: 6px; color: var(--muted); }
+.resum b { color: var(--text); }
+.legend { font-size: 12.5px; color: var(--muted); }
+.empty { padding: 40px; text-align: center; color: var(--muted); }
+.muted { color: var(--muted); }
+@media (max-width: 760px) {
+  .layout { grid-template-columns: 1fr; }
+  nav { max-height: 220px; border-right: 0; border-bottom: 1px solid var(--line); }
+  main { padding: 12px; }
+  .controls { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Visor de modelos de lengua</h1>
+  <span class="meta" id="meta">Sin datos</span>
+  <div class="controls">
+    <input type="search" id="cerca" placeholder="Buscar frase o id…">
+    <select id="f-bench"><option value="">todos los benchmarks</option></select>
+    <select id="f-par"><option value="">todas las palabras</option></select>
+    <select id="f-err">
+      <option value="">todas las frases</option>
+      <option value="greu">error grave en algún modelo</option>
+      <option value="error">algún error</option>
+      <option value="dif">los modelos no coinciden</option>
+    </select>
+    <label class="btn">Abrir JSON<input type="file" id="fitxer" accept=".json" multiple hidden></label>
+  </div>
+</header>
+<div class="layout">
+  <nav id="llista"></nav>
+  <main id="detall"><div class="empty">
+    Abre uno o varios <span style="font-family:var(--mono)">compara_models_&lt;fecha&gt;_traces_&lt;modelo&gt;.json</span>
+    (selección múltiple o arrastrándolos aquí). Cada fichero es un modelo; se emparejan por benchmark e id.
+  </div></main>
+</div>
+<script>
+const MODELS = [];          // nombres, en el orden en que se abren
+const FRASES = new Map();   // "bench|id" -> {base, per: {model: frase}}
+let SEL = null;
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const num = (x, d = 2) => (x === null || x === undefined) ? "—" : Number(x).toFixed(d).replace(".", ",");
+const GREUS = new Set(["traduida_sense_caldre", "candidat_erroni"]);
+const NOM_CLASSE = {encert: "acierto", traduida_sense_caldre: "traducida sin hacer falta",
+                    sense_traduir: "sin traducir", candidat_erroni: "candidato erróneo"};
+
+function afig(d) {
+  const m = d.model || `modelo ${MODELS.length + 1}`;
+  if (!MODELS.includes(m)) MODELS.push(m);
+  for (const f of d.frases || []) {
+    const k = f.benchmark + "|" + f.id;
+    if (!FRASES.has(k)) FRASES.set(k, {base: f, per: {}});
+    FRASES.get(k).per[m] = f;
+  }
+  const crit = d.criteri ? ` · criterio margen ${num(d.criteri.marge, 1)}, ${d.criteri.per_defecte}, λ ${num(d.criteri.lam, 2)}` : "";
+  document.getElementById("meta").textContent = `${MODELS.join(", ")} · ${FRASES.size} frases${crit}`;
+  omplSelects(); pintaLlista();
+}
+
+function omplSelects() {
+  const bs = new Set(), ps = new Set();
+  for (const {base} of FRASES.values()) { bs.add(base.benchmark); base.punts.forEach(p => ps.add(p.paraula.toLowerCase())); }
+  for (const [id, vals] of [["f-bench", bs], ["f-par", ps]]) {
+    const el = document.getElementById(id), act = el.value;
+    el.innerHTML = el.options[0].outerHTML + [...vals].sort().map(v => `<option>${esc(v)}</option>`).join("");
+    el.value = act;
+  }
+}
+
+const avaluat = f => f && f.punts.find(p => p.classe);
+function filtrades() {
+  const q = document.getElementById("cerca").value.toLowerCase(), b = document.getElementById("f-bench").value,
+        par = document.getElementById("f-par").value, err = document.getElementById("f-err").value;
+  return [...FRASES.entries()].filter(([, e]) => {
+    const f = e.base;
+    if (q && !(f.id + " " + f.oriental).toLowerCase().includes(q)) return false;
+    if (b && f.benchmark !== b) return false;
+    if (par && !f.punts.some(p => p.paraula.toLowerCase() === par)) return false;
+    const ps = MODELS.map(m => avaluat(e.per[m])).filter(Boolean);
+    if (err === "greu") return ps.some(p => GREUS.has(p.classe));
+    if (err === "error") return ps.some(p => p.classe !== "encert");
+    if (err === "dif") return MODELS.some(m => e.per[m]) &&
+      new Set(MODELS.filter(m => e.per[m]).map(m => e.per[m].punts.map(p => p.tria).join("|"))).size > 1;
+    return true;
+  });
+}
+
+function badgeClasse(c) {
+  if (!c) return "";
+  const cls = c === "encert" ? "b-ok" : GREUS.has(c) ? "b-ko" : "b-warn";
+  return `<span class="badge ${cls}">${esc(NOM_CLASSE[c] || c)}</span>`;
+}
+
+function pintaLlista() {
+  const f = filtrades(), el = document.getElementById("llista");
+  if (!f.some(([k]) => k === SEL)) SEL = f.length ? f[0][0] : null;
+  el.innerHTML = f.map(([k, e]) => {
+    const marques = MODELS.map(m => { const p = avaluat(e.per[m]); return p ? `<span class="badge ${p.classe === "encert" ? "b-ok" : GREUS.has(p.classe) ? "b-ko" : "b-warn"}" title="${esc(m)}: ${esc(NOM_CLASSE[p.classe])}">${esc(m.replace("kenlm_", "k_"))}</span>` : ""; }).join("");
+    return `<div class="item${k === SEL ? " sel" : ""}" data-k="${esc(k)}"><span class="id">${esc(e.base.benchmark)} · ${esc(e.base.id)}</span> ${marques}<span class="txt">${esc(e.base.oriental)}</span></div>`;
+  }).join("") || `<div class="empty">Ninguna frase con estos filtros.</div>`;
+  el.querySelectorAll(".item").forEach(it => it.onclick = () => { SEL = it.dataset.k; pintaLlista(); });
+  pintaDetall();
+}
+
+// Color de un token según su log P: 0 → transparente; ≤ −12 → rojo intenso.
+const fons = lp => `background: color-mix(in srgb, var(--ko) ${Math.round(Math.min(1, Math.max(0, -lp / 12)) * 55)}%, transparent)`;
+
+// Zona distinta entre dos listas de tokens (prefijo y sufijo comunes por texto).
+function zona(a, b) {
+  let i = 0; while (i < a.length && i < b.length && a[i].t === b[i].t) i++;
+  let j = 0; while (j < a.length - i && j < b.length - i && a[a.length - 1 - j].t === b[b.length - 1 - j].t) j++;
+  return [i, a.length - j];
+}
+const suma = (ts, i0, i1) => ts.slice(i0, i1).reduce((s, t) => s + t.lp, 0);
+
+function pintaTokens(ts, ini, fi, model) {
+  return `<div class="toks">` + ts.map((t, i) => {
+    const tip = `log P = ${num(t.lp, 3)}` + (t.ngram ? ` · ${t.ngram}-grama` : "") + (t.oov ? " · desconocida" : "");
+    return `<span class="tok${i >= ini && i < fi ? " diff" : ""}${t.oov ? " oov" : ""}" style="${fons(t.lp)}" title="${esc(tip)}"><span class="w">${esc(t.t)}</span><span class="p">${num(t.lp, 1)}${t.ngram ? "·" + t.ngram : ""}</span></span>`;
+  }).join("") + `</div>`;
+}
+
+function pintaPunt(p, model) {
+  const cands = Object.entries(p.puntuacions || {});
+  let h = `<div class="model"><div class="cap"><b>${esc(model)}</b>
+    <span>elige <b>${esc(p.tria ?? "—")}</b></span><span class="muted">decide ${esc(p.decidit)}</span>${badgeClasse(p.classe)}</div>`;
+  if (!cands.length) return h + `<div class="resum">Sin puntuaciones del modelo (decide ${esc(p.decidit)}).</div></div>`;
+  const millor = cands.reduce((a, b) => b[1].puntuacio > a[1].puntuacio ? b : a)[0];
+  h += `<div class="tablewrap"><table><tr><th>Candidato</th><th>Frase puntuada</th><th>log P frase</th><th>prior</th><th>n</th><th>puntuación</th><th>Δ al mejor</th></tr>`;
+  for (const [c, v] of cands) {
+    h += `<tr class="${c === millor ? "win" : ""}"><td><b>${esc(c)}</b>${c === p.motor ? ' <span class="badge b-info">motor</span>' : ""}${c.toLowerCase() === p.paraula.toLowerCase() ? ' <span class="badge b-info">catalana</span>' : ""}</td>
+      <td>${esc(v.frase)}</td><td class="n">${num(v.lp)}</td><td class="n">${num(v.prior)}</td><td class="n">${v.n}</td>
+      <td class="n">${num(v.puntuacio)}</td><td class="n">${c === millor ? "" : num(v.puntuacio - p.puntuacions[millor].puntuacio)}</td></tr>`;
+  }
+  h += `</table></div>`;
+  const ref = p.puntuacions[millor];
+  for (const [c, v] of cands) {
+    if (!v.tokens) { h += `<div class="cand"><b>${esc(c)}</b>: este modelo no da probabilidades por token.</div>`; continue; }
+    const altre = c === millor ? cands.find(([x]) => x !== c)?.[1] : ref;
+    const [i0, i1] = altre?.tokens ? zona(v.tokens, altre.tokens) : [0, 0];
+    h += `<div class="cand"><b>${esc(c)}</b> · suma ${num(suma(v.tokens, 0, v.tokens.length))}`;
+    if (altre?.tokens) {
+      const [j0, j1] = zona(altre.tokens, v.tokens);
+      const dz = suma(v.tokens, i0, i1) - suma(altre.tokens, j0, j1);
+      const dr = suma(v.tokens, i1, v.tokens.length) - suma(altre.tokens, j1, altre.tokens.length);
+      h += ` · frente a «${esc(c === millor ? cands.find(([x]) => x !== c)[0] : millor)}»: palabra distinta ${num(dz)}, resto de la frase ${num(dr)}`;
+    }
+    h += ` · prior: ${(v.tokens_prior || []).map(t => `${esc(t.t)} ${num(t.lp, 2)}`).join(" ")}</div>`;
+    h += pintaTokens(v.tokens, i0, i1, model);
+  }
+  return h + `</div>`;
+}
+
+function pintaDetall() {
+  const el = document.getElementById("detall");
+  if (!SEL) { el.innerHTML = `<div class="empty">Sin frases.</div>`; return; }
+  const e = FRASES.get(SEL), f = e.base;
+  const p0 = f.punts.find(p => p.esperat) || {};
+  let h = `<section><h2>${esc(f.benchmark)} · ${esc(f.id)}${f.tipus ? ` <span class="badge b-info">${esc(f.tipus)}</span>` : ""}</h2>
+    <div class="frases"><span class="k">Catalán</span><span>${esc(f.oriental)}</span>
+    <span class="k">Referencia</span><span>${esc(f.referencia)}</span>
+    <span class="k">Motor</span><span>${esc(f.motor)}</span>`;
+  if (p0.esperat) h += `<span class="k">Esperado</span><span><b>${esc(p0.esperat)}</b>${p0.sentit ? ` <span class="muted">(${esc(p0.sentit)})</span>` : ""}</span>`;
+  for (const m of MODELS) if (e.per[m]) h += `<span class="k">${esc(m)}</span><span>${esc(e.per[m].hipotesi)}</span>`;
+  h += `</div></section>`;
+  f.punts.forEach((p, n) => {
+    h += `<section><h2>«${esc(p.paraula)}» <span class="muted">· ${esc(p.tipus)}${p.pos ? " · spaCy " + esc(p.pos) : ""} · candidatos ${p.candidats.map(esc).join(", ")}</span></h2>`;
+    for (const m of MODELS) { const pp = e.per[m]?.punts[n]; if (pp) h += pintaPunt(pp, m); }
+    h += `</section>`;
+  });
+  h += `<p class="legend">Cada token lleva su log P (natural; en KenLM también el orden del n-grama que encontró: 5 = todo el contexto, 1 = solo la palabra). Cuanto más rojo, menos probable. Recuadro = la zona en la que las frases candidatas difieren; «resto de la frase» = cuánto cambia la probabilidad de lo que viene después. Subrayado ondulado = palabra desconocida para el modelo. Puntuación = log P frase − λ · prior.</p>`;
+  el.innerHTML = h;
+}
+
+function llig(files) {
+  for (const file of files) {
+    const r = new FileReader();
+    r.onload = () => { try { afig(JSON.parse(r.result)); } catch (err) { alert(`${file.name}: ${err}`); } };
+    r.readAsText(file);
+  }
+}
+document.getElementById("fitxer").onchange = ev => llig(ev.target.files);
+document.body.addEventListener("dragover", ev => ev.preventDefault());
+document.body.addEventListener("drop", ev => { ev.preventDefault(); llig(ev.dataTransfer.files); });
+for (const id of ["cerca", "f-bench", "f-par", "f-err"]) document.getElementById(id).oninput = pintaLlista;
+</script>
+</body>
+</html>

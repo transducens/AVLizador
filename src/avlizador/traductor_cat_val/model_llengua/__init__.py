@@ -66,7 +66,7 @@ Criteri (`Criteri`); el valor per defecte és el millor de l'avaluació del
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 from ..rules import detokenize
 from .punts import TIPUS_PER_DEFECTE, Punt, base_neutra, carrega_punts, decisio_spacy, detecta, frases_candidates
@@ -88,6 +88,23 @@ class Criteri:
     # l'usuari, 05/11/2026) o "motor" (la tria del motor, normalment la
     # traducció; el criteri d'abans, amb `marge=5.0`).
     per_defecte: str = "catala"
+    # λ per a les col·lisions ("cop"); `None` = el mateix `lam` (11/11/2026:
+    # amb KenLM, el millor λ de les col·lisions no és el dels homògrafs).
+    lam_colisio: float | None = None
+
+
+def criteri_del_punt(punt: Punt, criteri: Criteri) -> Criteri:
+    """El criteri que s'aplica a un punt (amb `lam_colisio` en les col·lisions).
+
+    >>> c = Criteri(lam=0.5, lam_colisio=1.5)
+    >>> criteri_del_punt(Punt(0, "cop", "", "colisio", ["colp", "vegada"], None), c).lam
+    1.5
+    >>> criteri_del_punt(Punt(0, "nou", "", "irresoluble", ["anou", "nou"], "anou"), c).lam
+    0.5
+    """
+    if criteri.lam_colisio is not None and punt.tipus == "colisio":
+        return replace(criteri, lam=criteri.lam_colisio)
+    return criteri
 
 
 def _valor(d: dict, criteri: Criteri, normalitza: bool = True) -> float:
@@ -162,6 +179,7 @@ def tria(punt: Punt, criteri: Criteri) -> str | None:
     >>> tria(p, Criteri(model_irresolubles=False)), p.decidit
     ('hamaca', 'motor')
     """
+    criteri = criteri_del_punt(punt, criteri)
     if punt.tipus == "irresoluble" and criteri.spacy_irresolubles:
         decisio = decisio_spacy(punt)
         if decisio is not None:
