@@ -430,7 +430,7 @@ ENTRENAMIENTO (una vez)
     → spaCy: lemas; las palabras que concuerdan → su categoría
     → rasgos: 2 palabras a cada lado (con posición), bigramas de al lado,
       palabras a ±8
-    → cuántas veces sale cada rasgo con colp y con vegada → nb.json (~260 KB)
+    → cuántas veces sale cada rasgo con colp y con vegada → nb.json (~420 KB)
     (10 % de las frases apartado para medir: 83 % de acierto equilibrado)
 
 USO (cada «cop/cops» del texto catalán)
@@ -500,7 +500,7 @@ real del manual, sobre las trazas de `compara_models_20261111_1232`:
 - Muestra pequeña: falta validar en más texto real (gplsi, BOE, usos del
   corpus con KenLM).
 - En el sistema necesitaría spaCy (ya está en el traductor) y una tabla de
-  ~260 KB.
+  ~420 KB.
 
 ### 4.12 Ejecución real: base, C1 y C2 (11/11, `compara_models_20261111_1430`)
 Modelos: FLOR, `kenlm_val_net_dogv` (base), `kenlm_val_net_dogv_bi` (C2) y
@@ -561,7 +561,7 @@ criterio para «cop» = vez es «vegada». Por eso:
     golpes con KenLM seguro de lo contrario por más de 2 puntos: el
     clasificador no llega a intervenir.
 - Coste: el de KenLM (0,02-0,1 ms por frase, 74 MB) más el clasificador
-  (~260 KB). Sin torch.
+  (~420 KB). Sin torch.
 
 ### 4.13 Veto del clasificador y revisión de «manca» (11/11)
 **Veto (simulado).** Idea: dejar que el clasificador contradiga a KenLM
@@ -642,9 +642,56 @@ por defecto.
   - El clasificador del paquete da la misma elección que la ejecución
     `1430` en las 33 colisiones de los homógrafos (con el `nb.json` local
     y las frases de las trazas).
-- **Falta**: reproducir las cifras en Abaco con
+- **Reproducido en Abaco (12/11)** con el commit `733a8e2`:
   `avlizador avalua --model kenlm --benchmarks homografs homografs_v2 manual 151 boe_estricte gplsi`.
-  Debe dar exactas 227 / 110 / 229 / 145 / 1.887 / 1.553.
+  Da exactamente las cifras del comparador, con 0 errores:
+
+  | Benchmark | Exactas | BLEU | chrF | TER | WER |
+  |---|---|---|---|---|---|
+  | Homógrafos v1 + 151 (253) | 227 (89,7 %) | 96,57 | 98,20 | 0,62 | 0,62 |
+  | Homógrafos v2 (160) | 110 (68,8 %) | 87,97 | 93,55 | 4,32 | 4,32 |
+  | Manual mezcla (458) | 229 (50,0 %) | 90,94 | 96,33 | 5,59 | 5,97 |
+  | 151 (154) | 145 (94,2 %) | 99,23 | 99,59 | 0,30 | 0,30 |
+  | BOE estricto (2.000) | 1.887 (94,3 %) | 99,03 | 99,65 | 0,30 | 0,57 |
+  | gplsi (1.958) | 1.553 (79,3 %) | 93,66 | 97,05 | 2,73 | 2,75 |
+
+  Frente a FLOR (sistema 1.2.0): v1 +8, v2 +15, manual +1, 151 −1, BOE
+  igual y gplsi −1. El manual iguala las métricas de la release 1.2.0
+  (TER 5,59; WER 5,98 → 5,97).
+
+### 4.15 Clasificador de «cop» sin la AVL (12/11)
+Para distribuir KenLM hay que distribuir el `nb.json`, que se entrenó
+también con frases de la AVL. El aviso legal de la AVL prohíbe reproducir
+sus textos sin autorización (por eso quedó fuera de Hugging Face). El
+`nb.json` solo guarda recuentos de lemas, pero es un derivado. El KenLM
+(`valencia_net_dogv`) y su tabla de frecuencias no llevan AVL.
+
+Se ha reentrenado con `sentit_cop.py entrena --fonts net dogv` (opción
+nueva; por defecto, las tres fuentes).
+
+- **Reproducción**: con las tres fuentes (`nb_amb_avl.json`) sale idéntico
+  byte a byte al `nb.json` en uso. El código movido al paquete entrena
+  igual.
+- **Lo que aporta la AVL**: 32 frases con colp de 3.123 (1 %) y 626 con
+  vegada de 137.765 (0,5 %).
+- **Frases apartadas (dev)**: con AVL, colp 223/329 y vegada 4.342/4.410
+  (0,831); sin AVL, 221/327 y 4.382/4.449 (0,830). Los rasgos más fuertes
+  son los mismos.
+- **Colisiones de los benchmarks** (trazas de la `1430`: homógrafos 33,
+  manual 19, gplsi 16). Con la regla del sistema («KenLM; si gana por < 2,
+  clasificador») el resultado es **idéntico**: homógrafos 33/33, texto real
+  25/35, los mismos fallos (todos de gplsi, que usa «colp» = «vez» en su
+  referencia).
+  - De los 9 casos en la zona de desempate, ninguno cambia de decisión. El
+    voto se mueve poco (mediana 0,52 de log-odds) y nunca cambia de signo.
+  - Solo cambia de signo un caso fuera de esa zona (BM-AVL-141, −1,57 →
+    +0,52), donde KenLM gana por 7,2 y el clasificador no se consulta.
+  - El clasificador solo pierde un acierto (25 → 24 en texto real), pero
+    no se usa así en el sistema.
+
+**Conclusión**: el clasificador sin AVL da las mismas decisiones en el
+sistema. Se puede distribuir `nb_sense_avl.json` en lugar del `nb.json`
+actual.
 
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
@@ -741,7 +788,7 @@ USO  «El boxejador va rebre molts cops a la cara.»
 | Qué mira | todas las palabras a ±8, sin orden | 4 palabras a cada lado, en orden |
 | Cuándo actúa | solo en «cop/cops» y solo si KenLM duda | en todas las palabras ambiguas, siempre |
 | Qué aprende | qué palabras van con cada sentido | secuencias valencianas |
-| Coste | ~260 KB + spaCy (ya está) | otro KenLM (~77 MB) |
+| Coste | ~420 KB + spaCy (ya está) | otro KenLM (~77 MB) |
 
 Son compatibles: si C2 mejora la base, C1 puede desempatar encima.
 
@@ -776,4 +823,5 @@ Son compatibles: si C2 mejora la base, C1 puede desempatar encima.
 | 11/11 | Veto del clasificador: descartado | En los 2 «cop» que fallan el clasificador tampoco está seguro (sección 4.13). |
 | 11/11 | «manca»: incoherencia del léxico (E0247 manca→falta frente a E0248 manques→carències) | Los 2 graves de C1 vienen de ahí (sección 4.13). Propuesto al usuario: E0247 → «carència» (compañero) y aceptar «falta» en HG2-028. Pendiente. |
 | 11/11 | **Se integra KenLM + C1 en el paquete como opción complementaria** (FLOR sigue por defecto) | Decisión del usuario. Diseño: `--model kenlm`, ficheros en `AVLIZADOR_KENLM_DIR`, extra `[kenlm]`, clasificador intercambiable. Se hace el 12/11 en la rama `kenlm`. |
-| 12/11 | KenLM + C1 integrado en el paquete (`--model kenlm`; FLOR por defecto) | Sección 4.14. Tests en verde y clasificador idéntico al de la ejecución `1430`. Falta reproducir las cifras en Abaco. |
+| 12/11 | KenLM + C1 integrado en el paquete (`--model kenlm`; FLOR por defecto) | Sección 4.14. Tests en verde y clasificador idéntico al de la ejecución `1430`. **Reproducido en Abaco**: 227 / 110 / 229 / 145 / 1.887 / 1.553, 0 errores. |
+| 12/11 | Clasificador de «cop» reentrenado sin la AVL (para poder distribuirlo) | Sección 4.15. Mismas decisiones del sistema en las 68 colisiones; dev 0,830 frente a 0,831. Propuesto sustituir el `nb.json` (pendiente del usuario). |

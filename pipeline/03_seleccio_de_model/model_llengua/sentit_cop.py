@@ -10,7 +10,8 @@ valenciano real, qué palabras acompañan a cada sentido ("destral", "cara",
 "estat" → colp; "tres", "cada", "a" → vegada).
 
 Datos: frases valencianas (MaCoCu limpio = `valencia_net`, DOGV y AVL sin la
-evaluación) con "colp(s)" o "vegada(es)". La palabra se sustituye por un
+evaluación) con "colp(s)" o "vegada(es)"; `--fonts net dogv` deja fuera la
+AVL, que no se puede redistribuir. La palabra se sustituye por un
 hueco y la etiqueta es el sentido. Las palabras de alrededor se pasan a
 LEMA con spaCy (una→un, dues→dos, última→últim): en valenciano concuerdan
 con el sentido ("una vegada" / "un colp"), pero en la entrada catalana
@@ -96,24 +97,30 @@ class Lematitzador(_sentit.Lematitzador):
 # Datos
 # --------------------------------------------------------------------------
 
-def frases_font():
-    """(font, tokens normalizados) de net, DOGV y AVL."""
+FONTS = ("net", "dogv", "avl")
+
+
+def frases_font(fonts=FONTS):
+    """(font, tokens normalizados) de net, DOGV y AVL (las de `fonts`)."""
     from termes_ambigus import frases_net
 
-    for text in frases_net():
-        yield "net", normalitza(text).split()
+    if "net" in fonts:
+        for text in frases_net():
+            yield "net", normalitza(text).split()
     for font, path in (("dogv", DOGV), ("avl", AVL)):
+        if font not in fonts:
+            continue
         with path.open(encoding="utf-8") as fh:
             for linia in fh:
                 yield font, linia.split()
 
 
-def recull(max_vegada: int, llavor: int) -> list[dict]:
+def recull(max_vegada: int, llavor: int, fonts=FONTS) -> list[dict]:
     from termes_ambigus import Avaluacio
 
     aval = Avaluacio()
     colp, vegada, comptes = [], [], Counter()
-    for font, toks in frases_font():
+    for font, toks in frases_font(fonts):
         pos = [i for i, t in enumerate(toks) if t in SENTIT]
         if not pos:
             continue
@@ -125,6 +132,7 @@ def recull(max_vegada: int, llavor: int) -> list[dict]:
             comptes["semblant_avaluacio"] += 1
             continue
         ex = {"font": font, "toks": toks, "pos": pos, "classe": sentits.pop()}
+        comptes[f"{ex['classe']}_{font}"] += 1
         (colp if ex["classe"] == "colp" else vegada).append(ex)
     random.Random(llavor).shuffle(vegada)
     comptes.update({"colp": len(colp), "vegada_total": len(vegada)})
@@ -140,7 +148,7 @@ def es_dev(toks: list[str]) -> bool:
 
 def entrena(args) -> None:
     EIXIDA.mkdir(parents=True, exist_ok=True)
-    exemples = recull(args.max_vegada, args.llavor)
+    exemples = recull(args.max_vegada, args.llavor, args.fonts)
     lem = Lematitzador(args.genere)
     lemes = lem.lemes([[HUECO if i in e["pos"] else t for i, t in enumerate(e["toks"])] for e in exemples])
     nb = NaiveBayes(args.alpha)
@@ -265,6 +273,8 @@ def main(argv: list[str] | None = None) -> None:
     e.add_argument("--finestra", type=int, default=8)
     e.add_argument("--alpha", type=float, default=0.5)
     e.add_argument("--llavor", type=int, default=11)
+    e.add_argument("--fonts", nargs="+", choices=FONTS, default=list(FONTS),
+                   help="fuentes del entrenamiento (12/11/2026: sin la AVL para poder distribuirlo)")
     for x in (e, a := sub.add_parser("avalua")):
         x.add_argument("--nom", default="nb", help="nombre del modelo (dades/macocu/kenlm/sentit_cop/<nom>.json)")
         x.add_argument("--genere", action="store_true", help="no ocultar las palabras con género")
