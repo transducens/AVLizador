@@ -32,6 +32,13 @@ queda sol) i "l'" (que s'apostrofa cap a la dreta sobre el verb o mot
 seguent, o es desfà en "el" si el mot comença en consonant). Vore
 `clitic_lhi.py` per a l'explicació completa.
 
+**`concordanca_genere_sn.py` (10/11/2026)**: quan una paraula canvia de
+gènere en la traducció català->valencià (entrades `problema: "cambio_genero"`
+del lèxic), corregix el gènere de tot el sintagma nominal al qual pertany,
+usant spaCy per a identificar els dependents (det, amod, nmod...) i el
+fitxer `catalan_sin_top_loc_prefijos_participios.txt` per a trobar la forma
+del gènere nou dels adjectius i noms. Vore `concordanca_genere_sn.py`.
+
 **`preposicions_locucions.py` RETIRADA del pipeline (14/10/2026)**: vore
 `rules/val_cat/engine.py` per l'explicació completa (la regla "a"/"en"
 no generalitzava i la regla general C1 mesurada contra els dos
@@ -54,6 +61,7 @@ from .conjugacions_dict import ConjugacionsDictInversRule
 from .demostratius import DemostratiusInversRule
 from .incoatius import IncoatiusInversRule
 from .clitic_lhi import CliticLhiRule
+from .concordanca_genere_sn import ConcordancaGenereSnRule
 from .lexic import LexicInversRule
 from .numerals import NumeralsInversRule
 from .per_a_infinitiu import PerAInfinitiuInversRule
@@ -78,6 +86,7 @@ class RuleEngineInvers:
         self._regles = [
             LexicInversRule(),
             CliticLhiRule(),
+            ConcordancaGenereSnRule(),
             ConjugacionsDictInversRule(),
             PossessiusInversRule(),
             NumeralsInversRule(),

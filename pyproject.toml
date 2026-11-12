@@ -54,7 +54,7 @@ Repository = "https://github.com/transducens/AVLizador"
 where = ["src"]
 
 [tool.setuptools.package-data]
-"avlizador.traductor_cat_val" = ["data/*.json"]
+"avlizador.traductor_cat_val" = ["data/*.json", "data/*.txt"]
 "avlizador.web" = ["plantilles/*.html", "static/*", "textos/*.json"]
 
 [tool.pytest.ini_options]

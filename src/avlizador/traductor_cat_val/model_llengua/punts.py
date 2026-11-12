@@ -220,6 +220,20 @@ def _genere_original(tok: Token, paraula: str) -> str:
     return _GENERE_CURT.get(tok.gender, "") or genere_de(paraula.lower())
 
 
+_CONCORDANCA = None
+
+
+def _concordanca():
+    """La regla de concordança de gènere (una sola instància; el fitxer
+    morfològic el compartix amb la del motor)."""
+    global _CONCORDANCA
+    if _CONCORDANCA is None:
+        from ..rules.cat_val.concordanca_genere_sn import ConcordancaGenereSnRule
+
+        _CONCORDANCA = ConcordancaGenereSnRule()
+    return _CONCORDANCA
+
+
 def aplica_candidat(base: list[Token], punt: Punt, candidat: str) -> list[Token]:
     """Còpia de `base` (vore `base_neutra`) amb `candidat` al lloc del punt.
     Si és la paraula catalana mateixa, no es toca res més. Si no, i el
@@ -237,6 +251,14 @@ def aplica_candidat(base: list[Token], punt: Punt, candidat: str) -> list[Token]
     ("Es va estirar a l'hamaca.", 'Es va estirar a la gandula.')
     >>> prova("Arribarem a les nou del matí.", "nou")
     'Arribarem a les nou del matí.'
+
+    Les paraules de darrere també concorden (11/11/2026), però no un
+    participi amb subjecte propi:
+
+    >>> prova("La deu de muntanya és freda i cristal·lina.", "brollador")
+    'El brollador de muntanya és fred i cristal·lí.'
+    >>> prova("Un cop acabat el partit, marxem.", "vegada")
+    'Una vegada acabat el partit, marxem.'
     """
     tt = copy.deepcopy(base)
     tok = tt[punt.index]
@@ -244,9 +266,17 @@ def aplica_candidat(base: list[Token], punt: Punt, candidat: str) -> list[Token]
     tok.is_translated = True
     if punt.prefix or candidat.lower() == punt.paraula.lower():
         return tt
-    nou, original = genere_de(candidat.lower()), _genere_original(tok, punt.paraula)
+    # Gènere del candidat: el del diccionari si és una forma amb
+    # `cambio_genero` ("brollador"); si no, el que endevina spaCy.
+    regla = _concordanca()
+    nou = regla.genere_nou(candidat) or genere_de(candidat.lower())
+    original = _genere_original(tok, punt.paraula)
     if nou and nou != original:
         corregeix_determinant_abans(tt, punt.index, nou)
+        # I la resta de paraules que concorden amb el nucli, també les de
+        # DARRERE (11/11/2026): abans "La deu de muntanya és freda" ->
+        # "El brollador de muntanya és freda" (benchmark_genero #67).
+        regla.concorda_dependents(tt, punt.index, nou)
     corregeix_contraccio_al_abans(tt, punt.index)
     corregeix_article_abans(tt, punt.index)
     corregeix_elisio_de_abans(tt, punt.index)
@@ -315,7 +345,10 @@ def variants_concordanca(base: list[Token], punt: Punt, candidat: str) -> list[l
     >>> text = "Molts cops no sabem què fer."
     >>> p = detecta(motor.tradueix_tokens(text), carrega_punts())[0]
     >>> sorted(detokenize(v) for v in variants_concordanca(base_neutra(motor, text, [p]), p, "vegades"))
-    ['Moltes vegades no sabem què fer.', 'Molts vegades no sabem què fer.']
+    ['Moltes vegades no sabem què fer.']
+
+    (Des del 11/11/2026 `aplica_candidat` ja posa "Moltes" amb la regla de
+    concordança, i la variant "Molts vegades" no es genera.)
     """
     primera = aplica_candidat(base, punt, candidat)
     variants = [primera]

@@ -11,8 +11,8 @@
   <a class="saltar" href="#contingut">{{ t.saltar }}</a>
   <header class="capcalera">
     <div class="amplada fila-marca">
-      <a class="marca" href="/">
-        <span class="logo" aria-hidden="true">AV</span>
+      <a class="marca" href="/" {% if pagina == "inici" %}aria-current="page"{% endif %}>
+        <span class="logo" aria-hidden="true">TT</span>
         <span class="marca-text">
           <span class="nom">{{ t.titol }}</span>
           <span class="subtitol">{{ t.subtitol }}</span>
@@ -27,14 +27,25 @@
         </ul>
       </nav>
     </div>
+    {# Menú de dos nivells sense desplegables (fase 7): la secció activa
+       porta aria-current="true" i, dins de "Adaptador dialectal", la
+       segona fila marca la pàgina amb aria-current="page". #}
     <nav class="principal" aria-label="{{ t.nav_principal }}">
       <ul class="amplada">
-        <li><a href="/" {% if pagina == "traduir" %}aria-current="page"{% endif %}>{{ t.nav_traduir }}</a></li>
-        <li><a href="/gd" {% if pagina == "gd" %}aria-current="page"{% endif %}>{{ t.nav_gd }}</a></li>
-        <li><a href="/sobre" {% if pagina == "sobre" %}aria-current="page"{% endif %}>{{ t.nav_sobre }}</a></li>
+        <li><a href="/idiomes" {% if seccio == "idiomes" %}aria-current="page"{% endif %}>{{ t.nav_idiomes }}</a></li>
+        <li><a href="/dialectes/adaptador" {% if seccio == "dialectes" %}aria-current="true"{% endif %}>{{ t.nav_dialectes }}</a></li>
+        <li><a href="/sobre" {% if seccio == "sobre" %}aria-current="page"{% endif %}>{{ t.nav_sobre }}</a></li>
       </ul>
     </nav>
   </header>
+  {% if seccio == "dialectes" %}
+  <nav class="subnav" aria-label="{{ t.nav_seccio_dialectes }}">
+    <ul class="amplada">
+      <li><a href="/dialectes/adaptador" {% if pagina == "adaptador" %}aria-current="page"{% endif %}>{{ t.nav_adaptador }}</a></li>
+      <li><a href="/dialectes/gd" {% if pagina == "gd" %}aria-current="page"{% endif %}>{{ t.nav_gd }}</a></li>
+    </ul>
+  </nav>
+  {% endif %}
   <main id="contingut" class="amplada" tabindex="-1">
     {% block contingut %}{% endblock %}
   </main>

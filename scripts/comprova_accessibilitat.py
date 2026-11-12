@@ -1,4 +1,4 @@
-"""Comprovació d'accessibilitat de la pàgina de traduir (fase 2 de
+"""Comprovació d'accessibilitat de la interfície (fases 2, 3 i 7 de
 `documentacio/hoja_de_ruta_interfaz_docker.md`): axe-core (WCAG 2.0-2.2
 A/AA + bones pràctiques) en valencià i castellà, mode clar i fosc;
 recorregut amb teclat, focus visible, anuncis, botó "Copiar", 320 px
@@ -57,16 +57,21 @@ with sync_playwright() as p:
             ctx = nav.new_context(bypass_csp=True, color_scheme=esquema, viewport={"width": 1280, "height": 900})
             page = ctx.new_page()
             page.goto(f"{URL}/?idioma={idioma}")
-            axe(page, f"{idioma}, {esquema}")
-            page.screenshot(path=str(OUT / f"inici_{idioma}_{esquema}.png"), full_page=True)
+            axe(page, f"portada, {idioma}, {esquema}")
+            page.screenshot(path=str(OUT / f"portada_{idioma}_{esquema}.png"), full_page=True)
+            page.goto(f"{URL}/idiomes?idioma={idioma}")
+            axe(page, f"idiomes, {idioma}, {esquema}")
+            page.goto(f"{URL}/dialectes/adaptador?idioma={idioma}")
+            axe(page, f"adaptador, {idioma}, {esquema}")
+            page.screenshot(path=str(OUT / f"adaptador_{idioma}_{esquema}.png"), full_page=True)
             ctx.close()
 
     # Recorregut amb teclat i traducció amb JavaScript
     ctx = nav.new_context(bypass_csp=True, viewport={"width": 1280, "height": 900}, permissions=["clipboard-read", "clipboard-write"])
     page = ctx.new_page()
-    page.goto(URL + "/?idioma=ca-valencia")
+    page.goto(URL + "/dialectes/adaptador?idioma=ca-valencia")
     ordre = []
-    for _ in range(16):
+    for _ in range(20):
         page.keyboard.press("Tab")
         ordre.append(page.evaluate("() => { const e = document.activeElement; "
                                    "return e.id || e.textContent.trim().slice(0, 20) || e.tagName; }"))
@@ -86,11 +91,11 @@ with sync_playwright() as p:
     page.wait_for_timeout(200)
     comprova(page.input_value("#traduccio") == "Este xic necessita ajuda.\nLa seua faena és important.",
              "traducció: " + repr(page.input_value("#traduccio")))
-    comprova(page.inner_text("#estat") == "Traducció feta.", "anunci: " + page.inner_text("#estat"))
+    comprova(page.inner_text("#estat") == "Adaptació feta.", "anunci: " + page.inner_text("#estat"))
     comprova(page.evaluate("() => document.activeElement.id") == "boto-traduir", "el focus no salta")
     page.click("#copiar")
     page.wait_for_timeout(200)
-    comprova(page.inner_text("#estat") == "Traducció copiada.", "copiar: " + page.inner_text("#estat"))
+    comprova(page.inner_text("#estat") == "Text adaptat copiat.", "copiar: " + page.inner_text("#estat"))
     comprova(page.evaluate("() => navigator.clipboard.readText()").replace("\r\n", "\n") == page.input_value("#traduccio"),
              "el porta-retalls té la traducció")
     axe(page, "després de traduir")
@@ -107,7 +112,7 @@ with sync_playwright() as p:
         for idioma in ("ca-valencia", "es"):
             ctx = nav.new_context(bypass_csp=True, color_scheme=esquema, viewport={"width": 1280, "height": 900})
             page = ctx.new_page()
-            page.goto(f"{URL}/gd?idioma={idioma}")
+            page.goto(f"{URL}/dialectes/gd?idioma={idioma}")
             axe(page, f"GD buida, {idioma}, {esquema}")
             page.fill("#text", TEXT_GD)
             page.click("button[type=submit]")
@@ -119,7 +124,7 @@ with sync_playwright() as p:
             ctx.close()
     ctx = nav.new_context(bypass_csp=True)
     page = ctx.new_page()
-    page.goto(URL + "/gd?idioma=ca-valencia")
+    page.goto(URL + "/dialectes/gd?idioma=ca-valencia")
     page.fill("#text", TEXT_GD)
     page.click("button[type=submit]")
     page.wait_for_selector("#resultat")
@@ -138,24 +143,24 @@ with sync_playwright() as p:
 
     # 320 px d'amplària (equivalent al 400 % de zoom en 1280 px): sense desplaçament horitzontal
     for amplaria in (320, 640):
-        for ruta in ("/", "/gd", "/sobre"):
+        for ruta in ("/", "/idiomes", "/dialectes/adaptador", "/dialectes/gd", "/sobre"):
             ctx = nav.new_context(bypass_csp=True, viewport={"width": amplaria, "height": 800})
             page = ctx.new_page()
             page.goto(URL + ruta)
-            if ruta == "/gd":
+            if ruta == "/dialectes/gd":
                 page.fill("#text", TEXT_GD)
                 page.click("button[type=submit]")
                 page.wait_for_selector("#resultat")
             sw = page.evaluate("() => document.documentElement.scrollWidth")
             comprova(sw <= amplaria, f"{ruta} a {amplaria} px: scrollWidth {sw}")
-            nom = ruta.strip("/") or "inici"
+            nom = ruta.strip("/").replace("/", "_") or "portada"
             page.screenshot(path=str(OUT / f"estreta_{nom}_{amplaria}.png"), full_page=True)
             ctx.close()
 
     # Sense JavaScript: el formulari funciona igualment
     ctx = nav.new_context(bypass_csp=True, java_script_enabled=False)
     page = ctx.new_page()
-    page.goto(URL + "/")
+    page.goto(URL + "/dialectes/adaptador")
     comprova(not page.is_visible("#copiar"), "sense JS, el botó «Copiar» no es mostra")
     page.fill("#text", "Aquest noi necessita ajuda.")
     page.click("#boto-traduir")
