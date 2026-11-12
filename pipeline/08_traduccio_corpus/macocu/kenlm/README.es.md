@@ -143,6 +143,23 @@ Uso previsto de los dos: gana el
 candidato **más probable** (con el KenLM catalán, el **menos** probable;
 y la diferencia valenciano − catalán).
 
+## KenLM de lemas (12/11/2026, experimento)
+
+Propuesta del supervisor: un KenLM entrenado con el texto en **lemas**,
+para que las formas raras (plurales como «panotxes», «rentadores») sumen
+los datos de su lema. `lematitza_text.py` (+ `lematitza_text.sh`, 16
+procesos) pasa `valencia_net_dogv.txt` a lemas con
+`avlizador.traductor_cat_val.model_llengua.lemes.LematitzadorLM`, la misma
+función que usa el comparador al puntuar. Se quedan en su forma las
+palabras candidatas, las que concuerdan en género (DET, NUM, ADJ, PRON) y
+la puntuación. Luego se entrena con este mismo `entrena_kenlm.sh`
+(`TEXT=dades/macocu/kenlm/valencia_net_dogv_lemes.txt
+NOM=valencia_net_dogv_lemes`).
+
+Todo (lematizar, entrenar, comparar y evaluar el sistema actual) se lanza
+con `pipeline/03_seleccio_de_model/model_llengua/prova_lemes.sh`.
+Resultados en `documentacio/resultats_model_llengua_kenlm.md`, sección 4.16.
+
 ## Siguiente (cuando esté el modelo)
 
 Medirlo como a FLOR: las frases candidatas de los homógrafos v1 (253) y

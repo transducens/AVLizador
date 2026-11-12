@@ -667,7 +667,8 @@ sus textos sin autorización (por eso quedó fuera de Hugging Face). El
 (`valencia_net_dogv`) y su tabla de frecuencias no llevan AVL.
 
 Se ha reentrenado con `sentit_cop.py entrena --fonts net dogv` (opción
-nueva; por defecto, las tres fuentes).
+nueva; desde la decisión del usuario del 12/11, es lo que hace por defecto,
+y `--fonts net dogv avl` vuelve a meter la AVL).
 
 - **Reproducción**: con las tres fuentes (`nb_amb_avl.json`) sale idéntico
   byte a byte al `nb.json` en uso. El código movido al paquete entrena
@@ -692,6 +693,71 @@ nueva; por defecto, las tres fuentes).
 **Conclusión**: el clasificador sin AVL da las mismas decisiones en el
 sistema. Se puede distribuir `nb_sense_avl.json` en lugar del `nb.json`
 actual.
+
+**Decisión del usuario (12/11)**: se quita la AVL. `nb.json` es ahora el
+de sin AVL (el anterior, en `nb_amb_avl.json`), en local y en Abaco, y
+`sentit_cop.py` entrena sin la AVL por defecto (commit `9b7c2fc`).
+
+### 4.16 KenLM de lemas (12/11, propuesta del supervisor; lanzado en Abaco)
+Idea: entrenar un KenLM con el texto pasado a **lemas**, para ver si así
+resuelve los casos en que KenLM no se decide. Tras la fusión de `main`
+(concordancia de género), lo que queda en los homógrafos (257 decisiones)
+son sobre todo palabras **sin traducir** (`calces`, `recuita/es`,
+`rentadora/es`, `gandules`, `nou/nous`, `manques`, `panotxes`,
+`fartaneres`): KenLM no ve una candidata lo bastante mejor.
+
+**A favor**: las formas raras (sobre todo en plural) suman los datos de su
+lema y los contextos también («va pegar» / «pegà» → «pegar»); es barato
+(lematizar ~1,4 M frases + entrenar) y se mide igual que lo demás.
+
+**En contra**: con lemas se pierde la concordancia («les nous» / «els
+nous», «una vegada» / «un colp»); spaCy es catalán y lematiza mal algunas
+formas valencianas («juguen» → «juguar»), aunque igual al entrenar y al
+puntuar; la proporción colp/vegada no cambia (eso lo arreglan el prior y
+λ); la ventana del n-grama sigue siendo de 4 palabras; «manca» y las
+referencias de gplsi no son del modelo.
+
+**Cómo se lematiza** (`src/avlizador/traductor_cat_val/model_llengua/lemes.py`,
+`LematitzadorLM`; la MISMA función para el texto de entrenamiento y para las
+frases que puntúa el comparador):
+- se quedan en su forma las palabras candidatas de los puntos ambiguos (las
+  catalanas y sus traducciones: «cop», «colp», «vegades», «nous»,
+  «anous»...): son lo que se compara, y así el prior (frecuencia del
+  candidato) es el de siempre;
+- se quedan en su forma las palabras con género que concuerdan (DET, NUM,
+  ADJ, PRON con `Gender`), para no perder «les nous» / «els nous»;
+- la puntuación y los números, igual; el resto, al lema de spaCy.
+- Prueba local con 5.000 frases valencianas de MaCoCu: cambia el 22 % de
+  los tokens; 240 frases/s por proceso; la línea de salida ya es la que lee
+  KenLM (`normalitza` no la cambia); en paralelo sale idéntico que en serie.
+  Coste al puntuar: ~4 ms por frase candidata (spaCy), frente a 0,065 ms
+  del KenLM de formas (FLOR: 833 ms).
+
+**Modelos nuevos en el comparador**: `kenlm_lemes` (solo),
+`kenlm_lemes_c1` (+ clasificador de «cop») y `kenlm_mescla_c1` (log P del
+KenLM de formas + log P del de lemas, + clasificador). Los modelos `*_c1`
+se comparan ahora con el criterio del sistema KenLM (`CRITERI_KENLM`) y no
+con `Criteri()`.
+
+**Lanzado todo con `pipeline/03_seleccio_de_model/model_llengua/prova_lemes.sh`**
+(en el nodo de login; encola los jobs con dependencias):
+1. `avalua_sistema.sh`: la foto del sistema tras la fusión, `avlizador
+   avalua --motor --model flor kenlm` en homógrafos v1/v2, manual, 151, BOE
+   estricto y gplsi (la concordancia de género de `main` y E0248 cambian el
+   motor: las cifras de la 4.14 ya no valen).
+2. `lematitza_text.sh`: `valencia_net_dogv.txt` → `valencia_net_dogv_lemes.txt`.
+3. `entrena_kenlm.sh`: KenLM de lemas, orden 5, poda de singletons, y su
+   tabla de frecuencias.
+4. `compara_models.sh`: motor, `kenlm_val_net_dogv_c1` (el sistema),
+   `kenlm_lemes`, `kenlm_lemes_c1` y `kenlm_mescla_c1` en los mismos
+   benchmarks; rejilla de márgenes 1/2/3/5, λ 0,5-2, λ de colisiones
+   0,5/0,75/1, desempate 2; con el detalle de cada decisión.
+
+**Criterio para darlo por bueno**: más aciertos que el sistema actual en
+las 257 decisiones de los homógrafos con ≤ 2 errores graves, sin perder en
+el manual ni en las regresiones (151, BOE estricto, gplsi).
+
+Resultados: pendientes.
 
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
@@ -825,3 +891,6 @@ Son compatibles: si C2 mejora la base, C1 puede desempatar encima.
 | 11/11 | **Se integra KenLM + C1 en el paquete como opción complementaria** (FLOR sigue por defecto) | Decisión del usuario. Diseño: `--model kenlm`, ficheros en `AVLIZADOR_KENLM_DIR`, extra `[kenlm]`, clasificador intercambiable. Se hace el 12/11 en la rama `kenlm`. |
 | 12/11 | KenLM + C1 integrado en el paquete (`--model kenlm`; FLOR por defecto) | Sección 4.14. Tests en verde y clasificador idéntico al de la ejecución `1430`. **Reproducido en Abaco**: 227 / 110 / 229 / 145 / 1.887 / 1.553, 0 errores. |
 | 12/11 | Clasificador de «cop» reentrenado sin la AVL (para poder distribuirlo) | Sección 4.15. Mismas decisiones del sistema en las 68 colisiones; dev 0,830 frente a 0,831. Propuesto sustituir el `nb.json` (pendiente del usuario). |
+| 12/11 | **Se quita la AVL del clasificador** (`nb.json` = sin AVL; `sentit_cop.py` sin AVL por defecto) | Decisión del usuario. Mismas decisiones del sistema (sección 4.15). |
+| 12/11 | Fusión de `main` en `kenlm` (interfaz Transducens, concordancia de género) y PR #19/#20 a `main` | Sin conflictos; 107/108 tests (el que falla ya fallaba en `main`: texto de la portada). Hay que volver a medir el sistema. |
+| 12/11 | Prueba: KenLM de lemas (solo, + C1, mezcla formas + lemas) y foto del sistema actual, lanzado con `prova_lemes.sh` | Propuesta del supervisor (sección 4.16). Pendiente de resultados. |
