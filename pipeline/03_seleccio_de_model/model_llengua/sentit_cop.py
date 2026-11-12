@@ -9,9 +9,11 @@ izquierda: no sabe de qué trata la frase. Aquí se aprende, con texto
 valenciano real, qué palabras acompañan a cada sentido ("destral", "cara",
 "estat" → colp; "tres", "cada", "a" → vegada).
 
-Datos: frases valencianas (MaCoCu limpio = `valencia_net`, DOGV y AVL sin la
-evaluación) con "colp(s)" o "vegada(es)"; `--fonts net dogv` deja fuera la
-AVL, que no se puede redistribuir. La palabra se sustituye por un
+Datos: frases valencianas (MaCoCu limpio = `valencia_net` y DOGV, sin la
+evaluación) con "colp(s)" o "vegada(es)". Desde el 12/11/2026 la AVL queda
+fuera por defecto: su aviso legal no deja redistribuirla y el `nb.json` va
+con el paquete (mismas decisiones del sistema; sección 4.15 del documento
+vivo). `--fonts net dogv avl` la vuelve a meter. La palabra se sustituye por un
 hueco y la etiqueta es el sentido. Las palabras de alrededor se pasan a
 LEMA con spaCy (una→un, dues→dos, última→últim): en valenciano concuerdan
 con el sentido ("una vegada" / "un colp"), pero en la entrada catalana
@@ -98,9 +100,11 @@ class Lematitzador(_sentit.Lematitzador):
 # --------------------------------------------------------------------------
 
 FONTS = ("net", "dogv", "avl")
+# La AVL no se puede redistribuir y el modelo va con el paquete (12/11/2026).
+FONTS_PER_DEFECTE = ("net", "dogv")
 
 
-def frases_font(fonts=FONTS):
+def frases_font(fonts=FONTS_PER_DEFECTE):
     """(font, tokens normalizados) de net, DOGV y AVL (las de `fonts`)."""
     from termes_ambigus import frases_net
 
@@ -115,7 +119,7 @@ def frases_font(fonts=FONTS):
                 yield font, linia.split()
 
 
-def recull(max_vegada: int, llavor: int, fonts=FONTS) -> list[dict]:
+def recull(max_vegada: int, llavor: int, fonts=FONTS_PER_DEFECTE) -> list[dict]:
     from termes_ambigus import Avaluacio
 
     aval = Avaluacio()
@@ -273,8 +277,8 @@ def main(argv: list[str] | None = None) -> None:
     e.add_argument("--finestra", type=int, default=8)
     e.add_argument("--alpha", type=float, default=0.5)
     e.add_argument("--llavor", type=int, default=11)
-    e.add_argument("--fonts", nargs="+", choices=FONTS, default=list(FONTS),
-                   help="fuentes del entrenamiento (12/11/2026: sin la AVL para poder distribuirlo)")
+    e.add_argument("--fonts", nargs="+", choices=FONTS, default=list(FONTS_PER_DEFECTE),
+                   help="fuentes del entrenamiento (por defecto sin la AVL, que no se puede redistribuir)")
     for x in (e, a := sub.add_parser("avalua")):
         x.add_argument("--nom", default="nb", help="nombre del modelo (dades/macocu/kenlm/sentit_cop/<nom>.json)")
         x.add_argument("--genere", action="store_true", help="no ocultar las palabras con género")
