@@ -3,6 +3,11 @@ traductor/model_llengua -- Postprocessat cat->val amb un MODEL DE LLENGUA
 per als homògrafs que el motor no pot resoldre (23/10/2026). Opcional:
 `traductor.translate_cat_val` no canvia i no necessita res d'açò.
 
+Dos models (12/11/2026): FLOR-760M (`puntuador.py`, per defecte;
+`translate_cat_val_ml`) o KenLM + classificador de sentit de "cop"
+(`kenlm.py`, `sentit.py`; `translate_cat_val_kenlm` amb `CRITERI_KENLM`).
+Els dos ocupen el mateix buit: puntuen les frases candidates.
+
 Com funciona: el motor tradueix la frase; per a cada paraula ambigua del
 lèxic (vore `punts.py`) es construïxen les frases valencianes completes,
 una per candidat ("Una vegada acabada la reunió..." / "Un colp acabada
@@ -66,7 +71,7 @@ Criteri (`Criteri`); el valor per defecte és el millor de l'avaluació del
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 from ..rules import detokenize
 from .punts import TIPUS_PER_DEFECTE, Punt, base_neutra, carrega_punts, decisio_spacy, detecta, frases_candidates
@@ -88,6 +93,28 @@ class Criteri:
     # l'usuari, 05/11/2026) o "motor" (la tria del motor, normalment la
     # traducció; el criteri d'abans, amb `marge=5.0`).
     per_defecte: str = "catala"
+    # λ per a les col·lisions ("cop"); `None` = el mateix `lam` (11/11/2026:
+    # amb KenLM, el millor λ de les col·lisions no és el dels homògrafs).
+    lam_colisio: float | None = None
+    # Desempat de les col·lisions (11/11/2026, camí C1): si el model guanya
+    # per menys de `desempat` punts i el punt porta la tria d'un
+    # classificador de sentit (`Punt.sentit`), decidix el classificador.
+    # `None` = no s'usa.
+    desempat: float | None = None
+
+
+def criteri_del_punt(punt: Punt, criteri: Criteri) -> Criteri:
+    """El criteri que s'aplica a un punt (amb `lam_colisio` en les col·lisions).
+
+    >>> c = Criteri(lam=0.5, lam_colisio=1.5)
+    >>> criteri_del_punt(Punt(0, "cop", "", "colisio", ["colp", "vegada"], None), c).lam
+    1.5
+    >>> criteri_del_punt(Punt(0, "nou", "", "irresoluble", ["anou", "nou"], "anou"), c).lam
+    0.5
+    """
+    if criteri.lam_colisio is not None and punt.tipus == "colisio":
+        return replace(criteri, lam=criteri.lam_colisio)
+    return criteri
 
 
 def _valor(d: dict, criteri: Criteri, normalitza: bool = True) -> float:
@@ -117,6 +144,14 @@ def tria(punt: Punt, criteri: Criteri) -> str | None:
     ...                  "vegada": {"lp": -25.0, "n": 9, "prior": -20.0}}
     >>> tria(p, Criteri(lam=0.0)), tria(p, Criteri(lam=1.0)), p.decidit
     ('vegada', 'colp', 'model')
+
+    Desempat amb un classificador de sentit (col·lisions): amb `lam=0`
+    "vegada" guanya per 5 punts; amb `desempat=6` decidix `p.sentit`:
+
+    >>> p.sentit = "colp"
+    >>> tria(p, Criteri(lam=0.0, desempat=2.0)), tria(p, Criteri(lam=0.0, desempat=6.0)), p.decidit
+    ('vegada', 'colp', 'sentit')
+    >>> p.sentit = None
 
     Amb el motor ja decidit, el model només el canvia si guanya per més de
     `marge`:
@@ -162,6 +197,7 @@ def tria(punt: Punt, criteri: Criteri) -> str | None:
     >>> tria(p, Criteri(model_irresolubles=False)), p.decidit
     ('hamaca', 'motor')
     """
+    criteri = criteri_del_punt(punt, criteri)
     if punt.tipus == "irresoluble" and criteri.spacy_irresolubles:
         decisio = decisio_spacy(punt)
         if decisio is not None:
@@ -173,6 +209,12 @@ def tria(punt: Punt, criteri: Criteri) -> str | None:
         return punt.motor
     valors = {c: puntuacio(d, criteri) for c, d in punt.puntuacions.items()}
     millor = max(valors, key=valors.get)
+    if (criteri.desempat is not None and punt.tipus == "colisio" and punt.sentit in valors
+            and len(valors) > 1):
+        segon = max(v for c, v in valors.items() if c != millor)
+        if valors[millor] - segon < criteri.desempat:
+            punt.decidit = "sentit"
+            return punt.sentit
     defecte, qui = punt.motor, "motor"
     if criteri.per_defecte == "catala" and punt.motor is not None:
         catala = next((c for c in punt.candidats if c.lower() == punt.paraula.lower()), None)
@@ -226,7 +268,9 @@ def puntua_punts(text: str, model, tipus=TIPUS_PER_DEFECTE,
                 if millor is None or lp > millor["lp"]:
                     lp_fins, n_fins = model.logprob(detokenize(toks[: punt.index + 1]))
                     millor = {"frase": frase, "lp": lp, "n": n, "dreta": lp - lp_fins, "n_dreta": n - n_fins}
-            millor["prior"] = model.logprob(candidat.lower())[0]
+            # Prior = log P(candidat sol). Un model pot donar el seu (`prior`):
+            # KenLM amb <s> i </s> no dona la freqüència de la paraula.
+            millor["prior"] = getattr(model, "prior", model.logprob)(candidat.lower())[0]
             punt.puntuacions[candidat] = millor
             punt.frases[candidat] = millor["frase"]
     return detokenize(tokens), trobats
@@ -294,12 +338,16 @@ def _fusiona(actual: str, motor: str, nova: str) -> str:
 
 
 def tradueix_cat_val_ml(
-    text: str, model=None, criteri: Criteri = Criteri(), concordanca: str = CONCORDANCA_PER_DEFECTE
+    text: str, model=None, criteri: Criteri = Criteri(), concordanca: str = CONCORDANCA_PER_DEFECTE,
+    sentit=None,
 ) -> tuple[str, list[Punt]]:
     """Traducció cat->val amb el postprocessat del model de llengua.
     `model`: un `puntuador.ModelLlengua` (o qualsevol objecte amb
     `logprob(text) -> (float, int)`); sense model, el motor tal qual.
     `concordanca`: "motor" o "variants" (vore `punts.variants_concordanca`).
+    `sentit`: classificador de sentit de les col·lisions (`sentit.py`,
+    `candidat(punt)`); amb `criteri.desempat`, decidix quan el model guanya
+    per poc (12/11/2026, sistema KenLM).
 
     >>> class Fals:
     ...     def logprob(self, text):
@@ -322,6 +370,10 @@ def tradueix_cat_val_ml(
         return detokenize(tokens), detecta(tokens, punts, criteri.tipus)
     tipus_model = tuple(t for t in criteri.tipus if t != "irresoluble" or criteri.model_irresolubles)
     text_motor, trobats = puntua_punts(text, model, criteri.tipus, concordanca, tipus_model)
+    if sentit is not None and criteri.desempat is not None:
+        for punt in trobats:
+            if punt.tipus == "colisio" and punt.puntuacions:
+                punt.sentit = sentit.candidat(punt)
     return aplica_tries(text_motor, trobats, criteri), trobats
 
 
@@ -341,4 +393,45 @@ def translate_cat_val_ml(text: str, model_id: str | None = None, criteri: Criter
     return tradueix_cat_val_ml(text, _MODEL_PER_DEFECTE, criteri)[0]
 
 
-__all__ = ["Criteri", "tradueix_cat_val_ml", "translate_cat_val_ml", "puntua_punts", "aplica_tries", "tria"]
+# Sistema KenLM (12/11/2026; vore `kenlm.py`): `kenlm_val_net_dogv` amb prior
+# de freqüència, marge 3, la catalana per defecte, λ 1,5 en els homògrafs i
+# 0,75 en les col·lisions, i el classificador de "cop" quan KenLM guanya per
+# menys de 2 punts. És el criteri de l'execució `compara_models_20261111_1430`
+# (191 encerts i 2 errors greus en les 257 decisions dels homògrafs).
+CRITERI_KENLM = Criteri(marge=3.0, per_defecte="catala", lam=1.5, lam_colisio=0.75, desempat=2.0)
+
+_SISTEMA_KENLM = None
+
+
+def translate_cat_val_kenlm(text: str, directori=None, criteri: Criteri = CRITERI_KENLM) -> str:
+    """Motor + KenLM + classificador de sentit, només el text. Carrega els
+    fitxers la primera vegada (de `directori` o `AVLIZADOR_KENLM_DIR`); si
+    falta `kenlm` o algun fitxer, `kenlm.FaltaKenLM`.
+
+    >>> class Fals:
+    ...     def logprob(self, text):
+    ...         return (-1.0 if "una vegada" in text.lower() else -9.0, 5)
+    ...     def prior(self, paraula):
+    ...         return (-5.0, 1)
+    >>> import avlizador.traductor_cat_val.model_llengua as ml
+    >>> ml._SISTEMA_KENLM = (Fals(), None)
+    >>> translate_cat_val_kenlm("Un cop acabada la reunió, marxem.")
+    'Una vegada acabada la reunió, marxem.'
+    >>> ml._SISTEMA_KENLM = None
+    """
+    model, sentit = sistema_kenlm(directori)
+    return tradueix_cat_val_ml(text, model, criteri, sentit=sentit)[0]
+
+
+def sistema_kenlm(directori=None):
+    """`(ModelKenLM, ClassificadorCop)`, carregats una sola vegada per procés."""
+    global _SISTEMA_KENLM
+    if _SISTEMA_KENLM is None:
+        from .kenlm import carrega_sistema_kenlm
+
+        _SISTEMA_KENLM = carrega_sistema_kenlm(directori)
+    return _SISTEMA_KENLM
+
+
+__all__ = ["Criteri", "CRITERI_KENLM", "tradueix_cat_val_ml", "translate_cat_val_ml", "translate_cat_val_kenlm",
+           "puntua_punts", "aplica_tries", "tria"]

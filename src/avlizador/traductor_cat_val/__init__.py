@@ -13,7 +13,9 @@ Des de la línia d'ordres: `avlizador tradueix "text"`.
 amb model de llengua (`model_llengua/`, FLOR-760M, CPU) per als homògrafs.
 El model necessita l'extra `[ml]` (`torch`, `transformers`); sense ell,
 `translate_cat_val` usa el motor sol i avisa (`AvisSenseModelLlengua`).
-`translate_cat_val_motor` és el motor sol.
+`translate_cat_val_motor` és el motor sol. `translate_cat_val(text,
+model="kenlm")` (12/11/2026) usa KenLM + un classificador de sentit en lloc
+de FLOR: sense torch, extra `[kenlm]` i fitxers en `AVLIZADOR_KENLM_DIR`.
 
 Els diccionaris es lligen de `data/` (còpies de `dades/lexic/`, la font
 única; `scripts/sync_data.py` les regenera). El paquet no depén en temps

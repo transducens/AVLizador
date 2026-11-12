@@ -71,3 +71,9 @@ resultats_avaluacio/
 pipeline/02_regles_dialectals/docs_gramatica/gnv_complet.txt
 pipeline/02_regles_dialectals/docs_gramatica/geiec_complet.txt
 gramatica/
+# MaCoCu-ca (CLARIN.SI 11356/1837, 4,7 GB comprimit + 15 GB XML) i les seues eixides
+dades/macocu/
+dades/dogv_apunt/
+
+# Dataset de Hugging Face (es genera amb scripts/hf_benchmarks/prepara.py)
+dades/hf_benchmarks/

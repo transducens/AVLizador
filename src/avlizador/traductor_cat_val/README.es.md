@@ -87,11 +87,13 @@ del motor: `rules/cat_val/README.es.md`.
 from avlizador.traductor_cat_val import translate_cat_val, translate_cat_val_motor
 translate_cat_val("Un cop acabada la reunió.")         # sistema principal: motor + FLOR-760M
 translate_cat_val_motor("Aquest xiquet és molt bo.")   # motor solo (spaCy, sin modelo)
+translate_cat_val("Un cop acabada la reunió.", model="kenlm")  # motor + KenLM (extra [kenlm], AVLIZADOR_KENLM_DIR)
 ```
 
 ```bash
 avlizador tradueix "Aquest xiquet és molt bo."
 avlizador tradueix --motor "Aquest xiquet és molt bo."
+avlizador tradueix --model kenlm "Aquest xiquet és molt bo."
 ```
 
 ### Resultados actuales (cat→val, 30/10/2026)

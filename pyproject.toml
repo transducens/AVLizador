@@ -35,6 +35,10 @@ ml = [
     # La 2.x va trencar transformers el 29/10/2026.
     "huggingface_hub>=0.24,<2.0",
 ]
+# Alternativa lleugera a FLOR (12/11/2026): `translate_cat_val(text, model="kenlm")`.
+# Es compila en instal·lar-lo (en Windows cal compilador; la imatge Docker és Linux).
+# Els fitxers del model van a banda: AVLIZADOR_KENLM_DIR.
+kenlm = ["kenlm>=0.2"]
 avaluacio = ["sacrebleu>=2.4"]
 # Interfície web i API (`avlizador web`; vore documentacio/hoja_de_ruta_interfaz_docker.md).
 web = ["fastapi>=0.110", "uvicorn>=0.29", "jinja2>=3.1"]

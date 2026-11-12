@@ -4,6 +4,7 @@
     avlizador tradueix --fitxer entrada.txt > eixida.txt
     echo "Aquest noi..." | avlizador tradueix
     avlizador tradueix --motor "..."                   # motor sol, sense FLOR
+    avlizador tradueix --model kenlm "..."             # KenLM en lloc de FLOR (extra [kenlm])
     avlizador gd  --text "Este xiquet vol vindre hui." # Grau Dialectal
     avlizador gdv --text "..."                         # GDV
     avlizador gdc --text "..."                         # GDC
@@ -39,11 +40,27 @@ def tradueix(argv: list[str]) -> int:
     parser.add_argument("--fitxer", type=Path, help="Fitxer de text (UTF-8), una frase o paràgraf per línia.")
     parser.add_argument("--motor", action="store_true",
                         help="Només el motor de regles, sense el model de llengua.")
+    parser.add_argument("--model", choices=["flor", "kenlm"], default="flor",
+                        help="Model de llengua per als homògrafs: flor (per defecte) o kenlm "
+                             "(extra [kenlm] i fitxers en AVLIZADOR_KENLM_DIR).")
     args = parser.parse_args(argv)
 
     from .traductor_cat_val import translate_cat_val, translate_cat_val_motor
 
-    funcio = translate_cat_val_motor if args.motor else translate_cat_val
+    if args.motor:
+        funcio = translate_cat_val_motor
+    else:
+        def funcio(text: str) -> str:
+            return translate_cat_val(text, model=args.model)
+        if args.model == "kenlm":
+            from .traductor_cat_val.model_llengua import sistema_kenlm
+            from .traductor_cat_val.model_llengua.kenlm import FaltaKenLM
+
+            try:  # abans de llegir l'entrada: l'error ix de seguida
+                sistema_kenlm()
+            except FaltaKenLM as e:
+                print(f"ERROR: {e}", file=sys.stderr)
+                return 1
     if args.text:
         linies = [" ".join(args.text)]
     elif args.fitxer:
