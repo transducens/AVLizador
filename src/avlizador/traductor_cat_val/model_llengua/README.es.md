@@ -6,6 +6,41 @@ del **sistema principal** (`translate_cat_val`); necesita el extra `[ml]`
 (`torch` + `transformers`). Sin él, `translate_cat_val` usa el motor solo
 y avisa una vez (`AvisSenseModelLlengua`).
 
+## Alternativa a FLOR: KenLM + clasificador de sentido (12/11/2026)
+
+Opción complementaria (decisión del usuario; **FLOR sigue por defecto**):
+`translate_cat_val(text, model="kenlm")`, `avlizador tradueix --model kenlm`
+y `avlizador avalua --model kenlm` (o `--model flor kenlm`). KenLM ocupa el
+mismo hueco que FLOR (puntúa las frases candidatas), sin `torch`:
+
+- `kenlm.py`: `normalitza` (la misma del entrenamiento, antes en
+  `pipeline/08_traduccio_corpus/macocu/kenlm/exporta_text.py`, que ahora la
+  importa de aquí) y `ModelKenLM`: log P natural de la frase con `<s>` y
+  `</s>`; prior = ln((n + 1) / tokens) con las frecuencias del texto de
+  entrenamiento (`<modelo>_freq.json`).
+- `sentit.py`: clasificadores de sentido con una interfaz fija,
+  `candidat(punt) -> str | None` (frase con hueco → candidato). Hoy
+  `ClassificadorCop` (Naive Bayes de "cop/cops" + lemas de spaCy, el mismo
+  spaCy del motor). Cambiarlo = otro `nb.json` (se entrena con
+  `pipeline/03_seleccio_de_model/model_llengua/sentit_cop.py`, que importa
+  el núcleo de aquí) u otra clase con el mismo método.
+- `CRITERI_KENLM`: margen 3, la catalana por defecto, λ 1,5 en homógrafos y
+  0,75 en colisiones, y desempate < 2 con el clasificador (`Criteri.desempat`).
+
+Ficheros (fuera de git) en la carpeta de `AVLIZADOR_KENLM_DIR`:
+`valencia_net_dogv_o5.binary` (77 MB), `valencia_net_dogv_freq.json` y
+`nb.json` (o `sentit_cop/nb.json`). Hace falta el paquete `kenlm`
+(`pip install "avlizador[kenlm]"`; se compila: en Windows hace falta
+compilador, la imagen Docker es Linux). Si falta algo, `FaltaKenLM` (no
+vuelve al motor solo en silencio: se ha pedido expresamente).
+
+Resultados (`compara_models_20261111_1430`, mismo criterio): en las 257
+decisiones de los homógrafos, 191 aciertos y 2 errores graves (FLOR 168 y
+3); exactas homógrafos v1 227/253 (FLOR 219), v2 110/160 (95), manual
+229/458 (228), 151 145 (146), BOE estricto 1.887 (=), gplsi 1.553 (1.554).
+Unas 13.000 veces más rápido que FLOR por llamada y 59 MB de memoria frente
+a 1,5 GB. Detalle en `documentacio/resultats_model_llengua_kenlm.md`.
+
 ## Qué resuelve
 
 Los puntos salen del léxico (`traductor_cat_val/data/lexic_general.json`), sin
@@ -209,7 +244,10 @@ que no conocen el valenciano eligen "vegada" casi siempre. Detalle en
 
 - `punts.py`: detección de los puntos y construcción de los candidatos (sin modelo).
 - `puntuador.py`: `ModelLlengua`, log-probabilidad de un texto (torch + transformers).
-- `__init__.py`: `tradueix_cat_val_ml(text, model, criteri)`, elección del candidato.
+- `kenlm.py`: `ModelKenLM` y `normalitza` (alternativa a FLOR, sin torch; 12/11/2026).
+- `sentit.py`: clasificadores de sentido de las colisiones (`ClassificadorCop`).
+- `__init__.py`: `tradueix_cat_val_ml(text, model, criteri, sentit=None)`, elección
+  del candidato; `translate_cat_val_ml` (FLOR) y `translate_cat_val_kenlm` (KenLM).
 
 Fuera del paquete, en `pipeline/03_seleccio_de_model/model_llengua/`:
 

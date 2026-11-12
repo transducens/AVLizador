@@ -5,7 +5,9 @@ normalitzada amb `normalitza` (09/11/2026, primera prova de substituir
 FLOR per KenLM).
 
 Normalització (la MATEIXA s'ha d'aplicar a les frases que puntue el
-model després; per això està en una funció a banda):
+model després; per això està en una funció a banda, des del 12/11/2026 en el
+paquet: `avlizador.traductor_cat_val.model_llengua.kenlm.normalitza`, que
+este fitxer reexporta per als scripts que la importen d'ací):
 - minúscules; apòstrof tipogràfic (’ ʼ) -> ';
 - l'apòstrof queda pegat a la paraula d'abans ("d'una" -> "d' una");
 - els números, a "0" (menys vocabulari);
@@ -42,7 +44,6 @@ from __future__ import annotations
 import argparse
 import json
 import multiprocessing as mp
-import re
 import sys
 import time
 from collections import Counter
@@ -54,19 +55,7 @@ from comu import DIR, XML, _SEPARA, paragrafs  # noqa: E402
 EIXIDA = DIR / "kenlm" / "macocu_tot.txt"
 MIN_TOKENS = 3
 
-_APOSTROF = str.maketrans({"’": "'", "ʼ": "'", "´": "'", "`": "'"})
-_TOKEN = re.compile(r"[^\W\d_]+(?:[·\-][^\W\d_]+)*'?|\d+(?:[.,]\d+)*|[^\w\s]")
-_DIGITS = re.compile(r"\d+(?:[.,]\d+)*")
-
-
-def normalitza(text: str) -> str:
-    """Frase -> tokens separats per espais, com en el text d'entrenament.
-
-    >>> normalitza("D’una vegada, l'home va fer-ho el 2022!")
-    "d' una vegada , l' home va fer-ho el 0 !"
-    """
-    toks = _TOKEN.findall(text.translate(_APOSTROF).lower())
-    return " ".join("0" if _DIGITS.fullmatch(t) else t for t in toks)
+from avlizador.traductor_cat_val.model_llengua.kenlm import normalitza  # noqa: E402,F401  (una sola font)
 
 
 def _lot(paragrafs_: list[str]) -> tuple[list[str], int]:

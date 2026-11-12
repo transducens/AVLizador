@@ -6,6 +6,38 @@ del **sistema principal** (`translate_cat_val`); cal l'extra `[ml]`
 (`torch` + `transformers`). Sense ell, `translate_cat_val` usa el motor
 sol i avisa una vegada (`AvisSenseModelLlengua`).
 
+## Alternativa a FLOR: KenLM + classificador de sentit (12/11/2026)
+
+Opció complementària (decisió de l'usuari; **FLOR continua per defecte**):
+`translate_cat_val(text, model="kenlm")`, `avlizador tradueix --model kenlm`
+i `avlizador avalua --model kenlm` (o `--model flor kenlm`). KenLM ocupa el
+mateix buit que FLOR (puntua les frases candidates), sense `torch`:
+
+- `kenlm.py`: `normalitza` (la mateixa de l'entrenament; `exporta_text.py`
+  ara la importa d'ací) i `ModelKenLM` (log P natural de la frase; prior =
+  ln((n + 1) / tokens) amb les freqüències del text d'entrenament,
+  `<model>_freq.json`).
+- `sentit.py`: classificadors de sentit amb una interfície fixa,
+  `candidat(punt) -> str | None`. Hui `ClassificadorCop` (Naive Bayes de
+  "cop/cops" + lemes d'spaCy). Canviar-lo = un altre `nb.json` (s'entrena
+  amb `pipeline/03_seleccio_de_model/model_llengua/sentit_cop.py`) o una
+  altra classe amb el mateix mètode.
+- `CRITERI_KENLM`: marge 3, la catalana per defecte, λ 1,5 en els homògrafs
+  i 0,75 en les col·lisions, desempat < 2 amb el classificador.
+
+Fitxers (fora de git) en la carpeta d'`AVLIZADOR_KENLM_DIR`:
+`valencia_net_dogv_o5.binary` (77 MB), `valencia_net_dogv_freq.json` i
+`nb.json` (o `sentit_cop/nb.json`). Cal el paquet `kenlm` (`pip install
+"avlizador[kenlm]"`; en Windows cal compilador, la imatge Docker és Linux).
+Si falta alguna cosa, `FaltaKenLM`.
+
+Resultats (`compara_models_20261111_1430`): 257 decisions dels homògrafs,
+191 encerts i 2 errors greus (FLOR 168 i 3); exactes homògrafs v1 227/253
+(FLOR 219), v2 110/160 (95), manual 229/458 (228), 151 145 (146), BOE
+estricte 1.887 (=), gplsi 1.553 (1.554). Unes 13.000 vegades més ràpid que
+FLOR per crida i 59 MB de memòria davant d'1,5 GB. Detall en
+`documentacio/resultats_model_llengua_kenlm.md`.
+
 ## Què resol
 
 Els punts ixen del lèxic (`traductor_cat_val/data/lexic_general.json`), sense cap
@@ -95,7 +127,9 @@ no coneixen el valencià trien "vegada" quasi sempre. Detall a
 ## Fitxers
 
 `punts.py` (punts i candidats, sense model), `puntuador.py`
-(`ModelLlengua`), `__init__.py` (`tradueix_cat_val_ml`); fora del paquet, en
+(`ModelLlengua`, FLOR), `kenlm.py` (`ModelKenLM`, `normalitza`), `sentit.py`
+(`ClassificadorCop`), `__init__.py` (`tradueix_cat_val_ml`,
+`translate_cat_val_ml`, `translate_cat_val_kenlm`); fora del paquet, en
 `pipeline/03_seleccio_de_model/model_llengua/`: `frases_homografs.json` (frases catalanes amb el sentit esperat),
 `genera_benchmark.py` (crea `benchmark_homografs_cat_val.json` amb el
 motor; **les referències s'han de revisar a mà**) i `avalua.py` (prova

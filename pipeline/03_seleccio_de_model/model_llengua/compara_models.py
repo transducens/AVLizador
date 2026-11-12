@@ -65,18 +65,17 @@ import itertools
 import json
 import math
 import os
-import sys
 import time
 from datetime import datetime
 from pathlib import Path
 
 ARREL = Path(__file__).resolve().parents[3]
-sys.path.insert(0, str(ARREL / "pipeline" / "08_traduccio_corpus" / "macocu" / "kenlm"))
-from exporta_text import normalitza  # noqa: E402  (la normalització de l'entrenament de KenLM)
+from avlizador.traductor_cat_val.model_llengua.kenlm import normalitza  # noqa: E402  (la de l'entrenament de KenLM)
 
 from avlizador.avaluacio.avalua import resumeix  # noqa: E402
 from avlizador.avaluacio.metriques import calcula_metriques, normalitza_apostrofa  # noqa: E402
 from avlizador.traductor_cat_val.model_llengua import Criteri, aplica_tries, puntua_punts  # noqa: E402
+from avlizador.traductor_cat_val.model_llengua.kenlm import LN10, ModelKenLM  # noqa: E402
 from avlizador.traductor_cat_val.model_llengua.punts import TIPUS  # noqa: E402
 
 RESULTATS = ARREL / "pipeline" / "03_seleccio_de_model" / "resultats"
@@ -92,7 +91,6 @@ BENCHMARKS = {
 }
 BENCHMARKS_PER_DEFECTE = ("homografs", "homografs_v2", "manual")
 TIPUS_MODEL = ("colisio", "irresoluble")
-LN10 = math.log(10)
 MODELS = ("motor", "flor", "kenlm_cat", "kenlm_cat30", "kenlm_val", "kenlm_val_net", "kenlm_val_net_dogv",
           "kenlm_val_net_dogv_np", "kenlm_val_tot_np", "kenlm_val_net_dogv_bi", "kenlm_val_net_dogv_c1", "diff", "diff_net", "fasttext")
 # Fitxer de cada KenLM (dades/macocu/kenlm/<nom>_o5.binary i, si n'hi ha, <nom>_freq.json).
@@ -106,34 +104,31 @@ FITXERS_KENLM = {"kenlm_cat": "macocu_tot", "kenlm_cat30": "macocu_30pc", "kenlm
 # Puntuadors
 # --------------------------------------------------------------------------
 
-class KenLM:
-    """log P (natural) d'una frase normalitzada com el text d'entrenament.
-    `signe=-1`: gana la menys probable (KenLM català)."""
+class KenLM(ModelKenLM):
+    """El puntuador KenLM del paquete (`model_llengua/kenlm.py`: log P
+    natural de la frase normalitzada i prior de freqüència) amb `signe`:
+    `signe=-1` = gana la menys probable (KenLM català). Afig `tokens` per a
+    les traces.
+
+    >>> k = KenLM(None, -1.0, freq={"tokens": 100, "freq": {"colp": 1, "vegada": 39}})
+    >>> [round(k.prior(w)[0], 3) for w in ("colp", "vegada")]
+    [3.912, 0.916]
+    """
 
     def __init__(self, model, signe: float = 1.0, freq: dict | None = None) -> None:
-        self.model, self.signe, self.freq = model, signe, freq
+        super().__init__(model, freq)
+        self.signe = signe
 
     def logprob(self, text: str) -> tuple[float, int]:
-        frase = normalitza(text)
-        return self.signe * self.model.score(frase, bos=True, eos=True) * LN10, len(frase.split()) + 1
+        lp, n = super().logprob(text)
+        return self.signe * lp, n
 
     def prior(self, paraula: str) -> tuple[float, int]:
-        """log P(paraula sola), per a `lam` (11/11/2026). Abans era log
-        P("<s> colp </s>"), que no seguix la freqüència ("colp" −20,95 >
-        "vegada" −22,27, quan "vegada" és 35 voltes més freqüent): `lam` no
-        canviava res. Amb `freq` (de `freq_unigrames.py`): ln((n + 1) /
-        tokens). Sense: l'unigrama de KenLM sense <s> ni </s>, que tampoc és
-        la freqüència (Kneser-Ney: "colp" −10,66, "vegada" −9,89).
-
-        >>> k = KenLM(None, freq={"tokens": 100, "freq": {"colp": 1, "vegada": 39}})
-        >>> [round(k.prior(w)[0], 3) for w in ("colp", "vegada", "gandula")]
-        [-3.912, -0.916, -4.605]
-        """
-        frase = normalitza(paraula)
-        if self.freq is not None and " " not in frase:
-            n = self.freq["freq"].get(frase, 0)
-            return self.signe * math.log((n + 1) / self.freq["tokens"]), 1
-        return self.signe * self.model.score(frase, bos=False, eos=False) * LN10, len(frase.split())
+        """log P(paraula sola), per a `lam` (11/11/2026; vore
+        `ModelKenLM.prior`). Abans era log P("<s> colp </s>"), que no seguix
+        la freqüència: `lam` no canviava res."""
+        lp, n = super().prior(paraula)
+        return self.signe * lp, n
 
     def tokens(self, text: str, prior: bool = False) -> list[dict]:
         """log P (natural) de cada paraula de la frase normalitzada (i de
@@ -411,25 +406,20 @@ def puntua(benchmark: list[dict], model) -> tuple[list, float]:
 
 def afig_sentit(puntuats: dict, model_nb: Path) -> int:
     """Camí C1 (11/11/2026): posa en cada col·lisió (`Punt.sentit`) el
-    candidat que tria el classificador de sentit de `sentit_cop.py`
-    (Naive Bayes; la frase valenciana d'un candidat amb el buit). Amb
-    `Criteri.desempat`, decidix quan el model guanya per poc."""
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
-    import sentit_cop
+    candidat que tria el classificador de sentit (`ClassificadorCop` del
+    paquet, el mateix de `translate_cat_val(text, model="kenlm")`; Naive
+    Bayes de `sentit_cop.py`). Amb `Criteri.desempat`, decidix quan el model
+    guanya per poc."""
+    from avlizador.traductor_cat_val.model_llengua.sentit import ClassificadorCop, Lematitzador, NaiveBayes
 
-    nb = sentit_cop.NaiveBayes.carrega(model_nb)
-    lem = sentit_cop.Lematitzador(genere="genere" in model_nb.stem)
+    classificador = ClassificadorCop(NaiveBayes.carrega(model_nb), Lematitzador(genere="genere" in model_nb.stem))
     n = 0
     for files in puntuats.values():
         for _it, _text, punts in files:
             for p in punts:
                 if p.tipus != "colisio" or not p.puntuacions:
                     continue
-                f = sentit_cop.entrada({"puntuacions": p.puntuacions}, lem, 8)
-                if f is None:
-                    continue
-                sentit = "colp" if nb.logodds(f) > 0 else "vegada"
-                p.sentit = next((c for c in p.candidats if sentit_cop.SENTIT.get(c.lower()) == sentit), None)
+                p.sentit = classificador.candidat(p)
                 n += p.sentit is not None
     return n
 

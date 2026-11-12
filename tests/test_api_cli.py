@@ -54,7 +54,7 @@ def test_cli_avalua(tmp_path, capsys):
 
     monkey_sistemes = avalua.sistemes
     try:
-        avalua.sistemes = lambda amb_motor: [("motor", "Motor solo", avlizador.translate_cat_val_motor)]
+        avalua.sistemes = lambda amb_motor, models=("flor",): [("motor", "Motor solo", avlizador.translate_cat_val_motor)]
         assert cli.main(["avalua", "--fitxer", str(bench), "--eixida", str(tmp_path / "r")]) == 0
     finally:
         avalua.sistemes = monkey_sistemes

@@ -611,6 +611,41 @@ Propuesta, pendiente del usuario (no se ha tocado nada):
 
 ---
 
+### 4.14 Integración en el paquete (12/11, rama `kenlm`)
+KenLM + C1 entra en el paquete como **opción complementaria**; FLOR sigue
+por defecto.
+
+- **Uso**: `translate_cat_val(text, model="kenlm")`, `avlizador tradueix
+  --model kenlm` y `avlizador avalua --model kenlm` (o `--model flor kenlm`
+  para medir los dos en la misma ejecución).
+- **Código** (`src/avlizador/traductor_cat_val/model_llengua/`):
+  - `kenlm.py`: `normalitza` y `ModelKenLM` (log P natural; prior de
+    frecuencia).
+  - `sentit.py`: interfaz `candidat(punt) -> str | None`, con
+    `ClassificadorCop` (Naive Bayes + lemas). Usa el spaCy del motor, sin
+    cargar otro.
+  - `CRITERI_KENLM`: margen 3, la catalana por defecto, λ 1,5 / 0,75 y
+    desempate 2.
+- **Una sola fuente**: `exporta_text.py` reexporta `normalitza` del
+  paquete. `sentit_cop.py` y `compara_models.py` (su `KenLM` hereda de
+  `ModelKenLM`; `afig_sentit` usa `ClassificadorCop`) importan el núcleo
+  de ahí.
+- **Ficheros** (fuera de git) en `AVLIZADOR_KENLM_DIR`:
+  `valencia_net_dogv_o5.binary`, `valencia_net_dogv_freq.json` y `nb.json`
+  (o `sentit_cop/nb.json`). En Abaco basta con
+  `AVLIZADOR_KENLM_DIR=~/scrapeo/AVLizador/dades/macocu/kenlm`. Si falta
+  `kenlm` o algún fichero, error claro (`FaltaKenLM`), sin volver al motor
+  solo en silencio. Extra `[kenlm]` en `pyproject.toml`.
+- **Comprobado en local** (Windows, sin `kenlm`):
+  - 99 tests en verde, 11 nuevos en `tests/test_kenlm.py`, con un modelo
+    falso.
+  - El clasificador del paquete da la misma elección que la ejecución
+    `1430` en las 33 colisiones de los homógrafos (con el `nb.json` local
+    y las frases de las trazas).
+- **Falta**: reproducir las cifras en Abaco con
+  `avlizador avalua --model kenlm --benchmarks homografs homografs_v2 manual 151 boe_estricte gplsi`.
+  Debe dar exactas 227 / 110 / 229 / 145 / 1.887 / 1.553.
+
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
   se evalúa: las cifras son optimistas. Hay que confirmarlas en el 151, el
@@ -741,3 +776,4 @@ Son compatibles: si C2 mejora la base, C1 puede desempatar encima.
 | 11/11 | Veto del clasificador: descartado | En los 2 «cop» que fallan el clasificador tampoco está seguro (sección 4.13). |
 | 11/11 | «manca»: incoherencia del léxico (E0247 manca→falta frente a E0248 manques→carències) | Los 2 graves de C1 vienen de ahí (sección 4.13). Propuesto al usuario: E0247 → «carència» (compañero) y aceptar «falta» en HG2-028. Pendiente. |
 | 11/11 | **Se integra KenLM + C1 en el paquete como opción complementaria** (FLOR sigue por defecto) | Decisión del usuario. Diseño: `--model kenlm`, ficheros en `AVLIZADOR_KENLM_DIR`, extra `[kenlm]`, clasificador intercambiable. Se hace el 12/11 en la rama `kenlm`. |
+| 12/11 | KenLM + C1 integrado en el paquete (`--model kenlm`; FLOR por defecto) | Sección 4.14. Tests en verde y clasificador idéntico al de la ejecución `1430`. Falta reproducir las cifras en Abaco. |

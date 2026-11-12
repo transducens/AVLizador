@@ -11,7 +11,8 @@ SEMPRE el motor de regles + el postprocessat amb model de llengua
 Necessita `torch` i `transformers`; el model es carrega la primera vegada
 (~5 s) i es reutilitza. `translate_cat_val_motor` és el motor sol, per a
 comparar (`evalua_models.py --model traductor --direccio cat-val`) i per als
-doctests de les regles.
+doctests de les regles. Des del 12/11/2026, `translate_cat_val(text,
+model="kenlm")` usa KenLM en lloc de FLOR (opció complementària).
 """
 
 from __future__ import annotations
@@ -35,9 +36,18 @@ def translate_cat_val_motor(text: str) -> str:
     return _ENGINE_INVERS.translate(text)
 
 
-def translate_cat_val(text: str) -> str:
+MODELS = ("flor", "kenlm")
+
+
+def translate_cat_val(text: str, model: str = "flor") -> str:
     """Convertix `text` de català oriental a valencià occidental: motor de
-    regles + model de llengua (FLOR-760M) per als homògrafs.
+    regles + model de llengua per als homògrafs.
+
+    `model` (12/11/2026): "flor" (FLOR-760M, per defecte) o "kenlm" (KenLM +
+    classificador de sentit de "cop"; més lleuger i sense torch, vore
+    `model_llengua/kenlm.py`). Amb "kenlm" cal el paquet `kenlm` i els
+    fitxers en `AVLIZADOR_KENLM_DIR`: si falten, `FaltaKenLM` (no torna al
+    motor sol en silenci, perquè s'ha demanat expressament).
 
     >>> translate_cat_val("Tinc vuitanta anys i la meva obra és francesa.")
     'Tinc huitanta anys i la meua obra és francesa.'
@@ -49,7 +59,18 @@ def translate_cat_val(text: str) -> str:
     Sense `torch` o `transformers` instal·lats (paquet sense l'extra
     `[ml]`), usa el motor sol i avisa una vegada amb
     `AvisSenseModelLlengua` (decisió del 30/10/2026).
+
+    >>> translate_cat_val("Hola.", model="gpt")
+    Traceback (most recent call last):
+    ...
+    ValueError: model desconegut: 'gpt' (opcions: flor, kenlm)
     """
+    if model not in MODELS:
+        raise ValueError(f"model desconegut: {model!r} (opcions: {', '.join(MODELS)})")
+    if model == "kenlm":
+        from .model_llengua import translate_cat_val_kenlm
+
+        return translate_cat_val_kenlm(text)
     if not model_llengua_disponible():
         _avisa_sense_model()
         return translate_cat_val_motor(text)

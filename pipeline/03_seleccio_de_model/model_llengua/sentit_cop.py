@@ -34,6 +34,10 @@ Evaluación:
 - gplsi: frases con "cop/cops" (candidatas con el motor; solo el
   clasificador y, si se pide, FLOR).
 
+El núcleo (rasgos, Naive Bayes, lematizador, `ClassificadorCop`) está en el
+paquete desde el 12/11/2026 (`avlizador.traductor_cat_val.model_llengua.sentit`);
+aquí quedan el entrenamiento y la evaluación.
+
 Uso (desde la raíz del repositorio):
     python pipeline/03_seleccio_de_model/model_llengua/sentit_cop.py entrena
     python pipeline/03_seleccio_de_model/model_llengua/sentit_cop.py avalua --traces pipeline/03_seleccio_de_model/resultats/compara_models_20261111_1232_traces_
@@ -62,120 +66,30 @@ EIXIDA = ARREL / "dades" / "macocu" / "kenlm" / "sentit_cop"
 DOGV = ARREL / "dades" / "dogv_apunt" / "dogv_net.txt"
 AVL = ARREL / "dades" / "macocu" / "kenlm" / "termes" / "avl_net.txt"
 FREQ = ARREL / "dades" / "macocu" / "kenlm" / "termes" / "termes.json"
-SENTIT = {"colp": "colp", "colps": "colp", "vegada": "vegada", "vegades": "vegada"}
-CLASSES = ("colp", "vegada")
-HUECO = "__X__"
-# Categories que concorden amb el nom ("una/dues/última vegada"): només
-# estes s'amaguen. Els noms ("banc", "cara") tenen gènere propi i són pistes.
-CONCORDEN = {"DET", "NUM", "ADJ", "PRON"}
 
 
 # --------------------------------------------------------------------------
-# Rasgos
+# Rasgos y modelo: en el paquete (12/11/2026), una sola fuente para entrenar
+# aquí y para traducir con `translate_cat_val(text, model="kenlm")`.
 # --------------------------------------------------------------------------
 
-class Lematitzador:
-    """Lemas de spaCy sobre tokens ya separados (uno por token, alineados)."""
+from avlizador.traductor_cat_val.model_llengua import sentit as _sentit  # noqa: E402
+from avlizador.traductor_cat_val.model_llengua.sentit import (  # noqa: E402,F401
+    CLASSES,
+    CONCORDEN,
+    NaiveBayes,
+    trets as rasgos,
+)
+
+HUECO = _sentit.BUIT
+SENTIT = _sentit.SENTIT_COP
+
+
+class Lematitzador(_sentit.Lematitzador):
+    """El del paquete; `genere=True` deja las palabras con género."""
 
     def __init__(self, genere: bool = False) -> None:
-        import spacy
-        from spacy.tokens import Doc
-
-        from avlizador.traductor_cat_val.rules.pos_tagger import MODELS_SPACY
-
-        for nom in MODELS_SPACY:
-            try:
-                self.nlp = spacy.load(nom, exclude=["parser", "ner"])
-                break
-            except OSError:
-                continue
-        self.Doc = Doc
-        self.genere = genere  # True: deja las palabras con género (sin ocultarlas)
-
-    def lemes(self, llistes: list[list[str]], lot: int = 256) -> list[list[str]]:
-        docs = (self.Doc(self.nlp.vocab, words=t) for t in llistes)
-        return [[self.forma(t) for t in d] for d in self.nlp.pipe(docs, batch_size=lot)]
-
-    def forma(self, t) -> str:
-        """Lema; si la palabra tiene género (concuerda: un/una, dos/dues,
-        molts/moltes, últim/última), solo su categoría: en valenciano la
-        concordancia delata el sentido ("dues vegades" / "dos colps") y en la
-        entrada catalana "cop" siempre es masculino. spaCy no pasa "una" ni
-        "dues" a "un"/"dos", así que el lema no basta."""
-        if not self.genere and t.text != HUECO and t.morph.get("Gender") and t.pos_ in CONCORDEN:
-            return f"<{t.pos_}>"
-        return (t.lemma_ or t.text).lower()
-
-
-def rasgos(lemes: list[str], i: int, finestra: int) -> list[str]:
-    """Rasgos del hueco en la posición `i`.
-
-    >>> rasgos(["a", "un", "x", "de", "destral", "."], 2, 3)
-    ['L1=un', 'L2=a', 'R1=de', 'R2=destral', 'L21=a_un', 'R12=de_destral', 'W=a', 'W=un', 'W=de', 'W=destral']
-    """
-    def at(j):
-        return lemes[j] if 0 <= j < len(lemes) else ("<s>" if j < 0 else "</s>")
-
-    f = [f"L1={at(i - 1)}", f"L2={at(i - 2)}", f"R1={at(i + 1)}", f"R2={at(i + 2)}",
-         f"L21={at(i - 2)}_{at(i - 1)}", f"R12={at(i + 1)}_{at(i + 2)}"]
-    for j in range(max(0, i - finestra), min(len(lemes), i + finestra + 1)):
-        if j != i and any(c.isalpha() for c in lemes[j]):
-            f.append(f"W={lemes[j]}")
-    return f
-
-
-class NaiveBayes:
-    """
-    >>> nb = NaiveBayes(alpha=1.0)
-    >>> nb.afig(["W=destral"], "colp"); nb.afig(["W=tres"], "vegada")
-    >>> nb.logodds(["W=destral"]) > 0 > nb.logodds(["W=tres"])
-    True
-    """
-
-    def __init__(self, alpha: float = 0.5) -> None:
-        self.alpha = alpha
-        self.n = {c: Counter() for c in CLASSES}
-        self.total = Counter()
-
-    def afig(self, f: list[str], classe: str) -> None:
-        self.n[classe].update(f)
-        self.total[classe] += len(f)
-
-    def logodds(self, f: list[str]) -> float:
-        """Suma de log P(x|colp) − log P(x|vegada). Los rasgos que no salen en
-        el entrenamiento se ignoran: con el suavizado y "colp" con 13 veces
-        menos datos, un rasgo desconocido empujaba +2,5 hacia "colp" (11/11)."""
-        if getattr(self, "_v", None) is None:
-            self._v = len(set(self.n["colp"]) | set(self.n["vegada"])) or 1
-        v = self._v
-        s = 0.0
-        for x in f:
-            if not self.n["colp"][x] and not self.n["vegada"][x]:
-                continue
-            pc = (self.n["colp"][x] + self.alpha) / (self.total["colp"] + self.alpha * v)
-            pv = (self.n["vegada"][x] + self.alpha) / (self.total["vegada"] + self.alpha * v)
-            s += math.log(pc) - math.log(pv)
-        return s
-
-    def desa(self, path: Path, minim: int = 2) -> None:
-        tots = self.n["colp"] + self.n["vegada"]
-        json.dump({"alpha": self.alpha, "total": dict(self.total),
-                   "n": {c: {k: v for k, v in self.n[c].items() if tots[k] >= minim} for c in CLASSES}},
-                  path.open("w", encoding="utf-8"), ensure_ascii=False)
-
-    @classmethod
-    def carrega(cls, path: Path) -> NaiveBayes:
-        d = json.loads(path.read_text(encoding="utf-8"))
-        nb = cls(d["alpha"])
-        nb.n = {c: Counter(d["n"][c]) for c in CLASSES}
-        nb.total = Counter(d["total"])
-        return nb
-
-    def mes_informatius(self, k: int = 25) -> dict:
-        tots = self.n["colp"] + self.n["vegada"]
-        punt = {x: self.logodds([x]) for x, c in tots.items() if c >= 20}
-        ordre = sorted(punt.items(), key=lambda x: x[1])
-        return {"vegada": ordre[:k], "colp": ordre[::-1][:k]}
+        super().__init__(genere=genere)
 
 
 # --------------------------------------------------------------------------
@@ -293,15 +207,7 @@ def etiqueta(punt: dict, referencia: str | None) -> str | None:
 
 def entrada(punt: dict, lem: Lematitzador, finestra: int) -> list[str] | None:
     """Rasgos a partir de una frase candidata (valenciana) con el hueco."""
-    for c, d in punt["puntuacions"].items():
-        toks = normalitza(d["frase"]).split()
-        if c.lower() in toks:
-            i = toks.index(c.lower())
-            toks[i] = HUECO
-            l = lem.lemes([toks])[0]
-            l[i] = HUECO
-            return rasgos(l, i, finestra)
-    return None
+    return _sentit.trets_de_frases({c: d["frase"] for c, d in punt["puntuacions"].items()}, lem, finestra)
 
 
 def avalua(args) -> None:
