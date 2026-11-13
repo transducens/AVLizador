@@ -187,24 +187,27 @@ def _noms_valencians_multiparaula(path: Path) -> dict[str, str]:
     return resultat
 
 
-def carrega_formes_nominals(path: Path = LEXIC_GENERAL_PATH) -> set[str]:
-    """Formes catalanes d'una paraula que el lèxic només dona com a nom
-    (`categoria: "n"` en TOTES les seues entrades). Si spaCy diu que el
-    token és un participi (`VerbForm=Part`), no és eixe nom: "la carta
-    rebuda" no és "la rebuda" (05/11/2026). El participi, si és dialectal,
-    el tradueix la capa de conjugacions.
+def carrega_formes_nominals(path: Path = LEXIC_GENERAL_PATH, camp: str = "catalan") -> set[str]:
+    """Formes d'una paraula que el lèxic només dona com a nom (`categoria:
+    "n"` en TOTES les seues entrades), del costat `camp` ("catalan" o
+    "valenciano"). Si spaCy diu que el token és un participi
+    (`VerbForm=Part`), no és eixe nom: "la carta rebuda" no és "la rebuda"
+    (05/11/2026). El participi, si és dialectal, el tradueix la capa de
+    conjugacions. També ho usa el Grau Dialectal (13/11/2026).
 
     >>> noms = carrega_formes_nominals()
     >>> "rebuda" in noms, "sortida" in noms, "reeixida" in noms
     (True, True, False)
+    >>> "eixida" in carrega_formes_nominals(camp="valenciano")
+    True
     """
     dades = json.loads(Path(path).read_text(encoding="utf-8"))
     categories: dict[str, set] = {}
     for entrada in dades:
-        catalan = (entrada.get("catalan") or "").strip().lower()
-        if catalan and " " not in catalan:
-            categories.setdefault(catalan, set()).add(entrada.get("categoria"))
-    return {cat for cat, cats in categories.items() if cats == {"n"}}
+        forma = (entrada.get(camp) or "").strip().lower()
+        if forma and " " not in forma:
+            categories.setdefault(forma, set()).add(entrada.get("categoria"))
+    return {f for f, cats in categories.items() if cats == {"n"}}
 
 
 def carrega_frases_invers(path: Path = LEXIC_GENERAL_PATH) -> dict[tuple[str, ...], str]:

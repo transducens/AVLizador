@@ -291,14 +291,14 @@ def _gd_lot(linies: list[str]) -> list[str | None]:
             if cal:
                 pos_tagger.etiqueta(toks)
             occ, ori, total = [], [], 0
-            for tok in toks:  # el bucle de `calcula_gd`
+            for i, tok in enumerate(toks):  # el bucle de `calcula_gd`
                 if tok.surface.isspace():
                     continue
                 p = gd._paraula_per_lookup(tok.surface)
                 if p is None:
                     continue
                 total += 1
-                classe = gd._classifica_token(tok, _FORMES)
+                classe = gd._classifica_token(tok, _FORMES, toks, i)
                 if classe == "occ":
                     occ.append(p.lower())
                 elif classe == "or":

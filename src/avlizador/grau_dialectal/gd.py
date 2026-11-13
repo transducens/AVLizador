@@ -152,7 +152,12 @@ from typing import Iterator
 
 from ..traductor_cat_val.rules import Token, carrega_homografs, marca_noms_propis, pos_tagger, separa_prefix_elidit, tokenize
 from ..traductor_cat_val.rules.cat_val.demostratius import carrega_demostratius_invers
-from ..traductor_cat_val.rules.cat_val.lexic import LEXIC_GENERAL_PATH, carrega_lexic_invers
+from ..traductor_cat_val.rules.cat_val.lexic import (
+    LEXIC_GENERAL_PATH,
+    _participi_nominal,
+    carrega_formes_nominals,
+    carrega_lexic_invers,
+)
 from ..traductor_cat_val.rules.cat_val.numerals import carrega_numerals_invers
 from ..traductor_cat_val.rules.cat_val.possessius import carrega_possessius_invers
 from ..traductor_cat_val.rules.val_cat.conjugacions_dict import (
@@ -201,17 +206,23 @@ class Formes:
       filtre que ja fa servir `ConjugacionsDictRule`/`ConjugacionsDictInversRule`
       per a traduir, reaprofitat ací.
     - `homografs`: `{forma: etiquetes spaCy de la lectura dialectal}`, els
-      homògrafs resolubles declarats pel proveïdor (vore `_carrega_homografs`).
+      homògrafs resolubles declarats en el lèxic (vore `_carrega_homografs`).
+    - `noms`: formes (dels dos costats) que el lèxic només dona com a nom.
+      Si spaCy diu que són un participi, no compten (13/11/2026): "les
+      dades rebudes" no té el nom "rebudes" (= "recepcions"), té el
+      participi de "rebre", igual en els dos dialectes. La mateixa regla
+      que el traductor (`es_participi`).
     """
 
-    __slots__ = ("occ_simple", "or_simple", "occ_verbal", "or_verbal", "homografs")
+    __slots__ = ("occ_simple", "or_simple", "occ_verbal", "or_verbal", "homografs", "noms")
 
-    def __init__(self, occ_simple, or_simple, occ_verbal, or_verbal, homografs=None):
+    def __init__(self, occ_simple, or_simple, occ_verbal, or_verbal, homografs=None, noms=frozenset()):
         self.occ_simple = occ_simple
         self.or_simple = or_simple
         self.occ_verbal = occ_verbal
         self.or_verbal = or_verbal
         self.homografs = homografs or {}
+        self.noms = noms
 
 
 def _carrega_conjugacions_pures(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[str, str]:
@@ -348,8 +359,9 @@ def carrega_formes_dialectals(forcar_recarrega: bool = False) -> Formes:
     occ_verbal -= irresolubles
     or_verbal -= irresolubles
 
+    noms = frozenset(carrega_formes_nominals(camp="catalan") | carrega_formes_nominals(camp="valenciano"))
     _CACHE = Formes(
-        frozenset(occ), frozenset(orr), frozenset(occ_verbal), frozenset(or_verbal), homografs
+        frozenset(occ), frozenset(orr), frozenset(occ_verbal), frozenset(or_verbal), homografs, noms
     )
     return _CACHE
 
@@ -397,11 +409,22 @@ def _paraula_per_lookup(surface: str) -> str | None:
     return None
 
 
-def _classifica_token(tok: Token, formes: Formes) -> str | None:
-    """Torna `"occ"`, `"or"` o `None` per a `tok`, aplicant els dos
-    filtres de seguretat trobats mesurant contra el benchmark real (vore
+def _classifica_token(tok: Token, formes: Formes, tokens: list[Token] | None = None,
+                      i: int | None = None) -> str | None:
+    """Torna `"occ"`, `"or"` o `None` per a `tok`, aplicant els filtres de
+    seguretat trobats mesurant contra el benchmark real (vore
     `_paraula_per_lookup` per al prefix elidit, i baix per al filtre de
-    POS dels marcadors verbals)."""
+    POS dels marcadors verbals). Amb `tokens` i `i` (la frase i la posició
+    del token), un nom del lèxic que spaCy dona com a participi no compta
+    (13/11/2026, vore `Formes.noms`).
+
+    >>> def marques(text):
+    ...     formes = carrega_formes_dialectals()
+    ...     toks = _tokenitza_amb_pos(text)
+    ...     return [t.surface for i, t in enumerate(toks) if _classifica_token(t, formes, toks, i)]
+    >>> marques("Les dades rebudes."), marques("La rebuda dels documents.")
+    ([], ['rebuda'])
+    """
     if tok.surface.isspace() or tok.is_proper_noun:
         return None
     paraula = _paraula_per_lookup(tok.surface)
@@ -416,6 +439,13 @@ def _classifica_token(tok: Token, formes: Formes) -> str | None:
     # Sense etiqueta d'spaCy, no compta (preferix fals negatiu).
     lectura_dialectal = formes.homografs.get(baix)
     if lectura_dialectal is not None and tok.pos not in lectura_dialectal:
+        return None
+
+    # Nom del lèxic que fa de participi ("les dades rebudes"): no és el nom.
+    # Darrere d'un determinant sí que és el nom ("les rebudes"; vore
+    # `_participi_nominal` del traductor).
+    if (tokens is not None and baix in formes.noms and pos_tagger.es_participi(tokens, i)
+            and not _participi_nominal(tokens, i)):
         return None
 
     if baix in formes.occ_simple or (baix in formes.occ_verbal and es_verb_segur):
@@ -535,14 +565,14 @@ def calcula_gd(
     marcadors_occ: list[str] = []
     marcadors_or: list[str] = []
     total_paraules = 0
-    for tok in tokens:
+    for i, tok in enumerate(tokens):
         if tok.surface.isspace():
             continue
         paraula = _paraula_per_lookup(tok.surface)
         if paraula is None:
             continue
         total_paraules += 1
-        classe = _classifica_token(tok, formes)
+        classe = _classifica_token(tok, formes, tokens, i)
         if classe == "occ":
             marcadors_occ.append(paraula.lower())
         elif classe == "or":
@@ -644,12 +674,12 @@ def resalta_html(
     tokens = _tokenitza_amb_pos(text)
     out: list[str] = []
     pos = 0
-    for tok in tokens:
+    for i, tok in enumerate(tokens):
         out.append(_esc(text[pos : tok.start]))
         paraula = tok.surface
         pos = tok.start + len(paraula)
 
-        classe = _classifica_token(tok, formes)
+        classe = _classifica_token(tok, formes, tokens, i)
         if classe == "occ":
             out.append(marca(paraula, "mk-occ paraula-valenciana", etiquetes[0]))
         elif classe == "or":

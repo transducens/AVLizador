@@ -626,3 +626,51 @@ Si se quitan estos errores del GD, los tres benchmarks quedan puros: GD
 
 Resultados por frase en `dades/grau_dialectal/manual_*.jsonl` (fuera de
 git); resumen en `dades/grau_dialectal/resum.{json,md}`.
+
+## 8. Participios que el léxico solo da como nombre (13/11/2026)
+
+**El fallo** (ejemplo que pasaron al usuario): «les dades rebudes» daba
+GD = 0 (catalán puro). «rebudes» está en el léxico como nombre
+(E0435 rebudes → recepcions, `categoria: "n"`), pero ahí es el participio
+de «rebre», igual en los dos dialectos. spaCy lo ve bien (ADJ,
+`VerbForm=Part`), pero el GD no lo miraba: contaba la palabra como marcador
+catalán. Es el mismo caso que «rebuda» (E0434), anotado el 27/10 en la
+sección 2 (913 apariciones en el BOE catalán).
+
+**El arreglo** (`grau_dialectal/gd.py`, `Formes.noms` y
+`_classifica_token`): la misma regla que el traductor usa desde el 05/11
+(`pos_tagger.es_participi`). Una forma que el léxico solo da como nombre
+(en todas sus entradas, de los dos lados: «rebuda», «sortida», «tancat»;
+«eixida»…) no cuenta como marcador si spaCy dice que es un participio y no
+va justo detrás de un determinante («les rebudes» sigue siendo el nombre).
+Sin listas a mano: las formas salen del léxico
+(`carrega_formes_nominals(camp=...)`). También en el filtro de MaCoCu
+(`filtra_valencia.py`), que repite el bucle del GD.
+
+| Frase | Antes | Ahora |
+|---|---|---|
+| «les dades rebudes» | GD 0 (marcador «rebudes») | sin marcadores |
+| «La carta rebuda ahir.» | GD 0 | sin marcadores |
+| «La rebuda dels documents…» (nombre) | GD 0 | GD 0 (igual) |
+| «Les persones eixides de la sala.» | — | sin marcadores |
+| «L'eixida del sol.» (nombre) | GD 1 | GD 1 (igual) |
+
+**Efecto en los corpus de referencia** (GD global, antes → ahora; los
+marcadores que se dejan de contar):
+
+| Corpus | Lado | GD | Marcadores que ya no cuentan |
+|---|---|---|---|
+| Manual (458) | valenciano | 0,9973 → 0,9973 | tancat, tancats |
+| Manual (458) | catalán | 0,0299 → 0,0291 | tancat |
+| 151 | valenciano | 0,9855 → 0,9891 | rebuda |
+| 151 | catalán | 0,0696 → 0,0699 | rebuda |
+| gplsi | valenciano | 0,9342 → 0,9341 | tancat, tancats, portada |
+| gplsi | catalán | 0,0534 → 0,0519 | tancat, tancats, portada, admès |
+| BOE estricto (2.000) | valenciano | 0,9842 → 0,9848 | tancats, depositari, rebudes |
+| BOE estricto (2.000) | catalán | 0,0493 → 0,0488 | tancats, rebudes |
+
+Todos los que se pierden son participios contados como nombres
+(«tancat» = vallado, «portada», «rebuda»), salvo un «depositari» que spaCy
+da como participio por error. En el BOE completo el efecto será mayor
+(«rebuda» aparecía 913 veces en el lado catalán): pendiente de volver a
+medir con `mesura_corpus.py`.
