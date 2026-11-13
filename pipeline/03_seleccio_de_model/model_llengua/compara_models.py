@@ -481,19 +481,21 @@ def puntua(benchmark: list[dict], model) -> tuple[list, float]:
 
 
 def afig_sentit(puntuats: dict, model_nb: Path) -> int:
-    """Camí C1 (11/11/2026): posa en cada col·lisió (`Punt.sentit`) el
-    candidat que tria el classificador de sentit (`ClassificadorCop` del
-    paquet, el mateix de `translate_cat_val(text, model="kenlm")`; Naive
-    Bayes de `sentit_cop.py`). Amb `Criteri.desempat`, decidix quan el model
-    guanya per poc."""
-    from avlizador.traductor_cat_val.model_llengua.sentit import ClassificadorCop, Lematitzador, NaiveBayes
+    """Camí C1 (11/11/2026): posa en cada punt (`Punt.sentit`) el candidat
+    que tria el classificador de sentit, carregat igual que en el paquet
+    (`sentit.carrega_classificador`): el de "cop" (`nb.json`) o, des del
+    13/11/2026, el general (`sentit.json`, totes les paraules ambigües). Amb
+    `Criteri.desempat`, decidix quan el model guanya per poc."""
+    from avlizador.traductor_cat_val.model_llengua.sentit import Lematitzador, carrega_classificador
 
-    classificador = ClassificadorCop(NaiveBayes.carrega(model_nb), Lematitzador(genere="genere" in model_nb.stem))
+    classificador = carrega_classificador(model_nb)
+    if "genere" in model_nb.stem:
+        classificador._lem = Lematitzador(genere=True)
     n = 0
     for files in puntuats.values():
         for _it, _text, punts in files:
             for p in punts:
-                if p.tipus != "colisio" or not p.puntuacions:
+                if not p.puntuacions:
                     continue
                 p.sentit = classificador.candidat(p)
                 n += p.sentit is not None
@@ -772,7 +774,7 @@ def main(argv: list[str] | None = None) -> None:
 
         if clau.endswith("_c1"):
             n = afig_sentit(puntuats, args.model_sentit)
-            print(f"  classificador de sentit: {n} col·lisions ({args.model_sentit.name})", flush=True)
+            print(f"  classificador de sentit: {n} punts ({args.model_sentit.name})", flush=True)
         fix = criteri_fix(clau)
         files_criteris = [("motor sol", None)] if clau == "motor" else llista
         taula = []

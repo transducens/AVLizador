@@ -158,8 +158,9 @@ def directori_kenlm(directori: Path | str | None = None) -> Path:
 
 
 def fitxers_kenlm(directori: Path | str | None = None) -> dict[str, Path]:
-    """`{"model", "freq", "sentit"}` dins de la carpeta. El classificador pot
-    estar en la carpeta o en `sentit_cop/` (on el deixa `sentit_cop.py`).
+    """`{"model", "freq", "sentit"}` dins de la carpeta. El classificador:
+    `sentit.json` (el general, des del 13/11/2026) si hi és; si no, el de
+    "cop", `nb.json` en la carpeta o en `sentit_cop/`.
 
     >>> import tempfile
     >>> d = Path(tempfile.mkdtemp())
@@ -169,7 +170,9 @@ def fitxers_kenlm(directori: Path | str | None = None) -> dict[str, Path]:
     {'model': 'valencia_net_dogv_o5.binary', 'freq': 'valencia_net_dogv_freq.json', 'sentit': 'sentit_cop/nb.json'}
     """
     d = directori_kenlm(directori)
-    sentit = d / "nb.json"
+    sentit = d / "sentit.json"
+    if not sentit.exists():
+        sentit = d / "nb.json"
     if not sentit.exists() and (d / "sentit_cop" / "nb.json").exists():
         sentit = d / "sentit_cop" / "nb.json"
     return {"model": d / f"{NOM_MODEL}_o5.binary", "freq": d / f"{NOM_MODEL}_freq.json", "sentit": sentit}
@@ -199,7 +202,7 @@ def carrega_sistema_kenlm(directori: Path | str | None = None):
     if falten:
         raise FaltaKenLM("Falten fitxers del model KenLM: " + ", ".join(falten))
     from .lemes import formes_candidates
-    from .sentit import ClassificadorCop
+    from .sentit import carrega_classificador
 
     model = ModelKenLM.carrega(fitxers["model"], fitxers["freq"])
     falten = model.paraules_sense_freq(formes_candidates())
@@ -208,4 +211,4 @@ def carrega_sistema_kenlm(directori: Path | str | None = None):
                       f"{', '.join(falten[:10])}{'...' if len(falten) > 10 else ''}): regenera-la amb "
                       "freq_unigrames.py.", AvisFreqKenLM, stacklevel=2)
         model._avisades.update(falten)
-    return model, ClassificadorCop.carrega(fitxers["sentit"])
+    return model, carrega_classificador(fitxers["sentit"])

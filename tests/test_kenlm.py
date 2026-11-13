@@ -154,8 +154,41 @@ def test_avisa_si_la_taula_de_frequencies_no_te_una_candidata(tmp_path, monkeypa
     real = importlib.util.find_spec
     monkeypatch.setattr(importlib.util, "find_spec", lambda n, *a: object() if n == "kenlm" else real(n, *a))
     monkeypatch.setitem(__import__("sys").modules, "kenlm", KenLMModul)
-    monkeypatch.setattr("avlizador.traductor_cat_val.model_llengua.sentit.ClassificadorCop.carrega",
-                        classmethod(lambda cls, ruta: None))
+    monkeypatch.setattr("avlizador.traductor_cat_val.model_llengua.sentit.carrega_classificador",
+                        lambda ruta: None)
     with pytest.warns(mk.AvisFreqKenLM, match="paraules candidates no són"):
         model, _ = carrega_sistema_kenlm(tmp_path)
     assert "faltes" in model.paraules_sense_freq(["faltes", "colp"])
+
+
+def test_desempat_tambe_en_els_homografs():
+    """13/11/2026: el classificador desempata en totes les paraules ambigües."""
+    from avlizador.traductor_cat_val.model_llengua import tria
+    from avlizador.traductor_cat_val.model_llengua.punts import Punt
+
+    p = Punt(0, "rentadora", "", "irresoluble", ["llavadora", "rentadora"], "llavadora",
+             pos="NOUN", categoria="n")
+    p.puntuacions = {"llavadora": {"lp": -20.0, "n": 6, "prior": -10.0},
+                     "rentadora": {"lp": -20.5, "n": 6, "prior": -10.0}}
+    p.sentit = "llavadora"
+    assert tria(p, CRITERI_KENLM) == "llavadora" and p.decidit == "sentit"
+    p.sentit = None  # sense classificador: la regla de sempre (marge 3, la catalana)
+    assert tria(p, CRITERI_KENLM) == "rentadora" and p.decidit == "catala"
+
+
+def test_carrega_els_dos_formats_de_classificador(tmp_path):
+    import json
+
+    from avlizador.traductor_cat_val.model_llengua.sentit import (
+        ClassificadorSentit, carrega_classificador)
+
+
+    nb_cop().desa(tmp_path / "nb.json")
+    assert isinstance(carrega_classificador(tmp_path / "nb.json"), ClassificadorCop)
+    nb = NaiveBayes(alpha=1.0, classes=("0", "1"))
+    nb.afig(["W=roba"], "0"); nb.afig(["W=sabó"], "1")
+    (tmp_path / "sentit.json").write_text(json.dumps(
+        {"versio": 2, "finestra": 8, "grups": {"g": {"punts": {"rentadora": ["llavadora", "rentadora"]},
+                                                      "nb": nb.a_dict(0)}}}), encoding="utf-8")
+    c = carrega_classificador(tmp_path / "sentit.json")
+    assert isinstance(c, ClassificadorSentit) and c.index == {"rentadora": "g"}

@@ -86,7 +86,8 @@ def trets(lemes: list[str], i: int, finestra: int = FINESTRA) -> list[str]:
 
 class NaiveBayes:
     """Naive Bayes multinomial de dues classes (recomptes en JSON), amb
-    priors iguals.
+    priors iguals. `classes`: les dues etiquetes (per defecte, les de
+    "cop"; el classificador general usa "0" i "1", la posició del candidat).
 
     >>> nb = NaiveBayes(alpha=1.0)
     >>> nb.afig(["W=destral"], "colp"); nb.afig(["W=tres"], "vegada")
@@ -96,9 +97,9 @@ class NaiveBayes:
     0.0
     """
 
-    def __init__(self, alpha: float = 0.5) -> None:
-        self.alpha = alpha
-        self.n = {c: Counter() for c in CLASSES}
+    def __init__(self, alpha: float = 0.5, classes: tuple[str, str] = CLASSES) -> None:
+        self.alpha, self.classes = alpha, tuple(classes)
+        self.n = {c: Counter() for c in self.classes}
         self.total = Counter()
         self._v = None
 
@@ -108,39 +109,47 @@ class NaiveBayes:
         self._v = None
 
     def logodds(self, f: list[str]) -> float:
-        """Suma de log P(x|colp) − log P(x|vegada). Els trets que no ixen en
-        l'entrenament s'ignoren: amb el suavitzat i "colp" amb 13 vegades
-        menys dades, un tret desconegut empentava +2,5 cap a "colp"."""
+        """Suma de log P(x|classe 0) − log P(x|classe 1). Els trets que no
+        ixen en l'entrenament s'ignoren: amb el suavitzat i "colp" amb 13
+        vegades menys dades, un tret desconegut empentava +2,5 cap a "colp"."""
+        a, b = self.classes
         if self._v is None:
-            self._v = len(set(self.n["colp"]) | set(self.n["vegada"])) or 1
+            self._v = len(set(self.n[a]) | set(self.n[b])) or 1
         v, s = self._v, 0.0
         for x in f:
-            if not self.n["colp"][x] and not self.n["vegada"][x]:
+            if not self.n[a][x] and not self.n[b][x]:
                 continue
-            pc = (self.n["colp"][x] + self.alpha) / (self.total["colp"] + self.alpha * v)
-            pv = (self.n["vegada"][x] + self.alpha) / (self.total["vegada"] + self.alpha * v)
-            s += math.log(pc) - math.log(pv)
+            pa = (self.n[a][x] + self.alpha) / (self.total[a] + self.alpha * v)
+            pb = (self.n[b][x] + self.alpha) / (self.total[b] + self.alpha * v)
+            s += math.log(pa) - math.log(pb)
         return s
 
-    def desa(self, path: Path, minim: int = 2) -> None:
-        tots = self.n["colp"] + self.n["vegada"]
-        json.dump({"alpha": self.alpha, "total": dict(self.total),
-                   "n": {c: {k: v for k, v in self.n[c].items() if tots[k] >= minim} for c in CLASSES}},
-                  Path(path).open("w", encoding="utf-8"), ensure_ascii=False)
+    def a_dict(self, minim: int = 2) -> dict:
+        a, b = self.classes
+        tots = self.n[a] + self.n[b]
+        return {"alpha": self.alpha, "classes": list(self.classes), "total": dict(self.total),
+                "n": {c: {k: v for k, v in self.n[c].items() if tots[k] >= minim} for c in self.classes}}
 
     @classmethod
-    def carrega(cls, path: Path) -> NaiveBayes:
-        d = json.loads(Path(path).read_text(encoding="utf-8"))
-        nb = cls(d["alpha"])
-        nb.n = {c: Counter(d["n"][c]) for c in CLASSES}
+    def de_dict(cls, d: dict) -> NaiveBayes:
+        nb = cls(d["alpha"], tuple(d.get("classes", CLASSES)))
+        nb.n = {c: Counter(d["n"][c]) for c in nb.classes}
         nb.total = Counter(d["total"])
         return nb
 
+    def desa(self, path: Path, minim: int = 2) -> None:
+        json.dump(self.a_dict(minim), Path(path).open("w", encoding="utf-8"), ensure_ascii=False)
+
+    @classmethod
+    def carrega(cls, path: Path) -> NaiveBayes:
+        return cls.de_dict(json.loads(Path(path).read_text(encoding="utf-8")))
+
     def mes_informatius(self, k: int = 25) -> dict:
-        tots = self.n["colp"] + self.n["vegada"]
+        a, b = self.classes
+        tots = self.n[a] + self.n[b]
         punt = {x: self.logodds([x]) for x, c in tots.items() if c >= 20}
         ordre = sorted(punt.items(), key=lambda x: x[1])
-        return {"vegada": ordre[:k], "colp": ordre[::-1][:k]}
+        return {b: ordre[:k], a: ordre[::-1][:k]}
 
 
 def trets_de_frases(frases: dict[str, str], lem: Lematitzador, finestra: int = FINESTRA) -> list[str] | None:
@@ -203,3 +212,75 @@ class ClassificadorCop:
             return None
         sentit = "colp" if self.nb.logodds(f) > 0 else "vegada"
         return next((c for c in punt.candidats if SENTIT_COP.get(c.lower()) == sentit), None)
+
+
+class ClassificadorSentit:
+    """Classificador de sentit GENERAL (13/11/2026, decisió de l'usuari): un
+    Naive Bayes per grup de paraules ambigües, no només per a "cop".
+
+    Cada punt ambigu del lèxic té dos candidats (una col·lisió: "colp" /
+    "vegada"; un homògraf: la traducció i la paraula catalana, "faltes" /
+    "manques"). S'entrena amb frases valencianes reals on apareix cada
+    candidat (`pipeline/03_seleccio_de_model/model_llengua/sentit_general.py`):
+    la classe "0" és el primer candidat i la "1", el segon. Els punts amb
+    els mateixos `lemas` en el lèxic (singular i plural: "gandula" i
+    "gandules") compartixen grup i dades. Si un candidat té massa poques
+    frases en el corpus, el grup no s'entrena i el punt no en té.
+
+    El mateix ús que el de "cop": desempat quan KenLM guanya per menys de
+    `Criteri.desempat` punts. Sense grup per al punt, o sense cap tret
+    conegut, `None` (decidix la regla de sempre).
+
+    >>> nb = NaiveBayes(alpha=1.0, classes=("0", "1"))
+    >>> nb.afig(["W=rentar", "W=roba"], "0"); nb.afig(["W=sabó"], "1")
+    >>> c = ClassificadorSentit({"rentadora": {"punts": {"rentadora": ["llavadora", "rentadora"]}, "nb": nb}})
+    >>> from .punts import Punt
+    >>> p = Punt(0, "rentadora", "", "irresoluble", ["llavadora", "rentadora"], "llavadora")
+    >>> p.frases = {"llavadora": "Posa la roba a la llavadora.", "rentadora": "Posa la roba a la rentadora."}
+    >>> c.candidat(p)
+    'llavadora'
+    >>> c.candidat(Punt(0, "calces", "", "irresoluble", ["bragues", "calces"], "bragues")) is None
+    True
+    """
+
+    def __init__(self, grups: dict, lematitzador: Lematitzador | None = None, finestra: int = FINESTRA) -> None:
+        self.grups, self._lem, self.finestra = grups, lematitzador, finestra
+        self.index = {forma: g for g, d in grups.items() for forma in d["punts"]}
+
+    @classmethod
+    def carrega(cls, path: Path) -> ClassificadorSentit:
+        d = json.loads(Path(path).read_text(encoding="utf-8"))
+        grups = {g: {"punts": x["punts"], "nb": NaiveBayes.de_dict(x["nb"])} for g, x in d["grups"].items()}
+        return cls(grups, finestra=d.get("finestra", FINESTRA))
+
+    @property
+    def lem(self) -> Lematitzador:
+        if self._lem is None:
+            self._lem = Lematitzador()
+        return self._lem
+
+    def candidat(self, punt) -> str | None:
+        forma = punt.paraula.lower()
+        grup = self.index.get(forma)
+        if grup is None:
+            return None
+        esperats = self.grups[grup]["punts"][forma]
+        if [c.lower() for c in punt.candidats] != esperats:  # el lèxic ha canviat: no s'usa
+            return None
+        frases = punt.frases or {c: d["frase"] for c, d in punt.puntuacions.items()}
+        f = trets_de_frases(frases, self.lem, self.finestra)
+        if f is None:
+            return None
+        lo = self.grups[grup]["nb"].logodds(f)
+        if lo == 0:
+            return None
+        return punt.candidats[0 if lo > 0 else 1]
+
+
+def carrega_classificador(path: Path):
+    """El classificador d'un fitxer: el general (`sentit.json`, amb "grups")
+    o el de "cop" (`nb.json`, el format d'abans del 13/11/2026)."""
+    d = json.loads(Path(path).read_text(encoding="utf-8"))
+    if "grups" in d:
+        return ClassificadorSentit.carrega(path)
+    return ClassificadorCop(NaiveBayes.de_dict(d))

@@ -7,7 +7,9 @@
 # Des del 13/11/2026 el model de llengua és KenLM (en lloc de FLOR-760M i
 # PyTorch): la imatge és molt més lleugera. ABANS DE CONSTRUIR-LA cal posar
 # en docker/kenlm/ (carpeta ignorada per git) els tres fitxers del model:
-#   valencia_net_dogv_o5.binary, valencia_net_dogv_freq.json, nb.json
+#   valencia_net_dogv_o5.binary, valencia_net_dogv_freq.json i el
+#   classificador de sentit: sentit.json (el general, des del 13/11/2026)
+#   o nb.json (el de "cop")
 # (de dades/macocu/kenlm/ en Abaco; més avant es publicaran en Hugging Face).
 #
 # LLICÈNCIES: la imatge inclou el model d'spaCy ca_core_news_md (GPL-3.0) i
@@ -39,9 +41,11 @@ RUN pip install ".[kenlm,web]" \
 # Fitxers del model KenLM (vore la capçalera). Si en falta algun, la
 # construcció s'atura ací amb un missatge clar.
 COPY docker/kenlm/ /opt/kenlm/
-RUN for f in valencia_net_dogv_o5.binary valencia_net_dogv_freq.json nb.json; do \
+RUN for f in valencia_net_dogv_o5.binary valencia_net_dogv_freq.json; do \
       test -s "/opt/kenlm/$f" || { echo "Falta docker/kenlm/$f (vore la capçalera del Dockerfile)" >&2; exit 1; }; \
-    done
+    done \
+ && { test -s /opt/kenlm/sentit.json || test -s /opt/kenlm/nb.json \
+      || { echo "Falta docker/kenlm/sentit.json (o nb.json): el classificador de sentit" >&2; exit 1; }; }
 
 # --- Fase 2: imatge final, neta i sense root ------------------------------
 FROM python:3.12-slim
