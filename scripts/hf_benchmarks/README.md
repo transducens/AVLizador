@@ -6,7 +6,7 @@ fitxa `README.md`, `LICENSE`, `NOTICE` i bàner) en `dades/hf_benchmarks/<nom>/`
 
 | Script | Dataset (repo per defecte) | Frases |
 |---|---|---|
-| `manual.py` | `transducens/avlizador-manual-ca-va` | 246 del BOE (les 212 de l'AVL, només amb `--amb-avl` i l'autorització de l'AVL) |
+| `manual.py` | `transducens/avlizador-manual-ca-va` | 458: 246 del BOE + 212 de l'AVL (`--sense-avl`: només el BOE) |
 | `homografs.py` | `transducens/avlizador-homographs-ca-va`, un dataset amb dos configuracions: `v2` (per defecte) i `v1` (l'únic amb cop/cops) | 160 / 98 |
 | `boe_dialectal.py` | `transducens/avlizador-boe-strict-ca-va`, `…-boe-broad-ca-va` | 2.000 + 9.453 / 2.000 + 73.705 |
 
@@ -23,8 +23,7 @@ python scripts/hf_benchmarks/boe_dialectal.py --org ORG
   enllaç, la data i marcant els canvis: va en la fitxa, en el `NOTICE` i
   en cada frase (document, data, enllaç i, en el manual, l'original quan
   es va corregir a mà).
-- **AVL**: l'avís legal de l'AVL prohibix reproduir els textos de la web
-  sense autorització expressa; per això el manual no porta les frases de
-  l'AVL per defecte.
+- **AVL**: des del 12/11/2026 el manual porta també les 212 frases de
+  l'AVL, citant-ne l'origen en la fitxa i en el `NOTICE`.
 - `boe_dialectal.py` necessita `dades/boe/corpus_entrenamiento.jsonl`
   (document i data de cada parell).
