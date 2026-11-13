@@ -1,12 +1,18 @@
 """
 traductor/model_llengua -- Postprocessat cat->val amb un MODEL DE LLENGUA
-per als homògrafs que el motor no pot resoldre (23/10/2026). Opcional:
-`traductor.translate_cat_val` no canvia i no necessita res d'açò.
+per als homògrafs que el motor no pot resoldre (23/10/2026).
+`translate_cat_val` sempre el fa servir; `translate_cat_val_motor` no.
 
-Dos models (12/11/2026): FLOR-760M (`puntuador.py`, per defecte;
-`translate_cat_val_ml`) o KenLM + classificador de sentit de "cop"
-(`kenlm.py`, `sentit.py`; `translate_cat_val_kenlm` amb `CRITERI_KENLM`).
-Els dos ocupen el mateix buit: puntuen les frases candidates.
+Dos models, que ocupen el mateix buit (puntuen les frases candidates):
+- **KenLM + classificador de sentit de "cop"** (`kenlm.py`, `sentit.py`;
+  `translate_cat_val_kenlm` amb `CRITERI_KENLM`): el model PER DEFECTE des
+  del 13/11/2026 (decisió de l'usuari; motius i xifres en
+  `documentacio/resultats_model_llengua_kenlm.md`).
+- FLOR-760M (`puntuador.py`; `translate_cat_val_ml` amb `Criteri()`): el
+  model per defecte del 23/10 al 12/11/2026; ara opcional (`model="flor"`).
+
+La història de més avall (23/10-05/11) és la de FLOR; les capes d'spaCy i
+la tria per tipus de punt són les mateixes per als dos models.
 
 Com funciona: el motor tradueix la frase; per a cada paraula ambigua del
 lèxic (vore `punts.py`) es construïxen les frases valencianes completes,
@@ -209,8 +215,10 @@ def tria(punt: Punt, criteri: Criteri) -> str | None:
         return punt.motor
     valors = {c: puntuacio(d, criteri) for c, d in punt.puntuacions.items()}
     millor = max(valors, key=valors.get)
-    if (criteri.desempat is not None and punt.tipus == "colisio" and punt.sentit in valors
-            and len(valors) > 1):
+    # Desempat (12/11/2026 per a "cop"; des del 13/11/2026 per a TOTES les
+    # paraules ambigües): si el model guanya per poc, decidix el classificador
+    # de sentit, si en té per a esta paraula (`punt.sentit`).
+    if (criteri.desempat is not None and punt.sentit in valors and len(valors) > 1):
         segon = max(v for c, v in valors.items() if c != millor)
         if valors[millor] - segon < criteri.desempat:
             punt.decidit = "sentit"
@@ -345,9 +353,10 @@ def tradueix_cat_val_ml(
     `model`: un `puntuador.ModelLlengua` (o qualsevol objecte amb
     `logprob(text) -> (float, int)`); sense model, el motor tal qual.
     `concordanca`: "motor" o "variants" (vore `punts.variants_concordanca`).
-    `sentit`: classificador de sentit de les col·lisions (`sentit.py`,
-    `candidat(punt)`); amb `criteri.desempat`, decidix quan el model guanya
-    per poc (12/11/2026, sistema KenLM).
+    `sentit`: classificador de sentit (`sentit.py`, `candidat(punt)`); amb
+    `criteri.desempat`, decidix quan el model guanya per poc (12/11/2026 per
+    a "cop"; des del 13/11/2026 per a totes les paraules ambigües que en
+    tinguen).
 
     >>> class Fals:
     ...     def logprob(self, text):
@@ -372,7 +381,7 @@ def tradueix_cat_val_ml(
     text_motor, trobats = puntua_punts(text, model, criteri.tipus, concordanca, tipus_model)
     if sentit is not None and criteri.desempat is not None:
         for punt in trobats:
-            if punt.tipus == "colisio" and punt.puntuacions:
+            if punt.puntuacions:
                 punt.sentit = sentit.candidat(punt)
     return aplica_tries(text_motor, trobats, criteri), trobats
 

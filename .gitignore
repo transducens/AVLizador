@@ -77,3 +77,5 @@ dades/dogv_apunt/
 
 # Dataset de Hugging Face (es genera amb scripts/hf_benchmarks/prepara.py)
 dades/hf_benchmarks/
+# Fitxers del model KenLM per a construir la imatge Docker (13/11/2026; vore Dockerfile)
+docker/kenlm/

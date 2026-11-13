@@ -50,7 +50,7 @@ from ..rules import (
     preserva_majuscula,
     separa_prefix_elidit,
 )
-from ..rules.pos_tagger import _GENERE_CURT, genere_de
+from ..rules.pos_tagger import _GENERE_CURT, es_pronom_personal, genere_de
 
 TIPUS = ("colisio", "irresoluble", "resoluble")
 # Des del 29/10/2026 (decisió de l'usuari) també els resolubles passen pel
@@ -112,6 +112,8 @@ class Punt:
     genere: str = ""       # Gender d'spaCy de la paraula ("Masc", "Fem" o "")
     genere_det: str = ""   # Gender d'spaCy del determinant just d'abans (si n'hi ha)
     sentit: str | None = None  # candidat que tria un classificador de sentit (col·lisions; 11/11/2026)
+    pronom_abans: bool = False  # la paraula d'abans és un pronom personal (13/11/2026)
+    det_indefinit_fem_sg: bool = False  # just abans, "una" (DET indefinit, femení, singular; 13/11/2026)
 
 
 _CATEGORIA_PER_POS = {pos: cat for cat, poss in _POS_PER_CATEGORIA.items() for pos in poss}
@@ -160,12 +162,41 @@ def decisio_spacy(punt: Punt) -> str | None:
     'gandula'
     >>> p.pos, p.genere_det = "NUM", "Fem"; decisio_spacy(p)
     'gandula'
+
+    Pronom personal just abans (13/11/2026): darrere de "tu", "jo", "ens",
+    "hi"... no pot vindre un nom, només un verb ("Tu manques de paciència",
+    "Si tu manques a la reunió"). Si la lectura dialectal és un nom, és
+    impossible i es deixa la paraula catalana, diga el que diga spaCy de la
+    paraula mateixa (a "manques" li dona NOUN o ADJ, mai VERB):
+
+    >>> q = Punt(0, "manques", "", "irresoluble", ["faltes", "manques"], "faltes",
+    ...          pos="NOUN", categoria="n", pronom_abans=True)
+    >>> decisio_spacy(q)
+    'manques'
+    >>> q.pronom_abans = False; decisio_spacy(q) is None
+    True
+
+    Numeral darrere de "una" (13/11/2026): spaCy dona "nou" com a NUM quasi
+    sempre ("Ha caigut una nou de l'arbre"), però darrere d'un determinant
+    indefinit femení singular no pot ser "nou" (nueve): passa al model. "la
+    nou" (el dorsal) i "unes nou hores" (aproximat) seguixen sent numeral:
+
+    >>> n = Punt(0, "nou", "", "irresoluble", ["anou", "nou"], "anou", pos="NUM", categoria="n",
+    ...          det_indefinit_fem_sg=True)
+    >>> decisio_spacy(n) is None
+    True
+    >>> n.det_indefinit_fem_sg = False; decisio_spacy(n)
+    'nou'
     """
+    if punt.pronom_abans and punt.categoria == "n":
+        return next(c for c in punt.candidats if c.lower() == punt.paraula.lower())
     cat = _CATEGORIA_PER_POS.get(punt.pos)
     if not cat or cat == punt.categoria:
         return None
     if punt.pos == "ADJ" and punt.genere and punt.genere_det and punt.genere != punt.genere_det:
         return None
+    if punt.pos == "NUM" and punt.det_indefinit_fem_sg:
+        return None  # "una nou": no pot ser el numeral (vore més amunt)
     return next(c for c in punt.candidats if c.lower() == punt.paraula.lower())
 
 
@@ -200,11 +231,16 @@ def detecta(tokens: list[Token], punts: dict[str, dict], tipus=TIPUS_PER_DEFECTE
             if actual not in {c.lower() for c in info["candidats"]}:
                 continue
             motor = actual
-        abans = next((t for t in reversed(tokens[:i]) if not t.surface.isspace()), None)
+        j_abans = next((j for j in range(i - 1, -1, -1) if not tokens[j].surface.isspace()), None)
+        abans = tokens[j_abans] if j_abans is not None else None
         genere_det = abans.gender if abans is not None and abans.pos == "DET" else ""
+        pronom_abans = j_abans is not None and es_pronom_personal(tokens, j_abans)
+        det_una = (abans is not None and abans.pos == "DET" and abans.pron_type == "Ind"
+                   and abans.gender == "Fem" and abans.number == "Sing")
         trobats.append(Punt(i, paraula, prefix, info["tipus"], list(info["candidats"]), motor,
                             pos=tok.pos, categoria=info["categoria"], lectures=info["lectures"],
-                            genere=tok.gender, genere_det=genere_det))
+                            genere=tok.gender, genere_det=genere_det, pronom_abans=pronom_abans,
+                            det_indefinit_fem_sg=det_una))
     return trobats
 
 

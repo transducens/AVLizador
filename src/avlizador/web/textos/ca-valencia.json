@@ -50,7 +50,7 @@
     {
       "titol": "Com funciona",
       "paragrafs": [
-        "Un motor de regles aplica els diccionaris de parells català–valencià recopilats pel projecte i l'anàlisi gramatical d'spaCy. Quan una paraula té més d'una traducció possible, un model de llengua (FLOR-760M) tria la que fa més natural la frase.",
+        "Un motor de regles aplica els diccionaris de parells català–valencià recopilats pel projecte i l'anàlisi gramatical d'spaCy. Quan una paraula té més d'una traducció possible, un model de llengua (KenLM, entrenat amb textos en valencià) tria la que fa més natural la frase.",
         "La pantalla del Grau Dialectal fa servir els mateixos diccionaris per a comptar quantes paraules marcades d'un text són valencianes i quantes catalanes."
       ]
     },
@@ -77,7 +77,7 @@
     {
       "titol": "Versió i llicències",
       "paragrafs": [
-        "{versio}. Desenvolupat per Transducens (Universitat d'Alacant). El codi té la llicència Apache 2.0 i fa servir components de tercers amb altres llicències (el model d'spaCy ca_core_news_md, amb llicència GPL-3.0, i FLOR-760M, derivat de BLOOM amb la llicència RAIL): vegeu el fitxer NOTICE del projecte."
+        "{versio}. Desenvolupat per Transducens (Universitat d'Alacant). El codi té la llicència Apache 2.0 i fa servir components de tercers amb altres llicències (el model d'spaCy ca_core_news_md, amb llicència GPL-3.0, i la biblioteca KenLM, amb llicència LGPL-2.1): vegeu el fitxer NOTICE del projecte."
       ]
     }
   ],

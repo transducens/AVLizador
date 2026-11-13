@@ -11,7 +11,7 @@ Se instala como un paquete de Python, `avlizador`, con dos herramientas:
 
 | Herramienta | Qué hace | Importación |
 |---|---|---|
-| **Traductor catalán → valenciano** | Motor de reglas con los diccionarios del proyecto y spaCy, más un modelo de lenguaje pequeño (FLOR-760M) que resuelve las palabras ambiguas ("cop" → *colp* o *vegada*, "nou" → *nou* o *anou*) | `avlizador.traductor_cat_val` |
+| **Traductor catalán → valenciano** | Motor de reglas con los diccionarios del proyecto y spaCy, más un modelo de lenguaje de n-gramas (KenLM) y un clasificador de sentido que resuelven las palabras ambiguas ("cop" → *colp* o *vegada*, "nou" → *nou* o *anou*); FLOR-760M, opcional | `avlizador.traductor_cat_val` |
 | **Grado Dialectal** (GD, GDV, GDC) | Índices de 0 a 1 que dicen si un texto es valenciano o catalán | `avlizador.grau_dialectal` |
 
 Funciona **solo con CPU**, sin GPU ni servicios externos: está pensado para
@@ -24,19 +24,46 @@ instalación, pruebas y problemas habituales): [`documentacio/guia_instalacion.m
 En resumen, requiere Python 3.10 o posterior y, desde una copia del repositorio:
 
 ```bash
-pip install ".[ml]" --extra-index-url https://download.pytorch.org/whl/cpu
+pip install ".[kenlm]"
 ```
 
-- `[ml]` instala `torch` (versión CPU) y `transformers` para el modelo de
-  lenguaje FLOR-760M, que se descarga de Hugging Face la primera vez que
-  se usa (1,5 GB; se guarda en la carpeta de `HF_HOME`). Es la instalación
-  recomendada.
-- Sin `[ml]` (`pip install .`) funciona solo el motor de reglas: el
+- `[kenlm]` instala la biblioteca KenLM, el modelo de lenguaje por
+  defecto de las palabras ambiguas (desde el 13/11/2026). Se compila al
+  instalarla: hace falta un compilador de C++. En Linux y macOS funciona;
+  en Windows normalmente no se instala: usad Docker (abajo), FLOR o el
+  motor solo.
+- Los ficheros del modelo KenLM no están en git ni en el paquete: ver
+  [Modelo de lenguaje](#modelo-de-lenguaje) (`AVLIZADOR_KENLM_DIR`).
+- Sin KenLM o sin sus ficheros funciona solo el motor de reglas: el
   traductor lo usa y avisa una vez de que falta el modelo
   (`AvisSenseModelLlengua`).
+- `[ml]` (opcional) instala `torch` (versión CPU) y `transformers` para
+  FLOR-760M, el modelo por defecto hasta el 12/11/2026:
+  `pip install ".[ml]" --extra-index-url https://download.pytorch.org/whl/cpu`.
+  Se descarga de Hugging Face la primera vez que se usa (1,5 GB; se guarda
+  en la carpeta de `HF_HOME`).
 - El modelo catalán de spaCy (`ca_core_news_md`) se instala solo.
 - `[avaluacio]` añade `sacrebleu` para evaluar con los benchmarks; `[dev]`,
   `pytest`.
+
+### Modelo de lenguaje
+
+Las palabras ambiguas del léxico ("cop", "nou", "manca"...) las decide un
+modelo KenLM de orden 5 entrenado con frases valencianas de MaCoCu-ca y
+del DOGV (2025-2026), más un clasificador de sentido (Naive Bayes) para
+"cop" (*colp* o *vegada*). Hace falta una carpeta, indicada con la
+variable de entorno `AVLIZADOR_KENLM_DIR`, con tres ficheros:
+
+| Fichero | Qué es |
+|---|---|
+| `valencia_net_dogv_o5.binary` | el modelo KenLM (77 MB) |
+| `valencia_net_dogv_freq.json` | frecuencias de las palabras (para el prior) |
+| `sentit.json` (o el antiguo `nb.json`) | el clasificador de sentido de las palabras ambiguas (~730 KB; hoy tienen cop, cops y deu) |
+
+De momento se piden al equipo; más adelante se publicarán en Hugging
+Face. Coste: ~0,1 ms por frase candidata y ~74 MB de memoria (FLOR: 833
+ms y ~1,5 GB). Por qué KenLM y todas las cifras:
+[`documentacio/resultats_model_llengua_kenlm.md`](documentacio/resultats_model_llengua_kenlm.md).
 
 ## Uso
 
@@ -47,6 +74,7 @@ from avlizador import translate_cat_val, calcula_gd, calcula_gdv, calcula_gdc
 
 translate_cat_val("Aquest noi necessita ajuda. Un cop acabada la reunió, marxem.")
 # 'Este xic necessita ajuda. Una vegada acabada la reunió, marxem.'
+# model="kenlm": error (FaltaKenLM) si falta KenLM; model="flor": FLOR-760M (necesita [ml])
 
 calcula_gd("Este xiquet vol vindre hui.")["gd"]     # 1.0: valenciano
 calcula_gdv("Este xiquet vol vindre hui.")["gdv"]   # 1.0: valenciano puro
@@ -59,6 +87,7 @@ Desde la línea de órdenes:
 avlizador tradueix "Aquest noi necessita ajuda."
 avlizador tradueix --fitxer entrada.txt > salida.txt   # una frase o párrafo por línea
 avlizador tradueix --motor "..."                       # solo el motor, sin el modelo
+avlizador tradueix --model flor "..."                  # FLOR-760M en lugar de KenLM (necesita [ml])
 avlizador gd --text "Este xiquet vol vindre hui."      # también gdv y gdc
 avlizador gd --corpus corpus.jsonl --camp text --html informe.html  # informe HTML frase a frase
 avlizador avalua --benchmarks manual                   # evaluación (necesita [avaluacio])
@@ -79,16 +108,22 @@ entre idiomas. Los textos no se guardan ni se registran.
 Sin Docker, desde una copia del repositorio:
 
 ```bash
-pip install ".[ml,web]" --extra-index-url https://download.pytorch.org/whl/cpu
+pip install ".[kenlm,web]"
 avlizador web          # http://127.0.0.1:8000
 ```
 
-Con Docker (la imagen lleva spaCy y FLOR-760M dentro y funciona **sin
-internet**; la primera construcción descarga unos 2 GB):
+Con Docker (la imagen lleva spaCy y KenLM dentro, sin torch ni FLOR, y
+funciona **sin internet**). Antes de construirla, poned los tres ficheros
+del [modelo de lenguaje](#modelo-de-lenguaje) en `docker/kenlm/` (carpeta
+ignorada por git): la construcción los copia en `/opt/kenlm` y se detiene
+con un mensaje claro si falta alguno.
 
 ```bash
 docker compose up --build     # http://localhost:8000
 ```
+
+La imagen necesita ~1 GB de RAM (`mem_limit: 2g` en
+`docker-compose.yml`).
 
 Para un equipo sin internet, la imagen se copia como un fichero:
 
@@ -113,36 +148,57 @@ imagen; fuera de Docker, como variables de entorno antes de
 
 | Variable | Por defecto | Qué hace | Cuándo cambiarla |
 |---|---|---|---|
-| `AVLIZADOR_MODE` | `complet` | `complet` = motor + FLOR; `motor` = solo reglas (sin cargar FLOR: ~1,5 GB menos de RAM y arranque más rápido) | `motor` en equipos con menos de 4 GB de RAM o si hace falta rapidez antes que acertar los homógrafos |
+| `AVLIZADOR_MODE` | `complet` | `complet` = motor + KenLM; `motor` = solo reglas. Si en modo `complet` faltan los ficheros de KenLM, el servidor lo avisa en el registro y usa `motor` | `motor` si no se tienen los ficheros del modelo o si hace falta rapidez antes que acertar los homógrafos |
+| `AVLIZADOR_KENLM_DIR` | `/opt/kenlm` (en la imagen) | carpeta con los tres ficheros del [modelo de lenguaje](#modelo-de-lenguaje) | fuera de Docker, donde hayáis puesto los ficheros |
 | `MAX_CARACTERS` | 20000 | longitud máxima del texto por petición; si se pasa, HTTP 413 con un mensaje | subirla si se traducen documentos largos y el equipo lo aguanta; bajarla si las peticiones tardan demasiado |
-| `MAX_TRADUCCIONS_SIMULTANIES` | 2 | traducciones a la vez; si ya hay tantas, HTTP 429 ("El servicio está ocupado") | según los núcleos (regla de abajo); 1 en equipos de 2 núcleos |
-| `OMP_NUM_THREADS` | 2 | hilos de cálculo de PyTorch (y de otras librerías numéricas) | según los núcleos (regla de abajo) |
-| `TORCH_NUM_THREADS` | 2 | hilos que usa FLOR: la lee AVLizador (`torch.set_num_threads`); PyTorch no la lee por sí solo | igual que `OMP_NUM_THREADS`; normalmente el mismo valor |
-| `HF_HUB_OFFLINE` | `1` | no intentar conectarse a Hugging Face (los modelos ya están dentro de la imagen) | no hace falta cambiarla en Docker |
+| `MAX_TRADUCCIONS_SIMULTANIES` | 2 | traducciones a la vez; si ya hay tantas, HTTP 429 ("El servicio está ocupado") | según los núcleos (regla de abajo); 1 en equipos de 1 núcleo |
 | `UVICORN_LOG_LEVEL` | `warning` | nivel de los mensajes del servidor (arranque, avisos, errores). No vuelve a activar las líneas por petición: no se registran nunca (privacidad) | `info` o `debug` solo para investigar un problema de arranque |
 | `AVLIZADOR_DOCS` | `0` | `1` = documentación interactiva de la API en `/docs` (carga JavaScript de un CDN) | solo en desarrollo, nunca en producción |
 
-**Regla de los núcleos**: `MAX_TRADUCCIONS_SIMULTANIES` ×
-`TORCH_NUM_THREADS` ≤ núcleos del equipo (con los valores por defecto, 4
-núcleos). Si se pasa, las traducciones compiten por los mismos núcleos y
-todas van más lentas.
+**Regla de los núcleos**: KenLM usa un núcleo por traducción, así que
+`MAX_TRADUCCIONS_SIMULTANIES` ≤ núcleos del equipo. Si se pasa, las
+traducciones compiten por los mismos núcleos y todas van más lentas.
 
 ## Resultados
 
 Benchmark de evaluación: **manual mezcla** (458 frases del BOE y de la
 AVL, revisadas a mano). TER y WER: porcentaje de palabras que hay que
-editar para llegar a la referencia (cuanto más bajos, mejor).
+editar para llegar a la referencia (cuanto más bajos, mejor). Medida del
+13/11/2026 (`avlizador avalua`):
 
 | Sistema | Exactas | BLEU | chrF | TER | WER |
 |---|---|---|---|---|---|
-| Motor + FLOR-760M (sistema principal) | **227/458 (49,6 %)** | **90,88** | **96,34** | **5,61** | **6,01** |
+| Motor + KenLM + clasificador (por defecto) | **232/458 (50,7 %)** | **91,00** | **96,34** | **5,58** | **5,96** |
+| Motor + FLOR-760M (opcional) | 231/458 (50,4 %) | 90,98 | 96,33 | 5,59 | 5,97 |
+| Motor solo | 218/458 (47,6 %) | 90,49 | 96,08 | 5,90 | 6,27 |
+
+Frases exactas en el resto de benchmarks (13/11/2026):
+
+| Benchmark | KenLM + clasificador | FLOR-760M | Motor solo |
+|---|---|---|---|
+| homógrafos v1 (151 + homógrafos, 253) | **227** | 217 | 181 |
+| homógrafos v2 (160) | **111** | 96 | 82 |
+| 151 (154) | 144 | **145** | 142 |
+| BOE estricto, muestra (2.000) | **1.894** | **1.894** | 1.800 |
+| gplsi (1.958) | 1.550 | **1.551** | 1.533 |
+
+En las 257 decisiones de los homógrafos, KenLM + clasificador acierta
+193 y comete 1 error grave (cambia el sentido). Detalle:
+[`documentacio/resultats_model_llengua_kenlm.md`](documentacio/resultats_model_llengua_kenlm.md).
+
+Histórico, medida del 30/10/2026 (versión 1.0.1, con FLOR-760M como
+modelo por defecto; el léxico ha cambiado desde entonces):
+
+| Sistema | Exactas | BLEU | chrF | TER | WER |
+|---|---|---|---|---|---|
+| Motor + FLOR-760M (sistema principal entonces) | 227/458 (49,6 %) | 90,88 | 96,34 | 5,61 | 6,01 |
 | Motor solo | 214/458 (46,7 %) | 90,39 | 96,10 | 5,91 | 6,30 |
 
-En las frases de la AVL acierta exactamente el 92 %. En las del BOE las
-frases exactas bajan (13 %) porque la traducción oficial reformula mucho
-(futuro donde el catalán usa presente, sinónimos no dialectales...), pero
-el TER se queda en 9: una palabra de cada diez. Todos los benchmarks y
-métricas, en
+En esa medida, en las frases de la AVL acertaba exactamente el 92 %. En
+las del BOE las frases exactas bajan (13 %) porque la traducción oficial
+reformula mucho (futuro donde el catalán usa presente, sinónimos no
+dialectales...), pero el TER se queda en 9: una palabra de cada diez.
+Todos los benchmarks y métricas, en
 [`pipeline/03_seleccio_de_model/resultats_benchmarks_cat_val.md`](pipeline/03_seleccio_de_model/resultats_benchmarks_cat_val.md).
 
 ## Benchmarks
@@ -154,9 +210,10 @@ dataset público gplsi (CC BY 4.0). Formato: lista de
 `{"id", "oriental", "occidental"}` (catalán y valenciano).
 
 ```bash
-pip install ".[ml,avaluacio]" --extra-index-url https://download.pytorch.org/whl/cpu
-avlizador avalua                      # todos (sin los completos del BOE)
+pip install ".[kenlm,avaluacio]"
+avlizador avalua                      # todos (sin los completos del BOE), con KenLM
 avlizador avalua --benchmarks manual  # solo el de evaluación
+avlizador avalua --model kenlm flor --motor  # KenLM, FLOR (necesita [ml]) y el motor solo
 avlizador avalua --llista             # los disponibles
 ```
 
@@ -186,9 +243,12 @@ descartó, está en
 ## Desarrollo
 
 ```bash
-pip install -e ".[ml,avaluacio,dev]" --extra-index-url https://download.pytorch.org/whl/cpu
+pip install -e ".[kenlm,avaluacio,dev]"
 pytest                                  # doctests + pruebas de la API y las órdenes
 ```
+
+Para probar también FLOR, añadid `ml` y
+`--extra-index-url https://download.pytorch.org/whl/cpu`.
 
 Para cambiar el léxico, se editan **solo** los ficheros de `dades/lexic/`
 y después:
@@ -214,7 +274,12 @@ en [`NOTICE`](NOTICE):
 - el modelo catalán de spaCy (`ca_core_news_md`) es **GPL 3.0**: no se
   incluye, pip lo instala como dependencia, y quien lo redistribuya tiene
   que cumplir esa licencia;
-- FLOR-760M es Apache 2.0 (adaptación de BLOOM-1.1B);
+- la biblioteca KenLM es **GNU LGPL 2.1** (https://github.com/kpu/kenlm);
+  el modelo KenLM lo ha entrenado el proyecto con MaCoCu-ca 1.0 (CC0 1.0)
+  y textos del DOGV, y las condiciones de reutilización del DOGV se tienen
+  que revisar antes de publicarlo;
+- FLOR-760M (opcional, no se incluye) es Apache 2.0 (adaptación de
+  BLOOM-1.1B);
 - el dataset gplsi de `dades/benchmarks/gplsi/` es CC BY 4.0 de sus
   autores;
 - los textos del BOE y de la AVL se reutilizan citando su fuente.
@@ -222,7 +287,8 @@ en [`NOTICE`](NOTICE):
 **Imagen Docker.** El código de AVLizador es Apache 2.0, pero la
 imagen Docker incluye componentes de terceros con otras licencias (ver
 [`NOTICE`](NOTICE)), entre ellos el modelo de spaCy `ca_core_news_md`,
-con licencia GPL-3.0, y FLOR-760M, con las restricciones de uso de la
-licencia RAIL de BLOOM. Quien distribuya una imagen con estos modelos
-dentro tiene que cumplir esas licencias. Por eso recomendamos construir
-la imagen en local (`docker compose build`) en lugar de distribuirla.
+con licencia GPL-3.0, la biblioteca KenLM (LGPL 2.1) y el modelo KenLM
+del proyecto. Desde el 13/11/2026 la imagen ya no lleva FLOR-760M. Quien
+distribuya una imagen con estos componentes dentro tiene que cumplir esas
+licencias. Por eso recomendamos construir la imagen en local
+(`docker compose build`) en lugar de distribuirla.

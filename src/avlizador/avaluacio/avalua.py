@@ -2,15 +2,16 @@
 amb totes les mètriques (exactes, BLEU, chrF, chrF++, TER i WER) i escriu
 una taula resum.
 
-Per defecte avalua el sistema final (motor + FLOR-760M,
-`translate_cat_val`); `--motor` hi afig el motor sol per a comparar i
-`--model kenlm` (12/11/2026) avalua el sistema amb KenLM en lloc de FLOR
-(`--model flor kenlm`, els dos).
+Per defecte avalua el sistema final (motor + KenLM + classificador de
+sentit, `translate_cat_val`; des del 13/11/2026); `--motor` hi afig el
+motor sol per a comparar i `--model flor` avalua el sistema amb FLOR-760M
+(`--model kenlm flor`, els dos). Si falta KenLM, és un error (no s'avalua
+el motor sol en silenci).
 
     avlizador avalua                               # tots els benchmarks
     avlizador avalua --benchmarks manual           # el d'avaluació (mescla, 458)
     avlizador avalua --motor --limit 5             # prova ràpida
-    avlizador avalua --model kenlm --benchmarks homografs homografs_v2 manual
+    avlizador avalua --model kenlm flor --benchmarks homografs homografs_v2 manual
     avlizador avalua --llista                      # benchmarks disponibles
     avlizador avalua --fitxer un_benchmark.json    # un benchmark qualsevol
 
@@ -69,16 +70,18 @@ def troba_dir_benchmarks() -> Path | None:
     return None
 
 
-def sistemes(amb_motor: bool, models: tuple[str, ...] = ("flor",)) -> list[tuple[str, str, callable]]:
-    """(clau, nom, funció) de cada sistema a avaluar."""
+def sistemes(amb_motor: bool, models: tuple[str, ...] = ("kenlm",)) -> list[tuple[str, str, callable]]:
+    """(clau, nom, funció) de cada sistema a avaluar. Fins al 12/11/2026 la
+    clau del sistema amb FLOR era `sistema_final` (fitxers antics)."""
     from ..traductor_cat_val import translate_cat_val, translate_cat_val_motor
 
     llista = []
-    if "flor" in models:
-        llista.append(("sistema_final", "Motor + FLOR-760M", translate_cat_val))
     if "kenlm" in models:
         llista.append(("kenlm", "Motor + KenLM + sentit",
                        lambda text: translate_cat_val(text, model="kenlm")))
+    if "flor" in models:
+        llista.append(("flor", "Motor + FLOR-760M",
+                       lambda text: translate_cat_val(text, model="flor")))
     if amb_motor:
         llista.append(("motor", "Motor solo", translate_cat_val_motor))
     return llista
@@ -164,8 +167,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--fitxer", type=Path, action="append", default=[],
                         help="Un benchmark JSON qualsevol (es pot repetir).")
     parser.add_argument("--motor", action="store_true", help="Avalua també el motor sol.")
-    parser.add_argument("--model", nargs="+", choices=["flor", "kenlm"], default=["flor"],
-                        help="Model de llengua del sistema: flor (per defecte), kenlm o els dos.")
+    parser.add_argument("--model", nargs="+", choices=["kenlm", "flor"], default=["kenlm"],
+                        help="Model de llengua del sistema: kenlm (per defecte), flor o els dos.")
     parser.add_argument("--limit", type=int, help="Només les N primeres frases de cada benchmark.")
     parser.add_argument("--eixida", type=Path, default=Path("resultats_avaluacio"),
                         help="Carpeta dels resultats (per defecte, resultats_avaluacio/).")
@@ -205,6 +208,12 @@ def main(argv: list[str] | None = None) -> int:
             sistema_kenlm()
         except FaltaKenLM as e:
             print(f"ERROR: {e}", file=sys.stderr)
+            return 1
+    if "flor" in args.model:
+        from ..traductor_cat_val.translate_invers import model_llengua_disponible
+
+        if not model_llengua_disponible():
+            print('ERROR: FLOR necessita torch i transformers: pip install "avlizador[ml]".', file=sys.stderr)
             return 1
 
     args.eixida.mkdir(parents=True, exist_ok=True)

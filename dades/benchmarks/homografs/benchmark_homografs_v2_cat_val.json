@@ -203,41 +203,41 @@
   "id": "HG2-021",
   "oriental": "La manca de pluja ha arruïnat la collita.",
   "paraula": "manca",
-  "esperat": "carència",
+  "esperat": "falta",
   "tipus": "irresoluble",
-  "motor_sol": "La carència de pluja ha arruïnat la collita.",
+  "motor_sol": "La falta de pluja ha arruïnat la collita.",
   "sentit": "n: carencia",
-  "occidental": "La carència de pluja ha arruïnat la collita."
+  "occidental": "La falta de pluja ha arruïnat la collita."
  },
  {
   "id": "HG2-022",
   "oriental": "Hi ha una gran manca de metges als pobles.",
   "paraula": "manca",
-  "esperat": "carència",
+  "esperat": "falta",
   "tipus": "irresoluble",
-  "motor_sol": "Hi ha una gran carència de metges als pobles.",
+  "motor_sol": "Hi ha una gran falta de metges als pobles.",
   "sentit": "n: carencia",
-  "occidental": "Hi ha una gran carència de metges als pobles."
+  "occidental": "Hi ha una gran falta de metges als pobles."
  },
  {
   "id": "HG2-023",
   "oriental": "La seva manca d'experiència es nota molt.",
   "paraula": "manca",
-  "esperat": "carència",
+  "esperat": "falta",
   "tipus": "irresoluble",
-  "motor_sol": "La seua carència d'experiència es nota molt.",
+  "motor_sol": "La seua falta d'experiència es nota molt.",
   "sentit": "n: carencia",
-  "occidental": "La seua carència d'experiència es nota molt."
+  "occidental": "La seua falta d'experiència es nota molt."
  },
  {
   "id": "HG2-024",
   "oriental": "El projecte es va aturar per manca de diners.",
   "paraula": "manca",
-  "esperat": "carència",
+  "esperat": "falta",
   "tipus": "irresoluble",
-  "motor_sol": "El projecte es va aturar per carència de diners.",
+  "motor_sol": "El projecte es va aturar per falta de diners.",
   "sentit": "n: carencia",
-  "occidental": "El projecte es va aturar per carència de diners."
+  "occidental": "El projecte es va aturar per falta de diners."
  },
  {
   "id": "HG2-025",
@@ -323,41 +323,41 @@
   "id": "HG2-033",
   "oriental": "L'informe assenyala greus manques en la seguretat de l'edifici.",
   "paraula": "manques",
-  "esperat": "carències",
+  "esperat": "faltes",
   "tipus": "irresoluble",
-  "motor_sol": "L'informe assenyala greus carències en la seguretat de l'edifici.",
+  "motor_sol": "L'informe assenyala greus faltes en la seguretat de l'edifici.",
   "sentit": "n: carencias",
-  "occidental": "L'informe assenyala greus carències en la seguretat de l'edifici."
+  "occidental": "L'informe assenyala greus faltes en la seguretat de l'edifici."
  },
  {
   "id": "HG2-034",
   "oriental": "Les manques de l'escola són evidents per a tothom.",
   "paraula": "manques",
-  "esperat": "carències",
+  "esperat": "faltes",
   "tipus": "irresoluble",
-  "motor_sol": "Les carències de l'escola són evidents per a tothom.",
+  "motor_sol": "Les faltes de l'escola són evidents per a tothom.",
   "sentit": "n: carencias",
-  "occidental": "Les carències de l'escola són evidents per a tothom."
+  "occidental": "Les faltes de l'escola són evidents per a tothom."
  },
  {
   "id": "HG2-035",
   "oriental": "Hem detectat diverses manques en el pressupost.",
   "paraula": "manques",
-  "esperat": "carències",
+  "esperat": "faltes",
   "tipus": "irresoluble",
-  "motor_sol": "Hem detectat diverses carències en el pressupost.",
+  "motor_sol": "Hem detectat diverses faltes en el pressupost.",
   "sentit": "n: carencias",
-  "occidental": "Hem detectat diverses carències en el pressupost."
+  "occidental": "Hem detectat diverses faltes en el pressupost."
  },
  {
   "id": "HG2-036",
   "oriental": "Les manques alimentàries afecten molts infants.",
   "paraula": "manques",
-  "esperat": "carències",
+  "esperat": "faltes",
   "tipus": "irresoluble",
-  "motor_sol": "Les carències alimentàries afecten molts infants.",
+  "motor_sol": "Les faltes alimentàries afecten molts infants.",
   "sentit": "n: carencias",
-  "occidental": "Les carències alimentàries afecten molts infants."
+  "occidental": "Les faltes alimentàries afecten molts infants."
  },
  {
   "id": "HG2-037",
@@ -477,7 +477,7 @@
   "tipus": "resoluble",
   "motor_sol": "El poble es proveïa d'aigua d'una deu natural.",
   "sentit": "n: manantial",
-  "occidental": "El poble es proveïa d'aigua d'una brollador natural."
+  "occidental": "El poble es proveïa d'aigua d'un brollador natural."
  },
  {
   "id": "HG2-049",

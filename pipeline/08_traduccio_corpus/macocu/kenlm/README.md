@@ -24,3 +24,10 @@ filtre valencià (totes les de `valencia.jsonl`, decisió de l'usuari):
 
 **KenLM valencià net (10/11/2026)**: `MARCADORS_DOC=2 NOM=valencia_net` (frases de
 >= 2 marcadors o del mateix document que una d'elles: 1.211.204 frases).
+
+**KenLM de lemes (12/11/2026, experiment)**: `lematitza_text.py` (+ `.sh`)
+passa `valencia_net_dogv.txt` a lemes (es queden en la seua forma les
+paraules candidates, les que concorden en gènere i la puntuació) i
+`entrena_kenlm.sh` l'entrena (`NOM=valencia_net_dogv_lemes`). Tot es llança
+amb `pipeline/03_seleccio_de_model/model_llengua/prova_lemes.sh` (vore
+README.es.md i `documentacio/resultats_model_llengua_kenlm.md`, secció 4.16).

@@ -1,7 +1,8 @@
 """
 model_llengua/kenlm.py -- Puntuador KenLM (n-grames, CPU) i classificador
-de sentit per a les paraules ambigües: alternativa lleugera a FLOR-760M
-(12/11/2026, decisió de l'usuari; FLOR continua per defecte).
+de sentit per a les paraules ambigües. Integrat el 12/11/2026 com a
+alternativa a FLOR-760M; és el model PER DEFECTE des del 13/11/2026
+(decisió de l'usuari).
 
 Ocupa el MATEIX buit que FLOR: el motor construïx les frases valencianes
 de cada candidat i `ModelKenLM.logprob` les puntua. Dos diferències:
@@ -17,11 +18,12 @@ de cada candidat i `ModelKenLM.logprob` les puntua. Dos diferències:
 El sistema: `kenlm_val_net_dogv` (MaCoCu valencià net + DOGV 2025-2026,
 ordre 5, poda de singletons, 77 MB) amb `CRITERI_KENLM` (marge 3, la
 catalana per defecte, λ 1,5 en els homògrafs i 0,75 en les col·lisions,
-desempat < 2 amb el Naive Bayes de "cop"). Execució
-`compara_models_20261111_1430`: 257 decisions dels homògrafs, 191 encerts
-i 2 errors greus (FLOR: 168 i 3); exactes homògrafs v1 227/253, v2
-110/160, manual 229/458, 151 145, BOE estricte 1.887, gplsi 1.553. Unes
-13.000 vegades més ràpid que FLOR per crida i sense torch. Detall en
+desempat < 2 amb el Naive Bayes de "cop"). Últimes xifres (13/11/2026,
+`avalua_sistema_20261113_1308`, KenLM / FLOR): homògrafs v1 227 / 217 de
+253, v2 111 / 96 de 160, manual 232 / 231 de 458, 151 144 / 145, BOE
+estricte 1.894 / 1.894, gplsi 1.550 / 1.551; en les 257 decisions dels
+homògrafs, 193 encerts i 1 error greu. 0,1 ms per frase candidata
+(FLOR, 833 ms) i sense torch. Detall en
 `documentacio/resultats_model_llengua_kenlm.md`.
 
 Fitxers (fora de git; vore `fitxers_kenlm`), en la carpeta de la variable
@@ -39,6 +41,7 @@ import json
 import math
 import os
 import re
+import warnings
 from pathlib import Path
 
 LN10 = math.log(10)
@@ -78,12 +81,35 @@ class ModelKenLM:
     >>> lp, n = m.logprob("Una vegada més.")
     >>> round(lp, 3), n
     (-13.816, 5)
-    >>> [round(m.prior(w)[0], 3) for w in ("colp", "Vegada", "gandula")]
+    >>> import warnings
+    >>> with warnings.catch_warnings(record=True) as avisos:
+    ...     warnings.simplefilter("always")
+    ...     [round(m.prior(w)[0], 3) for w in ("colp", "Vegada", "gandula")]
     [-3.912, -0.916, -4.605]
+    >>> [str(a.message)[:40] for a in avisos]
+    ['«gandula» no és en la taula de freqüènci']
+
+    Una paraula que no és en la taula compta com a 0 aparicions, i amb `lam`
+    això li dona AVANTATGE (el prior es resta): passà el 13/11/2026 amb
+    «faltes» (la taula era d'abans del canvi del lèxic). Per això s'avisa
+    (una vegada per paraula); `paraules_sense_freq` les llista totes.
     """
 
     def __init__(self, model, freq: dict | None = None) -> None:
         self.model, self.freq = model, freq
+        self._avisades: set[str] = set()
+
+    def paraules_sense_freq(self, paraules) -> list[str]:
+        """Les `paraules` (normalitzades, d'una sola paraula) que no són en
+        la taula de freqüències.
+
+        >>> ModelKenLM(None, {"tokens": 10, "freq": {"colp": 1}}).paraules_sense_freq(["colp", "faltes"])
+        ['faltes']
+        """
+        if self.freq is None:
+            return []
+        formes = {normalitza(p) for p in paraules}
+        return sorted(f for f in formes if f and " " not in f and f not in self.freq["freq"])
 
     @classmethod
     def carrega(cls, binari: Path, freq: Path | None = None) -> ModelKenLM:
@@ -104,6 +130,10 @@ class ModelKenLM:
         −10,66 i "vegada" −9,89, quan "vegada" és 35 voltes més freqüent)."""
         frase = normalitza(paraula)
         if self.freq is not None and " " not in frase:
+            if frase not in self.freq["freq"] and frase not in self._avisades:
+                self._avisades.add(frase)
+                warnings.warn(f"«{frase}» no és en la taula de freqüències de KenLM: compta com a 0 "
+                              "aparicions. Regenera-la amb freq_unigrames.py.", AvisFreqKenLM, stacklevel=2)
             n = self.freq["freq"].get(frase, 0)
             return math.log((n + 1) / self.freq["tokens"]), 1
         return self.model.score(frase, bos=False, eos=False) * LN10, len(frase.split())
@@ -111,6 +141,10 @@ class ModelKenLM:
 
 class FaltaKenLM(RuntimeError):
     """Falta el paquet `kenlm` o algun fitxer del model."""
+
+
+class AvisFreqKenLM(UserWarning):
+    """Alguna paraula candidata no és en la taula de freqüències (13/11/2026)."""
 
 
 def directori_kenlm(directori: Path | str | None = None) -> Path:
@@ -124,8 +158,9 @@ def directori_kenlm(directori: Path | str | None = None) -> Path:
 
 
 def fitxers_kenlm(directori: Path | str | None = None) -> dict[str, Path]:
-    """`{"model", "freq", "sentit"}` dins de la carpeta. El classificador pot
-    estar en la carpeta o en `sentit_cop/` (on el deixa `sentit_cop.py`).
+    """`{"model", "freq", "sentit"}` dins de la carpeta. El classificador:
+    `sentit.json` (el general, des del 13/11/2026) si hi és; si no, el de
+    "cop", `nb.json` en la carpeta o en `sentit_cop/`.
 
     >>> import tempfile
     >>> d = Path(tempfile.mkdtemp())
@@ -135,7 +170,9 @@ def fitxers_kenlm(directori: Path | str | None = None) -> dict[str, Path]:
     {'model': 'valencia_net_dogv_o5.binary', 'freq': 'valencia_net_dogv_freq.json', 'sentit': 'sentit_cop/nb.json'}
     """
     d = directori_kenlm(directori)
-    sentit = d / "nb.json"
+    sentit = d / "sentit.json"
+    if not sentit.exists():
+        sentit = d / "nb.json"
     if not sentit.exists() and (d / "sentit_cop" / "nb.json").exists():
         sentit = d / "sentit_cop" / "nb.json"
     return {"model": d / f"{NOM_MODEL}_o5.binary", "freq": d / f"{NOM_MODEL}_freq.json", "sentit": sentit}
@@ -164,6 +201,14 @@ def carrega_sistema_kenlm(directori: Path | str | None = None):
     falten = [str(p) for p in fitxers.values() if not p.exists()]
     if falten:
         raise FaltaKenLM("Falten fitxers del model KenLM: " + ", ".join(falten))
-    from .sentit import ClassificadorCop
+    from .lemes import formes_candidates
+    from .sentit import carrega_classificador
 
-    return ModelKenLM.carrega(fitxers["model"], fitxers["freq"]), ClassificadorCop.carrega(fitxers["sentit"])
+    model = ModelKenLM.carrega(fitxers["model"], fitxers["freq"])
+    falten = model.paraules_sense_freq(formes_candidates())
+    if falten:  # la taula és d'abans d'un canvi del lèxic: avisa en carregar
+        warnings.warn(f"{len(falten)} paraules candidates no són en {fitxers['freq'].name} ("
+                      f"{', '.join(falten[:10])}{'...' if len(falten) > 10 else ''}): regenera-la amb "
+                      "freq_unigrames.py.", AvisFreqKenLM, stacklevel=2)
+        model._avisades.update(falten)
+    return model, carrega_classificador(fitxers["sentit"])

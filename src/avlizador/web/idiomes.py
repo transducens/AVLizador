@@ -51,7 +51,7 @@ class Parell:
 
 def parells_per_defecte(mode: str) -> dict[tuple[str, str], Parell]:
     """El registre que fa servir l'aplicació. `mode`: "complet" (motor +
-    FLOR-760M) o "motor" (només regles). Els imports del traductor van
+    model de llengua; KenLM des del 13/11/2026) o "motor" (només regles). Els imports del traductor van
     dins: el paquet no es carrega fins que es crida."""
 
     def cat_val(text: str) -> str:

@@ -9,7 +9,8 @@ description = "Traductor dialectal català -> valencià (norma AVL) i Grau Diale
 readme = "README.md"
 requires-python = ">=3.10"
 # Apache 2.0 (decisió del grup, 02/11/2026). Les peces de tercers (model
-# d'spaCy GPL-3.0, FLOR-760M, gplsi, BOE...) i les seues llicències: NOTICE.
+# d'spaCy GPL-3.0, KenLM LGPL-2.1, FLOR-760M, gplsi, BOE...) i les seues
+# llicències: NOTICE.
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
 authors = [{ name = "Transducens, Universitat d'Alacant" }]
@@ -27,7 +28,8 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# Model de llengua FLOR-760M per als homògrafs: el sistema principal.
+# FLOR-760M (`translate_cat_val(text, model="flor")`): el model per defecte
+# fins al 12/11/2026; ara opcional.
 # Per a torch només CPU: --extra-index-url https://download.pytorch.org/whl/cpu
 ml = [
     "torch>=2.2",
@@ -35,9 +37,10 @@ ml = [
     # La 2.x va trencar transformers el 29/10/2026.
     "huggingface_hub>=0.24,<2.0",
 ]
-# Alternativa lleugera a FLOR (12/11/2026): `translate_cat_val(text, model="kenlm")`.
-# Es compila en instal·lar-lo (en Windows cal compilador; la imatge Docker és Linux).
-# Els fitxers del model van a banda: AVLIZADOR_KENLM_DIR.
+# KenLM: el model de llengua PER DEFECTE des del 13/11/2026 (sense ell,
+# `translate_cat_val` usa el motor sol i avisa). Es compila en instal·lar-lo
+# (en Windows cal compilador; la imatge Docker és Linux). Els fitxers del
+# model van a banda: AVLIZADOR_KENLM_DIR.
 kenlm = ["kenlm>=0.2"]
 avaluacio = ["sacrebleu>=2.4"]
 # Interfície web i API (`avlizador web`; vore documentacio/hoja_de_ruta_interfaz_docker.md).

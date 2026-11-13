@@ -11,12 +11,10 @@ services:
       # (millor amb un proxy HTTPS davant).
       - "127.0.0.1:8000:8000"
     environment:
-      AVLIZADOR_MODE: complet          # "complet" (amb FLOR) o "motor" (sense FLOR)
+      AVLIZADOR_MODE: complet          # "complet" (motor + KenLM) o "motor" (només regles)
+      AVLIZADOR_KENLM_DIR: /opt/kenlm  # fitxers del model, copiats de docker/kenlm/ en construir
       MAX_CARACTERS: 20000             # límit de text per petició
       MAX_TRADUCCIONS_SIMULTANIES: 2   # semàfor de concurrència (vore main.py)
-      OMP_NUM_THREADS: 2               # nuclis per a FLOR/PyTorch
-      TORCH_NUM_THREADS: 2
-      HF_HUB_OFFLINE: 1                # cap crida a Hugging Face en producció
       UVICORN_LOG_LEVEL: warning       # cap línia per petició
     # Sistema de fitxers de només lectura, sense privilegis.
     read_only: true
@@ -26,5 +24,5 @@ services:
       - ALL
     security_opt:
       - no-new-privileges:true
-    mem_limit: 4g
+    mem_limit: 2g                      # spaCy + KenLM: ~1 GB (amb FLOR calien 4g)
     restart: unless-stopped

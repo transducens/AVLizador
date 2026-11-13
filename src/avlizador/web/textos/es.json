@@ -50,7 +50,7 @@
     {
       "titol": "Cómo funciona",
       "paragrafs": [
-        "Un motor de reglas aplica los diccionarios de pares catalán–valenciano recopilados por el proyecto y el análisis gramatical de spaCy. Cuando una palabra tiene más de una traducción posible, un modelo de lenguaje (FLOR-760M) elige la que hace más natural la frase.",
+        "Un motor de reglas aplica los diccionarios de pares catalán–valenciano recopilados por el proyecto y el análisis gramatical de spaCy. Cuando una palabra tiene más de una traducción posible, un modelo de lenguaje (KenLM, entrenado con textos en valenciano) elige la que hace más natural la frase.",
         "La pantalla del Grado Dialectal usa los mismos diccionarios para contar cuántas palabras marcadas de un texto son valencianas y cuántas catalanas."
       ]
     },
@@ -77,7 +77,7 @@
     {
       "titol": "Versión y licencias",
       "paragrafs": [
-        "{versio}. Desarrollado por Transducens (Universidad de Alicante). El código tiene la licencia Apache 2.0 y usa componentes de terceros con otras licencias (el modelo de spaCy ca_core_news_md, con licencia GPL-3.0, y FLOR-760M, derivado de BLOOM con la licencia RAIL): ver el fichero NOTICE del proyecto."
+        "{versio}. Desarrollado por Transducens (Universidad de Alicante). El código tiene la licencia Apache 2.0 y usa componentes de terceros con otras licencias (el modelo de spaCy ca_core_news_md, con licencia GPL-3.0, y la biblioteca KenLM, con licencia LGPL-2.1): ver el fichero NOTICE del proyecto."
       ]
     }
   ],

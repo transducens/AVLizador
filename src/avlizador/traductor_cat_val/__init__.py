@@ -10,12 +10,13 @@ morfologia i lèxic dins de la mateixa llengua.
 Des de la línia d'ordres: `avlizador tradueix "text"`.
 
 `translate_cat_val` és el sistema final: motor de regles + postprocessat
-amb model de llengua (`model_llengua/`, FLOR-760M, CPU) per als homògrafs.
-El model necessita l'extra `[ml]` (`torch`, `transformers`); sense ell,
+amb model de llengua (`model_llengua/`, CPU) per als homògrafs. Des del
+13/11/2026 el model per defecte és KenLM + un classificador de sentit:
+extra `[kenlm]` i fitxers en `AVLIZADOR_KENLM_DIR`; si falten,
 `translate_cat_val` usa el motor sol i avisa (`AvisSenseModelLlengua`).
-`translate_cat_val_motor` és el motor sol. `translate_cat_val(text,
-model="kenlm")` (12/11/2026) usa KenLM + un classificador de sentit en lloc
-de FLOR: sense torch, extra `[kenlm]` i fitxers en `AVLIZADOR_KENLM_DIR`.
+`translate_cat_val(text, model="flor")` usa FLOR-760M (el model per defecte
+fins al 12/11/2026; extra `[ml]`: `torch`, `transformers`).
+`translate_cat_val_motor` és el motor sol.
 
 Els diccionaris es lligen de `data/` (còpies de `dades/lexic/`, la font
 única; `scripts/sync_data.py` les regenera). El paquet no depén en temps

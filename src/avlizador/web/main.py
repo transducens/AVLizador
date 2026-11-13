@@ -10,17 +10,19 @@ idiomes (encara cap parell); `/dialectes/adaptador` i `/dialectes/gd`
     avlizador web                                  # http://127.0.0.1:8000
     uvicorn avlizador.web.main:app --no-access-log # el mateix, a mà
 
-Un sol procés: spaCy i FLOR-760M es carreguen una vegada en arrancar
+Un sol procés: spaCy i el model de llengua (KenLM des del 13/11/2026)
+es carreguen una vegada en arrancar
 (cada procés en carregaria una còpia). Les traduccions van a un fil a part
 perquè no bloquegen el servidor, i un semàfor en limita el nombre a la
 vegada.
 
 Variables d'entorn (valors per defecte entre parèntesis):
-- `AVLIZADOR_MODE` (`complet`): `complet` = motor + FLOR; `motor` = només regles.
+- `AVLIZADOR_MODE` (`complet`): `complet` = motor + KenLM; `motor` = només regles.
+- `AVLIZADOR_KENLM_DIR`: carpeta dels fitxers de KenLM (en la imatge Docker,
+  `/opt/kenlm`). Si falten, el mode complet passa a `motor` i ho diu el log.
 - `MAX_CARACTERS` (20000): longitud màxima del text; si es passa, HTTP 413.
 - `MAX_TRADUCCIONS_SIMULTANIES` (2): traduccions a la vegada; si ja n'hi
   ha tantes, HTTP 429 sense esperar.
-- `TORCH_NUM_THREADS` (2): fils de càlcul de FLOR (`torch.set_num_threads`).
 - `AVLIZADOR_DOCS` (0): 1 = documentació interactiva en `/docs` (carrega
   JavaScript d'un CDN: només en desenvolupament).
 """
@@ -89,7 +91,6 @@ class Configuracio:
     mode: str = "complet"
     max_caracters: int = 20000
     max_simultanies: int = 2
-    fils: int = 2
     docs: bool = False
     precarrega: bool = True
 
@@ -100,7 +101,6 @@ class Configuracio:
             mode=mode if mode in ("complet", "motor") else "complet",
             max_caracters=max(1, _enter("MAX_CARACTERS", 20000)),
             max_simultanies=max(1, _enter("MAX_TRADUCCIONS_SIMULTANIES", 2)),
-            fils=max(1, _enter("TORCH_NUM_THREADS", 2)),
             docs=os.environ.get("AVLIZADOR_DOCS", "0") == "1",
         )
 
@@ -185,19 +185,16 @@ def _versio(paquet: str) -> str | None:
 
 
 def _precarrega(estat: Estat) -> None:
-    """Carrega spaCy, els diccionaris i (en mode complet) FLOR abans de la
+    """Carrega spaCy, els diccionaris i (en mode complet) KenLM abans de la
     primera petició."""
-    from ..traductor_cat_val.translate_invers import model_llengua_disponible
+    from ..traductor_cat_val.model_llengua.kenlm import NOM_MODEL, kenlm_disponible
 
     cfg = estat.config
     mode = cfg.mode
-    if mode == "complet" and not model_llengua_disponible():
-        log.warning("AVLIZADOR_MODE=complet però falta l'extra [ml] (torch, transformers): s'usa el motor sol.")
+    if mode == "complet" and not kenlm_disponible():
+        log.warning("AVLIZADOR_MODE=complet però falta KenLM (el paquet kenlm o els fitxers en "
+                    "AVLIZADOR_KENLM_DIR): s'usa el motor sol.")
         mode = "motor"
-    if mode == "complet":
-        import torch
-
-        torch.set_num_threads(cfg.fils)
     if cfg.precarrega:
         for parell in estat.parells.values():
             parell.tradueix("Un cop acabada la reunió, marxem.")
@@ -208,12 +205,10 @@ def _precarrega(estat: Estat) -> None:
         "model_llengua": None,
         "spacy": _versio("spacy"),
         "model_spacy": _versio("ca_core_news_md"),
-        "torch": _versio("torch") if mode == "complet" else None,
+        "kenlm": _versio("kenlm") if mode == "complet" else None,
     }
     if mode == "complet":
-        from ..traductor_cat_val.model_llengua.puntuador import MODEL_PER_DEFECTE
-
-        estat.versions["model_llengua"] = MODEL_PER_DEFECTE
+        estat.versions["model_llengua"] = f"KenLM {NOM_MODEL}_o5 + classificador de sentit"
     estat.models_carregats = True
 
 

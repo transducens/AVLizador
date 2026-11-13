@@ -152,6 +152,21 @@ def analitza(text: str, amb_parser: bool = False):
     return nlp(text, disable=[p for p in ("parser",) if p in nlp.pipe_names])
 
 
+def _analitza_sense_espais(text: str):
+    """`(doc, desplaçament)`: spaCy sobre el text SENSE els espais del
+    principi i del final (13/11/2026). Un espai al final canviava
+    l'etiqueta ("Ha estat una reeixida " -> ADJ; sense l'espai, NOUN), i en
+    la web és fàcil deixar-ne un. `desplaçament` = caràcters llevats del
+    principi, per a tornar a les posicions del text sencer.
+
+    >>> doc, n = _analitza_sense_espais("  Hola. ")
+    >>> n, [t.text for t in doc]
+    (2, ['Hola', '.'])
+    """
+    net = text.strip()
+    return analitza(net), (len(text) - len(text.lstrip()) if net else 0)
+
+
 def etiqueta(tokens: list[Token]) -> None:
     """Omple `tok.pos` (etiqueta POS universal d'spaCy: "VERB", "NOUN",
     "ADP"...) per a cada token-paraula de `tokens`, mutant-los en lloc.
@@ -230,13 +245,22 @@ def etiqueta(tokens: list[Token]) -> None:
     >>> etiqueta(toks)
     >>> [(t.surface, t.pos, t.verb_form) for t in toks if t.surface == "fer-ho"]
     [('fer-ho', 'VERB', 'Inf')]
+
+    Els espais del principi i del final no canvien les etiquetes (13/11/2026):
+
+    >>> def pos(text, paraula):
+    ...     toks = tokenize(text); marca_noms_propis(toks); etiqueta(toks)
+    ...     return next(t.pos for t in toks if t.surface == paraula)
+    >>> pos("Ha estat una reeixida", "reeixida") == pos("  Ha estat una reeixida ", "reeixida")
+    True
     """
     # "ʼ" (U+02BC) -> "’": spaCy només partix "l’Estat" amb l'apòstrof
     # habitual; el canvi no mou cap posició (un caràcter per un altre).
     text = "".join(t.surface for t in tokens).replace("ʼ", "’")
-    doc = analitza(text)
+    doc, desp = _analitza_sense_espais(text)
     if doc is None:
         return
+    idx = {d.i: d.idx + desp for d in doc}  # posició en el text sencer
     for tok in tokens:
         if not tok.surface[:1].isalpha():
             continue
@@ -251,12 +275,12 @@ def etiqueta(tokens: list[Token]) -> None:
         # prenia la PRIMERA aparició: "el" pronom rebia l'etiqueta d'un
         # "el" article anterior, "capacitat" la de "Capacitat" PROPN...
         fi = tok.start + len(tok.surface)
-        dins = [d for d in doc if tok.start <= d.idx < fi]
+        dins = [d for d in doc if tok.start <= idx[d.i] < fi]
         dt = next((d for buscada_min in candidates for d in dins if d.text.lower() == buscada_min), None)
         if dt is None:
             # tokenització distinta: el token d'spaCy on comença la paraula
             inici = tok.start + len(tok.surface) - len(buscada)
-            dt = next((d for d in doc if d.idx <= inici < d.idx + len(d.text)), None)
+            dt = next((d for d in doc if idx[d.i] <= inici < idx[d.i] + len(d.text)), None)
         if dt is None:
             continue
         tok.pos = dt.pos_
@@ -266,6 +290,10 @@ def etiqueta(tokens: list[Token]) -> None:
         tok.gender = gender[0] if gender else ""
         verb_form = dt.morph.get("VerbForm")
         tok.verb_form = verb_form[0] if verb_form else ""
+        pron_type = dt.morph.get("PronType")
+        tok.pron_type = pron_type[0] if pron_type else ""
+        number = dt.morph.get("Number")
+        tok.number = number[0] if number else ""
         tok.lemma = dt.lemma_.lower()
 
 
@@ -296,11 +324,51 @@ def es_participi(tokens: list[Token], i: int) -> bool:
         t.surface[:1].lower() + t.surface[1:] if j == i else t.surface
         for j, t in enumerate(tokens)
     ).replace("ʼ", "’")
-    doc = analitza(text)
+    doc, desp = _analitza_sense_espais(text)
     if doc is None:
         return True
-    dt = next((d for d in doc if d.idx == tok.start), None)
+    dt = next((d for d in doc if d.idx + desp == tok.start), None)
     return dt is None or "Part" in dt.morph.get("VerbForm")
+
+
+def es_pronom_personal(tokens: list[Token], i: int) -> bool:
+    """`tokens[i]` és un pronom personal segons spaCy (PRON amb
+    `PronType=Prs`: "tu", "jo", "ens", "hi", "et", "li"...)? Si la paraula
+    comença en majúscula i spaCy no hi veu un pronom, es torna a preguntar
+    en minúscula: a l'inici de frase "Tu" ix PROPN (13/11/2026).
+
+    >>> from . import tokenize, marca_noms_propis
+    >>> def prova(text, paraula):
+    ...     toks = tokenize(text)
+    ...     marca_noms_propis(toks)
+    ...     etiqueta(toks)
+    ...     return es_pronom_personal(toks, next(i for i, t in enumerate(toks) if t.surface == paraula))
+    >>> prova("Tu manques de paciència.", "Tu"), prova("Si tu manques a la reunió.", "tu")
+    (True, True)
+    >>> prova("Ara ja només hi manques tu.", "hi"), prova("Les manques són greus.", "Les")
+    (True, False)
+
+    Un verb amb pronom elidit davant no compta (spaCy partix "S'" i
+    "afegeixen", i el "s'" sí que és pronom):
+
+    >>> prova("S'afegeixen nous apartats.", "S'afegeixen")
+    False
+    """
+    tok = tokens[i]
+    if tok.pos == "PRON" and tok.pron_type == "Prs":
+        return True
+    if not tok.surface[:1].isupper():
+        return False
+    text = "".join(
+        t.surface[:1].lower() + t.surface[1:] if j == i else t.surface
+        for j, t in enumerate(tokens)
+    ).replace("ʼ", "’")
+    doc, desp = _analitza_sense_espais(text)
+    if doc is None:
+        return False
+    dt = next((d for d in doc if d.idx + desp == tok.start), None)
+    return (dt is not None and dt.text.lower() == tok.surface.lower() and dt.pos_ == "PRON"
+            and "Prs" in dt.morph.get("PronType"))
 
 
 _GENERE_CURT = {"Masc": "m", "Fem": "f"}
