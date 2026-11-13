@@ -266,6 +266,8 @@ def etiqueta(tokens: list[Token]) -> None:
         tok.gender = gender[0] if gender else ""
         verb_form = dt.morph.get("VerbForm")
         tok.verb_form = verb_form[0] if verb_form else ""
+        pron_type = dt.morph.get("PronType")
+        tok.pron_type = pron_type[0] if pron_type else ""
         tok.lemma = dt.lemma_.lower()
 
 
@@ -301,6 +303,46 @@ def es_participi(tokens: list[Token], i: int) -> bool:
         return True
     dt = next((d for d in doc if d.idx == tok.start), None)
     return dt is None or "Part" in dt.morph.get("VerbForm")
+
+
+def es_pronom_personal(tokens: list[Token], i: int) -> bool:
+    """`tokens[i]` és un pronom personal segons spaCy (PRON amb
+    `PronType=Prs`: "tu", "jo", "ens", "hi", "et", "li"...)? Si la paraula
+    comença en majúscula i spaCy no hi veu un pronom, es torna a preguntar
+    en minúscula: a l'inici de frase "Tu" ix PROPN (13/11/2026).
+
+    >>> from . import tokenize, marca_noms_propis
+    >>> def prova(text, paraula):
+    ...     toks = tokenize(text)
+    ...     marca_noms_propis(toks)
+    ...     etiqueta(toks)
+    ...     return es_pronom_personal(toks, next(i for i, t in enumerate(toks) if t.surface == paraula))
+    >>> prova("Tu manques de paciència.", "Tu"), prova("Si tu manques a la reunió.", "tu")
+    (True, True)
+    >>> prova("Ara ja només hi manques tu.", "hi"), prova("Les manques són greus.", "Les")
+    (True, False)
+
+    Un verb amb pronom elidit davant no compta (spaCy partix "S'" i
+    "afegeixen", i el "s'" sí que és pronom):
+
+    >>> prova("S'afegeixen nous apartats.", "S'afegeixen")
+    False
+    """
+    tok = tokens[i]
+    if tok.pos == "PRON" and tok.pron_type == "Prs":
+        return True
+    if not tok.surface[:1].isupper():
+        return False
+    text = "".join(
+        t.surface[:1].lower() + t.surface[1:] if j == i else t.surface
+        for j, t in enumerate(tokens)
+    ).replace("ʼ", "’")
+    doc = analitza(text)
+    if doc is None:
+        return False
+    dt = next((d for d in doc if d.idx == tok.start), None)
+    return (dt is not None and dt.text.lower() == tok.surface.lower() and dt.pos_ == "PRON"
+            and "Prs" in dt.morph.get("PronType"))
 
 
 _GENERE_CURT = {"Masc": "m", "Fem": "f"}

@@ -757,7 +757,92 @@ con `Criteri()`.
 las 257 decisiones de los homógrafos con ≤ 2 errores graves, sin perder en
 el manual ni en las regresiones (151, BOE estricto, gplsi).
 
-Resultados: pendientes.
+**Resultados (comparador, job 3035, `compara_models_20261112_1459`)**, con
+el criterio del sistema KenLM (`CRITERI_KENLM`); `sentit` = decisiones del
+modelo (v1 /57, v2 /132):
+
+| Modelo | sentit v1 | exactas v1 /253 | sentit v2 | exactas v2 /160 | manual /458 | 151 | BOE estr. | gplsi | ms/llamada |
+|---|---|---|---|---|---|---|---|---|---|
+| motor | 12 | 176 | 52 | 74 | 218 | 142 | 1.800 | 1.533 | — |
+| **KenLM + C1 (sistema)** | **49** | **224** | 85 | 106 | **232** | 144 | 1.894 | **1.550** | **0,096** |
+| KenLM de lemas | 46 | 220 | **93** | **111** | 231 | 144 | 1.894 | 1.549 | 3,86 |
+| KenLM de lemas + C1 | 48 | **224** | 88 | 109 | **232** | 144 | 1.894 | **1.550** | 3,82 |
+| Mezcla formas + lemas + C1 | 46 | 219 | 90 | 108 | **232** | 144 | 1.894 | 1.549 | 3,89 |
+
+Con el mejor criterio de cada uno (margen 1, λ 1, elegido sobre los mismos
+homógrafos): sistema 52 + 90 = 142 (exactas 225 / 108), lemas + C1 51 + 94
+= 145 (225 / 112), lemas solo 49 + 94 = 143, mezcla 51 + 91 = 142.
+
+**Errores graves** (`compara_models_20261112_1459_detall`, 257 decisiones de
+v1 + v2; grave = traducida sin hacer falta o candidata equivocada):
+
+| Modelo | Criterio | Aciertos | Graves | Sin traducir | Graves por palabra |
+|---|---|---|---|---|---|
+| KenLM + C1 (sistema) | sistema | 186 | 10 | 61 | manques 8, manca 2 |
+| Lemas + C1 | sistema | **189** | **5** | 63 | manca 3, calces 1, reeixides 1 |
+| Lemas solo | fijo | 187 | 19 | 51 | manca 6, reeixida(es) 7, cop(s) 3… |
+| Mezcla + C1 | sistema | 183 | 21 | 53 | manques 8, reeixida(es) 5, manca 4… |
+| KenLM + C1 / lemas + C1 | margen 1, λ 1 | 189 / 193 | 19 / 15 | 49 / 49 | reeixida(es) 7 en los dos |
+
+Antes de la fusión el sistema daba 191 / 2. Los 8 graves nuevos de
+«manques» son todos del cambio de E0248 (sección 4.17).
+
+Decisión a decisión, lemas + C1 frente al sistema (mismo criterio), solo
+cambian 14:
+- **«manques» (8)**: el modelo de lemas no se queda la «faltes» del motor y
+  deja «manques». Gana los 4 verbos/adjetivos (HG077, HG2-038, HG2-040,
+  HG2-043) y en los 4 nombres pasa de candidata equivocada a sin traducir.
+  Toda la ventaja en graves sale de aquí.
+- Gana: HG2-058 «rentadora» → «llavadora», HG2-154 «reeixides» → «exitoses».
+- Pierde: HG041 «El sastre cosia calces» → «bragues» (grave), HG2-157 «Les
+  reeixides de l'equip» → «exitoses» (grave), HG2-024 «per manca de diners»
+  → «falta» (grave), HG2-123 «panotxes» sin traducir.
+
+**Conclusión**: sin contar «manca/manques» (que dependen de E0248 y de
+referencias anteriores al cambio), los lemas dan 169 aciertos y 2 graves
+frente a 170 y 0 del sistema: **no mejoran**, y cuestan ~40 veces más por
+llamada. La mezcla y los criterios de margen 1 añaden graves. No se adopta
+el KenLM de lemas; se queda como experimento documentado. Lo que sí queda
+claro es que hay que resolver «manques» (sección 4.17).
+
+### 4.17 El sistema tras la fusión de `main` (12/11, job 3032, `avalua_sistema_20261112_1437`)
+`avlizador avalua --motor --model flor kenlm`, 0 errores en todo:
+
+| Benchmark | Motor | FLOR (antes → ahora) | KenLM + C1 (antes → ahora) |
+|---|---|---|---|
+| Homógrafos v1 (253) | 176 | 219 → 217 | 227 → **224** |
+| Homógrafos v2 (160) | 74 | 95 → 95 | 110 → **106** |
+| Manual (458) | 218 | 228 → **231** | 229 → **232** |
+| 151 (154) | 142 | 146 → 145 | 145 → 144 |
+| BOE estricto (2.000) | 1.800 | 1.887 → **1.894** | 1.887 → **1.894** |
+| gplsi (1.958) | 1.533 | 1.554 → 1.551 | 1.553 → 1.550 |
+
+El comparador (job 3035) da exactamente lo mismo para KenLM + C1. FLOR y
+KenLM solo difieren en una frase del manual (BM-AVL-191, «les anous»:
+acierta KenLM). De dónde vienen las bajadas de los homógrafos:
+
+- **E0248 «manques» → «faltes»** (cambio del léxico del 12/11, `fd697f9`):
+  el motor traduce ahora «manques» por «faltes» y KenLM se lo queda.
+  - Nombre (carencia): HG075, HG076, HG2-034 dan «faltes», pero el
+    benchmark espera «carències» (sus referencias son de antes del cambio).
+  - Verbo y adjetivo: HG077 «Tu faltes de paciència», HG2-038 «Si tu faltes
+    a la reunió», HG2-040, HG2-043 «dos velles faltes» (manca = sin un
+    brazo). El benchmark espera «manques»; FLOR acierta porque deja la
+    catalana. «dos velles faltes» es un error grave; «si tu faltes a la
+    reunió» es valenciano correcto, pero no es lo que pide la referencia.
+- **Concordancia de género nueva** (`concordanca_genere_sn.py`, de `main`):
+  HG2-045 «un brollador d'aigua molt freda» → «molt fred» (concuerda el
+  adjetivo con «brollador» en vez de con «aigua»: bug, pasa también con
+  FLOR y con el motor solo). En cambio HG2-048 sale ahora «d'un brollador»,
+  que es lo correcto: la referencia del benchmark («d'una brollador») está
+  mal.
+- La subida del manual (+3) y del BOE estricto (+7) es de la concordancia
+  de género, igual en FLOR y en KenLM.
+
+Pendiente del usuario (no tocar datos ni benchmarks sin permiso): decidir
+qué hacer con las referencias de «manques» (HG075, HG076, HG2-034) y con
+HG2-048, y si «manques» verbo/adjetivo debe seguir pasando a «faltes»; el
+bug de «molt freda», para quien lleve la concordancia de género.
 
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
@@ -893,4 +978,8 @@ Son compatibles: si C2 mejora la base, C1 puede desempatar encima.
 | 12/11 | Clasificador de «cop» reentrenado sin la AVL (para poder distribuirlo) | Sección 4.15. Mismas decisiones del sistema en las 68 colisiones; dev 0,830 frente a 0,831. Propuesto sustituir el `nb.json` (pendiente del usuario). |
 | 12/11 | **Se quita la AVL del clasificador** (`nb.json` = sin AVL; `sentit_cop.py` sin AVL por defecto) | Decisión del usuario. Mismas decisiones del sistema (sección 4.15). |
 | 12/11 | Fusión de `main` en `kenlm` (interfaz Transducens, concordancia de género) y PR #19/#20 a `main` | Sin conflictos; 107/108 tests (el que falla ya fallaba en `main`: texto de la portada). Hay que volver a medir el sistema. |
-| 12/11 | Prueba: KenLM de lemas (solo, + C1, mezcla formas + lemas) y foto del sistema actual, lanzado con `prova_lemes.sh` | Propuesta del supervisor (sección 4.16). Pendiente de resultados. |
+| 12/11 | Prueba: KenLM de lemas (solo, + C1, mezcla formas + lemas) y foto del sistema actual, lanzado con `prova_lemes.sh` | Propuesta del supervisor (sección 4.16). |
+| 12/11 | Sistema tras la fusión: KenLM + C1 224 / 106 / 232 / 144 / 1.894 / 1.550; FLOR 217 / 95 / 231 / 145 / 1.894 / 1.551 | Sección 4.17. Bajadas por E0248 («manques» → «faltes») frente a referencias antiguas y un bug de concordancia («molt freda»); subidas en manual y BOE por la concordancia. |
+| 12/11 | **KenLM de lemas: no se adopta** | Sección 4.16. Lemas + C1 189 / 5 frente a 186 / 10, pero toda la diferencia es «manques» (E0248); sin manca/manques, 169 / 2 frente a 170 / 0, y ~40× más lento. |
+| 13/11 | **Referencias de los homógrafos corregidas** (usuario + Claude, con permiso) | Coherencia con el léxico (E0247 manca→falta, E0248 manques→faltes): «manca» nombre → «falta» (HG069-071, HG2-021…024) y «manques» nombre → «faltes» (HG075, HG076, HG2-033…036), en `benchmark_homografs_cat_val.json`, `benchmark_sistema_final_cat_val.json` (el que se evalúa como `homografs`) y v2. Error de concordancia: HG2-048 «d'una brollador» → «d'un brollador» (HG029 «dos vegades» se cambió a «dues» y se deshizo: el valenciano del proyecto usa «dos» invariable, regla `cat_val/concordanca_dos_dues.py`). Recuento sin volver a ejecutar (decisiones del job 3035): KenLM + C1 191 / 5 (HG077, HG2-038, HG2-040, HG2-043 «manques» → «faltes»; HG2-028 «Si en falta algun»); lemas + C1 191 / 3; lemas 193 / 13; mezcla 190 / 14. |
+| 13/11 | **Regla del pronombre personal** (`punts.decisio_spacy`, `Punt.pronom_abans`, `pos_tagger.es_pronom_personal`, `Token.pron_type`) | Detrás de un pronombre personal (spaCy PRON + `PronType=Prs`; en mayúscula se vuelve a preguntar en minúscula, porque «Tu» inicial sale PROPN) no puede ir un nombre: si la lectura dialectal es nombre, se deja la catalana. Vale para cualquier homógrafo irresoluble, sin lista de palabras. En los benchmarks solo la activan «manques»/«manca» con pronombre (homógrafos v1 2, v2 6; manual, 151, BOE estricto y gplsi 0, tras corregir un falso positivo con «S'afegeixen»). Cambia 3 decisiones, las 3 a bien: HG077, HG2-038, HG2-040 («faltes» → «manques»). KenLM + C1, recuento: 191 / 5 → **194 / 2** (quedan HG2-043 «velles faltes» y HG2-028 «Si en falta algun»). FLOR ya las acertaba. Falta confirmarlo en Abaco. |

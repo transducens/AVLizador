@@ -76,6 +76,9 @@ class Token:
 
     `verb_form` (afegit 21/10/2026): el tret `VerbForm` d'spaCy ("Inf",
     "Fin", "Part", "Ger"). El consulta `cat_val/per_a_infinitiu.py`.
+
+    `pron_type` (afegit 13/11/2026): el tret `PronType` d'spaCy ("Prs",
+    "Art", "Rel"...). El consulta `pos_tagger.es_pronom_personal`.
     """
 
     surface: str
@@ -88,6 +91,7 @@ class Token:
     is_translated: bool = False
     is_proper_noun: bool = False
     start: int = 0
+    pron_type: str = ""
 
 
 # Orde de l'alternança (importa: la primera que casa guanya, d'esquerra a
