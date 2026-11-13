@@ -12,6 +12,54 @@ Código: `pipeline/03_seleccio_de_model/model_llengua/` (`compara_models.py`,
 `fasttext/`). Resultados en `pipeline/03_seleccio_de_model/resultats/`
 (fuera de git).
 
+## Estado actual (13/11/2026)
+
+**El modelo por defecto es KenLM + clasificador de sentido** (decisión del
+usuario, 13/11/2026). FLOR-760M queda como opción (`model="flor"`, extra
+`[ml]`) y sale de la imagen Docker.
+
+| Benchmark (exactas) | Motor solo | FLOR-760M | **KenLM + clasificador** |
+|---|---|---|---|
+| Homógrafos v1 (253) | 181 | 217 | **226** |
+| Homógrafos v2 (160) | 82 | 96 | **110** |
+| Manual mezcla BOE + AVL (458) | 218 | 231 | **232** |
+| 151 (154) | 142 | **145** | 144 |
+| BOE estricto (2.000) | 1.800 | 1.894 | 1.894 |
+| gplsi (1.958) | 1.533 | **1.551** | 1.550 |
+
+(KenLM: `avalua_sistema_20261113_1145`, con la tabla de frecuencias
+corregida; FLOR y motor: `_1016`.) En las 257 decisiones de los homógrafos:
+191 aciertos, 1 error grave (HG2-028 «Si en falta algun», valenciano
+correcto) y 65 sin traducir; «manques» no se traduce nunca (33 apariciones
+en el corpus frente a 420 de «faltes»). Coste: 0,1 ms por frase candidata y
+~74 MB, frente a 833 ms y ~1,5 GB de FLOR; sin `torch`.
+
+**El sistema, pieza a pieza** (con la sección donde se decidió):
+1. Motor de reglas → frases valencianas completas por cada candidata de
+   cada palabra ambigua del léxico (como con FLOR).
+2. spaCy descarta lecturas imposibles (categoría distinta de la dialectal,
+   concordancia con el determinante y, desde el 13/11, pronombre personal
+   delante: sección 8).
+3. KenLM `valencia_net_dogv_o5`: MaCoCu valenciano limpio + DOGV
+   2025-2026, orden 5, poda de singletons, 77 MB (secciones 3, 4.4, 4.9).
+4. Prior de frecuencia contado del texto de entrenamiento y λ (1,5 en los
+   homógrafos, 0,75 en las colisiones) contra el sesgo de las palabras
+   frecuentes (secciones 2.3, 2.4, 4.5).
+5. Margen 3 con la catalana por defecto: si KenLM duda, se queda la
+   palabra catalana (un error leve en vez de uno grave; sección 4.10).
+6. En las colisiones («cop»), si KenLM gana por menos de 2, decide el
+   clasificador de sentido (Naive Bayes, sin la AVL; secciones 4.11, 4.15).
+
+**Descartado** (con su sección): KenLM catalán «menos probable» y fastText
+(4.1), diferencia val − cat (4.1), KenLM sin poda y + AVL + UA (4.9),
+KenLM en dos sentidos (4.12), veto del clasificador (4.13), híbrido FLOR
+para «cop» (el usuario no quiere FLOR en la imagen; 4.8), KenLM de lemas y
+mezcla formas + lemas (4.16).
+
+**Siguiente**: clasificador de sentido general (uno por palabra ambigua,
+no solo «cop»). Pendiente aparte: publicar los ficheros de KenLM en
+Hugging Face (revisar antes las condiciones de reutilización del DOGV).
+
 ---
 
 ## 1. El problema y cómo se mide
@@ -805,6 +853,35 @@ llamada. La mezcla y los criterios de margen 1 añaden graves. No se adopta
 el KenLM de lemas; se queda como experimento documentado. Lo que sí queda
 claro es que hay que resolver «manques» (sección 4.17).
 
+**Repetición del 13/11** (job de `NOMES_COMPARA=1 prova_lemes.sh`,
+`compara_models_20261113_1016`), con las referencias corregidas
+(«manca/manques» nombre → «falta/faltes») y la regla del pronombre
+personal; mismo criterio que arriba:
+
+| Modelo | Aciertos /257 | Graves | Sin traducir | exactas v1 / v2 / manual / 151 / BOE estr. / gplsi | ms/llamada |
+|---|---|---|---|---|---|
+| **KenLM + C1 (sistema)** | **194** | **2** | 61 | **228** / 111 / **232** / 144 / 1.894 / **1.550** | **0,10** |
+| Lemas + C1 | 191 | 3 | 63 | 225 / 111 / **232** / 144 / 1.894 / **1.550** | 5,0 |
+| Lemas solo | 193 | 13 | 51 | 223 / **115** / 231 / 144 / 1.894 / 1.549 | 6,2 |
+| Mezcla + C1 | 193 | 11 | 53 | 223 / **115** / **232** / 144 / 1.894 / 1.549 | 4,8 |
+
+- Graves del sistema: HG2-028 «Si en falta algun» (valenciano correcto, la
+  referencia pide «manca») y HG2-043 «dos velles faltes» (adjetivo).
+- Lemas + C1 frente al sistema cambia 11 decisiones: gana 4 (HG2-024
+  «falta», HG2-043, HG2-058 «llavadora», HG2-154 «exitoses») y pierde 7
+  (4 «manques» nombre que deja sin traducir, HG2-123 «panotxes», y dos
+  graves nuevos: HG041 «calces» → «bragues», HG2-157 «reeixides» →
+  «exitoses»).
+- Lemas solo y la mezcla ganan 4 exactas en v2, pero con 11-13 graves
+  («reeixida» → «exitosa» y «cop» → «vegada» sobre todo).
+- Con el mejor criterio de cada uno (margen 1, ajustado sobre los mismos
+  homógrafos), todos suben aciertos a costa de graves (sistema 199 / 9).
+- Coste: los lemas pasan de ~4 a 5-6 ms por llamada (spaCy en cada frase
+  candidata); el sistema, 0,1 ms.
+
+**Conclusión**: se confirma que el KenLM de lemas no mejora al sistema ni
+en aciertos ni en graves, y es ~50 veces más lento por llamada.
+
 ### 4.17 El sistema tras la fusión de `main` (12/11, job 3032, `avalua_sistema_20261112_1437`)
 `avlizador avalua --motor --model flor kenlm`, 0 errores en todo:
 
@@ -843,6 +920,24 @@ Pendiente del usuario (no tocar datos ni benchmarks sin permiso): decidir
 qué hacer con las referencias de «manques» (HG075, HG076, HG2-034) y con
 HG2-048, y si «manques» verbo/adjetivo debe seguir pasando a «faltes»; el
 bug de «molt freda», para quien lleve la concordancia de género.
+
+**13/11, con las referencias corregidas y la regla del pronombre**
+(`avalua_sistema_20261113_1016`, 0 errores; el comparador da lo mismo para
+KenLM + C1):
+
+| Benchmark | Motor (12/11 → 13/11) | FLOR | KenLM + C1 |
+|---|---|---|---|
+| Homógrafos v1 (253) | 176 → 181 | 217 → 217 | 224 → **228** |
+| Homógrafos v2 (160) | 74 → 82 | 95 → 96 | 106 → **111** |
+| Manual (458) | 218 | 231 | **232** |
+| 151 (154) | 142 | **145** | 144 |
+| BOE estricto (2.000) | 1.800 | 1.894 | 1.894 |
+| gplsi (1.958) | 1.533 | **1.551** | 1.550 |
+
+Las subidas de los homógrafos son de las referencias de «manca/manques» y
+de HG2-048; en KenLM, además, de la regla del pronombre (HG077, HG2-038,
+HG2-040). El resto no cambia. KenLM + C1 gana a FLOR en homógrafos (+11 en
+v1, +15 en v2) y en el manual (+1), y pierde 1 en el 151 y 1 en gplsi.
 
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
@@ -983,3 +1078,10 @@ Son compatibles: si C2 mejora la base, C1 puede desempatar encima.
 | 12/11 | **KenLM de lemas: no se adopta** | Sección 4.16. Lemas + C1 189 / 5 frente a 186 / 10, pero toda la diferencia es «manques» (E0248); sin manca/manques, 169 / 2 frente a 170 / 0, y ~40× más lento. |
 | 13/11 | **Referencias de los homógrafos corregidas** (usuario + Claude, con permiso) | Coherencia con el léxico (E0247 manca→falta, E0248 manques→faltes): «manca» nombre → «falta» (HG069-071, HG2-021…024) y «manques» nombre → «faltes» (HG075, HG076, HG2-033…036), en `benchmark_homografs_cat_val.json`, `benchmark_sistema_final_cat_val.json` (el que se evalúa como `homografs`) y v2. Error de concordancia: HG2-048 «d'una brollador» → «d'un brollador» (HG029 «dos vegades» se cambió a «dues» y se deshizo: el valenciano del proyecto usa «dos» invariable, regla `cat_val/concordanca_dos_dues.py`). Recuento sin volver a ejecutar (decisiones del job 3035): KenLM + C1 191 / 5 (HG077, HG2-038, HG2-040, HG2-043 «manques» → «faltes»; HG2-028 «Si en falta algun»); lemas + C1 191 / 3; lemas 193 / 13; mezcla 190 / 14. |
 | 13/11 | **Regla del pronombre personal** (`punts.decisio_spacy`, `Punt.pronom_abans`, `pos_tagger.es_pronom_personal`, `Token.pron_type`) | Detrás de un pronombre personal (spaCy PRON + `PronType=Prs`; en mayúscula se vuelve a preguntar en minúscula, porque «Tu» inicial sale PROPN) no puede ir un nombre: si la lectura dialectal es nombre, se deja la catalana. Vale para cualquier homógrafo irresoluble, sin lista de palabras. En los benchmarks solo la activan «manques»/«manca» con pronombre (homógrafos v1 2, v2 6; manual, 151, BOE estricto y gplsi 0, tras corregir un falso positivo con «S'afegeixen»). Cambia 3 decisiones, las 3 a bien: HG077, HG2-038, HG2-040 («faltes» → «manques»). KenLM + C1, recuento: 191 / 5 → **194 / 2** (quedan HG2-043 «velles faltes» y HG2-028 «Si en falta algun»). FLOR ya las acertaba. Falta confirmarlo en Abaco. |
+| 13/11 | Repetición en Abaco (`compara_models_20261113_1016`): **KenLM + C1 194 / 2** (confirma el recuento), lemas + C1 191 / 3, lemas 193 / 13, mezcla 193 / 11 | Sección 4.16, «Repetición del 13/11». Los lemas no mejoran: confirmado. |
+| 13/11 | **KenLM de lemas y mezcla: descartados** | Repetición del 13/11 (sección 4.16): no mejoran ni aciertos ni graves y son ~50× más lentos. Los fallos que quedan son de frecuencia y de palabras sin datos en el corpus, que los lemas no tocan. |
+| 13/11 | **Fallo: la tabla de frecuencias se había quedado vieja** | `valencia_net_dogv_freq.json` era del 11/11 (candidatas de entonces): tenía «carències» y no «faltes», la candidata de «manques» desde E0248. Una candidata que no está en la tabla cuenta como 0 apariciones, y con λ eso es una ventaja enorme (+~5 puntos para «faltes»). Regenerada en Abaco (`freq_unigrames.py`; «faltes» 420, «manques» 33; copia de la vieja en `_freq_20261111.json`) y vuelto a evaluar (`avalua_sistema_20261113_1145`, `compara_models_20261113_1145`): **191 aciertos / 1 grave / 65 sin traducir** (antes 194 / 2 / 61); exactas v1 228 → 226, v2 111 → 110, el resto igual. Cambian 5 decisiones, todas «manques»: los 4 nombres pasan de «faltes» a sin traducir y HG2-043 de grave a acierto. Para que no vuelva a pasar (hecho, rama `kenlm-per-defecte`): `freq_unigrames.py` cuenta las candidatas y **todas las formas de una palabra del léxico** (una palabra que se marque ambigua más adelante ya estará en la tabla); `ModelKenLM` avisa (`AvisFreqKenLM`) al cargar y al puntuar si una candidata no está en la tabla; test en `tests/test_kenlm.py`. La próxima vez que se regenere la tabla en Abaco ya saldrá con todas las formas. |
+| 13/11 | **KenLM + clasificador pasa a ser el modelo por defecto; FLOR, opcional** | Decisión del usuario. Iguala o mejora a FLOR en todo menos 1 frase del 151 y 1 de gplsi (tabla «Estado actual»), ~8.000× más rápido y sin torch. `translate_cat_val(text)` usa KenLM; sin `kenlm` o sin los ficheros, motor solo + aviso; `model="kenlm"` explícito da error; `model="flor"` sigue funcionando (extra `[ml]`). `avlizador avalua` evalúa KenLM por defecto (la clave de FLOR pasa de `sistema_final` a `flor`). Rama `kenlm-per-defecte`. |
+| 13/11 | **Imagen Docker solo con KenLM** (sin torch ni FLOR) | Decisión del usuario. Los ficheros de KenLM se copian de `docker/kenlm/` (fuera de git) al construir, en `/opt/kenlm`; ahora se traen de Abaco, más adelante se publicarán en Hugging Face. `mem_limit` 4g → 2g; fuera `TORCH_NUM_THREADS`, `OMP_NUM_THREADS` y las variables de Hugging Face. `NOTICE`: KenLM (LGPL-2.1) y los datos del modelo (MaCoCu CC0, DOGV: condiciones por revisar). |
+| 13/11 | DOGV nuevo (`dades/dogv_apunt/nova/`): ampliación, no se reentrena todavía | Contiene los 10.289 documentos de antes, idénticos, y 5.413 más (casi todos de 2025, +7,2 M palabras). En las palabras ambiguas apenas aporta (1 «colp» frente a 3.784 «vegada»; 0 de reeixida, gandula, anou, panotxa…). Se usará para el clasificador general; reentrenar KenLM con él, solo si hace falta. |
+| 13/11 | Siguiente: clasificador de sentido **general** (hoy solo «cop»), uno por punto ambiguo entrenado con las frases del corpus de cada candidata | Decisión del usuario. Si una candidata no tiene datos, sin clasificador (se queda la catalana si KenLM duda). |

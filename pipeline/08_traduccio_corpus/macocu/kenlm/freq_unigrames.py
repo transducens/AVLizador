@@ -9,6 +9,14 @@ Kneser-Ney, l'unigrama compta en quants contextos distints apareix una
 paraula, no quantes vegades: "colp" −10,66 i "vegada" −9,89 en
 valencia_net_dogv, quan "vegada" és 35 voltes més freqüent).
 
+Quines paraules (13/11/2026): les candidates d'ara i TOTES les formes d'una
+paraula del lèxic (català i valencià de `lexic_general.json`). Abans només
+les candidates del moment, i la taula es quedava vella sense avisar quan el
+lèxic canviava una traducció («manques» -> «faltes»: «faltes» no hi era i
+comptava com a 0, cosa que amb λ li donava avantatge). Ara una paraula que
+el lèxic marque com a ambigua més avant ja hi serà; i `ModelKenLM` avisa
+si en falta alguna (`AvisFreqKenLM`).
+
 Eixida: JSON `{"text", "linies", "tokens", "freq": {paraula: n}}`, amb
 `tokens` = paraules + un </s> per línia (com compta KenLM). Per defecte,
 al costat del model: `<nom>_freq.json`.
@@ -26,9 +34,24 @@ from pathlib import Path
 
 
 def candidats() -> set[str]:
-    from avlizador.traductor_cat_val.model_llengua.punts import carrega_punts
+    """Les candidates d'ara + totes les formes d'una paraula del lèxic,
+    normalitzades com el text d'entrenament.
 
-    return {c.lower() for p, d in carrega_punts().items() for c in [p, *d["candidats"]]}
+    >>> f = candidats()
+    >>> {"faltes", "manques", "colp", "vegada", "xiquet", "aquest"} <= f, len(f) > 2000
+    (True, True)
+    """
+    from avlizador.traductor_cat_val.model_llengua.kenlm import normalitza
+    from avlizador.traductor_cat_val.model_llengua.lemes import formes_candidates
+    from avlizador.traductor_cat_val.rules import LEXIC_GENERAL_PATH
+
+    formes = set(formes_candidates())
+    for e in json.loads(Path(LEXIC_GENERAL_PATH).read_text(encoding="utf-8")):
+        for camp in ("catalan", "valenciano"):
+            forma = normalitza(e.get(camp) or "")
+            if forma and " " not in forma:
+                formes.add(forma)
+    return formes
 
 
 def compta(text: Path, formes: set[str]) -> dict:
@@ -65,7 +88,11 @@ def main(argv: list[str] | None = None) -> None:
     eixida = a.eixida or a.text.with_name(a.text.stem + "_freq.json")
     eixida.write_text(json.dumps(r, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"{r['linies']} línies, {r['tokens']} tokens -> {eixida}")
-    for f, n in sorted(r["freq"].items(), key=lambda x: -x[1]):
+    from avlizador.traductor_cat_val.model_llengua.lemes import formes_candidates
+
+    candidates = formes_candidates()
+    print(f"{len(r['freq'])} formes comptades; les candidates d'ara:")
+    for f, n in sorted(((f, n) for f, n in r["freq"].items() if f in candidates), key=lambda x: -x[1]):
         print(f"  {f:12s} {n}")
 
 

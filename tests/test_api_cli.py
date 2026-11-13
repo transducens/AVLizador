@@ -24,15 +24,30 @@ def test_api_grau_dialectal():
     assert avlizador.calcula_gdc("Aquest nen vol venir avui.")["gdc"] == 1.0
 
 
-def test_sense_model_llengua_usa_el_motor_i_avisa(monkeypatch):
-    monkeypatch.setattr(translate_invers, "model_llengua_disponible", lambda: False)
+def test_sense_kenlm_usa_el_motor_i_avisa(monkeypatch):
+    """Per defecte (KenLM, 13/11/2026): si falta KenLM, motor sol i un avís."""
+    from avlizador.traductor_cat_val.model_llengua import kenlm
+
+    monkeypatch.setattr(kenlm, "kenlm_disponible", lambda directori=None: False)
     monkeypatch.setattr(translate_invers, "_AVISAT", False)
-    with pytest.warns(translate_invers.AvisSenseModelLlengua):
+    with pytest.warns(translate_invers.AvisSenseModelLlengua, match="KenLM"):
         eixida = translate_invers.translate_cat_val("Un cop acabada la reunió, marxem.")
     assert eixida == translate_invers.translate_cat_val_motor("Un cop acabada la reunió, marxem.")
     with warnings.catch_warnings():  # només avisa una vegada
         warnings.simplefilter("error")
         translate_invers.translate_cat_val("Aquest noi.")
+
+
+def test_flor_sense_extra_ml_usa_el_motor_i_avisa(monkeypatch):
+    monkeypatch.setattr(translate_invers, "model_llengua_disponible", lambda: False)
+    monkeypatch.setattr(translate_invers, "_AVISAT", False)
+    with pytest.warns(translate_invers.AvisSenseModelLlengua, match="FLOR"):
+        eixida = translate_invers.translate_cat_val("Un cop acabada la reunió, marxem.", model="flor")
+    assert eixida == translate_invers.translate_cat_val_motor("Un cop acabada la reunió, marxem.")
+
+
+def test_model_per_defecte_es_kenlm():
+    assert translate_invers.MODEL_PER_DEFECTE == "kenlm"
 
 
 def test_cli_tradueix_motor(capsys):
@@ -52,12 +67,16 @@ def test_cli_avalua(tmp_path, capsys):
     pytest.importorskip("sacrebleu")
     from avlizador.avaluacio import avalua
 
-    monkey_sistemes = avalua.sistemes
+    from avlizador.traductor_cat_val import model_llengua
+
+    monkey_sistemes, monkey_kenlm = avalua.sistemes, model_llengua.sistema_kenlm
     try:
-        avalua.sistemes = lambda amb_motor, models=("flor",): [("motor", "Motor solo", avlizador.translate_cat_val_motor)]
+        # Sense KenLM de veritat: es comprova abans d'avaluar (13/11/2026).
+        model_llengua.sistema_kenlm = lambda directori=None: None
+        avalua.sistemes = lambda amb_motor, models=("kenlm",): [("motor", "Motor solo", avlizador.translate_cat_val_motor)]
         assert cli.main(["avalua", "--fitxer", str(bench), "--eixida", str(tmp_path / "r")]) == 0
     finally:
-        avalua.sistemes = monkey_sistemes
+        avalua.sistemes, model_llengua.sistema_kenlm = monkey_sistemes, monkey_kenlm
     assert "| 1/1 (100,0 %) |" in capsys.readouterr().out
 
 

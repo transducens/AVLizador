@@ -22,18 +22,19 @@ de `diccionarios/` (o `lexic/`), en `dades/lexic/`.
 **Prioritat: català → valencià** (decisió de l'usuari, 20/10/2026). És una
 de les dos eines que s'entreguen a la Conselleria (l'altra és el GD,
 `avlizador.grau_dialectal`), en equips només amb CPU. **Sistema
-principal = motor + FLOR-760M** (30/10/2026); el motor sol, com a
-comparació o sense l'extra `[ml]`.
+principal = motor + KenLM + classificador de sentit** (des del 13/11/2026;
+del 30/10 al 12/11, motor + FLOR-760M, que continua com a opció amb
+`model="flor"`); el motor sol, com a comparació o si falta KenLM.
 
 ### Què hi ha en el paquet
 
 ```
 traductor_cat_val/
-├── __init__.py               API: translate_cat_val (motor + FLOR-760M; sense [ml], motor sol
-│                             amb l'avís AvisSenseModelLlengua), translate_cat_val_motor
+├── __init__.py               API: translate_cat_val (motor + KenLM; sense kenlm o sense els fitxers,
+│                             motor sol amb l'avís AvisSenseModelLlengua), translate_cat_val_motor
 ├── translate_invers.py       cat→val (sistema principal i motor sol)
 ├── translate.py              val→cat: fora de l'API pública; el GD usa els seus carregadors
-├── data/                     NOMÉS els dos fitxers del proveïdor (còpies que genera
+├── data/                     NOMÉS els dos fitxers del lèxic (còpies que genera
 │   │                         scripts/sync_data.py des de dades/lexic/; no editar a mà):
 │   ├── lexic_general.json          lèxic, numerals, possessius, demostratius, homògrafs
 │   └── conjugacions_dialectals.json  formes verbals
@@ -42,7 +43,7 @@ traductor_cat_val/
 │   ├── pos_tagger.py         spaCy (ca_core_news_md, si no sm): categoria, gènere, lema, forma verbal
 │   ├── cat_val/              motor català → valencià (9 capes, vore baix)
 │   └── val_cat/              motor valencià → català (aparcat des del 20/10; l'usa el GD)
-└── model_llengua/            homògrafs cat→val amb FLOR-760M (cal l'extra [ml])
+└── model_llengua/            homògrafs cat→val: KenLM + classificador (extra [kenlm]) o FLOR ([ml])
 ```
 
 Fora del paquet: `scripts/sync_data.py` (arrel),
@@ -72,10 +73,12 @@ text català
   │      AccentuacioInversRule ...... francès → francés
   │      PerAInfinitiuInversRule .... per fer → per a fer
   │
-  └─ 3. model_llengua (translate_cat_val_ml) — només si hi ha una paraula ambigua del lèxic:
-         cop / cops (colision_homonima) ........ FLOR puntua "Una vegada…" davant "Un colp…"
+  └─ 3. model_llengua (translate_cat_val_kenlm) — només si hi ha una paraula ambigua del lèxic:
+         cop / cops (colision_homonima) ........ KenLM puntua "Una vegada…" davant "Un colp…";
+                                                   si guanya per menys de 2, decidix el classificador de sentit
          homògrafs (homonimia_lexica: nou, manca, calces, gandula…) spaCy per categoria dels
-                                                   `lemas`; amb NOUN, FLOR (marge 2 amb la catalana per defecte)
+                                                   `lemas` i pronom personal davant; si no, KenLM
+                                                   (marge 3 amb la catalana per defecte)
 ```
 
 Detall de la capa 3: `model_llengua/README.md`. Detall de les capes del
@@ -85,21 +88,28 @@ motor: `rules/cat_val/README.md`.
 
 ```python
 from avlizador.traductor_cat_val import translate_cat_val, translate_cat_val_motor
-translate_cat_val("Un cop acabada la reunió.")         # sistema principal: motor + FLOR-760M
+translate_cat_val("Un cop acabada la reunió.")         # sistema principal: motor + KenLM (extra [kenlm], AVLIZADOR_KENLM_DIR)
 translate_cat_val_motor("Aquest xiquet és molt bo.")   # motor sol (spaCy, sense model)
-translate_cat_val("Un cop acabada la reunió.", model="kenlm")  # motor + KenLM (extra [kenlm], AVLIZADOR_KENLM_DIR)
+translate_cat_val("Un cop acabada la reunió.", model="flor")   # motor + FLOR-760M (extra [ml])
 ```
 
 ```bash
 avlizador tradueix "Aquest xiquet és molt bo."
 avlizador tradueix --motor "Aquest xiquet és molt bo."
-avlizador tradueix --model kenlm "Aquest xiquet és molt bo."
+avlizador tradueix --model flor "Aquest xiquet és molt bo."
 ```
 
-### Resultats actuals (cat→val, 30/10/2026)
+### Resultats actuals (cat→val, 13/11/2026)
 
-Exactes del sistema principal (motor + FLOR-760M); entre parèntesis, el
-motor sol on s'ha mesurat. Totes les mètriques (BLEU, chrF, TER, WER),
+Exactes (`avalua_sistema_20261113_1145`), KenLM + classificador / FLOR-760M /
+motor sol: homògrafs + 151 (`homografs`) **226** / 217 / 181 de 253;
+homògrafs v2 **110** / 96 / 82 de 160; manual mescla **232** / 231 / 218 de
+458 (TER 5,58 / 5,59 / 5,90); 151 144 / **145** / 142; BOE estricte 1.894 /
+1.894 / 1.800; gplsi 1.550 / **1.551** / 1.533. Motius i detall:
+`documentacio/resultats_model_llengua_kenlm.md`.
+
+Taula anterior (30/10/2026), amb el sistema d'aleshores (motor +
+FLOR-760M); entre parèntesis, el motor sol on es va mesurar. Totes les mètriques (BLEU, chrF, TER, WER),
 en `pipeline/03_seleccio_de_model/resultats_benchmarks_cat_val.md`.
 
 | benchmark (`avlizador avalua --llista`) | exactes |
@@ -114,12 +124,13 @@ en `pipeline/03_seleccio_de_model/resultats_benchmarks_cat_val.md`.
 | gplsi (`gplsi`) | 1.544/1.958 |
 
 Recursos: motor ~700 MB de RAM amb `ca_core_news_md`, ~250 frases/s en 1
-nucli; la capa de model hi afig 1,5 GB i ~1,5 s per frase amb "cop".
+nucli. La capa de model amb KenLM hi afig ~74 MB i ~0,1 ms per frase
+candidata; amb FLOR, 1,5 GB i ~1,5 s per frase amb "cop".
 
 ### Regles de treball vigents
 
 - Les dades només ixen de `dades/lexic/` via `python scripts/sync_data.py`;
-  res de llistes de paraules a mà. Les fonts del proveïdor només s'editen
+  res de llistes de paraules a mà. Les fonts del lèxic només s'editen
   amb permís explícit, cas a cas.
 - En cas de dubte entre candidats, mana `canonica: true`. Les entrades
   `_PENDENT` s'usen com les altres.
@@ -877,7 +888,7 @@ cat-val --benchmark ...`). Cal el paquet instal·lat en l'entorn
 ## Proves
 
 ```bash
-pip install -e ".[ml,avaluacio,dev]" --extra-index-url https://download.pytorch.org/whl/cpu
+pip install -e ".[kenlm,avaluacio,dev]"   # en Windows kenlm no s'instal·la: ".[avaluacio,dev]"
 pytest
 ```
 

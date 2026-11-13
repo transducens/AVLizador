@@ -4,9 +4,15 @@
 #
 #   docker compose up --build        # http://localhost:8000
 #
+# Des del 13/11/2026 el model de llengua és KenLM (en lloc de FLOR-760M i
+# PyTorch): la imatge és molt més lleugera. ABANS DE CONSTRUIR-LA cal posar
+# en docker/kenlm/ (carpeta ignorada per git) els tres fitxers del model:
+#   valencia_net_dogv_o5.binary, valencia_net_dogv_freq.json, nb.json
+# (de dades/macocu/kenlm/ en Abaco; més avant es publicaran en Hugging Face).
+#
 # LLICÈNCIES: la imatge inclou el model d'spaCy ca_core_news_md (GPL-3.0) i
-# FLOR-760M (derivat de BLOOM, llicència RAIL). Vegeu NOTICE abans de
-# distribuir-la; la recomanació és construir-la en local (decisió D3).
+# la biblioteca KenLM (LGPL-2.1). Vegeu NOTICE abans de distribuir-la; la
+# recomanació és construir-la en local (decisió D3).
 
 # --- Fase 1: instal·lació -------------------------------------------------
 FROM python:3.12-slim AS construccio
@@ -15,25 +21,27 @@ ENV PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PYTHONDONTWRITEBYTECODE=1
 
+# kenlm es compila en instal·lar-lo: compilador de C++ i zlib només en esta
+# fase (la imatge final no els porta).
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends build-essential zlib1g-dev \
+ && rm -rf /var/lib/apt/lists/*
+
 RUN python -m venv /opt/venv
 ENV PATH=/opt/venv/bin:$PATH
 
 WORKDIR /src
 COPY pyproject.toml README.md LICENSE NOTICE ./
 COPY src ./src
-# torch només CPU (~200 MB en compte de més de 2 GB amb CUDA). Primer i a
-# soles des de l'índex de CPU: amb --extra-index-url pip podria triar el de
-# PyPI (CUDA).
-RUN pip install torch --index-url https://download.pytorch.org/whl/cpu \
- && pip install ".[ml,web]" \
+RUN pip install ".[kenlm,web]" \
  && pip freeze > /opt/versions_python.txt
 
-# FLOR-760M dins de la imatge (decisió D2), a una revisió fixa: la mateixa
-# amb què s'han mesurat els resultats.
-ARG FLOR_REVISIO=d47b56bdc67aa290cf9c4a64a6ee040b01eacdfc
-ENV HF_HOME=/opt/hf
-COPY docker/descarrega_flor.py /tmp/descarrega_flor.py
-RUN python /tmp/descarrega_flor.py "$FLOR_REVISIO"
+# Fitxers del model KenLM (vore la capçalera). Si en falta algun, la
+# construcció s'atura ací amb un missatge clar.
+COPY docker/kenlm/ /opt/kenlm/
+RUN for f in valencia_net_dogv_o5.binary valencia_net_dogv_freq.json nb.json; do \
+      test -s "/opt/kenlm/$f" || { echo "Falta docker/kenlm/$f (vore la capçalera del Dockerfile)" >&2; exit 1; }; \
+    done
 
 # --- Fase 2: imatge final, neta i sense root ------------------------------
 FROM python:3.12-slim
@@ -41,7 +49,7 @@ FROM python:3.12-slim
 RUN useradd --system --uid 10001 --no-create-home --shell /usr/sbin/nologin avlizador
 
 COPY --from=construccio /opt/venv /opt/venv
-COPY --from=construccio /opt/hf /opt/hf
+COPY --from=construccio /opt/kenlm /opt/kenlm
 COPY --from=construccio /opt/versions_python.txt /opt/versions_python.txt
 
 # Valors per defecte (es poden canviar en docker-compose.yml sense
@@ -49,22 +57,18 @@ COPY --from=construccio /opt/versions_python.txt /opt/versions_python.txt
 ENV PATH=/opt/venv/bin:$PATH \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    HF_HOME=/opt/hf \
-    HF_HUB_OFFLINE=1 \
-    TRANSFORMERS_OFFLINE=1 \
     AVLIZADOR_MODE=complet \
+    AVLIZADOR_KENLM_DIR=/opt/kenlm \
     MAX_CARACTERS=20000 \
     MAX_TRADUCCIONS_SIMULTANIES=2 \
-    OMP_NUM_THREADS=2 \
-    TORCH_NUM_THREADS=2 \
     UVICORN_LOG_LEVEL=warning
 
 USER avlizador
 WORKDIR /tmp
 EXPOSE 8000
 
-# Carregar spaCy i FLOR tarda uns segons: --start-period els dona temps.
-HEALTHCHECK --interval=30s --timeout=5s --start-period=120s --retries=3 \
+# Carregar spaCy i KenLM tarda uns segons: --start-period els dona temps.
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
   CMD ["python", "-c", "import sys, urllib.request; r = urllib.request.urlopen('http://127.0.0.1:8000/api/salut', timeout=4).read(); sys.exit(0 if b'\"ok\"' in r else 1)"]
 
 CMD ["avlizador", "web", "--host", "0.0.0.0", "--port", "8000"]

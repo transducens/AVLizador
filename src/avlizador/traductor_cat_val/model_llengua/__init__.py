@@ -1,12 +1,18 @@
 """
 traductor/model_llengua -- Postprocessat cat->val amb un MODEL DE LLENGUA
-per als homògrafs que el motor no pot resoldre (23/10/2026). Opcional:
-`traductor.translate_cat_val` no canvia i no necessita res d'açò.
+per als homògrafs que el motor no pot resoldre (23/10/2026).
+`translate_cat_val` sempre el fa servir; `translate_cat_val_motor` no.
 
-Dos models (12/11/2026): FLOR-760M (`puntuador.py`, per defecte;
-`translate_cat_val_ml`) o KenLM + classificador de sentit de "cop"
-(`kenlm.py`, `sentit.py`; `translate_cat_val_kenlm` amb `CRITERI_KENLM`).
-Els dos ocupen el mateix buit: puntuen les frases candidates.
+Dos models, que ocupen el mateix buit (puntuen les frases candidates):
+- **KenLM + classificador de sentit de "cop"** (`kenlm.py`, `sentit.py`;
+  `translate_cat_val_kenlm` amb `CRITERI_KENLM`): el model PER DEFECTE des
+  del 13/11/2026 (decisió de l'usuari; motius i xifres en
+  `documentacio/resultats_model_llengua_kenlm.md`).
+- FLOR-760M (`puntuador.py`; `translate_cat_val_ml` amb `Criteri()`): el
+  model per defecte del 23/10 al 12/11/2026; ara opcional (`model="flor"`).
+
+La història de més avall (23/10-05/11) és la de FLOR; les capes d'spaCy i
+la tria per tipus de punt són les mateixes per als dos models.
 
 Com funciona: el motor tradueix la frase; per a cada paraula ambigua del
 lèxic (vore `punts.py`) es construïxen les frases valencianes completes,

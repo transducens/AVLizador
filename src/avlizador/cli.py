@@ -3,8 +3,8 @@
     avlizador tradueix "Aquest noi necessita ajuda."   # català -> valencià
     avlizador tradueix --fitxer entrada.txt > eixida.txt
     echo "Aquest noi..." | avlizador tradueix
-    avlizador tradueix --motor "..."                   # motor sol, sense FLOR
-    avlizador tradueix --model kenlm "..."             # KenLM en lloc de FLOR (extra [kenlm])
+    avlizador tradueix --motor "..."                   # motor sol, sense model de llengua
+    avlizador tradueix --model flor "..."              # FLOR-760M en lloc de KenLM (extra [ml])
     avlizador gd  --text "Este xiquet vol vindre hui." # Grau Dialectal
     avlizador gdv --text "..."                         # GDV
     avlizador gdc --text "..."                         # GDC
@@ -21,7 +21,7 @@ import sys
 from pathlib import Path
 
 SUBORDRES = {
-    "tradueix": "Traduïx de català a valencià (motor + FLOR-760M).",
+    "tradueix": "Traduïx de català a valencià (motor + KenLM).",
     "gd": "Grau Dialectal (0 = català, 1 = valencià).",
     "gdv": "Grau Dialectal Valencià (1 = valencià pur).",
     "gdc": "Grau Dialectal Català (1 = català pur).",
@@ -40,9 +40,11 @@ def tradueix(argv: list[str]) -> int:
     parser.add_argument("--fitxer", type=Path, help="Fitxer de text (UTF-8), una frase o paràgraf per línia.")
     parser.add_argument("--motor", action="store_true",
                         help="Només el motor de regles, sense el model de llengua.")
-    parser.add_argument("--model", choices=["flor", "kenlm"], default="flor",
-                        help="Model de llengua per als homògrafs: flor (per defecte) o kenlm "
-                             "(extra [kenlm] i fitxers en AVLIZADOR_KENLM_DIR).")
+    parser.add_argument("--model", choices=["kenlm", "flor"], default=None,
+                        help="Model de llengua per als homògrafs: kenlm (per defecte; extra "
+                             "[kenlm] i fitxers en AVLIZADOR_KENLM_DIR; si falten, motor sol i "
+                             "avís) o flor (FLOR-760M, extra [ml]). Amb --model kenlm, si falta "
+                             "alguna cosa és un error.")
     args = parser.parse_args(argv)
 
     from .traductor_cat_val import translate_cat_val, translate_cat_val_motor

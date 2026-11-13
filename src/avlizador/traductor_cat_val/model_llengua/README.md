@@ -2,41 +2,74 @@
 
 Postprocessat (23/10/2026) per a les paraules catalanes ambigües que el
 motor de regles no pot resoldre a soles. Des del 29/10/2026 forma part
-del **sistema principal** (`translate_cat_val`); cal l'extra `[ml]`
-(`torch` + `transformers`). Sense ell, `translate_cat_val` usa el motor
-sol i avisa una vegada (`AvisSenseModelLlengua`).
+del **sistema principal** (`translate_cat_val`).
 
-## Alternativa a FLOR: KenLM + classificador de sentit (12/11/2026)
+## Model per defecte: KenLM + classificador de sentit (des del 13/11/2026)
 
-Opció complementària (decisió de l'usuari; **FLOR continua per defecte**):
-`translate_cat_val(text, model="kenlm")`, `avlizador tradueix --model kenlm`
-i `avlizador avalua --model kenlm` (o `--model flor kenlm`). KenLM ocupa el
-mateix buit que FLOR (puntua les frases candidates), sense `torch`:
+**Decisió de l'usuari (13/11/2026)**: KenLM + el classificador de sentit
+de "cop" substituïx FLOR-760M com a model per defecte. FLOR continua
+disponible com a opció (`model="flor"`, extra `[ml]`).
 
-- `kenlm.py`: `normalitza` (la mateixa de l'entrenament; `exporta_text.py`
-  ara la importa d'ací) i `ModelKenLM` (log P natural de la frase; prior =
-  ln((n + 1) / tokens) amb les freqüències del text d'entrenament,
-  `<model>_freq.json`).
+| | KenLM + classificador | FLOR-760M |
+|---|---|---|
+| Homògrafs v1 (253) | **226** | 217 |
+| Homògrafs v2 (160) | **110** | 96 |
+| Manual mescla BOE + AVL (458) | **232** | 231 |
+| 151 (154) | 144 | **145** |
+| BOE estricte (2.000) | 1.894 | 1.894 |
+| gplsi (1.958) | 1.550 | **1.551** |
+| Temps per frase candidata | **0,1 ms** | 833 ms |
+| Memòria | **~74 MB** | ~1,5 GB |
+| Dependències | `kenlm` | `torch` + `transformers` |
+
+Exactes, `avalua_sistema_20261113_1145` (KenLM) i `_1016` (FLOR). En les 257 decisions dels
+homògrafs, KenLM + classificador fa 191 encerts i 1 error greu (que
+canvien el sentit). Per què, com s'hi va arribar i què es va descartar
+(KenLM català, fastText, KenLM sense poda, en dos sentits, de lemes,
+híbrid amb FLOR): `documentacio/resultats_model_llengua_kenlm.md`.
+
+Ús:
+
+- `translate_cat_val(text)`: KenLM si hi ha el paquet `kenlm` i els
+  fitxers; si falta alguna cosa, el motor sol i un avís
+  (`AvisSenseModelLlengua`).
+- `translate_cat_val(text, model="kenlm")`: igual, però si falta alguna
+  cosa, `FaltaKenLM` (s'ha demanat expressament).
+- `translate_cat_val(text, model="flor")`: FLOR-760M (extra `[ml]`; sense
+  ell, motor sol i avís).
+- Ordres: `avlizador tradueix [--model flor]`, `avlizador avalua [--model
+  kenlm flor]`.
+
+Peces:
+
+- `kenlm.py`: `normalitza` (la mateixa de l'entrenament; la importa
+  `pipeline/08_traduccio_corpus/macocu/kenlm/exporta_text.py`) i
+  `ModelKenLM` (log P natural de la frase; prior = ln((n + 1) / tokens)
+  amb les freqüències del text d'entrenament, `<model>_freq.json`).
 - `sentit.py`: classificadors de sentit amb una interfície fixa,
   `candidat(punt) -> str | None`. Hui `ClassificadorCop` (Naive Bayes de
-  "cop/cops" + lemes d'spaCy). Canviar-lo = un altre `nb.json` (s'entrena
-  amb `pipeline/03_seleccio_de_model/model_llengua/sentit_cop.py`) o una
-  altra classe amb el mateix mètode.
+  "cop/cops" + lemes d'spaCy), entrenat sense textos de l'AVL. Canviar-lo =
+  un altre `nb.json` (`pipeline/03_seleccio_de_model/model_llengua/sentit_cop.py`)
+  o una altra classe amb el mateix mètode. Pas previst: un classificador
+  general per a totes les paraules ambigües, no només "cop".
 - `CRITERI_KENLM`: marge 3, la catalana per defecte, λ 1,5 en els homògrafs
   i 0,75 en les col·lisions, desempat < 2 amb el classificador.
+- `punts.decisio_spacy`: abans del model, spaCy descarta lectures
+  impossibles; des del 13/11/2026 també si la paraula d'abans és un pronom
+  personal ("Tu manques de paciència": verb, no nom).
 
 Fitxers (fora de git) en la carpeta d'`AVLIZADOR_KENLM_DIR`:
-`valencia_net_dogv_o5.binary` (77 MB), `valencia_net_dogv_freq.json` i
-`nb.json` (o `sentit_cop/nb.json`). Cal el paquet `kenlm` (`pip install
+`valencia_net_dogv_o5.binary` (77 MB; MaCoCu valencià net + DOGV
+2025-2026, ordre 5, poda de singletons), `valencia_net_dogv_freq.json` i
+`nb.json` (o `sentit_cop/nb.json`). Hui són en Abaco
+(`dades/macocu/kenlm/`); més avant es publicaran en Hugging Face. En la
+imatge Docker van en `/opt/kenlm` (es copien de `docker/kenlm/` en
+construir-la). El paquet `kenlm` es compila en instal·lar-lo (`pip install
 "avlizador[kenlm]"`; en Windows cal compilador, la imatge Docker és Linux).
-Si falta alguna cosa, `FaltaKenLM`.
 
-Resultats (`compara_models_20261111_1430`): 257 decisions dels homògrafs,
-191 encerts i 2 errors greus (FLOR 168 i 3); exactes homògrafs v1 227/253
-(FLOR 219), v2 110/160 (95), manual 229/458 (228), 151 145 (146), BOE
-estricte 1.887 (=), gplsi 1.553 (1.554). Unes 13.000 vegades més ràpid que
-FLOR per crida i 59 MB de memòria davant d'1,5 GB. Detall en
-`documentacio/resultats_model_llengua_kenlm.md`.
+El que ve a continuació és sobretot la història de FLOR (23/10-12/11/2026).
+Les capes d'spaCy i la tria per tipus de punt són les mateixes per als dos
+models.
 
 ## Què resol
 

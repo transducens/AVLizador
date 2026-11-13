@@ -49,6 +49,15 @@ def test_kenlm_tria_la_frase_mes_probable(sistema):
         "Una vegada acabada la reunió, marxem."
 
 
+def test_kenlm_es_el_model_per_defecte(sistema, monkeypatch):
+    """Sense `model` (13/11/2026): KenLM si hi és, no FLOR."""
+    from avlizador.traductor_cat_val.model_llengua import kenlm
+
+    sistema(bones=("una vegada",))
+    monkeypatch.setattr(kenlm, "kenlm_disponible", lambda directori=None: True)
+    assert translate_cat_val("Un cop acabada la reunió, marxem.") == "Una vegada acabada la reunió, marxem."
+
+
 def test_kenlm_sense_punts_es_el_motor(sistema):
     sistema()
     text = "Tinc vuitanta anys i la meva obra és francesa."
@@ -126,3 +135,27 @@ def test_cli_avalua_kenlm(sistema, tmp_path, capsys):
     out = capsys.readouterr().out
     assert "Motor + KenLM + sentit" in out and "| 1/1 (100,0 %) |" in out
     assert (tmp_path / "r").glob("kenlm_b_*.json")
+
+
+def test_avisa_si_la_taula_de_frequencies_no_te_una_candidata(tmp_path, monkeypatch):
+    """13/11/2026: «faltes» no era en la taula i comptava com a 0 aparicions."""
+    import importlib.util
+    import json
+
+    from avlizador.traductor_cat_val.model_llengua import kenlm as mk
+
+    class KenLMModul:
+        Model = staticmethod(lambda ruta: KenLMFals())
+
+    for nom in ("valencia_net_dogv_o5.binary", "nb.json"):
+        (tmp_path / nom).write_text("{}", encoding="utf-8")
+    (tmp_path / "valencia_net_dogv_freq.json").write_text(
+        json.dumps({"tokens": 1000, "freq": {"colp": 10, "vegada": 300}}), encoding="utf-8")
+    real = importlib.util.find_spec
+    monkeypatch.setattr(importlib.util, "find_spec", lambda n, *a: object() if n == "kenlm" else real(n, *a))
+    monkeypatch.setitem(__import__("sys").modules, "kenlm", KenLMModul)
+    monkeypatch.setattr("avlizador.traductor_cat_val.model_llengua.sentit.ClassificadorCop.carrega",
+                        classmethod(lambda cls, ruta: None))
+    with pytest.warns(mk.AvisFreqKenLM, match="paraules candidates no són"):
+        model, _ = carrega_sistema_kenlm(tmp_path)
+    assert "faltes" in model.paraules_sense_freq(["faltes", "colp"])

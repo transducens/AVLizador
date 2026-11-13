@@ -24,7 +24,8 @@ Components i dades de tercers
 2. Model de llengua FLOR-760M (projecte-aina, Barcelona Supercomputing
    Center)
    Llicència: Apache 2.0. És una adaptació de BLOOM-1.1B (BigScience,
-   llicència BigScience RAIL 1.0). No s'inclou: es baixa de Hugging Face
+   llicència BigScience RAIL 1.0). Opcional des del 13/11/2026 (extra
+   [ml], `model="flor"`). No s'inclou: es baixa de Hugging Face
    (https://huggingface.co/projecte-aina/FLOR-760M) la primera vegada que
    s'usa.
 
@@ -51,9 +52,24 @@ Components i dades de tercers
    2.0); Gemma 3 i Gemma 4 (Gemma Terms of Use); Llama 3.1 (Llama 3.1
    Community License).
 
+7. KenLM i el model de llengua per defecte (des del 13/11/2026)
+   - Biblioteca KenLM (Kenneth Heafield), mòdul de Python `kenlm`:
+     GNU LGPL 2.1 (https://github.com/kpu/kenlm). Dependència opcional
+     (extra [kenlm]): no s'inclou en el repositori.
+   - Model valencia_net_dogv_o5 (KenLM, ordre 5), la seua taula de
+     freqüències i el classificador de sentit de "cop" (nb.json), entrenats
+     pel projecte. No són en el repositori (AVLIZADOR_KENLM_DIR); van dins
+     de la imatge Docker. Dades d'entrenament: frases valencianes de
+     MaCoCu-ca 1.0 (CLARIN.SI, hdl 11356/1837, CC0 1.0) i textos del Diari
+     Oficial de la Generalitat Valenciana (DOGV, 2025-2026,
+     https://dogv.gva.es), sense textos de l'AVL. Cal revisar les
+     condicions de reutilització del DOGV abans de publicar el model
+     (pendent; es publicarà en Hugging Face).
+
 Dependències de Python (no incloses; les instal·la pip): spaCy i thinc
-(MIT), PyTorch (BSD), transformers, huggingface_hub, tokenizers,
-safetensors, sacrebleu i requests (Apache 2.0), numpy (BSD) i pytest
+(MIT), kenlm (LGPL 2.1; extra [kenlm]), PyTorch (BSD) i transformers,
+huggingface_hub, tokenizers i safetensors (Apache 2.0; extra [ml], només
+per a FLOR), sacrebleu i requests (Apache 2.0), numpy (BSD) i pytest
 (MIT). La interfície web (extra [web]) usa FastAPI i Pydantic (MIT),
 Starlette, uvicorn, Jinja2 i MarkupSafe (BSD-3-Clause).
 
@@ -64,9 +80,12 @@ Imatge Docker
 =============
 
 La imatge Docker d'AVLizador (Dockerfile, docker-compose.yml) inclou, a més
-del codi i les dades del projecte, estos components de tercers. Versions
-de la imatge avlizador:1.2.0 construïda el 06/11/2026 (la llista completa
-de paquets de Python és dins de la imatge, en /opt/versions_python.txt):
+del codi i les dades del projecte, estos components de tercers. Des del
+13/11/2026 la imatge porta KenLM en lloc de FLOR-760M i PyTorch. Les
+versions de spaCy i del servidor web són les de la imatge avlizador:1.2.0
+construïda el 06/11/2026; s'han de revisar en construir la nova (la llista
+completa de paquets de Python és dins de la imatge, en
+/opt/versions_python.txt):
 
 1. Model d'spaCy ca_core_news_md
    Versió: 3.8.0 (amb spaCy 3.8.18)
@@ -76,23 +95,20 @@ de paquets de Python és dins de la imatge, en /opt/versions_python.txt):
    per a este component (incloure'n la llicència i donar accés al codi
    font).
 
-2. Model de llengua FLOR-760M (projecte-aina)
-   Versió: revisió d47b56bdc67aa290cf9c4a64a6ee040b01eacdfc de Hugging Face
-   Llicència: Apache 2.0; és una adaptació de BLOOM, amb la llicència
-   BigScience RAIL 1.0, que inclou restriccions d'ús:
-   https://huggingface.co/spaces/bigscience/license
-   Cal revisar estes restriccions abans de redistribuir la imatge o de
-   canviar-ne l'ús previst.
+2. KenLM i el model de llengua valencia_net_dogv_o5
+   Biblioteca: mòdul de Python kenlm, GNU LGPL 2.1
+   (https://github.com/kpu/kenlm). Qui redistribuïsca la imatge ha de
+   complir la LGPL 2.1 per a este component.
+   Model, freqüències i classificador de sentit: entrenats pel projecte amb
+   MaCoCu-ca (CC0 1.0) i el DOGV (vegeu el punt 7 de més amunt), en
+   /opt/kenlm.
 
 3. Programari del servidor web
    FastAPI 0.162.0 (MIT), Starlette 1.10.0 (BSD-3-Clause), uvicorn 0.54.0
    (BSD-3-Clause), Pydantic 2.14.2 (MIT), Jinja2 3.1.6 i MarkupSafe 3.0.3
    (BSD-3-Clause). Vegeu els repositoris respectius.
 
-4. PyTorch 2.15.0 (versió CPU, BSD-3-Clause) i transformers 5.22.1
-   (Apache 2.0).
-
-5. Imatge base python:3.12-slim (Debian), amb els paquets del sistema i les
+4. Imatge base python:3.12-slim (Debian), amb els paquets del sistema i les
    seues llicències respectives.
 
 El codi d'AVLizador es distribuïx amb la llicència Apache 2.0.
