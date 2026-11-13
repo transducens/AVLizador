@@ -2025,7 +2025,7 @@
  {
   "id": "HG029",
   "oriental": "Ens veiem dos cops per setmana.",
-  "occidental": "Ens veiem dos vegades per setmana.",
+  "occidental": "Ens veiem dues vegades per setmana.",
   "categoria": "homografs_colisio",
   "paraula": "cops",
   "esperat": "vegades",
@@ -2425,30 +2425,30 @@
  {
   "id": "HG069",
   "oriental": "Hi ha una manca greu de personal.",
-  "occidental": "Hi ha una carència greu de personal.",
+  "occidental": "Hi ha una falta greu de personal.",
   "categoria": "homografs_resoluble",
   "paraula": "manca",
-  "esperat": "carència",
+  "esperat": "falta",
   "font": "a_ma",
   "revisat": true
  },
  {
   "id": "HG070",
   "oriental": "La manca de pluja afecta els cultius.",
-  "occidental": "La carència de pluja afecta els cultius.",
+  "occidental": "La falta de pluja afecta els cultius.",
   "categoria": "homografs_resoluble",
   "paraula": "manca",
-  "esperat": "carència",
+  "esperat": "falta",
   "font": "a_ma",
   "revisat": true
  },
  {
   "id": "HG071",
   "oriental": "Pateix una gran manca afectiva.",
-  "occidental": "Patix una gran carència afectiva.",
+  "occidental": "Patix una gran falta afectiva.",
   "categoria": "homografs_resoluble",
   "paraula": "manca",
-  "esperat": "carència",
+  "esperat": "falta",
   "font": "a_ma",
   "revisat": true
  },
@@ -2485,20 +2485,20 @@
  {
   "id": "HG075",
   "oriental": "Les manques del sistema educatiu són evidents.",
-  "occidental": "Les carències del sistema educatiu són evidents.",
+  "occidental": "Les faltes del sistema educatiu són evidents.",
   "categoria": "homografs_resoluble",
   "paraula": "manques",
-  "esperat": "carències",
+  "esperat": "faltes",
   "font": "a_ma",
   "revisat": true
  },
  {
   "id": "HG076",
   "oriental": "L'informe detalla les manques del servei.",
-  "occidental": "L'informe detalla les carències del servici.",
+  "occidental": "L'informe detalla les faltes del servici.",
   "categoria": "homografs_resoluble",
   "paraula": "manques",
-  "esperat": "carències",
+  "esperat": "faltes",
   "font": "a_ma",
   "revisat": true
  },

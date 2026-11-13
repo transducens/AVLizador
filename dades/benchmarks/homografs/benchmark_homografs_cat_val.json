@@ -263,7 +263,7 @@
    "esperat": "vegades",
    "tipus": "colisio",
    "motor_sol": "Ens veiem dos cops per setmana.",
-   "occidental": "Ens veiem dos vegades per setmana."
+   "occidental": "Ens veiem dues vegades per setmana."
   },
   {
    "id": "HG030",
@@ -623,29 +623,29 @@
    "id": "HG069",
    "oriental": "Hi ha una manca greu de personal.",
    "paraula": "manca",
-   "esperat": "carència",
+   "esperat": "falta",
    "tipus": "resoluble",
-   "motor_sol": "Hi ha una carència greu de personal.",
-   "occidental": "Hi ha una carència greu de personal."
+   "motor_sol": "Hi ha una falta greu de personal.",
+   "occidental": "Hi ha una falta greu de personal."
   },
   {
    "id": "HG070",
    "oriental": "La manca de pluja afecta els cultius.",
    "paraula": "manca",
-   "esperat": "carència",
+   "esperat": "falta",
    "tipus": "resoluble",
-   "motor_sol": "La carència de pluja carinya els cultius.",
-   "occidental": "La carència de pluja afecta els cultius.",
+   "motor_sol": "La falta de pluja afecta els cultius.",
+   "occidental": "La falta de pluja afecta els cultius.",
    "revisat": true
   },
   {
    "id": "HG071",
    "oriental": "Pateix una gran manca afectiva.",
    "paraula": "manca",
-   "esperat": "carència",
+   "esperat": "falta",
    "tipus": "resoluble",
-   "motor_sol": "Patix una gran carència afectiva.",
-   "occidental": "Patix una gran carència afectiva."
+   "motor_sol": "Patix una gran falta afectiva.",
+   "occidental": "Patix una gran falta afectiva."
   },
   {
    "id": "HG072",
@@ -678,19 +678,19 @@
    "id": "HG075",
    "oriental": "Les manques del sistema educatiu són evidents.",
    "paraula": "manques",
-   "esperat": "carències",
+   "esperat": "faltes",
    "tipus": "resoluble",
-   "motor_sol": "Les carències del sistema educatiu són evidents.",
-   "occidental": "Les carències del sistema educatiu són evidents."
+   "motor_sol": "Les faltes del sistema educatiu són evidents.",
+   "occidental": "Les faltes del sistema educatiu són evidents."
   },
   {
    "id": "HG076",
    "oriental": "L'informe detalla les manques del servei.",
    "paraula": "manques",
-   "esperat": "carències",
+   "esperat": "faltes",
    "tipus": "resoluble",
-   "motor_sol": "L'informe detalla les carències del servici.",
-   "occidental": "L'informe detalla les carències del servici."
+   "motor_sol": "L'informe detalla les faltes del servici.",
+   "occidental": "L'informe detalla les faltes del servici."
   },
   {
    "id": "HG077",
@@ -698,7 +698,7 @@
    "paraula": "manques",
    "esperat": "manques",
    "tipus": "resoluble",
-   "motor_sol": "Tu carències de paciència.",
+    "motor_sol": "Tu manques de paciència.",
    "occidental": "Tu manques de paciència."
   },
   {
