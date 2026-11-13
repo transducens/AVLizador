@@ -674,3 +674,48 @@ Todos los que se pierden son participios contados como nombres
 da como participio por error. En el BOE completo el efecto será mayor
 («rebuda» aparecía 913 veces en el lado catalán): pendiente de volver a
 medir con `mesura_corpus.py`.
+
+### 8.1 GD, GDV y GDC antes y después, y el caso contrario (13/11/2026)
+
+Medido en los cinco corpus de referencia, valores globales (suma de
+marcadores; GDV = 1 − orientales / palabras; GDC = 1 − occidentales /
+palabras). **Antes** = sin la regla; **A** = la regla de esta sección
+(commit `2edfb72`); **A+B** = además, contar como marcadores los
+participios de verbos dialectales cuando spaCy los da como adjetivo
+(«establits» / «establerts»), igual que hace el traductor. B es solo una
+prueba: no está en el código.
+
+| Corpus (frases) | Lado | GD antes → A (A+B) | GDV antes → A (A+B) | GDC antes → A (A+B) | Frases que cambian con A (A+B) |
+|---|---|---|---|---|---|
+| Manual (458) | val | 0,9973 → 0,9973 (0,9919) | 0,9998 → 0,9998 (0,9993) | 0,9181 → 0,9183 (0,9172) | 2 (21) |
+| Manual (458) | cat | 0,0299 → 0,0291 (0,0312) | 0,9200 → 0,9200 (0,9186) | 0,9975 → 0,9976 (0,9974) | 1 (22) |
+| 151 (154) | val | 0,9855 → 0,9891 (0,9857) | 0,9991 → 0,9993 (0,9991) | 0,9370 → 0,9370 (0,9361) | 1 (6) |
+| 151 (154) | cat | 0,0696 → 0,0699 (0,0797) | 0,9410 → 0,9412 (0,9410) | 0,9956 → 0,9956 (0,9949) | 1 (5) |
+| gplsi (1.958) | val | 0,9342 → 0,9341 (0,9326) | 0,9936 → 0,9936 (0,9935) | 0,9094 → 0,9096 (0,9095) | 3 (7) |
+| gplsi (1.958) | cat | 0,0534 → 0,0519 (0,0524) | 0,9062 → 0,9063 (0,9061) | 0,9947 → 0,9949 (0,9948) | 4 (8) |
+| BOE estricto (2.000) | val | 0,9842 → 0,9848 (0,9848) | 0,9993 → 0,9994 (0,9993) | 0,9586 → 0,9586 (0,9571) | 3 (61) |
+| BOE estricto (2.000) | cat | 0,0493 → 0,0488 (0,0507) | 0,9598 → 0,9599 (0,9584) | 0,9979 → 0,9979 (0,9978) | 2 (60) |
+| BOE amplio (2.000) | val | 0,9368 → 0,9379 (0,9341) | 0,9986 → 0,9986 (0,9984) | 0,9790 → 0,9791 (0,9774) | 3 (63) |
+| BOE amplio (2.000) | cat | 0,0860 → 0,0849 (0,0968) | 0,9792 → 0,9792 (0,9780) | 0,9980 → 0,9981 (0,9976) | 2 (52) |
+
+**A**: cambia muy poco (1-4 frases por corpus) y siempre en la dirección
+correcta (el GD valenciano sube o se queda, el catalán baja o se queda,
+salvo el 151 catalán, +0,0003, por un «rebuda» que deja de contar). GDV y
+GDC apenas se mueven (cuentan las palabras neutras). Se pierden «tancat(s)»,
+«portada», «rebuda/rebudes» y «admès» (participios) y un «depositari» (error
+de spaCy).
+
+**A+B: no se aplica todavía.** Añade muchos marcadores buenos
+(«establits»/«establerts» 18 + 18 en el BOE estricto, «oferides»/«ofertes»,
+«complits»/«complertes»), pero empeora el GD de los textos valencianos (manual
+0,9973 → 0,9919; BOE amplio 0,9368 → 0,9341) y sube el de los catalanes
+por dos problemas de datos, no del GD:
+- **«esmentat/esmentades» cuenta como catalán** («esmentar» → «mencionar»,
+  cambio del léxico del 05/11): aparece en textos valencianos de la AVL y
+  del BOE. Pendiente de hablar con el compañero (ya anotado: la AVL usa
+  «esment*» 231 veces frente a 65 «mencion*»).
+- **«previstos» cuenta como valenciano** (17 en el BOE amplio, 6 en el
+  catalán del estricto): el catalán también dice «previstos».
+
+Con esos dos datos corregidos en el léxico, B sería coherente con el
+traductor y conviene volver a medirlo.
