@@ -20,17 +20,17 @@ usuario, 13/11/2026). FLOR-760M queda como opción (`model="flor"`, extra
 
 | Benchmark (exactas) | Motor solo | FLOR-760M | **KenLM + clasificador** |
 |---|---|---|---|
-| Homógrafos v1 (253) | 181 | 217 | **226** |
-| Homógrafos v2 (160) | 82 | 96 | **110** |
+| Homógrafos v1 (253) | 181 | 217 | **227** |
+| Homógrafos v2 (160) | 82 | 96 | **111** |
 | Manual mezcla BOE + AVL (458) | 218 | 231 | **232** |
 | 151 (154) | 142 | **145** | 144 |
 | BOE estricto (2.000) | 1.800 | 1.894 | 1.894 |
 | gplsi (1.958) | 1.533 | **1.551** | 1.550 |
 
-(KenLM: `avalua_sistema_20261113_1145`, con la tabla de frecuencias
-corregida; FLOR y motor: `_1016`.) En las 257 decisiones de los homógrafos:
-191 aciertos, 1 error grave (HG2-028 «Si en falta algun», valenciano
-correcto) y 65 sin traducir; «manques» no se traduce nunca (33 apariciones
+(KenLM: `avalua_sistema_20261113_1308`, con la tabla de frecuencias
+corregida, el clasificador general y la regla de «una nou»; FLOR y motor:
+`_1016`.) En las 257 decisiones de los homógrafos: 193 aciertos, 1 error
+grave (HG2-028 «Si en falta algun», valenciano correcto) y 63 sin traducir; «manques» no se traduce nunca (33 apariciones
 en el corpus frente a 420 de «faltes»). Coste: 0,1 ms por frase candidata y
 ~74 MB, frente a 833 ms y ~1,5 GB de FLOR; sin `torch`.
 
@@ -47,8 +47,10 @@ en el corpus frente a 420 de «faltes»). Coste: 0,1 ms por frase candidata y
    frecuentes (secciones 2.3, 2.4, 4.5).
 5. Margen 3 con la catalana por defecto: si KenLM duda, se queda la
    palabra catalana (un error leve en vez de uno grave; sección 4.10).
-6. En las colisiones («cop»), si KenLM gana por menos de 2, decide el
-   clasificador de sentido (Naive Bayes, sin la AVL; secciones 4.11, 4.15).
+6. Si KenLM gana por menos de 2, decide el clasificador de sentido de la
+   palabra, si tiene uno que haya demostrado acertar (≥ 0,7 en frases
+   apartadas; hoy cop, cops y deu): Naive Bayes entrenado con MaCoCu + DOGV,
+   sin la AVL (secciones 4.11, 4.15 y tabla de decisiones del 13/11).
 
 **Descartado** (con su sección): KenLM catalán «menos probable» y fastText
 (4.1), diferencia val − cat (4.1), KenLM sin poda y + AVL + UA (4.9),
@@ -56,8 +58,8 @@ KenLM en dos sentidos (4.12), veto del clasificador (4.13), híbrido FLOR
 para «cop» (el usuario no quiere FLOR en la imagen; 4.8), KenLM de lemas y
 mezcla formas + lemas (4.16).
 
-**Siguiente**: clasificador de sentido general (uno por palabra ambigua,
-no solo «cop»). Pendiente aparte: publicar los ficheros de KenLM en
+**Siguiente**: más datos para que más palabras pasen el umbral del
+clasificador (DOGV nuevo; «nou», «manca»...). Pendiente aparte: publicar los ficheros de KenLM en
 Hugging Face (revisar antes las condiciones de reutilización del DOGV).
 
 ---
@@ -1088,3 +1090,4 @@ Son compatibles: si C2 mejora la base, C1 puede desempatar encima.
 | 13/11 | **Clasificador de sentido general, parte del sistema** (rama `kenlm-per-defecte`, sin commitear) | Decisión del usuario: nada específico de «cop». `sentit.ClassificadorSentit` (un Naive Bayes por grupo; clase «0» = primer candidato, «1» = segundo) y `sentit_general.py` (entrenamiento): las palabras salen del léxico; los puntos con los mismos `lemas` comparten grupo (singular y plural); frases de MaCoCu net + DOGV, sin la AVL. `tria`: el desempate (KenLM gana por < 2 → decide el clasificador) vale para **todos** los puntos que tengan clasificador; sin él, la regla de siempre. El sistema carga `sentit.json` si existe; si no, `nb.json` (el de «cop»). Datos: 9 de 12 grupos con ≥ 20 frases por clase (sin datos: fartanera, panotxa, recuita). |
 | 13/11 | **Umbral de calidad: 0,7 de acierto equilibrado en el dev** | Decisión del usuario. Primer entrenamiento, acierto equilibrado en frases apartadas: cop 0,89, deu 0,81, cops 0,75, nou 0,59, manca 0,56, rentadora 0,50, gandula 0,50, reeixida 0,49, calces 0,39. Solo entra en el sistema un grupo que demuestre que acierta (≥ 0,7): cop, cops, deu. «manca» no separa sentidos porque en el valenciano real (DOGV) «manca» también se usa como nombre; los demás, por falta de datos. Cuando haya más datos, un grupo que pase el umbral entra solo. |
 | 13/11 | **«nou» que no se traducía según el final de la frase** (fallo visto por el usuario en Docker) | La etiqueta de spaCy de «nou» cambia con un punto o un espacio al final («una nou» ADJ → «una nou.» NUM) y con NUM se dejaba siempre «nou». Dos arreglos: (1) spaCy etiqueta el texto sin los espacios del principio y del final (`pos_tagger._analitza_sense_espais`; ninguna frase de los benchmarks los tiene, no cambia ninguna cifra); (2) NUM detrás de un determinante indefinido femenino singular («una nou», rasgos de spaCy, sin lista) no es el numeral: decide el modelo. «la nou» (dorsal) y «unes nou hores» siguen siendo numeral (decisión del 03/11). |
+| 13/11 | **Medido en Abaco** (`avalua_sistema_20261113_1308`, `compara_models_20261113_1308`; clasificador general con cop, cops y deu + las dos reglas de «nou») | 257 decisiones: **193 aciertos / 1 grave / 63 sin traducir** (11:45: 191 / 1 / 65). Exactas v1 226 → **227**, v2 110 → **111**; manual 232, 151 144, BOE estricto 1.894 y gplsi 1.550 igual. Cambian 4 decisiones: las 2 ganancias son de la regla «una nou» (HG059 «Es va menjar una nou», HG2-001 «Ha caigut una nou de l'arbre»: spaCy NUM → ahora decide KenLM y acierta «anou»). El clasificador general decide 8 puntos (antes 6) sin cambiar ningún resultado: separar «cop» y «cops» da las mismas decisiones, y en «deu» decide 2 (HG2-053 bien; HG2-047 «Aquesta deu no s'asseca mai» se queda «deu», igual que antes). Ningún error grave nuevo. |

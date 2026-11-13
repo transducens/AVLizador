@@ -78,8 +78,8 @@ Instal·lació mínima, només el motor de regles: `pip install -e .`
 **Fitxers del model KenLM.** No són en git ni en el paquet: de moment es
 demanen a l'equip (més avant es publicaran en Hugging Face). Es posen en
 una carpeta amb estos tres fitxers: `valencia_net_dogv_o5.binary` (el
-model, 77 MB), `valencia_net_dogv_freq.json` (freqüències) i `nb.json`
-(el classificador de "cop"; també val `sentit_cop/nb.json`). La variable
+model, 77 MB), `valencia_net_dogv_freq.json` (freqüències) i
+`sentit.json` (el classificador de sentit; també val l'antic `nb.json`). La variable
 `AVLIZADOR_KENLM_DIR` diu on és la carpeta (cal tornar-la a posar en cada
 terminal nova, o afegir-la al perfil):
 

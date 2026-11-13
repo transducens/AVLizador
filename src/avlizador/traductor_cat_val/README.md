@@ -78,7 +78,8 @@ text català
                                                    si guanya per menys de 2, decidix el classificador de sentit
          homògrafs (homonimia_lexica: nou, manca, calces, gandula…) spaCy per categoria dels
                                                    `lemas` i pronom personal davant; si no, KenLM
-                                                   (marge 3 amb la catalana per defecte)
+                                                   (marge 3 amb la catalana per defecte; si guanya per menys
+                                                   de 2 i la paraula té classificador, decidix este)
 ```
 
 Detall de la capa 3: `model_llengua/README.md`. Detall de les capes del
@@ -101,9 +102,9 @@ avlizador tradueix --model flor "Aquest xiquet és molt bo."
 
 ### Resultats actuals (cat→val, 13/11/2026)
 
-Exactes (`avalua_sistema_20261113_1145`), KenLM + classificador / FLOR-760M /
-motor sol: homògrafs + 151 (`homografs`) **226** / 217 / 181 de 253;
-homògrafs v2 **110** / 96 / 82 de 160; manual mescla **232** / 231 / 218 de
+Exactes (`avalua_sistema_20261113_1308`), KenLM + classificador / FLOR-760M /
+motor sol: homògrafs + 151 (`homografs`) **227** / 217 / 181 de 253;
+homògrafs v2 **111** / 96 / 82 de 160; manual mescla **232** / 231 / 218 de
 458 (TER 5,58 / 5,59 / 5,90); 151 144 / **145** / 142; BOE estricte 1.894 /
 1.894 / 1.800; gplsi 1.550 / **1.551** / 1.533. Motius i detall:
 `documentacio/resultats_model_llengua_kenlm.md`.

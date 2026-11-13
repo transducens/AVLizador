@@ -58,7 +58,7 @@ variable de entorno `AVLIZADOR_KENLM_DIR`, con tres ficheros:
 |---|---|
 | `valencia_net_dogv_o5.binary` | el modelo KenLM (77 MB) |
 | `valencia_net_dogv_freq.json` | frecuencias de las palabras (para el prior) |
-| `nb.json` (o `sentit_cop/nb.json`) | el clasificador de sentido de "cop" (~420 KB) |
+| `sentit.json` (o el antiguo `nb.json`) | el clasificador de sentido de las palabras ambiguas (~730 KB; hoy tienen cop, cops y deu) |
 
 De momento se piden al equipo; más adelante se publicarán en Hugging
 Face. Coste: ~0,1 ms por frase candidata y ~74 MB de memoria (FLOR: 833
@@ -176,14 +176,14 @@ Frases exactas en el resto de benchmarks (13/11/2026):
 
 | Benchmark | KenLM + clasificador | FLOR-760M | Motor solo |
 |---|---|---|---|
-| homógrafos v1 (151 + homógrafos, 253) | **226** | 217 | 181 |
-| homógrafos v2 (160) | **110** | 96 | 82 |
+| homógrafos v1 (151 + homógrafos, 253) | **227** | 217 | 181 |
+| homógrafos v2 (160) | **111** | 96 | 82 |
 | 151 (154) | 144 | **145** | 142 |
 | BOE estricto, muestra (2.000) | **1.894** | **1.894** | 1.800 |
 | gplsi (1.958) | 1.550 | **1.551** | 1.533 |
 
 En las 257 decisiones de los homógrafos, KenLM + clasificador acierta
-191 y comete 1 error grave (cambia el sentido). Detalle:
+193 y comete 1 error grave (cambia el sentido). Detalle:
 [`documentacio/resultats_model_llengua_kenlm.md`](documentacio/resultats_model_llengua_kenlm.md).
 
 Histórico, medida del 30/10/2026 (versión 1.0.1, con FLOR-760M como

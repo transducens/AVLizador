@@ -57,7 +57,7 @@ d'entorn `AVLIZADOR_KENLM_DIR`, amb tres fitxers:
 |---|---|
 | `valencia_net_dogv_o5.binary` | el model KenLM (77 MB) |
 | `valencia_net_dogv_freq.json` | freqüències de les paraules (per al prior) |
-| `nb.json` (o `sentit_cop/nb.json`) | el classificador de sentit de "cop" (~420 KB) |
+| `sentit.json` (o l'antic `nb.json`) | el classificador de sentit de les paraules ambigües (~730 KB; hui en tenen cop, cops i deu) |
 
 De moment es demanen a l'equip; més avant es publicaran en Hugging Face.
 Cost: ~0,1 ms per frase candidata i ~74 MB de memòria (FLOR: 833 ms i
@@ -174,13 +174,13 @@ Frases exactes en la resta de benchmarks (13/11/2026):
 
 | Benchmark | KenLM + classificador | FLOR-760M | Motor sol |
 |---|---|---|---|
-| homògrafs v1 (151 + homògrafs, 253) | **226** | 217 | 181 |
-| homògrafs v2 (160) | **110** | 96 | 82 |
+| homògrafs v1 (151 + homògrafs, 253) | **227** | 217 | 181 |
+| homògrafs v2 (160) | **111** | 96 | 82 |
 | 151 (154) | 144 | **145** | 142 |
 | BOE estricte, mostra (2.000) | **1.894** | **1.894** | 1.800 |
 | gplsi (1.958) | 1.550 | **1.551** | 1.533 |
 
-En les 257 decisions dels homògrafs, KenLM + classificador encerta 191 i
+En les 257 decisions dels homògrafs, KenLM + classificador encerta 193 i
 comet 2 errors greus (canvia el sentit). Detall:
 [`documentacio/resultats_model_llengua_kenlm.md`](documentacio/resultats_model_llengua_kenlm.md).
 

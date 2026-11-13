@@ -78,8 +78,8 @@ Instalación mínima, solo el motor de reglas: `pip install -e .`
 momento se piden al equipo (más adelante se publicarán en Hugging Face).
 Se ponen en una carpeta con estos tres ficheros:
 `valencia_net_dogv_o5.binary` (el modelo, 77 MB),
-`valencia_net_dogv_freq.json` (frecuencias) y `nb.json` (el clasificador
-de "cop"; también vale `sentit_cop/nb.json`). La variable
+`valencia_net_dogv_freq.json` (frecuencias) y `sentit.json` (el
+clasificador de sentido; también vale el antiguo `nb.json`). La variable
 `AVLIZADOR_KENLM_DIR` dice dónde está la carpeta (hay que volver a
 ponerla en cada terminal nueva, o añadirla al perfil):
 
