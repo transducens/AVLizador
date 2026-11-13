@@ -526,7 +526,7 @@
    "paraula": "nou",
    "esperat": "anou",
    "tipus": "resoluble",
-   "motor_sol": "El pastís porta nou i panses.",
+   "motor_sol": "El pastís porta anou i panses.",
    "occidental": "El pastís porta anou i panses."
   },
   {
@@ -535,7 +535,7 @@
    "paraula": "nou",
    "esperat": "anou",
    "tipus": "resoluble",
-   "motor_sol": "Es va menjar una nou del calaix.",
+   "motor_sol": "Es va menjar una anou del calaix.",
    "occidental": "Es va menjar una anou del calaix."
   },
   {
@@ -553,7 +553,7 @@
    "paraula": "nou",
    "esperat": "nou",
    "tipus": "resoluble",
-   "motor_sol": "Hem comprat un cotxe nou.",
+   "motor_sol": "Hem comprat un cotxe anou.",
    "occidental": "Hem comprat un cotxe nou."
   },
   {
@@ -562,7 +562,7 @@
    "paraula": "nou",
    "esperat": "nou",
    "tipus": "resoluble",
-   "motor_sol": "Tinc nou germans.",
+   "motor_sol": "Tinc anou germans.",
    "occidental": "Tinc nou germans."
   },
   {
@@ -571,7 +571,7 @@
    "paraula": "nou",
    "esperat": "nou",
    "tipus": "resoluble",
-   "motor_sol": "És un projecte nou de l'ajuntament.",
+   "motor_sol": "És un projecte anou de l'ajuntament.",
    "occidental": "És un projecte nou de l'ajuntament."
   },
   {
@@ -580,7 +580,7 @@
    "paraula": "nou",
    "esperat": "nou",
    "tipus": "resoluble",
-   "motor_sol": "Arribarem a les nou del matí.",
+   "motor_sol": "Arribarem a les anou del matí.",
    "occidental": "Arribarem a les nou del matí."
   },
   {
@@ -598,7 +598,7 @@
    "paraula": "nous",
    "esperat": "anous",
    "tipus": "resoluble",
-   "motor_sol": "Ha collit un sac de nous.",
+   "motor_sol": "Ha collit un sac d'anous.",
    "occidental": "Ha collit un sac d'anous."
   },
   {
@@ -607,7 +607,7 @@
    "paraula": "nous",
    "esperat": "nous",
    "tipus": "resoluble",
-   "motor_sol": "Els llibres nous són a la taula.",
+   "motor_sol": "Els llibres anous són a la taula.",
    "occidental": "Els llibres nous són a la taula."
   },
   {
@@ -616,7 +616,7 @@
    "paraula": "nous",
    "esperat": "nous",
    "tipus": "resoluble",
-   "motor_sol": "Hi ha nous casos de grip.",
+   "motor_sol": "Hi ha anous casos de grip.",
    "occidental": "Hi ha nous casos de grip."
   },
   {
@@ -653,7 +653,7 @@
    "paraula": "manca",
    "esperat": "manca",
    "tipus": "resoluble",
-   "motor_sol": "Li manca experiència per a esta faena.",
+   "motor_sol": "Li falta experiència per a esta faena.",
    "occidental": "Li manca experiència per a esta faena."
   },
   {
@@ -662,7 +662,7 @@
    "paraula": "manca",
    "esperat": "manca",
    "tipus": "resoluble",
-   "motor_sol": "Encara manca una setmana per a les vacacions.",
+   "motor_sol": "Encara falta una setmana per a les vacacions.",
    "occidental": "Encara manca una setmana per a les vacacions."
   },
   {
@@ -671,7 +671,7 @@
    "paraula": "manca",
    "esperat": "manca",
    "tipus": "resoluble",
-   "motor_sol": "Esta regió manca de grans ciutats.",
+   "motor_sol": "Esta regió falta de grans ciutats.",
    "occidental": "Esta regió manca de grans ciutats."
   },
   {
@@ -698,7 +698,7 @@
    "paraula": "manques",
    "esperat": "manques",
    "tipus": "resoluble",
-    "motor_sol": "Tu manques de paciència.",
+    "motor_sol": "Tu faltes de paciència.",
    "occidental": "Tu manques de paciència."
   },
   {
@@ -707,7 +707,7 @@
    "paraula": "manques",
    "esperat": "manques",
    "tipus": "resoluble",
-   "motor_sol": "Si manques a la reunió, avisa'ns.",
+   "motor_sol": "Si faltes a la reunió, avisa'ns.",
    "occidental": "Si manques a la reunió, avisa'ns."
   },
   {
@@ -716,7 +716,7 @@
    "paraula": "deu",
    "esperat": "brollador",
    "tipus": "resoluble",
-   "motor_sol": "Van beure aigua de la deu del bosc.",
+   "motor_sol": "Van beure aigua del brollador del bosc.",
    "occidental": "Van beure aigua del brollador del bosc."
   },
   {
@@ -725,7 +725,7 @@
    "paraula": "deu",
    "esperat": "brollador",
    "tipus": "resoluble",
-   "motor_sol": "La deu de la font s'ha assecat.",
+   "motor_sol": "El brollador de la font s'ha assecat.",
    "occidental": "El brollador de la font s'ha assecat."
   },
   {
@@ -734,7 +734,7 @@
    "paraula": "deu",
    "esperat": "brollador",
    "tipus": "resoluble",
-   "motor_sol": "A la muntanya hi ha una deu d'aigua freda.",
+   "motor_sol": "A la muntanya hi ha un brollador d'aigua freda.",
    "occidental": "A la muntanya hi ha un brollador d'aigua freda."
   },
   {
@@ -860,7 +860,7 @@
    "paraula": "fartanera",
    "esperat": "fartanera",
    "tipus": "resoluble",
-   "motor_sol": "La seua germana és molt fartanera.",
+   "motor_sol": "La seua germana és molt fartada.",
    "occidental": "La seua germana és molt fartanera."
   },
   {
@@ -869,7 +869,7 @@
    "paraula": "fartanera",
    "esperat": "fartanera",
    "tipus": "resoluble",
-   "motor_sol": "Esta gossa és molt fartanera.",
+   "motor_sol": "Esta gossa és molt fartada.",
    "occidental": "Esta gossa és molt fartanera."
   },
   {

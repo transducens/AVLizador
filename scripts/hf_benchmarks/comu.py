@@ -47,10 +47,11 @@ def escriu_jsonl(path: Path, files: list[dict]) -> None:
     path.write_text("".join(json.dumps(f, ensure_ascii=False) + "\n" for f in files), encoding="utf-8")
 
 
-def escriu_notice(desti: Path, titol: str, boe: str | None) -> None:
+def escriu_notice(desti: Path, titol: str, boe: str | None, altres: list[str] | None = None) -> None:
     """NOTICE del dataset: autors, llicència i, si hi ha frases del BOE,
     l'atribució que demana l'avís legal del BOE (`boe` = BOE_COPIA si el
-    text es reproduïx sense canvis, BOE_DERIVAT si s'ha modificat)."""
+    text es reproduïx sense canvis, BOE_DERIVAT si s'ha modificat).
+    `altres`: més línies d'atribució (p. ex. les frases de l'AVL)."""
     linies = [titol, f"Copyright 2026 {autors_text()}.",
               "Made for AVLizador (" + GITHUB + ").",
               "Licensed under the Apache License, Version 2.0.", ""]
@@ -62,6 +63,8 @@ def escriu_notice(desti: Path, titol: str, boe: str | None) -> None:
             "Boletín Oficial del Estado does not sponsor or endorse this work.",
             "",
         ]
+    if altres:
+        linies += [*altres, ""]
     (desti / "NOTICE").write_text("\n".join(linies), encoding="utf-8")
     shutil.copy(ARREL / "LICENSE", desti / "LICENSE")
 

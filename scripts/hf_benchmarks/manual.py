@@ -10,14 +10,13 @@ cada frase porta la data, l'enllaç al document i, si el text es va
 corregir a mà, l'original (`oriental_original`, `occidental_original`);
 l'atribució va en la fitxa i en el fitxer NOTICE.
 
-Les frases de l'AVL NO entren per defecte: l'avís legal de l'AVL
-(https://www.avl.gva.es/index.php/aviso-legal/) prohibix reproduir i
-distribuir els textos de la web sense autorització expressa. Només
-s'afigen amb `--amb-avl "<referència de l'autorització>"`.
+Des del 12/11/2026 hi entren també les 212 frases de l'AVL (l'usuari
+confirma que es poden publicar), citant-ne l'origen; `--sense-avl` fa la
+versió només amb el BOE (la que es va publicar el 09/11).
 
 Ús (des de l'arrel del repositori):
-    python scripts/hf_benchmarks/manual.py                      # només BOE (246)
-    python scripts/hf_benchmarks/manual.py --amb-avl "Autorització de l'AVL, 20/11/2026"
+    python scripts/hf_benchmarks/manual.py               # BOE + AVL (458)
+    python scripts/hf_benchmarks/manual.py --sense-avl   # només BOE (246)
 """
 
 from __future__ import annotations
@@ -127,7 +126,7 @@ def _taula_fenomens(fs: list[dict]) -> str:
     return "\n".join(linies)
 
 
-def fitxa(fs: list[dict], repo: str, autoritzacio: str | None) -> str:
+def fitxa(fs: list[dict], repo: str) -> str:
     boe = [f for f in fs if f["source"] == "BOE"]
     avl = [f for f in fs if f["source"] == "AVL"]
     anys = Counter(f["date"][:4] for f in boe if f["date"])
@@ -151,9 +150,9 @@ def fitxa(fs: list[dict], repo: str, autoritzacio: str | None) -> str:
         splits = (f"| `test` | {len(fs)} | BOE + AVL: **the evaluation set** |\n"
                   f"| `boe` | {len(boe)} | Official texts from the Spanish State Gazette (BOE) |\n"
                   f"| `avl` | {len(avl)} | Texts from the website of the Acadèmia Valenciana de la Llengua (AVL) |")
-        llicencia_avl = (f"- **AVL sentences**: texts © Acadèmia Valenciana de la Llengua "
-                         f"([avl.gva.es](https://www.avl.gva.es)), reproduced with its authorization "
-                         f"({autoritzacio}). The Catalan side of these sentences was written by the authors.")
+        llicencia_avl = ("- **AVL sentences**: texts © Acadèmia Valenciana de la Llengua "
+                         "([avl.gva.es](https://www.avl.gva.es)). The Catalan side of these sentences "
+                         "was written by the authors.")
         avl_build = f"""### AVL ({len(avl)} sentences)
 
 - **Source**: public texts from the website of the
@@ -178,9 +177,7 @@ def fitxa(fs: list[dict], repo: str, autoritzacio: str | None) -> str:
         path: data/test.jsonl"""
         splits = (f"| `test` | {len(fs)} | Official texts from the Spanish State Gazette (BOE) |")
         llicencia_avl = ("- The full benchmark used in AVLizador also has 212 sentences from the website "
-                         "of the Acadèmia Valenciana de la Llengua (AVL). They are **not included** here: "
-                         "the AVL's legal notice does not allow reproducing its texts without express "
-                         "authorization.")
+                         "of the Acadèmia Valenciana de la Llengua (AVL), not included in this version.")
         avl_build = ""
 
     insignia = '<img alt="Hand reviewed" src="https://img.shields.io/badge/hand-reviewed-2e8b57">\n  '
@@ -312,18 +309,24 @@ dialectal features.
 def main(argv: list[str] | None = None) -> None:
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     p.add_argument("--repo", default=REPO_PER_DEFECTE, help="org/nom del dataset en el Hub")
-    p.add_argument("--amb-avl", metavar="AUTORITZACIO",
-                   help="inclou les frases de l'AVL; cal la referència de l'autorització de l'AVL")
+    p.add_argument("--sense-avl", action="store_true", help="només les frases del BOE (246)")
     args = p.parse_args(argv)
+    amb_avl = not args.sense_avl
 
     desti = prepara_desti("manual")
-    fs = files(bool(args.amb_avl))
+    fs = files(amb_avl)
     escriu_jsonl(desti / "data" / "test.jsonl", fs)
-    if args.amb_avl:
+    if amb_avl:
         escriu_jsonl(desti / "data" / "boe.jsonl", [f for f in fs if f["source"] == "BOE"])
         escriu_jsonl(desti / "data" / "avl.jsonl", [f for f in fs if f["source"] == "AVL"])
-    (desti / "README.md").write_text(fitxa(fs, args.repo, args.amb_avl), encoding="utf-8")
-    escriu_notice(desti, "AVLizador manual benchmark (Catalan -> Valencian)", BOE_DERIVAT)
+    (desti / "README.md").write_text(fitxa(fs, args.repo), encoding="utf-8")
+    avl = None
+    if amb_avl:
+        avl = ["This dataset contains sentences from the website of the Acadèmia Valenciana",
+               "de la Llengua (AVL, https://www.avl.gva.es). The texts are",
+               "© Acadèmia Valenciana de la Llengua. The Catalan side of those",
+               "sentences was written by the authors."]
+    escriu_notice(desti, "AVLizador manual benchmark (Catalan -> Valencian)", BOE_DERIVAT, avl)
     banner(desti / "assets" / "banner.png", "AVLizador manual benchmark",
            "Catalan → Valencian dialectal adaptation · hand-reviewed",
            "aquesta  seva  feina", "esta  seua  faena")
