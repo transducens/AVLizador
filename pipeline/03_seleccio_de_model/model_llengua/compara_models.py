@@ -22,6 +22,7 @@ queda per defecte). Ací cada model és un puntuador:
 | `kenlm_lemes`   | log P del KenLM de LEMES (12/11/2026, experiment): la frase passada a lemes (`model_llengua/lemes.py`) |
 | `kenlm_lemes_c1` | ídem + el classificador de "cop" (camí C1) |
 | `kenlm_mescla_c1` | log P del KenLM de formes + log P del de lemes, + classificador de "cop" |
+| `kenlm_o6_c1`, `kenlm_o7_c1`, `kenlm_o8_c1` | el KenLM del sistema (`valencia_net_dogv`, mateix text i poda) d'ordre 6, 7 o 8 en lloc de 5, + classificador (16/11/2026; `prova_ordres.sh`) |
 
 Els models `*_c1` es comparen amb el criteri del sistema KenLM
 (`CRITERI_KENLM`: marge 3, la catalana per defecte, λ 1,5 / 0,75 en les
@@ -100,8 +101,11 @@ BENCHMARKS_PER_DEFECTE = ("homografs", "homografs_v2", "manual")
 TIPUS_MODEL = ("colisio", "irresoluble")
 MODELS = ("motor", "flor", "kenlm_cat", "kenlm_cat30", "kenlm_val", "kenlm_val_net", "kenlm_val_net_dogv",
           "kenlm_val_net_dogv_np", "kenlm_val_tot_np", "kenlm_val_net_dogv_bi", "kenlm_val_net_dogv_c1", "kenlm_lemes", "kenlm_lemes_c1",
-          "kenlm_mescla_c1", "diff", "diff_net", "fasttext")
+          "kenlm_mescla_c1", "kenlm_o6_c1", "kenlm_o7_c1", "kenlm_o8_c1", "diff", "diff_net", "fasttext")
 NOM_LEMES = "valencia_net_dogv_lemes"  # 12/11/2026: lematitza_text.py + entrena_kenlm.sh
+# 16/11/2026: el KenLM del sistema amb un altre ordre (dades/macocu/kenlm/valencia_net_dogv_o<N>.binary;
+# la taula de freqüències és la mateixa, perquè el text és el mateix).
+ORDRES_KENLM = {"kenlm_o6_c1": 6, "kenlm_o7_c1": 7, "kenlm_o8_c1": 8}
 # Fitxer de cada KenLM (dades/macocu/kenlm/<nom>_o5.binary i, si n'hi ha, <nom>_freq.json).
 # 11/11/2026: `_np` = sense poda; `valencia_tot_np` = net + DOGV + AVL + UA (GD >= 0,8), sense poda.
 FITXERS_KENLM = {"kenlm_cat": "macocu_tot", "kenlm_cat30": "macocu_30pc", "kenlm_val": "valencia",
@@ -335,13 +339,20 @@ class Carregador:
         self.cache: dict[str, object] = {}
         self.cost: dict[str, dict] = {}
 
-    def _kenlm(self, nom: str):
-        if nom not in self.cache:
+    @staticmethod
+    def _nom_ordre(nom: str, ordre: int = 5) -> str:
+        """Nom del model en la memòria cau i en el cost: `nom` amb l'ordre 5
+        (com sempre) i `nom_o<N>` amb un altre."""
+        return nom if ordre == 5 else f"{nom}_o{ordre}"
+
+    def _kenlm(self, nom: str, ordre: int = 5):
+        clau = self._nom_ordre(nom, ordre)
+        if clau not in self.cache:
             import kenlm
 
-            path = self.dir / "kenlm" / f"{nom}_o5.binary"
-            self._mesura(nom, path, lambda: kenlm.Model(str(path)))
-        return self.cache[nom]
+            path = self.dir / "kenlm" / f"{nom}_o{ordre}.binary"
+            self._mesura(clau, path, lambda: kenlm.Model(str(path)))
+        return self.cache[clau]
 
     def _lematitzador(self):
         if "_lemes" not in self.cache:
@@ -378,6 +389,8 @@ class Carregador:
             return self.cache["flor"]
         if clau == "kenlm_val_net_dogv_c1":  # camí C1: el KenLM de la base + classificador de "cop"
             return KenLM(self._kenlm("valencia_net_dogv"), 1.0, self._freq("valencia_net_dogv"))
+        if clau in ORDRES_KENLM:  # 16/11/2026: el mateix amb un altre ordre
+            return KenLM(self._kenlm("valencia_net_dogv", ORDRES_KENLM[clau]), 1.0, self._freq("valencia_net_dogv"))
         if clau in ("kenlm_lemes", "kenlm_lemes_c1"):
             return KenLMLemes(self._kenlm(NOM_LEMES), self._lematitzador(), self._freq(NOM_LEMES))
         if clau == "kenlm_mescla_c1":
@@ -407,6 +420,8 @@ class Carregador:
             return ["valencia_net_dogv", "valencia_net_dogv_inv"]
         if clau == "kenlm_val_net_dogv_c1":
             return ["valencia_net_dogv"]
+        if clau in ORDRES_KENLM:
+            return [self._nom_ordre("valencia_net_dogv", ORDRES_KENLM[clau])]
         if clau in ("kenlm_lemes", "kenlm_lemes_c1"):
             return [NOM_LEMES]
         if clau == "kenlm_mescla_c1":

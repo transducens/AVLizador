@@ -21,6 +21,9 @@
 # lloc de dades/macocu/kenlm/<NOM>.txt; no s'exporta res).
 # Pas 4 (11/11/2026): <NOM>_freq.json, la freqüència de les paraules
 # candidates en el text (el prior de compara_models.py; freq_unigrames.py).
+# SENSE_FREQ=1 (16/11/2026): se salta el pas 4, per a entrenar el MATEIX
+# text amb un altre ORDRE sense tocar la taula que ja hi ha (i sense que
+# diversos jobs alhora escriguen el mateix fitxer; prova_ordres.sh).
 
 #SBATCH --job-name=kenlm
 #SBATCH --output=%j_kenlm.out
@@ -96,6 +99,10 @@ echo "=== 3. build_binary (trie, quantitzat 8 bits) ==="
 ls -lh "$BIN"
 echo "L'arpa es pot esborrar si el .binary funciona: rm $ARPA"
 
-echo "=== 4. freqüència de les paraules candidates (prior) ==="
-python -u pipeline/08_traduccio_corpus/macocu/kenlm/freq_unigrames.py "$TEXT" --eixida "$DIR_LM/${NOM}_freq.json"
+if [[ -n "${SENSE_FREQ:-}" ]]; then
+    echo "=== 4. SENSE_FREQ: es manté $DIR_LM/${NOM}_freq.json tal com està ==="
+else
+    echo "=== 4. freqüència de les paraules candidates (prior) ==="
+    python -u pipeline/08_traduccio_corpus/macocu/kenlm/freq_unigrames.py "$TEXT" --eixida "$DIR_LM/${NOM}_freq.json"
+fi
 echo "Temps total: $(( $(date +%s) - T0 )) s"
