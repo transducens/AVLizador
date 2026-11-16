@@ -82,6 +82,180 @@ construir). El paquete `kenlm` se compila al instalarlo (`pip install
 "avlizador[kenlm]"`; en Windows hace falta compilador, la imagen Docker es
 Linux).
 
+## Mantenimiento: palabras y corpus nuevos (16/11/2026)
+
+Qué hay que hacer para que el sistema KenLM + clasificador tenga en cuenta
+una palabra ambigua nueva o un corpus nuevo. Todas las órdenes, desde la
+raíz del repositorio. En Abaco, con el venv activado (`source
+~/venvs/avlizador/bin/activate`) y la rama al día (`git pull`).
+
+Los ficheros del modelo viven en **tres sitios**, y cada vez que cambie
+uno hay que copiarlo a los tres:
+
+| Sitio | Para qué |
+|---|---|
+| `dades/macocu/kenlm/` en Abaco | evaluar (`avalua_sistema.sh`, `compara_models.sh`) |
+| la carpeta de `AVLIZADOR_KENLM_DIR` en el PC (si se usa KenLM fuera de Docker) | `translate_cat_val`, `avlizador tradueix` |
+| `docker/kenlm/` (fuera de git) | la imagen Docker (`/opt/kenlm`); hay que reconstruirla |
+
+### 1. Palabra ambigua nueva
+
+| # | Paso | Dónde |
+|---|---|---|
+| 1 | El compañero añade la entrada al léxico: `forma_problematica`, `problema` (`colision_homonima` o `homonimia_lexica`) y, si son homógrafos, `lemas`. Conviene que el `espanol` de cada lectura esté bien (servirá si se etiquetan los sentidos con el castellano). | `dades/lexic/lexico_general.json` |
+| 2 | Copiar el léxico dentro del paquete. Desde aquí el sistema **ya trata la palabra como ambigua** (`punts.carrega_punts`). Commit y `git pull` en Abaco. | PC |
+| 3 | Comprobar que las candidatas están en la tabla de frecuencias. Si falta alguna, regenerarla (si no, cuenta como 0 apariciones y con λ gana ventaja: pasó con «faltes» el 13/11). | PC / Abaco |
+| 4 | **KenLM no se toca**: es un modelo general del valenciano y puntúa cualquier frase. | — |
+| 5 | Reentrenar el clasificador (sección 3). | PC o Abaco |
+| 6 | Copiar a los tres sitios lo que haya cambiado (`valencia_net_dogv_freq.json`, `sentit.json`) y reconstruir la imagen Docker. | — |
+| 7 | Medir. | Abaco |
+
+Si se quiere medir la palabra nueva, hay que añadir frases suyas al
+benchmark de homógrafos (solo con permiso del usuario).
+
+```bash
+# 2. Léxico -> paquete (PC)
+python scripts/sync_data.py
+python scripts/sync_data.py --check          # "Tot sincronitzat"
+
+# 3. ¿Faltan candidatas en la tabla de frecuencias? (sin kenlm: vale en Windows)
+#    Imprime [] si están todas. Cambiar la ruta por la del fichero que se use.
+python -c "import json; from avlizador.traductor_cat_val.model_llengua.kenlm import ModelKenLM; from avlizador.traductor_cat_val.model_llengua.lemes import formes_candidates; f = json.load(open('docker/kenlm/valencia_net_dogv_freq.json', encoding='utf-8')); print(ModelKenLM(None, f).paraules_sense_freq(formes_candidates()))"
+#    (Al cargar el sistema también sale el aviso AvisFreqKenLM.)
+
+# 3b. Si falta alguna: regenerarla en Abaco (lee el léxico del paquete: antes, git pull)
+cp dades/macocu/kenlm/valencia_net_dogv_freq.json dades/macocu/kenlm/valencia_net_dogv_freq_$(date +%Y%m%d).json
+python pipeline/08_traduccio_corpus/macocu/kenlm/freq_unigrames.py dades/macocu/kenlm/valencia_net_dogv.txt
+#    -> dades/macocu/kenlm/valencia_net_dogv_freq.json. Al PC:
+scp nmartin@abaco:~/scrapeo/AVLizador/dades/macocu/kenlm/valencia_net_dogv_freq.json docker/kenlm/
+
+# 6. Imagen Docker con los ficheros nuevos de docker/kenlm/
+docker compose up --build
+
+# 7. Medir (Abaco, desde pipeline/03_seleccio_de_model/model_llengua)
+MODELS="kenlm" BENCHMARKS="homografs homografs_v2 manual" sbatch avalua_sistema.sh
+#    -> pipeline/03_seleccio_de_model/resultats/avalua_sistema_<fecha>/resum_<fecha>.md
+```
+
+### 2. Corpus nuevo
+
+El corpus sirve para dos cosas distintas, y cada una tiene sus pasos.
+
+**A. Para KenLM** (se reentrena):
+
+1. **Preparar el texto**: quedarse solo con el valenciano filtrando por GD
+   (como el DOGV en `prepara_dogv.py`) y normalizarlo con la misma función
+   de siempre (`kenlm.normalitza`; lo hacen los dos scripts). Una frase
+   por línea.
+2. **Unir los textos**: el texto actual, `valencia_net_dogv.txt`, más el
+   nuevo, en un fichero nuevo.
+3. **Entrenar** en Abaco con `entrena_kenlm.sh`: genera el `.binary` (orden
+   5, poda de singletons) y su tabla de frecuencias (`<nom>_freq.json`).
+4. **Comparar** con el modelo actual en el comparador: darle una clave en
+   `FITXERS_KENLM` y en `MODELS` de `compara_models.py` y lanzarlo en
+   homógrafos y manual. Las dos claves sin `_c1` se comparan sin
+   clasificador: es la comparación de los dos KenLM.
+5. **Si mejora, pasarlo al sistema**. El paquete busca siempre
+   `valencia_net_dogv_o5.binary` y `valencia_net_dogv_freq.json`
+   (`NOM_MODEL` en `kenlm.py`): o se renombran los ficheros nuevos con esos
+   nombres (guardando los viejos), o se cambia `NOM_MODEL`. Después, a los
+   tres sitios, y la evaluación completa (`avalua_sistema.sh` con todos los
+   benchmarks). El clasificador no depende de KenLM: no hace falta
+   reentrenarlo.
+
+```bash
+# 1. Preparar el texto (Abaco o PC), según el formato del corpus:
+#    - documentos como el DOGV (mismo formato que dogv_documents.tsv): documentos de GD >= 0,8
+python pipeline/08_traduccio_corpus/dogv_apunt/prepara_dogv.py --entrada <corpus.tsv> --eixida dades/macocu/kenlm/<nuevo>.txt --min-gd-doc 0.8
+#    - frases en JSONL (campo text; gd y occ si se filtra, como valencia.jsonl)
+python pipeline/08_traduccio_corpus/macocu/kenlm/exporta_text.py --jsonl <corpus.jsonl> --min-gd 0.5 --eixida dades/macocu/kenlm/<nuevo>.txt
+
+# 2. Unir
+cat dades/macocu/kenlm/valencia_net_dogv.txt dades/macocu/kenlm/<nuevo>.txt > dades/macocu/kenlm/<nom>.txt
+
+# 3. Entrenar (Abaco, desde pipeline/08_traduccio_corpus/macocu/kenlm; TEXT relativo a la raíz del repo)
+TEXT=dades/macocu/kenlm/<nom>.txt NOM=<nom> sbatch entrena_kenlm.sh
+#    -> dades/macocu/kenlm/<nom>_o5.binary y <nom>_freq.json
+
+# 4. Comparar (Abaco, desde pipeline/03_seleccio_de_model/model_llengua), tras añadir
+#    "kenlm_<nom>": "<nom>" a FITXERS_KENLM y "kenlm_<nom>" a MODELS:
+MODELS="kenlm_val_net_dogv kenlm_<nom>" EXTRA="--benchmarks homografs homografs_v2 manual --marges 1 2 3 5 --per-defecte catala --lams 0.5 1 1.5 2 --lams-colisio 0.5 0.75 1 --detall" sbatch compara_models.sh
+
+# 5. Pasarlo al sistema (Abaco), guardando los viejos
+cd dades/macocu/kenlm
+mv valencia_net_dogv_o5.binary valencia_net_dogv_o5_$(date +%Y%m%d).binary
+mv valencia_net_dogv_freq.json valencia_net_dogv_freq_$(date +%Y%m%d).json
+cp <nom>_o5.binary valencia_net_dogv_o5.binary
+cp <nom>_freq.json valencia_net_dogv_freq.json
+#    y al PC (docker/kenlm/ y AVLIZADOR_KENLM_DIR) con scp, como en 3b.
+```
+
+Otros órdenes del KenLM: `ORDRE=<n>` en `entrena_kenlm.sh` (con
+`SENSE_FREQ=1` si el texto es el mismo y ya tiene tabla) y
+`pipeline/03_seleccio_de_model/model_llengua/prova_ordres.sh` (orden 5
+frente a 6, 7 y 8; 16/11/2026: dan las mismas decisiones, se queda el 5).
+Ojo: `kenlm` se compila por defecto con orden máximo 6; para más hay que
+recompilar las herramientas (`cmake -DKENLM_MAX_ORDER=10 ..`) y el módulo
+de Python (`MAX_ORDER=10 pip install --no-cache-dir --force-reinstall
+https://github.com/kpu/kenlm/archive/master.zip`).
+
+**B. Para el clasificador**:
+
+1. Las fuentes de frases están en
+   `pipeline/03_seleccio_de_model/model_llengua/sentit_cop.py`: `FONTS`
+   (`net` = `dades/macocu/valencia/valencia.jsonl`, `dogv` =
+   `dades/dogv_apunt/dogv_net.txt`, `avl`) y `frases_font`. Añadir un
+   corpus es añadir una fuente más (un nombre en `FONTS`, su ruta y su
+   rama en `frases_font`; un texto normalizado, una frase por línea, como
+   `dogv_net.txt`). Es un cambio de código pequeño. Ojo: el clasificador
+   va con el paquete, así que la fuente tiene que poder redistribuirse (por
+   eso la AVL está fuera desde el 12/11).
+2. Reentrenar con esa fuente. Si debe usarse siempre, añadirla también a
+   `FONTS_PER_DEFECTE`.
+
+```bash
+python pipeline/03_seleccio_de_model/model_llengua/sentit_general.py recompte --fonts net dogv <nueva>
+python pipeline/03_seleccio_de_model/model_llengua/sentit_general.py entrena --fonts net dogv <nueva>
+```
+
+### 3. Cómo se actualiza el clasificador
+
+- **Se reentrena entero**, no por partes. `recompte` dice cuántas frases
+  tiene cada sentido de cada palabra; `entrena` escribe
+  `dades/macocu/kenlm/sentit/sentit.json` (el clasificador) y
+  `sentit_entrenament.json` (el informe). Necesita
+  `dades/macocu/valencia/valencia.jsonl` y `dades/dogv_apunt/dogv_net.txt`
+  (están en el PC y en Abaco).
+- **Las palabras entran y salen solas**: cada palabra que llega al 0,7 de
+  acierto equilibrado en las frases apartadas entra en `grups`; las que no
+  llegan van a `descartats` y las que no tienen datos (menos de 20 frases
+  de un sentido), a `sense_dades`. El sistema las trata como siempre: con
+  duda, la catalana. No hay que tocar nada a mano.
+- **El sistema coge el fichero nuevo solo**: carga `sentit.json` si existe
+  y, si no, el antiguo de «cop» (`nb.json`).
+- **Protección si cambia el léxico**: si el léxico cambia las candidatas de
+  una palabra, su clasificador antiguo deja de usarse (`sentit.py`,
+  `ClassificadorSentit.candidat`) hasta que se reentrene.
+- **Ojo**: reentrenar no arregla las palabras a las que les faltan datos.
+  Para eso hace falta más corpus o etiquetar los sentidos con el castellano
+  (corpus paralelo catalán–castellano y el `espanol` del léxico; propuesta
+  del 16/11, sin hacer).
+
+```bash
+# Entrenar (PC o Abaco)
+python pipeline/03_seleccio_de_model/model_llengua/sentit_general.py recompte
+python pipeline/03_seleccio_de_model/model_llengua/sentit_general.py entrena
+#    Opciones: --min-dev 0.7 (umbral), --minim 20 (frases mínimas por sentido), --fonts
+
+# Qué palabras han entrado (y con qué acierto)
+python -c "import json; d = json.load(open('dades/macocu/kenlm/sentit/sentit_entrenament.json', encoding='utf-8')); [print(s, list(x['punts']), x['frases'], x.get('balancejat')) for s in ('grups', 'descartats', 'sense_dades') for x in d[s].values()]"
+
+# A los tres sitios (desde el PC)
+cp dades/macocu/kenlm/sentit/sentit.json docker/kenlm/
+scp dades/macocu/kenlm/sentit/sentit.json nmartin@abaco:~/scrapeo/AVLizador/dades/macocu/kenlm/sentit.json
+#    + la carpeta de AVLIZADOR_KENLM_DIR, si se usa; y docker compose up --build
+```
+
 Lo que sigue (hasta "Límites conocidos") es sobre todo la historia de
 FLOR (23/10-12/11/2026). Las capas de spaCy y la elección por tipo de punto
 son las mismas para los dos modelos.

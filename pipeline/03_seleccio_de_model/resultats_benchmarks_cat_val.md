@@ -6,13 +6,27 @@ arriba. Para el contexto (cómo se hizo cada benchmark, qué falla y por
 qué), ver `documentacio/hoja_de_ruta_benchmark_manual.md` (sección 10) y
 `documentacio/metodologia_i_resultats.md` (secciones 15 y 17).
 
-**Sistema principal = motor + FLOR-760M** (`--model traductor_ml`, es
-`traductor.translate_cat_val`). El motor solo (`--model traductor`) se
-mide al lado solo como comparación.
+**Sistema principal desde el 13/11/2026 = motor + KenLM + clasificador de
+sentido** (`translate_cat_val(text)`, `avlizador avalua` por defecto).
+FLOR-760M queda como opción (`--model flor`). El motor solo (`--motor`)
+se mide al lado solo como comparación. Hasta el 06/11 el sistema
+principal era motor + FLOR-760M.
 
 ## Cómo se evalúa todo de una vez
 
-`avalua_sistema_final.py` ejecuta el sistema final en todos los
+Desde el 12/11/2026, con el paquete (en Abaco,
+`pipeline/03_seleccio_de_model/model_llengua/avalua_sistema.sh`):
+
+```powershell
+avlizador avalua --motor --model flor kenlm --benchmarks homografs homografs_v2 manual 151 boe_estricte gplsi --eixida resultats/avalua_sistema_<fecha>
+```
+
+Escribe `resum_<fecha>.md` en esa carpeta, con la misma tabla que aquí.
+Los modelos experimentales que no están en el paquete (KenLM de lemas,
+mezcla...) se miden con `model_llengua/compara_models.py`: mismas
+métricas menos chrF++, y el desglose de cada decisión con `--detall`.
+
+Antes (hasta el 06/11, con FLOR): `avalua_sistema_final.py` ejecuta el sistema final en todos los
 benchmarks (manual BOE, AVL y mezcla; 151; 151 + homógrafos; BOE estricto
 y amplio; gplsi) en un solo proceso, con todas las métricas, y al acabar
 escribe la tabla en `resultats/resum_sistema_final_<fecha>.md`, lista
@@ -42,6 +56,160 @@ TER y WER (desde el 30/10/2026): separación por espacios, distinguen
 mayúsculas, la puntuación va pegada a la palabra. Cada frase del JSON
 guarda `ter`, `wer`, `ter_edicions`, `wer_edicions` y `ref_paraules`; el
 resumen, `ter_corpus` y `wer_corpus`.
+
+## 16/11/2026 — KenLM de orden 6, 7 y 8 (experimento, descartado)
+
+El KenLM del sistema (orden 5) frente al mismo texto, poda y tabla de
+frecuencias con orden 6, 7 y 8, todos con el clasificador general y el
+criterio del sistema. Comparador (`compara_models_20261116_0916` y
+`_0922`), solo homógrafos y manual, sin FLOR ni motor (decisión del
+usuario). Detalle en `documentacio/resultats_model_llengua_kenlm.md`,
+sección 4.18. El comparador no calcula chrF++.
+
+| Benchmark | Orden | Exactas | BLEU | chrF | TER ↓ | WER ↓ |
+|---|---|---|---|---|---|---|
+| 151 + homógrafos (253) | 5, 6, 7 y 8 | 227/253 (89,7 %) | 97,05 | 98,44 | 0,58 | 0,58 |
+| Homógrafos v2 (160) | 5, 6, 7 y 8 | 111/160 (69,4 %) | 88,24 | 93,66 | 4,41 | 4,41 |
+| Manual mezcla BOE + AVL (458) | 5, 6, 7 y 8 | 232/458 (50,7 %) | 91,00 | 96,34 | 5,58 | 5,96 |
+
+- Las 257 decisiones de los homógrafos son idénticas en los cuatro (193
+  aciertos / 1 grave / 63 sin traducir). GD / GDV del manual 0,9936 /
+  0,9995 en todos.
+- Fichero 77 / 91 / 102 / 112 MB; mismo tiempo (0,099 ms por frase
+  candidata).
+- Con el mejor criterio de cada uno (margen 1), los órdenes 6-8 ganan una
+  frase en v2 (HG2-034), con 8 graves igual que el orden 5 con ese margen.
+- Se queda el orden 5.
+
+## 13/11/2026 — KenLM + clasificador de sentido, modelo por defecto
+
+`avlizador avalua --motor --model flor kenlm` en Abaco, 0 errores. KenLM
+de la ejecución de las 13:08 (`avalua_sistema_20261113_1308`: tabla de
+frecuencias corregida, clasificador general y regla de «una nou»); FLOR y
+motor de las 10:16 (`avalua_sistema_20261113_1016`), porque los cambios de
+las 11:45 y 13:08 solo tocan KenLM. Detalle y decisiones en
+`documentacio/resultats_model_llengua_kenlm.md` («Estado actual», 4.17 y
+sección 8).
+
+KenLM + clasificador: KenLM `valencia_net_dogv_o5` (MaCoCu valenciano
+limpio + DOGV, orden 5, 77 MB), prior de frecuencia con λ 1,5 en los
+homógrafos y 0,75 en las colisiones, margen 3 con la catalana por defecto
+y desempate (< 2) con el clasificador de sentido de la palabra (hoy cop,
+cops y deu).
+
+| Benchmark | Sistema | Exactas | BLEU | chrF | chrF++ | TER ↓ | WER ↓ | Errors |
+|---|---|---|---|---|---|---|---|---|
+| 151 + homógrafos (253) | **Motor + KenLM + sentit** | **227/253 (89,7 %)** | **97,05** | **98,44** | **98,45** | **0,58** | **0,58** | 0 |
+| 151 + homógrafos (253) | Motor + FLOR-760M | 217/253 (85,8 %) | 95,34 | 97,72 | 97,69 | 0,86 | 0,86 | 0 |
+| 151 + homógrafos (253) | Motor solo | 181/253 (71,5 %) | 90,75 | 94,95 | 94,85 | 1,77 | 1,77 | 0 |
+| Homógrafos v2, equilibrado por sentido (160) | **Motor + KenLM + sentit** | **111/160 (69,4 %)** | **88,24** | **93,66** | **93,69** | **4,41** | **4,41** | 0 |
+| Homógrafos v2, equilibrado por sentido (160) | Motor + FLOR-760M | 96/160 (60,0 %) | 84,37 | 92,39 | 92,27 | 5,90 | 5,90 | 0 |
+| Homógrafos v2, equilibrado por sentido (160) | Motor solo | 82/160 (51,2 %) | 81,48 | 90,98 | 90,86 | 6,73 | 6,73 | 0 |
+| Manual mezcla BOE + AVL (458) | **Motor + KenLM + sentit** | **232/458 (50,7 %)** | **91,00** | **96,34** | **95,93** | **5,58** | **5,96** | 0 |
+| Manual mezcla BOE + AVL (458) | Motor + FLOR-760M | 231/458 (50,4 %) | 90,98 | 96,33 | 95,92 | 5,59 | 5,97 | 0 |
+| Manual mezcla BOE + AVL (458) | Motor solo | 218/458 (47,6 %) | 90,49 | 96,08 | 95,64 | 5,90 | 6,27 | 0 |
+| 151 (banco curado) | Motor + KenLM + sentit | 144/154 (93,5 %) | 99,28 | 99,62 | 99,60 | 0,30 | 0,30 | 0 |
+| 151 (banco curado) | **Motor + FLOR-760M** | **145/154 (94,2 %)** | **99,38** | **99,69** | **99,67** | **0,27** | **0,27** | 0 |
+| 151 (banco curado) | Motor solo | 142/154 (92,2 %) | 99,15 | 99,64 | 99,60 | 0,41 | 0,41 | 0 |
+| BOE estricto, muestra (2.000) | Motor + KenLM + sentit | 1894/2000 (94,7 %) | 99,08 | 99,66 | 99,60 | 0,29 | 0,56 | 0 |
+| BOE estricto, muestra (2.000) | Motor + FLOR-760M | 1894/2000 (94,7 %) | 99,08 | 99,66 | 99,60 | 0,29 | 0,56 | 0 |
+| BOE estricto, muestra (2.000) | Motor solo | 1800/2000 (90,0 %) | 98,04 | 99,42 | 99,22 | 0,76 | 1,02 | 0 |
+| gplsi (1.958) | Motor + KenLM + sentit | 1550/1958 (79,2 %) | 93,59 | 97,01 | 96,88 | 2,77 | 2,79 | 0 |
+| gplsi (1.958) | **Motor + FLOR-760M** | **1551/1958 (79,2 %)** | **93,64** | **97,04** | **96,91** | **2,74** | **2,75** | 0 |
+| gplsi (1.958) | Motor solo | 1533/1958 (78,3 %) | 93,28 | 96,94 | 96,78 | 2,88 | 2,89 | 0 |
+
+Manual, Grau Dialectal de la salida (comparador): KenLM y FLOR GD 0,9936
+/ GDV 0,9995 (7 marcadores orientales); motor solo 0,9765 / 0,9981 (26).
+
+- KenLM gana a FLOR en los homógrafos (+10 en v1, +15 en v2) y en el
+  manual (+1), empata en el BOE estricto y pierde 1 frase en el 151 y 1 en
+  gplsi.
+- Las 257 decisiones de los homógrafos (v1 + v2): **193 aciertos, 1 error
+  grave** (HG2-028 «Si en falta algun», valenciano correcto; la referencia
+  pide «manca») **y 63 sin traducir**. FLOR: 168 / 3 / 86 (10/11).
+- Coste por frase candidata: KenLM 0,1 ms y ~74 MB, sin `torch`; FLOR
+  833 ms y ~1,5 GB.
+- El clasificador general decide 8 puntos y no cambia ningún resultado;
+  las 2 exactas que se ganan a las 13:08 son de la regla de «una nou».
+
+## 13/11/2026 10:16 — KenLM de lemas (experimento, descartado)
+
+Propuesta del supervisor: un KenLM entrenado con el texto pasado a lemas
+(spaCy), para que las formas raras sumen los datos de su lema. Se lematiza
+igual el texto de entrenamiento y las frases que se puntúan
+(`model_llengua/lemes.py`); se quedan en su forma las palabras que se
+comparan, las que concuerdan en género y la puntuación. Mismo texto
+(`valencia_net_dogv`), orden 5 y poda que el KenLM del sistema. Medido con
+el comparador (`compara_models_20261113_1016`, job de
+`NOMES_COMPARA=1 prova_lemes.sh`) en la misma ejecución que el sistema de
+ese momento; detalle en `documentacio/resultats_model_llengua_kenlm.md`,
+sección 4.16.
+
+Modelos:
+- **Sistema**: KenLM de formas + clasificador, criterio del sistema
+  (`CRITERI_KENLM`: margen 3, catalana por defecto, λ 1,5 / 0,75,
+  desempate 2). Es el de las 10:16, con la tabla de frecuencias vieja: por
+  eso da 228 en v1 y no los 227 de la tabla de arriba.
+- **Lemas + C1**: KenLM de lemas + el clasificador de «cop», mismo criterio.
+- **Lemas solo**: KenLM de lemas sin clasificador, margen 2, catalana por
+  defecto, λ 0,5.
+- **Mezcla + C1**: log P del KenLM de formas + log P del de lemas, más el
+  clasificador, criterio del sistema.
+
+El comparador no calcula chrF++.
+
+| Benchmark | Modelo | Exactas | BLEU | chrF | TER ↓ | WER ↓ |
+|---|---|---|---|---|---|---|
+| 151 + homógrafos (253) | **Sistema** | **228/253 (90,1 %)** | **97,21** | **98,55** | **0,56** | **0,56** |
+| 151 + homógrafos (253) | Lemas + C1 | 225/253 (88,9 %) | 96,72 | 98,33 | 0,62 | 0,62 |
+| 151 + homógrafos (253) | Lemas solo | 223/253 (88,1 %) | 96,27 | 98,07 | 0,76 | 0,76 |
+| 151 + homógrafos (253) | Mezcla + C1 | 223/253 (88,1 %) | 96,30 | 98,02 | 0,76 | 0,76 |
+| 151 + homógrafos (253) | Motor solo | 181/253 (71,5 %) | 90,75 | 94,95 | 1,77 | 1,77 |
+| Homógrafos v2 (160) | Sistema | 111/160 (69,4 %) | 88,22 | 93,69 | 4,41 | 4,41 |
+| Homógrafos v2 (160) | Lemas + C1 | 111/160 (69,4 %) | 88,23 | 93,70 | 4,41 | 4,41 |
+| Homógrafos v2 (160) | **Lemas solo** | **115/160 (71,9 %)** | **89,22** | **93,97** | **4,24** | **4,24** |
+| Homógrafos v2 (160) | Mezcla + C1 | 115/160 (71,9 %) | 89,02 | 93,98 | 4,24 | 4,24 |
+| Homógrafos v2 (160) | Motor solo | 82/160 (51,2 %) | 81,48 | 90,98 | 6,73 | 6,73 |
+| Manual mezcla BOE + AVL (458) | **Sistema** | **232/458 (50,7 %)** | **91,00** | **96,34** | **5,58** | **5,96** |
+| Manual mezcla BOE + AVL (458) | Lemas + C1 | 232/458 (50,7 %) | 91,00 | 96,34 | 5,58 | 5,96 |
+| Manual mezcla BOE + AVL (458) | Lemas solo | 231/458 (50,4 %) | 90,98 | 96,33 | 5,59 | 5,97 |
+| Manual mezcla BOE + AVL (458) | Mezcla + C1 | 232/458 (50,7 %) | 91,00 | 96,34 | 5,58 | 5,96 |
+| Manual mezcla BOE + AVL (458) | Motor solo | 218/458 (47,6 %) | 90,49 | 96,08 | 5,90 | 6,27 |
+| 151 (154) | Sistema, lemas + C1, lemas solo y mezcla + C1 | 144/154 (93,5 %) | 99,28 | 99,62 | 0,30 | 0,30 |
+| 151 (154) | Motor solo | 142/154 (92,2 %) | 99,15 | 99,64 | 0,41 | 0,41 |
+| BOE estricto (2.000) | Sistema, lemas + C1, lemas solo y mezcla + C1 | 1894/2000 (94,7 %) | 99,08 | 99,66 | 0,29 | 0,56 |
+| BOE estricto (2.000) | Motor solo | 1800/2000 (90,0 %) | 98,04 | 99,42 | 0,76 | 1,02 |
+| gplsi (1.958) | Sistema | 1550/1958 (79,2 %) | 93,59 | 97,01 | 2,77 | 2,79 |
+| gplsi (1.958) | **Lemas + C1** | **1550/1958 (79,2 %)** | **93,61** | **97,02** | **2,75** | **2,77** |
+| gplsi (1.958) | Lemas solo | 1549/1958 (79,1 %) | 93,56 | 96,99 | 2,79 | 2,80 |
+| gplsi (1.958) | Mezcla + C1 | 1549/1958 (79,1 %) | 93,56 | 96,99 | 2,79 | 2,80 |
+| gplsi (1.958) | Motor solo | 1533/1958 (78,3 %) | 93,28 | 96,94 | 2,88 | 2,89 |
+
+Grau Dialectal de la salida en el manual: GD 0,9936 / GDV 0,9995 en los
+cuatro modelos de KenLM (motor solo 0,9765 / 0,9981).
+
+Decisiones de los homógrafos (257, v1 + v2) y coste:
+
+| Modelo | Aciertos | Errores graves | Sin traducir | ms por frase candidata |
+|---|---|---|---|---|
+| **Sistema** | **194** | **2** | 61 | **0,10** |
+| Lemas + C1 | 191 | 3 | 63 | 5,0 |
+| Lemas solo | 193 | 13 | 51 | 6,2 |
+| Mezcla + C1 | 193 | 11 | 53 | 4,8 |
+
+- Las métricas de corpus casi no se mueven: solo cambian las frases con
+  palabra ambigua, y las diferencias son de 1-5 frases.
+- Lemas solo y la mezcla ganan 4 exactas en v2, pero con 11-13 errores
+  graves («reeixida» → «exitosa», «cop» → «vegada»): traducen más y
+  cambian más el sentido.
+- Lemas + C1 frente al sistema cambia 11 decisiones: gana 4 y pierde 7,
+  dos de ellas graves nuevas (HG041 «calces» → «bragues», HG2-157
+  «reeixides» → «exitoses»).
+- **Conclusión: descartado.** No mejora ni en aciertos ni en errores
+  graves y es ~50 veces más lento (spaCy en cada frase candidata). Los
+  fallos que quedan son de frecuencia (colp/vegada) y de palabras sin
+  datos en el corpus (panotxa, recuita), que los lemas no arreglan; además
+  se pierde la concordancia.
 
 ## 06/11/2026 09:31 — Margen 2 con la catalana por defecto + léxico del 05/11
 
