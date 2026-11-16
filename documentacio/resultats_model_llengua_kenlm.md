@@ -960,7 +960,13 @@ v1, +15 en v2) y en el manual (+1), y pierde 1 en el 151 y 1 en gplsi.
 | `visor_compara_models.html` | Abre los `_traces_<modelo>.json`: probabilidad por token, zona distinta, pérdida en la palabra frente al resto. |
 | `kenlm/freq_unigrames.py` | Frecuencia de las candidatas en un texto de entrenamiento → `<modelo>_freq.json`. Es el cuarto paso de `entrena_kenlm.sh`. |
 | `kenlm/termes_ambigus.py` | Conteo y contextos de las candidatas en net, DOGV, AVL y UA. Prepara `avl_net.txt` y `ua_net.txt`. |
-| `kenlm/entrena_kenlm.sh` | Entrena un KenLM. `TEXT=` reutiliza un texto ya exportado; `PODA=""` entrena sin poda. |
+| `kenlm/entrena_kenlm.sh` | Entrena un KenLM. `TEXT=` reutiliza un texto ya exportado; `PODA=""` entrena sin poda; `ORDRE=` otro orden; `SENSE_FREQ=1` no rehace la tabla de frecuencias (mismo texto). |
+| `prova_ordres.sh` | (16/11) Entrena el KenLM del sistema con orden 6, 7 y 8 y lo compara con el de orden 5 (`kenlm_o6_c1`...), solo en homógrafos y manual. |
+| `sentit_general.py` | Entrena el clasificador de sentido general (`recompte`, `entrena`) → `sentit.json`. |
+
+**Palabras y corpus nuevos** (qué regenerar y con qué órdenes): sección
+«Mantenimiento» de `src/avlizador/traductor_cat_val/model_llengua/README.es.md`
+(16/11).
 
 ---
 
