@@ -387,7 +387,8 @@ pronombre y el subjuntivo, marcadores catalanes reales.
   detecta. En la GNV este error casi no se nota ("consideren" 7) porque un
   texto valenciano usa esas formas con el sentido valenciano.
 - Este problema es del GD, no del léxico: no lo arregla la corrección de
-  datos en curso. Posibles vías, sin probar todavía:
+  datos en curso. **Arreglado el 16/11/2026 (sección 10)**: `Person` no
+  sirve; se resolvió desde los datos. Vías que se plantearon:
   1. 1ª singular: usar el rasgo `Person` de spaCy (solo contar "permet"
      si spaCy dice 1ª persona). `Mood` no sirve (medido el 20/10), pero
      `Person` no se ha medido.
@@ -769,3 +770,118 @@ catalán, pero como vale en los dos dialectos no dice nada del dialecto, y
 deja de contar. Es lo esperado: una forma de los dos lados no es un
 marcador. El GDV de los textos catalanes también sube un poco por lo
 mismo.
+
+## 10. Colisión verbal (16/11/2026)
+
+**El fallo** (abierto desde el 27/10, sección 2, problema 1; el 20 % de los
+marcadores valencianos del BOE catalán): algunas formas valencianas son
+también formas catalanas normales de otra persona o modo, y el GD las
+contaba como valencianas en cualquier texto:
+
+- **1.ª persona del singular sin desinencia**: «jo permet» (valenciano) se
+  escribe igual que «ell permet» (los dos dialectos). El catalán de la
+  pareja es «permeto».
+- **3.ª persona del plural de subjuntivo**: «que consideren» (valenciano)
+  se escribe igual que «consideren» (indicativo, los dos dialectos). El
+  catalán es «considerin». Ya había una regla para esto (08/10,
+  `es_risc_mode_3a_plural`), pero tenía dos fallos: tomaba los presentes
+  en «-eren» («consideren», «superen», «alteren») por imperfectos y
+  entonces exigía «-essin» en catalán, y no cubría la diéresis
+  («continuen» → «continuïn»).
+
+**spaCy no lo separa** (medido en los cinco corpus): `Person` dice 3
+también con «Jo» delante («Jo permet...») y en primeras personas
+auténticas como «aconseguisc»; `Mood` dice indicativo casi siempre,
+también en los subjuntivos valencianos reales.
+
+**El arreglo** (decisión del usuario: opción A + B', en la función
+compartida para que el fallo no se propague al traductor val→cat):
+
+- `rules/val_cat/conjugacions_dict.py`:
+  - `es_risc_mode_3a_plural` corregida: valenciano en «-en» y catalán en
+    «-in»/«-ïn», sea presente o imperfecto. De 9.466 a 9.794 parejas
+    (+328, todas de subjuntivo o imperativo de 3.ª plural, o de raíz
+    distinta como «cultiven»/«conreïn»); ninguna perdida.
+  - `es_colisio_1a_singular` nueva: catalán = valenciano + «o». Sin
+    listas, sale de los datos: 38 filas (32 formas: acull, admet,
+    arremet, ateny, comet, compromet, constreny, convenç, cull, cus,
+    emet, empeny, entremet, escomet, escull, escup, estreny, inadmet,
+    malmet, omet, permet, pertany, preadmet, promet, readmet, remet,
+    restreny, retransmet, sobresurt, sotmet, tramet, transmet); todas las
+    que llevan morfología son `pri p1 sg`.
+  - `es_colisio_verbal` = cualquiera de las dos (salvo `SEMPRE_VERB`). La
+    usan el traductor val→cat (`carrega_conjugacions`) y el GD.
+- `grau_dialectal/gd.py`: la forma valenciana de una colisión no cuenta;
+  la catalana («permeto», «considerin») **sí cuenta** como marcador
+  oriental, porque no tiene otra lectura (`_catalans_de_colisio`, solo si
+  la pareja es la única en las dos direcciones).
+
+**Efecto en el GD** (valores globales; «antes» = el GD con «mentre», sección 9):
+
+| Corpus | Lado | GD antes → ahora | GDV antes → ahora | GDC antes → ahora | Frases que cambian |
+|---|---|---|---|---|---|
+| Manual (458) | val | 0,9973 → 0,9971 | 0,9998 → 0,9998 | 0,9183 → 0,9214 | 40 |
+| Manual (458) | cat | 0,0293 → 0,0101 | 0,9205 → 0,9120 | 0,9976 → 0,9991 | 103 |
+| 151 (154) | val | 0,9927 → 0,9926 | 0,9995 → 0,9995 | 0,9370 → 0,9375 | 2 |
+| 151 (154) | cat | 0,0704 → 0,0632 | 0,9417 → 0,9380 | 0,9956 → 0,9958 | 14 |
+| gplsi (1.958) | val | 0,9371 → 0,9364 | 0,9939 → 0,9939 | 0,9096 → 0,9106 | 19 |
+| gplsi (1.958) | cat | 0,0521 → 0,0421 | 0,9066 → 0,9056 | 0,9949 → 0,9958 | 37 |
+| BOE estricto (2.000) | val | 0,9854 → 0,9852 | 0,9994 → 0,9994 | 0,9586 → 0,9593 | 26 |
+| BOE estricto (2.000) | cat | 0,0488 → 0,0312 | 0,9599 → 0,9511 | 0,9979 → 0,9984 | 292 |
+| BOE amplio (2.000) | val | 0,9379 → 0,9365 | 0,9986 → 0,9986 | 0,9791 → 0,9796 | 17 |
+| BOE amplio (2.000) | cat | 0,0849 → 0,0496 | 0,9792 → 0,9740 | 0,9981 → 0,9986 | 158 |
+
+**Lectura**:
+
+- **Textos catalanes**: el GD baja mucho y se acerca a 0, que es lo que
+  debe dar (BOE amplio 0,085 → 0,050; manual 0,029 → 0,010). Se van
+  «permet», «consideren», «remet», «exceptuen»… y entran como catalanes
+  «siguin», «hagin», «puguin», «tinguin», «estableixin».
+- **El GDV de los textos catalanes baja un poco** (BOE estricto 0,960 →
+  0,951) por lo mismo: ahora cuentan sus subjuntivos catalanes, que antes
+  no contaban. Es correcto.
+- **Textos valencianos**: el GD baja como mucho 0,0014. Es el coste: los
+  subjuntivos valencianos auténticos («que consideren») y las primeras
+  personas («jo permet») ya no cuentan, porque no se distinguen de las
+  formas compartidas (falso negativo, el criterio de siempre).
+
+**Efecto en el traductor val→cat** (motor, exactas; mismo código antes y
+después salvo la regla):
+
+| Benchmark | Antes | Ahora | Gana | Pierde |
+|---|---|---|---|---|
+| Manual (458) | 168 | 177 | 16 | 7 |
+| 151 (154) | 103 | 102 | 0 | 1 |
+| gplsi (1.958) | 1.437 | 1.451 | 14 | 0 |
+| BOE estricto (2.000) | 918 | 923 | 10 | 5 |
+| BOE amplio (2.000) | 866 | 871 | 6 | 1 |
+
+Antes traducía «Això permet» → «Això permeto» y «que es consideren» →
+«que es considerin» aunque fuera indicativo. De las pérdidas:
+
+- **Referencias mal**: en el manual, 6 de las 7 tienen en el catalán un
+  error que viene del borrador val→cat («li **permeto** contrarestar»,
+  BM-AVL-003/016/070; «que es **pronunciïn** amb o closa», «funcions que
+  s'**associïn** culturalment», «**continuïn** vulnerant», todos
+  indicativos). En el 151, RC056 «que **pertanyo**, evidentment» también
+  es un error de la referencia (es 3.ª persona). Ahora el sistema dice lo
+  correcto.
+- **Subjuntivos de verdad que ya no se traducen**: BM-BOE-103 «que
+  vulnerin», y en el BOE «que no superin», «que actuïn», «que propiciïn»,
+  «que denunciïn», «llevat que considerin», «que es considerin». Es el
+  falso negativo esperado (la capa LLM de val→cat, congelada, es la que
+  decide estos casos).
+
+**Lo que queda sin cubrir** (no se ha tocado nada):
+
+- 2.ª persona del singular de subjuntivo: «arribes», «trobes», «parles»
+  (valenciano) = indicativo catalán. Es el mismo caso que la 3.ª plural,
+  en otra persona (76 casos en el análisis de la sección 4).
+- Verbos de raíz distinta con «-eix»: «pateix» → «sofreix», «abelleix» →
+  «apeteix» («pateix» es también catalán normal de «patir»).
+- Datos raros: «recau» → «requeu» como 2.ª plural, «contrau»/«subjau»
+  también como 3.ª singular.
+- Las formas valencianas solo de subjuntivo («siguen», «puguen», «hagen»,
+  «tinguen») tampoco cuentan, porque la regla no sabe que no tienen
+  indicativo igual (ya pasaba desde el 08/10). Sus catalanas sí cuentan
+  ahora.
