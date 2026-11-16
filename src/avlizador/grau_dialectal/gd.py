@@ -61,6 +61,15 @@ p.ex. per homografia accidental), no es fiable com a marcador de cap
 dels dos costats -- se'n descarta dels dos conjunts (preferix fals
 negatiu, mateix criteri que la resta del projecte).
 
+FORMES IGUALS EN ELS DOS DIALECTES (16/11/2026, vore `_formes_iguals`):
+una entrada del lèxic amb el valencià igual que el català ("mentre" ->
+"mentre", E1647, canònica en col·lisió amb E0040 "mentres" -> "mentre")
+diu que la forma és vàlida en els dos dialectes. El traductor ja ho
+respectava (no traduïx "mentre"), pero el GD no: com que "mentre" és el
+català de "mentres", el comptava com a marcador oriental en textos
+valencians. Ara eixes formes no compten en cap dels dos costats, com les
+ambigües de dalt. Sense cap llista: ixen de les dades.
+
 MARCADORS NO FIABLES PER REGISTRE (15/10/2026, vore `_MARCADORS_NO_FIABLES_REGISTRE`):
 diferent de l'ambigüitat de dalt -- ací el parell és real i el traductor
 el convertix bé (`translate("Açò no és correcte.")` -> "Això no és
@@ -275,6 +284,23 @@ def _carrega_conjugacions_pures(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[
     }
 
 
+def _formes_iguals(path: Path = LEXIC_GENERAL_PATH) -> set[str]:
+    """Formes (en minúscules) d'una sola paraula que alguna entrada del
+    lèxic dona IGUALS en valencià i en català: vàlides en els dos dialectes,
+    no són marcador de cap (vore "FORMES IGUALS EN ELS DOS DIALECTES" al
+    docstring del mòdul).
+
+    >>> "mentre" in _formes_iguals()
+    True
+    """
+    iguals = set()
+    for entrada in json.loads(Path(path).read_text(encoding="utf-8")):
+        val = (entrada.get("valenciano") or "").strip().lower()
+        if val and " " not in val and val == (entrada.get("catalan") or "").strip().lower():
+            iguals.add(val)
+    return iguals
+
+
 def carrega_formes_dialectals(forcar_recarrega: bool = False) -> Formes:
     """Fusiona tots els diccionaris diferencials que ja fa servir
     `traductor/` (les dos direccions per al lèxic/demostratius/numerals/
@@ -303,6 +329,12 @@ def carrega_formes_dialectals(forcar_recarrega: bool = False) -> Formes:
     False
     >>> "açò" in formes.occ_simple or "això" in formes.or_simple
     False
+
+    "mentre" és vàlid en els dos dialectes (E1647); "mentres", només en
+    valencià:
+
+    >>> "mentre" in formes.or_simple, "mentres" in formes.occ_simple
+    (False, True)
     """
     global _CACHE
     if _CACHE is not None and not forcar_recarrega:
@@ -339,9 +371,11 @@ def carrega_formes_dialectals(forcar_recarrega: bool = False) -> Formes:
 
     # Col·lisions entre QUALSEVOL dels 4 conjunts (vore docstring del
     # mòdul, "AMBIGÜITAT") -- es descarten de tots a la vegada.
+    # També les formes que el lèxic dona iguals en els dos dialectes
+    # ("mentre"; vore `_formes_iguals`).
     tot_occ = occ | occ_verbal
     tot_or = orr | or_verbal
-    ambigues = tot_occ & tot_or
+    ambigues = (tot_occ & tot_or) | _formes_iguals()
     occ -= ambigues
     orr -= ambigues
     occ_verbal -= ambigues

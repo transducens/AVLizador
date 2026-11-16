@@ -719,3 +719,53 @@ por dos problemas de datos, no del GD:
 
 Con esos dos datos corregidos en el léxico, B sería coherente con el
 traductor y conviene volver a medirlo.
+
+## 9. «mentre»: formas iguales en los dos dialectes (16/11/2026)
+
+**El fallo** (pendiente desde el 27/10, sección 2, problema 3): el léxico
+dice que «mentre» es también la forma valenciana preferida (E1647
+«mentre» → «mentre», `canonica: true`, en colisión con E0040 «mentres» →
+«mentre»). El traductor lo respeta desde el 21/10 (no traduce «mentre»),
+pero el GD no: como «mentre» es el catalán de «mentres», lo contaba como
+marcador catalán. «Mentre treballe, escolte música.» daba GD 0 (catalán
+puro).
+
+**El arreglo** (`grau_dialectal/gd.py`, `_formes_iguals`, decisión del
+usuario): una forma que alguna entrada del léxico da igual en valenciano y
+en catalán es válida en los dos dialectos y no cuenta como marcador en
+ningún lado, igual que las formas ambiguas. Sin listas: sale de los datos.
+Hoy solo hay una entrada así en todo el léxico (E1647); si el compañero
+añade más, entran solas.
+
+| Frase | Antes | Ahora |
+|---|---|---|
+| «Mentre treballe, escolte música.» | GD 0 (marcador «mentre») | sin marcadores |
+| «Mentres treballe, escolte música.» | GD 1 («mentres») | GD 1 (igual) |
+
+(«treballe» y «escolte» no cuentan: tienen dos parejas catalanas,
+«treballo» y «treballi», y el GD solo usa las formas verbales con una
+pareja única en las dos direcciones.)
+
+**Efecto en los corpus de referencia** (valores globales; «antes» = el GD
+con la regla de los participios de la sección 8, columna A de la 8.1):
+
+| Corpus | Lado | «mentre» | GD antes → ahora | GDV antes → ahora | GDC antes → ahora | Frases que cambian |
+|---|---|---|---|---|---|---|
+| Manual (458) | val | 0 | 0,9973 → 0,9973 | 0,9998 → 0,9998 | 0,9183 → 0,9183 | 0 |
+| Manual (458) | cat | 7 | 0,0291 → 0,0293 | 0,9200 → 0,9205 | 0,9976 → 0,9976 | 7 |
+| 151 (154) | val | 1 | 0,9891 → 0,9927 | 0,9993 → 0,9995 | 0,9370 → 0,9370 | 1 |
+| 151 (154) | cat | 2 | 0,0699 → 0,0704 | 0,9412 → 0,9417 | 0,9956 → 0,9956 | 2 |
+| gplsi (1.958) | val | 6 | 0,9341 → 0,9371 | 0,9936 → 0,9939 | 0,9096 → 0,9096 | 6 |
+| gplsi (1.958) | cat | 6 | 0,0519 → 0,0521 | 0,9063 → 0,9066 | 0,9949 → 0,9949 | 6 |
+| BOE estricto (2.000) | val | 1 | 0,9848 → 0,9854 | 0,9994 → 0,9994 | 0,9586 → 0,9586 | 1 |
+| BOE estricto (2.000) | cat | 1 | 0,0488 → 0,0488 | 0,9599 → 0,9599 | 0,9979 → 0,9979 | 1 |
+| BOE amplio (2.000) | val | 0 | 0,9379 → 0,9379 | 0,9986 → 0,9986 | 0,9791 → 0,9791 | 0 |
+| BOE amplio (2.000) | cat | 0 | 0,0849 → 0,0849 | 0,9792 → 0,9792 | 0,9981 → 0,9981 | 0 |
+
+**Lectura**: en los textos valencianos el GD sube (151 +0,0036, gplsi
++0,0030): eran «mentre» valencianos contados como catalanes. En los
+catalanes sube un poco (manual +0,0002, 151 +0,0005): ahí «mentre» sí era
+catalán, pero como vale en los dos dialectos no dice nada del dialecto, y
+deja de contar. Es lo esperado: una forma de los dos lados no es un
+marcador. El GDV de los textos catalanes también sube un poco por lo
+mismo.
