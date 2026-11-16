@@ -38,6 +38,9 @@
 #   bash pipeline/03_seleccio_de_model/model_llengua/prova_corpus.sh
 #   VARIANTS="valencia_net_dogv2" CLASSIFICADORS="sentit_dogv2" bash .../prova_corpus.sh
 #   NOMES_COMPARA=1 bash .../prova_corpus.sh      # ja està tot entrenat: només el pas 3
+#   SENSE_KENLM=1 ESPERA="3129:3130:3131" bash .../prova_corpus.sh
+#       # els KenLM ja estan en cua (jobs 3129-3131): només els classificadors i
+#       # les comparacions, que esperen també a eixos jobs
 # Mirar com van: squeue -u $USER; els .out queden en la carpeta de cada script.
 # Disc: cada .arpa fa uns quants GB; quan el .binary funcione, es pot esborrar.
 
@@ -94,7 +97,7 @@ done
 [[ -n "$SENTIT" ]] || { echo "Falta el classificador del sistema ($DIR_LM/sentit.json)" >&2; exit 1; }
 echo "Classificador del sistema: $SENTIT"
 if [[ -z "${NOMES_COMPARA:-}" ]]; then
-    for v in "${VAR[@]}"; do
+    [[ -n "${SENSE_KENLM:-}" ]] || for v in "${VAR[@]}"; do
         for f in $(fonts "$v"); do
             [[ -s "$f" ]] || { echo "Falta $f (per a $v)" >&2; exit 1; }
         done
@@ -102,7 +105,7 @@ if [[ -z "${NOMES_COMPARA:-}" ]]; then
     for c in "${CLS[@]}"; do fonts_sentit "$c" > /dev/null; done
     [[ ${#CLS[@]} -eq 0 || -s dades/macocu/valencia/valencia.jsonl ]] || {
         echo "Falta dades/macocu/valencia/valencia.jsonl (per als classificadors)" >&2; exit 1; }
-    [[ -x "$HOME/kenlm/build/bin/lmplz" ]] || { echo "Falta KenLM compilat en ~/kenlm" >&2; exit 1; }
+    [[ -n "${SENSE_KENLM:-}" || -x "$HOME/kenlm/build/bin/lmplz" ]] || { echo "Falta KenLM compilat en ~/kenlm" >&2; exit 1; }
 else
     for v in "${VAR[@]}"; do
         for f in "$DIR_LM/${v}_o5.binary" "$DIR_LM/${v}_freq.json"; do
@@ -117,7 +120,7 @@ fi
 # --- 1. KenLM: textos i entrenaments --------------------------------------------
 JOBS=()
 if [[ -z "${NOMES_COMPARA:-}" ]]; then
-    for v in "${VAR[@]}"; do
+    [[ -n "${SENSE_KENLM:-}" ]] || for v in "${VAR[@]}"; do
         # shellcheck disable=SC2046
         cat $(fonts "$v") > "$DIR_LM/$v.txt"
         echo "   $v.txt: $(wc -l < "$DIR_LM/$v.txt") frases ($(fonts "$v"))"
@@ -131,11 +134,13 @@ if [[ -z "${NOMES_COMPARA:-}" ]]; then
     for c in "${CLS[@]}"; do
         J=$(sbatch --parsable --job-name="$c" --cpus-per-task=2 --mem=16G --time=03:00:00 \
             --output="$MODEL_LL/%j_$c.out" \
-            --wrap="source $VENV/bin/activate && cd $ARREL && PYTHONIOENCODING=utf-8 python -u $MODEL_LL/sentit_general.py entrena --fonts $(fonts_sentit "$c") --nom $c")
+            --wrap="cd $ARREL && PYTHONIOENCODING=utf-8 $VENV/bin/python -u $MODEL_LL/sentit_general.py entrena --fonts $(fonts_sentit "$c") --nom $c")
         echo "2. Classificador $c ($(fonts_sentit "$c")):   job $J"
         JOBS+=("$J")
     done
 fi
+# Jobs d'abans que també cal esperar (p. ex. els KenLM ja en cua: ESPERA="3129:3130:3131").
+[[ -n "${ESPERA:-}" ]] && JOBS+=("$ESPERA")
 DEP=()
 if [[ ${#JOBS[@]} -gt 0 ]]; then
     DEP=(--dependency=afterok:"$(IFS=:; echo "${JOBS[*]}")")
