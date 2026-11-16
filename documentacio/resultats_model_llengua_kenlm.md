@@ -884,6 +884,43 @@ personal; mismo criterio que arriba:
 **Conclusión**: se confirma que el KenLM de lemas no mejora al sistema ni
 en aciertos ni en graves, y es ~50 veces más lento por llamada.
 
+**Cierre (16/11, decisión del usuario: se queda la estructura actual,
+KenLM de formas de orden 5 + clasificador)**. Se probó en **todas** las
+palabras ambiguas de los benchmarks (las 20 formas de los homógrafos v1 y
+v2, 257 decisiones, y las del manual, el 151, el BOE estricto y gplsi).
+Aciertos por palabra (`compara_models_20261113_1016_detall`, criterio del
+sistema), lemas solo frente al sistema:
+
+| Gana el KenLM de lemas | Pierde el KenLM de lemas |
+|---|---|
+| manca 15 / 11, gandules 10 / 8, panotxa 7 / 5, gandula 16 / 15, rentadora 5 / 4 | reeixida 6 / 10, manques 11 / 13, cops 10 / 12, cop 20 / 21, calces 8 / 9 |
+
+No se usa ni siquiera por palabra:
+- cada palabra tiene 8-18 casos: elegir el modelo palabra a palabra sería
+  ajustarse al benchmark (como las reglas de preposiciones del 14/10);
+- donde gana es porque traduce más, y así suma graves (lemas solo: 13
+  frente a 1);
+- necesita spaCy en cada frase candidata (~50× más lento) y spaCy, que es
+  catalán, lematiza mal formas valencianas («juguen» → «juguar»).
+
+**spaCy en el sistema** (`compara_models_20261116_0916_detall`, 257
+decisiones): decide 68 y acierta 61. Los 7 fallos son **todos leves** (se
+queda la catalana), porque la regla deja la palabra catalana cuando spaCy
+da otra categoría que la de la lectura dialectal: «nou» / «nous» fruto
+como ADJ o NUM (HG058 «El pastís porta nou i panses», HG066, HG2-013,
+HG2-015), «manques» nombre como ADJ (HG2-033, HG2-036) y HG2-081
+«recuites». Otros fallos de spaCy ya vistos: la etiqueta de «nou» cambiaba
+con el punto final (arreglado el 13/11), «Necessito» inicial como PROPN,
+«una mica gandules» como NOUN.
+
+**De dónde salen los 63 «sin traducir» del sistema**: KenLM prefiere la
+catalana 41, KenLM gana por menos del margen 3 14, spaCy 7, clasificador
+1. Lo que pesa es la falta de datos de la otra forma en el corpus
+(recuita, calces, panotxa...), que los lemas no arreglan; la vía con más
+recorrido es tener más ejemplos de cada sentido (p. ej., etiquetar los
+sentidos con el castellano en un corpus paralelo catalán–castellano;
+propuesta del 16/11, sin hacer).
+
 ### 4.17 El sistema tras la fusión de `main` (12/11, job 3032, `avalua_sistema_20261112_1437`)
 `avlizador avalua --motor --model flor kenlm`, 0 errores en todo:
 
@@ -1159,3 +1196,4 @@ Son compatibles: si C2 mejora la base, C1 puede desempatar encima.
 | 13/11 | **«nou» que no se traducía según el final de la frase** (fallo visto por el usuario en Docker) | La etiqueta de spaCy de «nou» cambia con un punto o un espacio al final («una nou» ADJ → «una nou.» NUM) y con NUM se dejaba siempre «nou». Dos arreglos: (1) spaCy etiqueta el texto sin los espacios del principio y del final (`pos_tagger._analitza_sense_espais`; ninguna frase de los benchmarks los tiene, no cambia ninguna cifra); (2) NUM detrás de un determinante indefinido femenino singular («una nou», rasgos de spaCy, sin lista) no es el numeral: decide el modelo. «la nou» (dorsal) y «unes nou hores» siguen siendo numeral (decisión del 03/11). |
 | 13/11 | **Medido en Abaco** (`avalua_sistema_20261113_1308`, `compara_models_20261113_1308`; clasificador general con cop, cops y deu + las dos reglas de «nou») | 257 decisiones: **193 aciertos / 1 grave / 63 sin traducir** (11:45: 191 / 1 / 65). Exactas v1 226 → **227**, v2 110 → **111**; manual 232, 151 144, BOE estricto 1.894 y gplsi 1.550 igual. Cambian 4 decisiones: las 2 ganancias son de la regla «una nou» (HG059 «Es va menjar una nou», HG2-001 «Ha caigut una nou de l'arbre»: spaCy NUM → ahora decide KenLM y acierta «anou»). El clasificador general decide 8 puntos (antes 6) sin cambiar ningún resultado: separar «cop» y «cops» da las mismas decisiones, y en «deu» decide 2 (HG2-053 bien; HG2-047 «Aquesta deu no s'asseca mai» se queda «deu», igual que antes). Ningún error grave nuevo. |
 | 16/11 | **KenLM de orden 6, 7 y 8: descartado** (`compara_models_20261116_0916` y `_0922`) | Mismo texto, poda y tabla de frecuencias; solo cambia el orden. Las 257 decisiones son idénticas a las del orden 5 (193 aciertos / 1 grave / 63 sin traducir; exactas v1 227, v2 111, manual 232); la diferencia entre candidatas varía ≤ 0,06 en el 90 % de los casos. Con el mejor criterio (margen 1), +1 en v2 (HG2-034). Ocupa más (91-112 MB frente a 77) y un orden > 6 exige compilar `kenlm` con `KENLM_MAX_ORDER`/`MAX_ORDER=10`. Sección 4.18. |
+| 16/11 | **Lemas cerrados; se queda la estructura actual** (KenLM de formas, orden 5, + clasificador general) | Decisión del usuario. Los lemas se probaron en todas las palabras ambiguas; ganan en algunas (manca, gandules, panotxa) pero con 8-18 casos por palabra y traduciendo más (13 graves frente a 1): no se usan ni por palabra. spaCy decide 68 de las 257 decisiones y falla 7, todas leves. Los «sin traducir» vienen sobre todo de falta de datos (41 + 14 de 63). Sección 4.16, «Cierre». |
