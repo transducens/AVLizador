@@ -128,6 +128,24 @@ def cita(clau: str, titol: str, repo: str) -> str:
 """
 
 
+# 16/11/2026 (decisió de l'usuari): avís de retirada en els datasets amb textos de l'AVL (el manual).
+AVIS_RETIRADA = """## Notice and take down
+
+**Notice**: Should you consider that our data contains material that is owned
+by you and should therefore not be reproduced here, please:
+
+- Clearly identify yourself, with detailed contact data such as an address,
+  telephone number or email address at which you can be contacted.
+- Clearly identify the copyrighted work claimed to be infringed.
+- Clearly identify the material that is claimed to be infringing and
+  information reasonably sufficient to allow us to locate the material.
+- And contact Miquel Esplà at the following email address:
+  [miquel.espla@ua.es](mailto:miquel.espla@ua.es).
+
+**Take down**: We will comply to legitimate requests by removing the affected
+sources from the next release of the corpus."""
+
+
 METRIQUES_NOTA = """Learned metrics such as xCOMET-XL and LLM judges **do not see the
 dialect**: in our tests they scored the untranslated Catalan as high as,
 or higher than, the Valencian reference. For this task we recommend

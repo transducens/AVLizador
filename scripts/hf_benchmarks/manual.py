@@ -11,7 +11,8 @@ corregir a mà, l'original (`oriental_original`, `occidental_original`);
 l'atribució va en la fitxa i en el fitxer NOTICE.
 
 Des del 12/11/2026 hi entren també les 212 frases de l'AVL (l'usuari
-confirma que es poden publicar), citant-ne l'origen; `--sense-avl` fa la
+confirma que es poden publicar), citant-ne l'origen, i des del 16/11 amb
+l'avís de retirada ("Notice and take down", `comu.AVIS_RETIRADA`); `--sense-avl` fa la
 versió només amb el BOE (la que es va publicar el 09/11).
 
 Ús (des de l'arrel del repositori):
@@ -31,7 +32,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from comu import (  # noqa: E402
-    ARREL, AUTORS, BENCH, BOE_DERIVAT, GITHUB, METRIQUES_NOTA, ORG_PER_DEFECTE, autoria, autors_text, banner,
+    ARREL, AUTORS, AVIS_RETIRADA, BENCH, BOE_DERIVAT, GITHUB, METRIQUES_NOTA, ORG_PER_DEFECTE, autoria, autors_text, banner,
     capcalera, cita, escriu_jsonl, escriu_notice, prepara_desti, yaml,
 )
 
@@ -179,6 +180,8 @@ def fitxa(fs: list[dict], repo: str) -> str:
         llicencia_avl = ("- The full benchmark used in AVLizador also has 212 sentences from the website "
                          "of the Acadèmia Valenciana de la Llengua (AVL), not included in this version.")
         avl_build = ""
+    # 16/11/2026: l'avís de retirada, només si hi ha textos de l'AVL.
+    retirada = f"\n{AVIS_RETIRADA}\n" if avl else ""
 
     insignia = '<img alt="Hand reviewed" src="https://img.shields.io/badge/hand-reviewed-2e8b57">\n  '
     return yaml("AVLizador manual benchmark (Catalan → Valencian)", "n<1K", configs_yaml) + "\n" + capcalera(
@@ -302,7 +305,7 @@ dialectal features.
   marked in `oriental_original` / `occidental_original`. This is not an
   official version of the texts, and the BOE does not endorse this work.
 {llicencia_avl}
-
+{retirada}
 {cita("avlizador_manual_benchmark_2026", "AVLizador manual benchmark: Catalan to Valencian dialectal adaptation", repo)}"""
 
 
@@ -325,7 +328,9 @@ def main(argv: list[str] | None = None) -> None:
         avl = ["This dataset contains sentences from the website of the Acadèmia Valenciana",
                "de la Llengua (AVL, https://www.avl.gva.es). The texts are",
                "© Acadèmia Valenciana de la Llengua. The Catalan side of those",
-               "sentences was written by the authors."]
+               "sentences was written by the authors.",
+               "If you own material in this dataset and want it removed, see",
+               "\"Notice and take down\" in README.md (contact: miquel.espla@ua.es)."]
     escriu_notice(desti, "AVLizador manual benchmark (Catalan -> Valencian)", BOE_DERIVAT, avl)
     banner(desti / "assets" / "banner.png", "AVLizador manual benchmark",
            "Catalan → Valencian dialectal adaptation · hand-reviewed",
