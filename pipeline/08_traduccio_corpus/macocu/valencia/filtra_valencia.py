@@ -250,9 +250,13 @@ class _DocsPrecalculats:
     def __init__(self, nlp, docs: dict) -> None:
         self.nlp, self.docs = nlp, docs
 
-    def __call__(self, text: str):
+    def __call__(self, text: str, **kwargs):
         doc = self.docs.get(text)
-        return doc if doc is not None else self.nlp(text)
+        return doc if doc is not None else self.nlp(text, **kwargs)
+
+    def __getattr__(self, nom: str):
+        # 16/11/2026: `pos_tagger.analitza` mira `nlp.pipe_names` (des del 13/11).
+        return getattr(self.nlp, nom)
 
 
 def _gd_lot(linies: list[str]) -> list[str | None]:

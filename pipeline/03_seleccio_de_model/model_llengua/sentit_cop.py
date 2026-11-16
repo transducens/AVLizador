@@ -67,6 +67,9 @@ from exporta_text import normalitza  # noqa: E402
 
 EIXIDA = ARREL / "dades" / "macocu" / "kenlm" / "sentit_cop"
 DOGV = ARREL / "dades" / "dogv_apunt" / "dogv_net.txt"
+# 16/11/2026: el DOGV nou sencer (els 10.289 documents d'abans + 5.413), amb `prepara_dogv.py`.
+# Inclou el DOGV vell: va en lloc de "dogv", no al costat.
+DOGV2 = ARREL / "dades" / "dogv_apunt" / "nova" / "dogv_net.txt"
 AVL = ARREL / "dades" / "macocu" / "kenlm" / "termes" / "avl_net.txt"
 FREQ = ARREL / "dades" / "macocu" / "kenlm" / "termes" / "termes.json"
 
@@ -99,19 +102,21 @@ class Lematitzador(_sentit.Lematitzador):
 # Datos
 # --------------------------------------------------------------------------
 
-FONTS = ("net", "dogv", "avl")
+FONTS = ("net", "dogv", "dogv2", "avl")
 # La AVL no se puede redistribuir y el modelo va con el paquete (12/11/2026).
 FONTS_PER_DEFECTE = ("net", "dogv")
 
 
 def frases_font(fonts=FONTS_PER_DEFECTE):
-    """(font, tokens normalizados) de net, DOGV y AVL (las de `fonts`)."""
+    """(font, tokens normalizados) de net, DOGV, DOGV nuevo y AVL (las de `fonts`)."""
     from termes_ambigus import frases_net
 
     if "net" in fonts:
         for text in frases_net():
             yield "net", normalitza(text).split()
-    for font, path in (("dogv", DOGV), ("avl", AVL)):
+    if "dogv" in fonts and "dogv2" in fonts:
+        raise ValueError("dogv2 ya incluye el DOGV de dogv: usa una de las dos")
+    for font, path in (("dogv", DOGV), ("dogv2", DOGV2), ("avl", AVL)):
         if font not in fonts:
             continue
         with path.open(encoding="utf-8") as fh:

@@ -1039,6 +1039,65 @@ evidents» → «faltes» (acierto), que el orden 5 deja sin traducir.
 memoria y no exige recompilar `kenlm`. La mejora de 1 frase con el mejor
 criterio es de margen 1, que en el sistema añade graves (8 frente a 1).
 
+### 4.19 Más texto: DOGV nuevo, AVL y UA, en KenLM y en el clasificador (16/11, en curso)
+
+**Petición del usuario** (versión 2.0.0): ver si KenLM y el clasificador de
+sentido mejoran, o al menos no empeoran, con más texto valenciano: el DOGV
+nuevo entero, la AVL y las noticias de la UA. Se decide con los resultados.
+
+**Textos** (generados en local el 16/11 y subidos a Abaco):
+
+| Texto | Script | Frases | Palabras |
+|---|---|---|---|
+| MaCoCu net (`valencia_net.txt`) | `exporta_text.py` (ya estaba) | 1.211.204 | — |
+| DOGV del sistema (`dogv_apunt/dogv_net.txt`) | `prepara_dogv.py` | 163.558 | 9,5 M |
+| **DOGV nuevo** (`dogv_apunt/nova/dogv_net.txt`) | `prepara_dogv.py --entrada dades/dogv_apunt/nova/dogv_documents.tsv` | 233.946 | 13,7 M |
+| **AVL** (`termes/avl_net.txt`) | `termes_ambigus.py --sense-net` | 88.243 | 1,5 M |
+| **UA** (`termes/ua_net.txt`, frases de GD ≥ 0,8) | `termes_ambigus.py --sense-net` | 31.212 de 204.781 | — |
+
+El DOGV nuevo incluye el del sistema (15.702 documentos: los 10.289 de antes
+y 5.413 más); se quedan los 10.843 documentos con GD ≥ 0,8.
+
+**Nada de la evaluación en el texto**: `prepara_dogv.py` quita del DOGV las
+frases de los benchmarks; `termes_ambigus.py` quita de la AVL los 233
+documentos del 151 y del manual y las frases parecidas (Jaccard ≥ 0,6) a una
+de las 7.360 del manual, del 151 o de los homógrafos. Importa porque el
+manual AVL y el 151 salen de textos de la AVL.
+
+**Arreglo de paso**: `prepara_dogv.py` (y el filtro valenciano de MaCoCu)
+fallaban desde el 13/11: el sustituto de spaCy de `filtra_valencia.py`
+(`_DocsPrecalculats`) no tenía `pipe_names`, que `pos_tagger` usa desde
+entonces. Arreglado (delega en el spaCy de verdad).
+
+**Variantes** (`prova_corpus.sh`; mismo orden 5 y poda que el sistema, cada
+KenLM con su tabla de frecuencias):
+
+| KenLM | Texto | Clave del comparador |
+|---|---|---|
+| `valencia_net_dogv` (el sistema) | MaCoCu net + DOGV del sistema | `kenlm_val_net_dogv_c1` |
+| `valencia_net_dogv2` | MaCoCu net + DOGV nuevo | `kenlm_dogv2_c1` |
+| `valencia_net_dogv2_avl` | ídem + AVL | `kenlm_dogv2_avl_c1` |
+| `valencia_net_dogv2_avl_ua` | ídem + UA | `kenlm_dogv2_avl_ua_c1` |
+
+| Clasificador (`sentit_general.py entrena`) | Fuentes |
+|---|---|
+| `sentit` (el sistema) | MaCoCu net + DOGV del sistema |
+| `sentit_dogv2` | MaCoCu net + DOGV nuevo (`--fonts net dogv2`) |
+| `sentit_dogv2_avl` | ídem + AVL (`--fonts net dogv2 avl`) |
+
+Recuento de las fuentes nuevas solas (`recompte --fonts dogv2 avl`): «cop»
+colp 25 / vegada 4.738 y «manca» faltes 1.569 / manques 101 pasan el mínimo;
+el resto de grupos sigue con pocos datos de un sentido (anous 12, colps 14,
+brollador 5). El grueso de los ejemplos sigue viniendo de MaCoCu.
+
+**Comparación**: un `compara_models.sh` por clasificador, cada uno con los
+cuatro KenLM (3 × 4), en homógrafos v1 y v2, manual y 151, con la rejilla de
+criterios de la 4.18 (márgenes 1-5, λ 0,5-2, λ de colisión 0,5-1, desempate
+2). La salida lleva el nombre del clasificador
+(`compara_models_<fecha>_<clasificador>`, opción nueva `--etiqueta`).
+
+**Resultados**: pendientes.
+
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
   se evalúa: las cifras son optimistas. Hay que confirmarlas en el 151, el

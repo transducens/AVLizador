@@ -23,6 +23,9 @@ queda per defecte). Ací cada model és un puntuador:
 | `kenlm_lemes_c1` | ídem + el classificador de "cop" (camí C1) |
 | `kenlm_mescla_c1` | log P del KenLM de formes + log P del de lemes, + classificador de "cop" |
 | `kenlm_o6_c1`, `kenlm_o7_c1`, `kenlm_o8_c1` | el KenLM del sistema (`valencia_net_dogv`, mateix text i poda) d'ordre 6, 7 o 8 en lloc de 5, + classificador (16/11/2026; `prova_ordres.sh`) |
+| `kenlm_dogv2_c1` | KenLM amb més text (16/11/2026; `prova_corpus.sh`): MaCoCu net + el DOGV nou sencer (2025-2026, +5.413 documents), + classificador |
+| `kenlm_dogv2_avl_c1` | ídem + la AVL (sense els documents ni les frases dels benchmarks; `termes_ambigus.py`) |
+| `kenlm_dogv2_avl_ua_c1` | ídem + les notícies de la UA (frases de GD ≥ 0,8) |
 
 Els models `*_c1` es comparen amb el criteri del sistema KenLM
 (`CRITERI_KENLM`: marge 3, la catalana per defecte, λ 1,5 / 0,75 en les
@@ -101,11 +104,16 @@ BENCHMARKS_PER_DEFECTE = ("homografs", "homografs_v2", "manual")
 TIPUS_MODEL = ("colisio", "irresoluble")
 MODELS = ("motor", "flor", "kenlm_cat", "kenlm_cat30", "kenlm_val", "kenlm_val_net", "kenlm_val_net_dogv",
           "kenlm_val_net_dogv_np", "kenlm_val_tot_np", "kenlm_val_net_dogv_bi", "kenlm_val_net_dogv_c1", "kenlm_lemes", "kenlm_lemes_c1",
-          "kenlm_mescla_c1", "kenlm_o6_c1", "kenlm_o7_c1", "kenlm_o8_c1", "diff", "diff_net", "fasttext")
+          "kenlm_mescla_c1", "kenlm_o6_c1", "kenlm_o7_c1", "kenlm_o8_c1", "kenlm_dogv2_c1", "kenlm_dogv2_avl_c1",
+          "kenlm_dogv2_avl_ua_c1", "diff", "diff_net", "fasttext")
 NOM_LEMES = "valencia_net_dogv_lemes"  # 12/11/2026: lematitza_text.py + entrena_kenlm.sh
 # 16/11/2026: el KenLM del sistema amb un altre ordre (dades/macocu/kenlm/valencia_net_dogv_o<N>.binary;
 # la taula de freqüències és la mateixa, perquè el text és el mateix).
 ORDRES_KENLM = {"kenlm_o6_c1": 6, "kenlm_o7_c1": 7, "kenlm_o8_c1": 8}
+# 16/11/2026: el KenLM del sistema (ordre 5, mateixa poda) amb més text, cadascun amb la seua taula
+# de freqüències (`prova_corpus.sh`).
+CORPUS_KENLM = {"kenlm_dogv2_c1": "valencia_net_dogv2", "kenlm_dogv2_avl_c1": "valencia_net_dogv2_avl",
+                "kenlm_dogv2_avl_ua_c1": "valencia_net_dogv2_avl_ua"}
 # Fitxer de cada KenLM (dades/macocu/kenlm/<nom>_o5.binary i, si n'hi ha, <nom>_freq.json).
 # 11/11/2026: `_np` = sense poda; `valencia_tot_np` = net + DOGV + AVL + UA (GD >= 0,8), sense poda.
 FITXERS_KENLM = {"kenlm_cat": "macocu_tot", "kenlm_cat30": "macocu_30pc", "kenlm_val": "valencia",
@@ -391,6 +399,8 @@ class Carregador:
             return KenLM(self._kenlm("valencia_net_dogv"), 1.0, self._freq("valencia_net_dogv"))
         if clau in ORDRES_KENLM:  # 16/11/2026: el mateix amb un altre ordre
             return KenLM(self._kenlm("valencia_net_dogv", ORDRES_KENLM[clau]), 1.0, self._freq("valencia_net_dogv"))
+        if clau in CORPUS_KENLM:  # 16/11/2026: el mateix amb més text
+            return KenLM(self._kenlm(CORPUS_KENLM[clau]), 1.0, self._freq(CORPUS_KENLM[clau]))
         if clau in ("kenlm_lemes", "kenlm_lemes_c1"):
             return KenLMLemes(self._kenlm(NOM_LEMES), self._lematitzador(), self._freq(NOM_LEMES))
         if clau == "kenlm_mescla_c1":
@@ -422,6 +432,8 @@ class Carregador:
             return ["valencia_net_dogv"]
         if clau in ORDRES_KENLM:
             return [self._nom_ordre("valencia_net_dogv", ORDRES_KENLM[clau])]
+        if clau in CORPUS_KENLM:
+            return [CORPUS_KENLM[clau]]
         if clau in ("kenlm_lemes", "kenlm_lemes_c1"):
             return [NOM_LEMES]
         if clau == "kenlm_mescla_c1":
@@ -745,6 +757,8 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--model-sentit", type=Path,
                    default=ARREL / "dades" / "macocu" / "kenlm" / "sentit_cop" / "nb.json",
                    help="classificador de sentit de sentit_cop.py")
+    p.add_argument("--etiqueta", default="", help="s'afig al nom dels fitxers d'eixida (16/11/2026: "
+                   "distingir execucions del mateix minut, p. ex. el classificador)")
     p.add_argument("--prior-kenlm", choices=["freq", "unigrama"], default="freq",
                    help="prior de KenLM: freqüència del text d'entrenament (<nom>_freq.json) o l'unigrama de KenLM")
     p.add_argument("--dir-models", type=Path, default=DIR_MODELS)
@@ -756,7 +770,8 @@ def main(argv: list[str] | None = None) -> None:
                    help="models dels quals es guarda la traça (probabilitat de cada token de cada frase "
                         "candidata, per a visor_compara_models.html; sense valors: tots els de --models)")
     args = p.parse_args(argv)
-    sufix = f"{datetime.now():%Y%m%d_%H%M}" + (f"_limit{args.limit}" if args.limit else "")
+    sufix = (f"{datetime.now():%Y%m%d_%H%M}" + (f"_limit{args.limit}" if args.limit else "")
+             + (f"_{args.etiqueta}" if args.etiqueta else ""))
     RESULTATS.mkdir(parents=True, exist_ok=True)
 
     benchmarks = {b: carrega_benchmark(b, args.limit) for b in args.benchmarks}
@@ -764,6 +779,7 @@ def main(argv: list[str] | None = None) -> None:
     llista = criteris(args)
     fix = Criteri()  # el criteri del sistema: marge 2, la catalana per defecte, lam 0,5
     resultat: dict = {"data": datetime.now().isoformat(timespec="minutes"), "limit": args.limit,
+                      "model_sentit": str(args.model_sentit),
                       "criteri_fix": {"marge": fix.marge, "per_defecte": fix.per_defecte, "lam": fix.lam},
                       "models": {}}
     # Calfa el motor i spaCy abans de cronometrar res (si no, la primera
