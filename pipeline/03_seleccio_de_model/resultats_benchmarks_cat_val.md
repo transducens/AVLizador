@@ -57,6 +57,30 @@ mayúsculas, la puntuación va pegada a la palabra. Cada frase del JSON
 guarda `ter`, `wer`, `ter_edicions`, `wer_edicions` y `ref_paraules`; el
 resumen, `ter_corpus` y `wer_corpus`.
 
+## 16/11/2026 — KenLM de orden 6, 7 y 8 (experimento, descartado)
+
+El KenLM del sistema (orden 5) frente al mismo texto, poda y tabla de
+frecuencias con orden 6, 7 y 8, todos con el clasificador general y el
+criterio del sistema. Comparador (`compara_models_20261116_0916` y
+`_0922`), solo homógrafos y manual, sin FLOR ni motor (decisión del
+usuario). Detalle en `documentacio/resultats_model_llengua_kenlm.md`,
+sección 4.18. El comparador no calcula chrF++.
+
+| Benchmark | Orden | Exactas | BLEU | chrF | TER ↓ | WER ↓ |
+|---|---|---|---|---|---|---|
+| 151 + homógrafos (253) | 5, 6, 7 y 8 | 227/253 (89,7 %) | 97,05 | 98,44 | 0,58 | 0,58 |
+| Homógrafos v2 (160) | 5, 6, 7 y 8 | 111/160 (69,4 %) | 88,24 | 93,66 | 4,41 | 4,41 |
+| Manual mezcla BOE + AVL (458) | 5, 6, 7 y 8 | 232/458 (50,7 %) | 91,00 | 96,34 | 5,58 | 5,96 |
+
+- Las 257 decisiones de los homógrafos son idénticas en los cuatro (193
+  aciertos / 1 grave / 63 sin traducir). GD / GDV del manual 0,9936 /
+  0,9995 en todos.
+- Fichero 77 / 91 / 102 / 112 MB; mismo tiempo (0,099 ms por frase
+  candidata).
+- Con el mejor criterio de cada uno (margen 1), los órdenes 6-8 ganan una
+  frase en v2 (HG2-034), con 8 graves igual que el orden 5 con ese margen.
+- Se queda el orden 5.
+
 ## 13/11/2026 — KenLM + clasificador de sentido, modelo por defecto
 
 `avlizador avalua --motor --model flor kenlm` en Abaco, 0 errores. KenLM

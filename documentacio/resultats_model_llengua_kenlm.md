@@ -56,7 +56,7 @@ en el corpus frente a 420 de «faltes»). Coste: 0,1 ms por frase candidata y
 (4.1), diferencia val − cat (4.1), KenLM sin poda y + AVL + UA (4.9),
 KenLM en dos sentidos (4.12), veto del clasificador (4.13), híbrido FLOR
 para «cop» (el usuario no quiere FLOR en la imagen; 4.8), KenLM de lemas y
-mezcla formas + lemas (4.16).
+mezcla formas + lemas (4.16), KenLM de orden 6, 7 u 8 (4.18).
 
 **Siguiente**: más datos para que más palabras pasen el umbral del
 clasificador (DOGV nuevo; «nou», «manca»...). Pendiente aparte: publicar los ficheros de KenLM en
@@ -941,6 +941,67 @@ de HG2-048; en KenLM, además, de la regla del pronombre (HG077, HG2-038,
 HG2-040). El resto no cambia. KenLM + C1 gana a FLOR en homógrafos (+11 en
 v1, +15 en v2) y en el manual (+1), y pierde 1 en el 151 y 1 en gplsi.
 
+### 4.18 KenLM de orden 6, 7 y 8 (16/11, petición del usuario; Abaco)
+Pregunta: si KenLM mira más palabras hacia atrás (orden 6, 7 u 8 = 5, 6 o
+7 palabras en lugar de 4), ¿decide mejor las palabras ambiguas?
+
+**Cómo se hizo** (`pipeline/03_seleccio_de_model/model_llengua/prova_ordres.sh`,
+rama `kenlm-ordres`):
+- Mismo texto que el sistema (`valencia_net_dogv.txt`, 44,2 M tokens),
+  misma poda (n-gramas de una sola aparición desde los bigramas) y misma
+  tabla de frecuencias (`SENSE_FREQ=1`); solo cambia `ORDRE`. ~1 minuto de
+  entrenamiento cada uno.
+- Comparador: `kenlm_val_net_dogv_c1` (orden 5, el sistema) frente a
+  `kenlm_o6_c1`, `kenlm_o7_c1` y `kenlm_o8_c1`, todos con el clasificador
+  general (`sentit.json`); solo homógrafos v1, v2 y manual, sin FLOR ni
+  motor (decisión del usuario). Criterio del sistema y el mejor de una
+  rejilla de 48 (márgenes 1-5, λ 0,5-2, λ de colisiones 0,5-1).
+- Ejecuciones: `compara_models_20261116_0916` (5 frente a 6) y `_0922` (5
+  frente a 7 y 8).
+- **Incidencia**: KenLM se compila por defecto con orden máximo 6
+  (`KENLM_MAX_ORDER=6`): `lmplz` escribió los `.arpa` de orden 7 y 8, pero
+  `build_binary` los rechazó. Arreglo en Abaco: recompilar con `cmake
+  -DKENLM_MAX_ORDER=10 ..` (en `~/kenlm/build`), `build_binary` sobre los
+  `.arpa` ya escritos, y el módulo de Python del venv reinstalado con
+  `MAX_ORDER=10 pip install --no-cache-dir --force-reinstall --no-deps
+  https://github.com/kpu/kenlm/archive/master.zip` (el de pip también
+  venía con 6). Un modelo de orden > 6 en el paquete o en Docker exigiría
+  lo mismo.
+
+**Resultados**, criterio del sistema (`CRITERI_KENLM`):
+
+| Orden | Aciertos /257 | Graves | Sin traducir | Exactas v1 /253 | Exactas v2 /160 | Manual /458 | chrF manual | TER / WER manual | GD / GDV manual | Fichero | Memoria |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| **5 (sistema)** | **193** | **1** | 63 | **227** | **111** | **232** | 96,34 | 5,58 / 5,96 | 0,9936 / 0,9995 | **77 MB** | **74 MB** |
+| 6 | 193 | 1 | 63 | 227 | 111 | 232 | 96,34 | 5,58 / 5,96 | 0,9936 / 0,9995 | 91 MB | 88 MB |
+| 7 | 193 | 1 | 63 | 227 | 111 | 232 | 96,34 | 5,58 / 5,96 | 0,9936 / 0,9995 | 102 MB | 99 MB |
+| 8 | 193 | 1 | 63 | 227 | 111 | 232 | 96,34 | 5,58 / 5,96 | 0,9936 / 0,9995 | 112 MB | 108 MB |
+
+Las 257 decisiones son **idénticas** en los cuatro órdenes. Tiempo igual
+(0,099 ms por frase candidata).
+
+Con el mejor criterio de cada uno (margen 1, λ 1, λ de colisiones 0,75;
+ajustado sobre los mismos homógrafos): orden 5 198 aciertos / 8 graves /
+51 sin traducir (exactas v1 228, v2 115); orden 6, 7 y 8 199 / 8 / 50
+(228, 116). La única diferencia es HG2-034 «Les manques de l'escola són
+evidents» → «faltes» (acierto), que el orden 5 deja sin traducir.
+
+**Por qué no cambia nada** (puntuaciones en bruto del `_detall.json`):
+- La log P de la frase cambia en 117 de las 257 decisiones, pero cambia
+  casi igual para las dos candidatas: la diferencia entre ellas, que es lo
+  que decide, varía 0 de mediana y ≤ 0,06 en el 90 % de los casos (máximo
+  1,06; > 0,5 solo en 4-6 decisiones). Los márgenes del sistema son 2 y 3.
+- Con la poda, los n-gramas largos casi desaparecen (orden 8: 1,3 M
+  8-gramas frente a 2,5 M 5-gramas) y los que quedan casi nunca contienen
+  la palabra ambigua con su contexto: KenLM retrocede al orden 4-5 igual
+  que antes.
+- Lo que decide estas palabras es la frecuencia (corregida con λ) y el
+  clasificador, no la distancia que ve KenLM.
+
+**Conclusión: descartado.** Se queda el orden 5: mismas decisiones, menos
+memoria y no exige recompilar `kenlm`. La mejora de 1 frase con el mejor
+criterio es de margen 1, que en el sistema añade graves (8 frente a 1).
+
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
   se evalúa: las cifras son optimistas. Hay que confirmarlas en el 151, el
@@ -988,7 +1049,7 @@ resultados del prior de frecuencia y de los modelos sin poda.
 
 | # | Opción | Qué arregla | Coste en CPU | Riesgo |
 |---|---|---|---|---|
-| 1 | KenLM de orden 6-7 | un poco más de distancia | igual | apenas ayuda: las secuencias largas casi no se repiten |
+| 1 | KenLM de orden 6-7 (**probado el 16/11, orden 6, 7 y 8: no cambia ninguna decisión**, sección 4.18) | un poco más de distancia | igual | apenas ayuda: las secuencias largas casi no se repiten |
 | 2 | **KenLM en los dos sentidos**: otro modelo entrenado con las frases al revés; se suman las dos puntuaciones | el candidato se puntúa también con las 4 palabras de su derecha | ~0,1 ms | bajo; un entrenamiento + ~20 líneas |
 | 3 | **Clasificador de sentido por palabra** (fastText supervisado): frases valencianas con «colp» o «vegada», la palabra oculta, se aprende cuál era con todas las palabras de la frase | usa toda la frase («boxejador», «destral» → colp) | ~0,1 ms, pocos MB | solo donde hay datos (cop/cops, manca, nou); no para recuita, fartanera, panotxa |
 | 4 | Modelo bidireccional pequeño (p. ej. RoBERTa-ca, 125 M): hueco oculto, P(colp) frente a P(vegada) | toda la frase, a los dos lados | ~50-100 ms, ~500 MB | puede tener el sesgo de FLOR hacia el catalán general |
@@ -1097,3 +1158,4 @@ Son compatibles: si C2 mejora la base, C1 puede desempatar encima.
 | 13/11 | **Umbral de calidad: 0,7 de acierto equilibrado en el dev** | Decisión del usuario. Primer entrenamiento, acierto equilibrado en frases apartadas: cop 0,89, deu 0,81, cops 0,75, nou 0,59, manca 0,56, rentadora 0,50, gandula 0,50, reeixida 0,49, calces 0,39. Solo entra en el sistema un grupo que demuestre que acierta (≥ 0,7): cop, cops, deu. «manca» no separa sentidos porque en el valenciano real (DOGV) «manca» también se usa como nombre; los demás, por falta de datos. Cuando haya más datos, un grupo que pase el umbral entra solo. |
 | 13/11 | **«nou» que no se traducía según el final de la frase** (fallo visto por el usuario en Docker) | La etiqueta de spaCy de «nou» cambia con un punto o un espacio al final («una nou» ADJ → «una nou.» NUM) y con NUM se dejaba siempre «nou». Dos arreglos: (1) spaCy etiqueta el texto sin los espacios del principio y del final (`pos_tagger._analitza_sense_espais`; ninguna frase de los benchmarks los tiene, no cambia ninguna cifra); (2) NUM detrás de un determinante indefinido femenino singular («una nou», rasgos de spaCy, sin lista) no es el numeral: decide el modelo. «la nou» (dorsal) y «unes nou hores» siguen siendo numeral (decisión del 03/11). |
 | 13/11 | **Medido en Abaco** (`avalua_sistema_20261113_1308`, `compara_models_20261113_1308`; clasificador general con cop, cops y deu + las dos reglas de «nou») | 257 decisiones: **193 aciertos / 1 grave / 63 sin traducir** (11:45: 191 / 1 / 65). Exactas v1 226 → **227**, v2 110 → **111**; manual 232, 151 144, BOE estricto 1.894 y gplsi 1.550 igual. Cambian 4 decisiones: las 2 ganancias son de la regla «una nou» (HG059 «Es va menjar una nou», HG2-001 «Ha caigut una nou de l'arbre»: spaCy NUM → ahora decide KenLM y acierta «anou»). El clasificador general decide 8 puntos (antes 6) sin cambiar ningún resultado: separar «cop» y «cops» da las mismas decisiones, y en «deu» decide 2 (HG2-053 bien; HG2-047 «Aquesta deu no s'asseca mai» se queda «deu», igual que antes). Ningún error grave nuevo. |
+| 16/11 | **KenLM de orden 6, 7 y 8: descartado** (`compara_models_20261116_0916` y `_0922`) | Mismo texto, poda y tabla de frecuencias; solo cambia el orden. Las 257 decisiones son idénticas a las del orden 5 (193 aciertos / 1 grave / 63 sin traducir; exactas v1 227, v2 111, manual 232); la diferencia entre candidatas varía ≤ 0,06 en el 90 % de los casos. Con el mejor criterio (margen 1), +1 en v2 (HG2-034). Ocupa más (91-112 MB frente a 77) y un orden > 6 exige compilar `kenlm` con `KENLM_MAX_ORDER`/`MAX_ORDER=10`. Sección 4.18. |

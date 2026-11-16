@@ -190,7 +190,11 @@ cp <nom>_freq.json valencia_net_dogv_freq.json
 Altres ordres del KenLM: `ORDRE=<n>` en `entrena_kenlm.sh` (amb
 `SENSE_FREQ=1` si el text és el mateix i ja té taula) i
 `pipeline/03_seleccio_de_model/model_llengua/prova_ordres.sh` (ordre 5
-enfront de 6, 7 i 8; 16/11/2026).
+enfront de 6, 7 i 8; 16/11/2026: donen les mateixes decisions, es queda el
+5). Compte: `kenlm` es compila per defecte amb ordre màxim 6; per a més cal
+recompilar les eines (`cmake -DKENLM_MAX_ORDER=10 ..`) i el mòdul de Python
+(`MAX_ORDER=10 pip install --no-cache-dir --force-reinstall
+https://github.com/kpu/kenlm/archive/master.zip`).
 
 **B. Per al classificador**:
 
