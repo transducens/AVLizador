@@ -40,8 +40,9 @@ ml = [
 # KenLM: el model de llengua PER DEFECTE des del 13/11/2026 (sense ell,
 # `translate_cat_val` usa el motor sol i avisa). Es compila en instal·lar-lo
 # (en Windows cal compilador; la imatge Docker és Linux). Els fitxers del
-# model van a banda: AVLIZADOR_KENLM_DIR.
-kenlm = ["kenlm>=0.2"]
+# model es baixen de Hugging Face (transducens/avlizador-kenlm-va) la primera
+# vegada, o es posen a mà en AVLIZADOR_KENLM_DIR.
+kenlm = ["kenlm>=0.2", "huggingface_hub>=0.24,<2.0"]
 avaluacio = ["sacrebleu>=2.4"]
 # Interfície web i API (`avlizador web`; vore documentacio/hoja_de_ruta_interfaz_docker.md).
 web = ["fastapi>=0.110", "uvicorn>=0.29", "jinja2>=3.1"]
