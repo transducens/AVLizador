@@ -879,9 +879,45 @@ Antes traducía «Això permet» → «Això permeto» y «que es consideren» �
   en otra persona (76 casos en el análisis de la sección 4).
 - Verbos de raíz distinta con «-eix»: «pateix» → «sofreix», «abelleix» →
   «apeteix» («pateix» es también catalán normal de «patir»).
-- Datos raros: «recau» → «requeu» como 2.ª plural, «contrau»/«subjau»
-  también como 3.ª singular.
+- «recau» y «pateix»: vienen de los datos, ver abajo.
 - Las formas valencianas solo de subjuntivo («siguen», «puguen», «hagen»,
   «tinguen») tampoco cuentan, porque la regla no sabe que no tienen
   indicativo igual (ya pasaba desde el 08/10). Sus catalanas sí cuentan
   ahora.
+
+**Para el compañero** (revisado en `dades/lexic/` el 16/11; decisión del
+usuario: de momento no se toca nada):
+
+- **Error de forma** en `verbos_diferentes_conjugados.json`: la 3.ª
+  singular de cuatro verbos va en la forma catalana «-eix», mientras el
+  resto del paradigma es valenciano («-isca», «-isquen»): «pateix» →
+  «sofreix» (REP_570), «abelleix» → «apeteix» (REP_013), «engoleix» →
+  «empassa», «ablaneix» → «estova». Lo coherente sería «patix»,
+  «abellix», «engolix», «ablanix» (BOE: «patix» val 13 / cat 0;
+  «pateix» val 13 / cat 32). Con «-eix», la forma también es catalana y
+  cuenta como valenciana en textos catalanes.
+- **Criterio**: «patir» → «sofrir» (y quizá «abellir» → «apetir»): «patir»
+  también es catalán normal; parece una preferencia, como «vegada».
+- **Choque entre verbos, no error**: «recau» (id 34629) es la 2.ª plural en
+  «-au» del verbo «recar», bien formada, pero coincide con «recau» de
+  «recaure» (3.ª singular, igual en los dos dialectos; 83 veces en el BOE
+  catalán). De las 489 formas valencianas en «-au», es la única que choca
+  así. Opciones: quitar esa forma o marcarla.
+- **Correctos** (revisados): «contrau» (contraure → contreure) y «subjau»
+  (jaure → jeure) son formas valencianas auténticas («contrau»: BOE val 7 /
+  cat 0).
+
+**Mejora posible, no aplicada** (decisión del usuario, 16/11: no compensa
+de momento): decidir la colisión por corpus en vez de por la terminación.
+Con el BOE paralelo (el catalán no pasa por el GD), comparar cuántas veces
+sale la forma valenciana en el lado catalán frente a su pareja catalana.
+Lo separa bien: «permet» val 428 / cat 570 y «consideren» 748 / 910 (son
+colisiones); «hagen» 6.460 / 0, «siguen» 5.218 / 0, «complisquen» 1.252 / 0
+(marcadores que la regla de la terminación quita hoy: 266 formas con ≥ 5
+apariciones); «pateix» 13 / 32 y «recau» 39 / 83 (colisiones que hoy
+cuentan). No sirve para la 2.ª persona («arribes»: 1 / 1; el BOE casi no
+la usa). Costes: un fichero generado que hay que regenerar con el léxico,
+un umbral (casos frontera: «troben» 1.320 / 130, «superen» 253 / 32), el
+registro del BOE, y las colisiones de nombre y verbo («mesures»/«mesuris»)
+también saldrían. Valdría la pena si el GD se usa como recompensa de
+entrenamiento o en textos cortos.
