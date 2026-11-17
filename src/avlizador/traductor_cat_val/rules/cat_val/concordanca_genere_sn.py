@@ -273,8 +273,8 @@ def carrega_morfologia(
     Només les categories que la regla pot canviar (`_CATEGORIES_CONCORDANTS`:
     adjectius i participis), que són les úniques que consulta: els noms no
     es canvien mai. Les altres línies es descarten abans de l'expressió
-    regular (17/11/2026: la càrrega passa de ~1,3 s a ~0,2 s, mateixes
-    traduccions).
+    regular (17/11/2026: construir la regla passa de 0,65 s a 0,49 s, amb
+    el mateix índex per a adjectius i participis).
 
     El resultat es guarda (`lru_cache`) i el compartixen totes les
     instàncies de la regla (el motor i `model_llengua/punts.py`): no s'ha de
@@ -488,6 +488,8 @@ class ConcordancaGenereSnRule:
 
     >>> e.translate("Amb aquesta finalitat i la seva galleda.")
     'Amb este fi i el seu poal.'
+    >>> e.translate("La fusta d'aquesta noguera és molt vella.")
+    "La fusta d'este anouer és molt vella."
     >>> e.translate("Cal cobrir totes les despeses, inclosa l'amortització.")
     "Cal cobrir tots els gastos, inclosa l'amortització."
 
@@ -610,17 +612,35 @@ class ConcordancaGenereSnRule:
         possessius que només té la taula d'esta regla ("aquesta", "seva")
         van per ella, perquè ixen ja en valencià ("aquesta" -> "este");
         la resta (articles, contraccions "del"/"de la") per
-        `corregeix_determinant_abans`."""
+        `corregeix_determinant_abans`.
+
+        Amb la preposició apostrofada dins del token ("d'aquesta noguera"),
+        la taula es consulta sense el "d'" i després es torna a posar:
+        abans "d'aquesta" no es trobava i la regla de demostratius en feia
+        "d'esta" ("d'esta anouer", 17/11/2026).
+
+        >>> from .. import tokenize, detokenize
+        >>> r = ConcordancaGenereSnRule()
+        >>> toks = tokenize("La fusta D'aquesta noguera"); toks[6].translated = "anouer"
+        >>> r._corregeix_determinant_anterior(toks, 6, "m"); detokenize(toks)
+        "La fusta D'este anouer"
+        """
         j = i - 1
         while j >= 0 and tokens[j].surface.isspace():
             j -= 1
         if j >= 0 and not tokens[j].is_translated:
             anterior = tokens[j]
-            forma = anterior.translated.lower()
+            prefix, forma = "", anterior.translated
+            m = _PREFIX_ELIDIT_RE.match(forma)
+            if m and m.group(1).lower() == "d":
+                prefix, forma = forma[: len(forma) - len(m.group(2))], m.group(2)
             compartides = DET_FEM_A_MASC if genere_nou == "m" else DET_MASC_A_FEM
-            nova = self._canvia_determinant(forma, genere_nou)
-            if nova is not None and forma not in compartides:
-                anterior.translated = preserva_majuscula(anterior.translated, nova)
+            nova = self._canvia_determinant(forma.lower(), genere_nou)
+            if nova is not None and forma.lower() not in compartides:
+                nova = preserva_majuscula(forma, nova)
+                if prefix and not _COMENCA_EN_VOCAL_O_H_MUDA_RE.match(nova):
+                    prefix = preserva_majuscula(prefix, "de ")  # "d'" només davant de vocal
+                anterior.translated = prefix + nova
                 anterior.is_translated = True
                 return
         corregeix_determinant_abans(tokens, i, genere_nou)
