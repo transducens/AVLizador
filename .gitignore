@@ -83,3 +83,5 @@ dades/hf_model/
 resultats_kenlm_*/
 # Fitxers del model KenLM per a construir la imatge Docker (13/11/2026; vore Dockerfile)
 docker/kenlm/
+# Model d'spaCy per a construir la imatge sense baixar-lo de GitHub (17/11/2026; vore docker/LLEGIM.md)
+docker/*.whl

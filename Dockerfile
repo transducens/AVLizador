@@ -35,7 +35,24 @@ ENV PATH=/opt/venv/bin:$PATH
 WORKDIR /src
 COPY pyproject.toml README.md LICENSE NOTICE ./
 COPY src ./src
-RUN pip install ".[kenlm,web]" \
+# Model d'spaCy: pip el baixa dels "releases" de GitHub (URL directa del
+# pyproject). Si eixa descàrrega falla dins de Docker (17/11/2026: la xarxa de
+# Docker Desktop tallava la connexió SSL i en Windows sí que baixava), es pot
+# deixar el fitxer en docker/ (ca_core_news_md-3.8.0-py3-none-any.whl) i
+# s'instal·la d'allí: les altres dependències s'instal·len a banda perquè, amb
+# la URL directa, pip el tornaria a baixar encara que ja estiga instal·lat.
+COPY docker/LLEGIM.md docker/*.whl /tmp/whl/
+RUN if ls /tmp/whl/ca_core_news_md-*.whl >/dev/null 2>&1; then \
+      echo "Model d'spaCy: docker/" \
+      && pip install /tmp/whl/ca_core_news_md-*.whl \
+      && python -c "import tomllib; p = tomllib.load(open('pyproject.toml', 'rb'))['project']; e = p['optional-dependencies']; r = [d for d in p['dependencies'] if not d.replace('-', '_').startswith('ca_core_news_md')] + e['kenlm'] + e['web']; open('/tmp/requisits.txt', 'w').write(chr(10).join(r))" \
+      && pip install -r /tmp/requisits.txt \
+      && pip install --no-deps . ; \
+    else \
+      pip install ".[kenlm,web]" ; \
+    fi \
+ && pip check \
+ && rm -rf /tmp/whl /tmp/requisits.txt \
  && pip freeze > /opt/versions_python.txt
 
 # Fitxers del model KenLM (vore la capçalera): de docker/kenlm/ si hi són;
