@@ -11,7 +11,7 @@ S'instal·la com un paquet de Python, `avlizador`, amb dues eines:
 
 | Eina | Què fa | Importació |
 |---|---|---|
-| **Traductor català → valencià** | Motor de regles amb els diccionaris del projecte i spaCy, més un model de llengua de n-grames (KenLM) i un classificador de sentit que resolen les paraules ambigües ("cop" → *colp* o *vegada*, "nou" → *nou* o *anou*); FLOR-760M, opcional | `avlizador.traductor_cat_val` |
+| **Traductor català → valencià** | Motor de regles amb els diccionaris del projecte i spaCy, més un model de llengua de n-grames (KenLM) i un classificador de sentit que resolen les paraules ambigües ("cop" → *colp* o *vegada*, "nou" → *nou* o *anou*) | `avlizador.traductor_cat_val` |
 | **Grau Dialectal** (GD, GDV, GDC) | Índexs de 0 a 1 que diuen si un text és valencià o català | `avlizador.grau_dialectal` |
 
 Funciona **només amb CPU**, sense GPU ni serveis externs: està pensat per
@@ -27,21 +27,16 @@ En resum, cal Python 3.10 o posterior i, des d'una còpia del repositori:
 pip install ".[kenlm]"
 ```
 
-- `[kenlm]` instal·la la biblioteca KenLM, el model de llengua per defecte
-  de les paraules ambigües (des del 13/11/2026). Es compila en instal·lar-la:
-  cal un compilador de C++. En Linux i macOS funciona; en Windows
-  normalment no s'instal·la: useu Docker (baix), FLOR o el motor sol.
+- `[kenlm]` instal·la la biblioteca KenLM, el model de llengua de les
+  paraules ambigües. Es compila en instal·lar-la: cal un compilador de C++.
+  En Linux i macOS funciona; en Windows normalment no s'instal·la: useu
+  Docker (baix) o el motor sol.
 - Els fitxers del model KenLM no són en git ni en el paquet: es baixen de
   Hugging Face la primera vegada que s'usen (vegeu
   [Model de llengua](#model-de-llengua)).
 - Sense KenLM o sense els seus fitxers funciona només el motor de regles:
   el traductor l'usa i avisa una vegada que falta el model
   (`AvisSenseModelLlengua`).
-- `[ml]` (opcional) instal·la `torch` (versió CPU) i `transformers` per a
-  FLOR-760M, el model per defecte fins al 12/11/2026:
-  `pip install ".[ml]" --extra-index-url https://download.pytorch.org/whl/cpu`.
-  Es baixa de Hugging Face la primera vegada que s'usa (1,5 GB; es guarda
-  en la carpeta de `HF_HOME`).
 - El model català de spaCy (`ca_core_news_md`) s'instal·la sol.
 - `[avaluacio]` afig `sacrebleu` per a avaluar amb els benchmarks; `[dev]`,
   `pytest`.
@@ -64,17 +59,46 @@ tres fitxers, publicats en Hugging Face:
 
 El paquet els baixa sol la primera vegada que s'usen (cal `huggingface_hub`,
 que ve amb `[kenlm]`, i internet eixa vegada) i els guarda en la memòria cau
-de Hugging Face (`HF_HOME`); després funciona sense internet. Cada versió
-del paquet baixa la seua revisió del model (la 2.0.0, el commit `db4a1f1` del 17/11/2026).
+de Hugging Face (`HF_HOME`); després funciona sense internet.
+
+#### Quina versió del model baixa cada versió del paquet
+
+Cada versió del paquet baixa sempre **el mateix commit** del repositori
+del model en Hugging Face, fixat en `REVISIO_HF`
+([`src/avlizador/traductor_cat_val/model_llengua/kenlm.py`](src/avlizador/traductor_cat_val/model_llengua/kenlm.py)).
+Així, si més avant es puja un model nou, les instal·lacions d'una versió
+anterior continuen baixant el seu i traduïxen igual. Es fixa per commit, i
+no per etiqueta, perquè la web de Hugging Face no permet crear etiquetes.
+
+| Versió del paquet | Commit del model en Hugging Face | Model |
+|---|---|---|
+| 2.0.0 | [`db4a1f1`](https://huggingface.co/transducens/avlizador-kenlm-va/tree/db4a1f10d55bbc30ad54728e1639d17d32526ef7) (`db4a1f10d55bbc30ad54728e1639d17d32526ef7`, 17/11/2026) | KenLM `valencia_net_dogv2` (MaCoCu + DOGV 2025-2026) + classificador `sentit_dogv2_avl` (+ AVL) |
+
+Pujar a Hugging Face un altre fitxer (per exemple, la fitxa `README.md`)
+crea un commit nou, però no canvia res per a les versions ja publicades.
+
+**Publicar un model nou** (per a una versió nova del paquet):
+
+1. Generar la carpeta: `python scripts/hf_model/kenlm.py --dir ... --nom ...
+   --fonts ...` (vore el seu docstring) → `dades/hf_model/kenlm/`.
+2. Pujar-la a Hugging Face (*Files and versions* → *Add file* → *Upload
+   files*, o `hf upload transducens/avlizador-kenlm-va dades/hf_model/kenlm . --repo-type model`).
+3. Copiar l'identificador complet del commit nou: *Files and versions* →
+   *History*, o `python -c "from huggingface_hub import HfApi;
+   print(HfApi().model_info('transducens/avlizador-kenlm-va').sha)"`.
+4. Posar-lo en `REVISIO_HF`, afegir-ne una fila a la taula de dalt (i en
+   [`README.es.md`](README.es.md)), passar els tests i traure la versió
+   nova del paquet.
 
 | Variable d'entorn | Què fa |
 |---|---|
 | `AVLIZADOR_KENLM_DIR` | usar una carpeta local amb els tres fitxers en lloc de Hugging Face |
 | `AVLIZADOR_KENLM_DESCARREGA=0` o `HF_HUB_OFFLINE=1` | no baixar res (només la memòria cau o la carpeta local) |
-| `AVLIZADOR_KENLM_REVISIO` | una altra revisió del model en Hugging Face (etiqueta, branca o commit) |
+| `AVLIZADOR_KENLM_REVISIO` | una altra revisió del model en Hugging Face (commit, branca o etiqueta) en lloc de la de `REVISIO_HF` |
 
-Cost: ~0,1 ms per frase candidata i ~80 MB de memòria (FLOR: 833 ms i
-~1,5 GB). Per què KenLM i totes les xifres:
+Cost: ~0,1 ms per frase candidata i ~80 MB de memòria, sense GPU ni
+PyTorch. Fins al 12/11/2026 el model era FLOR-760M (833 ms i ~1,5 GB); des
+de la versió 2.0.0 ja no és en el paquet. Per què KenLM i totes les xifres:
 [`documentacio/resultats_model_llengua_kenlm.md`](documentacio/resultats_model_llengua_kenlm.md).
 
 ## Ús
@@ -86,7 +110,7 @@ from avlizador import translate_cat_val, calcula_gd, calcula_gdv, calcula_gdc
 
 translate_cat_val("Aquest noi necessita ajuda. Un cop acabada la reunió, marxem.")
 # 'Este xic necessita ajuda. Una vegada acabada la reunió, marxem.'
-# model="kenlm": error (FaltaKenLM) si falta KenLM; model="flor": FLOR-760M (cal [ml])
+# model="kenlm": error (FaltaKenLM) si falta KenLM, en lloc del motor sol amb avís
 
 calcula_gd("Este xiquet vol vindre hui.")["gd"]     # 1.0: valencià
 calcula_gdv("Este xiquet vol vindre hui.")["gdv"]   # 1.0: valencià pur
@@ -99,7 +123,6 @@ Des de la línia d'ordres:
 avlizador tradueix "Aquest noi necessita ajuda."
 avlizador tradueix --fitxer entrada.txt > eixida.txt   # una frase o paràgraf per línia
 avlizador tradueix --motor "..."                       # només el motor, sense el model
-avlizador tradueix --model flor "..."                  # FLOR-760M en lloc de KenLM (cal [ml])
 avlizador gd --text "Este xiquet vol vindre hui."      # també gdv i gdc
 avlizador gd --corpus corpus.jsonl --camp text --html informe.html  # informe HTML frase a frase
 avlizador avalua --benchmarks manual                   # avaluació (cal [avaluacio])
@@ -124,7 +147,7 @@ pip install ".[kenlm,web]"
 avlizador web          # http://127.0.0.1:8000
 ```
 
-Amb Docker (la imatge porta spaCy i KenLM dins, sense torch ni FLOR, i
+Amb Docker (la imatge porta spaCy i KenLM dins, sense torch, i
 funciona **sense internet**). En construir-la es baixa de Hugging Face el
 [model de llengua](#model-de-llengua) (cal internet només en eixe moment)
 i es guarda en `/opt/kenlm`; si els tres fitxers ja són en `docker/kenlm/`
@@ -177,12 +200,13 @@ traduccions competixen pels mateixos nuclis i totes van més lentes.
 Benchmark d'avaluació: **manual mescla** (458 frases del BOE i de l'AVL,
 revisades a mà). TER i WER: percentatge de paraules que cal editar per a
 arribar a la referència (com més baixos, millor). Versió 2.0.0, mesura
-del 17/11/2026 (`avlizador avalua`); FLOR i el motor sol, del 13/11/2026:
+del 17/11/2026 (`avlizador avalua`); FLOR-760M (el model d'abans, ja no
+inclòs) i el motor sol, del 13/11/2026:
 
 | Sistema | Exactes | BLEU | chrF | TER | WER |
 |---|---|---|---|---|---|
 | Motor + KenLM + classificador (per defecte) | **232/458 (50,7 %)** | **91,00** | **96,34** | **5,58** | **5,96** |
-| Motor + FLOR-760M (opcional) | 231/458 (50,4 %) | 90,98 | 96,33 | 5,59 | 5,97 |
+| Motor + FLOR-760M (fins a la 1.2.0) | 231/458 (50,4 %) | 90,98 | 96,33 | 5,59 | 5,97 |
 | Motor sol | 218/458 (47,6 %) | 90,49 | 96,08 | 5,90 | 6,27 |
 
 Per parts (2.0.0): BOE 35/246 (BLEU 84,01, TER 9,21) i AVL 197/212 (BLEU
@@ -191,7 +215,7 @@ Per parts (2.0.0): BOE 35/246 (BLEU 84,01, TER 9,21) i AVL 197/212 (BLEU
 Frases exactes en la resta de benchmarks (homògrafs i 151, 16-17/11/2026;
 BOE i gplsi, 13/11/2026 amb el model KenLM anterior):
 
-| Benchmark | KenLM + classificador | FLOR-760M | Motor sol |
+| Benchmark | KenLM + classificador | FLOR-760M (d'abans) | Motor sol |
 |---|---|---|---|
 | homògrafs v1 (151 + homògrafs, 253) | **227** | 217 | 181 |
 | homògrafs v2 (160) | **112** | 96 | 82 |
@@ -230,7 +254,7 @@ dataset públic gplsi (CC BY 4.0). Format: llista de
 pip install ".[kenlm,avaluacio]"
 avlizador avalua                      # tots (sense els complets del BOE), amb KenLM
 avlizador avalua --benchmarks manual  # només el d'avaluació
-avlizador avalua --model kenlm flor --motor  # KenLM, FLOR (cal [ml]) i el motor sol
+avlizador avalua --motor               # també el motor sol, per a comparar
 avlizador avalua --llista             # els disponibles
 ```
 
@@ -264,8 +288,10 @@ pip install -e ".[kenlm,avaluacio,dev]"
 pytest                                  # doctests + proves de l'API i les ordres
 ```
 
-Per a provar també FLOR, afegiu-hi `ml` i
-`--extra-index-url https://download.pytorch.org/whl/cpu`.
+FLOR-760M (el model fins a la 1.2.0) ja no és en el paquet; per a repetir
+els experiments que el comparen amb KenLM, el seu puntuador és en
+`pipeline/03_seleccio_de_model/model_llengua/flor.py` (cal `torch` i
+`transformers` a banda).
 
 Per a canviar el lèxic, s'editen **només** els fitxers de `dades/lexic/`
 i després:
@@ -292,11 +318,10 @@ peces de tercers mantenen la seua llicència i es detallen en
   pip l'instal·la com a dependència, i qui el redistribuïsca ha de
   complir eixa llicència;
 - la biblioteca KenLM és **GNU LGPL 2.1** (https://github.com/kpu/kenlm);
-  el model KenLM l'ha entrenat el projecte amb MaCoCu-ca 1.0 (CC0 1.0) i
-  textos del DOGV, i les condicions de reutilització del DOGV s'han de
-  revisar abans de publicar-lo;
-- FLOR-760M (opcional, no s'inclou) és Apache 2.0 (adaptació de
-  BLOOM-1.1B);
+  el model KenLM l'ha entrenat el projecte amb MaCoCu-ca 1.0 (CC0 1.0),
+  textos del DOGV i, el classificador, textos de l'AVL, i està publicat en
+  Hugging Face amb llicència **CC BY 4.0**
+  ([`transducens/avlizador-kenlm-va`](https://huggingface.co/transducens/avlizador-kenlm-va));
 - el dataset gplsi de `dades/benchmarks/gplsi/` és CC BY 4.0 dels seus
   autors;
 - els textos del BOE i de l'AVL es reutilitzen citant-ne la font.
@@ -305,7 +330,6 @@ peces de tercers mantenen la seua llicència i es detallen en
 Docker inclou components de tercers amb altres llicències (vegeu
 [`NOTICE`](NOTICE)), entre els quals el model d'spaCy
 `ca_core_news_md`, amb llicència GPL-3.0, la biblioteca KenLM (LGPL 2.1)
-i el model KenLM del projecte. Des del 13/11/2026 la imatge ja no porta
-FLOR-760M. Qui distribuïsca una imatge amb estos components dins ha de
+i el model KenLM del projecte. Qui distribuïsca una imatge amb estos components dins ha de
 complir eixes llicències. Per això recomanem construir la imatge en
 local (`docker compose build`) en compte de distribuir-la.

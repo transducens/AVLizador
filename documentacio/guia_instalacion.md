@@ -15,7 +15,7 @@ paso tiene los comandos de los tres sistemas.
 - No hace falta tarjeta gráfica: todo funciona con CPU.
 - Conexión a internet en la instalación y la primera vez que se traduce
   (se descargan de Hugging Face los tres ficheros del modelo KenLM, unos
-  83 MB; ver el paso 3). Solo con FLOR (opcional): unos 3 GB más.
+  83 MB; ver el paso 3).
 
 | | Comprobar | Instalar si falta |
 |---|---|---|
@@ -101,16 +101,10 @@ al perfil); con `AVLIZADOR_KENLM_DESCARREGA=0` no se descarga nada:
 | **Linux / macOS** | `export AVLIZADOR_KENLM_DIR=/ruta/a/kenlm` |
 
 **Windows.** KenLM normalmente no se instala (no hay compilador de C++).
-Tres opciones: (1) la imagen Docker (README de la raíz), que lleva KenLM;
-(2) FLOR-760M, el modelo por defecto hasta el 12/11/2026:
-
-```bash
-pip install -e ".[ml,avaluacio,dev]" --extra-index-url https://download.pytorch.org/whl/cpu
-```
-
-y traducir con `--model flor` (sin esa opción, el traductor usa el motor
-solo y avisa); `--extra-index-url ...whl/cpu` evita descargar torch con
-CUDA (varios GB que no hacen falta); (3) el motor solo.
+Dos opciones: (1) la imagen Docker (README de la raíz), que lleva KenLM;
+(2) el motor solo (`pip install -e ".[avaluacio,dev]"`): el traductor
+funciona, pero no resuelve las palabras ambiguas y avisa. FLOR-760M, el
+modelo hasta la versión 1.2.0, ya no está en el paquete.
 
 ## 4. Traducir
 
@@ -126,18 +120,13 @@ avlizador tradueix "Aquest noi necessita ajuda per fer els deures."
 avlizador tradueix --motor "Un cop acabada la reunió, marxarem."
 # solo el motor de reglas, sin modelo de lenguaje: deja "Un cop" igual
 
-avlizador tradueix --model flor "Un cop acabada la reunió, marxarem."
-# con FLOR-760M en lugar de KenLM (necesita [ml])
-
 avlizador tradueix --fitxer entrada.txt > salida.txt   # una frase o párrafo por línea
 ```
 
 Con `--motor`, unas 250 frases por segundo; KenLM añade muy poco (~0,1
-ms por frase candidata). Con `--model flor`, la **primera** traducción
-tarda: descarga FLOR (1,5 GB, una sola vez) en la caché de Hugging Face
-(`~/.cache/huggingface` en Linux y macOS, `%USERPROFILE%\.cache\huggingface`
-en Windows; se cambia con la variable `HF_HOME`); después, unos 0,5 s por
-frase.
+ms por frase candidata). La **primera** traducción tarda unos segundos
+más: se descargan los ficheros del modelo (unos 83 MB, una sola vez) en la
+caché de Hugging Face (se cambia con la variable `HF_HOME`).
 
 ## 5. Grau Dialectal
 
@@ -158,7 +147,6 @@ frase a frase).
 from avlizador import translate_cat_val, translate_cat_val_motor, calcula_gd, calcula_gdv, calcula_gdc
 
 translate_cat_val("Aquest noi necessita ajuda.")        # 'Este xic necessita ajuda.' (motor + KenLM)
-translate_cat_val("Un cop acabada.", model="flor")      # con FLOR-760M (necesita [ml])
 translate_cat_val_motor("Aquest noi necessita ajuda.")  # solo el motor
 calcula_gd("Este xiquet vol vindre hui.")["gd"]         # 1.0
 ```
@@ -168,12 +156,12 @@ calcula_gd("Este xiquet vol vindre hui.")["gd"]         # 1.0
 ```bash
 avlizador avalua --llista                 # benchmarks disponibles (dades/benchmarks/)
 avlizador avalua --benchmarks manual      # el de evaluación: 458 frases, unos 4 minutos
-pytest                                    # pruebas: 48 passed
+pytest                                    # pruebas: tienen que pasar todas
 ```
 
 Si todo está bien instalado, `avalua --benchmarks manual` da **232/458,
-TER 5,58** con KenLM (13/11/2026, en las máquinas del proyecto; con
-`--model flor`, 231/458, TER 5,59). Los resultados se guardan en
+TER 5,58** (versión 2.0.0, 17/11/2026, en las máquinas del proyecto).
+Los resultados se guardan en
 `resultats_avaluacio/`.
 
 ## 8. Cambiar el léxico
@@ -194,9 +182,7 @@ avlizador avalua --benchmarks manual   # comparar con 232/458
 | `avlizador: command not found` / no se reconoce | El entorno no está activado: paso 2 |
 | Aviso `AvisSenseModelLlengua` | Falta el extra `[kenlm]`, o no se han podido descargar los ficheros del modelo (sin internet la primera vez) y no hay `AVLIZADOR_KENLM_DIR`: paso 3 |
 | Error `FaltaKenLM` (con `model="kenlm"` o `--model kenlm`) | La misma causa; el mensaje dice qué falta |
-| `pip` falla al compilar `kenlm` | Falta el compilador de C++ (paso 0); en Windows, Docker o FLOR (paso 3) |
-| Con `--model flor`, la primera traducción tarda minutos | Descarga de FLOR (solo la primera vez) |
-| `pip` descarga varios GB de torch con CUDA | Falta `--extra-index-url https://download.pytorch.org/whl/cpu` (solo con `[ml]`) |
+| `pip` falla al compilar `kenlm` | Falta el compilador de C++ (paso 0); en Windows, Docker o el motor solo (paso 3) |
 | Linux: "ensurepip is not available" | `sudo apt install python3-venv` |
 | Windows: no deja ejecutar `Activate.ps1` | `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` |
-| Sin internet en la máquina de trabajo | Descargar antes el modelo KenLM con conexión: `python -c "from huggingface_hub import snapshot_download; print(snapshot_download('transducens/avlizador-kenlm-va', revision='db4a1f10d55bbc30ad54728e1639d17d32526ef7'))"` y copiar la carpeta que indica a la máquina de trabajo, con `AVLIZADOR_KENLM_DIR` apuntando a ella. Con FLOR, descargarlo antes con conexión: `python -c "from huggingface_hub import snapshot_download; snapshot_download('projecte-aina/FLOR-760M')"` |
+| Sin internet en la máquina de trabajo | Descargar antes el modelo KenLM con conexión: `python -c "from huggingface_hub import snapshot_download; print(snapshot_download('transducens/avlizador-kenlm-va', revision='db4a1f10d55bbc30ad54728e1639d17d32526ef7'))"` y copiar la carpeta que indica a la máquina de trabajo, con `AVLIZADOR_KENLM_DIR` apuntando a ella. |

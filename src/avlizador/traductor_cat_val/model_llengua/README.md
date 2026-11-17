@@ -7,8 +7,10 @@ del **sistema principal** (`translate_cat_val`).
 ## Model per defecte: KenLM + classificador de sentit (des del 13/11/2026)
 
 **Decisió de l'usuari (13/11/2026)**: KenLM + el classificador de sentit
-substituïx FLOR-760M com a model per defecte. FLOR continua
-disponible com a opció (`model="flor"`, extra `[ml]`).
+substituïx FLOR-760M com a model per defecte. Des de la versió 2.0.0
+(17/11/2026, decisió de l'usuari) FLOR ja no és en el paquet, ni com a
+opció; el seu puntuador és en `pipeline/03_seleccio_de_model/model_llengua/flor.py`
+per a repetir els experiments.
 
 | | KenLM + classificador | FLOR-760M |
 |---|---|---|
@@ -35,10 +37,7 @@ híbrid amb FLOR): `documentacio/resultats_model_llengua_kenlm.md`.
   (`AvisSenseModelLlengua`).
 - `translate_cat_val(text, model="kenlm")`: igual, però si falta alguna
   cosa, `FaltaKenLM` (s'ha demanat expressament).
-- `translate_cat_val(text, model="flor")`: FLOR-760M (extra `[ml]`; sense
-  ell, motor sol i avís).
-- Ordres: `avlizador tradueix [--model flor]`, `avlizador avalua [--model
-  kenlm flor]`.
+- Ordres: `avlizador tradueix [--motor]`, `avlizador avalua [--motor]`.
 
 Peces:
 
@@ -91,14 +90,16 @@ paraula ambigua nova o un corpus nou. Totes les ordres, des de l'arrel del
 repositori. En Abaco, amb el venv activat (`source
 ~/venvs/avlizador/bin/activate`) i la branca al dia (`git pull`).
 
-Els fitxers del model viuen en **tres llocs**, i cada vegada que en canvie
-un cal copiar-lo als tres:
+Els fitxers del model viuen en **tres llocs** de treball, i cada vegada que
+en canvie un cal copiar-lo als tres; el quart, Hugging Face, només es toca
+per a una versió nova del paquet:
 
 | Lloc | Per a què |
 |---|---|
 | `dades/macocu/kenlm/` en Abaco | avaluar (`avalua_sistema.sh`, `compara_models.sh`) |
 | la carpeta d'`AVLIZADOR_KENLM_DIR` en el PC (si s'usa KenLM fora de Docker) | `translate_cat_val`, `avlizador tradueix` |
 | `docker/kenlm/` (fora de git) | la imatge Docker (`/opt/kenlm`); cal reconstruir-la |
+| Hugging Face (`transducens/avlizador-kenlm-va`) | el que baixa el paquet i la imatge si no hi ha `docker/kenlm/`. Només per a una versió nova del paquet: `scripts/hf_model/kenlm.py`, pujar-lo i posar el commit nou en `REVISIO_HF` (README de l'arrel, «Quina versió del model baixa cada versió del paquet») |
 
 ### 1. Paraula ambigua nova
 
@@ -290,7 +291,8 @@ frases que deixen la catalana, 42 → 57/59; les que demanen la
 valenciana, 82 → 38/101), manual 228/458 sense canvis. Resultats: benchmark combinat motor 190/253 →
 sistema 227/253 (151 sense cap canvi, colisio 0 → 31/33, irresoluble 12 →
 18/24; "calces" no la separa); BOE ampli 1.206/2.000. La
-funció és `translate_cat_val_ml(text)`; `evalua_models.py --model
+funció era `translate_cat_val_ml(text)` (hui, fora del paquet,
+`flor.translate_cat_val_flor`); `evalua_models.py --model
 traductor_ml --direccio cat-val` l'avalua sobre
 `pipeline/03_seleccio_de_model/benchmark_sistema_final_cat_val.json` (el de
 151 + els homògrafs, `construeix_benchmark_sistema_final.py`).
@@ -349,11 +351,12 @@ no coneixen el valencià trien "vegada" quasi sempre. Detall a
 
 ## Fitxers
 
-`punts.py` (punts i candidats, sense model), `puntuador.py`
-(`ModelLlengua`, FLOR), `kenlm.py` (`ModelKenLM`, `normalitza`), `sentit.py`
-(`ClassificadorSentit`, `ClassificadorCop`), `__init__.py` (`tradueix_cat_val_ml`,
-`translate_cat_val_ml`, `translate_cat_val_kenlm`); fora del paquet, en
-`pipeline/03_seleccio_de_model/model_llengua/`: `frases_homografs.json` (frases catalanes amb el sentit esperat),
+`punts.py` (punts i candidats, sense model), `kenlm.py` (`ModelKenLM`,
+`normalitza`), `sentit.py` (`ClassificadorSentit`, `ClassificadorCop`),
+`__init__.py` (`tradueix_cat_val_ml`, `translate_cat_val_kenlm`); fora del
+paquet, en `pipeline/03_seleccio_de_model/model_llengua/`: `flor.py`
+(`ModelLlengua` i `translate_cat_val_flor`, FLOR, fora del paquet des de la
+2.0.0), `frases_homografs.json` (frases catalanes amb el sentit esperat),
 `genera_benchmark.py` (crea `benchmark_homografs_cat_val.json` amb el
 motor; **les referències s'han de revisar a mà**) i `avalua.py` (prova
 tots els criteris amb cada model).

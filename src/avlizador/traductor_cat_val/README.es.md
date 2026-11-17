@@ -23,8 +23,8 @@ de `diccionarios/` (o `lexic/`), en `dades/lexic/`.
 una de las dos herramientas que se entregan a la Conselleria (la otra es
 el GD, `avlizador.grau_dialectal`), en equipos solo con CPU. **Sistema
 principal = motor + KenLM + clasificador de sentido** (desde el 13/11/2026;
-del 30/10 al 12/11, motor + FLOR-760M, que sigue como opción con
-`model="flor"`); el motor solo, como comparación o si falta KenLM.
+del 30/10 al 12/11, motor + FLOR-760M, que desde la versión 2.0.0 ya no
+está en el paquete); el motor solo, como comparación o si falta KenLM.
 
 ### Qué hay en el paquete
 
@@ -43,7 +43,7 @@ traductor_cat_val/
 │   ├── pos_tagger.py         spaCy (ca_core_news_md, si no sm): categoría, género, lema, forma verbal
 │   ├── cat_val/              motor catalán → valenciano (9 capas, ver abajo)
 │   └── val_cat/              motor valenciano → catalán (aparcado desde el 20/10; lo usa el GD)
-└── model_llengua/            homógrafos cat→val: KenLM + clasificador (extra [kenlm]) o FLOR ([ml])
+└── model_llengua/            homógrafos cat→val: KenLM + clasificador (extra [kenlm])
 ```
 
 Fuera del paquete: `scripts/sync_data.py` (raíz),
@@ -89,15 +89,13 @@ del motor: `rules/cat_val/README.es.md`.
 
 ```python
 from avlizador.traductor_cat_val import translate_cat_val, translate_cat_val_motor
-translate_cat_val("Un cop acabada la reunió.")         # sistema principal: motor + KenLM (extra [kenlm], AVLIZADOR_KENLM_DIR)
+translate_cat_val("Un cop acabada la reunió.")         # sistema principal: motor + KenLM (extra [kenlm]; modelo de Hugging Face)
 translate_cat_val_motor("Aquest xiquet és molt bo.")   # motor solo (spaCy, sin modelo)
-translate_cat_val("Un cop acabada la reunió.", model="flor")   # motor + FLOR-760M (extra [ml])
 ```
 
 ```bash
 avlizador tradueix "Aquest xiquet és molt bo."
 avlizador tradueix --motor "Aquest xiquet és molt bo."
-avlizador tradueix --model flor "Aquest xiquet és molt bo."
 ```
 
 ### Resultados actuales (cat→val, 13/11/2026)

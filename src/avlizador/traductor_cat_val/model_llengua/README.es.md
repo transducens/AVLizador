@@ -7,8 +7,10 @@ del **sistema principal** (`translate_cat_val`).
 ## Modelo por defecto: KenLM + clasificador de sentido (desde el 13/11/2026)
 
 **Decisión del usuario (13/11/2026)**: KenLM + el clasificador de sentido
-sustituye a FLOR-760M como modelo por defecto. FLOR sigue
-disponible como opción (`model="flor"`, extra `[ml]`).
+sustituye a FLOR-760M como modelo por defecto. Desde la versión 2.0.0
+(17/11/2026, decisión del usuario) FLOR ya no está en el paquete, ni como
+opción; su puntuador está en `pipeline/03_seleccio_de_model/model_llengua/flor.py`
+para repetir los experimentos.
 
 | | KenLM + clasificador | FLOR-760M |
 |---|---|---|
@@ -35,10 +37,7 @@ Uso:
   (`AvisSenseModelLlengua`).
 - `translate_cat_val(text, model="kenlm")`: igual, pero si falta algo,
   `FaltaKenLM` (se ha pedido expresamente).
-- `translate_cat_val(text, model="flor")`: FLOR-760M (extra `[ml]`; sin él,
-  motor solo y aviso).
-- Órdenes: `avlizador tradueix [--model flor]`, `avlizador avalua [--model
-  kenlm flor]`.
+- Órdenes: `avlizador tradueix [--motor]`, `avlizador avalua [--motor]`.
 
 Piezas:
 
@@ -93,14 +92,16 @@ una palabra ambigua nueva o un corpus nuevo. Todas las órdenes, desde la
 raíz del repositorio. En Abaco, con el venv activado (`source
 ~/venvs/avlizador/bin/activate`) y la rama al día (`git pull`).
 
-Los ficheros del modelo viven en **tres sitios**, y cada vez que cambie
-uno hay que copiarlo a los tres:
+Los ficheros del modelo viven en **tres sitios** de trabajo, y cada vez
+que cambie uno hay que copiarlo a los tres; el cuarto, Hugging Face, solo
+se toca para una versión nueva del paquete:
 
 | Sitio | Para qué |
 |---|---|
 | `dades/macocu/kenlm/` en Abaco | evaluar (`avalua_sistema.sh`, `compara_models.sh`) |
 | la carpeta de `AVLIZADOR_KENLM_DIR` en el PC (si se usa KenLM fuera de Docker) | `translate_cat_val`, `avlizador tradueix` |
 | `docker/kenlm/` (fuera de git) | la imagen Docker (`/opt/kenlm`); hay que reconstruirla |
+| Hugging Face (`transducens/avlizador-kenlm-va`) | lo que descarga el paquete y la imagen si no hay `docker/kenlm/`. Solo para una versión nueva del paquete: `scripts/hf_model/kenlm.py`, subirlo y poner el commit nuevo en `REVISIO_HF` (README de la raíz, «Qué versión del modelo descarga cada versión del paquete») |
 
 ### 1. Palabra ambigua nueva
 
@@ -406,7 +407,8 @@ v2 122 → 124, manual 227 → 228, homógrafos 233 igual. Detalle en
 Errores que quedan en colisio: "un últim **cop** al banc" (golpe = robo) y
 "intent de **cop**" (golpe de estado sin "d'estat"), los dos salen "vegada".
 
-La función del sistema final es `translate_cat_val_ml(text)`, y
+La función del sistema final era `translate_cat_val_ml(text)` (hoy, fuera
+del paquete, `flor.translate_cat_val_flor`), y
 `evalua_models.py --model traductor_ml --direccio cat-val` la evalúa.
 **Desde el 29/10/2026 `avlizador.translate_cat_val` es siempre este
 sistema** (motor + FLOR-760M); el motor solo queda como
@@ -466,11 +468,12 @@ que no conocen el valenciano eligen "vegada" casi siempre. Detalle en
 ## Ficheros
 
 - `punts.py`: detección de los puntos y construcción de los candidatos (sin modelo).
-- `puntuador.py`: `ModelLlengua`, log-probabilidad de un texto (torch + transformers).
 - `kenlm.py`: `ModelKenLM` y `normalitza` (alternativa a FLOR, sin torch; 12/11/2026).
 - `sentit.py`: clasificadores de sentido (`ClassificadorSentit`, el general; `ClassificadorCop`, el antiguo).
 - `__init__.py`: `tradueix_cat_val_ml(text, model, criteri, sentit=None)`, elección
-  del candidato; `translate_cat_val_ml` (FLOR) y `translate_cat_val_kenlm` (KenLM).
+  del candidato; `translate_cat_val_kenlm` (KenLM).
+- FLOR (`ModelLlengua`, torch + transformers) ya no está aquí: desde la 2.0.0,
+  `pipeline/03_seleccio_de_model/model_llengua/flor.py`.
 
 Fuera del paquete, en `pipeline/03_seleccio_de_model/model_llengua/`:
 

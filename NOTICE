@@ -24,10 +24,12 @@ Components i dades de tercers
 2. Model de llengua FLOR-760M (projecte-aina, Barcelona Supercomputing
    Center)
    Llicència: Apache 2.0. És una adaptació de BLOOM-1.1B (BigScience,
-   llicència BigScience RAIL 1.0). Opcional des del 13/11/2026 (extra
-   [ml], `model="flor"`). No s'inclou: es baixa de Hugging Face
-   (https://huggingface.co/projecte-aina/FLOR-760M) la primera vegada que
-   s'usa.
+   llicència BigScience RAIL 1.0). Va ser el model de les paraules
+   ambigües fins al 12/11/2026; des de la versió 2.0.0 ja no és en el
+   paquet. Només l'usen alguns scripts d'experiments de pipeline/
+   (pipeline/03_seleccio_de_model/model_llengua/flor.py). No s'inclou: es
+   baixa de Hugging Face (https://huggingface.co/projecte-aina/FLOR-760M)
+   si s'executen eixos scripts.
 
 3. Dataset gplsi/CA-VA_alignment_test (grup GPLSI, Universitat d'Alacant)
    Llicència: Creative Commons BY 4.0. Inclòs en dades/benchmarks/gplsi/ i
@@ -71,10 +73,8 @@ Components i dades de tercers
      take down").
 
 Dependències de Python (no incloses; les instal·la pip): spaCy i thinc
-(MIT), kenlm (LGPL 2.1; extra [kenlm]), PyTorch (BSD) i transformers,
-huggingface_hub, tokenizers i safetensors (Apache 2.0; extra [ml], només
-per a FLOR), sacrebleu i requests (Apache 2.0), numpy (BSD) i pytest
-(MIT). La interfície web (extra [web]) usa FastAPI i Pydantic (MIT),
+(MIT), kenlm (LGPL 2.1) i huggingface_hub (Apache 2.0; extra [kenlm]),
+sacrebleu i requests (Apache 2.0), numpy (BSD) i pytest (MIT). La interfície web (extra [web]) usa FastAPI i Pydantic (MIT),
 Starlette, uvicorn, Jinja2 i MarkupSafe (BSD-3-Clause).
 
 Les gramàtiques GNV (AVL) i GEIEC (IEC) es van usar com a referència
@@ -84,9 +84,8 @@ Imatge Docker
 =============
 
 La imatge Docker d'AVLizador (Dockerfile, docker-compose.yml) inclou, a més
-del codi i les dades del projecte, estos components de tercers. Des del
-13/11/2026 la imatge porta KenLM en lloc de FLOR-760M i PyTorch. Les
-versions de spaCy i del servidor web són les de la imatge avlizador:1.2.0
+del codi i les dades del projecte, estos components de tercers (sense
+PyTorch ni FLOR-760M des del 13/11/2026). Les versions de spaCy i del servidor web són les de la imatge avlizador:1.2.0
 construïda el 06/11/2026; s'han de revisar en construir la nova (la llista
 completa de paquets de Python és dins de la imatge, en
 /opt/versions_python.txt):
