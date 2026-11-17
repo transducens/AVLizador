@@ -26,13 +26,18 @@ homògrafs, 193 encerts i 1 error greu. 0,1 ms per frase candidata
 (FLOR, 833 ms) i sense torch. Detall en
 `documentacio/resultats_model_llengua_kenlm.md`.
 
-Fitxers (fora de git; vore `fitxers_kenlm`), en la carpeta de la variable
-d'entorn `AVLIZADOR_KENLM_DIR`:
+Fitxers (fora de git; vore `fitxers_kenlm`):
 - `valencia_net_dogv_o5.binary` -- el model KenLM;
 - `valencia_net_dogv_freq.json` -- freqüències per al prior;
-- `nb.json` (o `sentit_cop/nb.json`) -- el classificador de "cop".
-Cal el paquet `kenlm` (extra `[kenlm]`; en Windows necessita compilador,
-la imatge Docker és Linux).
+- `sentit.json` (o el de "cop", `nb.json`) -- el classificador de sentit.
+On es busquen (`directori_kenlm`, 16/11/2026): en la carpeta de la variable
+d'entorn `AVLIZADOR_KENLM_DIR` si està definida; si no, en el model de
+Hugging Face `transducens/avlizador-kenlm-va` (`REPO_HF`), que es baixa a la
+memòria cau de Hugging Face la primera vegada, com FLOR. Per a no baixar res:
+`AVLIZADOR_KENLM_DESCARREGA=0` o `HF_HUB_OFFLINE=1`. La revisió:
+`AVLIZADOR_KENLM_REVISIO` (per defecte, `REVISIO_HF`).
+Cal el paquet `kenlm` (extra `[kenlm]`, que també porta `huggingface_hub`;
+en Windows necessita compilador, la imatge Docker és Linux).
 """
 
 from __future__ import annotations
@@ -47,6 +52,11 @@ from pathlib import Path
 LN10 = math.log(10)
 VAR_DIRECTORI = "AVLIZADOR_KENLM_DIR"
 NOM_MODEL = "valencia_net_dogv"
+# 16/11/2026: els fitxers també es poden baixar de Hugging Face.
+REPO_HF = "transducens/avlizador-kenlm-va"
+REVISIO_HF = "main"  # en cada versió del paquet, la revisió (etiqueta) del model que li correspon
+VAR_REVISIO = "AVLIZADOR_KENLM_REVISIO"
+VAR_DESCARREGA = "AVLIZADOR_KENLM_DESCARREGA"
 
 _APOSTROF = str.maketrans({"’": "'", "ʼ": "'", "´": "'", "`": "'"})
 _TOKEN = re.compile(r"[^\W\d_]+(?:[·\-][^\W\d_]+)*'?|\d+(?:[.,]\d+)*|[^\w\s]")
@@ -147,14 +157,43 @@ class AvisFreqKenLM(UserWarning):
     """Alguna paraula candidata no és en la taula de freqüències (13/11/2026)."""
 
 
-def directori_kenlm(directori: Path | str | None = None) -> Path:
-    """La carpeta dels fitxers: `directori` o `AVLIZADOR_KENLM_DIR`."""
+def _directori_hf(descarrega: bool = True) -> Path | None:
+    """La carpeta del model de Hugging Face (`REPO_HF`): de la memòria cau si
+    ja hi és; si no, el baixa (si `descarrega` i no ho impedixen
+    `AVLIZADOR_KENLM_DESCARREGA=0` ni `HF_HUB_OFFLINE`). `None` si no es pot
+    (sense `huggingface_hub`, sense xarxa, sense permís)."""
+    try:
+        from huggingface_hub import snapshot_download
+    except ImportError:
+        return None
+    revisio = os.environ.get(VAR_REVISIO) or REVISIO_HF
+    # Només els fitxers que fa servir el paquet (no la fitxa ni el bàner).
+    fitxers = [f"{NOM_MODEL}_o5.binary", f"{NOM_MODEL}_freq.json", "sentit.json"]
+    try:
+        return Path(snapshot_download(REPO_HF, revision=revisio, allow_patterns=fitxers, local_files_only=True))
+    except Exception:  # no és en la memòria cau
+        pass
+    sense_xarxa = os.environ.get("HF_HUB_OFFLINE", "").lower() in ("1", "true", "yes")
+    if not descarrega or os.environ.get(VAR_DESCARREGA) == "0" or sense_xarxa:
+        return None
+    try:
+        return Path(snapshot_download(REPO_HF, revision=revisio, allow_patterns=fitxers))
+    except Exception:
+        return None
+
+
+def directori_kenlm(directori: Path | str | None = None, descarrega: bool = True) -> Path:
+    """La carpeta dels fitxers: `directori`, `AVLIZADOR_KENLM_DIR` o, si no
+    n'hi ha cap, el model de Hugging Face (vore `_directori_hf`)."""
     directori = directori or os.environ.get(VAR_DIRECTORI)
-    if not directori:
+    if directori:
+        return Path(directori)
+    hf = _directori_hf(descarrega)
+    if hf is None:
         raise FaltaKenLM(
-            f"Falta la carpeta del model KenLM: defineix {VAR_DIRECTORI} (amb "
-            f"{NOM_MODEL}_o5.binary, {NOM_MODEL}_freq.json i nb.json).")
-    return Path(directori)
+            f"Falta el model KenLM: no s'ha pogut baixar de Hugging Face ({REPO_HF}) ni hi ha "
+            f"{VAR_DIRECTORI} (una carpeta amb {NOM_MODEL}_o5.binary, {NOM_MODEL}_freq.json i sentit.json).")
+    return hf
 
 
 def fitxers_kenlm(directori: Path | str | None = None) -> dict[str, Path]:

@@ -12,6 +12,10 @@ from avlizador.traductor_cat_val import model_llengua as ml
 from avlizador.traductor_cat_val.model_llengua import CRITERI_KENLM, Criteri, tradueix_cat_val_ml
 from avlizador.traductor_cat_val.model_llengua.kenlm import FaltaKenLM, ModelKenLM, carrega_sistema_kenlm, fitxers_kenlm
 from avlizador.traductor_cat_val.model_llengua.sentit import ClassificadorCop, NaiveBayes
+from avlizador.traductor_cat_val.model_llengua import kenlm
+
+# La funció real (conftest.py la substituïx en tots els tests).
+_DIRECTORI_HF = kenlm._directori_hf
 
 
 class KenLMFals:
@@ -96,6 +100,49 @@ def test_falta_directori(monkeypatch):
     monkeypatch.delenv("AVLIZADOR_KENLM_DIR", raising=False)
     with pytest.raises(FaltaKenLM):
         fitxers_kenlm()
+
+
+def _hf_fals(monkeypatch, tmp_path, en_cau: bool):
+    """`snapshot_download` fals: apunta les crides i torna `tmp_path`."""
+    import huggingface_hub
+
+    monkeypatch.setattr(kenlm, "_directori_hf", _DIRECTORI_HF)
+    crides = []
+
+    def snapshot_download(repo_id, revision=None, local_files_only=False, **kw):
+        crides.append((repo_id, revision, local_files_only))
+        if local_files_only and not en_cau:
+            raise FileNotFoundError(repo_id)
+        return str(tmp_path)
+
+    monkeypatch.setattr(huggingface_hub, "snapshot_download", snapshot_download)
+    return crides
+
+
+def test_la_carpeta_de_la_variable_mana(monkeypatch, tmp_path):
+    pytest.importorskip("huggingface_hub")
+    crides = _hf_fals(monkeypatch, tmp_path / "hf", en_cau=True)
+    monkeypatch.setenv("AVLIZADOR_KENLM_DIR", str(tmp_path))
+    assert kenlm.directori_kenlm() == tmp_path and crides == []
+
+
+def test_sense_variable_es_baixa_de_hugging_face(monkeypatch, tmp_path):
+    pytest.importorskip("huggingface_hub")
+    for var in ("AVLIZADOR_KENLM_DIR", "AVLIZADOR_KENLM_DESCARREGA", "AVLIZADOR_KENLM_REVISIO", "HF_HUB_OFFLINE"):
+        monkeypatch.delenv(var, raising=False)
+    crides = _hf_fals(monkeypatch, tmp_path, en_cau=False)
+    assert kenlm.directori_kenlm() == tmp_path
+    assert crides == [(kenlm.REPO_HF, kenlm.REVISIO_HF, True), (kenlm.REPO_HF, kenlm.REVISIO_HF, False)]
+
+
+def test_sense_permis_per_a_baixar(monkeypatch, tmp_path):
+    pytest.importorskip("huggingface_hub")
+    monkeypatch.delenv("AVLIZADOR_KENLM_DIR", raising=False)
+    monkeypatch.setenv("AVLIZADOR_KENLM_DESCARREGA", "0")
+    crides = _hf_fals(monkeypatch, tmp_path, en_cau=False)
+    with pytest.raises(FaltaKenLM, match="Hugging Face"):
+        kenlm.directori_kenlm()
+    assert [c[2] for c in crides] == [True]  # només ha mirat la memòria cau
 
 
 def test_falten_fitxers(monkeypatch, tmp_path):

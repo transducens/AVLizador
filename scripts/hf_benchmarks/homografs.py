@@ -5,7 +5,8 @@ UN dataset de Hugging Face amb dos configuracions, `v2` (per defecte) i
 (fora de git). El v1 és l'únic amb les col·lisions cop/cops.
 
 Frases escrites per a la prova (no tretes de cap corpus): no hi ha textos
-de tercers, només Apache 2.0. Les referències les va generar el motor
+de tercers: CC BY 4.0 (dades generades del tot per nosaltres, criteri del grup
+del 17/11/2026; abans Apache 2.0). Les referències les va generar el motor
 d'AVLizador posant el candidat esperat en el punt ambigu
 (`pipeline/03_seleccio_de_model/model_llengua/genera_benchmark.py`) i es
 van revisar a mà.
@@ -25,8 +26,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from comu import (  # noqa: E402
     AUTORS, BENCH, GITHUB, METRIQUES_NOTA, ORG_PER_DEFECTE, autoria, banner, capcalera, cita, escriu_jsonl,
-    escriu_notice, prepara_desti, yaml,
+    escriu_notice, prepara_desti, text_llicencia, yaml,
 )
+
+LLICENCIA = "cc-by-4.0"  # criteri del grup, 17/11/2026 (vore comu.LLICENCIES)
 
 FITXERS = {2: "benchmark_homografs_v2_cat_val.json", 1: "benchmark_homografs_cat_val.json"}
 TIPUS = {
@@ -105,8 +108,8 @@ def fitxa(v2: list[dict], v1: list[dict], repo: str) -> str:
         path: data/v1/test.jsonl"""
     nomes_v1 = sorted({f["word"] for f in v1 if f["word"]} - {f["word"] for f in v2})
     comunes = len({f["oriental"] for f in v1} & {f["oriental"] for f in v2})
-    return yaml(f"{titol} (Catalan → Valencian)", "n<1K", configs) + "\n" + capcalera(
-        repo, f"{titol}: ambiguous words, Catalan to Valencian", len(v2) + len(v1)) + f"""
+    return yaml(f"{titol} (Catalan → Valencian)", "n<1K", configs, LLICENCIA) + "\n" + capcalera(
+        repo, f"{titol}: ambiguous words, Catalan to Valencian", len(v2) + len(v1), LLICENCIA) + f"""
 # {titol}: Catalan → Valencian
 
 A test set of **ambiguous words** for dialectal adaptation from
@@ -204,8 +207,7 @@ verb readings of *manca/manques* (*mancar*) and *deu* (*deure*).
 
 ## License
 
-**Apache 2.0**, {" and ".join(AUTORS)}. Keep the `NOTICE` file when
-redistributing it.
+{text_llicencia(LLICENCIA)}
 
 {cita("avlizador_homographs_2026", f"{titol}: ambiguous words in Catalan to Valencian adaptation", repo)}"""
 
@@ -219,7 +221,7 @@ def main(argv: list[str] | None = None) -> None:
     escriu_jsonl(desti / "data" / "v2" / "test.jsonl", v2)
     escriu_jsonl(desti / "data" / "v1" / "test.jsonl", v1)
     (desti / "README.md").write_text(fitxa(v2, v1, args.repo), encoding="utf-8")
-    escriu_notice(desti, "AVLizador homograph benchmark (Catalan -> Valencian)", None)
+    escriu_notice(desti, "AVLizador homograph benchmark (Catalan -> Valencian)", None, llicencia=LLICENCIA)
     banner(desti / "assets" / "banner.png", "AVLizador homographs",
            "Ambiguous words · Catalan → Valencian dialectal adaptation",
            "una  nou  ·  un  cop", "una  anou  ·  un  colp")

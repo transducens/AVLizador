@@ -16,7 +16,9 @@ python scripts/hf_benchmarks/homografs.py --repo ORG/avlizador-homographs-ca-va
 python scripts/hf_benchmarks/boe_dialectal.py --org ORG
 ```
 
-- **Llicència**: Apache 2.0 (decisió de l'usuari, 09/11/2026), autors
+- **Llicència** (criteri del grup, 17/11/2026; abans Apache 2.0): **CC0 1.0**
+  per a les dades obtingudes de tercers (manual, BOE estricte i ampli) i
+  **CC BY 4.0** per a les generades del tot per nosaltres (homògrafs). Autors
   Mauricio González Arcas i Nicolás Martín Morcillo.
 - **BOE**: l'avís legal del BOE permet reutilitzar i modificar citant
   "Basado en datos de la Agencia Estatal Boletín Oficial del Estado" amb

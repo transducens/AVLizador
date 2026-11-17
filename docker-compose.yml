@@ -12,7 +12,7 @@ services:
       - "127.0.0.1:8000:8000"
     environment:
       AVLIZADOR_MODE: complet          # "complet" (motor + KenLM) o "motor" (només regles)
-      AVLIZADOR_KENLM_DIR: /opt/kenlm  # fitxers del model, copiats de docker/kenlm/ en construir
+      AVLIZADOR_KENLM_DIR: /opt/kenlm  # fitxers del model, baixats de Hugging Face (o de docker/kenlm/) en construir
       MAX_CARACTERS: 20000             # límit de text per petició
       MAX_TRADUCCIONS_SIMULTANIES: 2   # semàfor de concurrència (vore main.py)
       UVICORN_LOG_LEVEL: warning       # cap línia per petició

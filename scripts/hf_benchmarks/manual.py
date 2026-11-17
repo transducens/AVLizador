@@ -3,7 +3,8 @@ manual.py -- Prepara el benchmark manual cat→val d'AVLizador com a dataset
 de Hugging Face (09/11/2026): dades en JSONL, fitxa (`README.md`) i bàner,
 en `dades/hf_benchmarks/manual/` (fora de git).
 
-Llicència: Apache 2.0 (la del projecte). Les frases del BOE es poden reutilitzar i modificar
+Llicència: CC0 1.0 (dades de tercers, criteri del grup del 17/11/2026; abans
+Apache 2.0). Les frases del BOE es poden reutilitzar i modificar
 citant "Basado en datos de la Agencia Estatal Boletín Oficial del Estado"
 amb enllaç, la data i marcant els canvis (avís legal del BOE): per això
 cada frase porta la data, l'enllaç al document i, si el text es va
@@ -11,7 +12,8 @@ corregir a mà, l'original (`oriental_original`, `occidental_original`);
 l'atribució va en la fitxa i en el fitxer NOTICE.
 
 Des del 12/11/2026 hi entren també les 212 frases de l'AVL (l'usuari
-confirma que es poden publicar), citant-ne l'origen; `--sense-avl` fa la
+confirma que es poden publicar), citant-ne l'origen, i des del 16/11 amb
+l'avís de retirada ("Notice and take down", `comu.AVIS_RETIRADA`); `--sense-avl` fa la
 versió només amb el BOE (la que es va publicar el 09/11).
 
 Ús (des de l'arrel del repositori):
@@ -31,9 +33,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from comu import (  # noqa: E402
-    ARREL, AUTORS, BENCH, BOE_DERIVAT, GITHUB, METRIQUES_NOTA, ORG_PER_DEFECTE, autoria, autors_text, banner,
-    capcalera, cita, escriu_jsonl, escriu_notice, prepara_desti, yaml,
+    ARREL, AUTORS, AVIS_RETIRADA, BENCH, BOE_DERIVAT, GITHUB, METRIQUES_NOTA, ORG_PER_DEFECTE, autoria, autors_text, banner,
+    capcalera, cita, escriu_jsonl, escriu_notice, prepara_desti, text_llicencia, yaml,
 )
+
+LLICENCIA = "cc0-1.0"  # criteri del grup, 17/11/2026 (vore comu.LLICENCIES)
 
 REVISIO = ARREL / "dades" / "benchmark_manual"
 REPO_PER_DEFECTE = f"{ORG_PER_DEFECTE}/avlizador-manual-ca-va"
@@ -179,10 +183,12 @@ def fitxa(fs: list[dict], repo: str) -> str:
         llicencia_avl = ("- The full benchmark used in AVLizador also has 212 sentences from the website "
                          "of the Acadèmia Valenciana de la Llengua (AVL), not included in this version.")
         avl_build = ""
+    # 16/11/2026: l'avís de retirada, només si hi ha textos de l'AVL.
+    retirada = f"\n{AVIS_RETIRADA}\n" if avl else ""
 
     insignia = '<img alt="Hand reviewed" src="https://img.shields.io/badge/hand-reviewed-2e8b57">\n  '
-    return yaml("AVLizador manual benchmark (Catalan → Valencian)", "n<1K", configs_yaml) + "\n" + capcalera(
-        repo, "AVLizador manual benchmark: Catalan to Valencian", len(fs), insignia) + f"""
+    return yaml("AVLizador manual benchmark (Catalan → Valencian)", "n<1K", configs_yaml, LLICENCIA) + "\n" + capcalera(
+        repo, "AVLizador manual benchmark: Catalan to Valencian", len(fs), LLICENCIA, insignia) + f"""
 # AVLizador manual benchmark: Catalan → Valencian
 
 A hand-reviewed test set for **dialectal adaptation** from Central/Eastern
@@ -294,15 +300,14 @@ dialectal features.
 
 ## License and attribution
 
-- This dataset: **Apache 2.0**, {autors}. Keep the `NOTICE` file when
-  redistributing it.
+- This dataset: {text_llicencia(LLICENCIA)}
 - **BOE sentences**: *{BOE_DERIVAT}*
   ([www.boe.es](https://www.boe.es)). Each sentence
   keeps its document, date and link; changes made by the authors are
   marked in `oriental_original` / `occidental_original`. This is not an
   official version of the texts, and the BOE does not endorse this work.
 {llicencia_avl}
-
+{retirada}
 {cita("avlizador_manual_benchmark_2026", "AVLizador manual benchmark: Catalan to Valencian dialectal adaptation", repo)}"""
 
 
@@ -325,8 +330,10 @@ def main(argv: list[str] | None = None) -> None:
         avl = ["This dataset contains sentences from the website of the Acadèmia Valenciana",
                "de la Llengua (AVL, https://www.avl.gva.es). The texts are",
                "© Acadèmia Valenciana de la Llengua. The Catalan side of those",
-               "sentences was written by the authors."]
-    escriu_notice(desti, "AVLizador manual benchmark (Catalan -> Valencian)", BOE_DERIVAT, avl)
+               "sentences was written by the authors.",
+               "If you own material in this dataset and want it removed, see",
+               "\"Notice and take down\" in README.md (contact: miquel.espla@ua.es)."]
+    escriu_notice(desti, "AVLizador manual benchmark (Catalan -> Valencian)", BOE_DERIVAT, avl, LLICENCIA)
     banner(desti / "assets" / "banner.png", "AVLizador manual benchmark",
            "Catalan → Valencian dialectal adaptation · hand-reviewed",
            "aquesta  seva  feina", "esta  seua  faena")
