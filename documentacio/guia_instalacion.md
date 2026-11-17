@@ -12,10 +12,10 @@ paso tiene los comandos de los tres sistemas.
 - Un **compilador de C++** para KenLM, el modelo de lenguaje por defecto
   (se compila al instalarlo). En Windows normalmente no se instala: ver
   el paso 3.
-- Los **tres ficheros del modelo KenLM** (unos 78 MB; ver el paso 3). No
-  hace falta tarjeta gráfica: todo funciona con CPU.
-- Conexión a internet en la instalación. Solo con FLOR (opcional): unos
-  3 GB más e internet la primera vez que se traduce (descarga FLOR).
+- No hace falta tarjeta gráfica: todo funciona con CPU.
+- Conexión a internet en la instalación y la primera vez que se traduce
+  (se descargan de Hugging Face los tres ficheros del modelo KenLM, unos
+  83 MB; ver el paso 3). Solo con FLOR (opcional): unos 3 GB más.
 
 | | Comprobar | Instalar si falta |
 |---|---|---|
@@ -60,13 +60,14 @@ Igual en los tres sistemas (con el entorno activado):
 ```bash
 python -m pip install -U pip
 pip install -e ".[kenlm,avaluacio,dev]"
-avlizador --version        # -> avlizador 1.2.0
+avlizador --version        # -> avlizador 2.0.0
 ```
 
 - `[kenlm]`: la biblioteca KenLM, el modelo de lenguaje de las palabras
-  ambiguas ("cop", "nou"...) con un clasificador de sentido para "cop".
-  Es el sistema por defecto desde el 13/11/2026; sin él (o sin los
-  ficheros de abajo), el traductor usa solo el motor y avisa.
+  ambiguas ("cop", "nou"...) con un clasificador de sentido, y
+  `huggingface_hub` para descargar sus ficheros. Es el sistema por defecto
+  desde el 13/11/2026; sin él (o sin los ficheros de abajo), el traductor
+  usa solo el motor y avisa.
 - `[avaluacio]`: sacrebleu, para `avlizador avalua`. `[dev]`: pytest.
 - El modelo catalán de spaCy (`ca_core_news_md`) se instala solo.
 - `-e` (editable): el paquete usa los ficheros de la carpeta; si se
@@ -74,14 +75,25 @@ avlizador --version        # -> avlizador 1.2.0
 
 Instalación mínima, solo el motor de reglas: `pip install -e .`
 
-**Ficheros del modelo KenLM.** No están en git ni en el paquete: de
-momento se piden al equipo (más adelante se publicarán en Hugging Face).
-Se ponen en una carpeta con estos tres ficheros:
-`valencia_net_dogv_o5.binary` (el modelo, 77 MB),
+**Ficheros del modelo KenLM.** No están en git ni en el paquete: están
+publicados en Hugging Face,
+[`transducens/avlizador-kenlm-va`](https://huggingface.co/transducens/avlizador-kenlm-va)
+(CC BY 4.0), y el paquete los descarga solo la primera vez que se
+traduce: `valencia_net_dogv_o5.binary` (el modelo, 82 MB),
 `valencia_net_dogv_freq.json` (frecuencias) y `sentit.json` (el
-clasificador de sentido; también vale el antiguo `nb.json`). La variable
-`AVLIZADOR_KENLM_DIR` dice dónde está la carpeta (hay que volver a
-ponerla en cada terminal nueva, o añadirla al perfil):
+clasificador de sentido). Se guardan en la caché de Hugging Face
+(`~/.cache/huggingface` en Linux y macOS, `C:\Users\<usuario>\.cache\huggingface`
+en Windows) y después no hace falta internet. Para probar que se
+descargan:
+
+```bash
+avlizador tradueix "Un cop acabada la reunió, marxem."   # -> Una vegada acabada la reunió, marxem.
+```
+
+Para usar una copia local de los tres ficheros (por ejemplo, en una
+máquina sin internet), la variable `AVLIZADOR_KENLM_DIR` dice dónde está
+la carpeta (hay que volver a ponerla en cada terminal nueva, o añadirla
+al perfil); con `AVLIZADOR_KENLM_DESCARREGA=0` no se descarga nada:
 
 | | Comando |
 |---|---|
@@ -180,11 +192,11 @@ avlizador avalua --benchmarks manual   # comparar con 232/458
 | Síntoma | Causa y solución |
 |---|---|
 | `avlizador: command not found` / no se reconoce | El entorno no está activado: paso 2 |
-| Aviso `AvisSenseModelLlengua` | Falta el extra `[kenlm]` o los ficheros del modelo (`AVLIZADOR_KENLM_DIR`): paso 3 |
+| Aviso `AvisSenseModelLlengua` | Falta el extra `[kenlm]`, o no se han podido descargar los ficheros del modelo (sin internet la primera vez) y no hay `AVLIZADOR_KENLM_DIR`: paso 3 |
 | Error `FaltaKenLM` (con `model="kenlm"` o `--model kenlm`) | La misma causa; el mensaje dice qué falta |
 | `pip` falla al compilar `kenlm` | Falta el compilador de C++ (paso 0); en Windows, Docker o FLOR (paso 3) |
 | Con `--model flor`, la primera traducción tarda minutos | Descarga de FLOR (solo la primera vez) |
 | `pip` descarga varios GB de torch con CUDA | Falta `--extra-index-url https://download.pytorch.org/whl/cpu` (solo con `[ml]`) |
 | Linux: "ensurepip is not available" | `sudo apt install python3-venv` |
 | Windows: no deja ejecutar `Activate.ps1` | `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` |
-| Sin internet en la máquina de trabajo | KenLM no la necesita (solo los tres ficheros). Con FLOR, descargarlo antes con conexión: `python -c "from huggingface_hub import snapshot_download; snapshot_download('projecte-aina/FLOR-760M')"` |
+| Sin internet en la máquina de trabajo | Descargar antes el modelo KenLM con conexión: `python -c "from huggingface_hub import snapshot_download; print(snapshot_download('transducens/avlizador-kenlm-va', revision='v2.0.0'))"` y copiar la carpeta que indica a la máquina de trabajo, con `AVLIZADOR_KENLM_DIR` apuntando a ella. Con FLOR, descargarlo antes con conexión: `python -c "from huggingface_hub import snapshot_download; snapshot_download('projecte-aina/FLOR-760M')"` |

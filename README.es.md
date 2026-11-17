@@ -32,8 +32,9 @@ pip install ".[kenlm]"
   instalarla: hace falta un compilador de C++. En Linux y macOS funciona;
   en Windows normalmente no se instala: usad Docker (abajo), FLOR o el
   motor solo.
-- Los ficheros del modelo KenLM no están en git ni en el paquete: ver
-  [Modelo de lenguaje](#modelo-de-lenguaje) (`AVLIZADOR_KENLM_DIR`).
+- Los ficheros del modelo KenLM no están en git ni en el paquete: se
+  descargan de Hugging Face la primera vez que se usan (ver
+  [Modelo de lenguaje](#modelo-de-lenguaje)).
 - Sin KenLM o sin sus ficheros funciona solo el motor de reglas: el
   traductor lo usa y avisa una vez de que falta el modelo
   (`AvisSenseModelLlengua`).
@@ -50,19 +51,32 @@ pip install ".[kenlm]"
 
 Las palabras ambiguas del léxico ("cop", "nou", "manca"...) las decide un
 modelo KenLM de orden 5 entrenado con frases valencianas de MaCoCu-ca y
-del DOGV (2025-2026), más un clasificador de sentido (Naive Bayes) para
-"cop" (*colp* o *vegada*). Hace falta una carpeta, indicada con la
-variable de entorno `AVLIZADOR_KENLM_DIR`, con tres ficheros:
+del DOGV (2025-2026), más un clasificador de sentido (Naive Bayes; hoy
+para "cop", "cops" y "deu") entrenado con el mismo texto y textos de la
+AVL. Son tres ficheros, publicados en Hugging Face:
+[`transducens/avlizador-kenlm-va`](https://huggingface.co/transducens/avlizador-kenlm-va)
+(CC BY 4.0).
 
 | Fichero | Qué es |
 |---|---|
-| `valencia_net_dogv_o5.binary` | el modelo KenLM (77 MB) |
+| `valencia_net_dogv_o5.binary` | el modelo KenLM (82 MB) |
 | `valencia_net_dogv_freq.json` | frecuencias de las palabras (para el prior) |
-| `sentit.json` (o el antiguo `nb.json`) | el clasificador de sentido de las palabras ambiguas (~730 KB; hoy tienen cop, cops y deu) |
+| `sentit.json` (o el antiguo `nb.json`) | el clasificador de sentido de las palabras ambiguas (~730 KB) |
 
-De momento se piden al equipo; más adelante se publicarán en Hugging
-Face. Coste: ~0,1 ms por frase candidata y ~74 MB de memoria (FLOR: 833
-ms y ~1,5 GB). Por qué KenLM y todas las cifras:
+El paquete los descarga solo la primera vez que se usan (hace falta
+`huggingface_hub`, que viene con `[kenlm]`, e internet esa vez) y los
+guarda en la caché de Hugging Face (`HF_HOME`); después funciona sin
+internet. Cada versión del paquete descarga su revisión del modelo (la
+2.0.0, la etiqueta `v2.0.0`).
+
+| Variable de entorno | Qué hace |
+|---|---|
+| `AVLIZADOR_KENLM_DIR` | usar una carpeta local con los tres ficheros en lugar de Hugging Face |
+| `AVLIZADOR_KENLM_DESCARREGA=0` o `HF_HUB_OFFLINE=1` | no descargar nada (solo la caché o la carpeta local) |
+| `AVLIZADOR_KENLM_REVISIO` | otra revisión del modelo en Hugging Face (etiqueta, rama o commit) |
+
+Coste: ~0,1 ms por frase candidata y ~80 MB de memoria (FLOR: 833 ms y
+~1,5 GB). Por qué KenLM y todas las cifras:
 [`documentacio/resultats_model_llengua_kenlm.md`](documentacio/resultats_model_llengua_kenlm.md).
 
 ## Uso
@@ -113,10 +127,13 @@ avlizador web          # http://127.0.0.1:8000
 ```
 
 Con Docker (la imagen lleva spaCy y KenLM dentro, sin torch ni FLOR, y
-funciona **sin internet**). Antes de construirla, poned los tres ficheros
-del [modelo de lenguaje](#modelo-de-lenguaje) en `docker/kenlm/` (carpeta
-ignorada por git): la construcción los copia en `/opt/kenlm` y se detiene
-con un mensaje claro si falta alguno.
+funciona **sin internet**). Al construirla se descarga de Hugging Face el
+[modelo de lenguaje](#modelo-de-lenguaje) (hace falta internet solo en ese
+momento) y se guarda en `/opt/kenlm`; si los tres ficheros ya están en
+`docker/kenlm/` (carpeta ignorada por git), se copian de allí sin
+descargar nada. Otra revisión del modelo:
+`docker compose build --build-arg KENLM_REVISIO=...`. Detalle:
+[`docker/LLEGIM.md`](docker/LLEGIM.md).
 
 ```bash
 docker compose up --build     # http://localhost:8000
@@ -128,7 +145,7 @@ La imagen necesita ~1 GB de RAM (`mem_limit: 2g` en
 Para un equipo sin internet, la imagen se copia como un fichero:
 
 ```bash
-docker save avlizador:1.2.0 > avlizador.tar   # en el equipo donde se ha construido
+docker save avlizador:2.0.0 > avlizador.tar   # en el equipo donde se ha construido
 docker load < avlizador.tar                   # en el equipo de destino
 docker compose up                             # con docker-compose.yml al lado
 ```
@@ -149,7 +166,7 @@ imagen; fuera de Docker, como variables de entorno antes de
 | Variable | Por defecto | Qué hace | Cuándo cambiarla |
 |---|---|---|---|
 | `AVLIZADOR_MODE` | `complet` | `complet` = motor + KenLM; `motor` = solo reglas. Si en modo `complet` faltan los ficheros de KenLM, el servidor lo avisa en el registro y usa `motor` | `motor` si no se tienen los ficheros del modelo o si hace falta rapidez antes que acertar los homógrafos |
-| `AVLIZADOR_KENLM_DIR` | `/opt/kenlm` (en la imagen) | carpeta con los tres ficheros del [modelo de lenguaje](#modelo-de-lenguaje) | fuera de Docker, donde hayáis puesto los ficheros |
+| `AVLIZADOR_KENLM_DIR` | `/opt/kenlm` (en la imagen) | carpeta con los tres ficheros del [modelo de lenguaje](#modelo-de-lenguaje) | fuera de Docker no hace falta: sin la variable, el modelo se descarga de Hugging Face |
 | `MAX_CARACTERS` | 20000 | longitud máxima del texto por petición; si se pasa, HTTP 413 con un mensaje | subirla si se traducen documentos largos y el equipo lo aguanta; bajarla si las peticiones tardan demasiado |
 | `MAX_TRADUCCIONS_SIMULTANIES` | 2 | traducciones a la vez; si ya hay tantas, HTTP 429 ("El servicio está ocupado") | según los núcleos (regla de abajo); 1 en equipos de 1 núcleo |
 | `UVICORN_LOG_LEVEL` | `warning` | nivel de los mensajes del servidor (arranque, avisos, errores). No vuelve a activar las líneas por petición: no se registran nunca (privacidad) | `info` o `debug` solo para investigar un problema de arranque |

@@ -57,14 +57,18 @@ Components i dades de tercers
      GNU LGPL 2.1 (https://github.com/kpu/kenlm). Dependència opcional
      (extra [kenlm]): no s'inclou en el repositori.
    - Model valencia_net_dogv_o5 (KenLM, ordre 5), la seua taula de
-     freqüències i el classificador de sentit de "cop" (nb.json), entrenats
-     pel projecte. No són en el repositori (AVLIZADOR_KENLM_DIR); van dins
-     de la imatge Docker. Dades d'entrenament: frases valencianes de
-     MaCoCu-ca 1.0 (CLARIN.SI, hdl 11356/1837, CC0 1.0) i textos del Diari
-     Oficial de la Generalitat Valenciana (DOGV, 2025-2026,
-     https://dogv.gva.es), sense textos de l'AVL. Cal revisar les
-     condicions de reutilització del DOGV abans de publicar el model
-     (pendent; es publicarà en Hugging Face).
+     freqüències i el classificador de sentit (sentit.json), entrenats pel
+     projecte i publicats en Hugging Face amb llicència CC BY 4.0:
+     https://huggingface.co/transducens/avlizador-kenlm-va (versió 2.0.0:
+     etiqueta v2.0.0). No són en el repositori ni en el paquet: el paquet
+     els baixa la primera vegada que s'usen (o els llig d'AVLIZADOR_KENLM_DIR),
+     i van dins de la imatge Docker. Dades d'entrenament del model i de la
+     taula: frases valencianes de MaCoCu-ca 1.0 (CLARIN.SI, hdl 11356/1837,
+     CC0 1.0) i textos del Diari Oficial de la Generalitat Valenciana (DOGV,
+     2025-2026, https://dogv.gva.es). El classificador, a més, textos de la
+     web de l'AVL (punt 5), sense els documents ni les frases dels
+     benchmarks. La fitxa del model porta l'avís de retirada ("Notice and
+     take down").
 
 Dependències de Python (no incloses; les instal·la pip): spaCy i thinc
 (MIT), kenlm (LGPL 2.1; extra [kenlm]), PyTorch (BSD) i transformers,
@@ -99,9 +103,10 @@ completa de paquets de Python és dins de la imatge, en
    Biblioteca: mòdul de Python kenlm, GNU LGPL 2.1
    (https://github.com/kpu/kenlm). Qui redistribuïsca la imatge ha de
    complir la LGPL 2.1 per a este component.
-   Model, freqüències i classificador de sentit: entrenats pel projecte amb
-   MaCoCu-ca (CC0 1.0) i el DOGV (vegeu el punt 7 de més amunt), en
-   /opt/kenlm.
+   Model, freqüències i classificador de sentit: els del projecte en
+   Hugging Face (CC BY 4.0; entrenats amb MaCoCu-ca, el DOGV i, el
+   classificador, textos de l'AVL: vegeu el punt 7 de més amunt), baixats
+   en construir la imatge, en /opt/kenlm.
 
 3. Programari del servidor web
    FastAPI 0.162.0 (MIT), Starlette 1.10.0 (BSD-3-Clause), uvicorn 0.54.0

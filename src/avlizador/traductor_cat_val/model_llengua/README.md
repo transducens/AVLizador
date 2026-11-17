@@ -71,13 +71,17 @@ Peces:
   text sense els espais del principi i del final (un espai al final canviava
   l'etiqueta).
 
-Fitxers (fora de git) en la carpeta d'`AVLIZADOR_KENLM_DIR`:
-`valencia_net_dogv_o5.binary` (77 MB; MaCoCu valencià net + DOGV
-2025-2026, ordre 5, poda de singletons), `valencia_net_dogv_freq.json` i
-el classificador `sentit.json` (o l'antic de "cop", `nb.json`). Hui són en Abaco
-(`dades/macocu/kenlm/`); més avant es publicaran en Hugging Face. En la
-imatge Docker van en `/opt/kenlm` (es copien de `docker/kenlm/` en
-construir-la). El paquet `kenlm` es compila en instal·lar-lo (`pip install
+Fitxers (fora de git): `valencia_net_dogv_o5.binary` (82 MB; des de la
+2.0.0, MaCoCu valencià net + el DOGV 2025-2026 sencer, ordre 5, poda de
+singletons: `valencia_net_dogv2` en Abaco), `valencia_net_dogv_freq.json` i
+el classificador `sentit.json` (`sentit_dogv2_avl`: el mateix text + l'AVL;
+o l'antic de "cop", `nb.json`). Publicats en Hugging Face
+([`transducens/avlizador-kenlm-va`](https://huggingface.co/transducens/avlizador-kenlm-va),
+CC BY 4.0; `REVISIO_HF` diu quina revisió baixa cada versió del paquet):
+sense `AVLIZADOR_KENLM_DIR`, `directori_kenlm` els busca en la memòria cau de
+Hugging Face i els baixa la primera vegada. En la imatge Docker van en
+`/opt/kenlm` (es baixen en construir-la, o es copien de `docker/kenlm/`).
+Per a publicar-ne una versió nova: `scripts/hf_model/kenlm.py`. El paquet `kenlm` es compila en instal·lar-lo (`pip install
 "avlizador[kenlm]"`; en Windows cal compilador, la imatge Docker és Linux).
 
 ## Manteniment: paraules i corpus nous (16/11/2026)
