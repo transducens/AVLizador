@@ -65,7 +65,7 @@ tres fitxers, publicats en Hugging Face:
 El paquet els baixa sol la primera vegada que s'usen (cal `huggingface_hub`,
 que ve amb `[kenlm]`, i internet eixa vegada) i els guarda en la memòria cau
 de Hugging Face (`HF_HOME`); després funciona sense internet. Cada versió
-del paquet baixa la seua revisió del model (la 2.0.0, l'etiqueta `v2.0.0`).
+del paquet baixa la seua revisió del model (la 2.0.0, el commit `db4a1f1` del 17/11/2026).
 
 | Variable d'entorn | Què fa |
 |---|---|

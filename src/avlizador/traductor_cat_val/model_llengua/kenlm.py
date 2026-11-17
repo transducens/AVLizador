@@ -54,7 +54,9 @@ VAR_DIRECTORI = "AVLIZADOR_KENLM_DIR"
 NOM_MODEL = "valencia_net_dogv"
 # 16/11/2026: els fitxers també es poden baixar de Hugging Face.
 REPO_HF = "transducens/avlizador-kenlm-va"
-REVISIO_HF = "v2.0.0"  # en cada versió del paquet, la revisió (etiqueta) del model que li correspon
+# Revisió del model que correspon a cada versió del paquet: el commit de Hugging Face
+# (no es pot crear una etiqueta des de la web). 2.0.0: commit db4a1f1, 17/11/2026.
+REVISIO_HF = "db4a1f10d55bbc30ad54728e1639d17d32526ef7"
 VAR_REVISIO = "AVLIZADOR_KENLM_REVISIO"
 VAR_DESCARREGA = "AVLIZADOR_KENLM_DESCARREGA"
 

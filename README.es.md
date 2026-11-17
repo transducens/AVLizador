@@ -67,7 +67,7 @@ El paquete los descarga solo la primera vez que se usan (hace falta
 `huggingface_hub`, que viene con `[kenlm]`, e internet esa vez) y los
 guarda en la caché de Hugging Face (`HF_HOME`); después funciona sin
 internet. Cada versión del paquete descarga su revisión del modelo (la
-2.0.0, la etiqueta `v2.0.0`).
+2.0.0, el commit `db4a1f1` del 17/11/2026).
 
 | Variable de entorno | Qué hace |
 |---|---|
