@@ -176,8 +176,8 @@ traduccions competixen pels mateixos nuclis i totes van més lentes.
 
 Benchmark d'avaluació: **manual mescla** (458 frases del BOE i de l'AVL,
 revisades a mà). TER i WER: percentatge de paraules que cal editar per a
-arribar a la referència (com més baixos, millor). Mesura del 13/11/2026
-(`avlizador avalua`):
+arribar a la referència (com més baixos, millor). Versió 2.0.0, mesura
+del 17/11/2026 (`avlizador avalua`); FLOR i el motor sol, del 13/11/2026:
 
 | Sistema | Exactes | BLEU | chrF | TER | WER |
 |---|---|---|---|---|---|
@@ -185,18 +185,22 @@ arribar a la referència (com més baixos, millor). Mesura del 13/11/2026
 | Motor + FLOR-760M (opcional) | 231/458 (50,4 %) | 90,98 | 96,33 | 5,59 | 5,97 |
 | Motor sol | 218/458 (47,6 %) | 90,49 | 96,08 | 5,90 | 6,27 |
 
-Frases exactes en la resta de benchmarks (13/11/2026):
+Per parts (2.0.0): BOE 35/246 (BLEU 84,01, TER 9,21) i AVL 197/212 (BLEU
+99,10, TER 0,41). La versió 1.2.0 (FLOR) en traia 33 i 195 (228/458).
+
+Frases exactes en la resta de benchmarks (homògrafs i 151, 16-17/11/2026;
+BOE i gplsi, 13/11/2026 amb el model KenLM anterior):
 
 | Benchmark | KenLM + classificador | FLOR-760M | Motor sol |
 |---|---|---|---|
 | homògrafs v1 (151 + homògrafs, 253) | **227** | 217 | 181 |
-| homògrafs v2 (160) | **111** | 96 | 82 |
+| homògrafs v2 (160) | **112** | 96 | 82 |
 | 151 (154) | 144 | **145** | 142 |
 | BOE estricte, mostra (2.000) | **1.894** | **1.894** | 1.800 |
 | gplsi (1.958) | 1.550 | **1.551** | 1.533 |
 
-En les 257 decisions dels homògrafs, KenLM + classificador encerta 193 i
-comet 2 errors greus (canvia el sentit). Detall:
+En les 257 decisions dels homògrafs, KenLM + classificador encerta 194 i
+comet 1 error greu (canvia el sentit). Detall:
 [`documentacio/resultats_model_llengua_kenlm.md`](documentacio/resultats_model_llengua_kenlm.md).
 
 Històric, mesura del 30/10/2026 (versió 1.0.1, amb FLOR-760M com a model
