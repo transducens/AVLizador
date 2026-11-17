@@ -167,15 +167,17 @@ def _directori_hf(descarrega: bool = True) -> Path | None:
     except ImportError:
         return None
     revisio = os.environ.get(VAR_REVISIO) or REVISIO_HF
+    # Només els fitxers que fa servir el paquet (no la fitxa ni el bàner).
+    fitxers = [f"{NOM_MODEL}_o5.binary", f"{NOM_MODEL}_freq.json", "sentit.json"]
     try:
-        return Path(snapshot_download(REPO_HF, revision=revisio, local_files_only=True))
+        return Path(snapshot_download(REPO_HF, revision=revisio, allow_patterns=fitxers, local_files_only=True))
     except Exception:  # no és en la memòria cau
         pass
     sense_xarxa = os.environ.get("HF_HUB_OFFLINE", "").lower() in ("1", "true", "yes")
     if not descarrega or os.environ.get(VAR_DESCARREGA) == "0" or sense_xarxa:
         return None
     try:
-        return Path(snapshot_download(REPO_HF, revision=revisio))
+        return Path(snapshot_download(REPO_HF, revision=revisio, allow_patterns=fitxers))
     except Exception:
         return None
 
