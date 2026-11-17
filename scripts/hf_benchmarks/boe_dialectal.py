@@ -26,8 +26,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from comu import (  # noqa: E402
     ARREL, AUTORS, BENCH, BOE_DERIVAT, METRIQUES_NOTA, ORG_PER_DEFECTE, autoria, banner, capcalera, cita,
-    escriu_jsonl, escriu_notice, prepara_desti, yaml,
+    escriu_jsonl, escriu_notice, prepara_desti, text_llicencia, yaml,
 )
+
+LLICENCIA = "cc0-1.0"  # criteri del grup, 17/11/2026 (vore comu.LLICENCIES)
 
 CORPUS = ARREL / "dades" / "boe" / "corpus_entrenamiento.jsonl"
 
@@ -120,8 +122,8 @@ def fitxa(nom: str, fs: dict[str, list[dict]], repo: str) -> str:
         path: data/full.jsonl"""
     altre = "ampli" if nom == "estricte" else "estricte"
     repo_altre = repo.replace(f"-{d['curt']}-", f"-{DADES[altre]['curt']}-")
-    return yaml(f"{d['titol']} (Catalan → Valencian)", d["mida"], configs) + "\n" + capcalera(
-        repo, f"{d['titol']}: Catalan to Valencian", len(full)) + f"""
+    return yaml(f"{d['titol']} (Catalan → Valencian)", d["mida"], configs, LLICENCIA) + "\n" + capcalera(
+        repo, f"{d['titol']}: Catalan to Valencian", len(full), LLICENCIA) + f"""
 # {d["titol"]}: Catalan → Valencian
 
 Sentence pairs from the two official versions, **Catalan and Valencian**,
@@ -196,8 +198,7 @@ print(ds[0]["oriental"], "→", ds[0]["occidental"])
 
 ## License and attribution
 
-- This dataset: **Apache 2.0**, {" and ".join(AUTORS)}. Keep the
-  `NOTICE` file when redistributing it.
+- This dataset: {text_llicencia(LLICENCIA)}
 - **BOE sentences**: *{BOE_DERIVAT}* ([www.boe.es](https://www.boe.es)).
   Each pair keeps its document, date and link. This is not an official
   version of the texts, and the BOE does not endorse this work.
@@ -218,7 +219,7 @@ def main(argv: list[str] | None = None) -> None:
         for s, files in fs.items():
             escriu_jsonl(desti / "data" / f"{s}.jsonl", files)
         (desti / "README.md").write_text(fitxa(nom, fs, repo), encoding="utf-8")
-        escriu_notice(desti, f"{d['titol']} (Catalan -> Valencian)", BOE_DERIVAT)
+        escriu_notice(desti, f"{d['titol']} (Catalan -> Valencian)", BOE_DERIVAT, llicencia=LLICENCIA)
         banner(desti / "assets" / "banner.png", f"AVLizador BOE {d['curt']}",
                "Official Catalan and Valencian versions of the BOE",
                "aquesta  resolució", "esta  resolució")

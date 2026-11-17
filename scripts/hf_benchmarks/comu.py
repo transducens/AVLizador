@@ -4,11 +4,12 @@ d'AVLizador com a dataset de Hugging Face (un dataset per benchmark):
 rutes, autors, llicència, escriptura de JSONL, NOTICE del BOE, parts
 comunes de la fitxa i el bàner.
 
-Llicència (decisió de l'usuari, 09/11/2026): Apache 2.0, la del projecte.
-Les frases del BOE porten, a més, l'atribució que demana l'avís legal del
-BOE (https://www.boe.es/informacion/aviso_legal/), en la fitxa i en un
-fitxer NOTICE (Apache 2.0 obliga a conservar el NOTICE en les obres
-derivades).
+Llicència (criteri del grup, 17/11/2026; abans Apache 2.0): CC0 1.0 per a les
+dades obtingudes de tercers (el manual, BOE i AVL; els BOE estricte i ampli) i
+CC BY 4.0 per a les generades del tot per nosaltres (els homògrafs). Cada script
+passa la seua (`LLICENCIES`). Les frases del BOE porten, a més, l'atribució que
+demana l'avís legal del BOE (https://www.boe.es/informacion/aviso_legal/), en la
+fitxa i en el fitxer NOTICE.
 """
 
 from __future__ import annotations
@@ -23,7 +24,23 @@ EIXIDA = ARREL / "dades" / "hf_benchmarks"
 
 AUTORS = ("Mauricio González Arcas", "Nicolás Martín Morcillo")
 GITHUB = "https://github.com/transducens/AVLizador"
-LLICENCIA = "apache-2.0"
+# Identificador de Hugging Face -> (nom, insígnia, línia del NOTICE i del LICENSE, frase de la fitxa).
+LLICENCIES = {
+    "cc0-1.0": (
+        "CC0 1.0", "CC0%201.0",
+        "Dedicated to the public domain under CC0 1.0 Universal\n"
+        "(https://creativecommons.org/publicdomain/zero/1.0/legalcode).",
+        "Public domain dedication: you can copy, modify and distribute it without asking permission. "
+        "Please cite the sources listed in `NOTICE`",
+    ),
+    "cc-by-4.0": (
+        "CC BY 4.0", "CC%20BY%204.0",
+        "Licensed under the Creative Commons Attribution 4.0 International License\n"
+        "(https://creativecommons.org/licenses/by/4.0/legalcode).",
+        "You can copy, modify and distribute it, also commercially, as long as you give appropriate "
+        "credit to the authors (see the citation below)",
+    ),
+}
 ORG_PER_DEFECTE = "transducens"
 
 BOE_COPIA = "Fuente de los datos: Agencia Estatal Boletín Oficial del Estado"
@@ -47,14 +64,26 @@ def escriu_jsonl(path: Path, files: list[dict]) -> None:
     path.write_text("".join(json.dumps(f, ensure_ascii=False) + "\n" for f in files), encoding="utf-8")
 
 
-def escriu_notice(desti: Path, titol: str, boe: str | None, altres: list[str] | None = None) -> None:
+def _autoria_any(llicencia: str) -> str:
+    """Amb CC0 no es reté el copyright: només autors i any."""
+    return f"{autors_text()}, 2026." if llicencia == "cc0-1.0" else f"Copyright 2026 {autors_text()}."
+
+
+def text_llicencia(llicencia: str) -> str:
+    """Frase de la fitxa: «**CC0 1.0**, autors. Public domain dedication: …»"""
+    nom, _, _, frase = LLICENCIES[llicencia]
+    return f"**{nom}**, {autors_text()}. {frase}."
+
+
+def escriu_notice(desti: Path, titol: str, boe: str | None, altres: list[str] | None = None,
+                  llicencia: str = "cc0-1.0") -> None:
     """NOTICE del dataset: autors, llicència i, si hi ha frases del BOE,
     l'atribució que demana l'avís legal del BOE (`boe` = BOE_COPIA si el
     text es reproduïx sense canvis, BOE_DERIVAT si s'ha modificat).
     `altres`: més línies d'atribució (p. ex. les frases de l'AVL)."""
-    linies = [titol, f"Copyright 2026 {autors_text()}.",
+    linies = [titol, _autoria_any(llicencia),
               "Made for AVLizador (" + GITHUB + ").",
-              "Licensed under the Apache License, Version 2.0.", ""]
+              *LLICENCIES[llicencia][2].split("\n"), ""]
     if boe:
         linies += [
             "This dataset contains sentences from the Spanish State Gazette (BOE).",
@@ -66,15 +95,18 @@ def escriu_notice(desti: Path, titol: str, boe: str | None, altres: list[str] | 
     if altres:
         linies += [*altres, ""]
     (desti / "NOTICE").write_text("\n".join(linies), encoding="utf-8")
-    shutil.copy(ARREL / "LICENSE", desti / "LICENSE")
+    # LICENSE: el nom i l'enllaç al text legal (abans, una còpia de l'Apache 2.0 del projecte;
+    # `hf upload` el sobreescriu en els datasets ja publicats).
+    (desti / "LICENSE").write_text(
+        f"{titol}\n{_autoria_any(llicencia)}\n\n{LLICENCIES[llicencia][2]}\n", encoding="utf-8")
 
 
-def yaml(pretty: str, mida: str, configs: str) -> str:
+def yaml(pretty: str, mida: str, configs: str, llicencia: str) -> str:
     return f"""---
 pretty_name: {pretty}
 language:
   - ca
-license: {LLICENCIA}
+license: {llicencia}
 task_categories:
   - translation
   - text2text-generation
@@ -92,7 +124,7 @@ size_categories:
 """
 
 
-def capcalera(repo: str, alt: str, n: int, extra_insignia: str = "") -> str:
+def capcalera(repo: str, alt: str, n: int, llicencia: str, extra_insignia: str = "") -> str:
     """Bàner + insígnies."""
     return f"""<p align="center">
   <img src="https://huggingface.co/datasets/{repo}/resolve/main/assets/banner.png" alt="{alt}" width="100%">
@@ -101,7 +133,7 @@ def capcalera(repo: str, alt: str, n: int, extra_insignia: str = "") -> str:
 <p align="center">
   <a href="{GITHUB}"><img alt="Made for AVLizador" src="https://img.shields.io/badge/made%20for-AVLizador-1f6f8b?logo=github"></a>
   <img alt="Language" src="https://img.shields.io/badge/ca%20%E2%86%92%20ca--valencia-e8a33d">
-  <img alt="License" src="https://img.shields.io/badge/license-Apache%202.0-13294b">
+  <img alt="License" src="https://img.shields.io/badge/license-{LLICENCIES[llicencia][1]}-13294b">
   {extra_insignia}<img alt="Sentences" src="https://img.shields.io/badge/sentences-{n:,}-555">
 </p>
 """
