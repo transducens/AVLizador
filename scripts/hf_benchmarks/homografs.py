@@ -38,26 +38,31 @@ TIPUS = {
     "resoluble": "different grammatical categories: the part-of-speech tag decides",
 }
 
-# Resultats (v2: 06/11/2026, AVLizador 1.2.0; v1, sense traduir i motor sol:
-# 09/11/2026, mateixes mètriques de `avlizador avalua`).
+# Resultats (17/11/2026, AVLizador 2.0.0 i el motor sol, `avlizador avalua`,
+# resultats_hf_2.0.0; sense traduir: 09/11/2026, mateixes mètriques).
 RESULTATS = {
     2: """| System | Exact match | BLEU | chrF | TER ↓ |
 |---|---|---|---|---|
-| **AVLizador 1.2.0** (rules + FLOR-760M, margin 2, Catalan by default) | **95 / 160 (59.4 %)** | **84.29** | **92.29** | **5.82** |
-| AVLizador, rule engine only | 82 / 160 (51.3 %) | – | – | – |
+| **AVLizador 2.0.0** (rules + KenLM + sense classifier) | **112 / 160 (70.0 %)** | **88.36** | **93.81** | **4.24** |
+| AVLizador, rule engine only | 82 / 160 (51.2 %) | 81.48 | 90.98 | 6.73 |
 | Untranslated (Catalan as is) | 59 / 160 (36.9 %) | 74.84 | 87.30 | 10.81 |
 
-The rule engine alone almost always picks the dialectal reading (68/72
-right on the Valencian senses, 14/88 on the others). AVLizador 1.2.0 is
-deliberately conservative: when the language model is not clearly sure
-(margin 2), it keeps the Catalan word, because a wrong replacement changes
-the meaning while an untranslated word only leaves a Catalan form. A
-less conservative setting of the same system reached 124/160.""",
+The rule engine alone almost always picks the dialectal reading. AVLizador
+2.0.0 decides each ambiguous word with a Valencian 5-gram KenLM model and a
+sense classifier ([`transducens/avlizador-kenlm-va`](https://huggingface.co/transducens/avlizador-kenlm-va)),
+and it is deliberately conservative: when the model is not clearly sure
+(margin 3), it keeps the Catalan word, because a wrong replacement changes
+the meaning while an untranslated word only leaves a Catalan form. On the
+257 ambiguous-word decisions of v1 and v2 (with AVLizador's 151 curated
+sentences) it makes 194 right choices and 1 serious error. AVLizador 1.2.0
+(FLOR-760M) reached 95 / 160.""",
     1: """| System | Exact match | BLEU | chrF | TER ↓ |
 |---|---|---|---|---|
-| **AVLizador 1.2.0** (rules + FLOR-760M) | **71 / 98 (72.4 %)** | **88.51** | **94.18** | **4.44** |
-| AVLizador, rule engine only | 33 / 98 (33.7 %) | 74.24 | 85.46 | 11.16 |
-| Untranslated (Catalan as is) | 23 / 98 (23.5 %) | 68.16 | 82.42 | 15.59 |""",
+| **AVLizador 2.0.0** (rules + KenLM + sense classifier) | **82 / 98 (83.7 %)** | **93.52** | **96.59** | **2.28** |
+| AVLizador, rule engine only | 39 / 98 (39.8 %) | 77.65 | 87.59 | 9.68 |
+| Untranslated (Catalan as is) | 23 / 98 (23.5 %) | 68.16 | 82.42 | 15.59 |
+
+AVLizador 1.2.0 (FLOR-760M) reached 71 / 98.""",
 }
 
 
