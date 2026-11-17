@@ -155,7 +155,8 @@ _MODEL = None
 
 def _inicia_flor(fils: int) -> None:
     global _MODEL
-    from avlizador.traductor_cat_val.model_llengua.puntuador import ModelLlengua
+    sys.path.insert(0, str(ARREL / "pipeline" / "03_seleccio_de_model" / "model_llengua"))
+    from flor import ModelLlengua  # fora del paquet des de la 2.0.0
 
     _MODEL = ModelLlengua(fils=fils)
     _inicia_motor()

@@ -3,16 +3,17 @@ traductor/model_llengua -- Postprocessat cat->val amb un MODEL DE LLENGUA
 per als homògrafs que el motor no pot resoldre (23/10/2026).
 `translate_cat_val` sempre el fa servir; `translate_cat_val_motor` no.
 
-Dos models, que ocupen el mateix buit (puntuen les frases candidates):
-- **KenLM + classificador de sentit de "cop"** (`kenlm.py`, `sentit.py`;
-  `translate_cat_val_kenlm` amb `CRITERI_KENLM`): el model PER DEFECTE des
-  del 13/11/2026 (decisió de l'usuari; motius i xifres en
-  `documentacio/resultats_model_llengua_kenlm.md`).
-- FLOR-760M (`puntuador.py`; `translate_cat_val_ml` amb `Criteri()`): el
-  model per defecte del 23/10 al 12/11/2026; ara opcional (`model="flor"`).
+El model és **KenLM + classificador de sentit** (`kenlm.py`, `sentit.py`;
+`translate_cat_val_kenlm` amb `CRITERI_KENLM`), des del 13/11/2026
+(decisió de l'usuari; motius i xifres en
+`documentacio/resultats_model_llengua_kenlm.md`). `tradueix_cat_val_ml`
+accepta qualsevol objecte amb `logprob(frase)`.
 
-La història de més avall (23/10-05/11) és la de FLOR; les capes d'spaCy i
-la tria per tipus de punt són les mateixes per als dos models.
+Del 23/10 al 12/11/2026 el model era FLOR-760M; des de la versió 2.0.0
+(17/11/2026) ja no és en el paquet, ni com a opció (decisió de l'usuari):
+el seu puntuador és en `pipeline/03_seleccio_de_model/model_llengua/flor.py`
+per a repetir els experiments. La història de més avall (23/10-05/11) és la
+de FLOR; les capes d'spaCy i la tria per tipus de punt són les mateixes.
 
 Com funciona: el motor tradueix la frase; per a cada paraula ambigua del
 lèxic (vore `punts.py`) es construïxen les frases valencianes completes,
@@ -350,7 +351,7 @@ def tradueix_cat_val_ml(
     sentit=None,
 ) -> tuple[str, list[Punt]]:
     """Traducció cat->val amb el postprocessat del model de llengua.
-    `model`: un `puntuador.ModelLlengua` (o qualsevol objecte amb
+    `model`: un `kenlm.ModelKenLM` (o qualsevol objecte amb
     `logprob(text) -> (float, int)`); sense model, el motor tal qual.
     `concordanca`: "motor" o "variants" (vore `punts.variants_concordanca`).
     `sentit`: classificador de sentit (`sentit.py`, `candidat(punt)`); amb
@@ -384,22 +385,6 @@ def tradueix_cat_val_ml(
             if punt.puntuacions:
                 punt.sentit = sentit.candidat(punt)
     return aplica_tries(text_motor, trobats, criteri), trobats
-
-
-_MODEL_PER_DEFECTE = None
-
-
-def translate_cat_val_ml(text: str, model_id: str | None = None, criteri: Criteri = Criteri()) -> str:
-    """El sistema final, només el text: motor + model de llengua amb
-    `criteri` (per defecte, el criteri per defecte). Carrega el model la
-    primera vegada (FLOR-760M si no es diu cap altre). És el que avalua
-    `evalua_models.py --model traductor_ml --direccio cat-val`."""
-    global _MODEL_PER_DEFECTE
-    if _MODEL_PER_DEFECTE is None or (model_id and _MODEL_PER_DEFECTE.model_id != model_id):
-        from .puntuador import MODEL_PER_DEFECTE, ModelLlengua
-
-        _MODEL_PER_DEFECTE = ModelLlengua(model_id or MODEL_PER_DEFECTE)
-    return tradueix_cat_val_ml(text, _MODEL_PER_DEFECTE, criteri)[0]
 
 
 # Sistema KenLM (12/11/2026; vore `kenlm.py`): `kenlm_val_net_dogv` amb prior
@@ -442,5 +427,5 @@ def sistema_kenlm(directori=None):
     return _SISTEMA_KENLM
 
 
-__all__ = ["Criteri", "CRITERI_KENLM", "tradueix_cat_val_ml", "translate_cat_val_ml", "translate_cat_val_kenlm",
+__all__ = ["Criteri", "CRITERI_KENLM", "tradueix_cat_val_ml", "translate_cat_val_kenlm",
            "puntua_punts", "aplica_tries", "tria"]

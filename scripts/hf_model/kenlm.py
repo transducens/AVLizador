@@ -10,11 +10,11 @@ Fitxers (els noms que busca `avlizador.traductor_cat_val.model_llengua.kenlm`):
 - `<NOM_MODEL>_freq.json` -- freqüències de les paraules candidates (el prior);
 - `sentit.json` -- el classificador de sentit (Naive Bayes per grup de lectures).
 
-Llicència: CC0 1.0 (16/11/2026). Des del 17/11/2026 (criteri del grup: CC0 per a
-dades obtingudes de tercers, CC-BY 4.0 per a les generades del tot per nosaltres;
-l'usuari: CC0 també amb l'AVL) el model pot portar textos de l'AVL: si el KenLM o
-el classificador en porten, la fitxa i el NOTICE ho diuen i porten l'avís de
-retirada (el mateix que el dataset manual).
+Llicència: CC BY 4.0 (decisió de l'usuari, 17/11/2026: el model l'hem fet
+nosaltres; criteri del grup: CC0 per a dades obtingudes de tercers, CC BY 4.0 per
+a les generades per nosaltres; abans CC0). El model pot portar textos de l'AVL:
+si el KenLM o el classificador en porten, la fitxa i el NOTICE ho diuen i porten
+l'avís de retirada (el mateix que el dataset manual).
 
 Ús (des de l'arrel del repositori):
     python scripts/hf_model/kenlm.py --dir docker/kenlm --fonts net dogv
@@ -66,7 +66,7 @@ FONTS = {
 # 17/11/2026: KenLM valencia_net_dogv2 + sentit_dogv2_avl (comparador del 16/11); FLOR i
 # el motor sol, de l'avaluació del 13/11. S'actualitzen amb l'avaluació de la versió 2.0.0.
 RESULTATS = {
-    "data": "KenLM 2026-11-16; FLOR-760M and rules 2026-11-13",
+    "data": "KenLM: AVLizador 2.0.0, 2026-11-17; FLOR-760M and rules: 2026-11-13",
     "files": [
         ("Homographs v1 (253)", "227", "217", "176"),
         ("Homographs v2 (160)", "112", "96", "74"),
@@ -96,7 +96,7 @@ def fitxa(nom: str, fonts: list[str], fonts_sentit: list[str], freq: dict, n_gru
     return f"""---
 language:
   - ca
-license: cc0-1.0
+license: cc-by-4.0
 library_name: kenlm
 pipeline_tag: text-generation
 tags:
@@ -116,7 +116,7 @@ tags:
 <p align="center">
   <a href="{GITHUB}"><img alt="Made for AVLizador" src="https://img.shields.io/badge/made%20for-AVLizador-1f6f8b?logo=github"></a>
   <img alt="Language" src="https://img.shields.io/badge/language-ca--valencia-e8a33d">
-  <img alt="License" src="https://img.shields.io/badge/license-CC0%201.0-13294b">
+  <img alt="License" src="https://img.shields.io/badge/license-CC%20BY%204.0-13294b">
   <img alt="CPU only" src="https://img.shields.io/badge/CPU-only-555">
 </p>
 
@@ -232,8 +232,10 @@ Benchmarks: [AVLizador collection](https://huggingface.co/transducens).
 
 ## License
 
-**CC0 1.0** (public domain dedication), {autors_text()}. The training data are
-cited in `NOTICE`.{llicencia_avl} The KenLM library (LGPL 2.1) is not included:
+**CC BY 4.0** ([Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/)),
+{autors_text()}: you can copy, modify and distribute the model, also
+commercially, as long as you give appropriate credit (see the citation below).
+The training data are cited in `NOTICE`.{llicencia_avl} The KenLM library (LGPL 2.1) is not included:
 install it with `pip install kenlm`.
 {retirada}
 ## Citation
@@ -260,9 +262,9 @@ install it with `pip install kenlm`.
 
 def notice(fonts: list[str], fonts_sentit: list[str]) -> str:
     linies = ["AVLizador KenLM: Valencian n-gram language model",
-              f"{autors_text()}, 2026. Made for AVLizador ({GITHUB}).",
-              "Dedicated to the public domain under CC0 1.0",
-              "(https://creativecommons.org/publicdomain/zero/1.0/).", ""]
+              f"Copyright 2026 {autors_text()}. Made for AVLizador ({GITHUB}).",
+              "Licensed under the Creative Commons Attribution 4.0 International License",
+              "(https://creativecommons.org/licenses/by/4.0/legalcode).", ""]
     if fonts_sentit == fonts:
         linies += ["Trained on text from:"] + [f"- {FONTS[f][1]}" for f in fonts]
     else:

@@ -11,11 +11,12 @@ Des de la línia d'ordres: `avlizador tradueix "text"`.
 
 `translate_cat_val` és el sistema final: motor de regles + postprocessat
 amb model de llengua (`model_llengua/`, CPU) per als homògrafs. Des del
-13/11/2026 el model per defecte és KenLM + un classificador de sentit:
-extra `[kenlm]` i fitxers en `AVLIZADOR_KENLM_DIR`; si falten,
+13/11/2026 el model és KenLM + un classificador de sentit: extra
+`[kenlm]`; els fitxers del model es baixen de Hugging Face la primera
+vegada (o es llegixen d'`AVLIZADOR_KENLM_DIR`); si falten,
 `translate_cat_val` usa el motor sol i avisa (`AvisSenseModelLlengua`).
-`translate_cat_val(text, model="flor")` usa FLOR-760M (el model per defecte
-fins al 12/11/2026; extra `[ml]`: `torch`, `transformers`).
+Fins al 12/11/2026 el model era FLOR-760M; des de la versió 2.0.0 ja no és
+en el paquet.
 `translate_cat_val_motor` és el motor sol.
 
 Els diccionaris es lligen de `data/` (còpies de `dades/lexic/`, la font
