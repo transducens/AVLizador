@@ -12,23 +12,26 @@ justifican cada decisión, y el estado de cada fase.
 ## Capas actuales (23/10/2026)
 
 `engine.py` (`RuleEngineInvers`) etiqueta la frase con spaCy una vez y
-aplica estas 9 capas en este orden; cada una salta los tokens que ya ha
+aplica estas 11 capas en este orden; cada una salta los tokens que ya ha
 traducido otra:
 
 | capa | fichero | qué hace | usa spaCy |
 |---|---|---|---|
 | 1 | `lexic.py` | pares del léxico (una palabra y frases de 2-3); `canonica` en caso de duda; homógrafos resolubles; artículo, contracción y apóstrofo | homógrafos y género |
-| 2 | `conjugacions_dict.py` | formas verbales; las que tienen lectura no verbal, solo si spaCy dice verbo | sí |
-| 3 | `possessius.py` | meva → meua | no |
-| 4 | `numerals.py` | cardinales (vuitanta → huitanta); los ordinales van por el léxico | no |
-| 5 | `concordanca_dos_dues.py` | les dues → les dos | no |
-| 6 | `demostratius.py` | aquest → este, aqueix → eixe (entradas `det` del léxico) | no |
-| 7 | `incoatius.py` | serveix → servix (sin lista: lema en -ir validado contra el diccionario) | sí |
-| 8 | `accentuacio.py` | francès → francés | no |
-| 9 | `per_a_infinitiu.py` | per + infinitivo → per a (salvo "per haver") | sí |
+| 2 | `clitic_lhi.py` | "l'hi" → "li'l", separado y apostrofado hacia el verbo ("Li l'enviaré", "Li'l porte") | no |
+| 3 | `concordanca_genere_sn.py` | **cambio de género**: cuando el nombre cambia de género al traducirse (entradas `cambio_genero` del léxico: "el préssec" → "la bresquilla", "la despesa" → "el gasto"), concuerdan el determinante, los adjetivos, los participios, el atributo ("és molt bona") y el relativo "el qual/la qual"; adjetivos y participios, con el diccionario morfológico `data/catalan_sin_top_loc_prefijos_participios.txt` | sí, con el parser de `ca_core_news_md` (solo en las frases con una de estas palabras) |
+| 4 | `conjugacions_dict.py` | formas verbales; las que tienen lectura no verbal, solo si spaCy dice verbo | sí |
+| 5 | `possessius.py` | meva → meua | no |
+| 6 | `numerals.py` | cardinales (vuitanta → huitanta); los ordinales van por el léxico | no |
+| 7 | `concordanca_dos_dues.py` | les dues → les dos | no |
+| 8 | `demostratius.py` | aquest → este, aqueix → eixe (entradas `det` del léxico) | no |
+| 9 | `incoatius.py` | serveix → servix (sin lista: lema en -ir validado contra el diccionario) | sí |
+| 10 | `accentuacio.py` | francès → francés | no |
+| 11 | `per_a_infinitiu.py` | per + infinitivo → per a (salvo "per haver") | sí |
 
-Datos: solo `traductor_cat_val/data/lexic_general.json` y
-`conjugacions_dialectals.json` (copias de `dades/lexic/`). Ninguna lista
+Datos: `traductor_cat_val/data/lexic_general.json` y
+`conjugacions_dialectals.json` (copias de `dades/lexic/`), y el diccionario
+morfológico `catalan_sin_top_loc_prefijos_participios.txt` (para la capa 3). Ninguna lista
 de palabras a mano.
 
 **Homógrafos de la misma categoría** ("calces", "gandula", "gandules") y

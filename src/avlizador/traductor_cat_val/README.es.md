@@ -41,7 +41,7 @@ traductor_cat_val/
 ├── rules/
 │   ├── __init__.py           Token, tokenize/detokenize, apóstrofos, concordancia, homógrafos
 │   ├── pos_tagger.py         spaCy (ca_core_news_md, si no sm): categoría, género, lema, forma verbal
-│   ├── cat_val/              motor catalán → valenciano (9 capas, ver abajo)
+│   ├── cat_val/              motor catalán → valenciano (11 capas, ver rules/cat_val/README.es.md)
 │   └── val_cat/              motor valenciano → catalán (aparcado desde el 20/10; lo usa el GD)
 └── model_llengua/            homógrafos cat→val: KenLM + clasificador (extra [kenlm])
 ```

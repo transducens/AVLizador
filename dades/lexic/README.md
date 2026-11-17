@@ -9,14 +9,17 @@ la **única fuente**: desde el 30/10/2026 viven aquí (antes en
 | `lexico_general.json` | Léxico general catalán ↔ valenciano con categoría gramatical, forma canónica, colisiones y homógrafos (`canonica`, `problema`, `id_colision`, `forma_problematica`, `lemas`); incluye numerales, demostrativos y posesivos |
 | `conjugaciones_general.json` | Formas verbales catalán ↔ valenciano por persona, tiempo y modo (`morfologia`) |
 | `verbos_diferentes_conjugados.json` | Verbos con raíz distinta en cada variedad (conjugados) |
+| `catalan_sin_top_loc_prefijos_participios.txt` | Diccionario morfológico catalán (`forma:lema<cat><género><número>`, sin topónimos, locuciones ni prefijos), para la regla de cambio de género: pasa adjetivos y participios al otro género (`rules/cat_val/concordanca_genere_sn.py`) |
 | `Funcionamiento listas de palabras.pdf` | Guía del proveedor: qué significa cada campo |
 
 ## Cómo se cambian
 
 1. Se editan **solo** estos ficheros (nunca las copias del paquete).
 2. `python scripts/sync_data.py` copia y fusiona los datos en
-   `src/avlizador/traductor_cat_val/data/` (`lexic_general.json` y
-   `conjugacions_dialectals.json`, lo que lee el paquete instalado);
+   `src/avlizador/traductor_cat_val/data/` (`lexic_general.json`,
+   `conjugacions_dialectals.json` y una copia literal de
+   `catalan_sin_top_loc_prefijos_participios.txt`, lo que lee el paquete
+   instalado);
    `python scripts/sync_data.py --check` tiene que decir "Tot sincronitzat".
 3. `pytest` y `avlizador avalua --benchmarks manual` para ver que no hay
    regresiones.

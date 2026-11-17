@@ -11,7 +11,7 @@ Se instala como un paquete de Python, `avlizador`, con dos herramientas:
 
 | Herramienta | Qué hace | Importación |
 |---|---|---|
-| **Traductor catalán → valenciano** | Motor de reglas con los diccionarios del proyecto y spaCy, más un modelo de lenguaje de n-gramas (KenLM) y un clasificador de sentido que resuelven las palabras ambiguas ("cop" → *colp* o *vegada*, "nou" → *nou* o *anou*) | `avlizador.traductor_cat_val` |
+| **Traductor catalán → valenciano** | Motor de reglas con los diccionarios del proyecto y spaCy, más un modelo de lenguaje de n-gramas (KenLM) y un clasificador de sentido que resuelven las palabras ambiguas ("cop" → *colp* o *vegada*, "nou" → *nou* o *anou*). Cuando un nombre cambia de género ("el préssec" → "la bresquilla"), hace concordar el determinante, los adjetivos y el atributo | `avlizador.traductor_cat_val` |
 | **Grado Dialectal** (GD, GDV, GDC) | Índices de 0 a 1 que dicen si un texto es valenciano o catalán | `avlizador.grau_dialectal` |
 
 Funciona **solo con CPU**, sin GPU ni servicios externos: está pensado para
@@ -113,6 +113,8 @@ from avlizador import translate_cat_val, calcula_gd, calcula_gdv, calcula_gdc
 
 translate_cat_val("Aquest noi necessita ajuda. Un cop acabada la reunió, marxem.")
 # 'Este xic necessita ajuda. Una vegada acabada la reunió, marxem.'
+translate_cat_val("El préssec és molt bo. Les despeses previstes són altes.")
+# 'La bresquilla és molt bona. Els gastos previstos són alts.'  (cambio de género)
 # model="kenlm": error (FaltaKenLM) si falta KenLM, en lugar del motor solo con aviso
 
 calcula_gd("Este xiquet vol vindre hui.")["gd"]     # 1.0: valenciano
