@@ -10,4 +10,17 @@ Fitxers opcionals per a construir la imatge (`docker compose up --build`).
   `--build-arg KENLM_REVISIO=...`). Serveix per a provar un model encara no
   publicat.
 
+- `ca_core_news_md-3.8.0-py3-none-any.whl` (ignorat per git): el model
+  català d'spaCy. Normalment pip el baixa dels *releases* de GitHub en
+  construir la imatge; si eixa descàrrega falla dins de Docker (passa amb
+  algunes xarxes i VPN: `SSLError ... UNEXPECTED_EOF_WHILE_READING`, encara
+  que en el navegador o en PowerShell sí que baixe), baixa'l fora i deixa'l
+  ací amb este nom exacte:
+
+  ```
+  Invoke-WebRequest https://github.com/explosion/spacy-models/releases/download/ca_core_news_md-3.8.0/ca_core_news_md-3.8.0-py3-none-any.whl -OutFile docker\ca_core_news_md-3.8.0-py3-none-any.whl
+  ```
+
+  La construcció l'instal·la d'ací i no el baixa.
+
 En funcionament la imatge no es connecta a internet: el model ja va dins.
