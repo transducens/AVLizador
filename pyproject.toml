@@ -28,16 +28,8 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# FLOR-760M (`translate_cat_val(text, model="flor")`): el model per defecte
-# fins al 12/11/2026; ara opcional.
-# Per a torch només CPU: --extra-index-url https://download.pytorch.org/whl/cpu
-ml = [
-    "torch>=2.2",
-    "transformers>=4.45",
-    # La 2.x va trencar transformers el 29/10/2026.
-    "huggingface_hub>=0.24,<2.0",
-]
-# KenLM: el model de llengua PER DEFECTE des del 13/11/2026 (sense ell,
+# FLOR-760M i l'extra [ml] (torch, transformers) ja no hi són des de la 2.0.0.
+# KenLM: el model de llengua des del 13/11/2026 (sense ell,
 # `translate_cat_val` usa el motor sol i avisa). Es compila en instal·lar-lo
 # (en Windows cal compilador; la imatge Docker és Linux). Els fitxers del
 # model es baixen de Hugging Face (transducens/avlizador-kenlm-va) la primera

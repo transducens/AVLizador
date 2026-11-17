@@ -1,8 +1,9 @@
 """
 model_llengua/kenlm.py -- Puntuador KenLM (n-grames, CPU) i classificador
 de sentit per a les paraules ambigües. Integrat el 12/11/2026 com a
-alternativa a FLOR-760M; és el model PER DEFECTE des del 13/11/2026
-(decisió de l'usuari).
+alternativa a FLOR-760M; és el model per defecte des del 13/11/2026 i
+l'únic des de la versió 2.0.0 (decisions de l'usuari; FLOR ja no és en el
+paquet).
 
 Ocupa el MATEIX buit que FLOR: el motor construïx les frases valencianes
 de cada candidat i `ModelKenLM.logprob` les puntua. Dos diferències:

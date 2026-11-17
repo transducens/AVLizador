@@ -54,7 +54,7 @@ def test_kenlm_tria_la_frase_mes_probable(sistema):
 
 
 def test_kenlm_es_el_model_per_defecte(sistema, monkeypatch):
-    """Sense `model` (13/11/2026): KenLM si hi és, no FLOR."""
+    """Sense `model` (13/11/2026): KenLM si hi és."""
     from avlizador.traductor_cat_val.model_llengua import kenlm
 
     sistema(bones=("una vegada",))

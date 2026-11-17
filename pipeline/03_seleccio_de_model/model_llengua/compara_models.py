@@ -391,7 +391,7 @@ class Carregador:
             return None
         if clau == "flor":
             if "flor" not in self.cache:
-                from avlizador.traductor_cat_val.model_llengua.puntuador import ModelLlengua
+                from flor import ModelLlengua  # fora del paquet des de la 2.0.0 (model_llengua/flor.py)
 
                 self._mesura("flor", None, lambda: ModelLlengua(fils=self.fils))
             return self.cache["flor"]

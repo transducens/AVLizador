@@ -7,7 +7,7 @@ Dialectal (GD, GDV, GDC).
     calcula_gdv("Este xiquet vol vindre hui.")["gdv"]  # -> 1.0
 
 Subpaquets:
-- `avlizador.traductor_cat_val`: el traductor (motor de regles + FLOR-760M).
+- `avlizador.traductor_cat_val`: el traductor (motor de regles + KenLM).
 - `avlizador.grau_dialectal`: GD, GDV i GDC.
 - `avlizador.avaluacio`: mètriques i avaluació en els benchmarks
   (extra `[avaluacio]`).
