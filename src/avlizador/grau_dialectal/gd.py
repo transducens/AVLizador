@@ -61,6 +61,32 @@ p.ex. per homografia accidental), no es fiable com a marcador de cap
 dels dos costats -- se'n descarta dels dos conjunts (preferix fals
 negatiu, mateix criteri que la resta del projecte).
 
+FORMES IGUALS EN ELS DOS DIALECTES (16/11/2026, vore `_formes_iguals`):
+una entrada del lèxic amb el valencià igual que el català ("mentre" ->
+"mentre", E1647, canònica en col·lisió amb E0040 "mentres" -> "mentre")
+diu que la forma és vàlida en els dos dialectes. El traductor ja ho
+respectava (no traduïx "mentre"), pero el GD no: com que "mentre" és el
+català de "mentres", el comptava com a marcador oriental en textos
+valencians. Ara eixes formes no compten en cap dels dos costats, com les
+ambigües de dalt. Sense cap llista: ixen de les dades.
+
+COL·LISIÓ VERBAL (16/11/2026, vore `es_colisio_verbal` a
+`rules/val_cat/conjugacions_dict.py`, compartida amb el traductor
+val→cat): algunes formes valencianes són també formes catalanes normals
+d'una altra persona o mode. (1) 1a singular sense desinència: "jo permet"
+(valencià) = "ell permet" (els dos dialectes); el català de la parella és
+"permeto" (català = valencià + "o", 38 files). (2) 3a plural de
+subjuntiu: "que consideren" (valencià) = "consideren" (indicatiu, els dos
+dialectes); el català és "considerin". La regla de 3a plural ja existia
+(08/10/2026), pero no cobria els presents en "-eren" ni la dièresi
+("continuïn"). spaCy no ho separa: `Person` diu 3 fins i tot amb "Jo"
+davant i `Mood` diu indicatiu quasi sempre. Mesurat: era ~20 % dels
+marcadors valencians del BOE català. Ara la forma valenciana d'una
+col·lisió no compta (fals negatiu en textos valencians: "que consideren"
+de subjuntiu tampoc compta), i la catalana ("permeto", "considerin")
+sí compta com a oriental, perquè no és ambigua (si és l'única parella en
+les dos direccions; vore `_catalans_de_colisio`).
+
 MARCADORS NO FIABLES PER REGISTRE (15/10/2026, vore `_MARCADORS_NO_FIABLES_REGISTRE`):
 diferent de l'ambigüitat de dalt -- ací el parell és real i el traductor
 el convertix bé (`translate("Açò no és correcte.")` -> "Això no és
@@ -152,13 +178,17 @@ from typing import Iterator
 
 from ..traductor_cat_val.rules import Token, carrega_homografs, marca_noms_propis, pos_tagger, separa_prefix_elidit, tokenize
 from ..traductor_cat_val.rules.cat_val.demostratius import carrega_demostratius_invers
-from ..traductor_cat_val.rules.cat_val.lexic import LEXIC_GENERAL_PATH, carrega_lexic_invers
+from ..traductor_cat_val.rules.cat_val.lexic import (
+    LEXIC_GENERAL_PATH,
+    _participi_nominal,
+    carrega_formes_nominals,
+    carrega_lexic_invers,
+)
 from ..traductor_cat_val.rules.cat_val.numerals import carrega_numerals_invers
 from ..traductor_cat_val.rules.cat_val.possessius import carrega_possessius_invers
 from ..traductor_cat_val.rules.val_cat.conjugacions_dict import (
     DEFAULT_CONJUGACIONS_PATH,
-    SEMPRE_VERB,
-    es_risc_mode_3a_plural,
+    es_colisio_verbal,
 )
 from ..traductor_cat_val.rules.val_cat.demostratius import carrega_demostratius
 from ..traductor_cat_val.rules.val_cat.lexic import carrega_lexic
@@ -201,17 +231,23 @@ class Formes:
       filtre que ja fa servir `ConjugacionsDictRule`/`ConjugacionsDictInversRule`
       per a traduir, reaprofitat ací.
     - `homografs`: `{forma: etiquetes spaCy de la lectura dialectal}`, els
-      homògrafs resolubles declarats pel proveïdor (vore `_carrega_homografs`).
+      homògrafs resolubles declarats en el lèxic (vore `_carrega_homografs`).
+    - `noms`: formes (dels dos costats) que el lèxic només dona com a nom.
+      Si spaCy diu que són un participi, no compten (13/11/2026): "les
+      dades rebudes" no té el nom "rebudes" (= "recepcions"), té el
+      participi de "rebre", igual en els dos dialectes. La mateixa regla
+      que el traductor (`es_participi`).
     """
 
-    __slots__ = ("occ_simple", "or_simple", "occ_verbal", "or_verbal", "homografs")
+    __slots__ = ("occ_simple", "or_simple", "occ_verbal", "or_verbal", "homografs", "noms")
 
-    def __init__(self, occ_simple, or_simple, occ_verbal, or_verbal, homografs=None):
+    def __init__(self, occ_simple, or_simple, occ_verbal, or_verbal, homografs=None, noms=frozenset()):
         self.occ_simple = occ_simple
         self.or_simple = or_simple
         self.occ_verbal = occ_verbal
         self.or_verbal = or_verbal
         self.homografs = homografs or {}
+        self.noms = noms
 
 
 def _carrega_conjugacions_pures(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[str, str]:
@@ -223,10 +259,12 @@ def _carrega_conjugacions_pures(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[
 
     1. Sense `problematica: true` (ambigües indicatiu/subjuntiu per
        disseny, documentat al propi fitxer de dades).
-    2. Sense risc de col·lisió de mode en 3a plural
-       (`es_risc_mode_3a_plural`, el mateix càlcul que
+    2. Sense col·lisió verbal (`es_colisio_verbal`: mode en 3a plural,
+       "consideren"/"considerin", i persona en 1a singular,
+       "permet"/"permeto"), el mateix càlcul que
        `rules/val_cat/conjugacions_dict.py` ja fa per a protegir la
-       TRADUCCIÓ -- ací protegix l'ÍNDEX).
+       TRADUCCIÓ -- ací protegix l'ÍNDEX. El català d'eixes parelles
+       compta a banda (`_catalans_de_colisio`).
     3. Amb un ÚNIC candidat en les DOS direccions (ni el valencià ni el
        català de l'entrada apareixen en cap atra parella neta) --
        mes estricte que les dos funcions originals, que només exigixen
@@ -238,6 +276,8 @@ def _carrega_conjugacions_pures(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[
     >>> "base" in conj
     False
     >>> "entre" in conj
+    False
+    >>> "consideren" in conj or "permet" in conj
     False
     """
     dades = json.loads(Path(path).read_text(encoding="utf-8"))
@@ -251,7 +291,7 @@ def _carrega_conjugacions_pures(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[
         catalan = (entrada.get("catalan") or "").strip().lower()
         if not valenciano or not catalan or valenciano == catalan:
             continue
-        if valenciano not in SEMPRE_VERB and es_risc_mode_3a_plural(valenciano, catalan):
+        if es_colisio_verbal(valenciano, catalan):
             continue
         parells.append((valenciano, catalan))
         candidats_val.setdefault(valenciano, set()).add(catalan)
@@ -262,6 +302,57 @@ def _carrega_conjugacions_pures(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[
         for valenciano, catalan in parells
         if len(candidats_val[valenciano]) == 1 and len(candidats_cat[catalan]) == 1
     }
+
+
+def _catalans_de_colisio(path: Path = DEFAULT_CONJUGACIONS_PATH) -> set[str]:
+    """Formes catalanes de les parelles amb col·lisió verbal
+    (`es_colisio_verbal`): "considerin", "permeto". La valenciana no
+    compta ("consideren" també és indicatiu català), pero la catalana no
+    té cap altra lectura i sí és un marcador oriental (vore "COL·LISIÓ
+    VERBAL" al docstring del mòdul). Només si la parella és l'única en
+    les dos direccions, com a `_carrega_conjugacions_pures`.
+
+    >>> cat = _catalans_de_colisio()
+    >>> "considerin" in cat, "permeto" in cat, "consideren" in cat
+    (True, True, False)
+    """
+    dades = json.loads(Path(path).read_text(encoding="utf-8"))
+    candidats_val: dict[str, set[str]] = {}
+    candidats_cat: dict[str, set[str]] = {}
+    colisions: list[tuple[str, str]] = []
+    for entrada in dades.get("entradas", []):
+        if entrada.get("problematica"):
+            continue
+        valenciano = (entrada.get("valenciano") or "").strip().lower()
+        catalan = (entrada.get("catalan") or "").strip().lower()
+        if not valenciano or not catalan or valenciano == catalan:
+            continue
+        candidats_val.setdefault(valenciano, set()).add(catalan)
+        candidats_cat.setdefault(catalan, set()).add(valenciano)
+        if es_colisio_verbal(valenciano, catalan):
+            colisions.append((valenciano, catalan))
+    return {
+        catalan
+        for valenciano, catalan in colisions
+        if len(candidats_val[valenciano]) == 1 and len(candidats_cat[catalan]) == 1
+    }
+
+
+def _formes_iguals(path: Path = LEXIC_GENERAL_PATH) -> set[str]:
+    """Formes (en minúscules) d'una sola paraula que alguna entrada del
+    lèxic dona IGUALS en valencià i en català: vàlides en els dos dialectes,
+    no són marcador de cap (vore "FORMES IGUALS EN ELS DOS DIALECTES" al
+    docstring del mòdul).
+
+    >>> "mentre" in _formes_iguals()
+    True
+    """
+    iguals = set()
+    for entrada in json.loads(Path(path).read_text(encoding="utf-8")):
+        val = (entrada.get("valenciano") or "").strip().lower()
+        if val and " " not in val and val == (entrada.get("catalan") or "").strip().lower():
+            iguals.add(val)
+    return iguals
 
 
 def carrega_formes_dialectals(forcar_recarrega: bool = False) -> Formes:
@@ -292,6 +383,20 @@ def carrega_formes_dialectals(forcar_recarrega: bool = False) -> Formes:
     False
     >>> "açò" in formes.occ_simple or "això" in formes.or_simple
     False
+
+    "mentre" és vàlid en els dos dialectes (E1647); "mentres", només en
+    valencià:
+
+    >>> "mentre" in formes.or_simple, "mentres" in formes.occ_simple
+    (False, True)
+
+    Col·lisió verbal (vore el docstring del mòdul): "permet" i
+    "consideren" també són formes catalanes; "permeto" i "considerin", no:
+
+    >>> "permet" in formes.occ_verbal, "consideren" in formes.occ_verbal
+    (False, False)
+    >>> "permeto" in formes.or_verbal, "considerin" in formes.or_verbal
+    (True, True)
     """
     global _CACHE
     if _CACHE is not None and not forcar_recarrega:
@@ -325,12 +430,17 @@ def carrega_formes_dialectals(forcar_recarrega: bool = False) -> Formes:
     for valenciano, catalan in _carrega_conjugacions_pures().items():
         occ_verbal.add(valenciano)
         or_verbal.add(catalan)
+    # El català de les col·lisions verbals ("considerin", "permeto") sí
+    # compta; el valencià, no (vore "COL·LISIÓ VERBAL").
+    or_verbal |= _catalans_de_colisio()
 
     # Col·lisions entre QUALSEVOL dels 4 conjunts (vore docstring del
     # mòdul, "AMBIGÜITAT") -- es descarten de tots a la vegada.
+    # També les formes que el lèxic dona iguals en els dos dialectes
+    # ("mentre"; vore `_formes_iguals`).
     tot_occ = occ | occ_verbal
     tot_or = orr | or_verbal
-    ambigues = tot_occ & tot_or
+    ambigues = (tot_occ & tot_or) | _formes_iguals()
     occ -= ambigues
     orr -= ambigues
     occ_verbal -= ambigues
@@ -348,8 +458,9 @@ def carrega_formes_dialectals(forcar_recarrega: bool = False) -> Formes:
     occ_verbal -= irresolubles
     or_verbal -= irresolubles
 
+    noms = frozenset(carrega_formes_nominals(camp="catalan") | carrega_formes_nominals(camp="valenciano"))
     _CACHE = Formes(
-        frozenset(occ), frozenset(orr), frozenset(occ_verbal), frozenset(or_verbal), homografs
+        frozenset(occ), frozenset(orr), frozenset(occ_verbal), frozenset(or_verbal), homografs, noms
     )
     return _CACHE
 
@@ -397,11 +508,22 @@ def _paraula_per_lookup(surface: str) -> str | None:
     return None
 
 
-def _classifica_token(tok: Token, formes: Formes) -> str | None:
-    """Torna `"occ"`, `"or"` o `None` per a `tok`, aplicant els dos
-    filtres de seguretat trobats mesurant contra el benchmark real (vore
+def _classifica_token(tok: Token, formes: Formes, tokens: list[Token] | None = None,
+                      i: int | None = None) -> str | None:
+    """Torna `"occ"`, `"or"` o `None` per a `tok`, aplicant els filtres de
+    seguretat trobats mesurant contra el benchmark real (vore
     `_paraula_per_lookup` per al prefix elidit, i baix per al filtre de
-    POS dels marcadors verbals)."""
+    POS dels marcadors verbals). Amb `tokens` i `i` (la frase i la posició
+    del token), un nom del lèxic que spaCy dona com a participi no compta
+    (13/11/2026, vore `Formes.noms`).
+
+    >>> def marques(text):
+    ...     formes = carrega_formes_dialectals()
+    ...     toks = _tokenitza_amb_pos(text)
+    ...     return [t.surface for i, t in enumerate(toks) if _classifica_token(t, formes, toks, i)]
+    >>> marques("Les dades rebudes."), marques("La rebuda dels documents.")
+    ([], ['rebuda'])
+    """
     if tok.surface.isspace() or tok.is_proper_noun:
         return None
     paraula = _paraula_per_lookup(tok.surface)
@@ -416,6 +538,13 @@ def _classifica_token(tok: Token, formes: Formes) -> str | None:
     # Sense etiqueta d'spaCy, no compta (preferix fals negatiu).
     lectura_dialectal = formes.homografs.get(baix)
     if lectura_dialectal is not None and tok.pos not in lectura_dialectal:
+        return None
+
+    # Nom del lèxic que fa de participi ("les dades rebudes"): no és el nom.
+    # Darrere d'un determinant sí que és el nom ("les rebudes"; vore
+    # `_participi_nominal` del traductor).
+    if (tokens is not None and baix in formes.noms and pos_tagger.es_participi(tokens, i)
+            and not _participi_nominal(tokens, i)):
         return None
 
     if baix in formes.occ_simple or (baix in formes.occ_verbal and es_verb_segur):
@@ -535,14 +664,14 @@ def calcula_gd(
     marcadors_occ: list[str] = []
     marcadors_or: list[str] = []
     total_paraules = 0
-    for tok in tokens:
+    for i, tok in enumerate(tokens):
         if tok.surface.isspace():
             continue
         paraula = _paraula_per_lookup(tok.surface)
         if paraula is None:
             continue
         total_paraules += 1
-        classe = _classifica_token(tok, formes)
+        classe = _classifica_token(tok, formes, tokens, i)
         if classe == "occ":
             marcadors_occ.append(paraula.lower())
         elif classe == "or":
@@ -644,12 +773,12 @@ def resalta_html(
     tokens = _tokenitza_amb_pos(text)
     out: list[str] = []
     pos = 0
-    for tok in tokens:
+    for i, tok in enumerate(tokens):
         out.append(_esc(text[pos : tok.start]))
         paraula = tok.surface
         pos = tok.start + len(paraula)
 
-        classe = _classifica_token(tok, formes)
+        classe = _classifica_token(tok, formes, tokens, i)
         if classe == "occ":
             out.append(marca(paraula, "mk-occ paraula-valenciana", etiquetes[0]))
         elif classe == "or":

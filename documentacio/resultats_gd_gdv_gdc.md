@@ -387,7 +387,8 @@ pronombre y el subjuntivo, marcadores catalanes reales.
   detecta. En la GNV este error casi no se nota ("consideren" 7) porque un
   texto valenciano usa esas formas con el sentido valenciano.
 - Este problema es del GD, no del léxico: no lo arregla la corrección de
-  datos en curso. Posibles vías, sin probar todavía:
+  datos en curso. **Arreglado el 16/11/2026 (sección 10)**: `Person` no
+  sirve; se resolvió desde los datos. Vías que se plantearon:
   1. 1ª singular: usar el rasgo `Person` de spaCy (solo contar "permet"
      si spaCy dice 1ª persona). `Mood` no sirve (medido el 20/10), pero
      `Person` no se ha medido.
@@ -626,3 +627,297 @@ Si se quitan estos errores del GD, los tres benchmarks quedan puros: GD
 
 Resultados por frase en `dades/grau_dialectal/manual_*.jsonl` (fuera de
 git); resumen en `dades/grau_dialectal/resum.{json,md}`.
+
+## 8. Participios que el léxico solo da como nombre (13/11/2026)
+
+**El fallo** (ejemplo que pasaron al usuario): «les dades rebudes» daba
+GD = 0 (catalán puro). «rebudes» está en el léxico como nombre
+(E0435 rebudes → recepcions, `categoria: "n"`), pero ahí es el participio
+de «rebre», igual en los dos dialectos. spaCy lo ve bien (ADJ,
+`VerbForm=Part`), pero el GD no lo miraba: contaba la palabra como marcador
+catalán. Es el mismo caso que «rebuda» (E0434), anotado el 27/10 en la
+sección 2 (913 apariciones en el BOE catalán).
+
+**El arreglo** (`grau_dialectal/gd.py`, `Formes.noms` y
+`_classifica_token`): la misma regla que el traductor usa desde el 05/11
+(`pos_tagger.es_participi`). Una forma que el léxico solo da como nombre
+(en todas sus entradas, de los dos lados: «rebuda», «sortida», «tancat»;
+«eixida»…) no cuenta como marcador si spaCy dice que es un participio y no
+va justo detrás de un determinante («les rebudes» sigue siendo el nombre).
+Sin listas a mano: las formas salen del léxico
+(`carrega_formes_nominals(camp=...)`). También en el filtro de MaCoCu
+(`filtra_valencia.py`), que repite el bucle del GD.
+
+| Frase | Antes | Ahora |
+|---|---|---|
+| «les dades rebudes» | GD 0 (marcador «rebudes») | sin marcadores |
+| «La carta rebuda ahir.» | GD 0 | sin marcadores |
+| «La rebuda dels documents…» (nombre) | GD 0 | GD 0 (igual) |
+| «Les persones eixides de la sala.» | — | sin marcadores |
+| «L'eixida del sol.» (nombre) | GD 1 | GD 1 (igual) |
+
+**Efecto en los corpus de referencia** (GD global, antes → ahora; los
+marcadores que se dejan de contar):
+
+| Corpus | Lado | GD | Marcadores que ya no cuentan |
+|---|---|---|---|
+| Manual (458) | valenciano | 0,9973 → 0,9973 | tancat, tancats |
+| Manual (458) | catalán | 0,0299 → 0,0291 | tancat |
+| 151 | valenciano | 0,9855 → 0,9891 | rebuda |
+| 151 | catalán | 0,0696 → 0,0699 | rebuda |
+| gplsi | valenciano | 0,9342 → 0,9341 | tancat, tancats, portada |
+| gplsi | catalán | 0,0534 → 0,0519 | tancat, tancats, portada, admès |
+| BOE estricto (2.000) | valenciano | 0,9842 → 0,9848 | tancats, depositari, rebudes |
+| BOE estricto (2.000) | catalán | 0,0493 → 0,0488 | tancats, rebudes |
+
+Todos los que se pierden son participios contados como nombres
+(«tancat» = vallado, «portada», «rebuda»), salvo un «depositari» que spaCy
+da como participio por error. En el BOE completo el efecto será mayor
+(«rebuda» aparecía 913 veces en el lado catalán): pendiente de volver a
+medir con `mesura_corpus.py`.
+
+### 8.1 GD, GDV y GDC antes y después, y el caso contrario (13/11/2026)
+
+Medido en los cinco corpus de referencia, valores globales (suma de
+marcadores; GDV = 1 − orientales / palabras; GDC = 1 − occidentales /
+palabras). **Antes** = sin la regla; **A** = la regla de esta sección
+(commit `2edfb72`); **A+B** = además, contar como marcadores los
+participios de verbos dialectales cuando spaCy los da como adjetivo
+(«establits» / «establerts»), igual que hace el traductor. B es solo una
+prueba: no está en el código.
+
+| Corpus (frases) | Lado | GD antes → A (A+B) | GDV antes → A (A+B) | GDC antes → A (A+B) | Frases que cambian con A (A+B) |
+|---|---|---|---|---|---|
+| Manual (458) | val | 0,9973 → 0,9973 (0,9919) | 0,9998 → 0,9998 (0,9993) | 0,9181 → 0,9183 (0,9172) | 2 (21) |
+| Manual (458) | cat | 0,0299 → 0,0291 (0,0312) | 0,9200 → 0,9200 (0,9186) | 0,9975 → 0,9976 (0,9974) | 1 (22) |
+| 151 (154) | val | 0,9855 → 0,9891 (0,9857) | 0,9991 → 0,9993 (0,9991) | 0,9370 → 0,9370 (0,9361) | 1 (6) |
+| 151 (154) | cat | 0,0696 → 0,0699 (0,0797) | 0,9410 → 0,9412 (0,9410) | 0,9956 → 0,9956 (0,9949) | 1 (5) |
+| gplsi (1.958) | val | 0,9342 → 0,9341 (0,9326) | 0,9936 → 0,9936 (0,9935) | 0,9094 → 0,9096 (0,9095) | 3 (7) |
+| gplsi (1.958) | cat | 0,0534 → 0,0519 (0,0524) | 0,9062 → 0,9063 (0,9061) | 0,9947 → 0,9949 (0,9948) | 4 (8) |
+| BOE estricto (2.000) | val | 0,9842 → 0,9848 (0,9848) | 0,9993 → 0,9994 (0,9993) | 0,9586 → 0,9586 (0,9571) | 3 (61) |
+| BOE estricto (2.000) | cat | 0,0493 → 0,0488 (0,0507) | 0,9598 → 0,9599 (0,9584) | 0,9979 → 0,9979 (0,9978) | 2 (60) |
+| BOE amplio (2.000) | val | 0,9368 → 0,9379 (0,9341) | 0,9986 → 0,9986 (0,9984) | 0,9790 → 0,9791 (0,9774) | 3 (63) |
+| BOE amplio (2.000) | cat | 0,0860 → 0,0849 (0,0968) | 0,9792 → 0,9792 (0,9780) | 0,9980 → 0,9981 (0,9976) | 2 (52) |
+
+**A**: cambia muy poco (1-4 frases por corpus) y siempre en la dirección
+correcta (el GD valenciano sube o se queda, el catalán baja o se queda,
+salvo el 151 catalán, +0,0003, por un «rebuda» que deja de contar). GDV y
+GDC apenas se mueven (cuentan las palabras neutras). Se pierden «tancat(s)»,
+«portada», «rebuda/rebudes» y «admès» (participios) y un «depositari» (error
+de spaCy).
+
+**A+B: no se aplica todavía.** Añade muchos marcadores buenos
+(«establits»/«establerts» 18 + 18 en el BOE estricto, «oferides»/«ofertes»,
+«complits»/«complertes»), pero empeora el GD de los textos valencianos (manual
+0,9973 → 0,9919; BOE amplio 0,9368 → 0,9341) y sube el de los catalanes
+por dos problemas de datos, no del GD:
+- **«esmentat/esmentades» cuenta como catalán** («esmentar» → «mencionar»,
+  cambio del léxico del 05/11): aparece en textos valencianos de la AVL y
+  del BOE. Pendiente de hablar con el compañero (ya anotado: la AVL usa
+  «esment*» 231 veces frente a 65 «mencion*»).
+- **«previstos» cuenta como valenciano** (17 en el BOE amplio, 6 en el
+  catalán del estricto): el catalán también dice «previstos».
+
+Con esos dos datos corregidos en el léxico, B sería coherente con el
+traductor y conviene volver a medirlo.
+
+## 9. «mentre»: formas iguales en los dos dialectes (16/11/2026)
+
+**El fallo** (pendiente desde el 27/10, sección 2, problema 3): el léxico
+dice que «mentre» es también la forma valenciana preferida (E1647
+«mentre» → «mentre», `canonica: true`, en colisión con E0040 «mentres» →
+«mentre»). El traductor lo respeta desde el 21/10 (no traduce «mentre»),
+pero el GD no: como «mentre» es el catalán de «mentres», lo contaba como
+marcador catalán. «Mentre treballe, escolte música.» daba GD 0 (catalán
+puro).
+
+**El arreglo** (`grau_dialectal/gd.py`, `_formes_iguals`, decisión del
+usuario): una forma que alguna entrada del léxico da igual en valenciano y
+en catalán es válida en los dos dialectos y no cuenta como marcador en
+ningún lado, igual que las formas ambiguas. Sin listas: sale de los datos.
+Hoy solo hay una entrada así en todo el léxico (E1647); si el compañero
+añade más, entran solas.
+
+| Frase | Antes | Ahora |
+|---|---|---|
+| «Mentre treballe, escolte música.» | GD 0 (marcador «mentre») | sin marcadores |
+| «Mentres treballe, escolte música.» | GD 1 («mentres») | GD 1 (igual) |
+
+(«treballe» y «escolte» no cuentan: tienen dos parejas catalanas,
+«treballo» y «treballi», y el GD solo usa las formas verbales con una
+pareja única en las dos direcciones.)
+
+**Efecto en los corpus de referencia** (valores globales; «antes» = el GD
+con la regla de los participios de la sección 8, columna A de la 8.1):
+
+| Corpus | Lado | «mentre» | GD antes → ahora | GDV antes → ahora | GDC antes → ahora | Frases que cambian |
+|---|---|---|---|---|---|---|
+| Manual (458) | val | 0 | 0,9973 → 0,9973 | 0,9998 → 0,9998 | 0,9183 → 0,9183 | 0 |
+| Manual (458) | cat | 7 | 0,0291 → 0,0293 | 0,9200 → 0,9205 | 0,9976 → 0,9976 | 7 |
+| 151 (154) | val | 1 | 0,9891 → 0,9927 | 0,9993 → 0,9995 | 0,9370 → 0,9370 | 1 |
+| 151 (154) | cat | 2 | 0,0699 → 0,0704 | 0,9412 → 0,9417 | 0,9956 → 0,9956 | 2 |
+| gplsi (1.958) | val | 6 | 0,9341 → 0,9371 | 0,9936 → 0,9939 | 0,9096 → 0,9096 | 6 |
+| gplsi (1.958) | cat | 6 | 0,0519 → 0,0521 | 0,9063 → 0,9066 | 0,9949 → 0,9949 | 6 |
+| BOE estricto (2.000) | val | 1 | 0,9848 → 0,9854 | 0,9994 → 0,9994 | 0,9586 → 0,9586 | 1 |
+| BOE estricto (2.000) | cat | 1 | 0,0488 → 0,0488 | 0,9599 → 0,9599 | 0,9979 → 0,9979 | 1 |
+| BOE amplio (2.000) | val | 0 | 0,9379 → 0,9379 | 0,9986 → 0,9986 | 0,9791 → 0,9791 | 0 |
+| BOE amplio (2.000) | cat | 0 | 0,0849 → 0,0849 | 0,9792 → 0,9792 | 0,9981 → 0,9981 | 0 |
+
+**Lectura**: en los textos valencianos el GD sube (151 +0,0036, gplsi
++0,0030): eran «mentre» valencianos contados como catalanes. En los
+catalanes sube un poco (manual +0,0002, 151 +0,0005): ahí «mentre» sí era
+catalán, pero como vale en los dos dialectos no dice nada del dialecto, y
+deja de contar. Es lo esperado: una forma de los dos lados no es un
+marcador. El GDV de los textos catalanes también sube un poco por lo
+mismo.
+
+## 10. Colisión verbal (16/11/2026)
+
+**El fallo** (abierto desde el 27/10, sección 2, problema 1; el 20 % de los
+marcadores valencianos del BOE catalán): algunas formas valencianas son
+también formas catalanas normales de otra persona o modo, y el GD las
+contaba como valencianas en cualquier texto:
+
+- **1.ª persona del singular sin desinencia**: «jo permet» (valenciano) se
+  escribe igual que «ell permet» (los dos dialectos). El catalán de la
+  pareja es «permeto».
+- **3.ª persona del plural de subjuntivo**: «que consideren» (valenciano)
+  se escribe igual que «consideren» (indicativo, los dos dialectos). El
+  catalán es «considerin». Ya había una regla para esto (08/10,
+  `es_risc_mode_3a_plural`), pero tenía dos fallos: tomaba los presentes
+  en «-eren» («consideren», «superen», «alteren») por imperfectos y
+  entonces exigía «-essin» en catalán, y no cubría la diéresis
+  («continuen» → «continuïn»).
+
+**spaCy no lo separa** (medido en los cinco corpus): `Person` dice 3
+también con «Jo» delante («Jo permet...») y en primeras personas
+auténticas como «aconseguisc»; `Mood` dice indicativo casi siempre,
+también en los subjuntivos valencianos reales.
+
+**El arreglo** (decisión del usuario: opción A + B', en la función
+compartida para que el fallo no se propague al traductor val→cat):
+
+- `rules/val_cat/conjugacions_dict.py`:
+  - `es_risc_mode_3a_plural` corregida: valenciano en «-en» y catalán en
+    «-in»/«-ïn», sea presente o imperfecto. De 9.466 a 9.794 parejas
+    (+328, todas de subjuntivo o imperativo de 3.ª plural, o de raíz
+    distinta como «cultiven»/«conreïn»); ninguna perdida.
+  - `es_colisio_1a_singular` nueva: catalán = valenciano + «o». Sin
+    listas, sale de los datos: 38 filas (32 formas: acull, admet,
+    arremet, ateny, comet, compromet, constreny, convenç, cull, cus,
+    emet, empeny, entremet, escomet, escull, escup, estreny, inadmet,
+    malmet, omet, permet, pertany, preadmet, promet, readmet, remet,
+    restreny, retransmet, sobresurt, sotmet, tramet, transmet); todas las
+    que llevan morfología son `pri p1 sg`.
+  - `es_colisio_verbal` = cualquiera de las dos (salvo `SEMPRE_VERB`). La
+    usan el traductor val→cat (`carrega_conjugacions`) y el GD.
+- `grau_dialectal/gd.py`: la forma valenciana de una colisión no cuenta;
+  la catalana («permeto», «considerin») **sí cuenta** como marcador
+  oriental, porque no tiene otra lectura (`_catalans_de_colisio`, solo si
+  la pareja es la única en las dos direcciones).
+
+**Efecto en el GD** (valores globales; «antes» = el GD con «mentre», sección 9):
+
+| Corpus | Lado | GD antes → ahora | GDV antes → ahora | GDC antes → ahora | Frases que cambian |
+|---|---|---|---|---|---|
+| Manual (458) | val | 0,9973 → 0,9971 | 0,9998 → 0,9998 | 0,9183 → 0,9214 | 40 |
+| Manual (458) | cat | 0,0293 → 0,0101 | 0,9205 → 0,9120 | 0,9976 → 0,9991 | 103 |
+| 151 (154) | val | 0,9927 → 0,9926 | 0,9995 → 0,9995 | 0,9370 → 0,9375 | 2 |
+| 151 (154) | cat | 0,0704 → 0,0632 | 0,9417 → 0,9380 | 0,9956 → 0,9958 | 14 |
+| gplsi (1.958) | val | 0,9371 → 0,9364 | 0,9939 → 0,9939 | 0,9096 → 0,9106 | 19 |
+| gplsi (1.958) | cat | 0,0521 → 0,0421 | 0,9066 → 0,9056 | 0,9949 → 0,9958 | 37 |
+| BOE estricto (2.000) | val | 0,9854 → 0,9852 | 0,9994 → 0,9994 | 0,9586 → 0,9593 | 26 |
+| BOE estricto (2.000) | cat | 0,0488 → 0,0312 | 0,9599 → 0,9511 | 0,9979 → 0,9984 | 292 |
+| BOE amplio (2.000) | val | 0,9379 → 0,9365 | 0,9986 → 0,9986 | 0,9791 → 0,9796 | 17 |
+| BOE amplio (2.000) | cat | 0,0849 → 0,0496 | 0,9792 → 0,9740 | 0,9981 → 0,9986 | 158 |
+
+**Lectura**:
+
+- **Textos catalanes**: el GD baja mucho y se acerca a 0, que es lo que
+  debe dar (BOE amplio 0,085 → 0,050; manual 0,029 → 0,010). Se van
+  «permet», «consideren», «remet», «exceptuen»… y entran como catalanes
+  «siguin», «hagin», «puguin», «tinguin», «estableixin».
+- **El GDV de los textos catalanes baja un poco** (BOE estricto 0,960 →
+  0,951) por lo mismo: ahora cuentan sus subjuntivos catalanes, que antes
+  no contaban. Es correcto.
+- **Textos valencianos**: el GD baja como mucho 0,0014. Es el coste: los
+  subjuntivos valencianos auténticos («que consideren») y las primeras
+  personas («jo permet») ya no cuentan, porque no se distinguen de las
+  formas compartidas (falso negativo, el criterio de siempre).
+
+**Efecto en el traductor val→cat** (motor, exactas; mismo código antes y
+después salvo la regla):
+
+| Benchmark | Antes | Ahora | Gana | Pierde |
+|---|---|---|---|---|
+| Manual (458) | 168 | 177 | 16 | 7 |
+| 151 (154) | 103 | 102 | 0 | 1 |
+| gplsi (1.958) | 1.437 | 1.451 | 14 | 0 |
+| BOE estricto (2.000) | 918 | 923 | 10 | 5 |
+| BOE amplio (2.000) | 866 | 871 | 6 | 1 |
+
+Antes traducía «Això permet» → «Això permeto» y «que es consideren» →
+«que es considerin» aunque fuera indicativo. De las pérdidas:
+
+- **Referencias mal**: en el manual, 6 de las 7 tienen en el catalán un
+  error que viene del borrador val→cat («li **permeto** contrarestar»,
+  BM-AVL-003/016/070; «que es **pronunciïn** amb o closa», «funcions que
+  s'**associïn** culturalment», «**continuïn** vulnerant», todos
+  indicativos). En el 151, RC056 «que **pertanyo**, evidentment» también
+  es un error de la referencia (es 3.ª persona). Ahora el sistema dice lo
+  correcto.
+- **Subjuntivos de verdad que ya no se traducen**: BM-BOE-103 «que
+  vulnerin», y en el BOE «que no superin», «que actuïn», «que propiciïn»,
+  «que denunciïn», «llevat que considerin», «que es considerin». Es el
+  falso negativo esperado (la capa LLM de val→cat, congelada, es la que
+  decide estos casos).
+
+**Lo que queda sin cubrir** (no se ha tocado nada):
+
+- 2.ª persona del singular de subjuntivo: «arribes», «trobes», «parles»
+  (valenciano) = indicativo catalán. Es el mismo caso que la 3.ª plural,
+  en otra persona (76 casos en el análisis de la sección 4).
+- Verbos de raíz distinta con «-eix»: «pateix» → «sofreix», «abelleix» →
+  «apeteix» («pateix» es también catalán normal de «patir»).
+- «recau» y «pateix»: vienen de los datos, ver abajo.
+- Las formas valencianas solo de subjuntivo («siguen», «puguen», «hagen»,
+  «tinguen») tampoco cuentan, porque la regla no sabe que no tienen
+  indicativo igual (ya pasaba desde el 08/10). Sus catalanas sí cuentan
+  ahora.
+
+**Para el compañero** (revisado en `dades/lexic/` el 16/11; decisión del
+usuario: de momento no se toca nada):
+
+- **Error de forma** en `verbos_diferentes_conjugados.json`: la 3.ª
+  singular de cuatro verbos va en la forma catalana «-eix», mientras el
+  resto del paradigma es valenciano («-isca», «-isquen»): «pateix» →
+  «sofreix» (REP_570), «abelleix» → «apeteix» (REP_013), «engoleix» →
+  «empassa», «ablaneix» → «estova». Lo coherente sería «patix»,
+  «abellix», «engolix», «ablanix» (BOE: «patix» val 13 / cat 0;
+  «pateix» val 13 / cat 32). Con «-eix», la forma también es catalana y
+  cuenta como valenciana en textos catalanes.
+- **Criterio**: «patir» → «sofrir» (y quizá «abellir» → «apetir»): «patir»
+  también es catalán normal; parece una preferencia, como «vegada».
+- **Choque entre verbos, no error**: «recau» (id 34629) es la 2.ª plural en
+  «-au» del verbo «recar», bien formada, pero coincide con «recau» de
+  «recaure» (3.ª singular, igual en los dos dialectos; 83 veces en el BOE
+  catalán). De las 489 formas valencianas en «-au», es la única que choca
+  así. Opciones: quitar esa forma o marcarla.
+- **Correctos** (revisados): «contrau» (contraure → contreure) y «subjau»
+  (jaure → jeure) son formas valencianas auténticas («contrau»: BOE val 7 /
+  cat 0).
+
+**Mejora posible, no aplicada** (decisión del usuario, 16/11: no compensa
+de momento): decidir la colisión por corpus en vez de por la terminación.
+Con el BOE paralelo (el catalán no pasa por el GD), comparar cuántas veces
+sale la forma valenciana en el lado catalán frente a su pareja catalana.
+Lo separa bien: «permet» val 428 / cat 570 y «consideren» 748 / 910 (son
+colisiones); «hagen» 6.460 / 0, «siguen» 5.218 / 0, «complisquen» 1.252 / 0
+(marcadores que la regla de la terminación quita hoy: 266 formas con ≥ 5
+apariciones); «pateix» 13 / 32 y «recau» 39 / 83 (colisiones que hoy
+cuentan). No sirve para la 2.ª persona («arribes»: 1 / 1; el BOE casi no
+la usa). Costes: un fichero generado que hay que regenerar con el léxico,
+un umbral (casos frontera: «troben» 1.320 / 130, «superen» 253 / 32), el
+registro del BOE, y las colisiones de nombre y verbo («mesures»/«mesuris»)
+también saldrían. Valdría la pena si el GD se usa como recompensa de
+entrenamiento o en textos cortos.

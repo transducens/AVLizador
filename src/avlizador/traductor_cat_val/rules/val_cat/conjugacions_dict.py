@@ -129,6 +129,30 @@ BOE) -- "haja"->"hagi" és un exemple ja comprovat de per que no es pot
 generalitzar nomes pel sufix: no es ambigu de veres (sempre es subjuntiu
 en valencia, l'indicatiu de "haver" es "he"/"ha", no "haja"), i una
 regla mes amplia el classificaria malament.
+
+Arreglada la regla de 3a plural (16/11/2026): la versio de 08/10/2026
+mirava la terminacio valenciana per a decidir si era present o imperfet
+("-aren"/"-eren" = imperfet, i aleshores exigia "-essin"/"-issin" en
+català). Pero molts presents també acaben en "-eren" ("consideren",
+"superen", "alteren"), i el seu subjuntiu català ("considerin") no
+casava: "consideren" (que en un text valencià pot ser indicatiu) es
+traduïa sempre a "considerin". Tampoc cobria la dièresi ("continuen" ->
+"continuïn"). Ara la regla és: valencià en "-en" i català en "-in"/"-ïn"
+(present o imperfet, "quedessin" també acaba en "-in"). Mesurat sobre
+`conjugacions_dialectals.json`: 9.466 -> 9.794 parells (+328, tots de
+subjuntiu o imperatiu de 3a plural, o d'arrel distinta com
+"cultiven"/"conreïn"), cap perdut.
+
+Col·lisio de 1a persona del present (16/11/2026, `es_colisio_1a_singular`):
+en valencià la 1a singular d'alguns verbs no porta desinència ("jo
+permet", "jo admet", "jo pertany") i s'escriu igual que la 3a singular,
+que és igual en els dos dialectes ("ell permet"). El català de la parella
+és la mateixa forma amb "-o" ("permeto"). Sense filtre, "Això permet" es
+traduïa a "Això permeto". spaCy no ho separa (dona `Person=3` fins i tot
+amb "Jo" davant). Sense llistes: el criteri és el de les dades, català =
+valencià + "o" (38 files, totes `pri p1 sg` quan porten morfologia). Es
+deixen sense tocar, com les de 3a plural (fals negatiu: "jo permet" no es
+traduïx).
 """
 
 from __future__ import annotations
@@ -177,41 +201,81 @@ SEMPRE_VERB = {"sigut", "siga", "haja", "vinga", "traure", "eixir"}
 # s'amplia a cap atra persona sense evidencia real (vore CLAUDE.md,
 # 08/10/2026 -- "haja"->"hagi" per exemple NO es real ambiguitat, es
 # SEMPRE subjuntiu, i una regla mes amplia el classificaria malament).
-_RE_PRESENT_SUBJ_3A_PL = re.compile(r"in$")
-_RE_IMPERFET_SUBJ_3A_PL = re.compile(r"(essin|issin)$")
+#
+# 16/11/2026: una sola regex per a present i imperfet ("quedessin" també
+# acaba en "-in") i amb la dièresi ("continuïn"); vore "Arreglada la regla
+# de 3a plural" al docstring del modul.
+_RE_SUBJ_3A_PL = re.compile(r"[iï]n$")
 
 
 def es_risc_mode_3a_plural(valenciano: str, catalan: str) -> bool:
-    """Torna `True` si `valenciano` (acaba en "-en" present, o "-aren"/
-    "-eren" imperfet) i `catalan` (acaba en "-in" o "-essin"/"-issin")
-    casen amb el patro de col·lisio INDICATIU/SUBJUNTIU de 3a plural --
-    vore docstring del modul. Funcio publica perque
-    `identifica_ambigues.py` (postprocessat_llm/) la reutilitza per a
-    construir els mateixos candidats (indicatiu = la forma valenciana
-    sense canviar, subjuntiu = `catalan`) i no duplicar el criteri.
+    """Torna `True` si `valenciano` (acaba en "-en": present o imperfet
+    de subjuntiu valencià, que s'escriuen com l'indicatiu) i `catalan`
+    (acaba en "-in"/"-ïn": present o imperfet de subjuntiu català) casen
+    amb el patro de col·lisio INDICATIU/SUBJUNTIU de 3a plural -- vore
+    docstring del modul. Funcio publica perque `identifica_ambigues.py`
+    (postprocessat_llm/), la capa LLM i el GD la reutilitzen i no dupliquen
+    el criteri.
 
     >>> es_risc_mode_3a_plural("creuen", "creuin")
     True
     >>> es_risc_mode_3a_plural("quedaren", "quedessin")
+    True
+
+    Presents en "-eren" i subjuntius amb dièresi (16/11/2026; abans no
+    casaven):
+
+    >>> es_risc_mode_3a_plural("consideren", "considerin")
+    True
+    >>> es_risc_mode_3a_plural("continuen", "continuïn")
     True
     >>> es_risc_mode_3a_plural("traure", "treure")
     False
     >>> es_risc_mode_3a_plural("haja", "hagi")
     False
     """
-    if valenciano.endswith(("aren", "eren")):
-        return bool(_RE_IMPERFET_SUBJ_3A_PL.search(catalan))
-    if valenciano.endswith("en"):
-        return bool(_RE_PRESENT_SUBJ_3A_PL.search(catalan))
-    return False
+    return valenciano.endswith("en") and bool(_RE_SUBJ_3A_PL.search(catalan))
+
+
+def es_colisio_1a_singular(valenciano: str, catalan: str) -> bool:
+    """Torna `True` si `valenciano` és una 1a persona del present sense
+    desinència que s'escriu igual que la 3a ("jo permet" = "ell permet")
+    i `catalan` és la mateixa forma amb "-o" ("permeto") -- vore
+    "Col·lisio de 1a persona del present" al docstring del modul.
+
+    >>> es_colisio_1a_singular("permet", "permeto")
+    True
+    >>> es_colisio_1a_singular("pertany", "pertanyo")
+    True
+    >>> es_colisio_1a_singular("oferisca", "ofereixi")
+    False
+    """
+    return catalan.lower() == valenciano.lower() + "o"
+
+
+def es_colisio_verbal(valenciano: str, catalan: str) -> bool:
+    """`es_risc_mode_3a_plural` o `es_colisio_1a_singular`: la forma
+    valenciana també és una forma vàlida en català (indicatiu de 3a
+    plural, 3a singular), aixina que no es pot traduir ni comptar com a
+    valenciana sense saber el mode o la persona. `SEMPRE_VERB` ("haja",
+    "siga"...) no col·lidix mai.
+
+    >>> es_colisio_verbal("consideren", "considerin"), es_colisio_verbal("permet", "permeto")
+    (True, True)
+    >>> es_colisio_verbal("haja", "hagi")
+    False
+    """
+    if valenciano.lower() in SEMPRE_VERB:
+        return False
+    return es_risc_mode_3a_plural(valenciano, catalan) or es_colisio_1a_singular(valenciano, catalan)
 
 
 def carrega_conjugacions(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[str, str]:
     """Llig el JSON de conjugacions i el converteix en un diccionari pla
     `{forma_valenciana_en_minuscules: forma_catalana}`, descartant les
     entrades `problematica: true` i les que col·lidixen de mode en 3a
-    plural (`es_risc_mode_3a_plural`, vore docstring del modul --
-    08/10/2026).
+    plural o de persona en 1a singular (`es_colisio_verbal`, vore
+    docstring del modul -- 08/10/2026 i 16/11/2026).
 
     19/10/2026: `EXCLUSIONS_HOMOGRAF` (nomes tenia "germanes") retirada a
     petició explícita de l'usuari -- vore CLAUDE.md, "Pendent per a la
@@ -232,6 +296,12 @@ def carrega_conjugacions(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[str, st
     False
     >>> "creuen" in lookup
     False
+
+    16/11/2026: tampoc "consideren" (present en "-eren") ni "permet" (1a
+    persona igual que la 3a):
+
+    >>> "consideren" in lookup, "permet" in lookup
+    (False, False)
     """
     dades = json.loads(Path(path).read_text(encoding="utf-8"))
     lookup: dict[str, str] = {}
@@ -242,7 +312,7 @@ def carrega_conjugacions(path: Path = DEFAULT_CONJUGACIONS_PATH) -> dict[str, st
         catalan = (entrada.get("catalan") or "").strip()
         if not valenciano or not catalan:
             continue
-        if valenciano not in SEMPRE_VERB and es_risc_mode_3a_plural(valenciano, catalan):
+        if es_colisio_verbal(valenciano, catalan):
             continue
         lookup.setdefault(valenciano, catalan)
     return lookup
