@@ -194,7 +194,7 @@ def test_titol_transducens_i_portada():
     assert 'href="/idiomes">Traducció d\'idiomes</a></h2>' in html
     assert 'href="/dialectes/adaptador">Adaptador dialectal</a></h2>' in html
     assert "Encara no hi ha cap traductor d'idiomes disponible." in html
-    assert "són la mateixa llengua" in html
+    assert "Adaptar un text del català oriental al català occidental." in html
     assert 'class="subnav"' not in html
 
 
