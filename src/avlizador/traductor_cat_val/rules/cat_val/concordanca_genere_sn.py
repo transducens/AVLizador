@@ -211,6 +211,31 @@ _LINIA_RE = re.compile(
 _TAG_RE = re.compile(r"<([^>]+)>")
 
 
+def _parseja_rapid(linia: str) -> tuple[str, str, str, str, str] | None:
+    """Com `_parseja_linia`, sense expressions regulars (unes 4 vegades més
+    ràpid; 17/11/2026). Per a les línies que no tenen la forma esperada
+    torna a `_parseja_linia`, que decidix.
+
+    >>> _parseja_rapid("plenes:ple<adj><f><pl>"), _parseja_rapid("encomandes de gestió:encomanda<n><f><pl># de gestió")
+    (('plenes', 'ple', 'adj', 'f', 'pl'), ('encomandes de gestió', 'encomanda', 'n', 'f', 'pl'))
+    """
+    forma, dos_punts, resta = linia.partition(":")
+    i = resta.find("<")
+    fi = resta.rfind(">")
+    if not dos_punts or i <= 0 or fi < i or resta[fi + 1:].strip()[:1] not in ("", "#") or "<" in resta[fi + 1:]:
+        return _parseja_linia(linia)
+    tags = resta[i + 1:fi].split("><")
+    if any(not t or "<" in t or ">" in t for t in tags):
+        return _parseja_linia(linia)
+    genere = nombre = ""
+    for t in tags[1:]:
+        if t in ("m", "f", "mf"):
+            genere = t
+        elif t in ("sg", "pl", "sp"):
+            nombre = t
+    return forma.strip(), resta[:i].strip(), tags[0], genere, nombre
+
+
 def _parseja_linia(linia: str) -> tuple[str, str, str, str, str] | None:
     """Torna `(forma, lema, categoria, genere, nombre)` o `None`."""
     m = _LINIA_RE.match(linia.strip())
@@ -245,6 +270,12 @@ def carrega_morfologia(
     apareixia abans que "ple" i es quedava com a masculí de "ple" (10/11/2026,
     7.113 claus afectades).
 
+    Només les categories que la regla pot canviar (`_CATEGORIES_CONCORDANTS`:
+    adjectius i participis), que són les úniques que consulta: els noms no
+    es canvien mai. Les altres línies es descarten abans de l'expressió
+    regular (17/11/2026: la càrrega passa de ~1,3 s a ~0,2 s, mateixes
+    traduccions).
+
     El resultat es guarda (`lru_cache`) i el compartixen totes les
     instàncies de la regla (el motor i `model_llengua/punts.py`): no s'ha de
     modificar.
@@ -256,14 +287,21 @@ def carrega_morfologia(
     'gonoccòcic'
     >>> idx[("ple", "adj", "m", "sg")], idx[("ple", "adj", "f", "sg")]
     ('ple', 'plena')
+    >>> sorted({cat for _, cat, _, _ in idx})
+    ['adj', 'vblex']
     """
+    marques = tuple(f"<{c}>" for c in _CATEGORIES_CONCORDANTS)
     idx: dict[tuple[str, str, str, str], str] = {}
     with open(path, encoding="utf-8") as fh:
         for linia in fh:
-            parsed = _parseja_linia(linia)
+            if not any(m in linia for m in marques):
+                continue  # ni adjectiu ni participi: no cal parsejar-la
+            parsed = _parseja_rapid(linia)
             if parsed is None:
                 continue
             forma, lema, cat, genere, nombre = parsed
+            if cat not in _CATEGORIES_CONCORDANTS:
+                continue  # la marca era un tag posterior, no la categoria
             if genere not in ("m", "f") or nombre not in ("sg", "pl"):
                 continue
             if " " in forma:
@@ -740,11 +778,14 @@ class ConcordancaGenereSnRule:
     # ------------------------------------------------------------------
 
     def apply(self, tokens: list[Token]) -> list[Token]:
-        # Text original (surface) per a spaCy, AMB parser: abans la regla
-        # usava el model de `pos_tagger` sense parser i `.children` sempre
-        # era buit, no trobava cap adjectiu (10/11/2026).
-        doc = self._analitza(_text_original(tokens))
-
+        # El parser d'spaCy (AMB parser: abans la regla usava el model de
+        # `pos_tagger` sense parser i `.children` sempre era buit, 10/11/2026)
+        # només s'executa si la frase té un nucli amb `cambio_genero`:
+        # `concorda_dependents` l'analitza la primera vegada que cal (i
+        # `_analitza` el guarda per al nucli següent). Abans s'analitzava
+        # cada frase i el parser era quasi tot el cost de la regla (+3,3 ms
+        # per frase en el benchmark manual, on només 53 de 458 frases tenen
+        # una d'estes paraules; 17/11/2026).
         for i, tok in enumerate(tokens):
             if not tok.is_translated or not tok.translated:
                 continue
@@ -766,5 +807,5 @@ class ConcordancaGenereSnRule:
             else:
                 self._corregeix_determinant_anterior(tokens, i, genere_nou)
 
-            self.concorda_dependents(tokens, i, genere_nou, doc)
+            self.concorda_dependents(tokens, i, genere_nou)
         return tokens
