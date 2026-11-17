@@ -214,6 +214,8 @@ def main(argv: list[str] | None = None) -> int:
     files = []
     for nom, descripcio, fitxer in tasques:
         benchmark = json.loads(fitxer.read_text(encoding="utf-8"))
+        if isinstance(benchmark, dict):  # {"descripcio": ..., "frases": [...]} (p. ex. homògrafs v1)
+            benchmark = benchmark["frases"]
         if args.limit:
             benchmark = benchmark[:args.limit]
             descripcio += f" [limit {args.limit}]"
