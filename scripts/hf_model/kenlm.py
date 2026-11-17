@@ -66,7 +66,7 @@ FONTS = {
 # 17/11/2026: KenLM valencia_net_dogv2 + sentit_dogv2_avl (comparador del 16/11); FLOR i
 # el motor sol, de l'avaluació del 13/11. S'actualitzen amb l'avaluació de la versió 2.0.0.
 RESULTATS = {
-    "data": "KenLM 2026-11-16; FLOR-760M and rules 2026-11-13",
+    "data": "KenLM: AVLizador 2.0.0, 2026-11-17; FLOR-760M and rules: 2026-11-13",
     "files": [
         ("Homographs v1 (253)", "227", "217", "176"),
         ("Homographs v2 (160)", "112", "96", "74"),
