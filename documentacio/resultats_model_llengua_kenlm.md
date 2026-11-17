@@ -1039,7 +1039,7 @@ evidents» → «faltes» (acierto), que el orden 5 deja sin traducir.
 memoria y no exige recompilar `kenlm`. La mejora de 1 frase con el mejor
 criterio es de margen 1, que en el sistema añade graves (8 frente a 1).
 
-### 4.19 Más texto: DOGV nuevo, AVL y UA, en KenLM y en el clasificador (16/11, en curso)
+### 4.19 Más texto: DOGV nuevo, AVL y UA, en KenLM y en el clasificador (16-17/11)
 
 **Petición del usuario** (versión 2.0.0): ver si KenLM y el clasificador de
 sentido mejoran, o al menos no empeoran, con más texto valenciano: el DOGV
@@ -1096,7 +1096,42 @@ criterios de la 4.18 (márgenes 1-5, λ 0,5-2, λ de colisión 0,5-1, desempate
 2). La salida lleva el nombre del clasificador
 (`compara_models_<fecha>_<clasificador>`, opción nueva `--etiqueta`).
 
-**Resultados**: pendientes.
+**Resultados** (Abaco, jobs 3129-3142; `resultats/compara_models_20261116_1608_sentit*`,
+`_1608_sentit_dogv2*` y `_1619_sentit_dogv2_avl*`). Criterio C1 (margen 3, la
+catalana por defecto, λ 1,5 / 0,75, desempate < 2); aciertos / errores graves
+en las 257 decisiones de homógrafos v1 + v2:
+
+| KenLM \ clasificador | `sentit` (sistema) | `sentit_dogv2` | `sentit_dogv2_avl` |
+|---|---|---|---|
+| `valencia_net_dogv` (sistema) | 193 / 1 | 193 / 1 (+1 candidato erróneo) | 194 / 1 |
+| `valencia_net_dogv2` | 193 / 1 | 193 / 1 | **194 / 1** |
+| `valencia_net_dogv2_avl` | 192 / 2 | 192 / 2 | 193 / 2 |
+| `valencia_net_dogv2_avl_ua` | 192 / 2 | 192 / 2 | 193 / 2 |
+
+Exactas con `valencia_net_dogv2` + `sentit_dogv2_avl`: v1 227/253, v2 112/160,
+manual 232/458, 151 144/154 (sistema: 227, 111, 232, 144). Manual: TER 5,58,
+WER 5,96, GD 0,9936, GDV 0,9995, iguales en las 12 combinaciones.
+
+Decisión a decisión:
+- **KenLM**: `valencia_net_dogv2` no cambia ningún resultado (en HG2-009
+  «nou» acierta igual, pero por la catalana por defecto en vez del modelo):
+  con el DOGV del sistema ya estaba saturado. Con la AVL, un error grave
+  nuevo: HG2-157 «Les reeixides de l'equip omplen el palmarès» → «exitoses».
+  La UA no cambia nada más.
+- **Clasificador** (actúa en 51 decisiones: cop, cops, deu; acierto propio
+  sistema 47/51, `sentit_dogv2` 47/51, `sentit_dogv2_avl` 48/51):
+  `sentit_dogv2` gana HG2-047 («Aquesta deu no s'asseca mai» → «brollador»)
+  y pierde HG009 («un últim cop al banc» → «vegada»); `sentit_dogv2_avl`
+  solo gana HG2-047.
+- Con el mejor criterio de cada modelo (marge 1) todos llegan a 198-200
+  aciertos, pero con 8-16 errores graves: se mantiene C1.
+
+**Decisión del usuario (17/11/2026)**: **KenLM `valencia_net_dogv2` (MaCoCu net
++ el DOGV entero, sin la AVL) + clasificador `sentit_dogv2_avl` (MaCoCu net +
+DOGV entero + AVL)**: la mejor combinación (194 / 1) y no pierde ninguna
+decisión frente al sistema. Ojo para la publicación: el clasificador sale en
+parte de textos de la AVL (vore el punto de la licencia en CLAUDE.md / la
+ficha de Hugging Face).
 
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que

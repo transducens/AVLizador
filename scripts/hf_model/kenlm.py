@@ -10,13 +10,17 @@ Fitxers (els noms que busca `avlizador.traductor_cat_val.model_llengua.kenlm`):
 - `<NOM_MODEL>_freq.json` -- freqüències de les paraules candidates (el prior);
 - `sentit.json` -- el classificador de sentit (Naive Bayes per grup de lectures).
 
-Llicència (decisió de l'usuari, 16/11/2026): CC0 1.0. Per això el model NO pot
-portar textos de l'AVL (el seu avís legal no ho permet): si `--fonts` inclou
-`avl`, el script s'atura. L'avís de retirada només va en el dataset manual.
+Llicència: CC0 1.0 (16/11/2026). Des del 17/11/2026 (criteri del grup: CC0 per a
+dades obtingudes de tercers, CC-BY 4.0 per a les generades del tot per nosaltres;
+l'usuari: CC0 també amb l'AVL) el model pot portar textos de l'AVL: si el KenLM o
+el classificador en porten, la fitxa i el NOTICE ho diuen i porten l'avís de
+retirada (el mateix que el dataset manual).
 
 Ús (des de l'arrel del repositori):
     python scripts/hf_model/kenlm.py --dir docker/kenlm --fonts net dogv
-    python scripts/hf_model/kenlm.py --dir dades/macocu/kenlm --nom valencia_net_dogv2 --fonts net dogv2
+    # versió 2.0.0 (decisió de l'usuari, 17/11/2026): KenLM sense AVL, classificador amb AVL
+    python scripts/hf_model/kenlm.py --dir dades/macocu/kenlm --nom valencia_net_dogv2 --fonts net dogv2 \\
+        --sentit dades/macocu/kenlm/sentit_dogv2_avl.json --fonts-sentit net dogv2 avl
 """
 
 from __future__ import annotations
@@ -28,7 +32,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "hf_benchmarks"))
-from comu import ARREL, AUTORS, GITHUB, autors_text, banner  # noqa: E402
+from comu import ARREL, AUTORS, AVIS_RETIRADA, GITHUB, autors_text, banner  # noqa: E402
 
 from avlizador.traductor_cat_val.model_llengua.kenlm import NOM_MODEL, REPO_HF  # noqa: E402
 
@@ -51,24 +55,42 @@ FONTS = {
               "Diari Oficial de la Generalitat Valenciana (DOGV, https://dogv.gva.es), 2025-2026."),
     "ua": ("**News of the University of Alicante** in Valencian (sentences with GD ≥ 0.8; 31,212 sentences).",
            "News of the University of Alicante (https://web.ua.es)."),
+    "avl": ("**Acadèmia Valenciana de la Llengua (AVL)** ([avl.gva.es](https://www.avl.gva.es)): texts from "
+            "its website (88,243 sentences, 1.5 M words), without the documents and sentences of AVLizador's "
+            "evaluation sets. Texts © Acadèmia Valenciana de la Llengua.",
+            "Texts from the website of the Acadèmia Valenciana de la Llengua (https://www.avl.gva.es), "
+            "© Acadèmia Valenciana de la Llengua."),
 }
 
-# Xifres del sistema amb este model (vore pipeline/03_seleccio_de_model/resultats_benchmarks_cat_val.md).
-# 16/11/2026: les del 13/11 (valencia_net_dogv); s'actualitzen amb l'avaluació de la versió 2.0.0.
+# Xifres del sistema amb este model (vore documentacio/resultats_model_llengua_kenlm.md, 4.19).
+# 17/11/2026: KenLM valencia_net_dogv2 + sentit_dogv2_avl (comparador del 16/11); FLOR i
+# el motor sol, de l'avaluació del 13/11. S'actualitzen amb l'avaluació de la versió 2.0.0.
 RESULTATS = {
-    "data": "2026-11-13",
+    "data": "KenLM 2026-11-16; FLOR-760M and rules 2026-11-13",
     "files": [
         ("Homographs v1 (253)", "227", "217", "176"),
-        ("Homographs v2 (160)", "111", "96", "74"),
+        ("Homographs v2 (160)", "112", "96", "74"),
         ("Manual benchmark (458)", "232", "231", "218"),
         ("151 sentences (154)", "144", "145", "142"),
     ],
-    "decisions": "193 correct and 1 serious error (a wrong meaning) out of 257 decisions in the homograph sets",
+    "decisions": "194 correct and 1 serious error (a wrong meaning) out of 257 decisions in the homograph sets",
 }
 
 
-def fitxa(nom: str, fonts: list[str], freq: dict, n_grups: int, mida_mb: int) -> str:
-    fonts_md = "\n".join(f"- {FONTS[f][0]}" for f in fonts)
+def _llista(fonts: list[str]) -> str:
+    return "\n".join(f"- {FONTS[f][0]}" for f in fonts)
+
+
+def fitxa(nom: str, fonts: list[str], fonts_sentit: list[str], freq: dict, n_grups: int, mida_mb: int) -> str:
+    if fonts_sentit == fonts:
+        fonts_md = _llista(fonts)
+    else:
+        fonts_md = (f"KenLM model and frequency table (`{nom}_o5.binary`, `{nom}_freq.json`):\n\n{_llista(fonts)}"
+                    f"\n\nSense classifier (`sentit.json`):\n\n{_llista(fonts_sentit)}")
+    avl = "avl" in fonts or "avl" in fonts_sentit
+    retirada = f"\n{AVIS_RETIRADA}\n" if avl else ""
+    llicencia_avl = (" Part of the training text are texts © Acadèmia Valenciana de la Llengua"
+                     " (see `NOTICE` and the notice below).") if avl else ""
     taula = "\n".join(f"| {b} | **{k}** | {fl} | {m} |" for b, k, fl, m in RESULTATS["files"])
     tokens = f"{freq.get('tokens', 0):,}" if freq.get("tokens") else "—"
     return f"""---
@@ -136,7 +158,7 @@ PyTorch**, and makes fewer mistakes.
 |---|---|
 | `{nom}_o5.binary` | KenLM model, order 5, trie with 8-bit quantization ({mida_mb} MB) |
 | `{nom}_freq.json` | Frequency of the candidate words in the training text ({tokens} tokens), used to correct the advantage of frequent words |
-| `sentit.json` | Sense classifier: one Naive Bayes per group of readings of an ambiguous word ({n_grups} groups), trained on the same kind of text |
+| `sentit.json` | Sense classifier: one Naive Bayes per group of readings of an ambiguous word ({n_grups} groups); its training text is listed below |
 
 ## Usage
 
@@ -175,7 +197,8 @@ for frase in ("Una vegada acabada la reunió, marxem.", "Un colp acabada la reun
 {fonts_md}
 
 No sentence of AVLizador's evaluation sets is in the training text (the
-benchmark sentences were removed from the DOGV text).
+benchmark sentences were removed from the DOGV text and, from the AVL text,
+the documents of the evaluation sets and any sentence similar to one of them).
 
 ## Training
 
@@ -210,9 +233,9 @@ Benchmarks: [AVLizador collection](https://huggingface.co/transducens).
 ## License
 
 **CC0 1.0** (public domain dedication), {autors_text()}. The training data are
-cited in `NOTICE`. The KenLM library (LGPL 2.1) is not included: install it with
-`pip install kenlm`.
-
+cited in `NOTICE`.{llicencia_avl} The KenLM library (LGPL 2.1) is not included:
+install it with `pip install kenlm`.
+{retirada}
 ## Citation
 
 ```bibtex
@@ -235,13 +258,23 @@ cited in `NOTICE`. The KenLM library (LGPL 2.1) is not included: install it with
 """
 
 
-def notice(fonts: list[str]) -> str:
+def notice(fonts: list[str], fonts_sentit: list[str]) -> str:
     linies = ["AVLizador KenLM: Valencian n-gram language model",
               f"{autors_text()}, 2026. Made for AVLizador ({GITHUB}).",
               "Dedicated to the public domain under CC0 1.0",
-              "(https://creativecommons.org/publicdomain/zero/1.0/).", "",
-              "Trained on text from:"]
-    linies += [f"- {FONTS[f][1]}" for f in fonts]
+              "(https://creativecommons.org/publicdomain/zero/1.0/).", ""]
+    if fonts_sentit == fonts:
+        linies += ["Trained on text from:"] + [f"- {FONTS[f][1]}" for f in fonts]
+    else:
+        linies += ["KenLM model and frequency table trained on text from:"]
+        linies += [f"- {FONTS[f][1]}" for f in fonts]
+        linies += ["", "Sense classifier (sentit.json) trained on text from:"]
+        linies += [f"- {FONTS[f][1]}" for f in fonts_sentit]
+    if "avl" in fonts or "avl" in fonts_sentit:
+        linies += ["", "Notice and take down: if you consider that this repository contains material",
+                   "owned by you that should not be reproduced here, contact Miquel Espla",
+                   "(miquel.espla@ua.es); see README.md. We will comply with legitimate requests",
+                   "by removing the affected sources from the next release."]
     linies += ["", "The KenLM library (Kenneth Heafield, GNU LGPL 2.1, https://github.com/kpu/kenlm)",
                "is not included in this repository."]
     return "\n".join(linies) + "\n"
@@ -252,15 +285,17 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--dir", type=Path, required=True, help="carpeta amb el .binary, el _freq.json i el classificador")
     p.add_argument("--nom", default=NOM_MODEL, help="nom del model en la carpeta (<nom>_o5.binary, <nom>_freq.json)")
     p.add_argument("--sentit", type=Path, default=None, help="classificador (per defecte, <dir>/sentit.json)")
-    p.add_argument("--fonts", nargs="+", required=True, choices=[*FONTS, "avl"],
-                   help="fonts del text d'entrenament (per a la fitxa i el NOTICE)")
+    p.add_argument("--fonts", nargs="+", required=True, choices=list(FONTS),
+                   help="fonts del text d'entrenament del KenLM (per a la fitxa i el NOTICE)")
+    p.add_argument("--fonts-sentit", nargs="+", choices=list(FONTS), default=None,
+                   help="fonts del classificador, si no són les del KenLM")
     args = p.parse_args(argv)
-    if "avl" in args.fonts:
-        sys.exit("El model porta textos de l'AVL: no es pot publicar en CC0 (decisió de l'usuari, 16/11/2026).")
-    if "dogv" in args.fonts and "dogv2" in args.fonts:
-        sys.exit("dogv2 ja inclou dogv: posa'n només una.")
-    if "ua" in args.fonts:
-        print("AVÍS: el text porta notícies de la UA; comprova'n les condicions abans de publicar en CC0.")
+    fonts_sentit = args.fonts_sentit or args.fonts
+    for fs in (args.fonts, fonts_sentit):
+        if "dogv" in fs and "dogv2" in fs:
+            sys.exit("dogv2 ja inclou dogv: posa'n només una.")
+    if "ua" in args.fonts or "ua" in fonts_sentit:
+        print("AVÍS: el text porta notícies de la UA; comprova'n les condicions abans de publicar.")
 
     binari = args.dir / f"{args.nom}_o5.binary"
     freq = args.dir / f"{args.nom}_freq.json"
@@ -279,11 +314,12 @@ def main(argv: list[str] | None = None) -> None:
     dades_freq = json.loads(freq.read_text(encoding="utf-8"))
     n_grups = len(json.loads(sentit.read_text(encoding="utf-8")).get("grups", {}))
     (EIXIDA / "README.md").write_text(
-        fitxa(NOM_MODEL, args.fonts, dades_freq, n_grups, round(binari.stat().st_size / 2**20)), encoding="utf-8")
-    (EIXIDA / "NOTICE").write_text(notice(args.fonts), encoding="utf-8")
+        fitxa(NOM_MODEL, args.fonts, fonts_sentit, dades_freq, n_grups, round(binari.stat().st_size / 2**20)),
+        encoding="utf-8")
+    (EIXIDA / "NOTICE").write_text(notice(args.fonts, fonts_sentit), encoding="utf-8")
     banner(EIXIDA / "assets" / "banner.png", "AVLizador KenLM", "Valencian 5-gram language model",
            "un cop acabada", "una vegada acabada")
-    print(f"-> {EIXIDA} (model {args.nom}, fonts {' '.join(args.fonts)})")
+    print(f"-> {EIXIDA} (model {args.nom}, fonts {' '.join(args.fonts)}; classificador {' '.join(fonts_sentit)})")
     print(f"Per a pujar-lo: hf upload {REPO_HF} {EIXIDA.relative_to(ARREL).as_posix()} . --repo-type model")
 
 
