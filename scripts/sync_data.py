@@ -231,6 +231,28 @@ FONTS: list[FontSpec] = [
 ]
 
 
+# Fitxers que es copien tal qual (17/11/2026): el diccionari morfològic de
+# la regla de canvi de gènere (`rules/cat_val/concordanca_genere_sn.py`).
+COPIES_LITERALS: list[str] = ["catalan_sin_top_loc_prefijos_participios.txt"]
+
+
+def _sync_copies(check_only: bool) -> bool:
+    """Copia byte a byte els fitxers de `COPIES_LITERALS` de `dades/lexic/`
+    a `data/`. Torna `True` si en calia copiar algun."""
+    calen = False
+    for nom in COPIES_LITERALS:
+        font, dest = LEXIC / nom, DATA / nom
+        dades = font.read_bytes()
+        if dest.exists() and dest.read_bytes() == dades:
+            print(f"= {nom}: sense canvis (còpia literal)")
+            continue
+        calen = True
+        print(f"~ {nom}: {'NOU FITXER' if not dest.exists() else 'canviat'} (còpia literal)")
+        if not check_only:
+            dest.write_bytes(dades)
+    return calen
+
+
 def _signatura(entrada: dict) -> str:
     return json.dumps(entrada, sort_keys=True, ensure_ascii=False)
 
@@ -307,6 +329,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     calen_canvis = sync(check_only=args.check)
+    calen_canvis = _sync_copies(check_only=args.check) or calen_canvis
 
     if args.check:
         if calen_canvis:
