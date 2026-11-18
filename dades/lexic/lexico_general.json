@@ -2225,13 +2225,13 @@
   {
     "espanol": "búsqueda",
     "catalan": "cerques",
-    "valenciano": "busces",
+    "valenciano": "busques",
     "tipo": "v:lexic_val_gva",
     "fuente": "unificado",
     "id": "E0240",
     "categoria": "n",
     "genero_cat": "f",
-    "genero_val": null
+    "genero_val": "f"
   },
   {
     "espanol": "calcetín",
@@ -2763,13 +2763,13 @@
   {
     "espanol": "juicio",
     "catalan": "judicis",
-    "valenciano": "juins",
+    "valenciano": "juís",
     "tipo": "v:lexic_val_gva",
     "fuente": "unificado",
     "id": "E0285",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "m"
   },
   {
     "espanol": "lata",
@@ -3224,17 +3224,6 @@
     "categoria": "adv"
   },
   {
-    "espanol": "cultivar",
-    "catalan": "conrear",
-    "valenciano": "cultivar",
-    "tipo": "v:lexic_val_PENDENT",
-    "fuente": "unificado",
-    "id": "E0323",
-    "categoria": "n",
-    "genero_cat": null,
-    "genero_val": "f"
-  },
-  {
     "espanol": "levantamiento",
     "catalan": "aixecament",
     "valenciano": "alçament",
@@ -3429,13 +3418,14 @@
   {
     "espanol": "calabacín",
     "catalan": "carabassons",
-    "valenciano": "carabassetans",
+    "valenciano": "carabassetes",
     "tipo": "v:lexic_val_PENDENT",
     "fuente": "unificado",
     "id": "E0341",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "f",
+    "problema": "cambio_genero"
   },
   {
     "espanol": "chuleta",
@@ -3584,13 +3574,14 @@
   {
     "espanol": "espesor",
     "catalan": "gruixos",
-    "valenciano": "grossàrians",
+    "valenciano": "grossàries",
     "tipo": "v:lexic_val_PENDENT",
     "fuente": "unificado",
     "id": "E0355",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "f",
+    "problema": "cambio_genero"
   },
   {
     "espanol": "grieta",
@@ -3896,13 +3887,13 @@
   {
     "espanol": "prejuicio",
     "catalan": "prejudicis",
-    "valenciano": "prejuins",
+    "valenciano": "prejuís",
     "tipo": "v:lexic_val_gva",
     "fuente": "unificado",
     "id": "E0383",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "m"
   },
   {
     "espanol": "ladrillo",
@@ -3919,13 +3910,14 @@
   {
     "espanol": "ladrillo",
     "catalan": "maons",
-    "valenciano": "rajolans",
+    "valenciano": "rajoles",
     "tipo": "v:lexic_val",
     "fuente": "unificado",
     "id": "E0385",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "f",
+    "problema": "cambio_genero"
   },
   {
     "espanol": "lavadora",
@@ -3986,17 +3978,6 @@
     "genero_val": "m"
   },
   {
-    "espanol": "debajo",
-    "catalan": "sotes",
-    "valenciano": "davalles",
-    "tipo": "v:lexic_val_PENDENT",
-    "fuente": "unificado",
-    "id": "E0393",
-    "categoria": "n",
-    "genero_cat": "f",
-    "genero_val": null
-  },
-  {
     "espanol": "tenis",
     "catalan": "tennis",
     "valenciano": "tenis",
@@ -4022,13 +4003,14 @@
   {
     "espanol": "tomate",
     "catalan": "tomàquets",
-    "valenciano": "tomacans",
+    "valenciano": "tomaques",
     "tipo": "v:lexic_val",
     "fuente": "unificado",
     "id": "E0396",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "f",
+    "problema": "cambio_genero"
   },
   {
     "espanol": "verdaderamente",
@@ -4144,13 +4126,14 @@
   {
     "espanol": "mejillón",
     "catalan": "musclos",
-    "valenciano": "clòtxinans",
+    "valenciano": "clòtxines",
     "tipo": "v:lexic_val",
     "fuente": "unificado",
     "id": "E0407",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "f",
+    "problema": "cambio_genero"
   },
   {
     "espanol": "condolencia",
@@ -4278,13 +4261,13 @@
   {
     "espanol": "purga",
     "catalan": "purgues",
-    "valenciano": "porges",
+    "valenciano": "porgues",
     "tipo": "v:lexic_val_PENDENT",
     "fuente": "unificado",
     "id": "E0419",
     "categoria": "n",
     "genero_cat": "f",
-    "genero_val": null
+    "genero_val": "f"
   },
   {
     "espanol": "burlete",
@@ -4523,13 +4506,14 @@
   {
     "espanol": "romería",
     "catalan": "romiatges",
-    "valenciano": "romerians",
+    "valenciano": "romeries",
     "tipo": "v:lexic_val_PENDENT",
     "fuente": "unificado",
     "id": "E0441",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "f",
+    "problema": "cambio_genero"
   },
   {
     "espanol": "falda",
@@ -4552,29 +4536,6 @@
     "categoria": "n",
     "genero_cat": "f",
     "genero_val": "f"
-  },
-  {
-    "espanol": "tenedor",
-    "catalan": "tenidor",
-    "valenciano": "forqueta",
-    "tipo": "v:lexic_val_PENDENT",
-    "fuente": "unificado",
-    "id": "E0444",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": "f",
-    "problema": "cambio_genero"
-  },
-  {
-    "espanol": "tenedor",
-    "catalan": "tenidors",
-    "valenciano": "forquetans",
-    "tipo": "v:lexic_val_PENDENT",
-    "fuente": "unificado",
-    "id": "E0445",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": null
   },
   {
     "espanol": "zancada",
@@ -4656,13 +4617,13 @@
   {
     "espanol": "yeso",
     "catalan": "guixos",
-    "valenciano": "algepsos",
+    "valenciano": "algeps",
     "tipo": "v:lexic_val",
     "fuente": "unificado",
     "id": "E0453",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "m"
   },
   {
     "espanol": "gorrión",
@@ -4701,13 +4662,14 @@
   {
     "espanol": "melocotonero",
     "catalan": "presseguers",
-    "valenciano": "bresquillerans",
+    "valenciano": "bresquilleres",
     "tipo": "v:lexic_val_PENDENT",
     "fuente": "unificado",
     "id": "E0457",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "f",
+    "problema": "cambio_genero"
   },
   {
     "espanol": "desarrollador",
@@ -4858,13 +4820,14 @@
   {
     "espanol": "malta",
     "catalan": "malts",
-    "valenciano": "maltans",
+    "valenciano": "maltes",
     "tipo": "v:lexic_val_PENDENT",
     "fuente": "unificado",
     "id": "E0471",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "f",
+    "problema": "cambio_genero"
   },
   {
     "espanol": "carcoma",
@@ -5186,13 +5149,13 @@
   {
     "espanol": "albahaca",
     "catalan": "alfàbregues",
-    "valenciano": "alfàbeges",
+    "valenciano": "alfàbegues",
     "tipo": "v:lexic_val_PENDENT",
     "fuente": "unificado",
     "id": "E0500",
     "categoria": "n",
     "genero_cat": "f",
-    "genero_val": null
+    "genero_val": "f"
   },
   {
     "espanol": "avena",
@@ -5486,13 +5449,14 @@
   {
     "espanol": "limonero",
     "catalan": "llimoners",
-    "valenciano": "llimerans",
+    "valenciano": "llimeres",
     "tipo": "v:lexic_val_PENDENT",
     "fuente": "unificado",
     "id": "E0527",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "f",
+    "problema": "cambio_genero"
   },
   {
     "espanol": "manantial",
@@ -5521,13 +5485,26 @@
   {
     "espanol": "manantial",
     "catalan": "deus",
-    "valenciano": "brolladores",
+    "valenciano": "brolladors",
     "tipo": "v:lexic_val_PENDENT",
     "fuente": "unificado",
     "id": "E0529",
     "categoria": "n",
-    "genero_cat": "f",
-    "genero_val": null
+    "forma_problematica": "deus",
+    "lado": "val",
+    "problema": [
+      "homonimia_lexica",
+      "cambio_genero"
+    ],
+    "lemas": [
+      "deu [n]",
+      "deu [num]"
+    ],
+    "genero_cat": [
+      "f",
+      "m"
+    ],
+    "genero_val": "m"
   },
   {
     "espanol": "nogal",
@@ -5568,13 +5545,14 @@
   {
     "espanol": "pisoteo",
     "catalan": "calcigaments",
-    "valenciano": "xafadans",
+    "valenciano": "xafades",
     "tipo": "v:lexic_val_gva",
     "fuente": "unificado",
     "id": "E0533",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "f",
+    "problema": "cambio_genero"
   },
   {
     "espanol": "riña",
@@ -5769,50 +5747,26 @@
     "genero_val": "f"
   },
   {
-    "espanol": "cometa",
-    "catalan": "estel",
-    "valenciano": "milotxa",
-    "tipo": "v:lexic_val_PENDENT",
-    "fuente": "unificado",
-    "id": "E0550",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": "f",
-    "problema": "cambio_genero"
-  },
-  {
-    "espanol": "cometa",
-    "catalan": "estels",
-    "valenciano": "milotxans",
-    "tipo": "v:lexic_val_PENDENT",
-    "fuente": "unificado",
-    "id": "E0551",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": null
-  },
-  {
     "espanol": "derrumbe",
-    "catalan": "ensorrament",
+    "catalan": "ensulsiada",
     "valenciano": "solsida",
     "tipo": "v:lexic_val",
     "fuente": "unificado",
     "id": "E0552",
     "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": "f",
-    "problema": "cambio_genero"
+    "genero_cat": "f",
+    "genero_val": "f"
   },
   {
     "espanol": "derrumbe",
-    "catalan": "ensorraments",
-    "valenciano": "solsidans",
+    "catalan": "ensulsiades",
+    "valenciano": "solsides",
     "tipo": "v:lexic_val",
     "fuente": "unificado",
     "id": "E0553",
     "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": null
+    "genero_cat": "f",
+    "genero_val": "f"
   },
   {
     "espanol": "empujón",
@@ -5895,13 +5849,14 @@
   {
     "espanol": "melocotón",
     "catalan": "préssecs",
-    "valenciano": "bresquillans",
+    "valenciano": "bresquilles",
     "tipo": "v:lexic_val_PENDENT",
     "fuente": "unificado",
     "id": "E0561",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "f",
+    "problema": "cambio_genero"
   },
   {
     "espanol": "perjuicio",
@@ -5917,13 +5872,13 @@
   {
     "espanol": "perjuicio",
     "catalan": "perjudicis",
-    "valenciano": "perjuins",
+    "valenciano": "perjuís",
     "tipo": "v:lexic_val_gva",
     "fuente": "unificado",
     "id": "E0563",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "m"
   },
   {
     "espanol": "requesón",
@@ -5947,41 +5902,27 @@
     "genero_cat": "m",
     "genero_val": "m"
   },
-  {
+    {
     "espanol": "requesón",
-    "catalan": "recuites",
-    "valenciano": "brulles",
+    "catalan": "mató",
+    "valenciano": "brull",
     "tipo": "v:lexic_val_PENDENT",
     "fuente": "unificado",
-    "id": "E0566",
+    "id": "E0564",
     "categoria": "n",
-    "forma_problematica": "recuites",
-    "lado": "val",
-    "problema": "homonimia_lexica",
-    "lemas": [
-      "recuit [adj, n]",
-      "recuita [n]"
-    ],
-    "genero_cat": "f",
-    "genero_val": null
+    "genero_cat": "m",
+    "genero_val": "m"
   },
   {
     "espanol": "requesón",
-    "catalan": "recuita",
-    "valenciano": "brulla",
+    "catalan": "matons",
+    "valenciano": "brulls",
     "tipo": "v:lexic_val_PENDENT",
     "fuente": "unificado",
-    "id": "E0567",
+    "id": "E0565",
     "categoria": "n",
-    "forma_problematica": "recuita",
-    "lado": "val",
-    "problema": "homonimia_lexica",
-    "lemas": [
-      "recuit [adj, n]",
-      "recuita [n]"
-    ],
-    "genero_cat": "f",
-    "genero_val": null
+    "genero_cat": "m",
+    "genero_val": "m"
   },
   {
     "espanol": "sarampión",
@@ -5998,13 +5939,14 @@
   {
     "espanol": "sarampión",
     "catalan": "xarampions",
-    "valenciano": "pallolans",
+    "valenciano": "palloles",
     "tipo": "v:lexic_val",
     "fuente": "unificado",
     "id": "E0569",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "f",
+    "problema": "cambio_genero"
   },
   {
     "espanol": "vaina",
@@ -6184,13 +6126,13 @@
   {
     "espanol": "arenero",
     "catalan": "sorrals",
-    "valenciano": "arenerans",
+    "valenciano": "areneres",
     "tipo": "v:lexic_val",
     "fuente": "unificado",
     "id": "E0585",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "m"
   },
   {
     "espanol": "refajo",
@@ -6344,35 +6286,13 @@
   {
     "espanol": "abrebotellas",
     "catalan": "obridors",
-    "valenciano": "obribotellesos",
+    "valenciano": "obribotelles",
     "tipo": "v:lexic_val_PENDENT",
     "fuente": "unificado",
     "id": "E0598",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
-  },
-  {
-    "espanol": "abrebotellas",
-    "catalan": "obridores",
-    "valenciano": "obribotelleses",
-    "tipo": "v:lexic_val_PENDENT",
-    "fuente": "unificado",
-    "id": "E0599",
-    "categoria": "adj",
-    "genero_cat": "f",
-    "genero_val": null
-  },
-  {
-    "espanol": "abrebotellas",
-    "catalan": "obridora",
-    "valenciano": "obribotellesa",
-    "tipo": "v:lexic_val_PENDENT",
-    "fuente": "unificado",
-    "id": "E0600",
-    "categoria": "adj",
-    "genero_cat": "f",
-    "genero_val": null
+    "genero_val": "m"
   },
   {
     "espanol": "novatada",
@@ -6582,13 +6502,14 @@
   {
     "espanol": "algarrobo",
     "catalan": "garrofers",
-    "valenciano": "garroferans",
+    "valenciano": "garroferes",
     "tipo": "v:lexic_val_PENDENT",
     "fuente": "unificado",
     "id": "E0617",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "f",
+    "problema": "cambio_genero"
   },
   {
     "espanol": "antevíspera",
@@ -6777,13 +6698,13 @@
   {
     "espanol": "quebrantahuesos",
     "catalan": "trencalossos",
-    "valenciano": "crebalòsos",
+    "valenciano": "crebalossos",
     "tipo": "v:lexic_val",
     "fuente": "unificado",
     "id": "E0632",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "m"
   },
   {
     "espanol": "urraca",
@@ -6836,13 +6757,14 @@
   {
     "espanol": "vencejo",
     "catalan": "falciots",
-    "valenciano": "falcians",
+    "valenciano": "falcies",
     "tipo": "v:lexic_val",
     "fuente": "unificado",
     "id": "E0636",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": "m"
+    "genero_val": "f",
+    "problema": "cambio_genero"
   },
   {
     "espanol": "medición",
@@ -6973,12 +6895,12 @@
   },
   {
     "catalan": "argelagues",
-    "valenciano": "argilages",
+    "valenciano": "argilagues",
     "fuente": "unificado",
     "id": "E0650",
     "categoria": "n",
     "genero_cat": "f",
-    "genero_val": null
+    "genero_val": "f"
   },
   {
     "catalan": "arrencada",
@@ -7277,12 +7199,12 @@
   },
   {
     "catalan": "embussos",
-    "valenciano": "embosos",
+    "valenciano": "embossos",
     "fuente": "unificado",
     "id": "E0682",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "m"
   },
   {
     "catalan": "emmotllament",
@@ -7628,12 +7550,12 @@
   },
   {
     "catalan": "mànigues",
-    "valenciano": "màneges",
+    "valenciano": "mànegues",
     "fuente": "unificado",
     "id": "E0721",
     "categoria": "n",
     "genero_cat": "f",
-    "genero_val": null
+    "genero_val": "f"
   },
   {
     "catalan": "nou",
@@ -8007,12 +7929,12 @@
   },
   {
     "catalan": "soies",
-    "valenciano": "sojes",
+    "valenciano": "soges",
     "fuente": "unificado",
     "id": "E0759",
     "categoria": "n",
     "genero_cat": "f",
-    "genero_val": null
+    "genero_val": "f"
   },
   {
     "catalan": "subordre",
@@ -8310,15 +8232,6 @@
     "categoria": "n",
     "genero_cat": "m",
     "genero_val": "m"
-  },
-  {
-    "catalan": "aerotrens",
-    "valenciano": "aerotréns",
-    "fuente": "unificado",
-    "id": "E0795",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": null
   },
   {
     "catalan": "afganès",
@@ -8831,15 +8744,6 @@
     "genero_val": "m"
   },
   {
-    "catalan": "avanttrens",
-    "valenciano": "avanttréns",
-    "fuente": "unificado",
-    "id": "E0852",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": null
-  },
-  {
     "catalan": "avianès",
     "valenciano": "avianés",
     "fuente": "unificado",
@@ -8966,22 +8870,13 @@
     "genero_val": "m"
   },
   {
-    "catalan": "barbaespesses",
-    "valenciano": "barbaespeses",
-    "fuente": "unificado",
-    "id": "E0867",
-    "categoria": "adj",
-    "genero_cat": "f",
-    "genero_val": null
-  },
-  {
     "catalan": "barbaespessa",
     "valenciano": "barbaespesa",
     "fuente": "unificado",
     "id": "E0868",
     "categoria": "adj",
     "genero_cat": "f",
-    "genero_val": null
+    "genero_val": "f"
   },
   {
     "catalan": "barbaespessos",
@@ -8990,7 +8885,7 @@
     "id": "E0869",
     "categoria": "adj",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "m"
   },
   {
     "catalan": "barcelonès",
@@ -10012,15 +9907,6 @@
     "genero_val": "m"
   },
   {
-    "catalan": "distressos",
-    "valenciano": "distresos",
-    "fuente": "unificado",
-    "id": "E0984",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": null
-  },
-  {
     "catalan": "distès",
     "valenciano": "distés",
     "fuente": "unificado",
@@ -10109,15 +9995,6 @@
     "categoria": "n",
     "genero_cat": "m",
     "genero_val": "m"
-  },
-  {
-    "catalan": "edens",
-    "valenciano": "edéns",
-    "fuente": "unificado",
-    "id": "E0995",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": null
   },
   {
     "catalan": "elnès",
@@ -10237,33 +10114,6 @@
     "genero_val": "m"
   },
   {
-    "catalan": "espesses",
-    "valenciano": "espeses",
-    "fuente": "unificado",
-    "id": "E1009",
-    "categoria": "adj",
-    "genero_cat": "f",
-    "genero_val": null
-  },
-  {
-    "catalan": "espessa",
-    "valenciano": "espesa",
-    "fuente": "unificado",
-    "id": "E1010",
-    "categoria": "adj",
-    "genero_cat": "f",
-    "genero_val": null
-  },
-  {
-    "catalan": "espessos",
-    "valenciano": "espesos",
-    "fuente": "unificado",
-    "id": "E1011",
-    "categoria": "adj",
-    "genero_cat": "m",
-    "genero_val": null
-  },
-  {
     "catalan": "estavarès",
     "valenciano": "estavarés",
     "fuente": "unificado",
@@ -10316,15 +10166,6 @@
     "categoria": "n",
     "genero_cat": "m",
     "genero_val": "m"
-  },
-  {
-    "catalan": "estressos",
-    "valenciano": "estresos",
-    "fuente": "unificado",
-    "id": "E1018",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": null
   },
   {
     "catalan": "estèreo",
@@ -10851,15 +10692,6 @@
     "categoria": "n",
     "genero_cat": "m",
     "genero_val": "m"
-  },
-  {
-    "catalan": "ibuprofens",
-    "valenciano": "ibuproféns",
-    "fuente": "unificado",
-    "id": "E1077",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": null
   },
   {
     "catalan": "il·lès",
@@ -11564,15 +11396,6 @@
     "genero_val": "m"
   },
   {
-    "catalan": "mossens",
-    "valenciano": "mosséns",
-    "fuente": "unificado",
-    "id": "E1157",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": null
-  },
-  {
     "catalan": "moçambiquès",
     "valenciano": "moçambiqués",
     "fuente": "unificado",
@@ -12005,15 +11828,6 @@
     "genero_val": "m"
   },
   {
-    "catalan": "oncogens",
-    "valenciano": "oncogéns",
-    "fuente": "unificado",
-    "id": "E1206",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": null
-  },
-  {
     "catalan": "onzè",
     "valenciano": "onzé",
     "fuente": "unificado",
@@ -12390,33 +12204,6 @@
     "categoria": "n",
     "genero_cat": "m",
     "genero_val": "m"
-  },
-  {
-    "catalan": "possesses",
-    "valenciano": "posseses",
-    "fuente": "unificado",
-    "id": "E1249",
-    "categoria": "n",
-    "genero_cat": "f",
-    "genero_val": null
-  },
-  {
-    "catalan": "possessa",
-    "valenciano": "possesa",
-    "fuente": "unificado",
-    "id": "E1250",
-    "categoria": "n",
-    "genero_cat": "f",
-    "genero_val": null
-  },
-  {
-    "catalan": "possessos",
-    "valenciano": "possesos",
-    "fuente": "unificado",
-    "id": "E1251",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": null
   },
   {
     "catalan": "praguès",
@@ -13696,15 +13483,6 @@
     "genero_val": "m"
   },
   {
-    "catalan": "transgens",
-    "valenciano": "transgéns",
-    "fuente": "unificado",
-    "id": "E1395",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": null
-  },
-  {
     "catalan": "trenta-cinquè",
     "valenciano": "trenta-cinqué",
     "fuente": "unificado",
@@ -13894,33 +13672,6 @@
     "genero_val": "m"
   },
   {
-    "catalan": "txerquesses",
-    "valenciano": "txerqueses",
-    "fuente": "unificado",
-    "id": "E1417",
-    "categoria": "n",
-    "genero_cat": "f",
-    "genero_val": null
-  },
-  {
-    "catalan": "txerquessa",
-    "valenciano": "txerquesa",
-    "fuente": "unificado",
-    "id": "E1418",
-    "categoria": "n",
-    "genero_cat": "f",
-    "genero_val": null
-  },
-  {
-    "catalan": "txerquessos",
-    "valenciano": "txerquesos",
-    "fuente": "unificado",
-    "id": "E1419",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": null
-  },
-  {
     "catalan": "txetxè",
     "valenciano": "txetxé",
     "fuente": "unificado",
@@ -13940,12 +13691,12 @@
   },
   {
     "catalan": "tèlexs",
-    "valenciano": "télexos",
+    "valenciano": "télexs",
     "fuente": "unificado",
     "id": "E1422",
     "categoria": "n",
     "genero_cat": "m",
-    "genero_val": null
+    "genero_val": "m"
   },
   {
     "catalan": "tènia",
@@ -14418,15 +14169,6 @@
     "categoria": "n",
     "genero_cat": "m",
     "genero_val": "m"
-  },
-  {
-    "catalan": "xeressos",
-    "valenciano": "xeresos",
-    "fuente": "unificado",
-    "id": "E1475",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": null
   },
   {
     "catalan": "xilè",
@@ -15849,7 +15591,7 @@
     "id": "E1635",
     "categoria": "n",
     "genero_cat": "f",
-    "genero_val": null
+    "genero_val": "f"
   },
   {
     "valenciano": "galletes",
@@ -15859,7 +15601,7 @@
     "id": "E1636",
     "categoria": "n",
     "genero_cat": "f",
-    "genero_val": null
+    "genero_val": "f"
   },
   {
     "catalan": "batlle",
@@ -16310,7 +16052,7 @@
     "id": "E1668",
     "categoria": "adj",
     "genero_cat": "f",
-    "genero_val": null
+    "genero_val": "f"
   },
   {
     "valenciano": "llavades",
@@ -16320,7 +16062,7 @@
     "id": "E1669",
     "categoria": "adj",
     "genero_cat": "f",
-    "genero_val": null
+    "genero_val": "f"
   },
   {
     "valenciano": "Li la",
