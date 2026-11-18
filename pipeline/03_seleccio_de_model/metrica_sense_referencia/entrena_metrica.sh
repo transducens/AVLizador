@@ -81,7 +81,8 @@ nvidia-smi --query-gpu=timestamp,memory.used,utilization.gpu --format=csv,nohead
 MONITOR_GPU=$!
 trap 'kill $MONITOR_GPU 2>/dev/null || true' EXIT
 
-"$VENV/bin/comet-train" --cfg "$CONFIG" --seed_everything 20261118
+# `comet-train` peta en un print amb el lightning d'Abaco: vore entrena_comet.py.
+"$VENV/bin/python" "$SCRIPT_DIR/entrena_comet.py" --cfg "$CONFIG" --seed_everything 20261118
 
 echo "Pic de memòria de la GPU (MiB): $(cut -d, -f2 "$SCRIPT_DIR/logs/${SLURM_JOB_ID:-local}_gpu.csv" | tr -dc '0-9\n' | sort -n | tail -1)"
 echo "Checkpoints:"
