@@ -136,6 +136,12 @@ _DET_M_A_F: dict[str, str] = {
     "mateix": "mateixa", "mateixos": "mateixes",
     # Interrogatiu / exclamatiu ("siga quin siga el seu fi", "quina despesa!")
     "quin": "quina", "quins": "quines",
+    # Quantitatius i indefinits (18/11/2026: abans "Algunes gastos", "Quantes
+    # gastos", "Ambdues poals"; els invariables, "cap", "altres",
+    # "qualsevol", "bastants", "gaires", no hi són)
+    "algun": "alguna", "alguns": "algunes", "divers": "diversa", "diversos": "diverses",
+    "quant": "quanta", "quants": "quantes", "tant": "tanta", "tants": "tantes",
+    "varis": "vàries", "ambdós": "ambdues", "ningun": "ninguna", "ninguns": "ningunes",
 }
 _DET_F_A_M: dict[str, str] = {
     # Articles
@@ -159,6 +165,9 @@ _DET_F_A_M: dict[str, str] = {
     "altra": "altre",
     "mateixa": "mateix", "mateixes": "mateixos",
     "quina": "quin", "quines": "quins",
+    "alguna": "algun", "algunes": "alguns", "diversa": "divers", "diverses": "diversos",
+    "quanta": "quant", "quantes": "quants", "tanta": "tant", "tantes": "tants",
+    "vàries": "varis", "ambdues": "ambdós", "ninguna": "ningun", "ningunes": "ninguns",
 }
 
 # Dependències d'un participi que vol dir que té el seu propi complement:
@@ -488,6 +497,8 @@ class ConcordancaGenereSnRule:
 
     >>> e.translate("Amb aquesta finalitat i la seva galleda.")
     'Amb este fi i el seu poal.'
+    >>> e.translate("Algunes despeses i ambdues galledes.")
+    'Alguns gastos i ambdós poals.'
     >>> e.translate("La fusta d'aquesta noguera és molt vella.")
     "La fusta d'este anouer és molt vella."
     >>> e.translate("Cal cobrir totes les despeses, inclosa l'amortització.")
@@ -500,8 +511,8 @@ class ConcordancaGenereSnRule:
     'El fesol tendre és excel·lent.'
     >>> e.translate("Va recomanar una síndria ben freda.")
     "Va recomanar un meló d'Alger ben fred."
-    >>> e.translate("L'estel va quedar enganxat en un arbre.")
-    'La milotxa va quedar enganxada en un arbre.'
+    >>> e.translate("La galleda va quedar enganxada a la paret.")
+    'El poal va quedar enganxat a la paret.'
 
     Però no en un temps compost, en un participi absolut ni en "cada ...
     més" (`translate` amb el nom traduït a mà, com fa FLOR):
@@ -518,6 +529,12 @@ class ConcordancaGenereSnRule:
     "El Decret, un vegada aprovat formalment, integrarà l'ordenament."
     >>> amb("Vivim en un món cada cop més interconnectat.", 10, "vegada")
     'Vivim en un món cada vegada més interconnectat.'
+
+    Un participi enganxat sí que concorda si spaCy el relaciona amb el nom,
+    encara que l'analitze al revés:
+
+    >>> e.translate("La xocolata desfeta arriba als estàndards belgues.")
+    'El xocolate desfet arriba als estàndards belgues.'
 
     Pronoms interrogatius i relatius que es referixen al nucli:
 
@@ -749,10 +766,14 @@ class ConcordancaGenereSnRule:
             return None
         if _te_complement_propi(dt, dt_nucli):
             return None  # "un cop acabat el partit": concorda amb "partit"
-        # Només adjectius: un participi darrere del nom sovint és una
-        # construcció absoluta ("El Decret, un cop aprovat, ...", BM-AVL-074),
-        # i si spaCy el fa penjar d'un ALTRE nom, és d'eixe nom.
-        if "Part" in dt.morph.get("VerbForm"):
+        # Un participi darrere del nom sovint és una construcció absoluta
+        # ("El Decret, un cop aprovat, ...", BM-AVL-074): només es canvia si
+        # spaCy el relaciona directament amb el nucli, encara que siga al
+        # revés ("La xocolata desfeta arriba...": fa "xocolata" `amod` de
+        # "desfeta", 18/11/2026). I si spaCy el fa penjar d'un ALTRE nom, és
+        # d'eixe nom.
+        relacionats = dt_nucli.head.i == dt.i or dt.head.i == dt_nucli.i
+        if "Part" in dt.morph.get("VerbForm") and not relacionats:
             return None
         if dt.head.i != dt_nucli.i and dt.head.pos_ in ("NOUN", "PROPN") and dt.dep_ in ("amod", "acl"):
             return None

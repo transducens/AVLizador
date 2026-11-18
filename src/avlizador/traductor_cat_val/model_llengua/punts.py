@@ -383,6 +383,14 @@ def variants_concordanca(base: list[Token], punt: Punt, candidat: str) -> list[l
     >>> sorted(detokenize(v) for v in variants_concordanca(base_neutra(motor, text, [p]), p, "vegades"))
     ['Moltes vegades no sabem què fer.']
 
+    No es proposen variants d'un adjectiu que va davant del determinant: no
+    és del sintagma (18/11/2026):
+
+    >>> text = "L'aïllament és absolut un cop arribes dins de la cova."
+    >>> p = detecta(motor.tradueix_tokens(text), carrega_punts())[0]
+    >>> [detokenize(v) for v in variants_concordanca(base_neutra(motor, text, [p]), p, "vegada")]
+    ["L'aïllament és absolut una vegada arribes dins de la cova."]
+
     (Des del 11/11/2026 `aplica_candidat` ja posa "Moltes" amb la regla de
     concordança, i la variant "Molts vegades" no es genera.)
     """
@@ -395,12 +403,20 @@ def variants_concordanca(base: list[Token], punt: Punt, candidat: str) -> list[l
         return variants
     anteriors = []
     j = punt.index - 1
+    vist_det = False
     while j >= 0 and len(anteriors) < 2:
         if primera[j].surface.isspace():
             j -= 1
             continue
         if primera[j].pos not in _CAT_CONCORDA or not primera[j].translated.isalpha():
             break
+        # El determinant obri el sintagma nominal: abans d'ell només hi pot
+        # haver un altre determinant ("tots els cops"), no un adjectiu del
+        # predicat ("és absolut un cop" -> "absoluta una vegada", que KenLM
+        # preferia per 0,25 punts; 18/11/2026).
+        if vist_det and primera[j].pos != "DET":
+            break
+        vist_det = vist_det or primera[j].pos == "DET"
         anteriors.append(j)
         j -= 1
     opcions = [[primera[j].translated] + [preserva_majuscula(primera[j].translated, f)
