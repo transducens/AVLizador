@@ -1,0 +1,73 @@
+# Mètrica sense referència cat->val: model FINAL (corpus sense reserva).
+# unbabel-comet 2.2.7 (pytorch-lightning 2.x). Rutes relatives a l'arrel del
+# repo (entrena_metrica.sh hi fa `cd`). Es llança amb:
+#   comet-train --cfg pipeline/03_seleccio_de_model/metrica_sense_referencia/configs/referenceless_complet.yaml
+#
+# Batch efectiu = batch_size 8 x accumulate_grad_batches 4 = 32.
+# Early stopping per la correlació de Pearson en validació (`val_pearson`,
+# la registra COMET en `on_validation_epoch_end`).
+
+referenceless_regression_metric:
+  class_path: comet.models.ReferencelessRegression
+  init_args:
+    nr_frozen_epochs: 0.3          # l'encoder congelat el primer 30 % de la 1a època
+    keep_embeddings_frozen: true   # la matriu d'embeddings (250k x 1024) no s'entrena: menys memòria
+    optimizer: AdamW
+    warmup_steps: 0
+    encoder_learning_rate: 1.0e-05
+    learning_rate: 1.5e-04
+    layerwise_decay: 0.95
+    encoder_model: XLM-RoBERTa
+    pretrained_model: xlm-roberta-large
+    pool: avg
+    layer: mix
+    layer_transformation: softmax
+    layer_norm: true
+    loss: mse
+    dropout: 0.1
+    batch_size: 8
+    train_data:
+      - dades/metrica_sense_referencia/complet/train.csv
+    validation_data:
+      - dades/metrica_sense_referencia/complet/val.csv
+    hidden_sizes:
+      - 2048
+      - 1024
+    activations: Tanh
+    final_activation: null
+
+trainer:
+  class_path: pytorch_lightning.trainer.trainer.Trainer
+  init_args:
+    accelerator: gpu
+    devices: 1
+    precision: 16-mixed            # fp16 (les RTX 2080 Ti no tenen bf16)
+    accumulate_grad_batches: 4
+    gradient_clip_val: 1.0
+    max_epochs: 5
+    min_epochs: 1
+    val_check_interval: 0.5        # validació dues vegades per època
+    check_val_every_n_epoch: 1
+    log_every_n_steps: 50
+    enable_progress_bar: false     # en SLURM, la barra omple el log
+    deterministic: false
+    default_root_dir: pipeline/03_seleccio_de_model/metrica_sense_referencia/models/complet
+
+early_stopping:
+  class_path: pytorch_lightning.callbacks.early_stopping.EarlyStopping
+  init_args:
+    monitor: val_pearson
+    mode: max
+    min_delta: 0.0
+    patience: 3                    # 3 validacions = 1,5 èpoques sense millorar
+    verbose: true
+
+model_checkpoint:
+  class_path: pytorch_lightning.callbacks.model_checkpoint.ModelCheckpoint
+  init_args:
+    filename: '{epoch}-{step}-{val_pearson:.4f}'
+    monitor: val_pearson
+    mode: max
+    save_top_k: 1
+    save_weights_only: true
+    save_last: false

@@ -86,3 +86,8 @@ resultats_hf_*/
 docker/kenlm/
 # Model d'spaCy per a construir la imatge sense baixar-lo de GitHub (17/11/2026; vore docker/LLEGIM.md)
 docker/*.whl
+
+# Mètrica sense referència: corpus sintètic generat (gran; es regenera amb pipeline/03_seleccio_de_model/metrica_sense_referencia/)
+dades/metrica_sense_referencia/
+pipeline/03_seleccio_de_model/metrica_sense_referencia/models/
+pipeline/03_seleccio_de_model/metrica_sense_referencia/logs/
