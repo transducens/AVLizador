@@ -11,6 +11,7 @@
 #   sbatch entrena_metrica.sh                         # model final (corpus sense reserva)
 #   VARIANT=reserva sbatch entrena_metrica.sh         # model per al test de circularitat
 #   LOT=4 sbatch entrena_metrica.sh                   # lot 4 x acumulació 8 si el de 8 no cap
+#   TREBALLADORS=2 sbatch entrena_metrica.sh          # treballadors del DataLoader (per defecte 0; vore entrena_comet.py)
 # Eixida: models/<variant>/lightning_logs/version_N/{hparams.yaml,checkpoints/*.ckpt,metrics.csv}
 # Logs: logs/%j_metrica.out (inclou l'ús de memòria de la GPU cada minut).
 #
