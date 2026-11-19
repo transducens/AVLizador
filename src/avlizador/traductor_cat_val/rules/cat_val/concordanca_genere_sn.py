@@ -132,6 +132,9 @@ _DET_M_A_F: dict[str, str] = {
     "molt": "molta", "molts": "moltes",
     "poc": "poca", "pocs": "poques",
     "cert": "certa", "certs": "certes",
+    # "algun" no és en el fitxer morfològic ("Alguns cops" -> "Alguns
+    # vegades", homògrafs HG030, 19/11/2026)
+    "algun": "alguna", "alguns": "algunes",
     "altre": "altra",
     "mateix": "mateixa", "mateixos": "mateixes",
     # Interrogatiu / exclamatiu ("siga quin siga el seu fi", "quina despesa!")
@@ -156,6 +159,7 @@ _DET_F_A_M: dict[str, str] = {
     "molta": "molt", "moltes": "molts",
     "poca": "poc", "poques": "pocs",
     "certa": "cert", "certes": "certs",
+    "alguna": "algun", "algunes": "alguns",
     "altra": "altre",
     "mateixa": "mateix", "mateixes": "mateixos",
     "quina": "quin", "quines": "quins",
@@ -727,6 +731,8 @@ class ConcordancaGenereSnRule:
         ...     return detokenize(toks)
         >>> amb("Diversos cops ho hem dit.", 2, "vegades")
         'Diverses vegades ho hem dit.'
+        >>> amb("Alguns cops arriba tard.", 2, "vegades")
+        'Algunes vegades arriba tard.'
         >>> amb("L'últim cop que el vaig veure estava bé.", 2, "vegada")
         "L'última vegada que el vaig veure estava bé."
         """

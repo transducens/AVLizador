@@ -1133,6 +1133,54 @@ decisión frente al sistema. Ojo para la publicación: el clasificador sale en
 parte de textos de la AVL (vore el punto de la licencia en CLAUDE.md / la
 ficha de Hugging Face).
 
+### 4.20 Concordancia de los candidatos: el modelo solo elige la palabra (19/11, rama `concordancia-genere`)
+
+Origen: dos fallos de la 2.0.0 que encontró un compañero en FLORES+ devtest.
+
+- **461**: «L'aïllament és absolut un cop arribes» → «és **absoluta** una
+  vegada». No era la regla de concordancia (spaCy hace «un cop» locución
+  `fixed` y no cuelga «absolut» de «cop»), sino `concordanca="variants"`, el
+  modo por defecto: proponía a KenLM las formas del otro género de las dos
+  palabras anteriores (DET/ADJ/NUM/PRON) sin mirar si dependen del nombre, y
+  KenLM prefería «absoluta una vegada».
+- **782**: «La xocolata desfeta» → «El xocolate **desfeta**». spaCy analiza al
+  revés («xocolata» `amod` de «desfeta») y `_adjectiu_enganxat` descartaba
+  todos los participios (por BM-AVL-074, «El Decret, un cop aprovat»).
+
+Cambios (decisión del usuario: que KenLM no haga concordancia y la haga la
+regla):
+
+1. `CONCORDANCA_PER_DEFECTE = "motor"`: la frase de cada candidato la hace
+   `aplica_candidat` con la regla de concordancia (spaCy + fichero
+   morfológico, desde el 11/11) y KenLM solo elige la palabra. Además puntúa
+   menos frases.
+2. `_adjectiu_enganxat` ya no descarta los participios. BM-AVL-074 sigue bien:
+   «aprovat» cuelga de «Decret» y la comprobación del núcleo lo deja fuera.
+3. Huecos de la regla que tapaban las variantes: determinante fuera de la
+   tabla → fichero morfológico, solo si no es artículo y spaCy le da el género
+   de antes («Diverses vegades»; sin esa condición, «a les nou» → «a lesa
+   anou», porque «les» tiene lectura de adjetivo); palabra con el artículo
+   apostrofado dentro del token («L'última vegada», que fallaba también con
+   las variantes); «algun/alguns» en la tabla de determinantes (no está en el
+   fichero morfológico).
+
+Medido:
+
+- Motor solo (local): 0 frases distintas en manual (218), 151 (142),
+  homógrafos v1 (181) y v2 (82), BOE estricto (1.800) y el benchmark de género
+  (110/119).
+- KenLM en Abaco (`avalua_sistema_20261119_0843`, con los cambios 1 y 2 y sin
+  «algun»): v1 **226** (2.0.0: 227), v2 112, manual 232 y 151 144. La única
+  frase distinta era HG030 «Alguns cops arriba tard» → «Alguns colps»: el
+  candidato de «vegades» salía «Alguns vegades» y KenLM lo veía improbable. Con
+  «algun» en la tabla, las frases candidatas de HG030 son idénticas a las de la
+  2.0.0 en los dos modos, así que se espera 227 / 112 / 232 / 144 (falta
+  confirmarlo en Abaco).
+
+Queda: si spaCy analiza mal la frase, alguna palabra se queda en el género de
+antes («La xocolata desfeta és molt bona» → «El xocolate desfet és molt
+bona»). Tests nuevos en `tests/test_kenlm.py` (461 y 782).
+
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
   se evalúa: las cifras son optimistas. Hay que confirmarlas en el 151, el
@@ -1291,3 +1339,4 @@ Son compatibles: si C2 mejora la base, C1 puede desempatar encima.
 | 13/11 | **Medido en Abaco** (`avalua_sistema_20261113_1308`, `compara_models_20261113_1308`; clasificador general con cop, cops y deu + las dos reglas de «nou») | 257 decisiones: **193 aciertos / 1 grave / 63 sin traducir** (11:45: 191 / 1 / 65). Exactas v1 226 → **227**, v2 110 → **111**; manual 232, 151 144, BOE estricto 1.894 y gplsi 1.550 igual. Cambian 4 decisiones: las 2 ganancias son de la regla «una nou» (HG059 «Es va menjar una nou», HG2-001 «Ha caigut una nou de l'arbre»: spaCy NUM → ahora decide KenLM y acierta «anou»). El clasificador general decide 8 puntos (antes 6) sin cambiar ningún resultado: separar «cop» y «cops» da las mismas decisiones, y en «deu» decide 2 (HG2-053 bien; HG2-047 «Aquesta deu no s'asseca mai» se queda «deu», igual que antes). Ningún error grave nuevo. |
 | 16/11 | **KenLM de orden 6, 7 y 8: descartado** (`compara_models_20261116_0916` y `_0922`) | Mismo texto, poda y tabla de frecuencias; solo cambia el orden. Las 257 decisiones son idénticas a las del orden 5 (193 aciertos / 1 grave / 63 sin traducir; exactas v1 227, v2 111, manual 232); la diferencia entre candidatas varía ≤ 0,06 en el 90 % de los casos. Con el mejor criterio (margen 1), +1 en v2 (HG2-034). Ocupa más (91-112 MB frente a 77) y un orden > 6 exige compilar `kenlm` con `KENLM_MAX_ORDER`/`MAX_ORDER=10`. Sección 4.18. |
 | 16/11 | **Lemas cerrados; se queda la estructura actual** (KenLM de formas, orden 5, + clasificador general) | Decisión del usuario. Los lemas se probaron en todas las palabras ambiguas; ganan en algunas (manca, gandules, panotxa) pero con 8-18 casos por palabra y traduciendo más (13 graves frente a 1): no se usan ni por palabra. spaCy decide 68 de las 257 decisiones y falla 7, todas leves. Los «sin traducir» vienen sobre todo de falta de datos (41 + 14 de 63). Sección 4.16, «Cierre». |
+| 19/11 | **La concordancia de los candidatos la hace la regla, no KenLM** (`concordanca="motor"` por defecto; participios pegados al nombre; «diversos», «algun», «L'últim») | Decisión del usuario, por FLORES+ devtest 461 («és absoluta una vegada») y 782 («El xocolate desfeta»). Motor solo: 0 frases distintas en 6 benchmarks. KenLM en Abaco sin «algun»: 226 / 112 / 232 / 144 (HG030 «Alguns vegades»); con «algun», las mismas frases candidatas que la 2.0.0. Sección 4.20. |
