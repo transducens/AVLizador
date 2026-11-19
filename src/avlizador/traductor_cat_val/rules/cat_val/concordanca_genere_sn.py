@@ -90,7 +90,10 @@ from .. import (
     _PREFIX_ELIDIT_RE,
     DET_FEM_A_MASC,
     DET_MASC_A_FEM,
+    _CONTRACCIO_A_FEMENI,
+    _index_anterior_real,
     Token,
+    contrau_article,
     corregeix_determinant_abans,
     preserva_majuscula,
     te_problema,
@@ -316,6 +319,30 @@ def carrega_morfologia(
     return idx
 
 
+def generes_de_nom(formes, path: Path = MORFOLOGIA_PATH) -> dict[str, set[str]]:
+    """`{forma: gèneres de les seues lectures de NOM}` per a les `formes`
+    demanades (en minúscules), segons el fitxer morfològic ("mf" si n'hi ha
+    una d'invariable). Una forma sense cap lectura de nom no hi és. Per a
+    la regla de gènere dels homògrafs (`model_llengua/punts.py`, 19/11/2026):
+    "nou" només és nom en femení (el fruit), "deu" en els dos gèneres.
+
+    >>> g = generes_de_nom({"nou", "deu", "cremosa"})
+    >>> sorted(g["nou"]), sorted(g["deu"]), "cremosa" in g
+    (['f'], ['f', 'm'], False)
+    """
+    formes = {f.lower() for f in formes}
+    generes: dict[str, set[str]] = {}
+    with open(path, encoding="utf-8") as fh:
+        for linia in fh:
+            forma = linia.partition(":")[0].strip().lower()
+            if forma not in formes or "<n>" not in linia:
+                continue
+            parsed = _parseja_rapid(linia)
+            if parsed is not None and parsed[2] == "n" and parsed[3]:
+                generes.setdefault(forma, set()).add(parsed[3])
+    return generes
+
+
 @lru_cache(maxsize=None)
 def _index_invers(path: Path = MORFOLOGIA_PATH) -> dict[str, list[tuple[str, str, str, str]]]:
     """`{forma en minúscules: TOTES les seues claus (lema, cat, genere,
@@ -504,8 +531,19 @@ class ConcordancaGenereSnRule:
     'El fesol tendre és excel·lent.'
     >>> e.translate("Va recomanar una síndria ben freda.")
     "Va recomanar un meló d'Alger ben fred."
-    >>> e.translate("L'estel va quedar enganxat en un arbre.")
-    'La milotxa va quedar enganxada en un arbre.'
+    >>> e.translate("La galleda va quedar enganxada a la paret.")
+    'El poal va quedar enganxat a la paret.'
+
+    L'article o la contracció de davant d'un possessiu o un adjectiu que
+    canvia de gènere també (19/11/2026, AINA), i un adjectiu que ja ha
+    traduït el lèxic:
+
+    >>> e.translate("Si volen romandre al seu habitatge actual.")
+    'Si volen romandre a la seua vivenda actual.'
+    >>> e.translate("Del primer esment no en sabem res. Vaig a la seva despesa.")
+    'De la primera menció no en sabem res. Vaig al seu gasto.'
+    >>> e.translate("Però imagina't si poses aquestes petites despeses en inversions.")
+    "Però imagina't si poses estos xicotets gastos en inversions."
 
     Però no en un temps compost, en un participi absolut ni en "cada ...
     més" (`translate` amb el nom traduït a mà, com fa FLOR):
@@ -761,6 +799,47 @@ class ConcordancaGenereSnRule:
             tok.translated = prefix + nova
             tok.is_translated = True
 
+    def _adjectiu_traduit(self, tok: Token, dt, genere_original: str) -> bool:
+        """Si `tok`, ja traduït per una altra regla, és un adjectiu que el
+        lèxic ha canviat ("petites" -> "xicotetes") i encara porta el gènere
+        ORIGINAL del nucli: llavors també ha de concordar ("estes petites
+        despeses" -> "estos xicotets gastos", AINA 6203509; 19/11/2026).
+        Els determinants i els tokens que ja ha tocat la concordança (que ja
+        no tenen el gènere original) no hi entren.
+
+        >>> r = ConcordancaGenereSnRule()
+        >>> t = Token("petites", translated="xicotetes", is_translated=True)
+        >>> r._adjectiu_traduit(t, None, "f"), r._adjectiu_traduit(t, None, "m")
+        (True, False)
+        """
+        if dt is not None and (dt.dep_ == "det" or dt.pos_ in ("DET", "PRON")):
+            return False
+        if tok.translated.lower() == tok.surface.lower():
+            return False
+        return self._te_lectura_concordant(tok.translated, genere_original)
+
+    def _porta_genere(self, forma: str, genere: str) -> bool:
+        """Si `forma` és un determinant o un adjectiu de `genere`."""
+        taula = _DET_M_A_F if genere == "f" else _DET_F_A_M
+        return forma.lower() in taula.values() or self._te_lectura_concordant(forma, genere)
+
+    def _corregeix_article_del_sn(self, tokens: list[Token], i: int, genere_nou: str) -> None:
+        """L'article o la contracció que va davant dels determinants i
+        adjectius que ja han canviat de gènere: "al seu habitatge" -> "a la
+        seua vivenda", "del primer esment" -> "de la primera menció" (abans
+        "al seua vivenda", 609 frases d'AINA amb la 2.0.0; 19/11/2026). Es
+        camina cap a l'esquerra des del nucli per les paraules ja traduïdes
+        que porten el gènere nou, i es corregix la de davant de l'última
+        (`corregeix_determinant_abans`, que no fa res si no és un article o
+        una contracció). Sense spaCy: a principi de frase spaCy no partix
+        "Al" en "a" + "l"."""
+        ultim = None
+        k = _index_anterior_real(tokens, i)
+        while k is not None and tokens[k].is_translated and self._porta_genere(tokens[k].translated, genere_nou):
+            ultim, k = k, _index_anterior_real(tokens, k)
+        if ultim is not None:
+            corregeix_determinant_abans(tokens, ultim, genere_nou)
+
     def _adjectiu_enganxat(self, tokens: list[Token], i: int, genere_nou: str, doc, dt_nucli) -> int | None:
         """Índex de l'adjectiu just darrere del nucli `tokens[i]` (saltant un
         adverbi de grau), si concordava amb ell. Per als casos en què spaCy
@@ -801,9 +880,15 @@ class ConcordancaGenereSnRule:
         """Posa en `genere_nou` les paraules que concorden amb el nucli
         `tokens[i]` (que ja porta la traducció): adjectius, determinants
         que spaCy penja del nom, predicatius, interrogatius i relatius. El
-        determinant immediatament anterior NO (el fa `apply`, o qui crida).
-        Sense spaCy no fa res. `doc`: l'anàlisi amb parser del text
-        original, si ja la té qui crida."""
+        determinant immediatament anterior NO (el fa `apply`, o qui crida),
+        però sí l'article o la contracció de davant de les paraules que han
+        canviat (`_corregeix_article_del_sn`). Sense spaCy només fa això
+        últim. `doc`: l'anàlisi amb parser del text original, si ja la té
+        qui crida."""
+        self._concorda_amb_spacy(tokens, i, genere_nou, doc)
+        self._corregeix_article_del_sn(tokens, i, genere_nou)
+
+    def _concorda_amb_spacy(self, tokens: list[Token], i: int, genere_nou: str, doc=None) -> None:
         if doc is None:
             doc = self._analitza(_text_original(tokens))
             if doc is None:
@@ -822,11 +907,16 @@ class ConcordancaGenereSnRule:
             m = _PREFIX_ELIDIT_RE.match(t.surface)
             if m:
                 pos_a_idx.setdefault(t.start + len(t.surface) - len(m.group(2)), k)
+        genere_original = "m" if genere_nou == "f" else "f"
         for dt in self._membres(dt_nucli):
             j = pos_a_idx.get(dt.idx)
-            if j is None or j == i or tokens[j].is_translated:
-                continue  # nucli, token no trobat o ja tocat per una altra regla
+            if j is None or j == i or (tokens[j].is_translated and not self._adjectiu_traduit(tokens[j], dt, genere_original)):
+                continue  # nucli o token ja tocat per una altra regla
             self._canvia_token(tokens[j], dt, genere_nou)
+            if genere_nou == "m" and tokens[j].translated.lower() in ("el", "els"):
+                seguent = next((k for k in range(j + 1, len(tokens)) if not tokens[k].surface.isspace()), None)
+                if seguent is not None:
+                    contrau_article(tokens, j, seguent)
         j = self._adjectiu_enganxat(tokens, i, genere_nou, doc, dt_nucli)
         if j is not None:
             self._canvia_token(tokens[j], None, genere_nou)
