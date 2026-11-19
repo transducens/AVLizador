@@ -715,14 +715,44 @@ class ConcordancaGenereSnRule:
     def _canvia_token(self, tok: Token, dt, genere_nou: str) -> None:
         """Canvia `tok` (no traduït encara) al gènere nou: taula de
         determinants per a determinants i pronoms, fitxer morfològic per a
-        adjectius i participis."""
+        adjectius i participis. Un determinant que no és en la taula
+        ("diversos") va pel fitxer morfològic. Amb un article o preposició
+        apostrofats dins del token ("L'últim"), es canvia la resta.
+
+        >>> from .. import tokenize, detokenize
+        >>> r = ConcordancaGenereSnRule()
+        >>> def amb(text, i, trad):
+        ...     toks = tokenize(text); toks[i].translated = trad; toks[i].is_translated = True
+        ...     r.concorda_dependents(toks, i, "f")
+        ...     return detokenize(toks)
+        >>> amb("Diversos cops ho hem dit.", 2, "vegades")
+        'Diverses vegades ho hem dit.'
+        >>> amb("L'últim cop que el vaig veure estava bé.", 2, "vegada")
+        "L'última vegada que el vaig veure estava bé."
+        """
         forma = tok.translated  # pot ser distinta de surface
+        prefix = ""
+        m = _PREFIX_ELIDIT_RE.match(forma)
+        if m:
+            prefix, forma = forma[: len(forma) - len(m.group(2))], m.group(2)
         if dt is not None and (dt.dep_ == "det" or dt.pos_ == "PRON"):
             nova = self._canvia_determinant(forma, genere_nou)
+            # Fitxer morfològic només per a un determinant no article que
+            # spaCy dona en el gènere d'abans: "les" té una lectura d'adjectiu
+            # ("lès, lesa") i feia "a les nou" -> "a lesa anou".
+            genere_abans = "Masc" if genere_nou == "f" else "Fem"
+            if (nova is None and dt.pos_ != "PRON" and "Art" not in dt.morph.get("PronType")
+                    and genere_abans in dt.morph.get("Gender")):
+                nova = self._canvia_per_morfologia(forma, genere_nou)
         else:
             nova = self._canvia_per_morfologia(forma, genere_nou)
         if nova is not None:
-            tok.translated = preserva_majuscula(forma, nova)
+            nova = preserva_majuscula(forma, nova)
+            if prefix and not _COMENCA_EN_VOCAL_O_H_MUDA_RE.match(nova):
+                if prefix[0].lower() != "d":
+                    return  # "l'" només davant de vocal: no es toca
+                prefix = preserva_majuscula(prefix, "de ")
+            tok.translated = prefix + nova
             tok.is_translated = True
 
     def _adjectiu_enganxat(self, tokens: list[Token], i: int, genere_nou: str, doc, dt_nucli) -> int | None:
@@ -749,11 +779,11 @@ class ConcordancaGenereSnRule:
             return None
         if _te_complement_propi(dt, dt_nucli):
             return None  # "un cop acabat el partit": concorda amb "partit"
-        # Només adjectius: un participi darrere del nom sovint és una
-        # construcció absoluta ("El Decret, un cop aprovat, ...", BM-AVL-074),
-        # i si spaCy el fa penjar d'un ALTRE nom, és d'eixe nom.
-        if "Part" in dt.morph.get("VerbForm"):
-            return None
+        # Si spaCy el fa penjar d'un ALTRE nom, és d'eixe nom: "El Decret, un
+        # cop aprovat, ..." (BM-AVL-074; "aprovat" penja de "Decret").
+        # Fins al 19/11/2026 també es descartava qualsevol participi, i
+        # "La xocolata desfeta" -> "El xocolate desfeta" (FLORES+ devtest
+        # 782: spaCy fa "xocolata" `amod` de "desfeta").
         if dt.head.i != dt_nucli.i and dt.head.pos_ in ("NOUN", "PROPN") and dt.dep_ in ("amod", "acl"):
             return None
         genere_original = "m" if genere_nou == "f" else "f"
@@ -780,6 +810,12 @@ class ConcordancaGenereSnRule:
         if dt_nucli is None:
             return
         pos_a_idx = {t.start: k for k, t in enumerate(tokens)}
+        # Paraula amb article o preposició apostrofats dins del token
+        # ("L'últim"): spaCy la té a part, darrere de l'apòstrof.
+        for k, t in enumerate(tokens):
+            m = _PREFIX_ELIDIT_RE.match(t.surface)
+            if m:
+                pos_a_idx.setdefault(t.start + len(t.surface) - len(m.group(2)), k)
         for dt in self._membres(dt_nucli):
             j = pos_a_idx.get(dt.idx)
             if j is None or j == i or tokens[j].is_translated:

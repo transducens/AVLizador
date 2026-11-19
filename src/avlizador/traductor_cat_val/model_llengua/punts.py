@@ -20,11 +20,13 @@ paraula escrita ací), sempre amb la forma ambigua al costat CATALÀ:
 
 Cada candidat es construïx sobre una "base neutra" (la frase traduïda pel
 motor amb la paraula ambigua sense tocar): es posa el candidat i es fa
-concordar el determinant d'abans ("un cop" -> "una vegada"). Límit: el
-motor no concorda els altres determinants ni adjectius ("molts cops" ->
-"molts vegades", "un altre cop" -> "un altre vegada"); l'opció
-experimental `concordanca="variants"` proposa les formes de l'altre
-gènere i deixa triar al model de llengua.
+concordar el determinant d'abans ("un cop" -> "una vegada") i, des del
+11/11/2026, la resta de paraules que concorden amb el nom segons spaCy
+("molts cops" -> "moltes vegades", "un altre cop" -> "una altra vegada").
+L'opció `concordanca="variants"` (la de per defecte fins al 19/11/2026)
+proposa a més les formes de l'altre gènere de les dos paraules d'abans i
+deixa triar al model, però sense mirar si depenen del nom: "és absolut un
+cop" -> "és absoluta una vegada".
 """
 
 from __future__ import annotations

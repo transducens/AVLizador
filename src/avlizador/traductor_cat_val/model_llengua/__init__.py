@@ -83,7 +83,13 @@ from dataclasses import dataclass, replace
 from ..rules import detokenize
 from .punts import TIPUS_PER_DEFECTE, Punt, base_neutra, carrega_punts, decisio_spacy, detecta, frases_candidates
 
-CONCORDANCA_PER_DEFECTE = "variants"
+# Concordança dels candidats: "motor" = la frase de cada candidat la fa
+# `aplica_candidat` amb la regla de concordança (spaCy + fitxer
+# morfològic), i el model només tria la paraula. Fins al 19/11/2026 era
+# "variants": el model també triava el gènere de les dos paraules d'abans
+# encara que no depengueren del nom, i "L'aïllament és absolut un cop
+# arribes" -> "és absoluta una vegada" (FLORES+ devtest 461).
+CONCORDANCA_PER_DEFECTE = "motor"
 
 
 @dataclass(frozen=True)
