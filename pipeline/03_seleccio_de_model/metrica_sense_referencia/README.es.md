@@ -139,13 +139,16 @@ sbatch entrena_metrica.sh                       # modelo final
 VARIANT=reserva sbatch entrena_metrica.sh       # modelo del test de circularidad
 ```
 
+Modelo de reserva (job 3224): 5 épocas completas, `val_pearson` 0,752 → **0,924** (seguía mejorando poco a poco); sin incidencias.
+
 Primer intento del modelo final (18/11/2026): `val_pearson` 0,824 → 0,918
 → 0,937 → 0,945 → 0,945 → **0,957** en 6 validaciones (3 épocas, unos 70
 minutos por época con la GPU al ~37 %). A las 3,5 horas murió un trabajador
 del DataLoader (`could not unlink the shared memory file`) y el job se quedó
 colgado con la GPU al 0 % hasta el límite. El mejor checkpoint (0,957) se
 guardó. Desde entonces `entrena_comet.py` usa 0 trabajadores (`TREBALLADORS=N`
-para cambiarlo, con un tiempo máximo de 10 minutos por lote).
+para cambiarlo, con un tiempo máximo de 10 minutos por lote) y el modelo final
+admite hasta 8 épocas (la parada temprana corta antes si deja de mejorar).
 
 Salida: `models/<variante>/lightning_logs/version_N/` (`hparams.yaml`,
 `checkpoints/*.ckpt`, `metrics.csv`), la estructura que espera
