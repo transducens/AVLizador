@@ -438,10 +438,13 @@ Opciones del criterio (`Criteri`), para probar con `avalua.py`:
 - `marge` y `per_defecte`: en los homógrafos, la forma por defecto
   (`catala`: la palabra catalana; `motor`: la traducción del motor) solo
   cambia si la otra gana por más de `marge` puntos.
-- `concordanca`: `motor` (solo el determinante inmediatamente anterior,
-  como el motor) o `variants` (propone las formas del otro género de las
-  dos palabras anteriores, "molts"→"moltes", "altre"→"altra", y el modelo
-  elige).
+- `concordanca`: `motor` (por defecto desde el 19/11/2026: la frase de cada
+  candidato la hace la regla de concordancia, con spaCy y el fichero
+  morfológico, "molts cops"→"moltes vegades", y el modelo solo elige la
+  palabra) o `variants` (por defecto hasta el 19/11/2026: además propone
+  las formas del otro género de las dos palabras anteriores y el modelo
+  elige; no mira si dependen del nombre y daba "L'aïllament és absoluta
+  una vegada arribes", FLORES+ devtest 461).
 - `puntuacio`: `frase` (toda la frase) o `dreta` (experimental: solo lo que
   viene después de la palabra, condicionado a ella; deja fuera el término
   "qué probable es esta palabra aquí", donde está el sesgo del modelo hacia
@@ -513,9 +516,9 @@ frase, esa frase se ha devuelto sin traducir: hay que mirarlo.
 
 ## Límites conocidos
 
-- Con `concordanca="motor"`, los determinantes que no son el inmediatamente
-  anterior y los adjetivos no se conciertan ("un altre vegada"); con
-  `variants` (por defecto) sí, hasta dos palabras antes.
+- La concordancia depende del análisis de spaCy: si analiza mal la frase,
+  alguna palabra se queda en el género de antes ("La xocolata desfeta és
+  molt bona" → "El xocolate desfet és molt bona").
 - Si la palabra ya la ha consumido otra regla ("cop de puny" → "punyada"),
   no es un punto.
 - Homógrafos que el léxico no marca como `homonimia_lexica` no llegan a esta

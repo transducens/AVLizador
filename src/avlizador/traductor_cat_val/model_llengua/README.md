@@ -311,9 +311,12 @@ Opcions del criteri (`Criteri`), per a provar amb `avalua.py`: `lam` (PMI,
 es resta `lam` × log P(candidat sol)), `norma` (`suma` / `mitjana` per
 token), `marge` i `per_defecte` (als homògrafs la forma per defecte,
 `catala` o `motor`, només canvia si l'altra guanya per més de `marge`
-punts) i `concordanca` (`motor` o `variants`,
-experimental: formes de l'altre gènere de les dos paraules d'abans, i el
-model tria).
+punts) i `concordanca`: `motor` (per defecte des del 19/11/2026: la frase
+de cada candidat la fa la regla de concordança, amb spaCy i el fitxer
+morfològic, i el model només tria la paraula) o `variants` (per defecte
+fins al 19/11/2026: a més, formes de l'altre gènere de les dos paraules
+d'abans, i el model tria; no mira si depenen del nom i donava
+"L'aïllament és absoluta una vegada arribes", FLORES+ devtest 461).
 
 **Des del 29/10/2026 `avlizador.translate_cat_val` és sempre este sistema**
 (motor + FLOR-760M); el motor sol és `translate_cat_val_motor`. Eixe
