@@ -1182,6 +1182,117 @@ Queda: si spaCy analiza mal la frase, alguna palabra se queda en el género de
 antes («La xocolata desfeta és molt bona» → «El xocolate desfet és molt
 bona»). Tests nuevos en `tests/test_kenlm.py` (461 y 782).
 
+### 4.21 Errores de la 2.0.0 en AINA ca-en (19/11, rama `errors-aina`)
+
+Origen: el ETL de `traductor-es-va-en` compara la 2.0.0 + KenLM con la 1.2.0
++ FLOR traduciendo el catalán de AINA ca-en (15 M de pares) y FLORES+
+devtest. 21 casos en 5 grupos. Con `main` (`bf5c0ca`, ya con la 4.20):
+
+| # | Error | Frases AINA 1.2.0 → 2.0.0 | En `main` | Causa |
+|---|---|---|---|---|
+| 1 | «deu» (número o verbo) → «brollador» | 812 → 4.000 | sigue | `resoluble`: spaCy da NUM y el motor deja «deu», pero el modelo puede cambiarlo igualmente (la capa de spaCy solo se aplicaba a los irresolubles) y con λ 1,5 la palabra rara gana. |
+| 2 | «nou» (nuevo, «de nou») → «anou» | 277 → 2.257 | sigue | spaCy da NOUN en los 6 casos («el nou de Bowie», «arriba el nou», «de nou», «observador no lineal nou») → decide KenLM, y λ 1,5 favorece «anou». |
+| 3 | «al seu habitatge» → «al seua vivenda» | 29 → 609 | sigue | spaCy parte «al» en «a» + «l»; el «l» no empieza en ningún token del motor y la concordancia se lo salta. Con mayúscula («Al seu») spaCy ni lo parte. |
+| 4 | 461 «absoluta», 782 «desfeta» | — | **arreglados** (4.20) | — |
+| 4 | «estes petites despeses» → «estos xicotetes gastos» | — | sigue | El léxico ya ha traducido «petites» → «xicotetes» y la concordancia no toca tokens traducidos. |
+| 5 | «estel» → «milotxa» | ya estaba | **arreglado** | El léxico del PR #33 ya no tiene «estel». |
+
+Además, «a la seva despesa» → «a el seu gasto» (falta contraer; el mismo
+fallo en el sentido masculino).
+
+Cambios:
+
+1. **Concordancia** (`concordanca_genere_sn.py`), sin spaCy: desde el nombre
+   se va hacia la izquierda por las palabras ya traducidas que llevan el
+   género nuevo («seua», «primera») y se corrige el artículo o la contracción
+   de delante (`corregeix_determinant_abans`): «a la seua vivenda», «de la
+   primera menció», «A LA SEUA VIVENDA». Un artículo que pasa a «el»/«els»
+   se contrae con la preposición (`contrau_article`, sacada de
+   `corregeix_determinant_abans`): «al seu gasto», «pel primer gasto». Un
+   adjetivo que ya ha traducido el léxico y conserva el género original
+   también concuerda («estos xicotets gastos»).
+2. **spaCy también en los resolubles** (`Criteri.spacy_resolubles`, por
+   defecto `True`): «per deu estats» (NUM) se queda «deu» sin consultar el
+   modelo. Dos matices para no perder frases de los benchmarks: un NUM detrás
+   de cualquier determinante femenino singular pasa al modelo («la deu del
+   bosc», que spaCy da NUM: HG079, HG080, HG2-046), y un participio (VERB +
+   `VerbForm=Part`) cuenta como adjetivo («van ser reeixides», HG2-154).
+   Sin esos matices se perdían 4 frases.
+3. **Género del nombre** (`punts.decisio_spacy`, `generes_de_nom`): si el
+   determinante de delante tiene un género que no tiene ninguna lectura de
+   nombre de la forma catalana según el fichero morfológico («nou» solo es
+   nombre en femenino), la lectura de nombre es imposible: «el nou de
+   Bowie», «arriba el nou», «amb el nou, prim i potent» se quedan «nou».
+   «deu» es nombre en los dos géneros: no se aplica. Solo con el
+   determinante: con el género que spaCy da a la propia palabra se perdían 7
+   frases («panotxes torrades», «un sac de nous»).
+
+Medido (local, sin KenLM; las reglas 2 y 3 se miden contra la referencia):
+
+- Motor solo: 0 frases distintas en homógrafos v1 (181), v2 (81), manual
+  (218) y 151 (142). Ninguno tiene estas construcciones.
+- Reglas 2 y 3 en los puntos de v1, v2, manual y 151: 0 traducciones buenas
+  bloqueadas; deciden la catalana en 22 (regla 2) y 10 (regla 3) puntos en
+  los que la referencia deja la catalana.
+- Casos del informe con un modelo falso que siempre prefiere la traducción:
+  19 de 21 bien. Quedan 8 («programes de nou») y 9 («observador no lineal
+  nou»): spaCy NOUN, sin determinante → decide KenLM.
+- 119 tests en verde. El doctest de «L'estel va quedar enganxat» ya fallaba
+  en `main` (léxico del PR #33): cambiado por «La galleda va quedar
+  enganxada».
+
+4. **λ propio para los irresolubles** (`Criteri.lam_irresoluble`;
+   `CRITERI_KENLM`: 1,25, el resto igual: λ 1,5 para los resolubles, 0,75
+   para las colisiones). La causa de fondo de los casos 8 y 9 es el λ 1,5:
+   KenLM solo prefiere «nou» (por 3,5 y 6 puntos), pero la corrección por
+   frecuencia da la vuelta al resultado («anou» gana por 5,8 y 3,3; margen 3).
+
+**Medido con el KenLM real de la 2.0.0** (19/11). Docker no arrancaba en
+el PC y `kenlm` no se instala en Windows, así que se hizo en tres pasos: el
+sistema en local recoge las frases que KenLM tiene que puntuar (1.042 en los
+4 benchmarks, 52 en los casos de AINA; las mismas con `main` y con la rama),
+se puntúan en Abaco con `kenlm.Model.score` sobre el modelo de la 2.0.0, y
+el sistema completo se ejecuta en local con esas puntuaciones (los ficheros
+de `docker/kenlm/` son idénticos a los de Hugging Face, por md5).
+
+Exactas, homógrafos v1 / v2 / manual / 151:
+
+| Sistema | v1 | v2 | manual | 151 | Frases distintas de `main` |
+|---|---|---|---|---|---|
+| `main` (`bf5c0ca`) | 227 | 111 | 232 | 144 | — |
+| Rama, λ irresolubles 1,5 (cambios 1-3) | 227 | 111 | 232 | 144 | 0 |
+| Rama, λ irresolubles 1,25 (**elegido**) | 227 | **112** | 232 | 144 | +1 (HG2-113 «panolla») |
+| Rama, λ irresolubles 1,0 | 227 | 115 | 231 | 144 | +4 (HG2-022, 024 «falta»; HG2-113, 115 «panolla») / −1 (BM-AVL-191 «les anous») |
+| Rama, λ irresolubles 0,75 | 227 | 116 | 231 | 144 | +6 / −2 (además HG059 «una nou») |
+
+`main` reproduce aquí las 227 / 232 / 144 de Abaco. En v2 salen 111, frente a
+110 en la ejecución de Abaco de `bf5c0ca` (`avalua_sistema_20261119_0944`) y
+112 en la de las 08:43. Frente a esta última, la única frase distinta es
+HG2-086, «Els fesols recuits», cuya referencia dice «recuites» (está mal).
+La comparación entre `main` y la rama es exacta porque se hace con las
+mismas puntuaciones. λ 1,0 se descarta porque pierde BM-AVL-191, y se elige
+1,25 porque mejora sin empeorar nada. En la simulación del detalle del 16/11
+(257 decisiones), 1,25 da 195 aciertos y 1 grave, frente a 194 y 1 con 1,5.
+
+**Casos de AINA con el KenLM real** (23 frases del informe). `main`
+reproduce todos los errores reportados: «per brollador estats» (los casos
+1-3 los decidía el clasificador de sentido), «comprar l'anou de Bowie»,
+«amb l'anou, prima i potent», «al seua vivenda», «del primera menció»,
+«estos xicotetes gastos». Con la rama, bien 1-7, 9-21 (el 9 por el λ
+1,25). Quedan:
+
+- 8, «programes de nou» → «d'anou»: con λ 1,25, «anou» sigue ganando por
+  4,2. Haría falta λ ≤ 1,0, que pierde BM-AVL-191.
+- 22 «manca» y 23 «rentadora» (grupo 6, los compañeros esperaban «falta» y
+  «llavadora»): KenLM prefiere la catalana (en «rentadora» por 1,2 sin
+  corrección; en «manca», con la corrección, por 2,3) y lejos del margen
+  3 → se queda la catalana. Es el criterio de la catalana por defecto, no
+  un fallo.
+
+Pendiente: medir el λ en texto catalán real (tasa de traducción de cada
+homógrafo en una muestra de AINA o de `catala_pur`), que es donde se ve el
+problema; los benchmarks están equilibrados al 50 % por sentido.
+
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
   se evalúa: las cifras son optimistas. Hay que confirmarlas en el 151, el
@@ -1341,3 +1452,4 @@ Son compatibles: si C2 mejora la base, C1 puede desempatar encima.
 | 16/11 | **KenLM de orden 6, 7 y 8: descartado** (`compara_models_20261116_0916` y `_0922`) | Mismo texto, poda y tabla de frecuencias; solo cambia el orden. Las 257 decisiones son idénticas a las del orden 5 (193 aciertos / 1 grave / 63 sin traducir; exactas v1 227, v2 111, manual 232); la diferencia entre candidatas varía ≤ 0,06 en el 90 % de los casos. Con el mejor criterio (margen 1), +1 en v2 (HG2-034). Ocupa más (91-112 MB frente a 77) y un orden > 6 exige compilar `kenlm` con `KENLM_MAX_ORDER`/`MAX_ORDER=10`. Sección 4.18. |
 | 16/11 | **Lemas cerrados; se queda la estructura actual** (KenLM de formas, orden 5, + clasificador general) | Decisión del usuario. Los lemas se probaron en todas las palabras ambiguas; ganan en algunas (manca, gandules, panotxa) pero con 8-18 casos por palabra y traduciendo más (13 graves frente a 1): no se usan ni por palabra. spaCy decide 68 de las 257 decisiones y falla 7, todas leves. Los «sin traducir» vienen sobre todo de falta de datos (41 + 14 de 63). Sección 4.16, «Cierre». |
 | 19/11 | **La concordancia de los candidatos la hace la regla, no KenLM** (`concordanca="motor"` por defecto; participios pegados al nombre; «diversos», «algun», «L'últim») | Decisión del usuario, por FLORES+ devtest 461 («és absoluta una vegada») y 782 («El xocolate desfeta»). Motor solo: 0 frases distintas en 6 benchmarks. KenLM en Abaco sin «algun»: 226 / 112 / 232 / 144 (HG030 «Alguns vegades»); con «algun» (`avalua_sistema_20261119_0850`): **227 / 112 / 232 / 144**, métricas idénticas a la 2.0.0. Sección 4.20. |
+| 19/11 | **Errores de AINA de la 2.0.0**: concordancia del artículo y la contracción hacia la izquierda («a la seua vivenda»), spaCy también en los resolubles («per deu estats»), género del nombre según el fichero morfológico («el nou de Bowie»), **λ 1,25 para los irresolubles** (`lam_irresoluble`) | Informe del ETL de `traductor-es-va-en` (AINA ca-en, FLORES+). Con el KenLM real (puntuado en Abaco, sistema en local): `main` 227 / 111 / 232 / 144, la rama con λ 1,5 da las mismas frases, con λ 1,25 **227 / 112 / 232 / 144** (+HG2-113, sin pérdidas); λ 1,0 pierde BM-AVL-191. Casos de AINA: 20 de 23 bien; quedan «programes de nou» y «manca»/«rentadora» (catalana por defecto). Sección 4.21. |

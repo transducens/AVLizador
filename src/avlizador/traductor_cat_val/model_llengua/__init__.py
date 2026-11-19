@@ -100,6 +100,11 @@ class Criteri:
     tipus: tuple[str, ...] = TIPUS_PER_DEFECTE
     puntuacio: str = "frase"
     spacy_irresolubles: bool = True
+    # La mateixa capa d'spaCy per als resolubles ("deu", "reeixida"): fins
+    # al 19/11/2026 el model podia canviar el que spaCy ja havia descartat
+    # ("per deu estats" -> "per brollador estats"; 812 -> 4.000 frases
+    # d'AINA amb "brollador" de la 1.2.0 a la 2.0.0).
+    spacy_resolubles: bool = True
     model_irresolubles: bool = True  # decisió de l'usuari, 23/10/2026 (després de corregir E0592)
     # Què es queda quan el model no guanya per més de `marge`: "catala" (la
     # paraula catalana sense traduir, si és un dels candidats; decisió de
@@ -109,6 +114,12 @@ class Criteri:
     # λ per a les col·lisions ("cop"); `None` = el mateix `lam` (11/11/2026:
     # amb KenLM, el millor λ de les col·lisions no és el dels homògrafs).
     lam_colisio: float | None = None
+    # λ per als homògrafs irresolubles ("nou", "manca", "panotxa"...);
+    # `None` = el mateix `lam`. 19/11/2026: amb 1,5 "programes de nou" o
+    # "un observador no lineal nou" passaven a "anou" en AINA. Amb el KenLM
+    # de la 2.0.0, 1,25 guanya HG2-113 i no perd cap frase en homògrafs v1/v2,
+    # manual ni 151; 1,0 perd BM-AVL-191 ("les anous").
+    lam_irresoluble: float | None = None
     # Desempat de les col·lisions (11/11/2026, camí C1): si el model guanya
     # per menys de `desempat` punts i el punt porta la tria d'un
     # classificador de sentit (`Punt.sentit`), decidix el classificador.
@@ -117,16 +128,24 @@ class Criteri:
 
 
 def criteri_del_punt(punt: Punt, criteri: Criteri) -> Criteri:
-    """El criteri que s'aplica a un punt (amb `lam_colisio` en les col·lisions).
+    """El criteri que s'aplica a un punt (amb `lam_colisio` en les
+    col·lisions i `lam_irresoluble` en els irresolubles).
 
     >>> c = Criteri(lam=0.5, lam_colisio=1.5)
     >>> criteri_del_punt(Punt(0, "cop", "", "colisio", ["colp", "vegada"], None), c).lam
     1.5
     >>> criteri_del_punt(Punt(0, "nou", "", "irresoluble", ["anou", "nou"], "anou"), c).lam
     0.5
+    >>> c = Criteri(lam=1.5, lam_irresoluble=1.25)
+    >>> criteri_del_punt(Punt(0, "nou", "", "irresoluble", ["anou", "nou"], "anou"), c).lam
+    1.25
+    >>> criteri_del_punt(Punt(0, "deu", "", "resoluble", ["brollador", "deu"], "brollador"), c).lam
+    1.5
     """
     if criteri.lam_colisio is not None and punt.tipus == "colisio":
         return replace(criteri, lam=criteri.lam_colisio)
+    if criteri.lam_irresoluble is not None and punt.tipus == "irresoluble":
+        return replace(criteri, lam=criteri.lam_irresoluble)
     return criteri
 
 
@@ -211,7 +230,8 @@ def tria(punt: Punt, criteri: Criteri) -> str | None:
     ('hamaca', 'motor')
     """
     criteri = criteri_del_punt(punt, criteri)
-    if punt.tipus == "irresoluble" and criteri.spacy_irresolubles:
+    if ((punt.tipus == "irresoluble" and criteri.spacy_irresolubles)
+            or (punt.tipus == "resoluble" and criteri.spacy_resolubles)):
         decisio = decisio_spacy(punt)
         if decisio is not None:
             punt.decidit = "spacy"
@@ -398,7 +418,8 @@ def tradueix_cat_val_ml(
 # 0,75 en les col·lisions, i el classificador de "cop" quan KenLM guanya per
 # menys de 2 punts. És el criteri de l'execució `compara_models_20261111_1430`
 # (191 encerts i 2 errors greus en les 257 decisions dels homògrafs).
-CRITERI_KENLM = Criteri(marge=3.0, per_defecte="catala", lam=1.5, lam_colisio=0.75, desempat=2.0)
+CRITERI_KENLM = Criteri(marge=3.0, per_defecte="catala", lam=1.5, lam_colisio=0.75, lam_irresoluble=1.25,
+                        desempat=2.0)
 
 _SISTEMA_KENLM = None
 
