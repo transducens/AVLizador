@@ -843,7 +843,8 @@ def main(argv: list[str] | None = None) -> None:
         resultat["models"][clau] = {
             "millor": descriu(millor), "fix": descriu(fila_fix), "cost": cost,
             "criteri_fix": {"marge": fix.marge, "per_defecte": fix.per_defecte, "lam": fix.lam,
-                            "lam_colisio": fix.lam_colisio, "desempat": fix.desempat},
+                            "lam_colisio": fix.lam_colisio, "lam_irresoluble": fix.lam_irresoluble,
+                            "desempat": fix.desempat},
             "graella": [{"criteri": nom, **{b: {k: v[k] for k in ("exactes", "sentit_model", "chrf_mitja")}
                                             for b, v in r.items()}} for nom, _, r in taula],
         }
@@ -861,6 +862,7 @@ def main(argv: list[str] | None = None) -> None:
             fitxer.write_text(json.dumps({"model": clau, "data": resultat["data"],
                                           "criteri": {"marge": fix.marge, "per_defecte": fix.per_defecte,
                                                       "lam": fix.lam, "lam_colisio": fix.lam_colisio,
+                                                      "lam_irresoluble": fix.lam_irresoluble,
                                                       "desempat": fix.desempat},
                                           "frases": traces(puntuats, model, fix)}, ensure_ascii=False, indent=1),
                               encoding="utf-8")
