@@ -74,7 +74,7 @@ fi
 # --- 3. Comparació ------------------------------------------------------------
 J3=$(cd "$MODEL_LL" && \
      MODELS="$MODELS" \
-     EXTRA="--benchmarks $BENCH --model-sentit $SENTIT --etiqueta $ETIQ--marges 1 2 3 5 --per-defecte catala --lams 0.5 1 1.5 2 --lams-colisio 0.5 0.75 1 --desempats 2 --detall" \
+     EXTRA="--benchmarks $BENCH --model-sentit $SENTIT --etiqueta $ETIQ --marges 1 2 3 5 --per-defecte catala --lams 0.5 1 1.5 2 --lams-colisio 0.5 0.75 1 --desempats 2 --detall" \
      sbatch --parsable --time=08:00:00 --job-name="compara-$ETIQ" ${DEP[@]+"${DEP[@]}"} compara_models.sh)
 echo "3. compara els models:         job $J3${DEP:+ (després de ${J2:-})}"
 echo
