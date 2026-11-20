@@ -1458,6 +1458,47 @@ el sistema actual):
   a 3 graves. Parte de la mejora es ajuste al banco. Antes de cambiar el
   criterio habría que mirar esos graves y medirlo en texto real (AINA).
 
+**Qué frases son** (20/11, simulado en local con las puntuaciones en bruto
+del detalle `compara_models_20261120_1012_lemes_dogv2_detall.json` y la
+función `tria` del paquete; reproduce exactamente las cifras de Abaco:
+194/2, 205/2, 119/3 y 81/3). Lo que cuenta es el margen; las λ casi no
+cambian nada si se dejan como están:
+
+| Criterio (el resto, el actual) | Aciertos / graves | v1 | v2 |
+|---|---|---|---|
+| Actual (margen 3) | 194 / 2 | 81 / 0 | 113 / 2 |
+| Margen 2 | 199 / 2 | 81 / 0 | 118 / 2 |
+| Margen 1 | 204 / 2 | 84 / 0 | 120 / 2 |
+| Margen 1 + λ 1 + λ irr. 1 («afinado») | 205 / 2 | 84 / 0 | 121 / 2 |
+| Margen 0,5 + λ 1 + λ irr. 1 | 210 / 4 | 86 / 1 | 124 / 3 |
+
+- **Margen 1 / afinado**: 11 decisiones pasan de «sin traducir» a acierto y
+  ninguna empeora: HG035 y HG037 «calces» → «bragues», HG043 «gandula» →
+  «hamaca», HG2-022 y HG2-024 «manca» → «falta», HG2-059 «rentadora» →
+  «llavadora», HG2-106 «gandules» → «hamaques», HG2-115 y HG2-121 «panotxa(es)»
+  → «panolla(es)», HG2-148 y HG2-154 «reeixida(es)» → «exitosa(es)». En todas
+  la traducción ganaba por 0,4-2,9 puntos, por debajo del margen 3.
+- **Los graves de la validación cruzada no vienen del margen, sino de las
+  λ** que eligió cada mitad:
+  - elegido con v1 (λ 0,5 para los resolubles): HG2-160 «Ha acumulat moltes
+    reeixides al llarg de la carrera» → «exitoses» (nombre convertido en
+    adjetivo), y pierde HG2-047 «Aquesta deu no s'asseca mai» (el modelo
+    gana al clasificador por más del desempate). Gana HG070, HG071 y HG075
+    («manca / manques» → «falta / faltes»).
+  - elegido con v2 (λ de colisiones 0,5): HG009 «Els lladres van preparar un
+    últim cop al banc», HG022 «molts cops a la cara» y HG025 «La fruita
+    tenia cops» → «vegada / vegades»: con λ bajo vuelve el sesgo hacia la
+    palabra frecuente.
+- **Margen 0,5**: graves nuevos HG041 «El sastre cosia calces» → «bragues» y
+  HG2-095.
+
+**Lectura**: bajar el margen de 3 a 1 (sin tocar las λ, o con λ 1) gana 10-11
+aciertos en los dos bancos y no añade ningún grave; las λ de colisiones y de
+resolubles no se deben bajar. Pero los bancos tienen la mitad de casos de
+cada sentido, y en texto real el sentido catalán («calces» de época, «manca»
+verbo, «reeixida» éxito) es mucho más frecuente: con margen 1 se traducirá
+más a menudo, y ahí pueden salir los graves. Falta medirlo en AINA.
+
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
   se evalúa: las cifras son optimistas. Hay que confirmarlas en el 151, el
