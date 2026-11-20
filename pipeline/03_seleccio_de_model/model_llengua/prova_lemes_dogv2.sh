@@ -19,6 +19,9 @@
 #   bash pipeline/03_seleccio_de_model/model_llengua/prova_lemes_dogv2.sh
 #   NOMES_COMPARA=1 bash .../prova_lemes_dogv2.sh   # el KenLM de lemes ja està entrenat
 #   BENCH="homografs homografs_v2 manual 151 boe_estricte gplsi" bash .../prova_lemes_dogv2.sh
+#   TOT=1 bash .../prova_lemes_dogv2.sh   # (20/11/2026) TOT a lema, també les candidates i les
+#       que concorden: valencia_net_dogv2_lemes_tot, claus kenlm_*_tot_dogv2*
+#   CPUS_LEM=8 MEM_LEM=16G ...            # CPU i memòria de la lematització (per defecte, les de lematitza_text.sh)
 # Mirar com van: squeue -u $USER; els .out queden en la carpeta de cada script.
 
 set -euo pipefail
@@ -30,7 +33,16 @@ DIR_LM="dades/macocu/kenlm"
 MODEL_LL="pipeline/03_seleccio_de_model/model_llengua"
 DIR_KENLM="pipeline/08_traduccio_corpus/macocu/kenlm"
 BASE="valencia_net_dogv2"
-NOM="${BASE}_lemes"
+if [[ -n "${TOT:-}" ]]; then
+    NOM="${BASE}_lemes_tot"; ETIQ="lemes_tot_dogv2"
+    MODELS="kenlm_dogv2_c1 kenlm_lemes_tot_dogv2 kenlm_lemes_tot_dogv2_c1 kenlm_mescla_tot_dogv2_c1"
+else
+    NOM="${BASE}_lemes"; ETIQ="lemes_dogv2"
+    MODELS="kenlm_dogv2_c1 kenlm_lemes_dogv2 kenlm_lemes_dogv2_c1 kenlm_mescla_dogv2_c1"
+fi
+RECURSOS=()
+[[ -n "${CPUS_LEM:-}" ]] && RECURSOS+=(--cpus-per-task="$CPUS_LEM")
+[[ -n "${MEM_LEM:-}" ]] && RECURSOS+=(--mem="$MEM_LEM")
 SENTIT="$ARREL/$DIR_LM/sentit/sentit_dogv2_avl.json"
 BENCH="${BENCH:-homografs homografs_v2 manual 151}"
 
@@ -50,20 +62,20 @@ fi
 # --- 1 i 2. KenLM de lemes ----------------------------------------------------
 DEP=()
 if [[ -z "${NOMES_COMPARA:-}" ]]; then
-    J1=$(cd "$DIR_KENLM" && ENTRADA="$DIR_LM/$BASE.txt" EIXIDA="$DIR_LM/$NOM.txt" \
-         sbatch --parsable --job-name="lemes-dogv2" lematitza_text.sh)
+    J1=$(cd "$DIR_KENLM" && ENTRADA="$DIR_LM/$BASE.txt" EIXIDA="$DIR_LM/$NOM.txt" TOT="${TOT:-}" \
+         sbatch --parsable --job-name="$ETIQ" ${RECURSOS[@]+"${RECURSOS[@]}"} lematitza_text.sh)
     echo "1. lematitza el text:          job $J1"
     J2=$(cd "$DIR_KENLM" && TEXT="$DIR_LM/$NOM.txt" NOM="$NOM" \
-         sbatch --parsable --job-name="kenlm-lemes-dogv2" --dependency=afterok:"$J1" entrena_kenlm.sh)
+         sbatch --parsable --job-name="kenlm-$ETIQ" --dependency=afterok:"$J1" entrena_kenlm.sh)
     echo "2. entrena el KenLM de lemes:  job $J2 (després de $J1)"
     DEP=(--dependency=afterok:"$J2")
 fi
 
 # --- 3. Comparació ------------------------------------------------------------
 J3=$(cd "$MODEL_LL" && \
-     MODELS="kenlm_dogv2_c1 kenlm_lemes_dogv2 kenlm_lemes_dogv2_c1 kenlm_mescla_dogv2_c1" \
-     EXTRA="--benchmarks $BENCH --model-sentit $SENTIT --etiqueta lemes_dogv2 --marges 1 2 3 5 --per-defecte catala --lams 0.5 1 1.5 2 --lams-colisio 0.5 0.75 1 --desempats 2 --detall" \
-     sbatch --parsable --time=08:00:00 --job-name="compara-lemes-dogv2" ${DEP[@]+"${DEP[@]}"} compara_models.sh)
+     MODELS="$MODELS" \
+     EXTRA="--benchmarks $BENCH --model-sentit $SENTIT --etiqueta $ETIQ--marges 1 2 3 5 --per-defecte catala --lams 0.5 1 1.5 2 --lams-colisio 0.5 0.75 1 --desempats 2 --detall" \
+     sbatch --parsable --time=08:00:00 --job-name="compara-$ETIQ" ${DEP[@]+"${DEP[@]}"} compara_models.sh)
 echo "3. compara els models:         job $J3${DEP:+ (després de ${J2:-})}"
 echo
-echo "Resultats: pipeline/03_seleccio_de_model/resultats/compara_models_<data>_lemes_dogv2{,_detall}.{md,json}"
+echo "Resultats: pipeline/03_seleccio_de_model/resultats/compara_models_<data>_$ETIQ{,_detall}.{md,json}"

@@ -26,6 +26,7 @@ queda per defecte). Ací cada model és un puntuador:
 | `kenlm_dogv2_c1` | KenLM amb més text (16/11/2026; `prova_corpus.sh`): MaCoCu net + el DOGV nou sencer (2025-2026, +5.413 documents), + classificador |
 | `kenlm_dogv2_avl_c1` | ídem + la AVL (sense els documents ni les frases dels benchmarks; `termes_ambigus.py`) |
 | `kenlm_dogv2_avl_ua_c1` | ídem + les notícies de la UA (frases de GD ≥ 0,8) |
+| `kenlm_lemes_tot_dogv2`, `kenlm_lemes_tot_dogv2_c1`, `kenlm_mescla_tot_dogv2_c1` | ídem, però amb TOT el text a lema, també les candidates i les que concorden (`LematitzadorLM(tot=True)`); el prior, de la taula de formes de la 2.0.0 (20/11/2026; `TOT=1 prova_lemes_dogv2.sh`) |
 | `kenlm_lemes_dogv2`, `kenlm_lemes_dogv2_c1`, `kenlm_mescla_dogv2_c1` | com `kenlm_lemes*` i `kenlm_mescla_c1`, però amb el text del sistema 2.0.0 (`valencia_net_dogv2`) passat a lemes; la mescla, amb el KenLM de formes de la 2.0.0 (20/11/2026; `prova_lemes_dogv2.sh`) |
 
 Els models `*_c1` es comparen amb el criteri del sistema KenLM
@@ -108,6 +109,7 @@ MODELS = ("motor", "flor", "kenlm_cat", "kenlm_cat30", "kenlm_val", "kenlm_val_n
           "kenlm_val_net_dogv_np", "kenlm_val_tot_np", "kenlm_val_net_dogv_bi", "kenlm_val_net_dogv_c1", "kenlm_lemes", "kenlm_lemes_c1",
           "kenlm_mescla_c1", "kenlm_o6_c1", "kenlm_o7_c1", "kenlm_o8_c1", "kenlm_dogv2_c1", "kenlm_dogv2_avl_c1",
           "kenlm_dogv2_avl_ua_c1", "kenlm_lemes_dogv2", "kenlm_lemes_dogv2_c1", "kenlm_mescla_dogv2_c1",
+          "kenlm_lemes_tot_dogv2", "kenlm_lemes_tot_dogv2_c1", "kenlm_mescla_tot_dogv2_c1",
           "diff", "diff_net", "fasttext")
 NOM_LEMES = "valencia_net_dogv_lemes"  # 12/11/2026: lematitza_text.py + entrena_kenlm.sh
 # KenLM de lemes de cada clau (12/11/2026 amb el text vell; 20/11/2026 amb el de la 2.0.0).
@@ -115,7 +117,13 @@ LEMES_KENLM = {"kenlm_lemes": NOM_LEMES, "kenlm_lemes_c1": NOM_LEMES,
                "kenlm_lemes_dogv2": "valencia_net_dogv2_lemes", "kenlm_lemes_dogv2_c1": "valencia_net_dogv2_lemes"}
 # Mescla formes + lemes: (KenLM de formes, KenLM de lemes).
 MESCLA_KENLM = {"kenlm_mescla_c1": ("valencia_net_dogv", NOM_LEMES),
-                "kenlm_mescla_dogv2_c1": ("valencia_net_dogv2", "valencia_net_dogv2_lemes")}
+                "kenlm_mescla_dogv2_c1": ("valencia_net_dogv2", "valencia_net_dogv2_lemes"),
+                "kenlm_mescla_tot_dogv2_c1": ("valencia_net_dogv2", "valencia_net_dogv2_lemes_tot")}
+# 20/11/2026: TOT a lema (`LematitzadorLM(tot=True)`). El text de lemes ja no té les formes
+# candidates ("vegades", "anous"), així que el prior ve de la taula de formes del mateix text.
+LEMES_TOT_KENLM = {"kenlm_lemes_tot_dogv2": "valencia_net_dogv2_lemes_tot",
+                   "kenlm_lemes_tot_dogv2_c1": "valencia_net_dogv2_lemes_tot"}
+FREQ_LEMES_TOT = "valencia_net_dogv2"
 # 16/11/2026: el KenLM del sistema amb un altre ordre (dades/macocu/kenlm/valencia_net_dogv_o<N>.binary;
 # la taula de freqüències és la mateixa, perquè el text és el mateix).
 ORDRES_KENLM = {"kenlm_o6_c1": 6, "kenlm_o7_c1": 7, "kenlm_o8_c1": 8}
@@ -371,12 +379,13 @@ class Carregador:
             self._mesura(clau, path, lambda: kenlm.Model(str(path)))
         return self.cache[clau]
 
-    def _lematitzador(self):
-        if "_lemes" not in self.cache:
+    def _lematitzador(self, tot: bool = False):
+        clau = "_lemes_tot" if tot else "_lemes"
+        if clau not in self.cache:
             from avlizador.traductor_cat_val.model_llengua.lemes import LematitzadorLM
 
-            self.cache["_lemes"] = LematitzadorLM()
-        return self.cache["_lemes"]
+            self.cache[clau] = LematitzadorLM(tot=tot)
+        return self.cache[clau]
 
     def _freq(self, nom: str) -> dict | None:
         """Freqüències del text d'entrenament (`<nom>_freq.json`) per al prior."""
@@ -413,10 +422,15 @@ class Carregador:
         if clau in LEMES_KENLM:
             nom = LEMES_KENLM[clau]
             return KenLMLemes(self._kenlm(nom), self._lematitzador(), self._freq(nom))
+        if clau in LEMES_TOT_KENLM:
+            return KenLMLemes(self._kenlm(LEMES_TOT_KENLM[clau]), self._lematitzador(tot=True),
+                              self._freq(FREQ_LEMES_TOT))
         if clau in MESCLA_KENLM:
             formes, lemes = MESCLA_KENLM[clau]
+            tot = lemes.endswith("_tot")
             return Mescla(KenLM(self._kenlm(formes), 1.0, self._freq(formes)),
-                          KenLMLemes(self._kenlm(lemes), self._lematitzador(), self._freq(lemes)))
+                          KenLMLemes(self._kenlm(lemes), self._lematitzador(tot=tot),
+                                     self._freq(FREQ_LEMES_TOT if tot else lemes)))
         if clau == "kenlm_val_net_dogv_bi":
             return Bidireccional(KenLM(self._kenlm("valencia_net_dogv"), 1.0, self._freq("valencia_net_dogv")),
                                  self._kenlm("valencia_net_dogv_inv"))
@@ -447,6 +461,8 @@ class Carregador:
             return [CORPUS_KENLM[clau]]
         if clau in LEMES_KENLM:
             return [LEMES_KENLM[clau]]
+        if clau in LEMES_TOT_KENLM:
+            return [LEMES_TOT_KENLM[clau]]
         if clau in MESCLA_KENLM:
             return list(MESCLA_KENLM[clau])
         if clau in FITXERS_KENLM:

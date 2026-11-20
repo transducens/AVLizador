@@ -17,6 +17,11 @@ Què NO es lematitza (es queda la forma):
   lemes tot quedaria "el nou" i es perdria la pista;
 - la puntuació i els números.
 
+Variant `tot=True` (20/11/2026, prova de l'usuari): TOT a lema, també les
+candidates i les paraules que concorden; només es queden la puntuació i els
+números. El prior ja no es pot traure del text de lemes (no hi ha
+"vegades", "anous"...): `compara_models.py` usa la taula de formes.
+
 La MATEIXA funció (`LematitzadorLM.linies`) fa el text d'entrenament
 (`pipeline/08_traduccio_corpus/macocu/kenlm/lematitza_text.py`) i les frases
 que puntua el model (`compara_models.py`, clau `kenlm_lemes*`).
@@ -50,9 +55,11 @@ class LematitzadorLM:
     ['les', 'nous', 'que', 'anar', 'comprar']
     >>> lem.linia("Li va pegar un cop amb la destral.").split()[:5]
     ['li', 'anar', 'pegar', 'un', 'cop']
+    >>> LematitzadorLM(tot=True).linia("Les nous que vaig comprar eren boníssimes.").split()[:2]
+    ['el', 'nou']
     """
 
-    def __init__(self, conserva: set[str] | None = None, nlp=None) -> None:
+    def __init__(self, conserva: set[str] | None = None, nlp=None, tot: bool = False) -> None:
         if nlp is None:
             from ..rules.pos_tagger import _carrega_spacy
 
@@ -60,13 +67,14 @@ class LematitzadorLM:
         from spacy.tokens import Doc
 
         self.nlp, self.Doc = nlp, Doc
-        self.conserva = formes_candidates() if conserva is None else conserva
+        self.tot = tot
+        self.conserva = set() if tot else (formes_candidates() if conserva is None else conserva)
 
     def forma(self, t) -> str:
         w = t.text
         if w in self.conserva or not any(c.isalpha() for c in w):
             return w
-        if t.pos_ in CONCORDEN and t.morph.get("Gender"):
+        if not self.tot and t.pos_ in CONCORDEN and t.morph.get("Gender"):
             return w
         lema = "_".join((t.lemma_ or w).lower().split())
         return lema or w

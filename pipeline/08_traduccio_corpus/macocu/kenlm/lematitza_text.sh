@@ -8,7 +8,8 @@
 #   sbatch lematitza_text.sh
 #   ENTRADA=dades/macocu/kenlm/valencia_net_dogv.txt EIXIDA=dades/macocu/kenlm/valencia_net_dogv_lemes.txt sbatch lematitza_text.sh
 #   LIMIT=20000 sbatch --time=00:30:00 lematitza_text.sh     # prova
-# Variables: ENTRADA, EIXIDA (relatius a l'arrel del repo), LIMIT.
+# Variables: ENTRADA, EIXIDA (relatius a l'arrel del repo), LIMIT, TOT=1 (20/11/2026:
+# tot a lema, també les candidates i les que concorden).
 
 #SBATCH --job-name=lemes
 #SBATCH --output=%j_lematitza.out
@@ -35,6 +36,7 @@ EIXIDA="${EIXIDA:-dades/macocu/kenlm/valencia_net_dogv_lemes.txt}"
 [[ -s "$ENTRADA" ]] || { echo "No trobe $ENTRADA" >&2; exit 1; }
 OPC=()
 [[ -n "${LIMIT:-}" ]] && OPC+=(--limit "$LIMIT")
+[[ -n "${TOT:-}" ]] && OPC+=(--tot)
 python -u pipeline/08_traduccio_corpus/macocu/kenlm/lematitza_text.py "$ENTRADA" --eixida "$EIXIDA" \
     --processos "${SLURM_CPUS_PER_TASK:-4}" ${OPC[@]+"${OPC[@]}"}
 wc -l "$ENTRADA" "$EIXIDA"
