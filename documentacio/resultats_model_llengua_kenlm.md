@@ -1499,6 +1499,36 @@ cada sentido, y en texto real el sentido catalán («calces» de época, «manca
 verbo, «reeixida» éxito) es mucho más frecuente: con margen 1 se traducirá
 más a menudo, y ahí pueden salir los graves. Falta medirlo en AINA.
 
+**Prueba en texto real** (20/11, job 3295,
+`prova_marge_text_real_20261120_1412.{md,json}`; `prova_marge_text_real.py`).
+Texto: `catala_pur.jsonl` (4.489.982 frases catalanas de MaCoCu, no usadas para
+entrenar). Hasta 300 frases al azar por palabra ambigua (llavor 20261120),
+el sistema 2.0.0 con margen 3, 2 y 1 (λ sin tocar). Tablas por palabra en el
+`.md` y en `documentacio/informes/2026-11-23_resultados_reunion.md`.
+
+- Margen 3 → 1: cambian 314 frases de la muestra, revisadas a mano: 296 bien
+  (94 %), 15 mal y 3 dudosas. Mal: «deus» verbo → «brolladors» (5), «nou»
+  número → «anou» (1: «el nombre de nou»), «reeixida» nombre → «exitosa» (1),
+  «gandules» perezosas → «hamaques» (1) y nombres propios («La Gandula» ×4,
+  «La rentadora» ×2, «La Panotxa»). Bien: «manca» → «falta» (46/46),
+  «calces» → «bragues» (30/30, todas ropa interior), «rentadora(es)» →
+  «llavadora(es)», «reeixida(es)» → «exitosa(es)» (adjetivo), «gandules» →
+  «hamaques».
+- Escalado al corpus: unas 2.000 traducciones más con margen 1 (manca ~1.100,
+  reeixida(es) ~270, rentadora(es) ~140). El error que más pesa es «nou»
+  número (1 caso en 298 → ~250 frases del corpus, cifra muy incierta); «deus»
+  verbo ~30. El margen 2 lleva casi los mismos errores con menos aciertos.
+- **Fallo de la 2.0.0 que no depende del margen**: con margen 3, «deus» →
+  «brolladors» en 87 de 299 frases (29 %); solo ~20 son manantiales. El resto:
+  verbo «deure» (19: «deus estar», «què tens i què deus»), «dioses» sin acento
+  o latín «Deus» (34), «deu» mal escrito (7), nombres propios (6). En el
+  corpus, ~490 frases con «brolladors», ~340 mal. Lo decide el modelo (spaCy
+  no lo frena).
+
+**Propuesta** (para la reunión del 23/11): margen 1 con las λ como están, y
+antes arreglar «deus» (spaCy verbo / revisar la entrada del léxico) y «nou»
+número sin determinante.
+
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
   se evalúa: las cifras son optimistas. Hay que confirmarlas en el 151, el
