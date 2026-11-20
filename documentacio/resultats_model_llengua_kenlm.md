@@ -1293,6 +1293,32 @@ Pendiente: medir el λ en texto catalán real (tasa de traducción de cada
 homógrafo en una muestra de AINA o de `catala_pur`), que es donde se ve el
 problema; los benchmarks están equilibrados al 50 % por sentido.
 
+### 4.22 KenLM de lemas con el texto de la 2.0.0 (20/11, petición del usuario; Abaco)
+
+Se repite la prueba de la 4.16 con el texto del sistema actual. El 12-13/11
+se hizo con `valencia_net_dogv` y el clasificador viejo; desde la 2.0.0 el
+sistema es `valencia_net_dogv2` (MaCoCu net + el DOGV nuevo entero) +
+`sentit_dogv2_avl`, con la concordancia de los candidatos (4.20) y λ 1,25
+en los irresolubles (4.21).
+
+- **Mismo lematizador** que el 12/11 (`LematitzadorLM`; decisión del
+  usuario): todo a lema salvo las palabras candidatas y las que concuerdan
+  en género (DET, ADJ, NUM, PRON con `Gender`).
+- `valencia_net_dogv2.txt` → `valencia_net_dogv2_lemes.txt` → KenLM de
+  orden 5 con la misma poda y su tabla de frecuencias.
+- Claves nuevas del comparador: `kenlm_lemes_dogv2` (solo),
+  `kenlm_lemes_dogv2_c1` (+ clasificador) y `kenlm_mescla_dogv2_c1` (formas
+  de la 2.0.0 + lemas + clasificador), frente a `kenlm_dogv2_c1` (el
+  sistema 2.0.0), con `--model-sentit sentit_dogv2_avl.json`; homógrafos v1
+  y v2, manual y 151; rejilla de márgenes y λ y detalle de cada decisión.
+- Lanzador: `pipeline/03_seleccio_de_model/model_llengua/prova_lemes_dogv2.sh`
+  (rama `kenlm-lemes-2.0`).
+- Criterio para darlo por bueno, el de la 4.16: más aciertos que el sistema
+  en las 257 decisiones con no más errores graves, sin perder en el manual
+  ni en el 151.
+
+Resultados: pendientes.
+
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
   se evalúa: las cifras son optimistas. Hay que confirmarlas en el 151, el

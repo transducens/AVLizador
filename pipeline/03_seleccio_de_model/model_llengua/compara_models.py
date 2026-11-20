@@ -26,6 +26,7 @@ queda per defecte). Ací cada model és un puntuador:
 | `kenlm_dogv2_c1` | KenLM amb més text (16/11/2026; `prova_corpus.sh`): MaCoCu net + el DOGV nou sencer (2025-2026, +5.413 documents), + classificador |
 | `kenlm_dogv2_avl_c1` | ídem + la AVL (sense els documents ni les frases dels benchmarks; `termes_ambigus.py`) |
 | `kenlm_dogv2_avl_ua_c1` | ídem + les notícies de la UA (frases de GD ≥ 0,8) |
+| `kenlm_lemes_dogv2`, `kenlm_lemes_dogv2_c1`, `kenlm_mescla_dogv2_c1` | com `kenlm_lemes*` i `kenlm_mescla_c1`, però amb el text del sistema 2.0.0 (`valencia_net_dogv2`) passat a lemes; la mescla, amb el KenLM de formes de la 2.0.0 (20/11/2026; `prova_lemes_dogv2.sh`) |
 
 Els models `*_c1` es comparen amb el criteri del sistema KenLM
 (`CRITERI_KENLM`: marge 3, la catalana per defecte, λ 1,5 / 0,75 en les
@@ -105,8 +106,15 @@ TIPUS_MODEL = ("colisio", "irresoluble")
 MODELS = ("motor", "flor", "kenlm_cat", "kenlm_cat30", "kenlm_val", "kenlm_val_net", "kenlm_val_net_dogv",
           "kenlm_val_net_dogv_np", "kenlm_val_tot_np", "kenlm_val_net_dogv_bi", "kenlm_val_net_dogv_c1", "kenlm_lemes", "kenlm_lemes_c1",
           "kenlm_mescla_c1", "kenlm_o6_c1", "kenlm_o7_c1", "kenlm_o8_c1", "kenlm_dogv2_c1", "kenlm_dogv2_avl_c1",
-          "kenlm_dogv2_avl_ua_c1", "diff", "diff_net", "fasttext")
+          "kenlm_dogv2_avl_ua_c1", "kenlm_lemes_dogv2", "kenlm_lemes_dogv2_c1", "kenlm_mescla_dogv2_c1",
+          "diff", "diff_net", "fasttext")
 NOM_LEMES = "valencia_net_dogv_lemes"  # 12/11/2026: lematitza_text.py + entrena_kenlm.sh
+# KenLM de lemes de cada clau (12/11/2026 amb el text vell; 20/11/2026 amb el de la 2.0.0).
+LEMES_KENLM = {"kenlm_lemes": NOM_LEMES, "kenlm_lemes_c1": NOM_LEMES,
+               "kenlm_lemes_dogv2": "valencia_net_dogv2_lemes", "kenlm_lemes_dogv2_c1": "valencia_net_dogv2_lemes"}
+# Mescla formes + lemes: (KenLM de formes, KenLM de lemes).
+MESCLA_KENLM = {"kenlm_mescla_c1": ("valencia_net_dogv", NOM_LEMES),
+                "kenlm_mescla_dogv2_c1": ("valencia_net_dogv2", "valencia_net_dogv2_lemes")}
 # 16/11/2026: el KenLM del sistema amb un altre ordre (dades/macocu/kenlm/valencia_net_dogv_o<N>.binary;
 # la taula de freqüències és la mateixa, perquè el text és el mateix).
 ORDRES_KENLM = {"kenlm_o6_c1": 6, "kenlm_o7_c1": 7, "kenlm_o8_c1": 8}
@@ -401,11 +409,13 @@ class Carregador:
             return KenLM(self._kenlm("valencia_net_dogv", ORDRES_KENLM[clau]), 1.0, self._freq("valencia_net_dogv"))
         if clau in CORPUS_KENLM:  # 16/11/2026: el mateix amb més text
             return KenLM(self._kenlm(CORPUS_KENLM[clau]), 1.0, self._freq(CORPUS_KENLM[clau]))
-        if clau in ("kenlm_lemes", "kenlm_lemes_c1"):
-            return KenLMLemes(self._kenlm(NOM_LEMES), self._lematitzador(), self._freq(NOM_LEMES))
-        if clau == "kenlm_mescla_c1":
-            return Mescla(KenLM(self._kenlm("valencia_net_dogv"), 1.0, self._freq("valencia_net_dogv")),
-                          KenLMLemes(self._kenlm(NOM_LEMES), self._lematitzador(), self._freq(NOM_LEMES)))
+        if clau in LEMES_KENLM:
+            nom = LEMES_KENLM[clau]
+            return KenLMLemes(self._kenlm(nom), self._lematitzador(), self._freq(nom))
+        if clau in MESCLA_KENLM:
+            formes, lemes = MESCLA_KENLM[clau]
+            return Mescla(KenLM(self._kenlm(formes), 1.0, self._freq(formes)),
+                          KenLMLemes(self._kenlm(lemes), self._lematitzador(), self._freq(lemes)))
         if clau == "kenlm_val_net_dogv_bi":
             return Bidireccional(KenLM(self._kenlm("valencia_net_dogv"), 1.0, self._freq("valencia_net_dogv")),
                                  self._kenlm("valencia_net_dogv_inv"))
@@ -434,10 +444,10 @@ class Carregador:
             return [self._nom_ordre("valencia_net_dogv", ORDRES_KENLM[clau])]
         if clau in CORPUS_KENLM:
             return [CORPUS_KENLM[clau]]
-        if clau in ("kenlm_lemes", "kenlm_lemes_c1"):
-            return [NOM_LEMES]
-        if clau == "kenlm_mescla_c1":
-            return ["valencia_net_dogv", NOM_LEMES]
+        if clau in LEMES_KENLM:
+            return [LEMES_KENLM[clau]]
+        if clau in MESCLA_KENLM:
+            return list(MESCLA_KENLM[clau])
         if clau in FITXERS_KENLM:
             return [FITXERS_KENLM[clau]]
         return {"flor": ["flor"], "diff": ["valencia", "macocu_tot"], "diff_net": ["valencia_net", "macocu_tot"],
