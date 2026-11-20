@@ -77,6 +77,7 @@ import itertools
 import json
 import math
 import os
+import re
 import time
 from datetime import datetime
 from pathlib import Path
@@ -592,6 +593,19 @@ def classifica(paraula: str, esperat: str, tria: str | None) -> str:
     return "candidat_erroni"
 
 
+def forma_que_queda(paraula: str, hipotesi: str) -> str | None:
+    """Si la paraula no s'ha detectat com a punt ambigu (20/11/2026: p. ex.
+    «recuita», que ja no és homògraf en el lèxic), la tria és la que ha
+    quedat en la traducció: la catalana si hi és sencera; si no, None
+    (canviada per una altra via).
+
+    >>> forma_que_queda("recuita", "És una pasta recuita."), forma_que_queda("recuita", "És brull.")
+    ('recuita', None)
+    """
+    hi_es = re.search(rf"(?<![\w·]){re.escape(paraula)}(?![\w·])", hipotesi, re.IGNORECASE)
+    return paraula if hi_es else None
+
+
 def detall(puntuats: list, criteri: Criteri | None) -> list[dict]:
     """Cada decisió avaluable (frases amb paraula i candidat esperat) amb el
     seu tipus d'encert o error i qui l'ha presa."""
@@ -601,7 +615,7 @@ def detall(puntuats: list, criteri: Criteri | None) -> list[dict]:
             continue
         hip = text_motor if criteri is None else aplica_tries(text_motor, punts, criteri)
         p = punt_avaluat(it, punts)
-        tria = (p.motor if criteri is None else p.tria) if p is not None else None
+        tria = (p.motor if criteri is None else p.tria) if p is not None else forma_que_queda(it["paraula"], hip)
         valors, brut = {}, {}
         if p is not None and criteri is not None and p.puntuacions:
             from avlizador.traductor_cat_val.model_llengua import criteri_del_punt, puntuacio

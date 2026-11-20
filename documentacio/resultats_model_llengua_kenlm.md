@@ -1317,7 +1317,55 @@ en los irresolubles (4.21).
   en las 257 decisiones con no más errores graves, sin perder en el manual
   ni en el 151.
 
-Resultados: pendientes.
+**Ejecución** (jobs 3286-3288, `compara_models_20261120_1012_lemes_dogv2`):
+lematizar 1.445.150 frases, 655 s con 8 CPU (cambia el 21 % de los
+tokens); KenLM 72 s; comparación ~1 h. El sistema sale igual que la
+evaluación de la 2.0.0 (exactas 227 / 112 / 232 / 144).
+
+**Fallo del comparador arreglado de paso**: si una palabra ya no se detecta
+como ambigua, `detall` contaba la decisión como «traducida sin hacer
+falta» aunque la palabra se quedara igual. Pasa con «recuita / recuites»:
+desde el commit del compañero del 18/11 (`8616c0b`) el léxico ya no las
+tiene como homógrafo (solo «recuit / recuits» → «brull / brulls»), así que
+el motor las deja siempre. Ahora la tria de un punto no detectado es la
+forma que queda en la traducción (`forma_que_queda`). Las cifras de abajo
+están recalculadas así a partir del JSON del detalle.
+
+257 decisiones de los homógrafos v1 + v2 (grave = traducida sin hacer
+falta o candidata equivocada):
+
+| Modelo | Criterio | Aciertos | Graves | Sin traducir | Exactas v1 / v2 / manual / 151 | ms/llamada |
+|---|---|---|---|---|---|---|
+| **Sistema 2.0.0** (`kenlm_dogv2_c1`) | sistema | **194** | **2** | 61 | **227** / 112 / **232** / 144 | **0,10** |
+| Lemas solo | fijo | 200 | 7 | 50 | 225 / **120** / 231 / 144 | 5,0 |
+| Lemas + clasificador | sistema | 196 | 3 | 58 | **227** / 114 / **232** / 144 | 4,9 |
+| Mezcla formas + lemas + clasificador | sistema | 198 | 5 | 54 | 225 / 118 / **232** / 144 | 5,2 |
+
+- Graves del sistema: HG2-028 «Si en falta algun» (ya conocido: valenciano
+  correcto, la referencia pide «manca») y HG2-086, que en realidad está
+  bien: «Les mongetes recuites» → «Els fesols recuits» (la concordancia
+  cambia el adjetivo con el nombre; la referencia espera «recuites»).
+- Lemas + clasificador, frente al sistema: gana 4 (HG053 «hamaques»,
+  HG2-024 «falta», HG2-058 «llavadora», HG2-154 «exitoses») y pierde 2:
+  HG2-123 «panotxes» (sin traducir) y un grave nuevo, HG041 «El sastre
+  cosia calces» → «bragues», el mismo que el 12/11.
+- Lemas solo y la mezcla traducen más (gandula / gandules, manca, panotxa)
+  pero vuelven los graves de «cop / cops» → «vegada / vegades» (HG009,
+  HG022, HG026), más «calces» y HG055 «gandules» → «hamaques».
+- Con el mejor criterio de cada uno (margen 1, λ 1, elegido sobre estos
+  mismos homógrafos): sistema 205 / 2, lemas + clasificador 206 / 5, lemas
+  solo 203 / 7, mezcla 207 / 6.
+
+**Lectura**: con el texto de la 2.0.0 pasa lo mismo que el 12-13/11. Los
+lemas no mejoran al sistema sin añadir errores graves; lo que ganan es
+traducir más, y cuestan ~50 veces más por llamada (spaCy en cada frase
+candidata). Visto de paso: el sistema con margen 1 y λ 1 pasa de 194 a 205
+aciertos con los mismos 2 graves; está elegido sobre el mismo benchmark y
+habría que comprobarlo en texto real antes de cambiar nada.
+
+Para el compañero: con el cambio del 18/11, «recuita» nombre (requesón)
+ya no se traduce nunca a «brulla» (12 decisiones sin traducir en los
+homógrafos).
 
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
