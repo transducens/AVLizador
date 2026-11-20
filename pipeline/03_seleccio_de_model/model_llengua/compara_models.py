@@ -68,11 +68,20 @@ KenLM: paraules normalitzades amb l'ordre de l'n-grama trobat). S'obrin amb
 Prior (11/11/2026): log P(candidat sol). KenLM el dona sense <s> ni </s>
 (`KenLM.prior`, l'unigrama); abans era log P("<s> colp </s>"), que no seguix
 la freqüència, i `lam` no canviava res en KenLM.
+
+Graella completa (20/11/2026, `--graella-completa`): per a cada criteri de
+la graella (`--marges`, `--lams`, `--lams-colisio`, `--lams-irresoluble`,
+`--desempats`; el desempat només en els `*_c1`), totes les mètriques de
+cada benchmark (exactes, BLEU, chrF, TER, WER), els encerts / errors greus
+/ sense traduir de cada benchmark d'homògrafs i el GD, GDV i GDC de l'eixida
+del manual, en `*_graella.json`. `tria_criteris.py` en tria els millors.
 """
 
 from __future__ import annotations
 
 import argparse
+import collections
+import functools
 import gc
 import itertools
 import json
@@ -561,13 +570,20 @@ def punt_avaluat(it: dict, punts: list):
     return next((p for p in punts if paraula and p.paraula.lower() == paraula), None)
 
 
+@functools.lru_cache(maxsize=None)
+def _metriques(hipotesi: str, referencia: str) -> dict:
+    """`calcula_metriques` amb memòria (20/11/2026): amb la graella completa,
+    la majoria de criteris donen la mateixa traducció en la majoria de frases."""
+    return calcula_metriques(hipotesi, referencia)
+
+
 def avalua(puntuats: list, criteri: Criteri | None) -> dict:
     """Mètriques d'un benchmark amb un criteri (`None` = motor sol)."""
     files, sentit, sentit_model, n_sentit, n_model = [], 0, 0, 0, 0
     for it, text_motor, punts in puntuats:
         hip = text_motor if criteri is None else aplica_tries(text_motor, punts, criteri)
         ref = normalitza_apostrofa(it["occidental"])
-        files.append({"id": it["id"], "hipotesi": hip, "error": False, **calcula_metriques(hip, ref)})
+        files.append({"id": it["id"], "hipotesi": hip, "error": False, **_metriques(hip, ref)})
         p = punt_avaluat(it, punts)
         if it.get("esperat") and (it.get("tipus") or "") != "control":
             tria = p.motor if (p is not None and criteri is None) else (p.tria if p is not None else None)
@@ -748,27 +764,70 @@ def informe_detall(detalls: dict, benchmarks: dict) -> str:
     return "\n".join(md) + "\n"
 
 
-def gd_eixida(hipotesis: list[str]) -> dict:
-    """GD i GDV globals de l'eixida (sumant marcadors i paraules)."""
+@functools.lru_cache(maxsize=None)
+def _gd_frase(hipotesi: str) -> tuple[int, int, int]:
     from avlizador.grau_dialectal import calcula_gd
 
+    r = calcula_gd(hipotesi)
+    return r["total_occidentals"], r["total_orientals"], r["total_paraules"]
+
+
+def gd_eixida(hipotesis: list[str]) -> dict:
+    """GD, GDV i GDC globals de l'eixida (sumant marcadors i paraules; el
+    GDC des del 20/11/2026: 1 - occidentals / paraules)."""
     occ = ori = paraules = 0
     for h in hipotesis:
-        r = calcula_gd(h)
-        occ, ori, paraules = occ + r["total_occidentals"], ori + r["total_orientals"], paraules + r["total_paraules"]
+        a, b, c = _gd_frase(h)
+        occ, ori, paraules = occ + a, ori + b, paraules + c
     return {"gd": round(occ / (occ + ori), 4) if occ + ori else None,
-            "gdv": round(1 - ori / paraules, 4) if paraules else None, "orientals": ori}
+            "gdv": round(1 - ori / paraules, 4) if paraules else None,
+            "gdc": round(1 - occ / paraules, 4) if paraules else None, "orientals": ori}
 
 
 def criteris(args) -> list[tuple[str, Criteri]]:
     eixida = []
-    for marge, defecte, lam, lam_col, desempat in itertools.product(
-            args.marges, args.per_defecte, args.lams, args.lams_colisio or [None], args.desempats or [None]):
+    for marge, defecte, lam, lam_col, lam_irr, desempat in itertools.product(
+            args.marges, args.per_defecte, args.lams, args.lams_colisio or [None],
+            getattr(args, "lams_irresoluble", None) or [None], args.desempats or [None]):
         nom = (f"marge={marge:g} defecte={defecte} lam={lam:g}" + (f" lam_col={lam_col:g}" if lam_col is not None else "")
+               + (f" lam_irr={lam_irr:g}" if lam_irr is not None else "")
                + (f" desempat={desempat:g}" if desempat is not None else ""))
         eixida.append((nom, Criteri(marge=marge, per_defecte=defecte, lam=lam, lam_colisio=lam_col,
-                                    desempat=desempat)))
+                                    lam_irresoluble=lam_irr, desempat=desempat)))
     return eixida
+
+
+def sense_desempat(llista: list[tuple[str, Criteri]]) -> list[tuple[str, Criteri]]:
+    """Per als models sense classificador (20/11/2026): el desempat no fa
+    res, així que es lleva i es queden els criteris distints.
+
+    >>> l = [("a desempat=1", Criteri(desempat=1.0)), ("a desempat=2", Criteri(desempat=2.0))]
+    >>> [n for n, _ in sense_desempat(l)]
+    ['a']
+    """
+    vist, eixida = set(), []
+    for nom, c in llista:
+        c2 = Criteri(**{**c.__dict__, "desempat": None})
+        if c2 not in vist:
+            vist.add(c2)
+            eixida.append((nom.split(" desempat=")[0], c2))
+    return eixida
+
+
+def fila_graella(nom: str, criteri: Criteri, r: dict, puntuats: dict, fix: bool) -> dict:
+    """Una fila de la graella completa: paràmetres, mètriques de cada
+    benchmark, classes de les decisions dels homògrafs i GD del manual."""
+    fila = {"criteri": nom, "fix": fix,
+            **{k: getattr(criteri, k) for k in ("marge", "per_defecte", "lam", "lam_colisio",
+                                                "lam_irresoluble", "desempat")}}
+    for b, v in r.items():
+        fila[b] = {k: v[k] for k in ("n_frases", "exactes", "bleu_mitja", "chrf_mitja", "ter_corpus",
+                                     "wer_corpus", "sentit_model", "n_model")}
+        if b.startswith("homografs"):
+            fila[b]["classes"] = dict(collections.Counter(f["classe"] for f in detall(puntuats[b], criteri)))
+        if b == "manual":
+            fila[b] |= gd_eixida(v["hipotesis"])
+    return fila
 
 
 def criteri_fix(clau: str) -> Criteri:
@@ -791,6 +850,10 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--lams", nargs="+", type=float, default=[0.0, 0.5])
     p.add_argument("--lams-colisio", nargs="+", type=float, default=None,
                    help="λ propi de les col·lisions (cop); sense l'opció, el mateix de --lams")
+    p.add_argument("--lams-irresoluble", nargs="+", type=float, default=None,
+                   help="λ propi dels homògrafs irresolubles; sense l'opció, el mateix de --lams")
+    p.add_argument("--graella-completa", action="store_true",
+                   help="totes les mètriques i els errors greus de cada criteri en *_graella.json (20/11/2026)")
     p.add_argument("--desempats", nargs="+", type=float, default=None,
                    help="camí C1: si el model guanya una col·lisió per menys d'això, decidix el classificador "
                         "de sentit (només els models *_c1)")
@@ -827,6 +890,7 @@ def main(argv: list[str] | None = None) -> None:
     puntua([{"id": "_", "oriental": "Un cop acabada la reunió, marxem.", "occidental": ""}], None)
 
     detalls: dict = {}
+    graella: dict = {}
     for clau in args.models:
         print(f"\n=== {clau} ===", flush=True)
         model = carregador.puntuador(clau)
@@ -847,7 +911,8 @@ def main(argv: list[str] | None = None) -> None:
             n = afig_sentit(puntuats, args.model_sentit)
             print(f"  classificador de sentit: {n} punts ({args.model_sentit.name})", flush=True)
         fix = criteri_fix(clau)
-        files_criteris = [("motor sol", None)] if clau == "motor" else llista
+        files_criteris = ([("motor sol", None)] if clau == "motor"
+                          else llista if clau.endswith("_c1") else sense_desempat(llista))
         taula = []
         for nom, criteri in files_criteris:
             r = {b: avalua(puntuats[b], criteri) for b in benchmarks}
@@ -864,6 +929,13 @@ def main(argv: list[str] | None = None) -> None:
         if fila_fix is None:  # el criteri fix no era en la graella: es calcula a banda
             nom_fix = "sistema KenLM (CRITERI_KENLM)" if fix == CRITERI_KENLM else "fix"
             fila_fix = (nom_fix, fix, {b: avalua(puntuats[b], fix) for b in benchmarks})
+
+        if args.graella_completa and clau != "motor":
+            t0 = time.time()
+            graella[clau] = [fila_graella(nom, c, r, puntuats, c == fila_fix[1]) for nom, c, r in taula]
+            if not any(f["fix"] for f in graella[clau]):
+                graella[clau].append(fila_graella(fila_fix[0], fila_fix[1], fila_fix[2], puntuats, True))
+            print(f"  graella completa: {len(graella[clau])} criteris ({time.time() - t0:.0f} s)", flush=True)
 
         def descriu(fila):
             nom, _, r = fila
@@ -913,6 +985,11 @@ def main(argv: list[str] | None = None) -> None:
     (RESULTATS / f"compara_models_{sufix}.json").write_text(json.dumps(resultat, ensure_ascii=False, indent=1),
                                                           encoding="utf-8")
     (RESULTATS / f"compara_models_{sufix}.md").write_text(informe(resultat, benchmarks), encoding="utf-8")
+    if graella:
+        (RESULTATS / f"compara_models_{sufix}_graella.json").write_text(
+            json.dumps({"data": resultat["data"], "benchmarks": list(benchmarks), "models": graella},
+                       ensure_ascii=False), encoding="utf-8")
+        print(f"-> {RESULTATS / f'compara_models_{sufix}_graella.json'}")
     if detalls:
         (RESULTATS / f"compara_models_{sufix}_detall.json").write_text(
             json.dumps(detalls, ensure_ascii=False, indent=1), encoding="utf-8")
