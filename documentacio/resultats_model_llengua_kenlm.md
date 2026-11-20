@@ -1367,6 +1367,49 @@ Para el compañero: con el cambio del 18/11, «recuita» nombre (requesón)
 ya no se traduce nunca a «brulla» (12 decisiones sin traducir en los
 homógrafos).
 
+**Variante «todo a lema»** (20/11, petición del usuario;
+`LematitzadorLM(tot=True)`, `TOT=1 prova_lemes_dogv2.sh`; jobs 3290-3291 y
+3293, `compara_models_20261120_1151_lemes_tot_dogv2`). Todo pasa a lema,
+también las candidatas y las palabras que concuerdan («Les anous són
+bones.» → «el anou ser bo .»); solo quedan la puntuación y los números. El
+prior sale de la tabla de formas de la 2.0.0, porque en el texto de lemas
+ya no están los plurales candidatos. Lematizar: 655 s con 8 CPU; KenLM 71 s.
+El comparador ya lleva el arreglo de los puntos no detectados.
+
+| Modelo | Criterio | Aciertos | Graves | Sin traducir | Exactas v1 / v2 / manual / 151 |
+|---|---|---|---|---|---|
+| **Sistema 2.0.0** | sistema | 194 | **2** | 61 | **227** / 112 / **232** / 144 |
+| Todo a lema, solo | fijo | 195 | 7 | 55 | 222 / 118 / 231 / 144 |
+| Todo a lema + clasificador | sistema | 187 | 4 | 66 | 223 / 109 / **232** / 144 |
+| Mezcla formas + todo a lema + clasificador | sistema | **199** | 4 | 54 | 226 / **118** / **232** / 144 |
+| *(4.22) Mezcla formas + lemas parciales + clasif.* | sistema | 198 | 5 | 54 | 225 / 118 / 232 / 144 |
+
+Los 2 graves del sistema (HG2-028 y HG2-086, sección anterior) están en
+todos; lo nuevo de cada uno:
+
+- **Todo a lema, solo**: gana 14 decisiones (gandula / gandules, manca,
+  rentadora, reeixida) y pierde 13: «cop / cops» → «vegada / vegades»
+  (HG009, HG022), HG041 «calces» → «bragues», HG055 «gandules» →
+  «hamaques», HG2-160 «reeixides» → «exitoses» (5 graves nuevos) y 7
+  «nou» fruto sin traducir: con «una nou» → «un anou» desaparece la pista
+  del género.
+- **Todo a lema + clasificador**: el peor; gana 7 y pierde 14 (reeixida,
+  panotxa, gandula sin traducir; graves nuevos HG041 «calces» y HG2-009
+  «nou» → «anou»).
+- **Mezcla formas + todo a lema + clasificador**: el que más acierta de
+  todas las variantes de lemas: gana 7 (HG053 y HG2-106 «hamaques», HG2-022
+  y HG2-024 «falta», HG2-058 y HG2-059 «llavadora», HG2-154 «exitoses») y
+  pierde 2, los dos graves: HG009 «Els lladres van preparar un últim cop al
+  banc» → «vegada» y HG041 «El sastre cosia calces» → «bragues». Exactas: v2
+  +6, v1 −1.
+
+**Lectura**: lematizarlo todo no arregla lo que no arreglaban los lemas
+parciales. Solo, pierde el género («nou» / «anou») y vuelve el error de
+«cop» → «vegada». La mezcla con el KenLM de formas recupera eso y saca +5
+aciertos, pero con 2 graves nuevos; con el criterio de la 4.16 (más
+aciertos sin más graves) no se adopta. Cuesta lo mismo que los lemas
+parciales (~5 ms por llamada, spaCy en cada frase candidata).
+
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
   se evalúa: las cifras son optimistas. Hay que confirmarlas en el 151, el
