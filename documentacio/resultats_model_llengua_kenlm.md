@@ -1410,6 +1410,54 @@ aciertos, pero con 2 graves nuevos; con el criterio de la 4.16 (más
 aciertos sin más graves) no se adopta. Cuesta lo mismo que los lemas
 parciales (~5 ms por llamada, spaCy en cada frase candidata).
 
+**Búsqueda de la mejor configuración** (20/11, petición del usuario; job 3294,
+`compara_models_20261120_1307_graella_lemes_tot{,_graella.json,_tria.md}`).
+`compara_models.py --graella-completa` guarda ahora, para cada criterio,
+todas las métricas de cada benchmark (exactas, BLEU, chrF, TER, WER), los
+aciertos / graves / sin traducir de los homógrafos y el GD / GDV / GDC del
+manual; `tria_criteris.py` elige. Rejilla: margen 0,5-5 (8 valores), λ 0,5-2
+(4), λ de colisiones 0,5-1,5 (4), λ de irresolubles 0,75-2 (5), desempate
+1/2/3 (solo con clasificador): 1.920 criterios por modelo con clasificador y
+641 sin él. Tardó unos 5 minutos (las métricas de cada traducción se
+calculan una vez).
+
+| Modelo | Criterio actual | Mejor sin más graves (≤ 2) | Mejor absoluto |
+|---|---|---|---|
+| **Sistema 2.0.0** | 194 / 2 | **205 / 2** (margen 1, λ 1, λ col. 0,75, λ irr. 1, desempate 2) | 210 / 4 (margen 0,5) |
+| Todo a lema | 195 / 7 | — (como mínimo 3 graves: 185 / 3) | 204 / 8 |
+| Todo a lema + clasificador | 187 / 4 | 187 / 2 (margen 4) | 206 / 7 |
+| Mezcla formas + todo a lema + clasificador | 199 / 4 | 199 / 2 (margen 5) | 212 / 10 |
+
+Aciertos / graves en las 257 decisiones. Exactas del sistema con «mejor sin
+más graves»: v1 230 (actual 227), v2 120 (112), manual 232 (232), 151 144
+(144); GD / GDV del manual 1,0000 en todas las filas y GDC 0,922. Tabla con
+todas las métricas en el `_tria.md`.
+
+**Validación cruzada** (se elige con un banco de homógrafos, sin pasar de
+los graves del sistema en ese banco, y se mide en el otro; entre paréntesis
+el sistema actual):
+
+| Modelo | Elegido en → medido en | Aciertos | Graves |
+|---|---|---|---|
+| Sistema 2.0.0 | v1 → v2 | 119 (113) | 3 (2) |
+| Sistema 2.0.0 | v2 → v1 | 81 (81) | 3 (0) |
+| Mezcla formas + todo a lema + clasif. | v1 → v2 | 118 (113) | 2 (2) |
+| Mezcla formas + todo a lema + clasif. | v2 → v1 | 82 (81) | 3 (0) |
+| Todo a lema + clasificador | v1 → v2 | 105 (113) | 3 (2) |
+| Todo a lema + clasificador | v2 → v1 | 77 (81) | 2 (0) |
+| Todo a lema | v2 → v1 | 78 (81) | 3 (0) |
+
+**Lectura**:
+
+- Con lemas no hay ninguna configuración mejor que el sistema con los
+  mismos graves: la mezcla llega a 199 / 2 y el sistema ajustado a 205 / 2.
+  Todo a lema, solo, no baja de 3 graves.
+- El sistema ajustado (margen 1, λ 1, λ irresolubles 1) gana 11 aciertos
+  sobre los mismos homógrafos, pero en la validación cruzada esa ganancia
+  se queda en +6 aciertos en v2 y 0 en v1, y en las dos direcciones sube
+  a 3 graves. Parte de la mejora es ajuste al banco. Antes de cambiar el
+  criterio habría que mirar esos graves y medirlo en texto real (AINA).
+
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
   se evalúa: las cifras son optimistas. Hay que confirmarlas en el 151, el
