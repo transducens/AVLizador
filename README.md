@@ -73,7 +73,7 @@ no per etiqueta, perquè la web de Hugging Face no permet crear etiquetes.
 | Versió del paquet | Commit del model en Hugging Face | Model |
 |---|---|---|
 | 2.0.0 | [`db4a1f1`](https://huggingface.co/transducens/avlizador-kenlm-va/tree/db4a1f10d55bbc30ad54728e1639d17d32526ef7) (`db4a1f10d55bbc30ad54728e1639d17d32526ef7`, 17/11/2026) | KenLM `valencia_net_dogv2` (MaCoCu + DOGV 2025-2026) + classificador `sentit_dogv2_avl` (+ AVL) |
-| 2.0.1 | [`ea87f3f`](https://huggingface.co/transducens/avlizador-kenlm-va/tree/ea87f3f330de365b2fc04f86271f86e692781bb5) (`ea87f3f330de365b2fc04f86271f86e692781bb5`, 23/11/2026) | El mateix KenLM i classificador; la taula de freqüències nova (amb «brolladors», que hi faltava des del lèxic del 18/11) |
+| 2.0.1 | [`684993c`](https://huggingface.co/transducens/avlizador-kenlm-va/tree/684993c83721bb000d424bbeb7286247c40e9154) (`684993c83721bb000d424bbeb7286247c40e9154`, 23/11/2026) | El mateix KenLM i classificador; la taula de freqüències nova (amb «brolladors», que hi faltava des del lèxic del 18/11) i el KenLM de lemes de l'opció `kenlm-lemes` |
 
 Pujar a Hugging Face un altre fitxer (per exemple, la fitxa `README.md`)
 crea un commit nou, però no canvia res per a les versions ja publicades.

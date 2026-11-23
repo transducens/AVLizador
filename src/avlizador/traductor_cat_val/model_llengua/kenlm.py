@@ -69,8 +69,9 @@ FITXERS_HF_LEMES = (f"{NOM_MODEL_LEMES}_o5.binary", f"{NOM_MODEL_LEMES}_freq.jso
 REPO_HF = "transducens/avlizador-kenlm-va"
 # Revisió del model que correspon a cada versió del paquet: el commit de Hugging Face
 # (no es pot crear una etiqueta des de la web). 2.0.0: commit db4a1f1, 17/11/2026.
-# 2.0.1: commit ea87f3f, 23/11/2026 (la taula de freqüències nova, amb «brolladors»).
-REVISIO_HF = "ea87f3f330de365b2fc04f86271f86e692781bb5"
+# 2.0.1: commit 684993c, 23/11/2026 (la taula de freqüències nova, amb «brolladors»,
+# del commit ea87f3f, i els dos fitxers de l'opció amb lemes).
+REVISIO_HF = "684993c83721bb000d424bbeb7286247c40e9154"
 VAR_REVISIO = "AVLIZADOR_KENLM_REVISIO"
 VAR_DESCARREGA = "AVLIZADOR_KENLM_DESCARREGA"
 

@@ -1884,7 +1884,11 @@ Cambios (rama `version-2.0.1`):
   dos ficheros con los nombres del paquete y añade a la ficha la sección
   «Lemma option» (y corrige «margin 3» → «margin 1»).
 - Tests: descarga de solo los ficheros de lemas y caché parcial (124 en verde).
-  No probado contra Hugging Face hasta que el usuario suba los ficheros.
+- Subido por el usuario: commit `684993c83721bb000d424bbeb7286247c40e9154`
+  (los dos ficheros de lemas, idénticos a los evaluados; el resto igual que
+  `ea87f3f`). Es la `REVISIO_HF` de la 2.0.1. La ficha (`README.md`) de HF
+  sigue siendo la anterior: falta subir la nueva (no cambia nada del
+  paquete).
 
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que

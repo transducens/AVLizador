@@ -185,4 +185,4 @@ avlizador avalua --benchmarks manual   # comparar con 232/458
 | `pip` falla al compilar `kenlm` | Falta el compilador de C++ (paso 0); en Windows, Docker o el motor solo (paso 3) |
 | Linux: "ensurepip is not available" | `sudo apt install python3-venv` |
 | Windows: no deja ejecutar `Activate.ps1` | `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` |
-| Sin internet en la máquina de trabajo | Descargar antes el modelo KenLM con conexión: `python -c "from huggingface_hub import snapshot_download; print(snapshot_download('transducens/avlizador-kenlm-va', revision='ea87f3f330de365b2fc04f86271f86e692781bb5'))"` y copiar la carpeta que indica a la máquina de trabajo, con `AVLIZADOR_KENLM_DIR` apuntando a ella. |
+| Sin internet en la máquina de trabajo | Descargar antes el modelo KenLM con conexión: `python -c "from huggingface_hub import snapshot_download; print(snapshot_download('transducens/avlizador-kenlm-va', revision='684993c83721bb000d424bbeb7286247c40e9154'))"` y copiar la carpeta que indica a la máquina de trabajo, con `AVLIZADOR_KENLM_DIR` apuntando a ella. |
