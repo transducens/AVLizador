@@ -75,6 +75,7 @@ etiquetas.
 | Versión del paquete | Commit del modelo en Hugging Face | Modelo |
 |---|---|---|
 | 2.0.0 | [`db4a1f1`](https://huggingface.co/transducens/avlizador-kenlm-va/tree/db4a1f10d55bbc30ad54728e1639d17d32526ef7) (`db4a1f10d55bbc30ad54728e1639d17d32526ef7`, 17/11/2026) | KenLM `valencia_net_dogv2` (MaCoCu + DOGV 2025-2026) + clasificador `sentit_dogv2_avl` (+ AVL) |
+| 2.0.1 | [`ea87f3f`](https://huggingface.co/transducens/avlizador-kenlm-va/tree/ea87f3f330de365b2fc04f86271f86e692781bb5) (`ea87f3f330de365b2fc04f86271f86e692781bb5`, 23/11/2026) | El mismo KenLM y clasificador; la tabla de frecuencias nueva (con «brolladors», que faltaba desde el léxico del 18/11) |
 
 Subir a Hugging Face otro fichero (por ejemplo, la ficha `README.md`) crea
 un commit nuevo, pero no cambia nada para las versiones ya publicadas.

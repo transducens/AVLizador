@@ -64,7 +64,8 @@ NOM_MODEL_LEMES = "valencia_net_dogv_lemes"  # 23/11/2026: l'opció amb lemes
 REPO_HF = "transducens/avlizador-kenlm-va"
 # Revisió del model que correspon a cada versió del paquet: el commit de Hugging Face
 # (no es pot crear una etiqueta des de la web). 2.0.0: commit db4a1f1, 17/11/2026.
-REVISIO_HF = "db4a1f10d55bbc30ad54728e1639d17d32526ef7"
+# 2.0.1: commit ea87f3f, 23/11/2026 (la taula de freqüències nova, amb «brolladors»).
+REVISIO_HF = "ea87f3f330de365b2fc04f86271f86e692781bb5"
 VAR_REVISIO = "AVLIZADOR_KENLM_REVISIO"
 VAR_DESCARREGA = "AVLIZADOR_KENLM_DESCARREGA"
 

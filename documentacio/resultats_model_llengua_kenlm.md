@@ -1817,8 +1817,12 @@ fichas de HF (modelo y homógrafos) actualizados. Evaluación de la versión
 igual que la 2.0.0), homógrafos v1 228/249 (motor solo 179), v2 113/144 (75),
 v1 del dataset de HF 83/94 (37).
 
-**Pendiente**: subir a HF la tabla nueva y poner el commit en `REVISIO_HF`
-(sin eso, la 2.0.1 bajaría la tabla vieja); revisar a mano las 135 frases
+**Hugging Face** (23/11): el usuario subió la tabla nueva y la ficha (commit
+`ea87f3f330de365b2fc04f86271f86e692781bb5`); es la `REVISIO_HF` de la 2.0.1.
+Comprobado desde una caché vacía: los tres ficheros que baja el paquete son
+idénticos a los de `docker/kenlm/`.
+
+**Pendiente**: revisar a mano las 135 frases
 nuevas de margen 3 → 1; la regla de «els deus» (masculino → no traducir).
 
 ### 4.25 El KenLM de lemas como opción del paquete (23/11, decisión del usuario)
