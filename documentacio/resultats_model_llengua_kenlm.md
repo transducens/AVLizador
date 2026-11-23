@@ -1821,6 +1821,35 @@ v1 del dataset de HF 83/94 (37).
 (sin eso, la 2.0.1 bajaría la tabla vieja); revisar a mano las 135 frases
 nuevas de margen 3 → 1; la regla de «els deus» (masculino → no traducir).
 
+### 4.25 El KenLM de lemas como opción del paquete (23/11, decisión del usuario)
+
+El usuario quiere dejar los lemas como **opción** («va bien, por si alguien lo
+quisiera utilizar»), no por defecto. De las dos variantes con referencia
+(4.23-4.24) eligió **lemas parciales + clasificador** (198 / 1 / 38 con margen
+1, mismo criterio que el sistema) frente a la mezcla (necesita los dos KenLM
+y su propio criterio: 194 / 0 con margen 3 y desempate 4).
+
+En el paquete (rama `version-2.0.1`):
+- `kenlm.ModelKenLMLemes`: el puntuador del comparador (`KenLMLemes` con
+  `referencia=True`); `LematitzadorLM.tokens_formes`. La referencia (la
+  traducción del motor) la fija `puntua_punts` solo si la frase tiene alguna
+  palabra ambigua: en las demás no se lematiza nada (en el comparador se
+  lematizaba siempre).
+- `translate_cat_val(text, model="kenlm-lemes")`,
+  `translate_cat_val_kenlm_lemes`, `avlizador tradueix --model kenlm-lemes`,
+  `avlizador avalua --model kenlm kenlm-lemes`. Si falta algo, `FaltaKenLM`.
+- Ficheros en `AVLIZADOR_KENLM_DIR`: `valencia_net_dogv_lemes_o5.binary` y
+  `valencia_net_dogv_lemes_freq.json` (= `valencia_net_dogv2_lemes_*` de
+  Abaco; en `~/kenlm_2.0.0`, enlaces) y el mismo `sentit.json`. **No se
+  descargan de Hugging Face** (no están publicados).
+- 4 tests nuevos con modelo falso (123 en verde).
+
+Comprobado en Abaco (job 3383, `resultats_kenlm_lemes_2.0.1`): homógrafos v1
+229/249, v2 114/144, manual 232/458, 151 144/154, idéntico al comparador
+(`kenlm_lemes_ref_dogv2_c1`, job 3370, mismo BLEU). Tiempo del modelo por
+frase con palabra ambigua, 10-17 ms frente a 0,04-0,11 ms del sistema; por
+frase entera, unas 2 veces más.
+
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
   se evalúa: las cifras son optimistas. Hay que confirmarlas en el 151, el
@@ -1983,3 +2012,4 @@ Son compatibles: si C2 mejora la base, C1 puede desempatar encima.
 | 19/11 | **Errores de AINA de la 2.0.0**: concordancia del artículo y la contracción hacia la izquierda («a la seua vivenda»), spaCy también en los resolubles («per deu estats»), género del nombre según el fichero morfológico («el nou de Bowie»), **λ 1,25 para los irresolubles** (`lam_irresoluble`) | Informe del ETL de `traductor-es-va-en` (AINA ca-en, FLORES+). Con el KenLM real (puntuado en Abaco, sistema en local): `main` 227 / 111 / 232 / 144, la rama con λ 1,5 da las mismas frases, con λ 1,25 **227 / 112 / 232 / 144** (+HG2-113, sin pérdidas); λ 1,0 pierde BM-AVL-191. Casos de AINA: 20 de 23 bien; quedan «programes de nou» y «manca»/«rentadora» (catalana por defecto). Sección 4.21. |
 | 23/11 | **Graves nuevos de los KenLM de lemas: causas y arreglo del lematizador** (job 3353, `compara_models_20261123_1027_lemes_ref_dogv2`) | «cop» → «vegada»: no es de los lemas (el sistema también falla sin clasificador); en la mezcla, la suma de dos KenLM dobla las diferencias y el desempate 2 se queda corto. «calces» → «bragues»: spaCy lematizaba el verbo distinto según el candidato («cosir bragues» / «cosia calces»); con el contexto lematizado una vez sobre la frase del motor desaparece. Las filas «solo» de la 4.22 llevaban `Criteri()`, no el del sistema (arreglado en `criteri_fix`). Con referencia: lemas + clasificador 197 / 2, mezcla con desempate 4 **202 / 2** (sistema 194 / 2), ~200 veces más lentos; sin validación cruzada ni texto real. Sección 4.23. |
 | 23/11 | **Margen 1 (en prueba), tabla de frecuencias arreglada y homógrafos corregidos** (jobs 3368-3370; `compara_models_20261123_1332_lemes_ref_dogv2`, `prova_marge_text_real_20261123_1312`) | `CRITERI_KENLM.marge` 3 → 1. El usuario quita «recuita(es)» de los homógrafos y HG2-028 espera «falta» (237 decisiones). «brolladors» faltaba en la tabla de frecuencias (léxico del 18/11; en la 2.0.0 publicada, «brolladores», también con 0): «deus» → «brolladors» en texto real pasa de 82 a 11 (margen 3) y de 89 a 27 (margen 1). Sistema margen 3 186 / 0, **margen 1 196 / 0**; lemas + clasificador 198 / 1; mezcla con desempate 4, 194 / 0 (margen 3) y 197 / 1 (margen 2); nada aguanta limpio la validación cruzada. Propuesta: margen 1 + tabla nueva, lemas descartados. Sección 4.24. |
+| 23/11 | **KenLM de lemas como opción del paquete** (`--model kenlm-lemes`; job 3383) | Decisión del usuario: opción, no por defecto; lemas parciales + clasificador con el contexto lematizado una vez sobre la frase del motor (`kenlm.ModelKenLMLemes`). Ficheros en `AVLIZADOR_KENLM_DIR`, no en HF. En Abaco, igual que el comparador: v1 229, v2 114, manual 232, 151 144 (198 / 1 en las 237 decisiones; sistema 196 / 0). Sección 4.25. |

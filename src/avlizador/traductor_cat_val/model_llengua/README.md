@@ -84,6 +84,42 @@ Hugging Face i els baixa la primera vegada. En la imatge Docker van en
 Per a publicar-ne una versió nova: `scripts/hf_model/kenlm.py`. El paquet `kenlm` es compila en instal·lar-lo (`pip install
 "avlizador[kenlm]"`; en Windows cal compilador, la imatge Docker és Linux).
 
+## Opció: KenLM de lemes (`--model kenlm-lemes`, 23/11/2026)
+
+Decisió de l'usuari: es deixa com a **opció**, no per defecte. El mateix
+sistema (criteri `CRITERI_KENLM` i el mateix classificador), però el KenLM és
+el de **lemes parcials** (proposta del supervisor): el text d'entrenament i
+les frases candidates es passen a lemes amb `lemes.LematitzadorLM` («va
+pegar» → «anar pegar»), llevat de les paraules candidates i de les que
+concorden en gènere («una vegada», «les nous»), que es queden en la seua
+forma. Així el model té més dades per a cada context.
+
+El context es lematitza **una sola vegada**, sobre la traducció del motor
+(`kenlm.ModelKenLMLemes.fixa_referencia`, que crida `puntua_punts` quan la
+frase té alguna paraula ambigua): spaCy lematitzava el context de manera
+distinta segons el candidat («cosia bragues» → «cosir», «cosia calces» →
+«cosia») i això donava errors greus.
+
+| En els homògrafs corregits del 23/11 | KenLM (per defecte) | KenLM de lemes |
+|---|---|---|
+| Decisions (237): encerts / greus / sense traduir | 196 / 0 / 41 | 198 / 1 / 38 |
+| Exactes homògrafs v1 (249) / v2 (144) | 228 / 113 | 229 / 114 |
+| Exactes manual (458) / 151 (154) | 232 / 144 | 232 / 144 |
+| Temps del model per frase amb paraula ambigua | ~0,1 ms | ~10-17 ms (spaCy) |
+
+El greu és «calces» → «bragues» en HG2-093. `avlizador avalua --model kenlm
+kenlm-lemes` en Abaco dona el mateix que el comparador (job 3383).
+
+Ús: `translate_cat_val(text, model="kenlm-lemes")`, `avlizador tradueix
+--model kenlm-lemes` o `avlizador avalua --model kenlm kenlm-lemes`. Fitxers,
+en la carpeta d'`AVLIZADOR_KENLM_DIR` (**no es baixen de Hugging Face**):
+`valencia_net_dogv_lemes_o5.binary` (80 MB; en Abaco,
+`dades/macocu/kenlm/valencia_net_dogv2_lemes_o5.binary`),
+`valencia_net_dogv_lemes_freq.json` (`_lemes_freq.json`) i el mateix
+`sentit.json`. En Abaco, `~/kenlm_2.0.0` ja té els enllaços. Si falta alguna
+cosa, `FaltaKenLM` (no torna al motor sol). Detall:
+`documentacio/resultats_model_llengua_kenlm.md`, 4.23-4.25.
+
 ## Manteniment: paraules i corpus nous (16/11/2026)
 
 Què cal fer perquè el sistema KenLM + classificador tinga en compte una

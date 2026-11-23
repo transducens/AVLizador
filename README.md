@@ -98,7 +98,17 @@ crea un commit nou, però no canvia res per a les versions ja publicades.
 
 Cost: ~0,1 ms per frase candidata i ~80 MB de memòria, sense GPU ni
 PyTorch. Fins al 12/11/2026 el model era FLOR-760M (833 ms i ~1,5 GB); des
-de la versió 2.0.0 ja no és en el paquet. Per què KenLM i totes les xifres:
+de la versió 2.0.0 ja no és en el paquet.
+
+**Opció amb lemes** (des de la 2.0.1, no per defecte): `--model kenlm-lemes`
+usa un KenLM de lemes parcials en lloc del de formes (198 encerts i 1 error
+greu en les 237 decisions dels homògrafs, davant de 196 i 0; en les frases
+amb paraula ambigua, la traducció tarda unes 2 vegades més: spaCy
+lematitza el context). Els seus fitxers no es
+baixen: van en la carpeta d'`AVLIZADOR_KENLM_DIR`. Detall en
+[`model_llengua/README.md`](src/avlizador/traductor_cat_val/model_llengua/README.md).
+
+Per què KenLM i totes les xifres:
 [`documentacio/resultats_model_llengua_kenlm.md`](documentacio/resultats_model_llengua_kenlm.md).
 
 ## Ús

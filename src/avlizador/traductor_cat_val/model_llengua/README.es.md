@@ -86,6 +86,42 @@ Para publicar una versión nueva: `scripts/hf_model/kenlm.py`. El paquete `kenlm
 "avlizador[kenlm]"`; en Windows hace falta compilador, la imagen Docker es
 Linux).
 
+## Opción: KenLM de lemas (`--model kenlm-lemes`, 23/11/2026)
+
+Decisión del usuario: se deja como **opción**, no por defecto. El mismo
+sistema (criterio `CRITERI_KENLM` y el mismo clasificador), pero el KenLM es
+el de **lemas parciales** (propuesta del supervisor): el texto de
+entrenamiento y las frases candidatas se pasan a lemas con
+`lemes.LematitzadorLM` («va pegar» → «anar pegar»), salvo las palabras
+candidatas y las que concuerdan en género («una vegada», «les nous»), que se
+quedan en su forma. Así el modelo tiene más datos para cada contexto.
+
+El contexto se lematiza **una sola vez**, sobre la traducción del motor
+(`kenlm.ModelKenLMLemes.fixa_referencia`, que llama `puntua_punts` cuando la
+frase tiene alguna palabra ambigua): spaCy lematizaba el contexto distinto
+según el candidato («cosia bragues» → «cosir», «cosia calces» → «cosia») y
+eso daba errores graves.
+
+| En los homógrafos corregidos del 23/11 | KenLM (por defecto) | KenLM de lemas |
+|---|---|---|
+| Decisiones (237): aciertos / graves / sin traducir | 196 / 0 / 41 | 198 / 1 / 38 |
+| Exactas homógrafos v1 (249) / v2 (144) | 228 / 113 | 229 / 114 |
+| Exactas manual (458) / 151 (154) | 232 / 144 | 232 / 144 |
+| Tiempo del modelo por frase con palabra ambigua | ~0,1 ms | ~10-17 ms (spaCy) |
+
+El grave es «calces» → «bragues» en HG2-093. `avlizador avalua --model kenlm
+kenlm-lemes` en Abaco da lo mismo que el comparador (job 3383).
+
+Uso: `translate_cat_val(text, model="kenlm-lemes")`, `avlizador tradueix
+--model kenlm-lemes` o `avlizador avalua --model kenlm kenlm-lemes`. Ficheros,
+en la carpeta de `AVLIZADOR_KENLM_DIR` (**no se descargan de Hugging Face**):
+`valencia_net_dogv_lemes_o5.binary` (80 MB; en Abaco,
+`dades/macocu/kenlm/valencia_net_dogv2_lemes_o5.binary`),
+`valencia_net_dogv_lemes_freq.json` (`_lemes_freq.json`) y el mismo
+`sentit.json`. En Abaco, `~/kenlm_2.0.0` ya tiene los enlaces. Si falta
+algo, `FaltaKenLM` (no vuelve al motor solo). Detalle:
+`documentacio/resultats_model_llengua_kenlm.md`, 4.23-4.25.
+
 ## Mantenimiento: palabras y corpus nuevos (16/11/2026)
 
 Qué hay que hacer para que el sistema KenLM + clasificador tenga en cuenta
