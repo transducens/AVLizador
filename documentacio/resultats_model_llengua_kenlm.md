@@ -1899,6 +1899,13 @@ Cambios (rama `version-2.0.1`):
   Reconstruida y probada: las dos opciones traducen y la web responde.
 - Dataset de homógrafos en HF actualizado por el usuario (commit `7cec10f`,
   idéntico a `dades/hf_benchmarks/homografs/`).
+- (24/11) **`main` fusionado en `version-2.0.1`** (`90a8539`): PR #37 del
+  compañero (fuera «recuit/recuits» → «brull(s)», E0564/E0565; variantes de
+  concordancia sin adjetivos del predicado en `punts.py`; bugs de cambio de
+  género) + léxico del paquete sincronizado (`53ab642`). Reevaluado en Abaco
+  (job 3402, `resultats_release_2.0.1b`): mismas cifras y **0 traducciones
+  distintas** frase a frase (1.402 con `kenlm`, 944 motor solo, 1.003
+  `kenlm-lemes`). 124 tests.
 
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
