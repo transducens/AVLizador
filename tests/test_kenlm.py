@@ -303,10 +303,38 @@ def test_lemes_sense_paraula_ambigua_no_lematitza():
     assert model._ref is None
 
 
-def test_lemes_necessita_directori(monkeypatch):
+def test_lemes_sense_variable_ni_hugging_face(monkeypatch):
     monkeypatch.delenv("AVLIZADOR_KENLM_DIR", raising=False)
-    with pytest.raises(FaltaKenLM, match="AVLIZADOR_KENLM_DIR"):
+    with pytest.raises(FaltaKenLM, match="valencia_net_dogv_lemes_o5.binary"):
         kenlm.fitxers_kenlm_lemes()
+
+
+def test_lemes_es_baixen_del_mateix_repositori(monkeypatch, tmp_path):
+    """Sense variable, l'opció amb lemes demana a Hugging Face (el mateix
+    repositori i revisió) només els seus fitxers; si la memòria cau té la
+    carpeta de la revisió però no els fitxers de lemes, els baixa."""
+    huggingface_hub = pytest.importorskip("huggingface_hub")
+    for var in ("AVLIZADOR_KENLM_DIR", "AVLIZADOR_KENLM_DESCARREGA", "AVLIZADOR_KENLM_REVISIO", "HF_HUB_OFFLINE"):
+        monkeypatch.delenv(var, raising=False)
+    monkeypatch.setattr(kenlm, "_directori_hf", _DIRECTORI_HF)
+    for f in kenlm.FITXERS_HF:  # en la memòria cau, només els de l'opció per defecte
+        (tmp_path / f).write_text("x")
+    crides = []
+
+    def snapshot_download(repo_id, revision=None, allow_patterns=None, local_files_only=False, **kw):
+        crides.append((repo_id, revision, tuple(allow_patterns), local_files_only))
+        if not local_files_only:
+            for f in allow_patterns:
+                (tmp_path / f).write_text("x")
+        return str(tmp_path)
+
+    monkeypatch.setattr(huggingface_hub, "snapshot_download", snapshot_download)
+    fitxers = kenlm.fitxers_kenlm_lemes()
+    assert fitxers["model"] == tmp_path / "valencia_net_dogv_lemes_o5.binary" and fitxers["model"].exists()
+    assert crides == [(kenlm.REPO_HF, kenlm.REVISIO_HF, kenlm.FITXERS_HF_LEMES, True),
+                      (kenlm.REPO_HF, kenlm.REVISIO_HF, kenlm.FITXERS_HF_LEMES, False)]
+    crides.clear()  # l'opció per defecte ja hi és: no baixa res
+    assert kenlm.directori_kenlm() == tmp_path and [c[3] for c in crides] == [True]
 
 
 def test_translate_cat_val_kenlm_lemes(monkeypatch):

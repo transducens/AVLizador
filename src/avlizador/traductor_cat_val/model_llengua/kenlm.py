@@ -42,9 +42,11 @@ en Windows necessita compilador, la imatge Docker és Linux).
 
 Opció amb LEMES (`ModelKenLMLemes`, 23/11/2026, decisió de l'usuari; NO és
 el per defecte): el mateix sistema amb el KenLM de lemes parcials
-(`valencia_net_dogv_lemes_o5.binary` i `_lemes_freq.json`, en la carpeta
-d'`AVLIZADOR_KENLM_DIR`; no es baixen de Hugging Face). Vore
-`ModelKenLMLemes` i `documentacio/resultats_model_llengua_kenlm.md`, 4.23-4.24.
+(`valencia_net_dogv_lemes_o5.binary` i `_lemes_freq.json`). Els fitxers són
+en el MATEIX repositori de Hugging Face i es busquen igual (la carpeta
+d'`AVLIZADOR_KENLM_DIR` o la memòria cau / la descàrrega), però només quan
+es demana l'opció: qui usa el sistema per defecte no els baixa. Vore
+`ModelKenLMLemes` i `documentacio/resultats_model_llengua_kenlm.md`, 4.23-4.26.
 """
 
 from __future__ import annotations
@@ -60,6 +62,9 @@ LN10 = math.log(10)
 VAR_DIRECTORI = "AVLIZADOR_KENLM_DIR"
 NOM_MODEL = "valencia_net_dogv"
 NOM_MODEL_LEMES = "valencia_net_dogv_lemes"  # 23/11/2026: l'opció amb lemes
+# Els fitxers de Hugging Face que necessita cada opció (no la fitxa ni el bàner).
+FITXERS_HF = (f"{NOM_MODEL}_o5.binary", f"{NOM_MODEL}_freq.json", "sentit.json")
+FITXERS_HF_LEMES = (f"{NOM_MODEL_LEMES}_o5.binary", f"{NOM_MODEL_LEMES}_freq.json", "sentit.json")
 # 16/11/2026: els fitxers també es poden baixar de Hugging Face.
 REPO_HF = "transducens/avlizador-kenlm-va"
 # Revisió del model que correspon a cada versió del paquet: el commit de Hugging Face
@@ -168,20 +173,25 @@ class AvisFreqKenLM(UserWarning):
     """Alguna paraula candidata no és en la taula de freqüències (13/11/2026)."""
 
 
-def _directori_hf(descarrega: bool = True) -> Path | None:
-    """La carpeta del model de Hugging Face (`REPO_HF`): de la memòria cau si
-    ja hi és; si no, el baixa (si `descarrega` i no ho impedixen
-    `AVLIZADOR_KENLM_DESCARREGA=0` ni `HF_HUB_OFFLINE`). `None` si no es pot
-    (sense `huggingface_hub`, sense xarxa, sense permís)."""
+def _directori_hf(descarrega: bool = True, fitxers=FITXERS_HF) -> Path | None:
+    """La carpeta del model de Hugging Face (`REPO_HF`) amb els `fitxers`: de
+    la memòria cau si ja hi són tots; si no, els baixa (si `descarrega` i no
+    ho impedixen `AVLIZADOR_KENLM_DESCARREGA=0` ni `HF_HUB_OFFLINE`). `None`
+    si no es pot (sense `huggingface_hub`, sense xarxa, sense permís). Només
+    es baixen els `fitxers` (els de l'opció per defecte, `FITXERS_HF`, o els
+    de l'opció amb lemes, `FITXERS_HF_LEMES`), no tot el repositori."""
     try:
         from huggingface_hub import snapshot_download
     except ImportError:
         return None
     revisio = os.environ.get(VAR_REVISIO) or REVISIO_HF
-    # Només els fitxers que fa servir el paquet (no la fitxa ni el bàner).
-    fitxers = [f"{NOM_MODEL}_o5.binary", f"{NOM_MODEL}_freq.json", "sentit.json"]
+    fitxers = list(fitxers)
     try:
-        return Path(snapshot_download(REPO_HF, revision=revisio, allow_patterns=fitxers, local_files_only=True))
+        cau = Path(snapshot_download(REPO_HF, revision=revisio, allow_patterns=fitxers, local_files_only=True))
+        # La memòria cau té la carpeta de la revisió encara que només s'hi haja baixat
+        # l'altra opció: si falta algun fitxer, cal baixar-lo.
+        if all((cau / f).exists() for f in fitxers):
+            return cau
     except Exception:  # no és en la memòria cau
         pass
     sense_xarxa = os.environ.get("HF_HUB_OFFLINE", "").lower() in ("1", "true", "yes")
@@ -193,17 +203,19 @@ def _directori_hf(descarrega: bool = True) -> Path | None:
         return None
 
 
-def directori_kenlm(directori: Path | str | None = None, descarrega: bool = True) -> Path:
+def directori_kenlm(directori: Path | str | None = None, descarrega: bool = True,
+                    fitxers=FITXERS_HF) -> Path:
     """La carpeta dels fitxers: `directori`, `AVLIZADOR_KENLM_DIR` o, si no
-    n'hi ha cap, el model de Hugging Face (vore `_directori_hf`)."""
+    n'hi ha cap, el model de Hugging Face amb els `fitxers` (vore
+    `_directori_hf`)."""
     directori = directori or os.environ.get(VAR_DIRECTORI)
     if directori:
         return Path(directori)
-    hf = _directori_hf(descarrega)
+    hf = _directori_hf(descarrega, fitxers)
     if hf is None:
         raise FaltaKenLM(
             f"Falta el model KenLM: no s'ha pogut baixar de Hugging Face ({REPO_HF}) ni hi ha "
-            f"{VAR_DIRECTORI} (una carpeta amb {NOM_MODEL}_o5.binary, {NOM_MODEL}_freq.json i sentit.json).")
+            f"{VAR_DIRECTORI} (una carpeta amb {', '.join(fitxers)}).")
     return hf
 
 
@@ -320,22 +332,18 @@ class ModelKenLMLemes(ModelKenLM):
 
 
 def fitxers_kenlm_lemes(directori: Path | str | None = None) -> dict[str, Path]:
-    """`{"model", "freq", "sentit"}` de l'opció amb lemes: en `directori` o en
-    `AVLIZADOR_KENLM_DIR` (no es baixen de Hugging Face); el classificador,
-    el mateix que el del sistema.
+    """`{"model", "freq", "sentit"}` de l'opció amb lemes: en `directori`, en
+    `AVLIZADOR_KENLM_DIR` o, si no n'hi ha cap, de Hugging Face (el mateix
+    repositori i la mateixa revisió que el sistema; només `FITXERS_HF_LEMES`).
+    El classificador, el mateix que el del sistema.
 
     >>> import tempfile
     >>> d = Path(tempfile.mkdtemp())
     >>> {k: v.name for k, v in fitxers_kenlm_lemes(d).items()}
     {'model': 'valencia_net_dogv_lemes_o5.binary', 'freq': 'valencia_net_dogv_lemes_freq.json', 'sentit': 'nb.json'}
     """
-    directori = directori or os.environ.get(VAR_DIRECTORI)
-    if not directori:
-        raise FaltaKenLM(f"L'opció amb lemes necessita {VAR_DIRECTORI}: una carpeta amb "
-                         f"{NOM_MODEL_LEMES}_o5.binary, {NOM_MODEL_LEMES}_freq.json i sentit.json "
-                         "(no es baixen de Hugging Face).")
-    fitxers = fitxers_kenlm(directori)
-    d = Path(directori)
+    d = directori_kenlm(directori, fitxers=FITXERS_HF_LEMES)
+    fitxers = fitxers_kenlm(d)
     return {"model": d / f"{NOM_MODEL_LEMES}_o5.binary", "freq": d / f"{NOM_MODEL_LEMES}_freq.json",
             "sentit": fitxers["sentit"]}
 

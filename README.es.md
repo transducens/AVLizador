@@ -107,8 +107,10 @@ desde la versión 2.0.0 ya no está en el paquete.
 usa un KenLM de lemas parciales en lugar del de formas (198 aciertos y 1
 error grave en las 237 decisiones de los homógrafos, frente a 196 y 0; en
 las frases con palabra ambigua, la traducción tarda unas 2 veces más: spaCy
-lematiza el contexto). Sus ficheros no se
-descargan: van en la carpeta de `AVLIZADOR_KENLM_DIR`. Detalle en
+lematiza el contexto). Sus dos ficheros están en el mismo repositorio de
+Hugging Face y se descargan, como los demás, la primera vez que se usa la
+opción (quien no la usa no los descarga); también se pueden poner en la
+carpeta de `AVLIZADOR_KENLM_DIR`. Detalle en
 [`model_llengua/README.es.md`](src/avlizador/traductor_cat_val/model_llengua/README.es.md).
 
 Por qué KenLM y todas las cifras:
@@ -168,7 +170,9 @@ funciona **sin internet**). Al construirla se descarga de Hugging Face el
 momento) y se guarda en `/opt/kenlm`; si los tres ficheros ya están en
 `docker/kenlm/` (carpeta ignorada por git), se copian de allí sin
 descargar nada. Otra revisión del modelo:
-`docker compose build --build-arg KENLM_REVISIO=...`. Detalle:
+`docker compose build --build-arg KENLM_REVISIO=...`. Para llevar también
+la opción con lemas (~80 MB más): `KENLM_LEMES: "1"` en `docker-compose.yml`
+o `--build-arg KENLM_LEMES=1`. Detalle:
 [`docker/LLEGIM.md`](docker/LLEGIM.md).
 
 ```bash

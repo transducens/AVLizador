@@ -469,7 +469,8 @@ def translate_cat_val_kenlm_lemes(text: str, directori=None, criteri: Criteri = 
     mateix criteri i el mateix classificador (`kenlm.ModelKenLMLemes`). En
     els homògrafs corregits del 23/11, 198 encerts i 1 error greu en 237
     decisions (el sistema, 196 i 0), unes 200 vegades més lent en les frases
-    amb paraula ambigua. Els fitxers, en `AVLIZADOR_KENLM_DIR`."""
+    amb paraula ambigua. Els fitxers, del mateix repositori de Hugging Face
+    (`kenlm.FITXERS_HF_LEMES`) o d'`AVLIZADOR_KENLM_DIR`."""
     model, sentit = sistema_kenlm_lemes(directori)
     return tradueix_cat_val_ml(text, model, criteri, sentit=sentit)[0]
 

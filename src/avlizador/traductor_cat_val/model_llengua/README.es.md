@@ -113,13 +113,19 @@ El grave es «calces» → «bragues» en HG2-093. `avlizador avalua --model ken
 kenlm-lemes` en Abaco da lo mismo que el comparador (job 3383).
 
 Uso: `translate_cat_val(text, model="kenlm-lemes")`, `avlizador tradueix
---model kenlm-lemes` o `avlizador avalua --model kenlm kenlm-lemes`. Ficheros,
-en la carpeta de `AVLIZADOR_KENLM_DIR` (**no se descargan de Hugging Face**):
+--model kenlm-lemes` o `avlizador avalua --model kenlm kenlm-lemes`. Ficheros:
 `valencia_net_dogv_lemes_o5.binary` (80 MB; en Abaco,
 `dades/macocu/kenlm/valencia_net_dogv2_lemes_o5.binary`),
 `valencia_net_dogv_lemes_freq.json` (`_lemes_freq.json`) y el mismo
-`sentit.json`. En Abaco, `~/kenlm_2.0.0` ya tiene los enlaces. Si falta
-algo, `FaltaKenLM` (no vuelve al motor solo). Detalle:
+`sentit.json`. Están en el **mismo repositorio de Hugging Face** que el
+modelo por defecto (misma `REVISIO_HF`) y se buscan igual: en la carpeta de
+`AVLIZADOR_KENLM_DIR` si está definida; si no, en la caché de Hugging Face,
+y se descargan la primera vez (`kenlm.FITXERS_HF_LEMES`: solo esos tres; quien
+usa la opción por defecto no los descarga nunca, `FITXERS_HF`). En Abaco,
+`~/kenlm_2.0.0` ya tiene los enlaces. En Docker, `KENLM_LEMES: "1"` en
+`docker-compose.yml` (`docker/prepara_kenlm.py`). Si falta algo,
+`FaltaKenLM` (no vuelve al motor solo). Para publicarlos:
+`scripts/hf_model/kenlm.py ... --lemes valencia_net_dogv2_lemes`. Detalle:
 `documentacio/resultats_model_llengua_kenlm.md`, 4.23-4.25.
 
 ## Mantenimiento: palabras y corpus nuevos (16/11/2026)

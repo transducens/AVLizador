@@ -4,7 +4,11 @@
 # de coincidir.
 services:
   avlizador:
-    build: .
+    build:
+      context: .
+      args:
+        # "1" = la imatge porta també l'opció amb lemes (--model kenlm-lemes; ~80 MB més)
+        KENLM_LEMES: ""
     image: avlizador:2.0.1
     ports:
       # Només des d'este equip. Per a obrir-lo a la xarxa: "8000:8000"

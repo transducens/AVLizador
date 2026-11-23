@@ -105,8 +105,10 @@ de la versió 2.0.0 ja no és en el paquet.
 usa un KenLM de lemes parcials en lloc del de formes (198 encerts i 1 error
 greu en les 237 decisions dels homògrafs, davant de 196 i 0; en les frases
 amb paraula ambigua, la traducció tarda unes 2 vegades més: spaCy
-lematitza el context). Els seus fitxers no es
-baixen: van en la carpeta d'`AVLIZADOR_KENLM_DIR`. Detall en
+lematitza el context). Els seus dos fitxers són en el mateix repositori
+de Hugging Face i es baixen, com els altres, la primera vegada que s'usa
+l'opció (qui no l'usa no els baixa); també es poden posar en la carpeta
+d'`AVLIZADOR_KENLM_DIR`. Detall en
 [`model_llengua/README.md`](src/avlizador/traductor_cat_val/model_llengua/README.md).
 
 Per què KenLM i totes les xifres:
@@ -166,6 +168,8 @@ funciona **sense internet**). En construir-la es baixa de Hugging Face el
 i es guarda en `/opt/kenlm`; si els tres fitxers ja són en `docker/kenlm/`
 (carpeta ignorada per git), es copien d'allí sense baixar res. Una altra
 revisió del model: `docker compose build --build-arg KENLM_REVISIO=...`.
+Per a portar també l'opció amb lemes (~80 MB més): `KENLM_LEMES: "1"` en
+`docker-compose.yml` o `--build-arg KENLM_LEMES=1`.
 Detall: [`docker/LLEGIM.md`](docker/LLEGIM.md).
 
 ```bash

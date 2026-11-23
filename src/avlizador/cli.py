@@ -43,7 +43,7 @@ def tradueix(argv: list[str]) -> int:
                         help="Model de llengua per als homògrafs: kenlm (el per defecte; extra "
                              "[kenlm]; els fitxers es baixen de Hugging Face o d'AVLIZADOR_KENLM_DIR; "
                              "si falten, motor sol i avís) o kenlm-lemes (opció: KenLM de lemes "
-                             "parcials, fitxers en AVLIZADOR_KENLM_DIR). Amb --model, si falta alguna "
+                             "parcials, del mateix repositori de Hugging Face o d'AVLIZADOR_KENLM_DIR). Amb --model, si falta alguna "
                              "cosa és un error.")
     args = parser.parse_args(argv)
 

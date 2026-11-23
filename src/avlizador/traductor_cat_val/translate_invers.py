@@ -60,7 +60,8 @@ def translate_cat_val(text: str, model: str | None = None) -> str:
       (s'ha demanat expressament: no torna al motor en silenci).
     - `"kenlm-lemes"` (opció, 23/11/2026): el KenLM de lemes parcials en lloc
       del de formes (`model_llengua.translate_cat_val_kenlm_lemes`); els
-      fitxers, en `AVLIZADOR_KENLM_DIR`; si falta alguna cosa, `FaltaKenLM`.
+      fitxers es baixen del mateix repositori de Hugging Face la primera
+      vegada (o d'`AVLIZADOR_KENLM_DIR`); si falta alguna cosa, `FaltaKenLM`.
 
     >>> translate_cat_val("Hola.", model="flor")
     Traceback (most recent call last):

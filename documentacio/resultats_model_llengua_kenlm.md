@@ -1854,6 +1854,38 @@ Comprobado en Abaco (job 3383, `resultats_kenlm_lemes_2.0.1`): homógrafos v1
 frase con palabra ambigua, 10-17 ms frente a 0,04-0,11 ms del sistema; por
 frase entera, unas 2 veces más.
 
+### 4.26 La opción con lemas, en el mismo repositorio de Hugging Face (23/11, decisión del usuario)
+
+Para que `kenlm-lemes` funcione como el KenLM por defecto (se descarga sola),
+sus dos ficheros van en el **mismo repositorio** (`transducens/avlizador-kenlm-va`)
+y la misma `REVISIO_HF`: comparten `sentit.json`, no hace falta crear otro
+repositorio ni fijar dos revisiones. Estructura del repositorio (todo en la
+raíz, como la carpeta de `AVLIZADOR_KENLM_DIR`):
+
+| Fichero | Opción |
+|---|---|
+| `valencia_net_dogv_o5.binary`, `valencia_net_dogv_freq.json` | por defecto |
+| `sentit.json` | las dos |
+| `valencia_net_dogv_lemes_o5.binary`, `valencia_net_dogv_lemes_freq.json` | lemas |
+| `README.md`, `NOTICE`, `assets/banner.png` | ficha |
+
+Cambios (rama `version-2.0.1`):
+- `kenlm.FITXERS_HF` / `FITXERS_HF_LEMES`: cada opción descarga solo sus
+  ficheros (`_directori_hf(fitxers=...)`); quien usa la opción por defecto no
+  descarga nunca los de lemas. Si la caché tiene la carpeta de la revisión
+  pero le falta algún fichero (porque antes se usó la otra opción), se
+  descarga. `fitxers_kenlm_lemes` busca como `directori_kenlm`: la variable o
+  Hugging Face.
+- Docker: `docker/prepara_kenlm.py` (sustituye la línea de Python del
+  Dockerfile) copia de `docker/kenlm/` fichero a fichero y descarga los que
+  faltan; `KENLM_LEMES` (`--build-arg` o `docker-compose.yml`) añade los de
+  lemas (~80 MB). La interfaz web sigue con la opción por defecto.
+- `scripts/hf_model/kenlm.py --lemes valencia_net_dogv2_lemes`: copia los
+  dos ficheros con los nombres del paquete y añade a la ficha la sección
+  «Lemma option» (y corrige «margin 3» → «margin 1»).
+- Tests: descarga de solo los ficheros de lemas y caché parcial (124 en verde).
+  No probado contra Hugging Face hasta que el usuario suba los ficheros.
+
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
   se evalúa: las cifras son optimistas. Hay que confirmarlas en el 151, el
@@ -2017,3 +2049,4 @@ Son compatibles: si C2 mejora la base, C1 puede desempatar encima.
 | 23/11 | **Graves nuevos de los KenLM de lemas: causas y arreglo del lematizador** (job 3353, `compara_models_20261123_1027_lemes_ref_dogv2`) | «cop» → «vegada»: no es de los lemas (el sistema también falla sin clasificador); en la mezcla, la suma de dos KenLM dobla las diferencias y el desempate 2 se queda corto. «calces» → «bragues»: spaCy lematizaba el verbo distinto según el candidato («cosir bragues» / «cosia calces»); con el contexto lematizado una vez sobre la frase del motor desaparece. Las filas «solo» de la 4.22 llevaban `Criteri()`, no el del sistema (arreglado en `criteri_fix`). Con referencia: lemas + clasificador 197 / 2, mezcla con desempate 4 **202 / 2** (sistema 194 / 2), ~200 veces más lentos; sin validación cruzada ni texto real. Sección 4.23. |
 | 23/11 | **Margen 1 (en prueba), tabla de frecuencias arreglada y homógrafos corregidos** (jobs 3368-3370; `compara_models_20261123_1332_lemes_ref_dogv2`, `prova_marge_text_real_20261123_1312`) | `CRITERI_KENLM.marge` 3 → 1. El usuario quita «recuita(es)» de los homógrafos y HG2-028 espera «falta» (237 decisiones). «brolladors» faltaba en la tabla de frecuencias (léxico del 18/11; en la 2.0.0 publicada, «brolladores», también con 0): «deus» → «brolladors» en texto real pasa de 82 a 11 (margen 3) y de 89 a 27 (margen 1). Sistema margen 3 186 / 0, **margen 1 196 / 0**; lemas + clasificador 198 / 1; mezcla con desempate 4, 194 / 0 (margen 3) y 197 / 1 (margen 2); nada aguanta limpio la validación cruzada. Propuesta: margen 1 + tabla nueva, lemas descartados. Sección 4.24. |
 | 23/11 | **KenLM de lemas como opción del paquete** (`--model kenlm-lemes`; job 3383) | Decisión del usuario: opción, no por defecto; lemas parciales + clasificador con el contexto lematizado una vez sobre la frase del motor (`kenlm.ModelKenLMLemes`). Ficheros en `AVLIZADOR_KENLM_DIR`, no en HF. En Abaco, igual que el comparador: v1 229, v2 114, manual 232, 151 144 (198 / 1 en las 237 decisiones; sistema 196 / 0). Sección 4.25. |
+| 23/11 | **La opción con lemas, en el mismo repositorio de HF** | Decisión del usuario: mismo repositorio y misma `REVISIO_HF` (comparten `sentit.json`). Cada opción descarga solo sus ficheros (`FITXERS_HF`, `FITXERS_HF_LEMES`); Docker con `KENLM_LEMES` (`docker/prepara_kenlm.py`); ficha con la sección de la opción. Pendiente: subirlos y fijar la revisión nueva. Sección 4.26. |

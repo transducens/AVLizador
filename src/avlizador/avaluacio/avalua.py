@@ -171,7 +171,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--motor", action="store_true", help="Avalua també el motor sol.")
     parser.add_argument("--model", nargs="+", choices=["kenlm", "kenlm-lemes"], default=["kenlm"],
                         help="Model de llengua del sistema: kenlm (el per defecte) i/o kenlm-lemes "
-                             "(opció: KenLM de lemes parcials; fitxers en AVLIZADOR_KENLM_DIR).")
+                             "(opció: KenLM de lemes parcials; es baixa com el per defecte).")
     parser.add_argument("--limit", type=int, help="Només les N primeres frases de cada benchmark.")
     parser.add_argument("--eixida", type=Path, default=Path("resultats_avaluacio"),
                         help="Carpeta dels resultats (per defecte, resultats_avaluacio/).")
