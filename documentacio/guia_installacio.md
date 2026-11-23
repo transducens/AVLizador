@@ -61,7 +61,7 @@ Igual en els tres sistemes (amb l'entorn activat):
 ```bash
 python -m pip install -U pip
 pip install -e ".[kenlm,avaluacio,dev]"
-avlizador --version        # -> avlizador 2.0.0
+avlizador --version        # -> avlizador 2.0.1
 ```
 
 - `[kenlm]`: la biblioteca KenLM, el model de llengua de les paraules

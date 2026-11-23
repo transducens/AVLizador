@@ -171,7 +171,7 @@ La imagen necesita ~1 GB de RAM (`mem_limit: 2g` en
 Para un equipo sin internet, la imagen se copia como un fichero:
 
 ```bash
-docker save avlizador:2.0.0 > avlizador.tar   # en el equipo donde se ha construido
+docker save avlizador:2.0.1 > avlizador.tar   # en el equipo donde se ha construido
 docker load < avlizador.tar                   # en el equipo de destino
 docker compose up                             # con docker-compose.yml al lado
 ```
