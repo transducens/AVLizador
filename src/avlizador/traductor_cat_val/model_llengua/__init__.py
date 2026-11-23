@@ -289,6 +289,9 @@ def puntua_punts(text: str, model, tipus=TIPUS_PER_DEFECTE,
     motor, punts = _motor()
     tokens = motor.tradueix_tokens(text)
     trobats = detecta(tokens, punts, tipus)
+    if trobats and hasattr(model, "fixa_referencia"):
+        # KenLM de lemes (23/11/2026): el context es lematitza una vegada, sobre la traducció del motor
+        model.fixa_referencia(detokenize(tokens))
     for punt in trobats:
         base = base_neutra(motor, text, [punt])
         if tipus_model is not None and punt.tipus not in tipus_model:
@@ -457,5 +460,30 @@ def sistema_kenlm(directori=None):
     return _SISTEMA_KENLM
 
 
+_SISTEMA_KENLM_LEMES = None
+
+
+def translate_cat_val_kenlm_lemes(text: str, directori=None, criteri: Criteri = CRITERI_KENLM) -> str:
+    """Opció (23/11/2026, decisió de l'usuari; no és la per defecte): el
+    sistema KenLM amb el KenLM de LEMES parcials en lloc del de formes, el
+    mateix criteri i el mateix classificador (`kenlm.ModelKenLMLemes`). En
+    els homògrafs corregits del 23/11, 198 encerts i 1 error greu en 237
+    decisions (el sistema, 196 i 0), unes 200 vegades més lent en les frases
+    amb paraula ambigua. Els fitxers, en `AVLIZADOR_KENLM_DIR`."""
+    model, sentit = sistema_kenlm_lemes(directori)
+    return tradueix_cat_val_ml(text, model, criteri, sentit=sentit)[0]
+
+
+def sistema_kenlm_lemes(directori=None):
+    """`(ModelKenLMLemes, classificador)`, carregats una sola vegada per procés."""
+    global _SISTEMA_KENLM_LEMES
+    if _SISTEMA_KENLM_LEMES is None:
+        from .kenlm import carrega_sistema_kenlm_lemes
+
+        _SISTEMA_KENLM_LEMES = carrega_sistema_kenlm_lemes(directori)
+    return _SISTEMA_KENLM_LEMES
+
+
 __all__ = ["Criteri", "CRITERI_KENLM", "tradueix_cat_val_ml", "translate_cat_val_kenlm",
+           "translate_cat_val_kenlm_lemes",
            "puntua_punts", "aplica_tries", "tria"]

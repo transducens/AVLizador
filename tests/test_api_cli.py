@@ -50,7 +50,7 @@ def test_flor_ja_no_hi_es():
 
 def test_model_per_defecte_es_kenlm():
     assert translate_invers.MODEL_PER_DEFECTE == "kenlm"
-    assert translate_invers.MODELS == ("kenlm",)
+    assert translate_invers.MODELS == ("kenlm", "kenlm-lemes")
 
 
 def test_cli_tradueix_motor(capsys):

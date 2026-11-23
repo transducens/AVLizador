@@ -262,3 +262,54 @@ def test_carrega_els_dos_formats_de_classificador(tmp_path):
                                                       "nb": nb.a_dict(0)}}}), encoding="utf-8")
     c = carrega_classificador(tmp_path / "sentit.json")
     assert isinstance(c, ClassificadorSentit) and c.index == {"rentadora": "g"}
+
+
+# --- Opció amb lemes (23/11/2026) -------------------------------------------
+
+class LemFals:
+    """Com `LematitzadorLM`, sense spaCy: «va» -> «anar» i «cosia» -> «cosir»
+    només si la frase porta «bragues» (spaCy lematitzava distint segons el
+    candidat: per això el context es lematitza una vegada)."""
+
+    def tokens_formes(self, text):
+        t = kenlm.normalitza(text).split()
+        canvis = {"va": "anar", "cosia": "cosir" if "bragues" in t else "cosia"}
+        return t, [canvis.get(w, w) for w in t]
+
+    def linia(self, text):
+        return " ".join(self.tokens_formes(text)[1])
+
+
+def test_lemes_referencia_es_la_frase_del_motor():
+    """`puntua_punts` fixa com a referència la traducció del motor, i les
+    frases candidates prenen d'ella el lema de les paraules iguals."""
+    vistes = []
+
+    class Registra(kenlm.ModelKenLMLemes):
+        def logprob(self, text):
+            vistes.append(self.linia(text))
+            return super().logprob(text)
+
+    model = Registra(KenLMFals(bones=("colp",)), LemFals(), FREQ)
+    text, punts = ml.puntua_punts("Li va pegar un cop.", model)
+    assert model._ref is not None and model._ref[0][:3] == ["li", "va", "pegar"]
+    assert any(v.startswith("li anar pegar un colp") for v in vistes)
+    assert any(v.startswith("li anar pegar una vegada") for v in vistes)
+
+
+def test_lemes_sense_paraula_ambigua_no_lematitza():
+    model = kenlm.ModelKenLMLemes(KenLMFals(), LemFals(), FREQ)
+    ml.puntua_punts("Bon dia a tothom.", model)
+    assert model._ref is None
+
+
+def test_lemes_necessita_directori(monkeypatch):
+    monkeypatch.delenv("AVLIZADOR_KENLM_DIR", raising=False)
+    with pytest.raises(FaltaKenLM, match="AVLIZADOR_KENLM_DIR"):
+        kenlm.fitxers_kenlm_lemes()
+
+
+def test_translate_cat_val_kenlm_lemes(monkeypatch):
+    monkeypatch.setattr(ml, "_SISTEMA_KENLM_LEMES",
+                        (kenlm.ModelKenLMLemes(KenLMFals(bones=("una vegada",)), LemFals(), FREQ), None))
+    assert translate_cat_val("Un cop acabada la reunió, marxem.", model="kenlm-lemes").startswith("Una vegada")

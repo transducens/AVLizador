@@ -88,3 +88,14 @@ class LematitzadorLM:
 
     def linia(self, text: str) -> str:
         return self.linies([text])[0]
+
+    def tokens_formes(self, text: str) -> tuple[list[str], list[str]]:
+        """Tokens normalitzats de `text` i la forma que en dona `forma` (lema
+        o forma conservada), un a un (per a `kenlm.ModelKenLMLemes`).
+
+        >>> LematitzadorLM().tokens_formes("Va pegar un cop.")
+        (['va', 'pegar', 'un', 'cop', '.'], ['anar', 'pegar', 'un', 'cop', '.'])
+        """
+        toks = normalitza(text).split()
+        doc = next(iter(self.nlp.pipe([self.Doc(self.nlp.vocab, words=toks)])))
+        return toks, [self.forma(t) for t in doc]
