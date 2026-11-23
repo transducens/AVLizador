@@ -17,9 +17,9 @@ de cada candidat i `ModelKenLM.logprob` les puntua. Dos diferències:
   un classificador que mira tota la frase (`sentit.py`).
 
 El sistema: `kenlm_val_net_dogv` (MaCoCu valencià net + DOGV 2025-2026,
-ordre 5, poda de singletons, 77 MB) amb `CRITERI_KENLM` (marge 3, la
-catalana per defecte, λ 1,5 en els homògrafs i 0,75 en les col·lisions,
-desempat < 2 amb el Naive Bayes de "cop"). Últimes xifres (13/11/2026,
+ordre 5, poda de singletons, 77 MB) amb `CRITERI_KENLM` (marge 1 des de la
+2.0.1, abans 3; la catalana per defecte, λ 1,5 en els homògrafs i 0,75 en
+les col·lisions, desempat < 2 amb el Naive Bayes de "cop"). Últimes xifres (13/11/2026,
 `avalua_sistema_20261113_1308`, KenLM / FLOR): homògrafs v1 227 / 217 de
 253, v2 111 / 96 de 160, manual 232 / 231 de 458, 151 144 / 145, BOE
 estricte 1.894 / 1.894, gplsi 1.550 / 1.551; en les 257 decisions dels
@@ -39,6 +39,14 @@ memòria cau de Hugging Face la primera vegada, com FLOR. Per a no baixar res:
 `AVLIZADOR_KENLM_REVISIO` (per defecte, `REVISIO_HF`).
 Cal el paquet `kenlm` (extra `[kenlm]`, que també porta `huggingface_hub`;
 en Windows necessita compilador, la imatge Docker és Linux).
+
+Opció amb LEMES (`ModelKenLMLemes`, 23/11/2026, decisió de l'usuari; NO és
+el per defecte): el mateix sistema amb el KenLM de lemes parcials
+(`valencia_net_dogv_lemes_o5.binary` i `_lemes_freq.json`). Els fitxers són
+en el MATEIX repositori de Hugging Face i es busquen igual (la carpeta
+d'`AVLIZADOR_KENLM_DIR` o la memòria cau / la descàrrega), però només quan
+es demana l'opció: qui usa el sistema per defecte no els baixa. Vore
+`ModelKenLMLemes` i `documentacio/resultats_model_llengua_kenlm.md`, 4.23-4.26.
 """
 
 from __future__ import annotations
@@ -53,11 +61,17 @@ from pathlib import Path
 LN10 = math.log(10)
 VAR_DIRECTORI = "AVLIZADOR_KENLM_DIR"
 NOM_MODEL = "valencia_net_dogv"
+NOM_MODEL_LEMES = "valencia_net_dogv_lemes"  # 23/11/2026: l'opció amb lemes
+# Els fitxers de Hugging Face que necessita cada opció (no la fitxa ni el bàner).
+FITXERS_HF = (f"{NOM_MODEL}_o5.binary", f"{NOM_MODEL}_freq.json", "sentit.json")
+FITXERS_HF_LEMES = (f"{NOM_MODEL_LEMES}_o5.binary", f"{NOM_MODEL_LEMES}_freq.json", "sentit.json")
 # 16/11/2026: els fitxers també es poden baixar de Hugging Face.
 REPO_HF = "transducens/avlizador-kenlm-va"
 # Revisió del model que correspon a cada versió del paquet: el commit de Hugging Face
 # (no es pot crear una etiqueta des de la web). 2.0.0: commit db4a1f1, 17/11/2026.
-REVISIO_HF = "db4a1f10d55bbc30ad54728e1639d17d32526ef7"
+# 2.0.1: commit 684993c, 23/11/2026 (la taula de freqüències nova, amb «brolladors»,
+# del commit ea87f3f, i els dos fitxers de l'opció amb lemes).
+REVISIO_HF = "684993c83721bb000d424bbeb7286247c40e9154"
 VAR_REVISIO = "AVLIZADOR_KENLM_REVISIO"
 VAR_DESCARREGA = "AVLIZADOR_KENLM_DESCARREGA"
 
@@ -160,20 +174,25 @@ class AvisFreqKenLM(UserWarning):
     """Alguna paraula candidata no és en la taula de freqüències (13/11/2026)."""
 
 
-def _directori_hf(descarrega: bool = True) -> Path | None:
-    """La carpeta del model de Hugging Face (`REPO_HF`): de la memòria cau si
-    ja hi és; si no, el baixa (si `descarrega` i no ho impedixen
-    `AVLIZADOR_KENLM_DESCARREGA=0` ni `HF_HUB_OFFLINE`). `None` si no es pot
-    (sense `huggingface_hub`, sense xarxa, sense permís)."""
+def _directori_hf(descarrega: bool = True, fitxers=FITXERS_HF) -> Path | None:
+    """La carpeta del model de Hugging Face (`REPO_HF`) amb els `fitxers`: de
+    la memòria cau si ja hi són tots; si no, els baixa (si `descarrega` i no
+    ho impedixen `AVLIZADOR_KENLM_DESCARREGA=0` ni `HF_HUB_OFFLINE`). `None`
+    si no es pot (sense `huggingface_hub`, sense xarxa, sense permís). Només
+    es baixen els `fitxers` (els de l'opció per defecte, `FITXERS_HF`, o els
+    de l'opció amb lemes, `FITXERS_HF_LEMES`), no tot el repositori."""
     try:
         from huggingface_hub import snapshot_download
     except ImportError:
         return None
     revisio = os.environ.get(VAR_REVISIO) or REVISIO_HF
-    # Només els fitxers que fa servir el paquet (no la fitxa ni el bàner).
-    fitxers = [f"{NOM_MODEL}_o5.binary", f"{NOM_MODEL}_freq.json", "sentit.json"]
+    fitxers = list(fitxers)
     try:
-        return Path(snapshot_download(REPO_HF, revision=revisio, allow_patterns=fitxers, local_files_only=True))
+        cau = Path(snapshot_download(REPO_HF, revision=revisio, allow_patterns=fitxers, local_files_only=True))
+        # La memòria cau té la carpeta de la revisió encara que només s'hi haja baixat
+        # l'altra opció: si falta algun fitxer, cal baixar-lo.
+        if all((cau / f).exists() for f in fitxers):
+            return cau
     except Exception:  # no és en la memòria cau
         pass
     sense_xarxa = os.environ.get("HF_HUB_OFFLINE", "").lower() in ("1", "true", "yes")
@@ -185,17 +204,19 @@ def _directori_hf(descarrega: bool = True) -> Path | None:
         return None
 
 
-def directori_kenlm(directori: Path | str | None = None, descarrega: bool = True) -> Path:
+def directori_kenlm(directori: Path | str | None = None, descarrega: bool = True,
+                    fitxers=FITXERS_HF) -> Path:
     """La carpeta dels fitxers: `directori`, `AVLIZADOR_KENLM_DIR` o, si no
-    n'hi ha cap, el model de Hugging Face (vore `_directori_hf`)."""
+    n'hi ha cap, el model de Hugging Face amb els `fitxers` (vore
+    `_directori_hf`)."""
     directori = directori or os.environ.get(VAR_DIRECTORI)
     if directori:
         return Path(directori)
-    hf = _directori_hf(descarrega)
+    hf = _directori_hf(descarrega, fitxers)
     if hf is None:
         raise FaltaKenLM(
             f"Falta el model KenLM: no s'ha pogut baixar de Hugging Face ({REPO_HF}) ni hi ha "
-            f"{VAR_DIRECTORI} (una carpeta amb {NOM_MODEL}_o5.binary, {NOM_MODEL}_freq.json i sentit.json).")
+            f"{VAR_DIRECTORI} (una carpeta amb {', '.join(fitxers)}).")
     return hf
 
 
@@ -249,6 +270,109 @@ def carrega_sistema_kenlm(directori: Path | str | None = None):
     model = ModelKenLM.carrega(fitxers["model"], fitxers["freq"])
     falten = model.paraules_sense_freq(formes_candidates())
     if falten:  # la taula és d'abans d'un canvi del lèxic: avisa en carregar
+        warnings.warn(f"{len(falten)} paraules candidates no són en {fitxers['freq'].name} ("
+                      f"{', '.join(falten[:10])}{'...' if len(falten) > 10 else ''}): regenera-la amb "
+                      "freq_unigrames.py.", AvisFreqKenLM, stacklevel=2)
+        model._avisades.update(falten)
+    return model, carrega_classificador(fitxers["sentit"])
+
+
+class ModelKenLMLemes(ModelKenLM):
+    """KenLM de LEMES parcials (opció, 23/11/2026; decisió de l'usuari): la
+    frase es passa a lemes amb `lemes.LematitzadorLM` (la mateixa funció del
+    text d'entrenament) abans de puntuar-la; les paraules candidates i les
+    que hi concorden en gènere es queden en la seua forma, així que el prior
+    (freqüència del candidat, de la taula del text de lemes) és el de sempre.
+
+    El context es lematitza UNA vegada, sobre la traducció del motor
+    (`fixa_referencia`, que crida `puntua_punts` quan la frase té alguna
+    paraula ambigua): spaCy lematitzava el context de manera distinta segons
+    el candidat ("el sastre cosia bragues" -> "cosir"; "el sastre cosia
+    calces" -> "cosia") i les frases candidates ja no es podien comparar. En
+    cada frase candidata, les paraules iguals que en la referència prenen el
+    lema de la referència i només les que canvien es lematitzen dins de la
+    frase candidata.
+
+    >>> class M:
+    ...     def score(self, frase, bos=True, eos=True): return -float(len(frase.split()))
+    >>> class Lem:
+    ...     def tokens_formes(self, text):
+    ...         t = normalitza(text).split()
+    ...         return t, [{"cosia": "cosir" if "bragues" in t else "cosia"}.get(w, w) for w in t]
+    ...     def linia(self, text): return " ".join(self.tokens_formes(text)[1])
+    >>> k = ModelKenLMLemes(M(), Lem())
+    >>> k.linia("El sastre cosia calces.")
+    'el sastre cosia calces .'
+    >>> k.fixa_referencia("El sastre cosia bragues.")
+    >>> k.linia("El sastre cosia calces."), k.logprob("El sastre cosia calces.")[1]
+    ('el sastre cosir calces .', 6)
+    """
+
+    def __init__(self, model, lematitzador, freq: dict | None = None) -> None:
+        super().__init__(model, freq)
+        self.lem = lematitzador
+        self._ref = None  # (tokens normalitzats, formes) de la traducció del motor
+
+    def fixa_referencia(self, text: str) -> None:
+        self._ref = self.lem.tokens_formes(text)
+
+    def linia(self, text: str) -> str:
+        if self._ref is None:
+            return self.lem.linia(text)
+        import difflib
+
+        toks, formes = self.lem.tokens_formes(text)
+        ref_toks, ref_formes = self._ref
+        eixida = list(formes)
+        for a, b, n in difflib.SequenceMatcher(None, ref_toks, toks, autojunk=False).get_matching_blocks():
+            eixida[b:b + n] = ref_formes[a:a + n]
+        return normalitza(" ".join(eixida))
+
+    def logprob(self, text: str) -> tuple[float, int]:
+        return super().logprob(self.linia(text))
+
+
+def fitxers_kenlm_lemes(directori: Path | str | None = None) -> dict[str, Path]:
+    """`{"model", "freq", "sentit"}` de l'opció amb lemes: en `directori`, en
+    `AVLIZADOR_KENLM_DIR` o, si no n'hi ha cap, de Hugging Face (el mateix
+    repositori i la mateixa revisió que el sistema; només `FITXERS_HF_LEMES`).
+    El classificador, el mateix que el del sistema.
+
+    >>> import tempfile
+    >>> d = Path(tempfile.mkdtemp())
+    >>> {k: v.name for k, v in fitxers_kenlm_lemes(d).items()}
+    {'model': 'valencia_net_dogv_lemes_o5.binary', 'freq': 'valencia_net_dogv_lemes_freq.json', 'sentit': 'nb.json'}
+    """
+    d = directori_kenlm(directori, fitxers=FITXERS_HF_LEMES)
+    fitxers = fitxers_kenlm(d)
+    return {"model": d / f"{NOM_MODEL_LEMES}_o5.binary", "freq": d / f"{NOM_MODEL_LEMES}_freq.json",
+            "sentit": fitxers["sentit"]}
+
+
+def carrega_sistema_kenlm_lemes(directori: Path | str | None = None):
+    """`(ModelKenLMLemes, classificador)` de l'opció amb lemes, o
+    `FaltaKenLM` amb el que falta. Necessita spaCy (com el motor)."""
+    from importlib.util import find_spec
+
+    if find_spec("kenlm") is None:
+        raise FaltaKenLM('Falta el paquet kenlm: pip install "avlizador[kenlm]" (en Linux o Docker).')
+    fitxers = fitxers_kenlm_lemes(directori)
+    falten = [str(p) for p in fitxers.values() if not p.exists()]
+    if falten:
+        raise FaltaKenLM(
+            "Falten fitxers del model KenLM de lemes: " + ", ".join(falten) + ". Són en el repositori "
+            f"de Hugging Face ({REPO_HF}) i es baixen la primera vegada si no hi ha {VAR_DIRECTORI}; amb "
+            f"{VAR_DIRECTORI}, posa'ls en eixa carpeta. En Docker, la imatge els porta si es construïx "
+            'amb KENLM_LEMES: "1" (docker-compose.yml) o --build-arg KENLM_LEMES=1.')
+    import kenlm
+
+    from .lemes import LematitzadorLM, formes_candidates
+    from .sentit import carrega_classificador
+
+    freq = json.loads(fitxers["freq"].read_text(encoding="utf-8"))
+    model = ModelKenLMLemes(kenlm.Model(str(fitxers["model"])), LematitzadorLM(), freq)
+    falten = model.paraules_sense_freq(formes_candidates())
+    if falten:
         warnings.warn(f"{len(falten)} paraules candidates no són en {fitxers['freq'].name} ("
                       f"{', '.join(falten[:10])}{'...' if len(falten) > 10 else ''}): regenera-la amb "
                       "freq_unigrames.py.", AvisFreqKenLM, stacklevel=2)

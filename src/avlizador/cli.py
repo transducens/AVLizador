@@ -39,11 +39,12 @@ def tradueix(argv: list[str]) -> int:
     parser.add_argument("--fitxer", type=Path, help="Fitxer de text (UTF-8), una frase o paràgraf per línia.")
     parser.add_argument("--motor", action="store_true",
                         help="Només el motor de regles, sense el model de llengua.")
-    parser.add_argument("--model", choices=["kenlm"], default=None,
-                        help="Model de llengua per als homògrafs: kenlm (l'únic, i el per "
-                             "defecte; extra [kenlm]; els fitxers es baixen de Hugging Face o "
-                             "d'AVLIZADOR_KENLM_DIR; si falten, motor sol i avís). Amb --model "
-                             "kenlm, si falta alguna cosa és un error.")
+    parser.add_argument("--model", choices=["kenlm", "kenlm-lemes"], default=None,
+                        help="Model de llengua per als homògrafs: kenlm (el per defecte; extra "
+                             "[kenlm]; els fitxers es baixen de Hugging Face o d'AVLIZADOR_KENLM_DIR; "
+                             "si falten, motor sol i avís) o kenlm-lemes (opció: KenLM de lemes "
+                             "parcials, del mateix repositori de Hugging Face o d'AVLIZADOR_KENLM_DIR). Amb --model, si falta alguna "
+                             "cosa és un error.")
     args = parser.parse_args(argv)
 
     from .traductor_cat_val import translate_cat_val, translate_cat_val_motor
@@ -53,12 +54,12 @@ def tradueix(argv: list[str]) -> int:
     else:
         def funcio(text: str) -> str:
             return translate_cat_val(text, model=args.model)
-        if args.model == "kenlm":
-            from .traductor_cat_val.model_llengua import sistema_kenlm
+        if args.model is not None:
+            from .traductor_cat_val.model_llengua import sistema_kenlm, sistema_kenlm_lemes
             from .traductor_cat_val.model_llengua.kenlm import FaltaKenLM
 
             try:  # abans de llegir l'entrada: l'error ix de seguida
-                sistema_kenlm()
+                (sistema_kenlm_lemes if args.model == "kenlm-lemes" else sistema_kenlm)()
             except FaltaKenLM as e:
                 print(f"ERROR: {e}", file=sys.stderr)
                 return 1

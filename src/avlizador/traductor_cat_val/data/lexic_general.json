@@ -5882,28 +5882,6 @@
   },
   {
     "espanol": "requesón",
-    "catalan": "recuit",
-    "valenciano": "brull",
-    "tipo": "v:lexic_val_PENDENT",
-    "fuente": "unificado",
-    "id": "E0564",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": "m"
-  },
-  {
-    "espanol": "requesón",
-    "catalan": "recuits",
-    "valenciano": "brulls",
-    "tipo": "v:lexic_val_PENDENT",
-    "fuente": "unificado",
-    "id": "E0565",
-    "categoria": "n",
-    "genero_cat": "m",
-    "genero_val": "m"
-  },
-  {
-    "espanol": "requesón",
     "catalan": "mató",
     "valenciano": "brull",
     "tipo": "v:lexic_val_PENDENT",

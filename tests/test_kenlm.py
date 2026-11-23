@@ -110,7 +110,7 @@ def test_desempat_amb_el_classificador():
 
 def test_criteri_kenlm():
     assert (CRITERI_KENLM.marge, CRITERI_KENLM.per_defecte, CRITERI_KENLM.lam,
-            CRITERI_KENLM.lam_colisio, CRITERI_KENLM.desempat) == (3.0, "catala", 1.5, 0.75, 2.0)
+            CRITERI_KENLM.lam_colisio, CRITERI_KENLM.desempat) == (1.0, "catala", 1.5, 0.75, 2.0)
 
 
 def test_classificador_desat_i_carregat(tmp_path):
@@ -242,7 +242,7 @@ def test_desempat_tambe_en_els_homografs():
                      "rentadora": {"lp": -20.5, "n": 6, "prior": -10.0}}
     p.sentit = "llavadora"
     assert tria(p, CRITERI_KENLM) == "llavadora" and p.decidit == "sentit"
-    p.sentit = None  # sense classificador: la regla de sempre (marge 3, la catalana)
+    p.sentit = None  # sense classificador: la regla de sempre (dins del marge, la catalana)
     assert tria(p, CRITERI_KENLM) == "rentadora" and p.decidit == "catala"
 
 
@@ -262,3 +262,82 @@ def test_carrega_els_dos_formats_de_classificador(tmp_path):
                                                       "nb": nb.a_dict(0)}}}), encoding="utf-8")
     c = carrega_classificador(tmp_path / "sentit.json")
     assert isinstance(c, ClassificadorSentit) and c.index == {"rentadora": "g"}
+
+
+# --- Opció amb lemes (23/11/2026) -------------------------------------------
+
+class LemFals:
+    """Com `LematitzadorLM`, sense spaCy: «va» -> «anar» i «cosia» -> «cosir»
+    només si la frase porta «bragues» (spaCy lematitzava distint segons el
+    candidat: per això el context es lematitza una vegada)."""
+
+    def tokens_formes(self, text):
+        t = kenlm.normalitza(text).split()
+        canvis = {"va": "anar", "cosia": "cosir" if "bragues" in t else "cosia"}
+        return t, [canvis.get(w, w) for w in t]
+
+    def linia(self, text):
+        return " ".join(self.tokens_formes(text)[1])
+
+
+def test_lemes_referencia_es_la_frase_del_motor():
+    """`puntua_punts` fixa com a referència la traducció del motor, i les
+    frases candidates prenen d'ella el lema de les paraules iguals."""
+    vistes = []
+
+    class Registra(kenlm.ModelKenLMLemes):
+        def logprob(self, text):
+            vistes.append(self.linia(text))
+            return super().logprob(text)
+
+    model = Registra(KenLMFals(bones=("colp",)), LemFals(), FREQ)
+    text, punts = ml.puntua_punts("Li va pegar un cop.", model)
+    assert model._ref is not None and model._ref[0][:3] == ["li", "va", "pegar"]
+    assert any(v.startswith("li anar pegar un colp") for v in vistes)
+    assert any(v.startswith("li anar pegar una vegada") for v in vistes)
+
+
+def test_lemes_sense_paraula_ambigua_no_lematitza():
+    model = kenlm.ModelKenLMLemes(KenLMFals(), LemFals(), FREQ)
+    ml.puntua_punts("Bon dia a tothom.", model)
+    assert model._ref is None
+
+
+def test_lemes_sense_variable_ni_hugging_face(monkeypatch):
+    monkeypatch.delenv("AVLIZADOR_KENLM_DIR", raising=False)
+    with pytest.raises(FaltaKenLM, match="valencia_net_dogv_lemes_o5.binary"):
+        kenlm.fitxers_kenlm_lemes()
+
+
+def test_lemes_es_baixen_del_mateix_repositori(monkeypatch, tmp_path):
+    """Sense variable, l'opció amb lemes demana a Hugging Face (el mateix
+    repositori i revisió) només els seus fitxers; si la memòria cau té la
+    carpeta de la revisió però no els fitxers de lemes, els baixa."""
+    huggingface_hub = pytest.importorskip("huggingface_hub")
+    for var in ("AVLIZADOR_KENLM_DIR", "AVLIZADOR_KENLM_DESCARREGA", "AVLIZADOR_KENLM_REVISIO", "HF_HUB_OFFLINE"):
+        monkeypatch.delenv(var, raising=False)
+    monkeypatch.setattr(kenlm, "_directori_hf", _DIRECTORI_HF)
+    for f in kenlm.FITXERS_HF:  # en la memòria cau, només els de l'opció per defecte
+        (tmp_path / f).write_text("x")
+    crides = []
+
+    def snapshot_download(repo_id, revision=None, allow_patterns=None, local_files_only=False, **kw):
+        crides.append((repo_id, revision, tuple(allow_patterns), local_files_only))
+        if not local_files_only:
+            for f in allow_patterns:
+                (tmp_path / f).write_text("x")
+        return str(tmp_path)
+
+    monkeypatch.setattr(huggingface_hub, "snapshot_download", snapshot_download)
+    fitxers = kenlm.fitxers_kenlm_lemes()
+    assert fitxers["model"] == tmp_path / "valencia_net_dogv_lemes_o5.binary" and fitxers["model"].exists()
+    assert crides == [(kenlm.REPO_HF, kenlm.REVISIO_HF, kenlm.FITXERS_HF_LEMES, True),
+                      (kenlm.REPO_HF, kenlm.REVISIO_HF, kenlm.FITXERS_HF_LEMES, False)]
+    crides.clear()  # l'opció per defecte ja hi és: no baixa res
+    assert kenlm.directori_kenlm() == tmp_path and [c[3] for c in crides] == [True]
+
+
+def test_translate_cat_val_kenlm_lemes(monkeypatch):
+    monkeypatch.setattr(ml, "_SISTEMA_KENLM_LEMES",
+                        (kenlm.ModelKenLMLemes(KenLMFals(bones=("una vegada",)), LemFals(), FREQ), None))
+    assert translate_cat_val("Un cop acabada la reunió, marxem.", model="kenlm-lemes").startswith("Una vegada")

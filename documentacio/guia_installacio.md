@@ -61,7 +61,7 @@ Igual en els tres sistemes (amb l'entorn activat):
 ```bash
 python -m pip install -U pip
 pip install -e ".[kenlm,avaluacio,dev]"
-avlizador --version        # -> avlizador 2.0.0
+avlizador --version        # -> avlizador 2.0.1
 ```
 
 - `[kenlm]`: la biblioteca KenLM, el model de llengua de les paraules
@@ -160,7 +160,7 @@ pytest                                    # proves: totes han de passar
 ```
 
 Si tot està ben instal·lat, `avalua --benchmarks manual` dona **232/458,
-TER 5,58** (versió 2.0.0, 17/11/2026, en les màquines del projecte).
+TER 5,58** (versió 2.0.1, 23/11/2026, en les màquines del projecte).
 Els resultats es guarden en
 `resultats_avaluacio/`.
 
@@ -185,4 +185,4 @@ avlizador avalua --benchmarks manual   # comparar amb 232/458
 | `pip` falla en compilar `kenlm` | Falta el compilador de C++ (pas 0); en Windows, Docker o el motor sol (pas 3) |
 | Linux: "ensurepip is not available" | `sudo apt install python3-venv` |
 | Windows: no deixa executar `Activate.ps1` | `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` |
-| Sense internet en la màquina de treball | Baixar abans el model KenLM amb connexió: `python -c "from huggingface_hub import snapshot_download; print(snapshot_download('transducens/avlizador-kenlm-va', revision='db4a1f10d55bbc30ad54728e1639d17d32526ef7'))"` i copiar la carpeta que diu a la màquina de treball, amb `AVLIZADOR_KENLM_DIR` apuntant-hi. |
+| Sense internet en la màquina de treball | Baixar abans el model KenLM amb connexió: `python -c "from huggingface_hub import snapshot_download; print(snapshot_download('transducens/avlizador-kenlm-va', revision='684993c83721bb000d424bbeb7286247c40e9154'))"` i copiar la carpeta que diu a la màquina de treball, amb `AVLIZADOR_KENLM_DIR` apuntant-hi. |

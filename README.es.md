@@ -75,6 +75,7 @@ etiquetas.
 | Versión del paquete | Commit del modelo en Hugging Face | Modelo |
 |---|---|---|
 | 2.0.0 | [`db4a1f1`](https://huggingface.co/transducens/avlizador-kenlm-va/tree/db4a1f10d55bbc30ad54728e1639d17d32526ef7) (`db4a1f10d55bbc30ad54728e1639d17d32526ef7`, 17/11/2026) | KenLM `valencia_net_dogv2` (MaCoCu + DOGV 2025-2026) + clasificador `sentit_dogv2_avl` (+ AVL) |
+| 2.0.1 | [`684993c`](https://huggingface.co/transducens/avlizador-kenlm-va/tree/684993c83721bb000d424bbeb7286247c40e9154) (`684993c83721bb000d424bbeb7286247c40e9154`, 23/11/2026) | El mismo KenLM y clasificador; la tabla de frecuencias nueva (con «brolladors», que faltaba desde el léxico del 18/11) y el KenLM de lemas de la opción `kenlm-lemes` |
 
 Subir a Hugging Face otro fichero (por ejemplo, la ficha `README.md`) crea
 un commit nuevo, pero no cambia nada para las versiones ya publicadas.
@@ -100,8 +101,19 @@ un commit nuevo, pero no cambia nada para las versiones ya publicadas.
 
 Coste: ~0,1 ms por frase candidata y ~80 MB de memoria, sin GPU ni
 PyTorch. Hasta el 12/11/2026 el modelo era FLOR-760M (833 ms y ~1,5 GB);
-desde la versión 2.0.0 ya no está en el paquete. Por qué KenLM y todas
-las cifras:
+desde la versión 2.0.0 ya no está en el paquete.
+
+**Opción con lemas** (desde la 2.0.1, no por defecto): `--model kenlm-lemes`
+usa un KenLM de lemas parciales en lugar del de formas (198 aciertos y 1
+error grave en las 237 decisiones de los homógrafos, frente a 196 y 0; en
+las frases con palabra ambigua, la traducción tarda unas 2 veces más: spaCy
+lematiza el contexto). Sus dos ficheros están en el mismo repositorio de
+Hugging Face y se descargan, como los demás, la primera vez que se usa la
+opción (quien no la usa no los descarga); también se pueden poner en la
+carpeta de `AVLIZADOR_KENLM_DIR`. Detalle en
+[`model_llengua/README.es.md`](src/avlizador/traductor_cat_val/model_llengua/README.es.md).
+
+Por qué KenLM y todas las cifras:
 [`documentacio/resultats_model_llengua_kenlm.md`](documentacio/resultats_model_llengua_kenlm.md).
 
 ## Uso
@@ -158,7 +170,9 @@ funciona **sin internet**). Al construirla se descarga de Hugging Face el
 momento) y se guarda en `/opt/kenlm`; si los tres ficheros ya están en
 `docker/kenlm/` (carpeta ignorada por git), se copian de allí sin
 descargar nada. Otra revisión del modelo:
-`docker compose build --build-arg KENLM_REVISIO=...`. Detalle:
+`docker compose build --build-arg KENLM_REVISIO=...`. La imagen lleva
+también la opción con lemas (~80 MB más; `KENLM_LEMES: "1"` en
+`docker-compose.yml`; con `""` no la lleva). Detalle:
 [`docker/LLEGIM.md`](docker/LLEGIM.md).
 
 ```bash
@@ -171,7 +185,7 @@ La imagen necesita ~1 GB de RAM (`mem_limit: 2g` en
 Para un equipo sin internet, la imagen se copia como un fichero:
 
 ```bash
-docker save avlizador:2.0.0 > avlizador.tar   # en el equipo donde se ha construido
+docker save avlizador:2.0.1 > avlizador.tar   # en el equipo donde se ha construido
 docker load < avlizador.tar                   # en el equipo de destino
 docker compose up                             # con docker-compose.yml al lado
 ```
@@ -207,7 +221,7 @@ traducciones compiten por los mismos núcleos y todas van más lentas.
 Benchmark de evaluación: **manual mezcla** (458 frases del BOE y de la
 AVL, revisadas a mano). TER y WER: porcentaje de palabras que hay que
 editar para llegar a la referencia (cuanto más bajos, mejor). Versión
-2.0.0, medida del 17/11/2026 (`avlizador avalua`); FLOR-760M (el modelo
+2.0.1, medida del 23/11/2026 (`avlizador avalua`; el manual da lo mismo que la 2.0.0); FLOR-760M (el modelo
 de antes, ya no incluido) y el motor solo, del 13/11/2026:
 
 | Sistema | Exactas | BLEU | chrF | TER | WER |
@@ -216,23 +230,25 @@ de antes, ya no incluido) y el motor solo, del 13/11/2026:
 | Motor + FLOR-760M (hasta la 1.2.0) | 231/458 (50,4 %) | 90,98 | 96,33 | 5,59 | 5,97 |
 | Motor solo | 218/458 (47,6 %) | 90,49 | 96,08 | 5,90 | 6,27 |
 
-Por partes (2.0.0): BOE 35/246 (BLEU 84,01, TER 9,21) y AVL 197/212
+Por partes (2.0.1): BOE 35/246 (BLEU 84,01, TER 9,21) y AVL 197/212
 (BLEU 99,10, TER 0,41). La versión 1.2.0 (FLOR) sacaba 33 y 195
 (228/458).
 
-Frases exactas en el resto de benchmarks (homógrafos y 151, 16-17/11/2026;
-BOE y gplsi, 13/11/2026 con el modelo KenLM anterior):
+Frases exactas en el resto de benchmarks (homógrafos, 23/11/2026, versión
+2.0.1, con los homógrafos corregidos el mismo día: sin «recuita», v1 249 y
+v2 144 frases, FLOR no se ha medido en ellos; 151, 16-17/11/2026; BOE y
+gplsi, 13/11/2026 con el modelo KenLM anterior):
 
 | Benchmark | KenLM + clasificador | FLOR-760M (de antes) | Motor solo |
 |---|---|---|---|
-| homógrafos v1 (151 + homógrafos, 253) | **227** | 217 | 181 |
-| homógrafos v2 (160) | **112** | 96 | 82 |
+| homógrafos v1 (151 + homógrafos, 249) | **228** | — | 179 |
+| homógrafos v2 (144) | **113** | — | 75 |
 | 151 (154) | 144 | **145** | 142 |
 | BOE estricto, muestra (2.000) | **1.894** | **1.894** | 1.800 |
 | gplsi (1.958) | 1.550 | **1.551** | 1.533 |
 
-En las 257 decisiones de los homógrafos, KenLM + clasificador acierta
-194 y comete 1 error grave (cambia el sentido). Detalle:
+En las 237 decisiones de los homógrafos, KenLM + clasificador acierta
+196 y no comete ningún error grave (que cambie el sentido; la 2.0.0, 186 y 0). Detalle:
 [`documentacio/resultats_model_llengua_kenlm.md`](documentacio/resultats_model_llengua_kenlm.md).
 
 Histórico, medida del 30/10/2026 (versión 1.0.1, con FLOR-760M como

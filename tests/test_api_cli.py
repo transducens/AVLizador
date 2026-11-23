@@ -11,7 +11,7 @@ from avlizador.traductor_cat_val import translate_invers
 
 
 def test_versio():
-    assert avlizador.__version__ == "2.0.0"
+    assert avlizador.__version__ == "2.0.1"
 
 
 def test_api_traductor():
@@ -50,7 +50,7 @@ def test_flor_ja_no_hi_es():
 
 def test_model_per_defecte_es_kenlm():
     assert translate_invers.MODEL_PER_DEFECTE == "kenlm"
-    assert translate_invers.MODELS == ("kenlm",)
+    assert translate_invers.MODELS == ("kenlm", "kenlm-lemes")
 
 
 def test_cli_tradueix_motor(capsys):

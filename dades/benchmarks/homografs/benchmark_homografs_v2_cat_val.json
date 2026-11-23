@@ -273,11 +273,11 @@
   "id": "HG2-028",
   "oriental": "Si en manca algun, avisa'm de seguida.",
   "paraula": "manca",
-  "esperat": "manca",
+  "esperat": "falta",
   "tipus": "irresoluble",
   "motor_sol": "Si en falta algun, avisa'm de seguida.",
-  "sentit": "v: mancar (falta)",
-  "occidental": "Si en manca algun, avisa'm de seguida."
+  "sentit": "v: faltar (falta)",
+  "occidental": "Si en falta algun, avisa'm de seguida."
  },
  {
   "id": "HG2-029",
@@ -718,166 +718,6 @@
   "motor_sol": "Les dones llavadores cantaven mentre treballaven.",
   "sentit": "adj/n: que lavan (personas, productos)",
   "occidental": "Les dones rentadores cantaven mentre treballaven."
- },
- {
-  "id": "HG2-073",
-  "oriental": "De postres hi ha recuita amb mel.",
-  "paraula": "recuita",
-  "esperat": "brulla",
-  "tipus": "irresoluble",
-  "motor_sol": "De postres hi ha brulla amb mel.",
-  "sentit": "n: requesón",
-  "occidental": "De postres hi ha brulla amb mel."
- },
- {
-  "id": "HG2-074",
-  "oriental": "La recuita es fa amb el sèrum de la llet.",
-  "paraula": "recuita",
-  "esperat": "brulla",
-  "tipus": "irresoluble",
-  "motor_sol": "La brulla es fa amb el sèrum de la llet.",
-  "sentit": "n: requesón",
-  "occidental": "La brulla es fa amb el sèrum de la llet."
- },
- {
-  "id": "HG2-075",
-  "oriental": "Compra un pot de recuita fresca.",
-  "paraula": "recuita",
-  "esperat": "brulla",
-  "tipus": "irresoluble",
-  "motor_sol": "Compra un pot de brulla fresca.",
-  "sentit": "n: requesón",
-  "occidental": "Compra un pot de brulla fresca."
- },
- {
-  "id": "HG2-076",
-  "oriental": "Aquesta recuita d'ovella és molt suau.",
-  "paraula": "recuita",
-  "esperat": "brulla",
-  "tipus": "irresoluble",
-  "motor_sol": "Esta brulla d'ovella és molt suau.",
-  "sentit": "n: requesón",
-  "occidental": "Esta brulla d'ovella és molt suau."
- },
- {
-  "id": "HG2-077",
-  "oriental": "La carn ha quedat recuita i seca.",
-  "paraula": "recuita",
-  "esperat": "recuita",
-  "tipus": "irresoluble",
-  "motor_sol": "La carn ha quedat brulla i seca.",
-  "sentit": "adj: recocida",
-  "occidental": "La carn ha quedat recuita i seca."
- },
- {
-  "id": "HG2-078",
-  "oriental": "La pasta recuita no té bon gust.",
-  "paraula": "recuita",
-  "esperat": "recuita",
-  "tipus": "irresoluble",
-  "motor_sol": "La pasta brulla no té bon gust.",
-  "sentit": "adj: recocida",
-  "occidental": "La pasta recuita no té bon gust."
- },
- {
-  "id": "HG2-079",
-  "oriental": "Aquesta salsa està recuita de tant bullir.",
-  "paraula": "recuita",
-  "esperat": "recuita",
-  "tipus": "irresoluble",
-  "motor_sol": "Esta salsa està brulla de tant bullir.",
-  "sentit": "adj: recocida",
-  "occidental": "Esta salsa està recuita de tant bullir."
- },
- {
-  "id": "HG2-080",
-  "oriental": "La verdura recuita perd les vitamines.",
-  "paraula": "recuita",
-  "esperat": "recuita",
-  "tipus": "irresoluble",
-  "motor_sol": "La verdura brulla perd les vitamines.",
-  "sentit": "adj: recocida",
-  "occidental": "La verdura recuita perd les vitamines."
- },
- {
-  "id": "HG2-081",
-  "oriental": "Al mercat venen recuites de cabra i d'ovella.",
-  "paraula": "recuites",
-  "esperat": "brulles",
-  "tipus": "irresoluble",
-  "motor_sol": "Al mercat venen brulles de cabra i d'ovella.",
-  "sentit": "n: requesones",
-  "occidental": "Al mercat venen brulles de cabra i d'ovella."
- },
- {
-  "id": "HG2-082",
-  "oriental": "Les recuites del formatger del poble són excel·lents.",
-  "paraula": "recuites",
-  "esperat": "brulles",
-  "tipus": "irresoluble",
-  "motor_sol": "Les brulles del formatger del poble són excel·lents.",
-  "sentit": "n: requesones",
-  "occidental": "Les brulles del formatger del poble són excel·lents."
- },
- {
-  "id": "HG2-083",
-  "oriental": "Hem tastat tres recuites diferents.",
-  "paraula": "recuites",
-  "esperat": "brulles",
-  "tipus": "irresoluble",
-  "motor_sol": "Hem tastat tres brulles diferents.",
-  "sentit": "n: requesones",
-  "occidental": "Hem tastat tres brulles diferents."
- },
- {
-  "id": "HG2-084",
-  "oriental": "Les recuites s'han de menjar fresques.",
-  "paraula": "recuites",
-  "esperat": "brulles",
-  "tipus": "irresoluble",
-  "motor_sol": "Les brulles s'han de menjar fresques.",
-  "sentit": "n: requesones",
-  "occidental": "Les brulles s'han de menjar fresques."
- },
- {
-  "id": "HG2-085",
-  "oriental": "Les patates han quedat recuites.",
-  "paraula": "recuites",
-  "esperat": "recuites",
-  "tipus": "irresoluble",
-  "motor_sol": "Les creïlles han quedat brulles.",
-  "sentit": "adj: recocidas",
-  "occidental": "Les creïlles han quedat recuites."
- },
- {
-  "id": "HG2-086",
-  "oriental": "Les mongetes recuites es desfan.",
-  "paraula": "recuites",
-  "esperat": "recuites",
-  "tipus": "irresoluble",
-  "motor_sol": "Els fesols brulles es desfan.",
-  "sentit": "adj: recocidas",
-  "occidental": "Els fesols recuites es desfan."
- },
- {
-  "id": "HG2-087",
-  "oriental": "No m'agraden les verdures recuites.",
-  "paraula": "recuites",
-  "esperat": "recuites",
-  "tipus": "irresoluble",
-  "motor_sol": "No m'agraden les verdures brulles.",
-  "sentit": "adj: recocidas",
-  "occidental": "No m'agraden les verdures recuites."
- },
- {
-  "id": "HG2-088",
-  "oriental": "Les llenties han quedat recuites de tant bullir.",
-  "paraula": "recuites",
-  "esperat": "recuites",
-  "tipus": "irresoluble",
-  "motor_sol": "Les llentilles han quedat brulles de tant bullir.",
-  "sentit": "adj: recocidas",
-  "occidental": "Les llentilles han quedat recuites de tant bullir."
  },
  {
   "id": "HG2-089",

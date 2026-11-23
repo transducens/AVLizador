@@ -60,8 +60,9 @@ Piezas:
   panotxa, recuita: sin datos) no tienen y hacen lo de siempre. Cuando haya
   más datos, una palabra que pase el umbral entra sola. El antiguo de "cop"
   (`ClassificadorCop`, `nb.json`) se sigue cargando si no hay `sentit.json`.
-- `CRITERI_KENLM`: margen 3, la catalana por defecto, λ 1,5 en homógrafos y
-  0,75 en colisiones, y desempate < 2 con el clasificador (`Criteri.desempat`):
+- `CRITERI_KENLM`: margen 1 (desde la 2.0.1; hasta la 2.0.0, margen 3), la
+  catalana por defecto, λ 1,5 en homógrafos resolubles, 1,25 en irresolubles
+  y 0,75 en colisiones, y desempate < 2 con el clasificador (`Criteri.desempat`):
   si KenLM gana por menos de 2, decide el clasificador de la palabra (si
   tiene); si no, la regla de siempre.
 - `punts.decisio_spacy`: antes del modelo, spaCy descarta lecturas
@@ -84,6 +85,48 @@ de Hugging Face y los descarga la primera vez. En la imagen Docker van en
 Para publicar una versión nueva: `scripts/hf_model/kenlm.py`. El paquete `kenlm` se compila al instalarlo (`pip install
 "avlizador[kenlm]"`; en Windows hace falta compilador, la imagen Docker es
 Linux).
+
+## Opción: KenLM de lemas (`--model kenlm-lemes`, 23/11/2026)
+
+Decisión del usuario: se deja como **opción**, no por defecto. El mismo
+sistema (criterio `CRITERI_KENLM` y el mismo clasificador), pero el KenLM es
+el de **lemas parciales** (propuesta del supervisor): el texto de
+entrenamiento y las frases candidatas se pasan a lemas con
+`lemes.LematitzadorLM` («va pegar» → «anar pegar»), salvo las palabras
+candidatas y las que concuerdan en género («una vegada», «les nous»), que se
+quedan en su forma. Así el modelo tiene más datos para cada contexto.
+
+El contexto se lematiza **una sola vez**, sobre la traducción del motor
+(`kenlm.ModelKenLMLemes.fixa_referencia`, que llama `puntua_punts` cuando la
+frase tiene alguna palabra ambigua): spaCy lematizaba el contexto distinto
+según el candidato («cosia bragues» → «cosir», «cosia calces» → «cosia») y
+eso daba errores graves.
+
+| En los homógrafos corregidos del 23/11 | KenLM (por defecto) | KenLM de lemas |
+|---|---|---|
+| Decisiones (237): aciertos / graves / sin traducir | 196 / 0 / 41 | 198 / 1 / 38 |
+| Exactas homógrafos v1 (249) / v2 (144) | 228 / 113 | 229 / 114 |
+| Exactas manual (458) / 151 (154) | 232 / 144 | 232 / 144 |
+| Tiempo del modelo por frase con palabra ambigua | ~0,1 ms | ~10-17 ms (spaCy) |
+
+El grave es «calces» → «bragues» en HG2-093. `avlizador avalua --model kenlm
+kenlm-lemes` en Abaco da lo mismo que el comparador (job 3383).
+
+Uso: `translate_cat_val(text, model="kenlm-lemes")`, `avlizador tradueix
+--model kenlm-lemes` o `avlizador avalua --model kenlm kenlm-lemes`. Ficheros:
+`valencia_net_dogv_lemes_o5.binary` (80 MB; en Abaco,
+`dades/macocu/kenlm/valencia_net_dogv2_lemes_o5.binary`),
+`valencia_net_dogv_lemes_freq.json` (`_lemes_freq.json`) y el mismo
+`sentit.json`. Están en el **mismo repositorio de Hugging Face** que el
+modelo por defecto (misma `REVISIO_HF`) y se buscan igual: en la carpeta de
+`AVLIZADOR_KENLM_DIR` si está definida; si no, en la caché de Hugging Face,
+y se descargan la primera vez (`kenlm.FITXERS_HF_LEMES`: solo esos tres; quien
+usa la opción por defecto no los descarga nunca, `FITXERS_HF`). En Abaco,
+`~/kenlm_2.0.0` ya tiene los enlaces. En Docker, `KENLM_LEMES: "1"` en
+`docker-compose.yml` (`docker/prepara_kenlm.py`). Si falta algo,
+`FaltaKenLM` (no vuelve al motor solo). Para publicarlos:
+`scripts/hf_model/kenlm.py ... --lemes valencia_net_dogv2_lemes`. Detalle:
+`documentacio/resultats_model_llengua_kenlm.md`, 4.23-4.25.
 
 ## Mantenimiento: palabras y corpus nuevos (16/11/2026)
 

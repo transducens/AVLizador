@@ -801,42 +801,6 @@
    "occidental": "Celebren la reeixida de la missió."
   },
   {
-   "id": "HG089",
-   "oriental": "Per postres hi havia recuita amb mel.",
-   "paraula": "recuita",
-   "esperat": "brulla",
-   "tipus": "resoluble",
-   "motor_sol": "Per postres hi havia brulla amb mel.",
-   "occidental": "Per postres hi havia brulla amb mel."
-  },
-  {
-   "id": "HG090",
-   "oriental": "La recuita es fa amb llet d'ovella.",
-   "paraula": "recuita",
-   "esperat": "brulla",
-   "tipus": "resoluble",
-   "motor_sol": "La brulla es fa amb llet d'ovella.",
-   "occidental": "La brulla es fa amb llet d'ovella."
-  },
-  {
-   "id": "HG091",
-   "oriental": "La carn recuita no té bon gust.",
-   "paraula": "recuita",
-   "esperat": "recuita",
-   "tipus": "resoluble",
-   "motor_sol": "La carn brulla no té bon gust.",
-   "occidental": "La carn recuita no té bon gust."
-  },
-  {
-   "id": "HG092",
-   "oriental": "Aquesta salsa està recuita.",
-   "paraula": "recuita",
-   "esperat": "recuita",
-   "tipus": "resoluble",
-   "motor_sol": "Esta salsa està brulla.",
-   "occidental": "Esta salsa està recuita."
-  },
-  {
    "id": "HG093",
    "oriental": "Ens vam fer una fartanera de marisc.",
    "paraula": "fartanera",

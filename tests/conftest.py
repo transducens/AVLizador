@@ -11,4 +11,4 @@ def sense_hugging_face(monkeypatch):
     cau (16/11/2026): el resultat no ha de dependre de la xarxa ni del que
     tinga baixat la màquina. Els tests de la descàrrega (test_kenlm.py)
     tornen a posar la funció real."""
-    monkeypatch.setattr(_kenlm, "_directori_hf", lambda descarrega=True: None)
+    monkeypatch.setattr(_kenlm, "_directori_hf", lambda descarrega=True, fitxers=None: None)

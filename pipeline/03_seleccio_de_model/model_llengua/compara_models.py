@@ -26,10 +26,17 @@ queda per defecte). Ací cada model és un puntuador:
 | `kenlm_dogv2_c1` | KenLM amb més text (16/11/2026; `prova_corpus.sh`): MaCoCu net + el DOGV nou sencer (2025-2026, +5.413 documents), + classificador |
 | `kenlm_dogv2_avl_c1` | ídem + la AVL (sense els documents ni les frases dels benchmarks; `termes_ambigus.py`) |
 | `kenlm_dogv2_avl_ua_c1` | ídem + les notícies de la UA (frases de GD ≥ 0,8) |
+| `kenlm_lemes_tot_dogv2`, `kenlm_lemes_tot_dogv2_c1`, `kenlm_mescla_tot_dogv2_c1` | ídem, però amb TOT el text a lema, també les candidates i les que concorden (`LematitzadorLM(tot=True)`); el prior, de la taula de formes de la 2.0.0 (20/11/2026; `TOT=1 prova_lemes_dogv2.sh`) |
+| `kenlm_lemes_dogv2`, `kenlm_lemes_dogv2_c1`, `kenlm_mescla_dogv2_c1` | com `kenlm_lemes*` i `kenlm_mescla_c1`, però amb el text del sistema 2.0.0 (`valencia_net_dogv2`) passat a lemes; la mescla, amb el KenLM de formes de la 2.0.0 (20/11/2026; `prova_lemes_dogv2.sh`) |
+| `kenlm_lemes_ref_dogv2`, `kenlm_lemes_tot_ref_dogv2` (+ `_c1`), `kenlm_mescla_ref_dogv2_c1`, `kenlm_mescla_tot_ref_dogv2_c1` | els mateixos, però amb el context lematitzat UNA vegada, sobre la frase del motor (`KenLMLemes(referencia=True)`, 23/11/2026; `REF=1 prova_lemes_dogv2.sh`) |
 
 Els models `*_c1` es comparen amb el criteri del sistema KenLM
 (`CRITERI_KENLM`: marge 3, la catalana per defecte, λ 1,5 / 0,75 en les
-col·lisions, desempat < 2 amb el classificador); la resta, amb `Criteri()`.
+col·lisions, λ 1,25 en els irresolubles, desempat < 2 amb el
+classificador); des del 23/11/2026 també la resta de KenLM, amb el mateix
+criteri sense desempat (abans, `Criteri()`: marge 2, λ 0,5, i el "criteri
+del sistema" dels KenLM sense classificador no ho era). FLOR, fastText i les
+diferències, amb `Criteri()`.
 
 Els logaritmes de KenLM (base 10) es passen a naturals, com FLOR, perquè
 els marges siguen comparables. Cada model puntua UNA vegada cada frase de
@@ -66,17 +73,28 @@ KenLM: paraules normalitzades amb l'ordre de l'n-grama trobat). S'obrin amb
 Prior (11/11/2026): log P(candidat sol). KenLM el dona sense <s> ni </s>
 (`KenLM.prior`, l'unigrama); abans era log P("<s> colp </s>"), que no seguix
 la freqüència, i `lam` no canviava res en KenLM.
+
+Graella completa (20/11/2026, `--graella-completa`): per a cada criteri de
+la graella (`--marges`, `--lams`, `--lams-colisio`, `--lams-irresoluble`,
+`--desempats`; el desempat només en els `*_c1`), totes les mètriques de
+cada benchmark (exactes, BLEU, chrF, TER, WER), els encerts / errors greus
+/ sense traduir de cada benchmark d'homògrafs i el GD, GDV i GDC de l'eixida
+del manual, en `*_graella.json`. `tria_criteris.py` en tria els millors.
 """
 
 from __future__ import annotations
 
 import argparse
+import collections
+import functools
 import gc
 import itertools
 import json
 import math
 import os
+import re
 import time
+from dataclasses import replace
 from datetime import datetime
 from pathlib import Path
 
@@ -92,8 +110,8 @@ from avlizador.traductor_cat_val.model_llengua.punts import TIPUS  # noqa: E402
 RESULTATS = ARREL / "pipeline" / "03_seleccio_de_model" / "resultats"
 DIR_MODELS = ARREL / "dades" / "macocu"
 BENCHMARKS = {
-    "homografs": ("Homògrafs v1 + 151 (253)", "homografs/benchmark_sistema_final_cat_val.json"),
-    "homografs_v2": ("Homògrafs v2 (160)", "homografs/benchmark_homografs_v2_cat_val.json"),
+    "homografs": ("Homògrafs v1 + 151 (249)", "homografs/benchmark_sistema_final_cat_val.json"),
+    "homografs_v2": ("Homògrafs v2 (144)", "homografs/benchmark_homografs_v2_cat_val.json"),
     "manual": ("Manual BOE + AVL (458)", "manual/benchmark_manual_cat_val.json"),
     # 11/11/2026, per a les regressions (no per defecte; el 151 ja va dins de `homografs`):
     "151": ("Benchmark de 151 (154)", "curat_151/benchmark_corpus.json"),
@@ -105,8 +123,30 @@ TIPUS_MODEL = ("colisio", "irresoluble")
 MODELS = ("motor", "flor", "kenlm_cat", "kenlm_cat30", "kenlm_val", "kenlm_val_net", "kenlm_val_net_dogv",
           "kenlm_val_net_dogv_np", "kenlm_val_tot_np", "kenlm_val_net_dogv_bi", "kenlm_val_net_dogv_c1", "kenlm_lemes", "kenlm_lemes_c1",
           "kenlm_mescla_c1", "kenlm_o6_c1", "kenlm_o7_c1", "kenlm_o8_c1", "kenlm_dogv2_c1", "kenlm_dogv2_avl_c1",
-          "kenlm_dogv2_avl_ua_c1", "diff", "diff_net", "fasttext")
+          "kenlm_dogv2_avl_ua_c1", "kenlm_lemes_dogv2", "kenlm_lemes_dogv2_c1", "kenlm_mescla_dogv2_c1",
+          "kenlm_lemes_tot_dogv2", "kenlm_lemes_tot_dogv2_c1", "kenlm_mescla_tot_dogv2_c1",
+          "kenlm_lemes_ref_dogv2", "kenlm_lemes_ref_dogv2_c1", "kenlm_mescla_ref_dogv2_c1",
+          "kenlm_lemes_tot_ref_dogv2", "kenlm_lemes_tot_ref_dogv2_c1", "kenlm_mescla_tot_ref_dogv2_c1",
+          "diff", "diff_net", "fasttext")
 NOM_LEMES = "valencia_net_dogv_lemes"  # 12/11/2026: lematitza_text.py + entrena_kenlm.sh
+# KenLM de lemes de cada clau (12/11/2026 amb el text vell; 20/11/2026 amb el de la 2.0.0).
+LEMES_KENLM = {"kenlm_lemes": NOM_LEMES, "kenlm_lemes_c1": NOM_LEMES,
+               "kenlm_lemes_dogv2": "valencia_net_dogv2_lemes", "kenlm_lemes_dogv2_c1": "valencia_net_dogv2_lemes",
+               "kenlm_lemes_ref_dogv2": "valencia_net_dogv2_lemes",
+               "kenlm_lemes_ref_dogv2_c1": "valencia_net_dogv2_lemes"}
+# Mescla formes + lemes: (KenLM de formes, KenLM de lemes).
+MESCLA_KENLM = {"kenlm_mescla_c1": ("valencia_net_dogv", NOM_LEMES),
+                "kenlm_mescla_dogv2_c1": ("valencia_net_dogv2", "valencia_net_dogv2_lemes"),
+                "kenlm_mescla_tot_dogv2_c1": ("valencia_net_dogv2", "valencia_net_dogv2_lemes_tot"),
+                "kenlm_mescla_ref_dogv2_c1": ("valencia_net_dogv2", "valencia_net_dogv2_lemes"),
+                "kenlm_mescla_tot_ref_dogv2_c1": ("valencia_net_dogv2", "valencia_net_dogv2_lemes_tot")}
+# 20/11/2026: TOT a lema (`LematitzadorLM(tot=True)`). El text de lemes ja no té les formes
+# candidates ("vegades", "anous"), així que el prior ve de la taula de formes del mateix text.
+LEMES_TOT_KENLM = {"kenlm_lemes_tot_dogv2": "valencia_net_dogv2_lemes_tot",
+                   "kenlm_lemes_tot_dogv2_c1": "valencia_net_dogv2_lemes_tot",
+                   "kenlm_lemes_tot_ref_dogv2": "valencia_net_dogv2_lemes_tot",
+                   "kenlm_lemes_tot_ref_dogv2_c1": "valencia_net_dogv2_lemes_tot"}
+FREQ_LEMES_TOT = "valencia_net_dogv2"
 # 16/11/2026: el KenLM del sistema amb un altre ordre (dades/macocu/kenlm/valencia_net_dogv_o<N>.binary;
 # la taula de freqüències és la mateixa, perquè el text és el mateix).
 ORDRES_KENLM = {"kenlm_o6_c1": 6, "kenlm_o7_c1": 7, "kenlm_o8_c1": 8}
@@ -244,17 +284,65 @@ class KenLMLemes(KenLM):
     ...     def linia(self, text): return "el colp"
     >>> KenLMLemes(M(), Lem()).logprob("Els colps.")[1]
     3
+
+    Amb `referencia=True` (23/11/2026): spaCy lematitzava el context de
+    manera distinta segons el candidat ("el sastre cosia bragues" -> "cosir";
+    "el sastre cosia calces" -> "cosia"), i les frases candidates ja no es
+    podien comparar. Ara `fixa_referencia` (cridat abans de puntuar cada
+    frase, amb la traducció del motor) lematitza el context UNA vegada; en
+    cada frase candidata, les paraules iguals que en la referència prenen el
+    lema de la referència i només les que canvien (el candidat i les que hi
+    concorden) es lematitzen dins de la frase candidata:
+
+    >>> class Lem2:
+    ...     def tokens_formes(self, text):
+    ...         t = text.split()
+    ...         return t, [{"cosia": "cosir" if "bragues" in t else "cosia"}.get(w, w) for w in t]
+    ...     def linia(self, text): return " ".join(self.tokens_formes(text)[1])
+    >>> k = KenLMLemes(M(), Lem2(), referencia=True)
+    >>> k.linia("el sastre cosia calces")
+    'el sastre cosia calces'
+    >>> k.fixa_referencia("el sastre cosia bragues")
+    >>> k.linia("el sastre cosia calces"), k.linia("el sastre")
+    ('el sastre cosir calces', 'el sastre')
     """
 
-    def __init__(self, model, lematitzador, freq: dict | None = None) -> None:
+    def __init__(self, model, lematitzador, freq: dict | None = None, referencia: bool = False) -> None:
         super().__init__(model, 1.0, freq)
         self.lem = lematitzador
+        self.usa_referencia = referencia
+        self._ref = None  # (tokens normalitzats, lemes) de la frase de referència
+
+    def _tokens_formes(self, text: str) -> tuple[list[str], list[str]]:
+        """Tokens normalitzats de `text` i la forma que en dona el
+        lematitzador (lema o forma conservada), un a un, com `linies`."""
+        if hasattr(self.lem, "tokens_formes"):
+            return self.lem.tokens_formes(text)
+        toks = normalitza(text).split()
+        doc = next(iter(self.lem.nlp.pipe([self.lem.Doc(self.lem.nlp.vocab, words=toks)])))
+        return toks, [self.lem.forma(t) for t in doc]
+
+    def fixa_referencia(self, text: str) -> None:
+        if self.usa_referencia:
+            self._ref = self._tokens_formes(text)
+
+    def linia(self, text: str) -> str:
+        if self._ref is None:
+            return self.lem.linia(text)
+        import difflib
+
+        toks, formes = self._tokens_formes(text)
+        ref_toks, ref_formes = self._ref
+        eixida = list(formes)
+        for a, b, n in difflib.SequenceMatcher(None, ref_toks, toks, autojunk=False).get_matching_blocks():
+            eixida[b:b + n] = ref_formes[a:a + n]
+        return normalitza(" ".join(eixida))
 
     def logprob(self, text: str) -> tuple[float, int]:
-        return super().logprob(self.lem.linia(text))
+        return super().logprob(self.linia(text))
 
     def tokens(self, text: str, prior: bool = False) -> list[dict]:
-        return super().tokens(text if prior else self.lem.linia(text), prior)
+        return super().tokens(text if prior else self.linia(text), prior)
 
 
 class Mescla:
@@ -271,6 +359,10 @@ class Mescla:
 
     def __init__(self, formes, lemes, pes: float = 1.0) -> None:
         self.formes, self.lemes, self.pes = formes, lemes, pes
+        self.usa_referencia = getattr(lemes, "usa_referencia", False)
+
+    def fixa_referencia(self, text: str) -> None:
+        self.lemes.fixa_referencia(text)
 
     def logprob(self, text: str) -> tuple[float, int]:
         a, n = self.formes.logprob(text)
@@ -362,12 +454,13 @@ class Carregador:
             self._mesura(clau, path, lambda: kenlm.Model(str(path)))
         return self.cache[clau]
 
-    def _lematitzador(self):
-        if "_lemes" not in self.cache:
+    def _lematitzador(self, tot: bool = False):
+        clau = "_lemes_tot" if tot else "_lemes"
+        if clau not in self.cache:
             from avlizador.traductor_cat_val.model_llengua.lemes import LematitzadorLM
 
-            self.cache["_lemes"] = LematitzadorLM()
-        return self.cache["_lemes"]
+            self.cache[clau] = LematitzadorLM(tot=tot)
+        return self.cache[clau]
 
     def _freq(self, nom: str) -> dict | None:
         """Freqüències del text d'entrenament (`<nom>_freq.json`) per al prior."""
@@ -401,11 +494,19 @@ class Carregador:
             return KenLM(self._kenlm("valencia_net_dogv", ORDRES_KENLM[clau]), 1.0, self._freq("valencia_net_dogv"))
         if clau in CORPUS_KENLM:  # 16/11/2026: el mateix amb més text
             return KenLM(self._kenlm(CORPUS_KENLM[clau]), 1.0, self._freq(CORPUS_KENLM[clau]))
-        if clau in ("kenlm_lemes", "kenlm_lemes_c1"):
-            return KenLMLemes(self._kenlm(NOM_LEMES), self._lematitzador(), self._freq(NOM_LEMES))
-        if clau == "kenlm_mescla_c1":
-            return Mescla(KenLM(self._kenlm("valencia_net_dogv"), 1.0, self._freq("valencia_net_dogv")),
-                          KenLMLemes(self._kenlm(NOM_LEMES), self._lematitzador(), self._freq(NOM_LEMES)))
+        ref = "_ref_" in clau  # 23/11/2026: context lematitzat una vegada (vore KenLMLemes)
+        if clau in LEMES_KENLM:
+            nom = LEMES_KENLM[clau]
+            return KenLMLemes(self._kenlm(nom), self._lematitzador(), self._freq(nom), referencia=ref)
+        if clau in LEMES_TOT_KENLM:
+            return KenLMLemes(self._kenlm(LEMES_TOT_KENLM[clau]), self._lematitzador(tot=True),
+                              self._freq(FREQ_LEMES_TOT), referencia=ref)
+        if clau in MESCLA_KENLM:
+            formes, lemes = MESCLA_KENLM[clau]
+            tot = lemes.endswith("_tot")
+            return Mescla(KenLM(self._kenlm(formes), 1.0, self._freq(formes)),
+                          KenLMLemes(self._kenlm(lemes), self._lematitzador(tot=tot),
+                                     self._freq(FREQ_LEMES_TOT if tot else lemes), referencia=ref))
         if clau == "kenlm_val_net_dogv_bi":
             return Bidireccional(KenLM(self._kenlm("valencia_net_dogv"), 1.0, self._freq("valencia_net_dogv")),
                                  self._kenlm("valencia_net_dogv_inv"))
@@ -434,10 +535,12 @@ class Carregador:
             return [self._nom_ordre("valencia_net_dogv", ORDRES_KENLM[clau])]
         if clau in CORPUS_KENLM:
             return [CORPUS_KENLM[clau]]
-        if clau in ("kenlm_lemes", "kenlm_lemes_c1"):
-            return [NOM_LEMES]
-        if clau == "kenlm_mescla_c1":
-            return ["valencia_net_dogv", NOM_LEMES]
+        if clau in LEMES_KENLM:
+            return [LEMES_KENLM[clau]]
+        if clau in LEMES_TOT_KENLM:
+            return [LEMES_TOT_KENLM[clau]]
+        if clau in MESCLA_KENLM:
+            return list(MESCLA_KENLM[clau])
         if clau in FITXERS_KENLM:
             return [FITXERS_KENLM[clau]]
         return {"flor": ["flor"], "diff": ["valencia", "macocu_tot"], "diff_net": ["valencia_net", "macocu_tot"],
@@ -473,6 +576,14 @@ class Cronometre:
             self.segons += time.perf_counter() - t0
             self.crides += 1
 
+    def fixa_referencia(self, text: str) -> None:
+        """Lematitzar la referència també és temps del model (23/11/2026)."""
+        t0 = time.perf_counter()
+        try:
+            self.model.fixa_referencia(text)
+        finally:
+            self.segons += time.perf_counter() - t0
+
     def __getattr__(self, nom: str):
         """La resta (`prior`...) passa al model. Sense això, `puntua_punts` no
         veia el `prior` de KenLM i usava `logprob` (bug del 11/11/2026: les
@@ -502,6 +613,11 @@ def puntua(benchmark: list[dict], model) -> tuple[list, float]:
 
             text_motor, punts = tradueix_cat_val_ml(text)
         else:
+            if getattr(model, "usa_referencia", False):  # 23/11/2026: lemes amb el context de la frase del motor
+                from avlizador.traductor_cat_val.model_llengua import _motor
+                from avlizador.traductor_cat_val.rules import detokenize
+
+                model.fixa_referencia(detokenize(_motor()[0].tradueix_tokens(text)))
             text_motor, punts = puntua_punts(text, model, TIPUS)
         eixida.append((it, text_motor, punts))
     return eixida, (time.time() - t0) / max(len(benchmark), 1)
@@ -534,13 +650,20 @@ def punt_avaluat(it: dict, punts: list):
     return next((p for p in punts if paraula and p.paraula.lower() == paraula), None)
 
 
+@functools.lru_cache(maxsize=None)
+def _metriques(hipotesi: str, referencia: str) -> dict:
+    """`calcula_metriques` amb memòria (20/11/2026): amb la graella completa,
+    la majoria de criteris donen la mateixa traducció en la majoria de frases."""
+    return calcula_metriques(hipotesi, referencia)
+
+
 def avalua(puntuats: list, criteri: Criteri | None) -> dict:
     """Mètriques d'un benchmark amb un criteri (`None` = motor sol)."""
     files, sentit, sentit_model, n_sentit, n_model = [], 0, 0, 0, 0
     for it, text_motor, punts in puntuats:
         hip = text_motor if criteri is None else aplica_tries(text_motor, punts, criteri)
         ref = normalitza_apostrofa(it["occidental"])
-        files.append({"id": it["id"], "hipotesi": hip, "error": False, **calcula_metriques(hip, ref)})
+        files.append({"id": it["id"], "hipotesi": hip, "error": False, **_metriques(hip, ref)})
         p = punt_avaluat(it, punts)
         if it.get("esperat") and (it.get("tipus") or "") != "control":
             tria = p.motor if (p is not None and criteri is None) else (p.tria if p is not None else None)
@@ -582,6 +705,19 @@ def classifica(paraula: str, esperat: str, tria: str | None) -> str:
     return "candidat_erroni"
 
 
+def forma_que_queda(paraula: str, hipotesi: str) -> str | None:
+    """Si la paraula no s'ha detectat com a punt ambigu (20/11/2026: p. ex.
+    «recuita», que ja no és homògraf en el lèxic), la tria és la que ha
+    quedat en la traducció: la catalana si hi és sencera; si no, None
+    (canviada per una altra via).
+
+    >>> forma_que_queda("recuita", "És una pasta recuita."), forma_que_queda("recuita", "És brull.")
+    ('recuita', None)
+    """
+    hi_es = re.search(rf"(?<![\w·]){re.escape(paraula)}(?![\w·])", hipotesi, re.IGNORECASE)
+    return paraula if hi_es else None
+
+
 def detall(puntuats: list, criteri: Criteri | None) -> list[dict]:
     """Cada decisió avaluable (frases amb paraula i candidat esperat) amb el
     seu tipus d'encert o error i qui l'ha presa."""
@@ -591,7 +727,7 @@ def detall(puntuats: list, criteri: Criteri | None) -> list[dict]:
             continue
         hip = text_motor if criteri is None else aplica_tries(text_motor, punts, criteri)
         p = punt_avaluat(it, punts)
-        tria = (p.motor if criteri is None else p.tria) if p is not None else None
+        tria = (p.motor if criteri is None else p.tria) if p is not None else forma_que_queda(it["paraula"], hip)
         valors, brut = {}, {}
         if p is not None and criteri is not None and p.puntuacions:
             from avlizador.traductor_cat_val.model_llengua import criteri_del_punt, puntuacio
@@ -708,34 +844,88 @@ def informe_detall(detalls: dict, benchmarks: dict) -> str:
     return "\n".join(md) + "\n"
 
 
-def gd_eixida(hipotesis: list[str]) -> dict:
-    """GD i GDV globals de l'eixida (sumant marcadors i paraules)."""
+@functools.lru_cache(maxsize=None)
+def _gd_frase(hipotesi: str) -> tuple[int, int, int]:
     from avlizador.grau_dialectal import calcula_gd
 
+    r = calcula_gd(hipotesi)
+    return r["total_occidentals"], r["total_orientals"], r["total_paraules"]
+
+
+def gd_eixida(hipotesis: list[str]) -> dict:
+    """GD, GDV i GDC globals de l'eixida (sumant marcadors i paraules; el
+    GDC des del 20/11/2026: 1 - occidentals / paraules)."""
     occ = ori = paraules = 0
     for h in hipotesis:
-        r = calcula_gd(h)
-        occ, ori, paraules = occ + r["total_occidentals"], ori + r["total_orientals"], paraules + r["total_paraules"]
+        a, b, c = _gd_frase(h)
+        occ, ori, paraules = occ + a, ori + b, paraules + c
     return {"gd": round(occ / (occ + ori), 4) if occ + ori else None,
-            "gdv": round(1 - ori / paraules, 4) if paraules else None, "orientals": ori}
+            "gdv": round(1 - ori / paraules, 4) if paraules else None,
+            "gdc": round(1 - occ / paraules, 4) if paraules else None, "orientals": ori}
 
 
 def criteris(args) -> list[tuple[str, Criteri]]:
     eixida = []
-    for marge, defecte, lam, lam_col, desempat in itertools.product(
-            args.marges, args.per_defecte, args.lams, args.lams_colisio or [None], args.desempats or [None]):
+    for marge, defecte, lam, lam_col, lam_irr, desempat in itertools.product(
+            args.marges, args.per_defecte, args.lams, args.lams_colisio or [None],
+            getattr(args, "lams_irresoluble", None) or [None], args.desempats or [None]):
         nom = (f"marge={marge:g} defecte={defecte} lam={lam:g}" + (f" lam_col={lam_col:g}" if lam_col is not None else "")
+               + (f" lam_irr={lam_irr:g}" if lam_irr is not None else "")
                + (f" desempat={desempat:g}" if desempat is not None else ""))
         eixida.append((nom, Criteri(marge=marge, per_defecte=defecte, lam=lam, lam_colisio=lam_col,
-                                    desempat=desempat)))
+                                    lam_irresoluble=lam_irr, desempat=desempat)))
     return eixida
+
+
+def sense_desempat(llista: list[tuple[str, Criteri]]) -> list[tuple[str, Criteri]]:
+    """Per als models sense classificador (20/11/2026): el desempat no fa
+    res, així que es lleva i es queden els criteris distints.
+
+    >>> l = [("a desempat=1", Criteri(desempat=1.0)), ("a desempat=2", Criteri(desempat=2.0))]
+    >>> [n for n, _ in sense_desempat(l)]
+    ['a']
+    """
+    vist, eixida = set(), []
+    for nom, c in llista:
+        c2 = Criteri(**{**c.__dict__, "desempat": None})
+        if c2 not in vist:
+            vist.add(c2)
+            eixida.append((nom.split(" desempat=")[0], c2))
+    return eixida
+
+
+def fila_graella(nom: str, criteri: Criteri, r: dict, puntuats: dict, fix: bool) -> dict:
+    """Una fila de la graella completa: paràmetres, mètriques de cada
+    benchmark, classes de les decisions dels homògrafs i GD del manual."""
+    fila = {"criteri": nom, "fix": fix,
+            **{k: getattr(criteri, k) for k in ("marge", "per_defecte", "lam", "lam_colisio",
+                                                "lam_irresoluble", "desempat")}}
+    for b, v in r.items():
+        fila[b] = {k: v[k] for k in ("n_frases", "exactes", "bleu_mitja", "chrf_mitja", "ter_corpus",
+                                     "wer_corpus", "sentit_model", "n_model")}
+        if b.startswith("homografs"):
+            fila[b]["classes"] = dict(collections.Counter(f["classe"] for f in detall(puntuats[b], criteri)))
+        if b == "manual":
+            fila[b] |= gd_eixida(v["hipotesis"])
+    return fila
 
 
 def criteri_fix(clau: str) -> Criteri:
     """El criteri del sistema per a cada model: el de KenLM (amb el
-    classificador) per als `*_c1`; `Criteri()` (marge 2, la catalana per
-    defecte, λ 0,5) per a la resta."""
-    return CRITERI_KENLM if clau.endswith("_c1") else Criteri()
+    classificador) per als `*_c1`; des del 23/11/2026, el mateix sense
+    desempat per a la resta de KenLM (abans `Criteri()`, i les files "sol"
+    dels KenLM de lemes del 20/11 no tenien el marge ni les λ del sistema);
+    `Criteri()` (marge 2, la catalana per defecte, λ 0,5) per a FLOR i la
+    resta.
+
+    >>> criteri_fix("kenlm_lemes_dogv2") == replace(CRITERI_KENLM, desempat=None), criteri_fix("flor") == Criteri()
+    (True, True)
+    """
+    if clau.endswith("_c1"):
+        return CRITERI_KENLM
+    if clau.startswith("kenlm_"):
+        return replace(CRITERI_KENLM, desempat=None)
+    return Criteri()
 
 
 def num(x, dec: int = 2) -> str:
@@ -751,6 +941,10 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--lams", nargs="+", type=float, default=[0.0, 0.5])
     p.add_argument("--lams-colisio", nargs="+", type=float, default=None,
                    help="λ propi de les col·lisions (cop); sense l'opció, el mateix de --lams")
+    p.add_argument("--lams-irresoluble", nargs="+", type=float, default=None,
+                   help="λ propi dels homògrafs irresolubles; sense l'opció, el mateix de --lams")
+    p.add_argument("--graella-completa", action="store_true",
+                   help="totes les mètriques i els errors greus de cada criteri en *_graella.json (20/11/2026)")
     p.add_argument("--desempats", nargs="+", type=float, default=None,
                    help="camí C1: si el model guanya una col·lisió per menys d'això, decidix el classificador "
                         "de sentit (només els models *_c1)")
@@ -787,6 +981,7 @@ def main(argv: list[str] | None = None) -> None:
     puntua([{"id": "_", "oriental": "Un cop acabada la reunió, marxem.", "occidental": ""}], None)
 
     detalls: dict = {}
+    graella: dict = {}
     for clau in args.models:
         print(f"\n=== {clau} ===", flush=True)
         model = carregador.puntuador(clau)
@@ -807,7 +1002,8 @@ def main(argv: list[str] | None = None) -> None:
             n = afig_sentit(puntuats, args.model_sentit)
             print(f"  classificador de sentit: {n} punts ({args.model_sentit.name})", flush=True)
         fix = criteri_fix(clau)
-        files_criteris = [("motor sol", None)] if clau == "motor" else llista
+        files_criteris = ([("motor sol", None)] if clau == "motor"
+                          else llista if clau.endswith("_c1") else sense_desempat(llista))
         taula = []
         for nom, criteri in files_criteris:
             r = {b: avalua(puntuats[b], criteri) for b in benchmarks}
@@ -824,6 +1020,13 @@ def main(argv: list[str] | None = None) -> None:
         if fila_fix is None:  # el criteri fix no era en la graella: es calcula a banda
             nom_fix = "sistema KenLM (CRITERI_KENLM)" if fix == CRITERI_KENLM else "fix"
             fila_fix = (nom_fix, fix, {b: avalua(puntuats[b], fix) for b in benchmarks})
+
+        if args.graella_completa and clau != "motor":
+            t0 = time.time()
+            graella[clau] = [fila_graella(nom, c, r, puntuats, c == fila_fix[1]) for nom, c, r in taula]
+            if not any(f["fix"] for f in graella[clau]):
+                graella[clau].append(fila_graella(fila_fix[0], fila_fix[1], fila_fix[2], puntuats, True))
+            print(f"  graella completa: {len(graella[clau])} criteris ({time.time() - t0:.0f} s)", flush=True)
 
         def descriu(fila):
             nom, _, r = fila
@@ -873,6 +1076,11 @@ def main(argv: list[str] | None = None) -> None:
     (RESULTATS / f"compara_models_{sufix}.json").write_text(json.dumps(resultat, ensure_ascii=False, indent=1),
                                                           encoding="utf-8")
     (RESULTATS / f"compara_models_{sufix}.md").write_text(informe(resultat, benchmarks), encoding="utf-8")
+    if graella:
+        (RESULTATS / f"compara_models_{sufix}_graella.json").write_text(
+            json.dumps({"data": resultat["data"], "benchmarks": list(benchmarks), "models": graella},
+                       ensure_ascii=False), encoding="utf-8")
+        print(f"-> {RESULTATS / f'compara_models_{sufix}_graella.json'}")
     if detalls:
         (RESULTATS / f"compara_models_{sufix}_detall.json").write_text(
             json.dumps(detalls, ensure_ascii=False, indent=1), encoding="utf-8")

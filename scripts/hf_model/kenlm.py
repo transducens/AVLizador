@@ -21,6 +21,14 @@ l'avís de retirada (el mateix que el dataset manual).
     # versió 2.0.0 (decisió de l'usuari, 17/11/2026): KenLM sense AVL, classificador amb AVL
     python scripts/hf_model/kenlm.py --dir dades/macocu/kenlm --nom valencia_net_dogv2 --fonts net dogv2 \\
         --sentit dades/macocu/kenlm/sentit_dogv2_avl.json --fonts-sentit net dogv2 avl
+    # versió 2.0.1 amb l'opció amb lemes (23/11/2026, decisió de l'usuari: en el MATEIX repositori)
+    python scripts/hf_model/kenlm.py --dir dades/macocu/kenlm --nom valencia_net_dogv2 --fonts net dogv2 \\
+        --sentit dades/macocu/kenlm/sentit_dogv2_avl.json --fonts-sentit net dogv2 avl \\
+        --lemes valencia_net_dogv2_lemes
+
+Amb `--lemes NOM`, la carpeta porta també `NOM_o5.binary` i `NOM_freq.json` de
+`--dir` (el KenLM de lemes parcials de l'opció `kenlm-lemes`) amb els noms que
+busca el paquet (`NOM_MODEL_LEMES`), i la fitxa en té una secció.
 """
 
 from __future__ import annotations
@@ -34,7 +42,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "hf_benchmarks"))
 from comu import ARREL, AUTORS, AVIS_RETIRADA, GITHUB, autors_text, banner  # noqa: E402
 
-from avlizador.traductor_cat_val.model_llengua.kenlm import NOM_MODEL, REPO_HF  # noqa: E402
+from avlizador.traductor_cat_val.model_llengua.kenlm import NOM_MODEL, NOM_MODEL_LEMES, REPO_HF  # noqa: E402
 
 EIXIDA = ARREL / "dades" / "hf_model" / "kenlm"
 
@@ -65,15 +73,25 @@ FONTS = {
 # Xifres del sistema amb este model (vore documentacio/resultats_model_llengua_kenlm.md, 4.19).
 # 17/11/2026: KenLM valencia_net_dogv2 + sentit_dogv2_avl (comparador del 16/11); FLOR i
 # el motor sol, de l'avaluació del 13/11. S'actualitzen amb l'avaluació de la versió 2.0.0.
+# 23/11/2026, versió 2.0.1 (marge 1, taula de freqüències nova; homògrafs corregits per
+# l'usuari, sense «recuita»): KenLM i motor sol, `avlizador avalua` (resultats_release_2.0.1);
+# FLOR no s'ha mesurat en els homògrafs corregits. Document viu, 4.24.
 RESULTATS = {
-    "data": "KenLM: AVLizador 2.0.0, 2026-11-17; FLOR-760M and rules: 2026-11-13",
+    "data": "KenLM and rules only: AVLizador 2.0.1, 2026-11-23 (homograph sets as corrected that day); "
+            "FLOR-760M: 2026-11-13, not measured on the corrected homograph sets",
     "files": [
-        ("Homographs v1 (253)", "227", "217", "176"),
-        ("Homographs v2 (160)", "112", "96", "74"),
+        ("Homographs v1 (249)", "228", "—", "179"),
+        ("Homographs v2 (144)", "113", "—", "75"),
         ("Manual benchmark (458)", "232", "231", "218"),
         ("151 sentences (154)", "144", "145", "142"),
     ],
-    "decisions": "194 correct and 1 serious error (a wrong meaning) out of 257 decisions in the homograph sets",
+    "decisions": "196 correct and no serious error (a wrong meaning) out of 237 decisions in the homograph sets",
+}
+# L'opció amb lemes (23/11/2026; avlizador avalua --model kenlm-lemes, Abaco, job 3383).
+RESULTATS_LEMES = {
+    "files": {"Homographs v1 (249)": "229", "Homographs v2 (144)": "114",
+              "Manual benchmark (458)": "232", "151 sentences (154)": "144"},
+    "decisions": "198 correct choices and 1 serious error out of the same 237 decisions",
 }
 
 
@@ -81,7 +99,8 @@ def _llista(fonts: list[str]) -> str:
     return "\n".join(f"- {FONTS[f][0]}" for f in fonts)
 
 
-def fitxa(nom: str, fonts: list[str], fonts_sentit: list[str], freq: dict, n_grups: int, mida_mb: int) -> str:
+def fitxa(nom: str, fonts: list[str], fonts_sentit: list[str], freq: dict, n_grups: int, mida_mb: int,
+          lemes: dict | None = None) -> str:
     if fonts_sentit == fonts:
         fonts_md = _llista(fonts)
     else:
@@ -93,6 +112,41 @@ def fitxa(nom: str, fonts: list[str], fonts_sentit: list[str], freq: dict, n_gru
                      " (see `NOTICE` and the notice below).") if avl else ""
     taula = "\n".join(f"| {b} | **{k}** | {fl} | {m} |" for b, k, fl, m in RESULTATS["files"])
     tokens = f"{freq.get('tokens', 0):,}" if freq.get("tokens") else "—"
+    fitxers_lemes = seccio_lemes = resultats_lemes = ""
+    if lemes:
+        fitxers_lemes = (
+            f"| `{NOM_MODEL_LEMES}_o5.binary` | *Optional (lemma option):* KenLM model of the same text with the "
+            f"context words in lemma form ({lemes['mida_mb']} MB) |\n"
+            f"| `{NOM_MODEL_LEMES}_freq.json` | *Optional (lemma option):* frequency of the candidate words in "
+            "that text |\n")
+        seccio_lemes = f"""
+## Lemma option (`kenlm-lemes`)
+
+An optional variant, not the default: the same system with a second KenLM
+trained on the same text **in lemma form** (*va pegar* → *anar pegar*), except
+the candidate words and the words that agree with them in gender (*una
+vegada*, *les nous*), which keep their form. The context of each sentence is
+lemmatized **once**, on the rule engine's translation, so that every
+candidate sentence is scored with the same context. It uses the same sense
+classifier (`sentit.json`) and needs spaCy (already a dependency of
+AVLizador).
+
+```bash
+avlizador tradueix --model kenlm-lemes "Un cop acabada la reunió, marxem."
+```
+
+```python
+translate_cat_val("Un cop acabada la reunió, marxem.", model="kenlm-lemes")
+```
+
+Its two files are downloaded only when this option is used (the default
+option never downloads them). It makes {RESULTATS_LEMES["decisions"]}
+(the default option: 196 and none), and its model takes
+~10-17 ms per sentence with an ambiguous word instead of ~0.1 ms.
+"""
+        resultats_lemes = ("\nWith the lemma option (`kenlm-lemes`): "
+                           + ", ".join(f"{b} **{v}**" for b, v in RESULTATS_LEMES["files"].items())
+                           + f"; {RESULTATS_LEMES['decisions']}.\n\n")
     return f"""---
 language:
   - ca
@@ -144,7 +198,7 @@ only the context tells which one is right:
 
 AVLizador builds the full Valencian sentence for each candidate and asks this
 model which one is more likely. It only translates when the model clearly
-prefers it (margin 3); otherwise it keeps the Catalan word. When the model
+prefers it (margin 1 since AVLizador 2.0.1; margin 3 before); otherwise it keeps the Catalan word. When the model
 hesitates in a collision such as *cop*, the sense classifier (`sentit.json`)
 decides from the whole sentence.
 
@@ -159,7 +213,7 @@ PyTorch**, and makes fewer mistakes.
 | `{nom}_o5.binary` | KenLM model, order 5, trie with 8-bit quantization ({mida_mb} MB) |
 | `{nom}_freq.json` | Frequency of the candidate words in the training text ({tokens} tokens), used to correct the advantage of frequent words |
 | `sentit.json` | Sense classifier: one Naive Bayes per group of readings of an ambiguous word ({n_grups} groups); its training text is listed below |
-
+{fitxers_lemes}
 ## Usage
 
 With AVLizador (the files are downloaded automatically the first time):
@@ -191,7 +245,7 @@ model = kenlm.Model(hf_hub_download("{REPO_HF}", "{nom}_o5.binary"))
 for frase in ("Una vegada acabada la reunió, marxem.", "Un colp acabada la reunió, marxem."):
     print(model.score(normalitza(frase), bos=True, eos=True), frase)  # log10 P
 ```
-
+{seccio_lemes}
 ## Training data
 
 {fonts_md}
@@ -219,7 +273,7 @@ alone (exact matches; {RESULTATS["data"]}):
 {taula}
 
 In the ambiguous words of the homograph sets: {RESULTATS["decisions"]}.
-Benchmarks: [AVLizador collection](https://huggingface.co/transducens).
+{resultats_lemes}Benchmarks: [AVLizador collection](https://huggingface.co/transducens).
 
 ## Limitations
 
@@ -291,6 +345,8 @@ def main(argv: list[str] | None = None) -> None:
                    help="fonts del text d'entrenament del KenLM (per a la fitxa i el NOTICE)")
     p.add_argument("--fonts-sentit", nargs="+", choices=list(FONTS), default=None,
                    help="fonts del classificador, si no són les del KenLM")
+    p.add_argument("--lemes", default=None, metavar="NOM",
+                   help="(23/11/2026) inclou l'opció amb lemes: <dir>/NOM_o5.binary i NOM_freq.json")
     args = p.parse_args(argv)
     fonts_sentit = args.fonts_sentit or args.fonts
     for fs in (args.fonts, fonts_sentit):
@@ -302,7 +358,9 @@ def main(argv: list[str] | None = None) -> None:
     binari = args.dir / f"{args.nom}_o5.binary"
     freq = args.dir / f"{args.nom}_freq.json"
     sentit = args.sentit or args.dir / "sentit.json"
-    for f in (binari, freq, sentit):
+    lemes = ([args.dir / f"{args.lemes}_o5.binary", args.dir / f"{args.lemes}_freq.json"]
+             if args.lemes else [])
+    for f in (binari, freq, sentit, *lemes):
         if not f.exists():
             sys.exit(f"Falta {f}")
 
@@ -313,15 +371,22 @@ def main(argv: list[str] | None = None) -> None:
     shutil.copy(binari, EIXIDA / f"{NOM_MODEL}_o5.binary")
     shutil.copy(freq, EIXIDA / f"{NOM_MODEL}_freq.json")
     shutil.copy(sentit, EIXIDA / "sentit.json")
+    info_lemes = None
+    if lemes:  # l'opció amb lemes, amb els noms que busca el paquet (NOM_MODEL_LEMES)
+        shutil.copy(lemes[0], EIXIDA / f"{NOM_MODEL_LEMES}_o5.binary")
+        shutil.copy(lemes[1], EIXIDA / f"{NOM_MODEL_LEMES}_freq.json")
+        info_lemes = {"mida_mb": round(lemes[0].stat().st_size / 2**20)}
     dades_freq = json.loads(freq.read_text(encoding="utf-8"))
     n_grups = len(json.loads(sentit.read_text(encoding="utf-8")).get("grups", {}))
     (EIXIDA / "README.md").write_text(
-        fitxa(NOM_MODEL, args.fonts, fonts_sentit, dades_freq, n_grups, round(binari.stat().st_size / 2**20)),
+        fitxa(NOM_MODEL, args.fonts, fonts_sentit, dades_freq, n_grups, round(binari.stat().st_size / 2**20),
+              info_lemes),
         encoding="utf-8")
     (EIXIDA / "NOTICE").write_text(notice(args.fonts, fonts_sentit), encoding="utf-8")
     banner(EIXIDA / "assets" / "banner.png", "AVLizador KenLM", "Valencian 5-gram language model",
            "un cop acabada", "una vegada acabada")
-    print(f"-> {EIXIDA} (model {args.nom}, fonts {' '.join(args.fonts)}; classificador {' '.join(fonts_sentit)})")
+    print(f"-> {EIXIDA} (model {args.nom}, fonts {' '.join(args.fonts)}; classificador {' '.join(fonts_sentit)}"
+          + (f"; lemes {args.lemes}" if args.lemes else "") + ")")
     print(f"Per a pujar-lo: hf upload {REPO_HF} {EIXIDA.relative_to(ARREL).as_posix()} . --repo-type model")
 
 

@@ -61,8 +61,9 @@ Components i dades de tercers
    - Model valencia_net_dogv_o5 (KenLM, ordre 5), la seua taula de
      freqüències i el classificador de sentit (sentit.json), entrenats pel
      projecte i publicats en Hugging Face amb llicència CC BY 4.0:
-     https://huggingface.co/transducens/avlizador-kenlm-va (versió 2.0.0:
-     commit db4a1f1 del 17/11/2026). No són en el repositori ni en el paquet: el paquet
+     https://huggingface.co/transducens/avlizador-kenlm-va (versió 2.0.1:
+     commit 684993c del 23/11/2026, també amb el KenLM de lemes de l'opció
+     kenlm-lemes; la 2.0.0, db4a1f1 del 17/11/2026). No són en el repositori ni en el paquet: el paquet
      els baixa la primera vegada que s'usen (o els llig d'AVLIZADOR_KENLM_DIR),
      i van dins de la imatge Docker. Dades d'entrenament del model i de la
      taula: frases valencianes de MaCoCu-ca 1.0 (CLARIN.SI, hdl 11356/1837,

@@ -35,7 +35,7 @@ def translate_cat_val_motor(text: str) -> str:
     return _ENGINE_INVERS.translate(text)
 
 
-MODELS = ("kenlm",)
+MODELS = ("kenlm", "kenlm-lemes")
 # Model (13/11/2026, decisió de l'usuari): KenLM + classificador de sentit.
 # Igualava o millorava FLOR-760M (el d'abans) en tots els benchmarks menys
 # una frase del 151 i una de gplsi, és unes 8.000 vegades més ràpid i no
@@ -58,11 +58,15 @@ def translate_cat_val(text: str, model: str | None = None) -> str:
       una vegada (`AvisSenseModelLlengua`).
     - `"kenlm"`: el mateix, però si falta alguna cosa llança `FaltaKenLM`
       (s'ha demanat expressament: no torna al motor en silenci).
+    - `"kenlm-lemes"` (opció, 23/11/2026): el KenLM de lemes parcials en lloc
+      del de formes (`model_llengua.translate_cat_val_kenlm_lemes`); els
+      fitxers es baixen del mateix repositori de Hugging Face la primera
+      vegada (o d'`AVLIZADOR_KENLM_DIR`); si falta alguna cosa, `FaltaKenLM`.
 
     >>> translate_cat_val("Hola.", model="flor")
     Traceback (most recent call last):
     ...
-    ValueError: model desconegut: 'flor' (opcions: kenlm)
+    ValueError: model desconegut: 'flor' (opcions: kenlm, kenlm-lemes)
     """
     if model is not None and model not in MODELS:
         raise ValueError(f"model desconegut: {model!r} (opcions: {', '.join(MODELS)})")
@@ -72,6 +76,10 @@ def translate_cat_val(text: str, model: str | None = None) -> str:
         if not kenlm_disponible():
             _avisa_sense_model()
             return translate_cat_val_motor(text)
+    if model == "kenlm-lemes":
+        from .model_llengua import translate_cat_val_kenlm_lemes
+
+        return translate_cat_val_kenlm_lemes(text)
     from .model_llengua import translate_cat_val_kenlm
 
     return translate_cat_val_kenlm(text)

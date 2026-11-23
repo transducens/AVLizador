@@ -289,6 +289,9 @@ def puntua_punts(text: str, model, tipus=TIPUS_PER_DEFECTE,
     motor, punts = _motor()
     tokens = motor.tradueix_tokens(text)
     trobats = detecta(tokens, punts, tipus)
+    if trobats and hasattr(model, "fixa_referencia"):
+        # KenLM de lemes (23/11/2026): el context es lematitza una vegada, sobre la traducció del motor
+        model.fixa_referencia(detokenize(tokens))
     for punt in trobats:
         base = base_neutra(motor, text, [punt])
         if tipus_model is not None and punt.tipus not in tipus_model:
@@ -418,7 +421,10 @@ def tradueix_cat_val_ml(
 # 0,75 en les col·lisions, i el classificador de "cop" quan KenLM guanya per
 # menys de 2 punts. És el criteri de l'execució `compara_models_20261111_1430`
 # (191 encerts i 2 errors greus en les 257 decisions dels homògrafs).
-CRITERI_KENLM = Criteri(marge=3.0, per_defecte="catala", lam=1.5, lam_colisio=0.75, lam_irresoluble=1.25,
+# Versió 2.0.1 (23/11/2026, decisió de l'usuari): marge 3 -> 1, la resta
+# igual; amb la taula de freqüències nova, 196 encerts i 0 greus en les 237
+# decisions dels homògrafs corregits (marge 3: 186 / 0; document viu, 4.24).
+CRITERI_KENLM = Criteri(marge=1.0, per_defecte="catala", lam=1.5, lam_colisio=0.75, lam_irresoluble=1.25,
                         desempat=2.0)
 
 _SISTEMA_KENLM = None
@@ -454,5 +460,31 @@ def sistema_kenlm(directori=None):
     return _SISTEMA_KENLM
 
 
+_SISTEMA_KENLM_LEMES = None
+
+
+def translate_cat_val_kenlm_lemes(text: str, directori=None, criteri: Criteri = CRITERI_KENLM) -> str:
+    """Opció (23/11/2026, decisió de l'usuari; no és la per defecte): el
+    sistema KenLM amb el KenLM de LEMES parcials en lloc del de formes, el
+    mateix criteri i el mateix classificador (`kenlm.ModelKenLMLemes`). En
+    els homògrafs corregits del 23/11, 198 encerts i 1 error greu en 237
+    decisions (el sistema, 196 i 0), unes 200 vegades més lent en les frases
+    amb paraula ambigua. Els fitxers, del mateix repositori de Hugging Face
+    (`kenlm.FITXERS_HF_LEMES`) o d'`AVLIZADOR_KENLM_DIR`."""
+    model, sentit = sistema_kenlm_lemes(directori)
+    return tradueix_cat_val_ml(text, model, criteri, sentit=sentit)[0]
+
+
+def sistema_kenlm_lemes(directori=None):
+    """`(ModelKenLMLemes, classificador)`, carregats una sola vegada per procés."""
+    global _SISTEMA_KENLM_LEMES
+    if _SISTEMA_KENLM_LEMES is None:
+        from .kenlm import carrega_sistema_kenlm_lemes
+
+        _SISTEMA_KENLM_LEMES = carrega_sistema_kenlm_lemes(directori)
+    return _SISTEMA_KENLM_LEMES
+
+
 __all__ = ["Criteri", "CRITERI_KENLM", "tradueix_cat_val_ml", "translate_cat_val_kenlm",
+           "translate_cat_val_kenlm_lemes",
            "puntua_punts", "aplica_tries", "tria"]

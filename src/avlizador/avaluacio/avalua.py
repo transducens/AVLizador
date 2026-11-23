@@ -46,8 +46,8 @@ BENCHMARKS = {
     "manual_boe":   ("Manual BOE (246)", "manual/benchmark_manual_boe_cat_val.json"),
     "manual_avl":   ("Manual AVL (212)", "manual/benchmark_manual_avl_cat_val.json"),
     "151":          ("151 (banco curado)", "curat_151/benchmark_corpus.json"),
-    "homografs":    ("151 + homógrafos (253)", "homografs/benchmark_sistema_final_cat_val.json"),
-    "homografs_v2": ("Homógrafos v2, equilibrado por sentido (160)", "homografs/benchmark_homografs_v2_cat_val.json"),
+    "homografs":    ("151 + homógrafos (249)", "homografs/benchmark_sistema_final_cat_val.json"),
+    "homografs_v2": ("Homógrafos v2, equilibrado por sentido (144)", "homografs/benchmark_homografs_v2_cat_val.json"),
     "boe_estricte": ("BOE estricto, muestra (2.000)", "boe_dialectal/benchmark_boe_dialectal_estricte.json"),
     "boe_ampli":    ("BOE amplio, muestra (2.000)", "boe_dialectal/benchmark_boe_dialectal_ampli.json"),
     "gplsi":        ("gplsi (1.958)", "gplsi/benchmark_gplsi.json"),
@@ -81,6 +81,9 @@ def sistemes(amb_motor: bool, models: tuple[str, ...] = ("kenlm",)) -> list[tupl
     if "kenlm" in models:
         llista.append(("kenlm", "Motor + KenLM + sentit",
                        lambda text: translate_cat_val(text, model="kenlm")))
+    if "kenlm-lemes" in models:  # opció (23/11/2026): el KenLM de lemes parcials
+        llista.append(("kenlm_lemes", "Motor + KenLM de lemes + sentit",
+                       lambda text: translate_cat_val(text, model="kenlm-lemes")))
     if amb_motor:
         llista.append(("motor", "Motor solo", translate_cat_val_motor))
     return llista
@@ -166,8 +169,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--fitxer", type=Path, action="append", default=[],
                         help="Un benchmark JSON qualsevol (es pot repetir).")
     parser.add_argument("--motor", action="store_true", help="Avalua també el motor sol.")
-    parser.add_argument("--model", nargs="+", choices=["kenlm"], default=["kenlm"],
-                        help="Model de llengua del sistema: kenlm (l'únic).")
+    parser.add_argument("--model", nargs="+", choices=["kenlm", "kenlm-lemes"], default=["kenlm"],
+                        help="Model de llengua del sistema: kenlm (el per defecte) i/o kenlm-lemes "
+                             "(opció: KenLM de lemes parcials; es baixa com el per defecte).")
     parser.add_argument("--limit", type=int, help="Només les N primeres frases de cada benchmark.")
     parser.add_argument("--eixida", type=Path, default=Path("resultats_avaluacio"),
                         help="Carpeta dels resultats (per defecte, resultats_avaluacio/).")
@@ -199,12 +203,15 @@ def main(argv: list[str] | None = None) -> int:
         print("ERROR: no es troben: " + ", ".join(falten), file=sys.stderr)
         return 1
 
-    if "kenlm" in args.model:
-        from ..traductor_cat_val.model_llengua import sistema_kenlm
+    if args.model:
+        from ..traductor_cat_val.model_llengua import sistema_kenlm, sistema_kenlm_lemes
         from ..traductor_cat_val.model_llengua.kenlm import FaltaKenLM
 
         try:
-            sistema_kenlm()
+            if "kenlm" in args.model:
+                sistema_kenlm()
+            if "kenlm-lemes" in args.model:
+                sistema_kenlm_lemes()
         except FaltaKenLM as e:
             print(f"ERROR: {e}", file=sys.stderr)
             return 1
