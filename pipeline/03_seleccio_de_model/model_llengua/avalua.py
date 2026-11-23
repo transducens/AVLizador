@@ -38,7 +38,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from avlizador.traductor_cat_val.model_llengua import CONCORDANCA_PER_DEFECTE, Criteri, aplica_tries, puntua_punts
 from genera_benchmark import BENCHMARK  # noqa: E402
 from avlizador.traductor_cat_val.model_llengua.punts import TIPUS  # noqa: E402
-from avlizador.traductor_cat_val.model_llengua.puntuador import MODEL_PER_DEFECTE, ModelLlengua
+from flor import MODEL_PER_DEFECTE, ModelLlengua  # noqa: E402  (fora del paquet des de la 2.0.0)
 
 RESULTATS = Path(__file__).resolve().parents[1] / "resultats"
 TIPUS_SISTEMA = ("colisio", "irresoluble")

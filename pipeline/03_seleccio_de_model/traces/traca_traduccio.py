@@ -89,7 +89,8 @@ class Recursos:
         if amb_model:
             from avlizador.traductor_cat_val.model_llengua import Criteri
             from avlizador.traductor_cat_val.model_llengua.punts import carrega_punts
-            from avlizador.traductor_cat_val.model_llengua.puntuador import MODEL_PER_DEFECTE, ModelLlengua
+            sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "model_llengua"))
+            from flor import MODEL_PER_DEFECTE, ModelLlengua  # fora del paquet des de la 2.0.0
 
             self.model = ModelLlengua(MODEL_PER_DEFECTE)
             self.criteri = Criteri()

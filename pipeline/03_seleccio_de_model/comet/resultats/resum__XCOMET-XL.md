@@ -1,7 +1,8 @@
-## 03/11/2026 17:09 — Unbabel/XCOMET-XL (fp16)
+## 17/11/2026 10:21 — Unbabel/XCOMET-XL (fp16, mode complet)
 
 | Sistema | Mescla | BOE | AVL | Frases amb error |
 |---|---|---|---|---|
+| Motor + KenLM + sentit | 97.44 | 98.06 | 96.73 | 168/458 |
 | Sin traducir (catalán tal cual) | 97.41 | 98.22 | 96.47 | 147/458 |
 | AVLizador: motor + FLOR-760M | 97.4 | 98.0 | 96.7 | 175/458 |
 | AVLizador 1.1.0: motor + FLOR-760M (P1) | 97.4 | 98.01 | 96.7 | 174/458 |

@@ -33,8 +33,8 @@ LLICENCIA = "cc0-1.0"  # criteri del grup, 17/11/2026 (vore comu.LLICENCIES)
 
 CORPUS = ARREL / "dades" / "boe" / "corpus_entrenamiento.jsonl"
 
-# Resultats (06/11/2026, AVLizador 1.2.0; sense traduir, 09/11/2026; mateixes
-# mètriques de `avlizador avalua`) sobre el split `test`.
+# Resultats (17/11/2026, AVLizador 2.0.0, `avlizador avalua`, resultats_hf_2.0.0;
+# sense traduir, 09/11/2026; mateixes mètriques) sobre el split `test`.
 DADES = {
     "estricte": {
         "titol": "AVLizador BOE strict benchmark",
@@ -55,7 +55,8 @@ DADES = {
   Result: 7,906 pairs explained by the dictionaries and 1,547 by (b)-(e).""",
         "resultats": """| System | Exact match | BLEU | chrF | TER ↓ | WER ↓ |
 |---|---|---|---|---|---|
-| **AVLizador 1.2.0** | **1,887 / 2,000 (94.3 %)** | **99.03** | **99.65** | **0.30** | **0.57** |
+| **AVLizador 2.0.0** | **1,894 / 2,000 (94.7 %)** | **99.08** | **99.66** | **0.29** | **0.56** |
+| AVLizador, rule engine only | 1,800 / 2,000 (90.0 %) | 98.04 | 99.42 | 0.76 | 1.02 |
 | Untranslated (Catalan as is) | 0 / 2,000 | 79.37 | 92.98 | 7.34 | 7.60 |""",
         "limit": ("The selection uses AVLizador's own dictionaries (criterion a), so this set is good to "
                   "detect regressions, **not** to compare AVLizador with other systems on equal terms."),
@@ -73,7 +74,8 @@ DADES = {
   official translation (*és → serà*, synonyms).""",
         "resultats": """| System | Exact match | BLEU | chrF | TER ↓ | WER ↓ |
 |---|---|---|---|---|---|
-| **AVLizador 1.2.0** | **1,212 / 2,000 (60.6 %)** | **88.35** | **95.57** | **3.66** | **5.92** |
+| **AVLizador 2.0.0** | **1,216 / 2,000 (60.8 %)** | **88.40** | **95.60** | **3.64** | **5.91** |
+| AVLizador, rule engine only | 1,200 / 2,000 (60.0 %) | 88.11 | 95.53 | 3.82 | 6.08 |
 | Untranslated (Catalan as is) | 872 / 2,000 (43.6 %) | 82.96 | 93.68 | 6.82 | 9.06 |
 
 About 44 % of the pairs are identical in both versions, so leaving the

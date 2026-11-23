@@ -665,19 +665,42 @@ def corregeix_determinant_abans(tokens: list[Token], index: int, genere_nou: str
         return
     anterior.translated = preserva_majuscula(anterior.translated, nova_forma)
     anterior.is_translated = True
-    if genere_nou != "m" or _COMENCA_EN_VOCAL_O_H_MUDA_RE.match(tokens[index].translated):
+    if genere_nou == "m":
+        contrau_article(tokens, i_anterior, index)
+
+
+def contrau_article(tokens: list[Token], i_article: int, i_seguent: int) -> None:
+    """Contrau l'article masculí `tokens[i_article]` ("el", "els") amb la
+    preposició d'abans ("a el" -> "al", "de els" -> "dels", "per el" ->
+    "pel") si la paraula següent (`tokens[i_seguent]`) no comença per
+    vocal. Si no hi ha preposició, no fa res. També la crida la
+    concordança quan l'article no va just davant del nom ("a la seva
+    despesa" -> "al seu gasto", 19/11/2026).
+
+    >>> toks = tokenize("a la seva despesa")
+    >>> toks[2].translated, toks[4].translated, toks[6].translated = "el", "seu", "gasto"
+    >>> contrau_article(toks, 2, 4); detokenize(toks)
+    'al seu gasto'
+    >>> toks = tokenize("a la altra")
+    >>> toks[2].translated, toks[4].translated = "el", "altre"
+    >>> contrau_article(toks, 2, 4); detokenize(toks)
+    'a el altre'
+    """
+    article = tokens[i_article]
+    if _COMENCA_EN_VOCAL_O_H_MUDA_RE.match(tokens[i_seguent].translated):
         return
-    i_prep = _index_anterior_real(tokens, i_anterior)
+    i_prep = _index_anterior_real(tokens, i_article)
     if i_prep is None:
         return
     prep = tokens[i_prep]
-    contraccio = _PREPOSICIO_ARTICLE_A_CONTRACCIO.get((prep.translated.lower(), nova_forma))
+    contraccio = _PREPOSICIO_ARTICLE_A_CONTRACCIO.get((prep.translated.lower(), article.translated.lower()))
     if contraccio is None:
         return
     prep.translated = preserva_majuscula(prep.translated, contraccio)
     prep.is_translated = True
-    anterior.translated = ""
-    for espai in tokens[i_prep + 1 : index]:
+    article.translated = ""
+    article.is_translated = True
+    for espai in tokens[i_prep + 1 : i_seguent]:
         if espai.surface.isspace():
             espai.translated = ""
             espai.is_translated = True

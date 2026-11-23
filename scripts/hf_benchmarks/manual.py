@@ -270,22 +270,23 @@ avlizador avalua --fitxer test.jsonl
 
 ## Results (BOE sentences)
 
-Same run for all systems. AVLizador against leaving the text untranslated
-and against the best of 9 general LLMs asked to adapt the text. TER and
-WER: lower is better. GD (*Grau Dialectal*, 0 = Catalan, 1 = Valencian)
-measures how Valencian the output is; the references score 0.995.
+AVLizador 2.0.0 (rules + KenLM + sense classifier, 2026-11-17) against
+leaving the text untranslated and against the best of 9 general LLMs asked
+to adapt the text (2026-11-02). TER and WER: lower is better. GD (*Grau
+Dialectal*, 0 = Catalan, 1 = Valencian, measured with AVLizador 2.0.0 for
+all rows) measures how Valencian the output is; the references score 0.995.
 
 | System | Exact match | BLEU | chrF | TER ↓ | WER ↓ | GD |
 |---|---|---|---|---|---|---|
-| **AVLizador** (rules + FLOR-760M) | **32 / 246 (13.0 %)** | **83.82** | **93.59** | **9.26** | **9.94** | **0.989** |
-| Best LLM (gemma3:12b) | 0 / 246 | 66.57 | 86.46 | 18.83 | 19.73 | 0.354 |
-| Untranslated (Catalan as is) | 0 / 246 | 61.79 | 85.71 | 20.16 | 20.70 | 0.000 |
+| **AVLizador 2.0.0** | **35 / 246 (14.2 %)** | **84.01** | **93.57** | **9.21** | **9.87** | **1.000** |
+| Best LLM (gemma3:12b) | 0 / 246 | 66.57 | 86.46 | 18.83 | 19.73 | 0.337 |
+| Untranslated (Catalan as is) | 0 / 246 | 61.79 | 85.71 | 20.16 | 20.70 | 0.003 |
 
 On the full benchmark used in AVLizador (BOE + AVL, 458 sentences),
-AVLizador 1.2.0 reaches 228/458 exact matches (BLEU 90.93, TER 5.59). Few
-BOE sentences match exactly because the official Valencian version often
-rewords the text (future tense, synonyms, articles), not because of the
-dialectal features.
+AVLizador 2.0.0 reaches 232/458 exact matches (BLEU 91.00, TER 5.58; the
+212 AVL sentences: 197). Few BOE sentences match exactly because the
+official Valencian version often rewords the text (future tense, synonyms,
+articles), not because of the dialectal features.
 
 {METRIQUES_NOTA}
 

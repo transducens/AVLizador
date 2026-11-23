@@ -54,12 +54,35 @@ def test_kenlm_tria_la_frase_mes_probable(sistema):
 
 
 def test_kenlm_es_el_model_per_defecte(sistema, monkeypatch):
-    """Sense `model` (13/11/2026): KenLM si hi és, no FLOR."""
+    """Sense `model` (13/11/2026): KenLM si hi és."""
     from avlizador.traductor_cat_val.model_llengua import kenlm
 
     sistema(bones=("una vegada",))
     monkeypatch.setattr(kenlm, "kenlm_disponible", lambda directori=None: True)
     assert translate_cat_val("Un cop acabada la reunió, marxem.") == "Una vegada acabada la reunió, marxem."
+
+
+class PrefereixAbsoluta(KenLMFals):
+    def score(self, frase, bos=True, eos=True):
+        return super().score(frase) + (3.0 if "absoluta" in frase else 0.0)
+
+
+def test_el_model_no_tria_el_genere_de_paraules_que_no_depenen_del_nom(monkeypatch):
+    """FLORES+ devtest 461 (19/11/2026): amb `concordanca="variants"` el model
+    triava "absoluta una vegada". Ara la concordança la fa la regla i eixa
+    frase ni es proposa, encara que el model la preferira."""
+    monkeypatch.setattr(ml, "_SISTEMA_KENLM", (ModelKenLM(PrefereixAbsoluta(("una vegada",)), FREQ),
+                                               ClassificadorCop(nb_cop())))
+    text = "L'aïllament és absolut un cop arribes dins de la cova."
+    assert translate_cat_val(text, model="kenlm") == \
+        "L'aïllament és absolut una vegada arribes dins de la cova."
+
+
+def test_participi_enganxat_al_nom_concorda():
+    """FLORES+ devtest 782 (19/11/2026): spaCy fa "xocolata" `amod` de
+    "desfeta", i els participis no es tocaven."""
+    assert translate_cat_val_motor("La xocolata desfeta arriba als estàndards belgues.") == \
+        "El xocolate desfet arriba als estàndards belgues."
 
 
 def test_kenlm_sense_punts_es_el_motor(sistema):

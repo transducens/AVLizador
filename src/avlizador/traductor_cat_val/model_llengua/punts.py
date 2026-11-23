@@ -20,11 +20,13 @@ paraula escrita ací), sempre amb la forma ambigua al costat CATALÀ:
 
 Cada candidat es construïx sobre una "base neutra" (la frase traduïda pel
 motor amb la paraula ambigua sense tocar): es posa el candidat i es fa
-concordar el determinant d'abans ("un cop" -> "una vegada"). Límit: el
-motor no concorda els altres determinants ni adjectius ("molts cops" ->
-"molts vegades", "un altre cop" -> "un altre vegada"); l'opció
-experimental `concordanca="variants"` proposa les formes de l'altre
-gènere i deixa triar al model de llengua.
+concordar el determinant d'abans ("un cop" -> "una vegada") i, des del
+11/11/2026, la resta de paraules que concorden amb el nom segons spaCy
+("molts cops" -> "moltes vegades", "un altre cop" -> "una altra vegada").
+L'opció `concordanca="variants"` (la de per defecte fins al 19/11/2026)
+proposa a més les formes de l'altre gènere de les dos paraules d'abans i
+deixa triar al model, però sense mirar si depenen del nom: "és absolut un
+cop" -> "és absoluta una vegada".
 """
 
 from __future__ import annotations
@@ -91,7 +93,14 @@ def carrega_punts(path: Path = LEXIC_GENERAL_PATH) -> dict[str, dict]:
                         for lema in e.get("lemas") or [] for m in [_CATEGORIES_LEMA_RE.search(lema)] if m]
             punts[forma] = {"tipus": tipus, "candidats": [valencia, forma], "categoria": e.get("categoria"),
                             "lectures": lectures}
-    return {f: p for f, p in punts.items() if len(p["candidats"]) > 1}
+    punts = {f: p for f, p in punts.items() if len(p["candidats"]) > 1}
+    # Gèneres de les lectures de nom de la forma catalana (fitxer
+    # morfològic; 19/11/2026): "nou" només és nom en femení (el fruit).
+    from ..rules.cat_val.concordanca_genere_sn import generes_de_nom
+
+    for forma, generes in generes_de_nom(punts).items():
+        punts[forma]["generes_nom"] = frozenset(generes)
+    return punts
 
 
 @dataclass
@@ -114,6 +123,9 @@ class Punt:
     sentit: str | None = None  # candidat que tria un classificador de sentit (col·lisions; 11/11/2026)
     pronom_abans: bool = False  # la paraula d'abans és un pronom personal (13/11/2026)
     det_indefinit_fem_sg: bool = False  # just abans, "una" (DET indefinit, femení, singular; 13/11/2026)
+    det_fem_sg: bool = False  # just abans, qualsevol DET femení singular ("la", "una"; 19/11/2026)
+    verb_form: str = ""    # VerbForm d'spaCy ("Part": el participi fa d'adjectiu; 19/11/2026)
+    generes_nom: frozenset = frozenset()  # gèneres de les lectures de nom de la forma catalana (19/11/2026)
 
 
 _CATEGORIA_PER_POS = {pos: cat for cat, poss in _POS_PER_CATEGORIA.items() for pos in poss}
@@ -187,17 +199,59 @@ def decisio_spacy(punt: Punt) -> str | None:
     True
     >>> n.det_indefinit_fem_sg = False; decisio_spacy(n)
     'nou'
+
+    Gènere del nom (19/11/2026, errors d'AINA): si el determinant d'abans
+    té un gènere que no té cap lectura de nom de la forma catalana (fitxer
+    morfològic: "nou" només és nom en femení), la lectura de nom és
+    impossible, diga el que diga spaCy: "el nou de Bowie", "arriba el nou"
+    (spaCy: NOUN) es queden "nou". Només amb el determinant: el gènere que
+    spaCy dona a la paraula mateixa falla massa ("panotxes torrades",
+    masculí). "deu" és nom en els dos gèneres: no s'aplica.
+
+    >>> n = Punt(0, "nou", "", "irresoluble", ["anou", "nou"], "anou", pos="NOUN", categoria="n",
+    ...          genere_det="Masc", generes_nom=frozenset({"f"}))
+    >>> decisio_spacy(n)
+    'nou'
+    >>> n.genere_det = "Fem"; decisio_spacy(n) is None
+    True
+    >>> n.genere_det, n.genere = "", "Masc"; decisio_spacy(n) is None
+    True
+
+    Els resolubles ("deu", "reeixida") també passen per ací des del
+    19/11/2026 (abans el model podia canviar "per deu estats" ->
+    "per brollador estats" encara que spaCy diguera NUM). Dos matisos, per
+    a no perdre frases bones dels benchmarks: un numeral darrere de
+    QUALSEVOL determinant femení singular passa al model ("la deu del
+    bosc", que spaCy dona NUM), i un participi compta com a adjectiu ("van
+    ser reeixides"):
+
+    >>> d = Punt(0, "deu", "", "resoluble", ["brollador", "deu"], "deu", pos="NUM", categoria="n")
+    >>> decisio_spacy(d)
+    'deu'
+    >>> d.det_fem_sg = True; decisio_spacy(d) is None
+    True
+    >>> r = Punt(0, "reeixides", "", "resoluble", ["exitoses", "reeixides"], "reeixides",
+    ...          pos="VERB", verb_form="Part", categoria="adj")
+    >>> decisio_spacy(r) is None
+    True
     """
+    catala = next(c for c in punt.candidats if c.lower() == punt.paraula.lower())
     if punt.pronom_abans and punt.categoria == "n":
-        return next(c for c in punt.candidats if c.lower() == punt.paraula.lower())
+        return catala
+    genere_det = _GENERE_CURT.get(punt.genere_det)
+    if (punt.categoria == "n" and genere_det and punt.generes_nom and "mf" not in punt.generes_nom
+            and genere_det not in punt.generes_nom):
+        return catala  # "el nou": la forma catalana no és nom masculí
     cat = _CATEGORIA_PER_POS.get(punt.pos)
+    if punt.pos == "VERB" and punt.verb_form == "Part":
+        cat = "adj"
     if not cat or cat == punt.categoria:
         return None
     if punt.pos == "ADJ" and punt.genere and punt.genere_det and punt.genere != punt.genere_det:
         return None
-    if punt.pos == "NUM" and punt.det_indefinit_fem_sg:
-        return None  # "una nou": no pot ser el numeral (vore més amunt)
-    return next(c for c in punt.candidats if c.lower() == punt.paraula.lower())
+    if punt.pos == "NUM" and (punt.det_indefinit_fem_sg or (punt.tipus == "resoluble" and punt.det_fem_sg)):
+        return None  # "una nou", "la deu": no pot ser el numeral (vore més amunt)
+    return catala
 
 
 def detecta(tokens: list[Token], punts: dict[str, dict], tipus=TIPUS_PER_DEFECTE) -> list[Punt]:
@@ -235,12 +289,14 @@ def detecta(tokens: list[Token], punts: dict[str, dict], tipus=TIPUS_PER_DEFECTE
         abans = tokens[j_abans] if j_abans is not None else None
         genere_det = abans.gender if abans is not None and abans.pos == "DET" else ""
         pronom_abans = j_abans is not None and es_pronom_personal(tokens, j_abans)
-        det_una = (abans is not None and abans.pos == "DET" and abans.pron_type == "Ind"
-                   and abans.gender == "Fem" and abans.number == "Sing")
+        det_fem_sg = (abans is not None and abans.pos == "DET" and abans.gender == "Fem"
+                      and abans.number == "Sing")
+        det_una = det_fem_sg and abans.pron_type == "Ind"
         trobats.append(Punt(i, paraula, prefix, info["tipus"], list(info["candidats"]), motor,
                             pos=tok.pos, categoria=info["categoria"], lectures=info["lectures"],
                             genere=tok.gender, genere_det=genere_det, pronom_abans=pronom_abans,
-                            det_indefinit_fem_sg=det_una))
+                            det_indefinit_fem_sg=det_una, det_fem_sg=det_fem_sg, verb_form=tok.verb_form,
+                            generes_nom=info.get("generes_nom", frozenset())))
     return trobats
 
 

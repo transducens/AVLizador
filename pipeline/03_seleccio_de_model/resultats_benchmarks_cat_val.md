@@ -57,6 +57,25 @@ mayúsculas, la puntuación va pegada a la palabra. Cada frase del JSON
 guarda `ter`, `wer`, `ter_edicions`, `wer_edicions` y `ref_paraules`; el
 resumen, `ter_corpus` y `wer_corpus`.
 
+## 17/11/2026 10:09 — Release 2.0.0 (KenLM `valencia_net_dogv2` + clasificador `sentit_dogv2_avl`)
+
+Modelo elegido en la 4.19 de `documentacio/resultats_model_llengua_kenlm.md`
+(KenLM con el DOGV entero; clasificador con el DOGV entero y la AVL),
+publicado en Hugging Face (`transducens/avlizador-kenlm-va`). Evaluación de
+release en Abaco, rama `version-2.0.0` (`resultats_release_2.0.0`):
+
+| Benchmark | Sistema | Exactas | BLEU | chrF | chrF++ | TER ↓ | WER ↓ | Errors |
+|---|---|---|---|---|---|---|---|---|
+| Manual BOE (246) | Motor + KenLM + sentit | 35/246 (14,2 %) | 84,01 | 93,57 | 92,82 | 9,21 | 9,87 | 0 |
+| Manual AVL (212) | Motor + KenLM + sentit | 197/212 (92,9 %) | 99,10 | 99,55 | 99,53 | 0,41 | 0,41 | 0 |
+| Manual mezcla BOE + AVL (458) | Motor + KenLM + sentit | 232/458 (50,7 %) | 91,00 | 96,34 | 95,93 | 5,58 | 5,96 | 0 |
+
+Frente a la 1.2.0 (FLOR, 06/11): BOE 33 → 35, AVL 195 → 197, mezcla 228 →
+232 (BLEU 90,93 → 91,00, TER 5,59 → 5,58, WER 5,98 → 5,96). Con el mismo
+paquete y estos ficheros (`avlizador avalua`, 17/11): homógrafos v1 227/253,
+v2 112/160, 151 144/154, igual que el comparador; 194 aciertos y 1 error
+grave en las 257 decisiones de los homógrafos.
+
 ## 16/11/2026 — KenLM de orden 6, 7 y 8 (experimento, descartado)
 
 El KenLM del sistema (orden 5) frente al mismo texto, poda y tabla de
