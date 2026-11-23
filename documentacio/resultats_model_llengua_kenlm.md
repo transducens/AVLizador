@@ -1889,6 +1889,16 @@ Cambios (rama `version-2.0.1`):
   `ea87f3f`). Es la `REVISIO_HF` de la 2.0.1. La ficha (`README.md`) de HF
   sigue siendo la anterior: falta subir la nueva (no cambia nada del
   paquete).
+- Comprobado en Abaco con la caché de HF vacía y sin `AVLIZADOR_KENLM_DIR`: la
+  opción por defecto baja solo sus tres ficheros y `kenlm-lemes` añade los
+  suyos; los cinco, idénticos a los evaluados.
+- Docker: la primera imagen 2.0.1 del usuario se construyó con
+  `KENLM_LEMES: ""` y `kenlm-lemes` daba `FaltaKenLM`. Desde ahora
+  `docker-compose.yml` trae `KENLM_LEMES: "1"` (la imagen lleva las dos
+  opciones: 733 MB frente a 650) y el error dice cómo conseguir los ficheros.
+  Reconstruida y probada: las dos opciones traducen y la web responde.
+- Dataset de homógrafos en HF actualizado por el usuario (commit `7cec10f`,
+  idéntico a `dades/hf_benchmarks/homografs/`).
 
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
