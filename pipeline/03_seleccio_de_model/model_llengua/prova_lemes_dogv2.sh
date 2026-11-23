@@ -21,6 +21,9 @@
 #   BENCH="homografs homografs_v2 manual 151 boe_estricte gplsi" bash .../prova_lemes_dogv2.sh
 #   TOT=1 bash .../prova_lemes_dogv2.sh   # (20/11/2026) TOT a lema, també les candidates i les
 #       que concorden: valencia_net_dogv2_lemes_tot, claus kenlm_*_tot_dogv2*
+#   REF=1 bash .../prova_lemes_dogv2.sh   # (23/11/2026) només compara (els dos KenLM de lemes ja entrenats): el
+#       context lematitzat una vegada sobre la frase del motor (claus kenlm_*_ref_dogv2*), amb la
+#       graella completa (desempat 2 i 4: la mescla suma dos models i dobla les diferències)
 #   CPUS_LEM=8 MEM_LEM=16G ...            # CPU i memòria de la lematització (per defecte, les de lematitza_text.sh)
 # Mirar com van: squeue -u $USER; els .out queden en la carpeta de cada script.
 
@@ -33,7 +36,11 @@ DIR_LM="dades/macocu/kenlm"
 MODEL_LL="pipeline/03_seleccio_de_model/model_llengua"
 DIR_KENLM="pipeline/08_traduccio_corpus/macocu/kenlm"
 BASE="valencia_net_dogv2"
-if [[ -n "${TOT:-}" ]]; then
+if [[ -n "${REF:-}" ]]; then
+    NOMES_COMPARA=1; NOM="${BASE}_lemes_tot"; ETIQ="lemes_ref_dogv2"
+    MODELS="kenlm_dogv2_c1 kenlm_lemes_ref_dogv2 kenlm_lemes_ref_dogv2_c1 kenlm_mescla_ref_dogv2_c1 kenlm_lemes_tot_ref_dogv2 kenlm_lemes_tot_ref_dogv2_c1 kenlm_mescla_tot_ref_dogv2_c1"
+    [[ -s "$DIR_LM/${BASE}_lemes_o5.binary" ]] || { echo "Falta $DIR_LM/${BASE}_lemes_o5.binary" >&2; exit 1; }
+elif [[ -n "${TOT:-}" ]]; then
     NOM="${BASE}_lemes_tot"; ETIQ="lemes_tot_dogv2"
     MODELS="kenlm_dogv2_c1 kenlm_lemes_tot_dogv2 kenlm_lemes_tot_dogv2_c1 kenlm_mescla_tot_dogv2_c1"
 else
@@ -74,7 +81,7 @@ fi
 # --- 3. Comparació ------------------------------------------------------------
 J3=$(cd "$MODEL_LL" && \
      MODELS="$MODELS" \
-     EXTRA="--benchmarks $BENCH --model-sentit $SENTIT --etiqueta $ETIQ --marges 1 2 3 5 --per-defecte catala --lams 0.5 1 1.5 2 --lams-colisio 0.5 0.75 1 --desempats 2 --detall" \
+     EXTRA="--benchmarks $BENCH --model-sentit $SENTIT --etiqueta $ETIQ --marges 1 2 3 5 --per-defecte catala --lams 0.5 1 1.5 2 --lams-colisio 0.5 0.75 1 --desempats 2 --detall${REF:+ --lams-irresoluble 1 1.25 1.5 --desempats 2 4 --graella-completa}" \
      sbatch --parsable --time=08:00:00 --job-name="compara-$ETIQ" ${DEP[@]+"${DEP[@]}"} compara_models.sh)
 echo "3. compara els models:         job $J3${DEP:+ (després de ${J2:-})}"
 echo
