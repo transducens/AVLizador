@@ -2623,46 +2623,6 @@
   "revisat": true
  },
  {
-  "id": "HG089",
-  "oriental": "Per postres hi havia recuita amb mel.",
-  "occidental": "Per postres hi havia brulla amb mel.",
-  "categoria": "homografs_resoluble",
-  "paraula": "recuita",
-  "esperat": "brulla",
-  "font": "a_ma",
-  "revisat": true
- },
- {
-  "id": "HG090",
-  "oriental": "La recuita es fa amb llet d'ovella.",
-  "occidental": "La brulla es fa amb llet d'ovella.",
-  "categoria": "homografs_resoluble",
-  "paraula": "recuita",
-  "esperat": "brulla",
-  "font": "a_ma",
-  "revisat": true
- },
- {
-  "id": "HG091",
-  "oriental": "La carn recuita no té bon gust.",
-  "occidental": "La carn recuita no té bon gust.",
-  "categoria": "homografs_resoluble",
-  "paraula": "recuita",
-  "esperat": "recuita",
-  "font": "a_ma",
-  "revisat": true
- },
- {
-  "id": "HG092",
-  "oriental": "Aquesta salsa està recuita.",
-  "occidental": "Esta salsa està recuita.",
-  "categoria": "homografs_resoluble",
-  "paraula": "recuita",
-  "esperat": "recuita",
-  "font": "a_ma",
-  "revisat": true
- },
- {
   "id": "HG093",
   "oriental": "Ens vam fer una fartanera de marisc.",
   "occidental": "Ens vam fer una fartada de marisc.",
