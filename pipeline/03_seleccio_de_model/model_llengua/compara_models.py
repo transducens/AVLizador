@@ -110,8 +110,8 @@ from avlizador.traductor_cat_val.model_llengua.punts import TIPUS  # noqa: E402
 RESULTATS = ARREL / "pipeline" / "03_seleccio_de_model" / "resultats"
 DIR_MODELS = ARREL / "dades" / "macocu"
 BENCHMARKS = {
-    "homografs": ("Homògrafs v1 + 151 (253)", "homografs/benchmark_sistema_final_cat_val.json"),
-    "homografs_v2": ("Homògrafs v2 (160)", "homografs/benchmark_homografs_v2_cat_val.json"),
+    "homografs": ("Homògrafs v1 + 151 (249)", "homografs/benchmark_sistema_final_cat_val.json"),
+    "homografs_v2": ("Homògrafs v2 (144)", "homografs/benchmark_homografs_v2_cat_val.json"),
     "manual": ("Manual BOE + AVL (458)", "manual/benchmark_manual_cat_val.json"),
     # 11/11/2026, per a les regressions (no per defecte; el 151 ja va dins de `homografs`):
     "151": ("Benchmark de 151 (154)", "curat_151/benchmark_corpus.json"),

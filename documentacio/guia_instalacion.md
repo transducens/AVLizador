@@ -160,7 +160,7 @@ pytest                                    # pruebas: tienen que pasar todas
 ```
 
 Si todo está bien instalado, `avalua --benchmarks manual` da **232/458,
-TER 5,58** (versión 2.0.0, 17/11/2026, en las máquinas del proyecto).
+TER 5,58** (versión 2.0.1, 23/11/2026, en las máquinas del proyecto).
 Los resultados se guardan en
 `resultats_avaluacio/`.
 

@@ -38,31 +38,30 @@ TIPUS = {
     "resoluble": "different grammatical categories: the part-of-speech tag decides",
 }
 
-# Resultats (17/11/2026, AVLizador 2.0.0 i el motor sol, `avlizador avalua`,
-# resultats_hf_2.0.0; sense traduir: 09/11/2026, mateixes mètriques).
+# Resultats (23/11/2026, AVLizador 2.0.1 i el motor sol, `avlizador avalua`,
+# resultats_release_2.0.1 i resultats_hf_2.0.1; sense traduir, les mateixes mètriques
+# calculades sobre la catalana). Homògrafs corregits per l'usuari el 23/11 (fora
+# «recuita»; HG2-028 espera «falta»): v1 94 frases, v2 144. FLOR no s'hi ha mesurat.
 RESULTATS = {
     2: """| System | Exact match | BLEU | chrF | TER ↓ |
 |---|---|---|---|---|
-| **AVLizador 2.0.0** (rules + KenLM + sense classifier) | **112 / 160 (70.0 %)** | **88.36** | **93.81** | **4.24** |
-| AVLizador, rule engine only | 82 / 160 (51.2 %) | 81.48 | 90.98 | 6.73 |
-| Untranslated (Catalan as is) | 59 / 160 (36.9 %) | 74.84 | 87.30 | 10.81 |
+| **AVLizador 2.0.1** (rules + KenLM + sense classifier) | **113 / 144 (78.5 %)** | **91.61** | **95.75** | **3.10** |
+| AVLizador, rule engine only | 75 / 144 (52.1 %) | 82.34 | 91.74 | 6.56 |
+| Untranslated (Catalan as is) | 54 / 144 (37.5 %) | 74.89 | 87.92 | 10.76 |
 
 The rule engine alone almost always picks the dialectal reading. AVLizador
-2.0.0 decides each ambiguous word with a Valencian 5-gram KenLM model and a
+2.0.1 decides each ambiguous word with a Valencian 5-gram KenLM model and a
 sense classifier ([`transducens/avlizador-kenlm-va`](https://huggingface.co/transducens/avlizador-kenlm-va)),
-and it is deliberately conservative: when the model is not clearly sure
-(margin 3), it keeps the Catalan word, because a wrong replacement changes
-the meaning while an untranslated word only leaves a Catalan form. On the
-257 ambiguous-word decisions of v1 and v2 (with AVLizador's 151 curated
-sentences) it makes 194 right choices and 1 serious error. AVLizador 1.2.0
-(FLOR-760M) reached 95 / 160.""",
+and it is conservative: when the model is not sure (margin 1), it keeps the
+Catalan word, because a wrong replacement changes the meaning while an
+untranslated word only leaves a Catalan form. On the 237 ambiguous-word
+decisions of v1 and v2 (with AVLizador's 151 curated sentences) it makes 196
+right choices and no serious error (2.0.0, with margin 3: 186).""",
     1: """| System | Exact match | BLEU | chrF | TER ↓ |
 |---|---|---|---|---|
-| **AVLizador 2.0.0** (rules + KenLM + sense classifier) | **82 / 98 (83.7 %)** | **93.52** | **96.59** | **2.28** |
-| AVLizador, rule engine only | 39 / 98 (39.8 %) | 77.65 | 87.59 | 9.68 |
-| Untranslated (Catalan as is) | 23 / 98 (23.5 %) | 68.16 | 82.42 | 15.59 |
-
-AVLizador 1.2.0 (FLOR-760M) reached 71 / 98.""",
+| **AVLizador 2.0.1** (rules + KenLM + sense classifier) | **83 / 94 (88.3 %)** | **95.08** | **97.60** | **1.67** |
+| AVLizador, rule engine only | 37 / 94 (39.4 %) | 77.74 | 87.87 | 9.74 |
+| Untranslated (Catalan as is) | 22 / 94 (23.4 %) | 68.00 | 82.52 | 15.72 |""",
 }
 
 
@@ -133,7 +132,7 @@ A good adapter has to replace the word only in the right sense.
 
 | Config | Sentences | What it is |
 |---|---|---|
-| **`v2`** (default) | {len(v2)} | **18 ambiguous forms, 4 sentences for each of their senses.** The same number of sentences per sense, so a system that always picks one reading cannot score well. Use this one to evaluate. |
+| **`v2`** (default) | {len(v2)} | **{len({x["word"] for x in v2})} ambiguous forms, 4 sentences for each of their senses.** The same number of sentences per sense, so a system that always picks one reading cannot score well. Use this one to evaluate. |
 | `v1` | {len(v1)} | The first set, **not balanced by sense**. It is the only one with the **collisions** {", ".join(f"*{w}*" for w in nomes_v1)} (the Catalan word is never kept: *colp* or *vegada*), plus {sum(1 for f in v1 if not f["word"])} control sentences without any ambiguous word. |
 
 The two configurations are separate test sets: report their results

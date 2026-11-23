@@ -65,15 +65,19 @@ FONTS = {
 # Xifres del sistema amb este model (vore documentacio/resultats_model_llengua_kenlm.md, 4.19).
 # 17/11/2026: KenLM valencia_net_dogv2 + sentit_dogv2_avl (comparador del 16/11); FLOR i
 # el motor sol, de l'avaluació del 13/11. S'actualitzen amb l'avaluació de la versió 2.0.0.
+# 23/11/2026, versió 2.0.1 (marge 1, taula de freqüències nova; homògrafs corregits per
+# l'usuari, sense «recuita»): KenLM i motor sol, `avlizador avalua` (resultats_release_2.0.1);
+# FLOR no s'ha mesurat en els homògrafs corregits. Document viu, 4.24.
 RESULTATS = {
-    "data": "KenLM: AVLizador 2.0.0, 2026-11-17; FLOR-760M and rules: 2026-11-13",
+    "data": "KenLM and rules only: AVLizador 2.0.1, 2026-11-23 (homograph sets as corrected that day); "
+            "FLOR-760M: 2026-11-13, not measured on the corrected homograph sets",
     "files": [
-        ("Homographs v1 (253)", "227", "217", "176"),
-        ("Homographs v2 (160)", "112", "96", "74"),
+        ("Homographs v1 (249)", "228", "—", "179"),
+        ("Homographs v2 (144)", "113", "—", "75"),
         ("Manual benchmark (458)", "232", "231", "218"),
         ("151 sentences (154)", "144", "145", "142"),
     ],
-    "decisions": "194 correct and 1 serious error (a wrong meaning) out of 257 decisions in the homograph sets",
+    "decisions": "196 correct and no serious error (a wrong meaning) out of 237 decisions in the homograph sets",
 }
 
 
