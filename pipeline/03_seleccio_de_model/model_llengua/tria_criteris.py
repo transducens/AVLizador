@@ -137,8 +137,10 @@ def informe(graella: dict) -> str:
     benchmarks = graella["benchmarks"]
     ref = next(f for f in models[SISTEMA] if f["fix"]) if SISTEMA in models else None
     greus_ref = decisions(ref)[1] if ref else None
+    n_decisions = (sum(sum(ref.get(b, {}).get("classes", {}).values()) for b in HOMOGRAFS)
+                   if ref else "?")  # 23/11/2026: abans posava 257 sempre (ara n'hi ha 237)
     md = ["# Millors criteris de cada model (graella completa)", "",
-          f"Graella de `{graella['data']}`. Decisions = homògrafs v1 + v2 (257); greus = traduïda sense "
+          f"Graella de `{graella['data']}`. Decisions = homògrafs v1 + v2 ({n_decisions}); greus = traduïda sense "
           "caldre + candidat erroni. "
           + (f"Referència: el sistema 2.0.0 amb el criteri actual, {decisions(ref)[0]} encerts i "
              f"{greus_ref} greus." if ref else ""), ""]
