@@ -1341,6 +1341,10 @@ falta o candidata equivocada):
 | Lemas + clasificador | sistema | 196 | 3 | 58 | **227** / 114 / **232** / 144 | 4,9 |
 | Mezcla formas + lemas + clasificador | sistema | 198 | 5 | 54 | 225 / 118 / **232** / 144 | 5,2 |
 
+(23/11) «Fijo» = `Criteri()` (margen 2, λ 0,5), no el criterio del sistema;
+con el del sistema, lemas solo da 193 / 5 / 59 y todo a lema solo 184 / 7 /
+66. Ver la 4.23.
+
 - Graves del sistema: HG2-028 «Si en falta algun» (ya conocido: valenciano
   correcto, la referencia pide «manca») y HG2-086, que en realidad está
   bien: «Les mongetes recuites» → «Els fesols recuits» (la concordancia
@@ -1529,6 +1533,287 @@ el sistema 2.0.0 con margen 3, 2 y 1 (λ sin tocar). Tablas por palabra en el
 antes arreglar «deus» (spaCy verbo / revisar la entrada del léxico) y «nou»
 número sin determinante.
 
+### 4.23 Por qué fallan los graves nuevos de los KenLM de lemas (23/11, petición del usuario)
+
+**Corrección de la 4.22**: las filas «fijo» (lemas solo y todo a lema solo)
+NO tienen el criterio del sistema. `criteri_fix` del comparador daba
+`CRITERI_KENLM` solo a los `*_c1`; al resto, `Criteri()` (margen 2, λ 0,5).
+Recalculadas con el criterio del sistema sin desempate (simulación local
+con las puntuaciones en bruto del detalle, `simula_criteris.py`; para todo a
+lema, la rejilla de Abaco da 183 / 7 / 67):
+
+| Modelo | Con `Criteri()` (4.22) | Con el criterio del sistema |
+|---|---|---|
+| Lemas parciales, solo | 200 / 7 / 50 | **193 / 5 / 59** |
+| Todo a lema, solo | 195 / 7 / 55 | **184 / 7 / 66** |
+
+Los graves que cuenta la tabla de la 4.22 para lemas solo y para la mezcla de
+lemas parciales llevan además 9 «recuita» no detectadas (la ejecución 1012 es
+de antes del arreglo del comparador; con el arreglo no son graves). Desde
+hoy `criteri_fix` da a todos los `kenlm_*` el criterio del sistema (sin
+desempate si no llevan clasificador). Las versiones con clasificador y las
+mezclas de la 4.22 no cambian.
+
+**Cómo se ha mirado**: puntuación de KenLM palabra a palabra de las frases
+candidatas de cada grave nuevo, con el KenLM de formas de la 2.0.0 y los dos de
+lemas (script en el scratchpad, `greus_lemes.py`, ejecutado en el login de
+Abaco), y el criterio del sistema simulado en local.
+
+Graves nuevos de los modelos de lemas con el criterio del sistema:
+
+| Modelo | Graves nuevos (además de HG2-028 y HG2-086, que tiene el sistema) |
+|---|---|
+| Lemas parciales, solo | HG009, HG022 (cop → vegada), HG041 (calces → bragues) |
+| Lemas parciales + clasificador | HG041 |
+| Mezcla formas + lemas parciales + clasificador | HG009, HG022, HG041 |
+| Todo a lema, solo | HG009, HG022, HG041, HG2-009 (nou → anou), HG027 (cops → colps, candidato equivocado) |
+| Todo a lema + clasificador | HG041, HG2-009 |
+| Mezcla formas + todo a lema + clasificador | HG009, HG041 |
+
+Cuatro causas, y solo una es de los lemas:
+
+1. **«cop» → «vegada»** (HG009 «un últim cop al banc», HG022 «molts cops a la
+   cara»; con `Criteri()` también HG026 «A cops de destral»). **No es de los
+   lemas**: el KenLM de formas del sistema también los falla sin el
+   clasificador (con `Criteri()`, 201 / 5 con estos tres). Un 5-grama no ve el
+   sentido; la diferencia está en la propia palabra («colp» −5,8 frente a
+   «vegada» −2,4; «colps» −8,8 frente a «vegades» −1,7), y λ 0,75 solo la
+   compensa en parte. En el sistema la diferencia final queda por debajo de 2
+   (1,4) y decide el clasificador. **En la mezcla es un fallo de escala**: suma
+   las puntuaciones de los dos KenLM, las diferencias se doblan (2,4 y 2,8) y
+   pasan del desempate de 2; el clasificador ya no entra. Con desempate 4
+   (simulado): mezcla con lemas parciales **201 / 3 / 53**, con todo a lema 200
+   / 3 / 54; el único grave nuevo que queda es «calces».
+2. **«calces» → «bragues»** (HG041 «El sastre cosia calces i gipons per als
+   nobles»): **artefacto del lematizador**. spaCy lematiza el verbo de forma
+   distinta según el candidato que va detrás: «el sastre **cosir** bragues i
+   gipó…» pero «el sastre **cosia** calces i gipó…» (todo a lema: «**cosi**
+   calça», *cosí*, el primo). «cosia» (−15,1) frente a «cosir» (−12,1) da 3 de
+   los 3,35 puntos de diferencia; las candidatas empatan (−12,8 y −12,5). Las
+   frases dejan de ser comparables: no compiten «bragues» y «calces», compiten
+   «cosir» y «cosia». Con formas la diferencia es 0,78 y se queda la catalana
+   por el margen. Es el único grave nuevo de todas las variantes con
+   clasificador.
+3. **«gandules» → «hamaques»** (HG055 «Aquelles alumnes eren gandules») y
+   **«reeixides» → «exitoses»** (HG2-160): solo con `Criteri()`; con el
+   criterio del sistema (λ irresolubles 1,25, margen 3) no son graves. La
+   causa es que el lema junta todas las formas del verbo («eren» → «ser»), y
+   «ser hamaques» está en el texto de lemas («ser gandules», no).
+4. **«a les nou en punt» → «anou»** (HG2-009, todo a lema): lematizarlo todo
+   hace «les nou» → «el nou», y se pierde el plural, que era el contexto que
+   delataba la hora. Con formas, «nou» detrás de «a les» saca 10 puntos a
+   «anou» (trigrama frente a unigrama); con todo a lema, 4, y la λ de los
+   irresolubles (1,25 · 6,2) le da la vuelta. spaCy etiqueta aquí «nou» como
+   NOUN, no NUM: decide el modelo también en el sistema, que acierta con poco
+   sobrante (diferencia final 1,5, por debajo del margen).
+
+**Prueba: el contexto lematizado una sola vez** (23/11, decisión del
+usuario). Para el punto 2: `KenLMLemes(referencia=True)` en el comparador
+(claves `kenlm_*_ref_dogv2*`). Antes de puntuar cada frase, se lematiza una
+vez la traducción del motor (la referencia); en cada frase candidata, las
+palabras iguales que en la referencia (alineadas con `difflib`) toman el lema
+de la referencia, y solo las que cambian (el candidato y las que concuerdan
+con él) se lematizan dentro de la frase candidata. Así el contexto es el
+mismo para todos los candidatos. Comprobado en local: «calces» y «bragues»
+llevan ahora las dos «cosir» (todo a lema: «cosir calça» / «cosir braga»); en
+«cop» y «gandules» no cambia nada (spaCy ya las lematizaba igual). Lematizar
+la referencia cuenta como tiempo del modelo. Lanzado con `REF=1
+prova_lemes_dogv2.sh` (job 3353, `compara_models_<fecha>_lemes_ref_dogv2`):
+sistema + las 6 variantes con referencia, rejilla completa con desempate 2 y
+4 (para la escala de la mezcla) y λ irresolubles 1 / 1,25 / 1,5.
+
+**Resultados** (job 3353, `compara_models_20261123_1027_lemes_ref_dogv2{,_detall,_graella}`;
+el sistema sale igual: 194 / 2 / 61, exactas 227 / 112 / 232 / 144). HG041
+«calces»: la diferencia baja de 3,35 a 0,76 (lemas parciales) y de 3,6 a 0,53
+(todo a lema), por debajo del margen: **el grave desaparece en todas las
+variantes**. 257 decisiones, criterio del sistema (los modelos sin
+clasificador, sin desempate); entre paréntesis, la misma variante sin
+referencia (4.22, recalculada):
+
+| Modelo | Desempate | Aciertos / graves / sin traducir | Exactas v1 / v2 / manual / 151 |
+|---|---|---|---|
+| **Sistema 2.0.0** | 2 | 194 / **2** / 61 | 227 / 112 / 232 / 144 |
+| Lemas parciales, solo | — | 194 / 4 / 59 (193 / 5) | 226 / 113 / 231 / 144 |
+| **Lemas parciales + clasificador** | 2 | **197 / 2 / 58** (196 / 3) | **228 / 114** / 232 / 144 |
+| Mezcla formas + lemas parciales + clasif. | 2 | 199 / 4 / 54 (198 / 5) | 226 / 118 / 232 / 144 |
+| **Mezcla formas + lemas parciales + clasif.** | **4** | **202 / 2 / 53** (201 / 3) | **228 / 119** / 232 / 144 |
+| Todo a lema, solo | — | 186 / 5 / 66 (184 / 7) | 222 / 108 / 232 / 144 |
+| Todo a lema + clasificador | 2 | 189 / 3 / 65 (188 / 4) | 224 / 109 / 232 / 144 |
+| Mezcla formas + todo a lema + clasif. | 2 | 200 / 3 / 54 (199 / 4) | 227 / 118 / 232 / 144 |
+| Mezcla formas + todo a lema + clasif. | 4 | 201 / 2 / 54 | 228 / 118 / 232 / 144 |
+
+(Cifras de la rejilla de Abaco, comprobadas con `simula_criteris.py` sobre el
+detalle; para todo a lema solo y + clasificador, la simulación da 1 acierto más
+que la rejilla.) GD / GDV del manual 1,0000 en todas.
+
+- **Lemas parciales + clasificador**: frente al sistema gana 4 (HG053
+  «gandules» → «hamaques», HG2-024 «manca» → «falta», HG2-058 «rentadora» →
+  «llavadora», HG2-154 «reeixides» → «exitoses») y pierde 1, leve (HG2-123
+  «panotxes» sin traducir). **Es la primera variante de lemas que cumple el
+  criterio de la 4.16**: más aciertos sin más graves y sin perder en el
+  manual ni en el 151.
+- **Mezcla con lemas parciales y desempate 4**: gana 8 (HG043 «gandula» →
+  «hamaca», HG2-022 y HG2-024 «manca» → «falta», HG2-058 «llavadora»,
+  HG2-106 «gandules» → «hamaques», HG2-115 y HG2-121 «panotxa(es)» →
+  «panolla(es)», HG2-154 «exitoses») y **no pierde ninguna**. Con desempate 2
+  vuelven HG009 y HG022 («cop» → «vegada»), como se esperaba por la escala. El
+  desempate 4 solo vale para la mezcla: en el sistema da 193 / 3.
+- Todo a lema sigue por debajo del sistema: pierde el género («nou» fruto
+  sin traducir, «a les nou» → «anou») y deja sin traducir reeixida, panotxa y
+  gandula.
+- Mejor configuración con ≤ 2 graves (elegida sobre los mismos homógrafos):
+  sistema 205 / 2 (margen 1, λ 1, λ irr. 1); mezcla con lemas parciales 205 / 2
+  (margen 3, λ 1, λ irr. 1, desempate 4); lemas parciales + clasificador 203 / 2
+  (margen 2, λ 0,5, λ irr. 1); mezcla con todo a lema 209 / 2 (margen 2, λ 1,
+  λ irr. 1, desempate 4).
+
+**Coste**: la referencia se lematiza en todas las frases, también en las que
+no tienen palabra ambigua, y cuenta como tiempo del modelo. Por frase, en los
+homógrafos v2 (todas con palabra ambigua): 23-29 ms con referencia frente a
+11,7 ms sin ella y 0,14 ms el sistema (unas 200 veces más). En el manual, 11 ms
+frente a 1,5 ms, porque se lematiza la referencia aunque no haga falta (en una
+implementación en el paquete solo haría falta cuando hay palabra ambigua).
+El «ms/crida» de esta ejecución no se puede comparar con el de antes: suma el
+tiempo de la referencia pero no la cuenta como llamada.
+
+**Lectura**: el grave de «calces» era un fallo de cómo se lematizaba, no de
+los lemas. Con el contexto lematizado una vez, los lemas parciales con
+clasificador ganan 3 aciertos netos con los mismos 2 graves, y la mezcla con
+desempate 4, 8 aciertos sin perder nada. Pero:
+
+- Todo está medido con los mismos homógrafos con que se ha buscado el arreglo
+  (el desempate 4 se eligió después de ver los graves de la mezcla); falta
+  la validación cruzada y el texto real.
+- Los aciertos que ganan son los mismos que gana el sistema con margen 1
+  (gandules, manca, rentadora, panotxa, reeixida): el sistema ajustado llega a
+  205 / 2 sin lemas.
+- Cuesta unas 200 veces más por frase con palabra ambigua y necesita spaCy
+  en cada frase candidata.
+
+Pendiente de decidir con el usuario si se sigue (validación cruzada y texto
+real de la mezcla con desempate 4, comparada con el sistema con margen 1).
+Hecho el mismo día: sección 4.24.
+
+### 4.24 Margen 1, tabla de frecuencias arreglada y benchmarks de homógrafos corregidos (23/11, decisión del usuario)
+
+**Qué se ha cambiado** (todo sin commitear):
+
+- **Margen 1, en prueba** (decisión del usuario tras la reunión):
+  `CRITERI_KENLM.marge` 3 → 1; λ 1,5 / 0,75 / 1,25 y desempate 2 igual. Test
+  `test_criteri_kenlm` actualizado; 119 tests en verde. Los README del
+  paquete siguen diciendo «margen 3» hasta que se confirme.
+- **Benchmarks de homógrafos corregidos por el usuario** (a mano, porque esas
+  entradas estaban mal): fuera las frases de «recuita(es)» (v1 HG089-HG092,
+  en `benchmark_homografs_cat_val.json` y en `benchmark_sistema_final_cat_val.json`,
+  que es el que se evalúa como `homografs`; v2 HG2-073-HG2-088, 16 frases) y
+  HG2-028 («Si en manca algun») espera ahora «falta». v1 = 249 frases, v2 = 144;
+  **237 decisiones** (antes 257). **Las cifras de esta sección no se pueden
+  comparar con las anteriores.**
+- **Tabla de frecuencias del KenLM regenerada** (job 3368;
+  `valencia_net_dogv2_freq.json`, la vieja guardada como
+  `valencia_net_dogv2_freq_20261116.json`). Ver abajo.
+
+**Fallo encontrado: «brolladors» no estaba en la tabla de frecuencias.** La
+tabla se hizo el 16/11; el 18/11 el léxico cambió «brolladores» →
+«brolladors» (E0529, plural corregido) y la forma nueva no estaba en la tabla.
+Contaba como 0 apariciones (en el texto de entrenamiento hay 38), así que su
+prior era ln(1/T) = −17,73 en vez de ln(39/T) = −14,06, y con λ 1,5 «brolladors»
+ganaba unos 5,5 puntos de regalo. El mismo fallo que «faltes» el 13/11; el
+aviso `AvisFreqKenLM` ya salía en el registro del 20/11 (job 3295) y no se miró.
+Ninguna otra candidata de los puntos falta en la tabla (33 formas del léxico
+sin palabra ambigua, sí: no se usan). La 2.0.0 publicada tampoco estaba bien
+(«brolladores», la forma mala, tampoco sale en el texto): **la tabla de HF hay
+que subirla de nuevo** con la próxima versión.
+
+Efecto, recalculado con las puntuaciones guardadas sobre la misma muestra de
+MaCoCu (job 3369; reproduce las 21.966 decisiones), frases de «deus»
+traducidas a «brolladors» (de 299):
+
+| Criterio | Tabla vieja | Tabla nueva |
+|---|---|---|
+| Sistema, margen 3 | 82 | 11 |
+| Sistema, margen 1 | 89 | 27 |
+| Mezcla con referencia, margen 3, desempate 4 | 75 | 23 |
+
+Revisadas a mano las 27 de margen 1: unas 7 son manantiales («les deus
+d'aigua», «les deus d'on brolla», y en sentido figurado «les deus
+econòmiques»); 10 son «dioses» («els/dels deus», casi siempre con artículo
+masculino); el resto, verbo («deus d'estar»), erratas («dels deus primers»
+por «deu»), nombres propios («Les Deus», «Cap a les deus») y una cita en
+francés. Idea para lo que queda (sin hacer): con determinante masculino delante
+y la lectura dialectal solo femenina (`generes_nom = {f}`, ya en el punto), dejar
+la catalana.
+
+**Otro fallo, en `prova_marge_text_real.py`**: la muestra no se podía repetir
+con la misma semilla (recorría un `set`, cuyo orden cambia en cada ejecución
+de Python): la del 20/11 y las dos de hoy solo comparten 1.283 de 3.674 frases.
+Arreglado (`sorted`). Por eso la comparación de tablas de arriba se hace
+recalculando, no comparando dos ejecuciones.
+
+**Comparación en los homógrafos** (job 3370, `compara_models_20261123_1332_lemes_ref_dogv2`,
+tabla nueva, benchmarks nuevos; aciertos / graves / sin traducir en las 237
+decisiones; exactas v1 /249, v2 /144, manual /458, 151 /154):
+
+| Sistema | Decisiones | v1 | v2 | Manual | 151 |
+|---|---|---|---|---|---|
+| Sistema, margen 3 (el de la 2.0.0) | 186 / 0 / 51 | 225 | 106 | 232 | 144 |
+| Sistema, margen 2 | 191 / 0 / 46 | 225 | 111 | 232 | 144 |
+| **Sistema, margen 1** | **196 / 0 / 41** | **228** | **113** | 232 | 144 |
+| Lemas parciales + clasificador, margen 1 | 198 / 1 / 38 | 229 | 114 | 232 | 144 |
+| Mezcla (lemas parciales), margen 3, desempate 4 | 194 / 0 / 43 | 226 | 113 | 232 | 144 |
+| Mezcla (lemas parciales), margen 2, desempate 4 | 197 / 1 / 39 | 229 | 113 | 232 | 144 |
+| Mezcla (lemas parciales), margen 1, desempate 4 | 195 / 3 / 39 | 228 | 112 | 232 | 144 |
+| Mezcla (todo a lema), margen 2, desempate 4 | 195 / 1 / 41 | 228 | 112 | 232 | 144 |
+
+Los 2 graves que tenía el sistema (HG2-028 y HG2-086) eran entradas mal del
+benchmark y ya no están: con margen 1 el sistema no tiene ningún grave.
+
+Mejor de la rejilla (`tria_criteris.py`, `_tria.md`; elegido sobre los mismos
+homógrafos): sistema 197 / 0 (margen 1, λ 1, λ irr. 1); mezcla con lemas
+parciales 197 / 0 (margen 3, λ 1, λ irr. 1, desempate 4); mezcla con todo a lema
+**201 / 0** (margen 2, λ 1, λ irr. 1, desempate 4). Validación cruzada (elegir
+en un benchmark, medir en el otro): ninguna variante gana limpia. El sistema
+con λ elegidas en v1 da 113 / 1 grave en v2 (114 / 0 sin tocar); la mezcla con
+todo a lema da 116 / 1 en v2 (+2 y un grave) y 81 / 2 en v1 (−1 y dos graves).
+Los graves vuelven a venir de bajar las λ, como el 20/11. (De paso:
+`tria_criteris.py` ponía siempre «257 decisiones» en el informe; ahora las
+cuenta.)
+
+**Texto real** (job 3369, `prova_marge_text_real_20261123_1312`, tabla nueva,
+`--mescla 3:4 2:4 1:4`; 3.674 frases de MaCoCu, 3.661 con la palabra
+detectada). Frases traducidas (la tría no es la palabra catalana):
+
+| Criterio | Traduce |
+|---|---|
+| Sistema, margen 3 | 905 |
+| Sistema, margen 2 | 1.046 |
+| Sistema, margen 1 | 1.240 |
+| Mezcla, margen 3, desempate 4 | 1.115 |
+| Mezcla, margen 2, desempate 4 | 1.237 |
+| Mezcla, margen 1, desempate 4 | 1.385 |
+
+De margen 3 a 1 cambian 335 frases (rentadora 61, reeixida 58, manca 45,
+rentadores 42, reeixides 33, calces 30, gandules 17, deus 16...); 200 ya se
+revisaron el 20/11 (94 % bien), 135 son nuevas por la muestra distinta. La
+mezcla con margen 2 casi coincide con el sistema con margen 1 (48 frases
+distintas, sin revisar); con margen 3 deja 148 sin traducir que el sistema con
+margen 1 traduce (calces 27, reeixida 23, rentadora 22, manca 20...: las
+mismas palabras que se revisaron bien el 20/11).
+
+**Lectura**:
+- El margen 1 con la tabla arreglada gana 10 aciertos sobre el margen 3 sin
+  ningún grave, en v1 y en v2 a la vez, sin tocar las λ.
+- Los lemas, también con referencia, no añaden nada limpio: +2 con un grave
+  (lemas + clasificador) o igual (mezcla), y lo que más gana (mezcla con todo a
+  lema, 201 / 0) está ajustado sobre los mismos homógrafos y no aguanta la
+  validación cruzada. Cuestan unas 200 veces más por frase con palabra ambigua.
+- **Propuesta**: sistema con margen 1 y la tabla de frecuencias nueva; lemas
+  descartados.
+
+**Pendiente**: revisar a mano las 135 frases nuevas de margen 3 → 1; decidir la
+versión (¿2.0.1?) y subir la tabla nueva a HF (y `REVISIO_HF`); los README
+(«margen 3»); la regla de «els deus» (masculino → no traducir).
+
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
   se evalúa: las cifras son optimistas. Hay que confirmarlas en el 151, el
@@ -1689,3 +1974,5 @@ Son compatibles: si C2 mejora la base, C1 puede desempatar encima.
 | 16/11 | **Lemas cerrados; se queda la estructura actual** (KenLM de formas, orden 5, + clasificador general) | Decisión del usuario. Los lemas se probaron en todas las palabras ambiguas; ganan en algunas (manca, gandules, panotxa) pero con 8-18 casos por palabra y traduciendo más (13 graves frente a 1): no se usan ni por palabra. spaCy decide 68 de las 257 decisiones y falla 7, todas leves. Los «sin traducir» vienen sobre todo de falta de datos (41 + 14 de 63). Sección 4.16, «Cierre». |
 | 19/11 | **La concordancia de los candidatos la hace la regla, no KenLM** (`concordanca="motor"` por defecto; participios pegados al nombre; «diversos», «algun», «L'últim») | Decisión del usuario, por FLORES+ devtest 461 («és absoluta una vegada») y 782 («El xocolate desfeta»). Motor solo: 0 frases distintas en 6 benchmarks. KenLM en Abaco sin «algun»: 226 / 112 / 232 / 144 (HG030 «Alguns vegades»); con «algun» (`avalua_sistema_20261119_0850`): **227 / 112 / 232 / 144**, métricas idénticas a la 2.0.0. Sección 4.20. |
 | 19/11 | **Errores de AINA de la 2.0.0**: concordancia del artículo y la contracción hacia la izquierda («a la seua vivenda»), spaCy también en los resolubles («per deu estats»), género del nombre según el fichero morfológico («el nou de Bowie»), **λ 1,25 para los irresolubles** (`lam_irresoluble`) | Informe del ETL de `traductor-es-va-en` (AINA ca-en, FLORES+). Con el KenLM real (puntuado en Abaco, sistema en local): `main` 227 / 111 / 232 / 144, la rama con λ 1,5 da las mismas frases, con λ 1,25 **227 / 112 / 232 / 144** (+HG2-113, sin pérdidas); λ 1,0 pierde BM-AVL-191. Casos de AINA: 20 de 23 bien; quedan «programes de nou» y «manca»/«rentadora» (catalana por defecto). Sección 4.21. |
+| 23/11 | **Graves nuevos de los KenLM de lemas: causas y arreglo del lematizador** (job 3353, `compara_models_20261123_1027_lemes_ref_dogv2`) | «cop» → «vegada»: no es de los lemas (el sistema también falla sin clasificador); en la mezcla, la suma de dos KenLM dobla las diferencias y el desempate 2 se queda corto. «calces» → «bragues»: spaCy lematizaba el verbo distinto según el candidato («cosir bragues» / «cosia calces»); con el contexto lematizado una vez sobre la frase del motor desaparece. Las filas «solo» de la 4.22 llevaban `Criteri()`, no el del sistema (arreglado en `criteri_fix`). Con referencia: lemas + clasificador 197 / 2, mezcla con desempate 4 **202 / 2** (sistema 194 / 2), ~200 veces más lentos; sin validación cruzada ni texto real. Sección 4.23. |
+| 23/11 | **Margen 1 (en prueba), tabla de frecuencias arreglada y homógrafos corregidos** (jobs 3368-3370; `compara_models_20261123_1332_lemes_ref_dogv2`, `prova_marge_text_real_20261123_1312`) | `CRITERI_KENLM.marge` 3 → 1. El usuario quita «recuita(es)» de los homógrafos y HG2-028 espera «falta» (237 decisiones). «brolladors» faltaba en la tabla de frecuencias (léxico del 18/11; en la 2.0.0 publicada, «brolladores», también con 0): «deus» → «brolladors» en texto real pasa de 82 a 11 (margen 3) y de 89 a 27 (margen 1). Sistema margen 3 186 / 0, **margen 1 196 / 0**; lemas + clasificador 198 / 1; mezcla con desempate 4, 194 / 0 (margen 3) y 197 / 1 (margen 2); nada aguanta limpio la validación cruzada. Propuesta: margen 1 + tabla nueva, lemas descartados. Sección 4.24. |
