@@ -59,8 +59,9 @@ Peces:
   més dades, una paraula que passe el llindar hi entra sola. L'antic de
   "cop" (`ClassificadorCop`, `nb.json`) encara es carrega si no hi ha
   `sentit.json`.
-- `CRITERI_KENLM`: marge 3, la catalana per defecte, λ 1,5 en els homògrafs
-  i 0,75 en les col·lisions, desempat < 2 amb el classificador: si KenLM
+- `CRITERI_KENLM`: marge 1 (des de la 2.0.1; fins a la 2.0.0, marge 3), la
+  catalana per defecte, λ 1,5 en els homògrafs resolubles, 1,25 en els
+  irresolubles i 0,75 en les col·lisions, desempat < 2 amb el classificador: si KenLM
   guanya per menys de 2, decidix el classificador de la paraula (si en té);
   si no, la regla de sempre.
 - `punts.decisio_spacy`: abans del model, spaCy descarta lectures

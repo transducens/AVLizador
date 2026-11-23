@@ -17,8 +17,8 @@ de cada candidat i `ModelKenLM.logprob` les puntua. Dos diferències:
   un classificador que mira tota la frase (`sentit.py`).
 
 El sistema: `kenlm_val_net_dogv` (MaCoCu valencià net + DOGV 2025-2026,
-ordre 5, poda de singletons, 77 MB) amb `CRITERI_KENLM` (marge 3, la
-catalana per defecte, λ 1,5 en els homògrafs i 0,75 en les col·lisions,
+ordre 5, poda de singletons, 77 MB) amb `CRITERI_KENLM` (marge 1 des de la
+2.0.1, abans 3; la catalana per defecte, λ 1,5 en els homògrafs i 0,75 en les col·lisions,
 desempat < 2 amb el Naive Bayes de "cop"). Últimes xifres (13/11/2026,
 `avalua_sistema_20261113_1308`, KenLM / FLOR): homògrafs v1 227 / 217 de
 253, v2 111 / 96 de 160, manual 232 / 231 de 458, 151 144 / 145, BOE

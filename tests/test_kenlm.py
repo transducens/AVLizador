@@ -110,7 +110,7 @@ def test_desempat_amb_el_classificador():
 
 def test_criteri_kenlm():
     assert (CRITERI_KENLM.marge, CRITERI_KENLM.per_defecte, CRITERI_KENLM.lam,
-            CRITERI_KENLM.lam_colisio, CRITERI_KENLM.desempat) == (3.0, "catala", 1.5, 0.75, 2.0)
+            CRITERI_KENLM.lam_colisio, CRITERI_KENLM.desempat) == (1.0, "catala", 1.5, 0.75, 2.0)
 
 
 def test_classificador_desat_i_carregat(tmp_path):
@@ -242,7 +242,7 @@ def test_desempat_tambe_en_els_homografs():
                      "rentadora": {"lp": -20.5, "n": 6, "prior": -10.0}}
     p.sentit = "llavadora"
     assert tria(p, CRITERI_KENLM) == "llavadora" and p.decidit == "sentit"
-    p.sentit = None  # sense classificador: la regla de sempre (marge 3, la catalana)
+    p.sentit = None  # sense classificador: la regla de sempre (dins del marge, la catalana)
     assert tria(p, CRITERI_KENLM) == "rentadora" and p.decidit == "catala"
 
 

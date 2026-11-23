@@ -60,8 +60,9 @@ Piezas:
   panotxa, recuita: sin datos) no tienen y hacen lo de siempre. Cuando haya
   más datos, una palabra que pase el umbral entra sola. El antiguo de "cop"
   (`ClassificadorCop`, `nb.json`) se sigue cargando si no hay `sentit.json`.
-- `CRITERI_KENLM`: margen 3, la catalana por defecto, λ 1,5 en homógrafos y
-  0,75 en colisiones, y desempate < 2 con el clasificador (`Criteri.desempat`):
+- `CRITERI_KENLM`: margen 1 (desde la 2.0.1; hasta la 2.0.0, margen 3), la
+  catalana por defecto, λ 1,5 en homógrafos resolubles, 1,25 en irresolubles
+  y 0,75 en colisiones, y desempate < 2 con el clasificador (`Criteri.desempat`):
   si KenLM gana por menos de 2, decide el clasificador de la palabra (si
   tiene); si no, la regla de siempre.
 - `punts.decisio_spacy`: antes del modelo, spaCy descarta lecturas

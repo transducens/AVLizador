@@ -78,7 +78,7 @@ texto catalán
                                                    si gana por menos de 2, decide el clasificador de sentido
          homógrafos (homonimia_lexica: nou, manca, calces, gandula…) spaCy por categoría de los
                                                    `lemas` y pronombre personal delante; si no, KenLM
-                                                   (margen 3 con la catalana por defecto; si gana por menos
+                                                   (margen 1 con la catalana por defecto; si gana por menos
                                                    de 2 y la palabra tiene clasificador, decide este)
 ```
 

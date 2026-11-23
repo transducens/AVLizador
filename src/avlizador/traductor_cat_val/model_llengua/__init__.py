@@ -418,7 +418,10 @@ def tradueix_cat_val_ml(
 # 0,75 en les col·lisions, i el classificador de "cop" quan KenLM guanya per
 # menys de 2 punts. És el criteri de l'execució `compara_models_20261111_1430`
 # (191 encerts i 2 errors greus en les 257 decisions dels homògrafs).
-CRITERI_KENLM = Criteri(marge=3.0, per_defecte="catala", lam=1.5, lam_colisio=0.75, lam_irresoluble=1.25,
+# Versió 2.0.1 (23/11/2026, decisió de l'usuari): marge 3 -> 1, la resta
+# igual; amb la taula de freqüències nova, 196 encerts i 0 greus en les 237
+# decisions dels homògrafs corregits (marge 3: 186 / 0; document viu, 4.24).
+CRITERI_KENLM = Criteri(marge=1.0, per_defecte="catala", lam=1.5, lam_colisio=0.75, lam_irresoluble=1.25,
                         desempat=2.0)
 
 _SISTEMA_KENLM = None
