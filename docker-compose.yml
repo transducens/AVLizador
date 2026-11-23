@@ -7,8 +7,9 @@ services:
     build:
       context: .
       args:
-        # "1" = la imatge porta també l'opció amb lemes (--model kenlm-lemes; ~80 MB més)
-        KENLM_LEMES: ""
+        # "1" = la imatge porta també l'opció amb lemes (--model kenlm-lemes; ~80 MB més
+        # de disc; la memòria només si s'usa). "" = només l'opció per defecte.
+        KENLM_LEMES: "1"
     image: avlizador:2.0.1
     ports:
       # Només des d'este equip. Per a obrir-lo a la xarxa: "8000:8000"

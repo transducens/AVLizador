@@ -170,9 +170,9 @@ funciona **sin internet**). Al construirla se descarga de Hugging Face el
 momento) y se guarda en `/opt/kenlm`; si los tres ficheros ya están en
 `docker/kenlm/` (carpeta ignorada por git), se copian de allí sin
 descargar nada. Otra revisión del modelo:
-`docker compose build --build-arg KENLM_REVISIO=...`. Para llevar también
-la opción con lemas (~80 MB más): `KENLM_LEMES: "1"` en `docker-compose.yml`
-o `--build-arg KENLM_LEMES=1`. Detalle:
+`docker compose build --build-arg KENLM_REVISIO=...`. La imagen lleva
+también la opción con lemas (~80 MB más; `KENLM_LEMES: "1"` en
+`docker-compose.yml`; con `""` no la lleva). Detalle:
 [`docker/LLEGIM.md`](docker/LLEGIM.md).
 
 ```bash

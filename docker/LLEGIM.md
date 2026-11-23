@@ -12,7 +12,8 @@ Fitxers opcionals per a construir la imatge (`docker compose up --build`).
   els que hi són es copien i els que falten es baixen.
 
 - Opció amb lemes (`--model kenlm-lemes`, 23/11/2026): amb `KENLM_LEMES: "1"`
-  en `docker-compose.yml` (o `--build-arg KENLM_LEMES=1`) la imatge porta
+  en `docker-compose.yml` (el valor que hi ha des del 23/11; `""` per a no
+  portar-la) o `--build-arg KENLM_LEMES=1` la imatge porta
   també `valencia_net_dogv_lemes_o5.binary` i `valencia_net_dogv_lemes_freq.json`
   (~80 MB més), de `kenlm/` si hi són o de Hugging Face (el mateix
   repositori). Sense, no s'hi posen encara que siguen en `kenlm/`. Dins del

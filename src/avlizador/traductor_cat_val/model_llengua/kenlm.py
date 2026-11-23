@@ -359,7 +359,11 @@ def carrega_sistema_kenlm_lemes(directori: Path | str | None = None):
     fitxers = fitxers_kenlm_lemes(directori)
     falten = [str(p) for p in fitxers.values() if not p.exists()]
     if falten:
-        raise FaltaKenLM("Falten fitxers del model KenLM de lemes: " + ", ".join(falten))
+        raise FaltaKenLM(
+            "Falten fitxers del model KenLM de lemes: " + ", ".join(falten) + ". Són en el repositori "
+            f"de Hugging Face ({REPO_HF}) i es baixen la primera vegada si no hi ha {VAR_DIRECTORI}; amb "
+            f"{VAR_DIRECTORI}, posa'ls en eixa carpeta. En Docker, la imatge els porta si es construïx "
+            'amb KENLM_LEMES: "1" (docker-compose.yml) o --build-arg KENLM_LEMES=1.")
     import kenlm
 
     from .lemes import LematitzadorLM, formes_candidates
