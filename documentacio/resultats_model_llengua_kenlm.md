@@ -1810,9 +1810,16 @@ mismas palabras que se revisaron bien el 20/11).
 - **Propuesta**: sistema con margen 1 y la tabla de frecuencias nueva; lemas
   descartados.
 
-**Pendiente**: revisar a mano las 135 frases nuevas de margen 3 → 1; decidir la
-versión (¿2.0.1?) y subir la tabla nueva a HF (y `REVISIO_HF`); los README
-(«margen 3»); la regla de «els deus» (masculino → no traducir).
+**Decisión del usuario (23/11): se adopta → versión 2.0.1** (rama
+`version-2.0.1`): margen 1 y la tabla de frecuencias nueva; README, guías y
+fichas de HF (modelo y homógrafos) actualizados. Evaluación de la versión
+(`avlizador avalua`, Abaco, jobs 3374-3376): manual 232/458 (BOE 35, AVL 197,
+igual que la 2.0.0), homógrafos v1 228/249 (motor solo 179), v2 113/144 (75),
+v1 del dataset de HF 83/94 (37).
+
+**Pendiente**: subir a HF la tabla nueva y poner el commit en `REVISIO_HF`
+(sin eso, la 2.0.1 bajaría la tabla vieja); revisar a mano las 135 frases
+nuevas de margen 3 → 1; la regla de «els deus» (masculino → no traducir).
 
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
