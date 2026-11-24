@@ -1907,6 +1907,49 @@ Cambios (rama `version-2.0.1`):
   distintas** frase a frase (1.402 con `kenlm`, 944 motor solo, 1.003
   `kenlm-lemes`). 124 tests.
 
+### 4.27 Revisión de las 135 frases nuevas del margen 1 y «dels deus» (24/11, decisión del usuario; rama `deus-contraccions`)
+
+**Revisión a mano** de las 135 frases de `prova_marge_text_real_20261123_1312`
+que cambian de margen 3 a 1 y no estaban en la muestra del 20/11 (las 200
+restantes se revisaron entonces):
+
+| Cambio | Frases | Bien | Mal | Dudosas |
+|---|---|---|---|---|
+| manca → falta (siempre «manca de…», nombre) | 43 | 43 | – | – |
+| reeixida → exitosa (adjetivo) | 44 | 44 | – | – |
+| reeixides → exitoses (adjetivo) | 17 | 17 | – | – |
+| rentadora → llavadora (la máquina) | 12 | 12 | – | – |
+| deus → brolladors | 16 | 2 | 12 | 2 |
+| deu → brollador («Deu me'n lliuri», «Deu dirà»: Déu sin acento) | 2 | – | 2 | – |
+| nous → anous («Mossenaires Nous», nombre propio) | 1 | – | 1 | – |
+| **Total** | **135** | **118 (87 %)** | **15** | **2** |
+
+Las dudosas son el título «Cap a les deus». Los errores de «deus» son
+«dioses» («dels deus de la ciutat», «sis deus», «els altres deus»), erratas
+de «deu» número («dels deus primers», «dels deus signants») y verbos («Deus
+d'estar…»). La concordancia sale bien («les deus de la vida» → «els
+brolladors de la vida»).
+
+**«dels deus»**: la regla de género del nombre de `decisio_spacy` (19/11;
+«deus» solo es nombre en femenino, `generes_nom = {f}`) ya dejaba «els deus»,
+pero no «dels/als/pels deus»: spaCy da la contracción como ADP sin género y
+`genere_det` quedaba vacío. Arreglo en `punts.detecta`: una contracción de
+artículo masculino (las claves de `_CONTRACCIO_A_FEMENI`: al, del, pel, als,
+dels, pels) cuenta como determinante masculino. Medido en local (la regla
+decide antes del modelo; tria de margen 1 del 23/11):
+- Texto real: «deus» traducidas de 27 a **17** de 299 (9 frases, todas mal
+  antes); 0 cambios en nou, nous, manca, rentadora, calces, gandula(es).
+- Homógrafos v1 y v2, manual y 151: **0 decisiones cambian** (solo hay dos
+  «nou» tras contracción, RC070 «al nou» y BM-BOE-033 «del nou», que spaCy
+  ya dejaba en catalán).
+- Probado y no aplicado (decisión del usuario): saltar un determinante sin
+  género en medio («els altres deus»): +1 frase.
+- Quedan mal (sin determinante): «sis deus», «treure deus», verbos («les
+  deus passar canutes», «Deus d'estar»), «sants, deus i deeses», «Gombert et
+  les deus Clers».
+
+124 tests y doctests de `punts.py` en verde.
+
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
   se evalúa: las cifras son optimistas. Hay que confirmarlas en el 151, el
@@ -2071,3 +2114,4 @@ Son compatibles: si C2 mejora la base, C1 puede desempatar encima.
 | 23/11 | **Margen 1 (en prueba), tabla de frecuencias arreglada y homógrafos corregidos** (jobs 3368-3370; `compara_models_20261123_1332_lemes_ref_dogv2`, `prova_marge_text_real_20261123_1312`) | `CRITERI_KENLM.marge` 3 → 1. El usuario quita «recuita(es)» de los homógrafos y HG2-028 espera «falta» (237 decisiones). «brolladors» faltaba en la tabla de frecuencias (léxico del 18/11; en la 2.0.0 publicada, «brolladores», también con 0): «deus» → «brolladors» en texto real pasa de 82 a 11 (margen 3) y de 89 a 27 (margen 1). Sistema margen 3 186 / 0, **margen 1 196 / 0**; lemas + clasificador 198 / 1; mezcla con desempate 4, 194 / 0 (margen 3) y 197 / 1 (margen 2); nada aguanta limpio la validación cruzada. Propuesta: margen 1 + tabla nueva, lemas descartados. Sección 4.24. |
 | 23/11 | **KenLM de lemas como opción del paquete** (`--model kenlm-lemes`; job 3383) | Decisión del usuario: opción, no por defecto; lemas parciales + clasificador con el contexto lematizado una vez sobre la frase del motor (`kenlm.ModelKenLMLemes`). Ficheros en `AVLIZADOR_KENLM_DIR`, no en HF. En Abaco, igual que el comparador: v1 229, v2 114, manual 232, 151 144 (198 / 1 en las 237 decisiones; sistema 196 / 0). Sección 4.25. |
 | 23/11 | **La opción con lemas, en el mismo repositorio de HF** | Decisión del usuario: mismo repositorio y misma `REVISIO_HF` (comparten `sentit.json`). Cada opción descarga solo sus ficheros (`FITXERS_HF`, `FITXERS_HF_LEMES`); Docker con `KENLM_LEMES` (`docker/prepara_kenlm.py`); ficha con la sección de la opción. Pendiente: subirlos y fijar la revisión nueva. Sección 4.26. |
+| 24/11 | **Revisión de las 135 frases nuevas del margen 1 y «dels deus»** (rama `deus-contraccions`) | 135 frases: 118 bien (manca, reeixida(es), rentadora, todas), 15 mal (deus 12, Deu 2, Nous 1), 2 dudosas. Una contracción de artículo masculino («dels», «al»…) cuenta como determinante masculino en `punts.detecta`: «deus» traducidas en texto real 27 → 17 de 299, 0 cambios en los benchmarks. Sección 4.27. |
