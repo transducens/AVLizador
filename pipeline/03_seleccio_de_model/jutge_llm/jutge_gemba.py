@@ -58,6 +58,7 @@ import json
 import re
 import sys
 import time
+import urllib.error
 import urllib.request
 from datetime import datetime
 from pathlib import Path
@@ -193,8 +194,19 @@ def xat(url: str, model: str, usuari: str, max_tokens: int, pensa: bool, num_ctx
            "options": {"temperature": 0, "num_predict": max_tokens, "num_ctx": num_ctx}}
     req = urllib.request.Request(f"{url}/api/chat", data=json.dumps(cos).encode("utf-8"),
                                  headers={"Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=1200) as r:
-        missatge = json.loads(r.read())["message"]
+    # Reintents (24/11/2026): en caiman (RTX PRO 6000, Ollama 0.33.3) el
+    # llama-server cau a vegades ("CUDA error: an illegal memory access",
+    # HTTP 500) i Ollama el torna a arrancar sol.
+    for intent in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=1200) as r:
+                missatge = json.loads(r.read())["message"]
+            break
+        except urllib.error.HTTPError as e:
+            if e.code != 500 or intent == 2:
+                raise
+            print(f"  HTTP 500, reintent {intent + 1} d'ací a 15 s", flush=True)
+            time.sleep(15)
     PENSAMENTS["darrer"] = missatge.get("thinking") or ""
     return missatge["content"]
 
