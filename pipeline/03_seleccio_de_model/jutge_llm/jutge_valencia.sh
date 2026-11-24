@@ -103,6 +103,10 @@ else
     export OLLAMA_VULKAN=0 GGML_VK_VISIBLE_DEVICES=-1
 fi
 export OLLAMA_SCHED_SPREAD=true
+# Ollama instal·lat en ~/ollama sense root (Abaco, nevis): sbatch hereta el
+# PATH de la sessió, que pot no tindre'l.
+command -v ollama > /dev/null || export PATH="$HOME/ollama/bin:$PATH"
+command -v ollama > /dev/null || { echo "ERROR: no trobe ollama (ni en ~/ollama/bin)" >&2; exit 1; }
 mkdir -p "$OLLAMA_MODELS"
 NOM_LOG="${MODEL//[\/:]/-}"
 ollama serve > "$LOGS/ollama_valencia_${NOM_LOG}_${SLURM_JOB_ID:-local}.log" 2>&1 &
