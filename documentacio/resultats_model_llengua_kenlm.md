@@ -1950,6 +1950,39 @@ decide antes del modelo; tria de margen 1 del 23/11):
 
 124 tests y doctests de `punts.py` en verde.
 
+### 4.28 Palabras ambiguas en mayúscula a media frase (24/11, rama `noms-propis-ambigus`)
+
+Pendiente de la revisión del 20/11 («La Gandula») y de la 4.27 («Deu» por
+«Déu», «Mossenaires Nous»). Desde el 22/10 el motor traduce también lo que
+va en mayúscula (decisión del usuario, por los títulos del BOE), y en los
+homógrafos PROPN cuenta como nombre: decidía KenLM. Regla nueva en
+`decisio_spacy` (campo `Punt.majuscula_mig`, calculado en `detecta` con
+`_inici_de_frase` de `conjugacions_dict`, la misma de la regla de PROPN de
+las conjugaciones): una palabra ambigua (homógrafo resoluble o irresoluble;
+las colisiones no pasan por aquí) que empieza en mayúscula, no va toda en
+mayúsculas y no abre frase se deja en catalán.
+
+Medido en local con el paquete cambiado (la regla decide antes del modelo;
+tria de margen 1 de cada muestra):
+
+| Muestra de texto real | Se arreglan | Se pierden |
+|---|---|---|
+| 20/11 (`_20261120_1412`, tabla de frecuencias vieja) | 26 | 3 |
+| 23/11 (`_20261123_1312`) | 17 (1 ya con la 4.27) | 4 |
+
+- Se arreglan: «La Gandula» (sección de ElNacional.cat, ×5), el restaurante
+  «La Deu», «Deu dirà» / «Deu me'n lliuri» / «sobre Deu», el lugar «Les
+  Deus» y «Les Deus Aventura», el latín («Deus caritas est», «Homo Deus»,
+  «Deus Vult»), «la Panotxa» (apodo), el ciclo «Gandules» del CCCB,
+  «Mossenaires Nous».
+- Se pierden (nombre común con mayúscula de estilo, ahora sin traducir:
+  error leve): «"Calces a tres euros!"», «Jacuzzi, Rentadores, Pàrking»,
+  «sala de Rentadores», «d'una Rentadora».
+- Homógrafos v1 y v2, manual y 151: **ningún punto** en mayúscula a media
+  frase (0 cambios).
+
+124 tests y doctests de `punts.py` en verde.
+
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
   se evalúa: las cifras son optimistas. Hay que confirmarlas en el 151, el
@@ -2115,3 +2148,4 @@ Son compatibles: si C2 mejora la base, C1 puede desempatar encima.
 | 23/11 | **KenLM de lemas como opción del paquete** (`--model kenlm-lemes`; job 3383) | Decisión del usuario: opción, no por defecto; lemas parciales + clasificador con el contexto lematizado una vez sobre la frase del motor (`kenlm.ModelKenLMLemes`). Ficheros en `AVLIZADOR_KENLM_DIR`, no en HF. En Abaco, igual que el comparador: v1 229, v2 114, manual 232, 151 144 (198 / 1 en las 237 decisiones; sistema 196 / 0). Sección 4.25. |
 | 23/11 | **La opción con lemas, en el mismo repositorio de HF** | Decisión del usuario: mismo repositorio y misma `REVISIO_HF` (comparten `sentit.json`). Cada opción descarga solo sus ficheros (`FITXERS_HF`, `FITXERS_HF_LEMES`); Docker con `KENLM_LEMES` (`docker/prepara_kenlm.py`); ficha con la sección de la opción. Pendiente: subirlos y fijar la revisión nueva. Sección 4.26. |
 | 24/11 | **Revisión de las 135 frases nuevas del margen 1 y «dels deus»** (rama `deus-contraccions`) | 135 frases: 118 bien (manca, reeixida(es), rentadora, todas), 15 mal (deus 12, Deu 2, Nous 1), 2 dudosas. Una contracción de artículo masculino («dels», «al»…) cuenta como determinante masculino en `punts.detecta`: «deus» traducidas en texto real 27 → 17 de 299, 0 cambios en los benchmarks. Sección 4.27. |
+| 24/11 | **Palabras ambiguas en mayúscula a media frase → catalana** (rama `noms-propis-ambigus`) | «La Gandula», «La Deu», «Deu dirà», «Les Deus», «Mossenaires Nous»: nombres propios que KenLM traducía. `decisio_spacy` deja la catalana si la palabra empieza en mayúscula, no va toda en mayúsculas y no abre frase. Texto real: 20/11 +26 / −3, 23/11 +17 / −4 (las pérdidas, nombres comunes con mayúscula de estilo, quedan sin traducir); 0 cambios en los benchmarks. Sección 4.28. |
