@@ -2,3 +2,7 @@ logs/*
 !logs/.gitkeep
 resultats/*_limit*/
 resultats/*/cache.jsonl
+resultats/**/cache.jsonl
+resultats/**/*_limit*/
+# traduccions generades en Abaco per jutge_valencia.sh (avlizador avalua)
+entrades_valencia/

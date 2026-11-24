@@ -127,3 +127,47 @@ l'AVL:
 
 Gemma 4 31B (`--array=1`): **descartat**, no s'ha llançat (decisió de
 l'usuari, 04/11/2026).
+
+## Prompt «valencia»: amb l'original i la norma valenciana (24/11/2026)
+
+Petició de l'usuari: que el jutge avalue la qualitat de la traducció al
+valencià **sense penalitzar el valencià**. Mateix model (Qwen 3.6) i mateix
+protocol en dues fases; canvis (`--prompt valencia`, `jutge_gemba.py`):
+
+1. **Veu l'original català**: els nostres errors són de sentit ("cop" ->
+   "vegada", "calces" -> "bragues", "La exitosa del projecte"); sense
+   original només es veu la gramàtica. Tornen les categories d'*accuracy*;
+   l'escala de la fase 2 és la del WMT amb origen (significat + gramàtica).
+2. **Bloc «Valencian norm»**: tota forma acceptada per l'AVL és correcta,
+   amb exemples de les que marcava el prompt anterior (este, esta, seua,
+   servicis, siga, sigut, tindre, hui, ací...); les paraules del DNV que
+   pareixen castellanes també (gasto, exitós, llavadora), i l'accentuació
+   valenciana (é tancada: francés, cinqué, sotmés, comprén; diacrítics de
+   l'AVL).
+3. **Concordança amb el nom valencià** ("la despesa" -> "el gasto"): és on
+   fallen de veritat les nostres substitucions (el prompt anterior premiava
+   "Amb esta fi").
+4. **Les formes catalanes que també accepta l'AVL no són error** (aquest,
+   servei, -eix): el jutge mesura qualitat; el dialecte, el GD. Per això no
+   hi ha la categoria *non-translation* i el català sense traduir pot
+   traure nota alta.
+5. Els errors de sentit coneguts (vegada per cop, bragues per calces,
+   exitosa com a nom) hi van com a exemple (decisió de l'usuari).
+
+Job: `jutge_valencia.sh` (genera abans, amb `avlizador avalua`, les
+traduccions d'AVLizador i del motor sol en `entrades_valencia/`):
+
+| Conjunt | Sistemes | Per a què |
+|---|---|---|
+| manual (458) | referència, sense traduir, gemma3:12b, AVLizador | comparar amb el prompt anterior; trossos en formes valencianes (abans 242 / 893 en la referència) |
+| homografs (249), homografs_v2 (144) | referència, AVLizador, motor sol | el motor tradueix sempre: si el jutge veu els errors de sentit, la referència ha de guanyar quasi sempre on el motor és distint |
+
+```
+cd ~/scrapeo/AVLizador && git fetch && git checkout jutge-valencia && git pull
+cd pipeline/03_seleccio_de_model/jutge_llm
+LIMIT=10 sbatch jutge_valencia.sh     # prova
+sbatch jutge_valencia.sh              # tot (~2.200 textos, unes 4-5 h)
+```
+
+Eixida en `resultats/valencia/<conjunt>/qwen3.6-35b-a3b/` (`resum.md` amb
+la taula «cada sistema contra la referència»). Resultats: pendents.
