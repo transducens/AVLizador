@@ -23,7 +23,7 @@
 #       --wrap "NOMES_ENTRADES=1 bash jutge_valencia.sh"
 # i el jutge en una màquina amb GPU sense SLURM (p. ex. nevis, A100 40 GB),
 # amb entrades_valencia/ copiada i Ollama al PATH (no cal el venv):
-#   bash jutge_valencia.sh
+#   OLLAMA_VULKAN=1 bash jutge_valencia.sh      # nevis: la GPU només per Vulkan
 
 #SBATCH --job-name=jutge-val
 #SBATCH --output=logs/%j_jutge_valencia.out
@@ -89,7 +89,20 @@ nvidia-smi --query-gpu=index,name,memory.total,memory.used --format=csv,noheader
 PORT=$((11700 + ${SLURM_JOB_ID:-0} % 100))
 export OLLAMA_HOST="127.0.0.1:$PORT"
 export OLLAMA_MODELS="${OLLAMA_MODELS:-$HOME/ollama_models}"
-export OLLAMA_VULKAN=0 GGML_VK_VISIBLE_DEVICES=-1 OLLAMA_SCHED_SPREAD=true
+if [[ "${OLLAMA_VULKAN:-0}" == 1 ]]; then
+    # nevis (24/11/2026): driver NVIDIA 535 i Ollama demana el 550 per a CUDA;
+    # per Vulkan sí que veu la A100. El carregador libvulkan.so.1 no està al
+    # sistema: `apt download libvulkan1` + `dpkg -x` en ~/vulkan.
+    export OLLAMA_VULKAN=1
+    unset GGML_VK_VISIBLE_DEVICES
+    if [[ -d "$HOME/vulkan/usr/lib/x86_64-linux-gnu" ]]; then
+        export LD_LIBRARY_PATH="$HOME/vulkan/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    fi
+else
+    # Abaco: Vulkan fora (no respecta CUDA_VISIBLE_DEVICES)
+    export OLLAMA_VULKAN=0 GGML_VK_VISIBLE_DEVICES=-1
+fi
+export OLLAMA_SCHED_SPREAD=true
 mkdir -p "$OLLAMA_MODELS"
 NOM_LOG="${MODEL//[\/:]/-}"
 ollama serve > "$LOGS/ollama_valencia_${NOM_LOG}_${SLURM_JOB_ID:-local}.log" 2>&1 &

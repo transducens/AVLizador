@@ -176,14 +176,22 @@ def prompts(prompt: str, text: str, src: str, dom: str, spans: str | None = None
     return FASE2.format(tgt="Valencian", hyp=text, domini=DOMINI[dom], spans=spans)
 
 
+PENSAMENTS: dict[str, str] = {}  # últim raonament de cada crida amb `pensa` (24/11/2026)
+
+
 def xat(url: str, model: str, usuari: str, max_tokens: int, pensa: bool) -> str:
+    # Amb raonament, el context ha de cabre el prompt i fins a `max_tokens`
+    # de raonament (abans 4096 fix: es tallava).
     cos = {"model": model, "stream": False, "think": pensa,
            "messages": [{"role": "system", "content": SISTEMA}, {"role": "user", "content": usuari}],
-           "options": {"temperature": 0, "num_predict": max_tokens, "num_ctx": 4096}}
+           "options": {"temperature": 0, "num_predict": max_tokens,
+                       "num_ctx": 4096 + max_tokens if pensa else 4096}}
     req = urllib.request.Request(f"{url}/api/chat", data=json.dumps(cos).encode("utf-8"),
                                  headers={"Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=600) as r:
-        return json.loads(r.read())["message"]["content"]
+    with urllib.request.urlopen(req, timeout=1200) as r:
+        missatge = json.loads(r.read())["message"]
+    PENSAMENTS["darrer"] = missatge.get("thinking") or ""
+    return missatge["content"]
 
 
 _LINIA = re.compile(r'^\s*[-*]?\s*([\w ]+(?:/[\w -]+)?)\s*-\s*["“”\'`]?(.*?)["“”\'`]?\s*$')
@@ -272,6 +280,7 @@ def puntua(args) -> int:
             try:
                 crua1 = xat(args.ollama_url, args.model, prompts(args.prompt, text, src, dom),
                             8192 if args.pensa else 512, args.pensa)
+                pensament1 = PENSAMENTS.get("darrer", "") if args.pensa else ""
                 spans = llig_spans(crua1)
                 crua2 = xat(args.ollama_url, args.model, prompts(args.prompt, text, src, dom, crua1.strip()),
                             64, False)
@@ -279,6 +288,8 @@ def puntua(args) -> int:
                         "nota": llig_nota(crua2), "fase2": crua2}
                 if valencia:
                     fila["entrada"] = src
+                if pensament1:
+                    fila["pensament1"] = pensament1
             except Exception as e:  # noqa: BLE001 -- es registra i es continua
                 print(f"  ERROR en {k[:8]}: {e}", flush=True)
                 continue
