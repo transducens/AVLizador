@@ -17,6 +17,13 @@
 #   CONJUNTS="homografs_v2" sbatch jutge_valencia.sh   # només un conjunt
 # Si s'acaba per temps, es torna a llançar igual: continua des de la memòria
 # cau (resultats/valencia/<conjunt>/<model>/cache.jsonl).
+#
+# En dos màquines (24/11/2026): les traduccions en Abaco, només CPU
+#   sbatch --mem=8G --cpus-per-task=4 --time=01:00:00 -o logs/%j_entrades.out \
+#       --wrap "NOMES_ENTRADES=1 bash jutge_valencia.sh"
+# i el jutge en una màquina amb GPU sense SLURM (p. ex. nevis, A100 40 GB),
+# amb entrades_valencia/ copiada i Ollama al PATH (no cal el venv):
+#   bash jutge_valencia.sh
 
 #SBATCH --job-name=jutge-val
 #SBATCH --output=logs/%j_jutge_valencia.out
@@ -41,12 +48,17 @@ mkdir -p "$LOGS" "$ENTRADES"
 echo "Repo: $ARREL_REPO ($(git -C "$ARREL_REPO" log -1 --format='%h %s'))"
 echo "Model: $MODEL; conjunts: $CONJUNTS; en $(hostname)"
 
-# shellcheck disable=SC1091
-source "$VENV/bin/activate"
 export PYTHONIOENCODING=utf-8
+PYTHON=python3
 
-# 1. Traduccions d'AVLizador i del motor sol (CPU; uns minuts)
+# 1. Traduccions d'AVLizador i del motor sol (CPU; uns minuts). Només cal
+#    el venv si falten.
 cd "$ARREL_REPO"
+if [[ ! -f "$ENTRADES/manual/avlizador.json" || ! -f "$ENTRADES/homografs_v2/motor.json" ]]; then
+    # shellcheck disable=SC1091
+    source "$VENV/bin/activate"
+    PYTHON=python
+fi
 if [[ ! -f "$ENTRADES/manual/avlizador.json" ]]; then
     TMP="$ENTRADES/avalua_manual"
     avlizador avalua --benchmarks manual --eixida "$TMP"
@@ -62,13 +74,17 @@ if [[ ! -f "$ENTRADES/homografs_v2/motor.json" ]]; then
         cp "$(ls -t "$TMP"/motor_${b}_2*.json | head -1)" "$ENTRADES/$b/motor.json"
     done
 fi
+if [[ -n "${NOMES_ENTRADES:-}" ]]; then
+    echo "Traduccions en $ENTRADES:"; ls -l "$ENTRADES"/*/
+    exit 0
+fi
 
-# 2. Ollama propi en les 2 GPU (com jutge_llm.sh)
-if [[ -z "${CUDA_VISIBLE_DEVICES:-}" ]]; then
+# 2. Ollama propi (en Abaco, en les 2 GPU de SLURM; fora de SLURM, les de la màquina)
+if [[ -n "${SLURM_JOB_ID:-}" && -z "${CUDA_VISIBLE_DEVICES:-}" ]]; then
     echo "ERROR: SLURM no ha assignat cap GPU (CUDA_VISIBLE_DEVICES buit)." >&2
     exit 1
 fi
-echo "GPU: $CUDA_VISIBLE_DEVICES"
+echo "GPU: ${CUDA_VISIBLE_DEVICES:-totes}"
 nvidia-smi --query-gpu=index,name,memory.total,memory.used --format=csv,noheader || true
 PORT=$((11700 + ${SLURM_JOB_ID:-0} % 100))
 export OLLAMA_HOST="127.0.0.1:$PORT"
@@ -96,7 +112,7 @@ for c in $CONJUNTS; do
         *) echo "ERROR: conjunt desconegut: $c" >&2; exit 1 ;;
     esac
     echo "== $c =="
-    python jutge_gemba.py puntua --prompt valencia --model "$MODEL" --ollama-url "http://$OLLAMA_HOST" \
+    "$PYTHON" jutge_gemba.py puntua --prompt valencia --model "$MODEL" --ollama-url "http://$OLLAMA_HOST" \
         --eixida "resultats/valencia/$c" ${LIMIT:+--limit "$LIMIT"} ${PENSA:+--pensa} "${FITXERS[@]}"
 done
 grep -iE "offload|layers|VRAM" "$LOGS/ollama_valencia_${NOM_LOG}_${SLURM_JOB_ID:-local}.log" | tail -5 || true
