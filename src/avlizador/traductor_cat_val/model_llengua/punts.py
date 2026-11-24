@@ -53,6 +53,7 @@ from ..rules import (
     preserva_majuscula,
     separa_prefix_elidit,
 )
+from ..rules.cat_val.conjugacions_dict import _inici_de_frase
 from ..rules.pos_tagger import _GENERE_CURT, es_pronom_personal, genere_de
 
 TIPUS = ("colisio", "irresoluble", "resoluble")
@@ -127,6 +128,7 @@ class Punt:
     det_fem_sg: bool = False  # just abans, qualsevol DET femení singular ("la", "una"; 19/11/2026)
     verb_form: str = ""    # VerbForm d'spaCy ("Part": el participi fa d'adjectiu; 19/11/2026)
     generes_nom: frozenset = frozenset()  # gèneres de les lectures de nom de la forma catalana (19/11/2026)
+    majuscula_mig: bool = False  # en majúscula i no a l'inici de frase: possible nom propi (24/11/2026)
 
 
 _CATEGORIA_PER_POS = {pos: cat for cat, poss in _POS_PER_CATEGORIA.items() for pos in poss}
@@ -237,8 +239,21 @@ def decisio_spacy(punt: Punt) -> str | None:
     ...          pos="VERB", verb_form="Part", categoria="adj")
     >>> decisio_spacy(r) is None
     True
+
+    Majúscula a mitja frase (24/11/2026): és quasi sempre un nom propi ("La
+    Gandula", la secció d'un diari; el restaurant "La Deu"; "Deu" per
+    "Déu"; "Mossenaires Nous") i es deixa la paraula catalana, diga el que
+    diga spaCy. A l'inici de frase o tota en majúscules ("RENTADORA") no
+    s'aplica:
+
+    >>> g = Punt(0, "Gandula", "", "irresoluble", ["hamaca", "gandula"], "hamaca",
+    ...          pos="PROPN", categoria="n", majuscula_mig=True)
+    >>> decisio_spacy(g)
+    'gandula'
     """
     catala = next(c for c in punt.candidats if c.lower() == punt.paraula.lower())
+    if punt.majuscula_mig:
+        return catala
     if punt.pronom_abans and punt.categoria == "n":
         return catala
     genere_det = _GENERE_CURT.get(punt.genere_det)
@@ -305,11 +320,13 @@ def detecta(tokens: list[Token], punts: dict[str, dict], tipus=TIPUS_PER_DEFECTE
         det_fem_sg = (abans is not None and abans.pos == "DET" and abans.gender == "Fem"
                       and abans.number == "Sing")
         det_una = det_fem_sg and abans.pron_type == "Ind"
+        majuscula_mig = (paraula[:1].isupper() and not paraula.isupper()
+                         and not _inici_de_frase(tokens, i))  # "La Gandula", "Deu dirà" (24/11/2026)
         trobats.append(Punt(i, paraula, prefix, info["tipus"], list(info["candidats"]), motor,
                             pos=tok.pos, categoria=info["categoria"], lectures=info["lectures"],
                             genere=tok.gender, genere_det=genere_det, pronom_abans=pronom_abans,
                             det_indefinit_fem_sg=det_una, det_fem_sg=det_fem_sg, verb_form=tok.verb_form,
-                            generes_nom=info.get("generes_nom", frozenset())))
+                            generes_nom=info.get("generes_nom", frozenset()), majuscula_mig=majuscula_mig))
     return trobats
 
 
