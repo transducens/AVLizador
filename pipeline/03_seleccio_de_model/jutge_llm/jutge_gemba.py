@@ -112,8 +112,8 @@ where N is an integer from 0 to 100."""
 # Prompt "valencia" (24/11/2026): amb l'original i el bloc de la norma valenciana.
 NORMA_VAL = """Valencian norm (read carefully before annotating):
 - The translation is in Valencian, following the norm of the Acadèmia Valenciana de la Llengua (AVL: Diccionari normatiu valencià and Gramàtica normativa valenciana). Every form accepted by the AVL is correct. Do NOT mark a Valencian form as a spelling, grammar, register or terminology error, and do NOT annotate it because Central Catalan would use another form.
-- Examples of correct Valencian forms: demonstratives este, esta, estos, estes, eixe, eixa, eixos, eixes; possessives meua, teua, seua, meues, teues, seues; plurals servicis, edificis (servici, edifici); verbs siga, sigues, siguen, sigut, haja, hagen, tindre, vindre, tinga, vinga, isca, pense, parle, parlen (present subjunctive), servix, servixen, patix, patixen, conéixer, aparéixer; words hui, ací, eixir, xiquet, xicotet, prompte, faena, vesprada, colp, llavadora, bresquilla, dacsa, anou, brollador; per a + infinitive (per a fer).
-- Valencian accentuation is correct: closed é (francés, anglés, cinqué, sotmés, comprén, conéixer) and the AVL criteria for diacritic accents.
+- Examples of correct Valencian forms: demonstratives este, esta, estos, estes, eixe, eixa, eixos, eixes; possessives meua, teua, seua, meues, teues, seues; plurals servicis, edificis (servici, edifici); verbs siga, sigues, siguen, sigut, haja, hagen, tindre, vindre, traure, extraure, tinga, vinga, isca, pense, parle; present subjunctive in -en and -a (parlen, presenten, consideren, permeta, establisca); -ix / -ixen forms (servix, servixen, patix, impedix, referix, compartixen), conéixer, aparéixer; words hui, ací, eixir, xiquet, xicotet, prompte, faena, vesprada, colp, llavadora, bresquilla, dacsa, anou, brollador; per a + infinitive (per a fer); dos with feminine nouns (les dos parts, dos vegades).
+- Valencian accentuation is correct: closed é (francés, anglés, cinqué, comprén, conéixer) and participles in -és (atés, entés, emés, comprés, promés, sotmés, admés), and the AVL criteria for diacritic accents.
 - Words of the AVL dictionary are correct even if they look like Spanish (gasto, exitós, exitosa, llavadora). Mark a word as a Spanish borrowing only if it is not accepted by the AVL.
 - Forms shared with Central Catalan that the AVL also accepts (aquest, servei, -eix, avui) are not errors either.
 - Check gender and number agreement with the noun that is actually in the translation, not with the noun of the source: when a noun changes gender (la despesa -> el gasto, el préssec -> la bresquilla), the article, determiners and adjectives must agree with the Valencian noun. A determiner or adjective that does not agree is a grammar error.
@@ -148,6 +148,11 @@ Respond with ONLY a valid JSON object and nothing else: {{"score": N}}
 where N is an integer from 0 to 100."""
 
 
+# Empremta del prompt "valencia": entra en la clau de la memòria cau, i així
+# qualsevol canvi del prompt torna a puntuar-ho tot (24/11/2026).
+EMPREMTA_VAL = hashlib.sha1((SISTEMA + FASE1_VAL + FASE2_VAL).encode("utf-8")).hexdigest()[:8]
+
+
 def domini_de(id_frase: str) -> str:
     """
     >>> domini_de("BM-BOE-001"), domini_de("BM-AVL-010"), domini_de("HG2-028"), domini_de("RC070")
@@ -179,13 +184,13 @@ def prompts(prompt: str, text: str, src: str, dom: str, spans: str | None = None
 PENSAMENTS: dict[str, str] = {}  # últim raonament de cada crida amb `pensa` (24/11/2026)
 
 
-def xat(url: str, model: str, usuari: str, max_tokens: int, pensa: bool) -> str:
-    # Amb raonament, el context ha de cabre el prompt i fins a `max_tokens`
-    # de raonament (abans 4096 fix: es tallava).
+def xat(url: str, model: str, usuari: str, max_tokens: int, pensa: bool, num_ctx: int = 4096) -> str:
+    # Amb raonament, el context ha de cabre el prompt i el raonament (abans
+    # 4096 fix: es tallava). Les dos fases han de dur el mateix `num_ctx`:
+    # si canvia, Ollama torna a carregar el model a cada crida.
     cos = {"model": model, "stream": False, "think": pensa,
            "messages": [{"role": "system", "content": SISTEMA}, {"role": "user", "content": usuari}],
-           "options": {"temperature": 0, "num_predict": max_tokens,
-                       "num_ctx": 4096 + max_tokens if pensa else 4096}}
+           "options": {"temperature": 0, "num_predict": max_tokens, "num_ctx": num_ctx}}
     req = urllib.request.Request(f"{url}/api/chat", data=json.dumps(cos).encode("utf-8"),
                                  headers={"Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=1200) as r:
@@ -263,7 +268,7 @@ def puntua(args) -> int:
                 cau[r["clau"]] = r
     sistemes = carrega_sistemes(args.fitxers, args.limit)
     def clau_de(fr: dict) -> str:
-        return clau(fr["hipotesi"], domini_de(fr["id"]), fr["entrada"] if valencia else "")
+        return clau(fr["hipotesi"], domini_de(fr["id"]), f"{EMPREMTA_VAL}\n{fr['entrada']}" if valencia else "")
 
     pendents = {}
     for s in sistemes.values():
@@ -274,16 +279,17 @@ def puntua(args) -> int:
     print(f"{args.model} (prompt {args.prompt}): {len(sistemes)} sistemes, {len(cau)} textos ja puntuats, "
           f"{len(pendents)} pendents", flush=True)
 
+    ctx = 4096 + 8192 if args.pensa else 4096  # el mateix en les dos fases
     t0 = time.time()
     with cau_f.open("a", encoding="utf-8") as fc:
         for i, (k, (text, dom, src)) in enumerate(pendents.items(), 1):
             try:
                 crua1 = xat(args.ollama_url, args.model, prompts(args.prompt, text, src, dom),
-                            8192 if args.pensa else 512, args.pensa)
+                            8192 if args.pensa else 512, args.pensa, ctx)
                 pensament1 = PENSAMENTS.get("darrer", "") if args.pensa else ""
                 spans = llig_spans(crua1)
                 crua2 = xat(args.ollama_url, args.model, prompts(args.prompt, text, src, dom, crua1.strip()),
-                            64, False)
+                            64, False, ctx)
                 fila = {"clau": k, "text": text, "domini": dom, "fase1": crua1, "spans": spans,
                         "nota": llig_nota(crua2), "fase2": crua2}
                 if valencia:
@@ -313,6 +319,7 @@ def puntua(args) -> int:
         (eixida / f"{clau_s}.json").write_text(json.dumps({
             "sistema": s["nom"], "clau": clau_s, "model": args.model, "pensa": args.pensa,
             "mode": "amb_origen_valencia" if valencia else "nomes_traduccio",
+            "empremta_prompt": EMPREMTA_VAL if valencia else None,
             "timestamp": datetime.now().isoformat(timespec="seconds"),
             "resultats": files}, ensure_ascii=False, indent=1), encoding="utf-8")
     return resum_carpeta(eixida)
