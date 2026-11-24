@@ -40,6 +40,7 @@ from pathlib import Path
 from ..rules import (
     te_problema,
     _CATEGORIES_LEMA_RE,
+    _CONTRACCIO_A_FEMENI,
     _POS_PER_CATEGORIA,
     LEXIC_GENERAL_PATH,
     Token,
@@ -206,7 +207,9 @@ def decisio_spacy(punt: Punt) -> str | None:
     impossible, diga el que diga spaCy: "el nou de Bowie", "arriba el nou"
     (spaCy: NOUN) es queden "nou". Només amb el determinant: el gènere que
     spaCy dona a la paraula mateixa falla massa ("panotxes torrades",
-    masculí). "deu" és nom en els dos gèneres: no s'aplica.
+    masculí). "deu" és nom en els dos gèneres: no s'aplica. Una contracció
+    d'article masculí ("dels", "al", "pel"...) compta com a determinant
+    masculí (24/11/2026, vore `detecta`): "dels deus" es queda "deus".
 
     >>> n = Punt(0, "nou", "", "irresoluble", ["anou", "nou"], "anou", pos="NOUN", categoria="n",
     ...          genere_det="Masc", generes_nom=frozenset({"f"}))
@@ -264,6 +267,14 @@ def detecta(tokens: list[Token], punts: dict[str, dict], tipus=TIPUS_PER_DEFECTE
     [('cop', None), ('calces', 'bragues')]
     >>> detecta(motor.tradueix_tokens("Va rebre un cop de puny."), punts)
     []
+
+    Una contracció d'article masculí just abans ("dels", "als", "pel"...)
+    és, per al gènere, un determinant masculí (24/11/2026): spaCy la dona
+    ADP sense gènere i "dels deus" (els déus) passava al model, que triava
+    "brolladors" ("deus" només és nom en femení):
+
+    >>> [(p.paraula, p.genere_det) for p in detecta(motor.tradueix_tokens("La voluntat dels deus."), punts)]
+    [('deus', 'Masc')]
     """
     trobats = []
     for i, tok in enumerate(tokens):
@@ -288,6 +299,8 @@ def detecta(tokens: list[Token], punts: dict[str, dict], tipus=TIPUS_PER_DEFECTE
         j_abans = next((j for j in range(i - 1, -1, -1) if not tokens[j].surface.isspace()), None)
         abans = tokens[j_abans] if j_abans is not None else None
         genere_det = abans.gender if abans is not None and abans.pos == "DET" else ""
+        if not genere_det and abans is not None and abans.surface.lower() in _CONTRACCIO_A_FEMENI:
+            genere_det = "Masc"  # "dels deus": contracció d'article masculí (24/11/2026)
         pronom_abans = j_abans is not None and es_pronom_personal(tokens, j_abans)
         det_fem_sg = (abans is not None and abans.pos == "DET" and abans.gender == "Fem"
                       and abans.number == "Sing")
