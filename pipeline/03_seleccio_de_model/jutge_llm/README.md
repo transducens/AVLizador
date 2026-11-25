@@ -260,7 +260,66 @@ el dialecte (el català sense traduir n'ix primer, com s'havia decidit: això
 ho fa el GD) i premia deixar la paraula catalana en un homògraf, igual que
 el nostre criteri (no traduir és un error lleu). Per a mesurar els errors de
 sentit, el comparador de homògrafs (encerts / greus) continua sent més
-fiable. Possible millora, no provada: llevar de la llista del prompt les
-formes que són candidates d'un homògraf (anou, llavadora, exitosa, colp);
-canvia l'empremta i obliga a tornar a puntuar-ho tot (~4 h el manual, ~1 h
-els homògrafs en caiman).
+fiable. Llevar de la llista les formes candidates d'un homògraf es va
+provar l'endemà (prompt «valencia2», baix): no ho arregla.
+
+### Prova «valencia2»: sense les formes candidates d'un homògraf (job 2527, 25/11/2026)
+
+`--prompt valencia2` (`PROMPT=valencia2` en `jutge_valencia.sh`; empremta
+`22ff4239`; «valencia» no canvia, `341f0eeb`): el mateix prompt sense colp,
+llavadora, anou, brollador, exitós/exitosa en el bloc «Valencian norm», i
+l'exemple de «dos vegades» canviat per «dos persones». Eixida en
+`resultats/valencia2/`; anàlisi amb `python analitza_valencia.py --prompt
+valencia2`. Només els homògrafs: el manual es va aturar a mitjan (vore
+«Velocitat» baix), perquè els homògrafs ja responien la pregunta i en el
+manual estes paraules quasi no ixen.
+
+| Conjunt | Referència | AVLizador 2.0.1 | Motor sol |
+|---|---|---|---|
+| v1 (249) | 97,63 (97,97) | 97,61 (97,75) | 94,44 (94,80) |
+| v2 (144) | 95,00 (96,46) | 96,91 (97,78) | 86,46 (87,29) |
+
+(Entre parèntesis, «valencia».) **El jutge no distingix el sentit: llevar
+una paraula de la llista només gira el biaix.** Amb «valencia» acceptava
+anou/colp/llavadora sempre; amb «valencia2» les marca quasi sempre, també
+quan són correctes.
+
+- **Millora**: veu més vegades l'«anou» erroni del motor. Motor sol contra
+  la referència (guanya la referència / empat / guanya el motor): nou → anou
+  v1 2/5/0 → 6/1/0, v2 3/5/0 → 7/1/0; nous → anous (v2) 1/3/0 → 4/0/0;
+  panotxes → panolles 1/3/0 → 3/1/0.
+- **Empitjora**: castiga la referència quan la paraula és correcta.
+  «colp» (colp de porta, colp de sort): el motor deixa «cop» i ara és el
+  motor qui guanya en 5 frases (colp → cop 0/11/0 → 0/6/5); colps → cops
+  0/6/0 → 0/3/3.
+  «anou» fruit: HG057 «Va trencar una anou amb les dents» 85, HG2-004 «Afig
+  una anou picada a l'ensalada» 65 (7 frases). «llavadora» electrodomèstic:
+  HG2-066 «Les llavadores modernes gasten poca aigua» 65, error major (4
+  frases). Trossos de la referència en formes valencianes: v1 19 → 29, v2
+  11 → 18.
+- On el motor fa un error de sentit que no depén de la llista, igual o
+  pitjor: rentadora → llavadora 3/1/0 → 2/2/0, manques → faltes 5/3/0 →
+  3/5/0; gandula, calces, fartanera, igual que abans.
+
+**Conclusió**: Qwen 3.6 (35B-A3B, quantitzat a 4 bits, Q4_K_M) no sap en
+quin sentit és valenciana cadascuna d'estes paraules; cap llista ho
+arregla. Per als errors de sentit dels homògrafs, el jutge no servix: hi
+mana la comparació exacta amb la referència (comparador d'homògrafs). El
+jutge es queda per a la qualitat general en el manual, amb «valencia».
+
+**Velocitat i GPU en caiman (25/11/2026)**. El manual anava a ~30 s/text
+(ahir, job 2455, ~12 s): el model generava a ~110 tokens/s enfront de ~240,
+amb raonaments de la mateixa llargària. El job tenia 4 CPU
+(`--cpus-per-task=4`) i el llama-server arranca amb 36 fils (410 % de CPU,
+GPU al 17 %): tot apunta a falta de CPU (el 2455 en tenia 8; no s'ha
+comprovat). A més, **la GPU no era la que donava SLURM**: SLURM va assignar
+la 0 (`scontrol show job -d <id>` → `IDX:0`, `CUDA_VISIBLE_DEVICES=0`), però
+CUDA numera les GPU en un altre orde que `nvidia-smi`, i Ollama va carregar
+el model en la del bus `e1:00.0`, que és la 3 de `nvidia-smi`. Per a
+comprovar-ho:
+
+    nvidia-smi --query-gpu=index,pci.bus_id --format=csv,noheader
+    nvidia-smi --query-compute-apps=gpu_bus_id,pid,used_memory --format=csv,noheader | while IFS=, read bus pid mem; do echo "$bus $pid $mem $(ps -o user= -p $pid)"; done
+
+Arreglament proposat (no aplicat): `export CUDA_DEVICE_ORDER=PCI_BUS_ID`
+en `jutge_valencia.sh` abans d'`ollama serve`, i 8 CPU.

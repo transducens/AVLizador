@@ -277,7 +277,7 @@ def main(argv=None) -> int:
         dades = dict(sorted(dades.items(), key=lambda kv: kv[0] != "referencia"))
         print(f"{conjunt}: {', '.join(f'{k} {len(v)}' for k, v in dades.items())}", file=sys.stderr)
         L += [f"## {conjunt}", "", "### Trossos amb error", ""]
-        L += taula_trossos(dades, "Prompt «valencia»")
+        L += taula_trossos(dades, f"Prompt «{args.prompt}»")
         if conjunt == "manual" and DIR_VELL.exists():
             vell = {k: v for k, v in llig(DIR_VELL).items()
                     if k in ("referencia", "copia", "avlizador_2.0.0", "ollama_gemma3-12b")}

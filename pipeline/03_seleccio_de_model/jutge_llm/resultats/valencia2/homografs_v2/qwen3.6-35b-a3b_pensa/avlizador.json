@@ -1,0 +1,1385 @@
+{
+ "sistema": "Motor + KenLM + sentit",
+ "clau": "avlizador",
+ "model": "qwen3.6:35b-a3b",
+ "pensa": true,
+ "mode": "amb_origen_valencia",
+ "prompt": "valencia2",
+ "empremta_prompt": "22ff4239",
+ "timestamp": "2026-11-25T09:55:35",
+ "resultats": [
+  {
+   "id": "HG2-001",
+   "entrada": "Ha caigut una nou de l'arbre del pati.",
+   "hipotesi": "Ha caigut una anou de l'arbre del pati.",
+   "referencia": "Ha caigut una anou de l'arbre del pati.",
+   "nota": 85.0,
+   "nota_spans": 97.5,
+   "error_spans": [
+    {
+     "severity": "minor",
+     "category": "fluency/spelling",
+     "text": "anou"
+    }
+   ]
+  },
+  {
+   "id": "HG2-002",
+   "entrada": "Per esmorzar es menja una nou i un tros de formatge.",
+   "hipotesi": "Per a esmorzar es menja una anou i un tros de formatge.",
+   "referencia": "Per a esmorzar es menja una anou i un tros de formatge.",
+   "nota": 85.0,
+   "nota_spans": 97.5,
+   "error_spans": [
+    {
+     "severity": "minor",
+     "category": "fluency/spelling",
+     "text": "anou"
+    }
+   ]
+  },
+  {
+   "id": "HG2-003",
+   "entrada": "La nou que em vas donar estava podrida per dins.",
+   "hipotesi": "L'anou que em vas donar estava podrida per dins.",
+   "referencia": "L'anou que em vas donar estava podrida per dins.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-004",
+   "entrada": "Afegeix una nou picada a l'amanida.",
+   "hipotesi": "Afig una anou picada a l'ensalada.",
+   "referencia": "Afig una anou picada a l'ensalada.",
+   "nota": 65.0,
+   "nota_spans": 95.0,
+   "error_spans": [
+    {
+     "severity": "minor",
+     "category": "grammar/anou",
+     "text": "anou"
+    },
+    {
+     "severity": "minor",
+     "category": "terminology/ensalada",
+     "text": "ensalada"
+    }
+   ]
+  },
+  {
+   "id": "HG2-005",
+   "entrada": "Hem estrenat un ordinador nou a l'oficina.",
+   "hipotesi": "Hem estrenat un ordinador nou a l'oficina.",
+   "referencia": "Hem estrenat un ordinador nou a l'oficina.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-006",
+   "entrada": "El nou director començarà a treballar dilluns.",
+   "hipotesi": "El nou director començarà a treballar dilluns.",
+   "referencia": "El nou director començarà a treballar dilluns.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-007",
+   "entrada": "Aquest abric encara sembla nou.",
+   "hipotesi": "Este abric encara sembla nou.",
+   "referencia": "Este abric encara sembla nou.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-008",
+   "entrada": "Han obert un camí nou entre els dos pobles.",
+   "hipotesi": "Han obert un camí nou entre els dos pobles.",
+   "referencia": "Han obert un camí nou entre els dos pobles.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-009",
+   "entrada": "La reunió començarà a les nou en punt.",
+   "hipotesi": "La reunió començarà a les nou en punt.",
+   "referencia": "La reunió començarà a les nou en punt.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-010",
+   "entrada": "El seu fill petit té nou anys.",
+   "hipotesi": "El seu fill xicotet té nou anys.",
+   "referencia": "El seu fill xicotet té nou anys.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-011",
+   "entrada": "Hi havia nou persones a la cua.",
+   "hipotesi": "Hi havia nou persones a la cua.",
+   "referencia": "Hi havia nou persones a la cua.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-012",
+   "entrada": "Viu al número nou d'aquest carrer.",
+   "hipotesi": "Viu al número nou d'este carrer.",
+   "referencia": "Viu al número nou d'este carrer.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-013",
+   "entrada": "Ha comprat un quilo de nous al mercat.",
+   "hipotesi": "Ha comprat un quilo de nous al mercat.",
+   "referencia": "Ha comprat un quilo d'anous al mercat.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-014",
+   "entrada": "Les nous d'aquest any han sortit molt grosses.",
+   "hipotesi": "Les anous d'este any han eixit molt grosses.",
+   "referencia": "Les anous d'este any han eixit molt grosses.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-015",
+   "entrada": "Posa unes quantes nous al pastís de poma.",
+   "hipotesi": "Posa unes quantes nous al pastís de poma.",
+   "referencia": "Posa unes quantes anous al pastís de poma.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-016",
+   "entrada": "Cada tardor collim les nous del noguer.",
+   "hipotesi": "Cada tardor collim les anous del noguer.",
+   "referencia": "Cada tardor collim les anous del noguer.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-017",
+   "entrada": "Els alumnes nous arriben la setmana que ve.",
+   "hipotesi": "Els alumnes nous arriben la setmana que ve.",
+   "referencia": "Els alumnes nous arriben la setmana que ve.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-018",
+   "entrada": "Necessito uns pantalons nous per a la festa.",
+   "hipotesi": "Necessite uns pantalons nous per a la festa.",
+   "referencia": "Necessite uns pantalons nous per a la festa.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-019",
+   "entrada": "Han aparegut nous casos de grip a l'escola.",
+   "hipotesi": "Han aparegut nous casos de grip a l'escola.",
+   "referencia": "Han aparegut nous casos de grip a l'escola.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-020",
+   "entrada": "Els veïns nous són molt amables.",
+   "hipotesi": "Els veïns nous són molt amables.",
+   "referencia": "Els veïns nous són molt amables.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-021",
+   "entrada": "La manca de pluja ha arruïnat la collita.",
+   "hipotesi": "La manca de pluja ha arruïnat la collita.",
+   "referencia": "La falta de pluja ha arruïnat la collita.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-022",
+   "entrada": "Hi ha una gran manca de metges als pobles.",
+   "hipotesi": "Hi ha una gran falta de metges als pobles.",
+   "referencia": "Hi ha una gran falta de metges als pobles.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-023",
+   "entrada": "La seva manca d'experiència es nota molt.",
+   "hipotesi": "La seua manca d'experiència es nota molt.",
+   "referencia": "La seua falta d'experiència es nota molt.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-024",
+   "entrada": "El projecte es va aturar per manca de diners.",
+   "hipotesi": "El projecte es va aturar per falta de diners.",
+   "referencia": "El projecte es va aturar per falta de diners.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-025",
+   "entrada": "Encara manca una setmana per a les vacances.",
+   "hipotesi": "Encara manca una setmana per a les vacacions.",
+   "referencia": "Encara manca una setmana per a les vacacions.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-026",
+   "entrada": "A la sopa li manca una mica de sal.",
+   "hipotesi": "A la sopa li manca una mica de sal.",
+   "referencia": "A la sopa li manca una mica de sal.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-027",
+   "entrada": "A l'equip li manca un jugador per poder començar.",
+   "hipotesi": "A l'equip li manca un jugador per a poder començar.",
+   "referencia": "A l'equip li manca un jugador per a poder començar.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-028",
+   "entrada": "Si en manca algun, avisa'm de seguida.",
+   "hipotesi": "Si en falta algun, avisa'm de seguida.",
+   "referencia": "Si en falta algun, avisa'm de seguida.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-029",
+   "entrada": "Després de l'accident es va quedar manca del braç dret.",
+   "hipotesi": "Després de l'accident es va quedar manca del braç dret.",
+   "referencia": "Després de l'accident es va quedar manca del braç dret.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-030",
+   "entrada": "La dona manca escrivia amb la mà esquerra.",
+   "hipotesi": "La dona manca escrivia amb la mà esquerra.",
+   "referencia": "La dona manca escrivia amb la mà esquerra.",
+   "nota": 45.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "accuracy/mistranslation",
+     "text": "manca"
+    }
+   ]
+  },
+  {
+   "id": "HG2-031",
+   "entrada": "Va néixer manca d'una mà però toca el piano.",
+   "hipotesi": "Va nàixer manca d'una mà però toca el piano.",
+   "referencia": "Va nàixer manca d'una mà però toca el piano.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-032",
+   "entrada": "La pirata manca portava un ganxo al canell.",
+   "hipotesi": "La pirata manca portava un ganxo al canell.",
+   "referencia": "La pirata manca portava un ganxo al canell.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-033",
+   "entrada": "L'informe assenyala greus manques en la seguretat de l'edifici.",
+   "hipotesi": "L'informe assenyala greus manques en la seguretat de l'edifici.",
+   "referencia": "L'informe assenyala greus faltes en la seguretat de l'edifici.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-034",
+   "entrada": "Les manques de l'escola són evidents per a tothom.",
+   "hipotesi": "Les manques de l'escola són evidents per a tothom.",
+   "referencia": "Les faltes de l'escola són evidents per a tothom.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-035",
+   "entrada": "Hem detectat diverses manques en el pressupost.",
+   "hipotesi": "Hem detectat diverses manques en el pressupost.",
+   "referencia": "Hem detectat diverses faltes en el pressupost.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-036",
+   "entrada": "Les manques alimentàries afecten molts infants.",
+   "hipotesi": "Les manques alimentàries afecten molts infants.",
+   "referencia": "Les faltes alimentàries afecten molts infants.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-037",
+   "entrada": "Tu ens manques molt des que te'n vas anar.",
+   "hipotesi": "Tu ens manques molt des que te'n vas anar.",
+   "referencia": "Tu ens manques molt des que te'n vas anar.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-038",
+   "entrada": "Si tu manques a la reunió, no podrem votar.",
+   "hipotesi": "Si tu manques a la reunió, no podrem votar.",
+   "referencia": "Si tu manques a la reunió, no podrem votar.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-039",
+   "entrada": "Ara ja només hi manques tu.",
+   "hipotesi": "Ara ja només hi manques tu.",
+   "referencia": "Ara ja només hi manques tu.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-040",
+   "entrada": "Quan tu manques, la casa sembla buida.",
+   "hipotesi": "Quan tu manques, la casa sembla buida.",
+   "referencia": "Quan tu manques, la casa sembla buida.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-041",
+   "entrada": "Les dues germanes van quedar manques després de la guerra.",
+   "hipotesi": "Les dos germanes van quedar manques després de la guerra.",
+   "referencia": "Les dos germanes van quedar manques després de la guerra.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-042",
+   "entrada": "Les estàtues manques del museu són romanes.",
+   "hipotesi": "Les estàtues manques del museu són romanes.",
+   "referencia": "Les estàtues manques del museu són romanes.",
+   "nota": 45.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "accuracy/mistranslation",
+     "text": "manques"
+    }
+   ]
+  },
+  {
+   "id": "HG2-043",
+   "entrada": "Eren dues velles manques que vivien soles al mas.",
+   "hipotesi": "Eren dos velles manques que vivien soles al mas.",
+   "referencia": "Eren dos velles manques que vivien soles al mas.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-044",
+   "entrada": "Les figures manques del pessebre s'han de reparar.",
+   "hipotesi": "Les figures manques del pesebre s'han de reparar.",
+   "referencia": "Les figures manques del pesebre s'han de reparar.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-045",
+   "entrada": "A la muntanya hi ha una deu d'aigua molt freda.",
+   "hipotesi": "A la muntanya hi ha un brollador d'aigua molt fred.",
+   "referencia": "A la muntanya hi ha un brollador d'aigua molt freda.",
+   "nota": 95.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-046",
+   "entrada": "Vam omplir les cantimplores a la deu del barranc.",
+   "hipotesi": "Vam omplir les cantimplores al brollador del barranc.",
+   "referencia": "Vam omplir les cantimplores al brollador del barranc.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-047",
+   "entrada": "Aquesta deu no s'asseca mai, ni tan sols a l'estiu.",
+   "hipotesi": "Este brollador no s'asseca mai, ni tan sols a l'estiu.",
+   "referencia": "Este brollador no s'asseca mai, ni tan sols a l'estiu.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-048",
+   "entrada": "El poble es proveïa d'aigua d'una deu natural.",
+   "hipotesi": "El poble es proveïa d'aigua d'un brollador natural.",
+   "referencia": "El poble es proveïa d'aigua d'un brollador natural.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-049",
+   "entrada": "Tinc deu euros a la butxaca.",
+   "hipotesi": "Tinc deu euros a la butxaca.",
+   "referencia": "Tinc deu euros a la butxaca.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-050",
+   "entrada": "L'autobús passa cada deu minuts.",
+   "hipotesi": "L'autobús passa cada deu minuts.",
+   "referencia": "L'autobús passa cada deu minuts.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-051",
+   "entrada": "Vam caminar deu quilòmetres sense parar.",
+   "hipotesi": "Vam caminar deu quilòmetres sense parar.",
+   "referencia": "Vam caminar deu quilòmetres sense parar.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-052",
+   "entrada": "Hi ha deu cadires al menjador.",
+   "hipotesi": "Hi ha deu cadires al menjador.",
+   "referencia": "Hi ha deu cadires al menjador.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-053",
+   "entrada": "En Joan em deu cinquanta euros.",
+   "hipotesi": "En Joan em deu cinquanta euros.",
+   "referencia": "En Joan em deu cinquanta euros.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-054",
+   "entrada": "Ja és fosc, deu ser molt tard.",
+   "hipotesi": "Ja és fosc, deu ser molt tard.",
+   "referencia": "Ja és fosc, deu ser molt tard.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-055",
+   "entrada": "Aquest paquet deu pesar uns cinc quilos.",
+   "hipotesi": "Este paquet deu pesar uns cinc quilos.",
+   "referencia": "Este paquet deu pesar uns cinc quilos.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-056",
+   "entrada": "La factura es deu pagar abans de divendres.",
+   "hipotesi": "La factura es deu pagar abans de divendres.",
+   "referencia": "La factura es deu pagar abans de divendres.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-057",
+   "entrada": "Posa els llençols a la rentadora.",
+   "hipotesi": "Posa els llençols a la rentadora.",
+   "referencia": "Posa els llençols a la llavadora.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-058",
+   "entrada": "Hem comprat una rentadora que gasta poca aigua.",
+   "hipotesi": "Hem comprat una rentadora que gasta poca aigua.",
+   "referencia": "Hem comprat una llavadora que gasta poca aigua.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-059",
+   "entrada": "La roba encara és dins de la rentadora.",
+   "hipotesi": "La roba encara és dins de la llavadora.",
+   "referencia": "La roba encara és dins de la llavadora.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-060",
+   "entrada": "El tècnic ha arreglat la rentadora del pis.",
+   "hipotesi": "El tècnic ha arreglat la rentadora del pis.",
+   "referencia": "El tècnic ha arreglat la llavadora del pis.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-061",
+   "entrada": "Treballava de rentadora de plats en un restaurant.",
+   "hipotesi": "Treballava de rentadora de plats en un restaurant.",
+   "referencia": "Treballava de rentadora de plats en un restaurant.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-062",
+   "entrada": "Una dona rentadora portava la roba al riu.",
+   "hipotesi": "Una dona rentadora portava la roba al riu.",
+   "referencia": "Una dona rentadora portava la roba al riu.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-063",
+   "entrada": "És una crema rentadora per a pells greixoses.",
+   "hipotesi": "És una crema rentadora per a pells greixoses.",
+   "referencia": "És una crema rentadora per a pells greixoses.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-064",
+   "entrada": "La planta rentadora de carbó va tancar fa anys.",
+   "hipotesi": "La planta rentadora de carbó va tancar fa anys.",
+   "referencia": "La planta rentadora de carbó va tancar fa anys.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-065",
+   "entrada": "La botiga ven rentadores i assecadores.",
+   "hipotesi": "La botiga ven llavadores i assecadores.",
+   "referencia": "La botiga ven llavadores i assecadores.",
+   "nota": 85.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "accuracy/mistranslation",
+     "text": "llavadores"
+    }
+   ]
+  },
+  {
+   "id": "HG2-066",
+   "entrada": "Les rentadores modernes gasten poca aigua.",
+   "hipotesi": "Les rentadores modernes gasten poca aigua.",
+   "referencia": "Les llavadores modernes gasten poca aigua.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-067",
+   "entrada": "A la bugaderia hi ha deu rentadores.",
+   "hipotesi": "A la bugaderia hi ha deu rentadores.",
+   "referencia": "A la bugaderia hi ha deu llavadores.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-068",
+   "entrada": "Totes les rentadores de l'edifici són al soterrani.",
+   "hipotesi": "Totes les rentadores de l'edifici són al soterrani.",
+   "referencia": "Totes les llavadores de l'edifici són al soterrani.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-069",
+   "entrada": "Les rentadores del poble es trobaven al safareig.",
+   "hipotesi": "Les rentadores del poble es trobaven al safareig.",
+   "referencia": "Les rentadores del poble es trobaven al safareig.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-070",
+   "entrada": "Antigament les rentadores feien la bugada al riu.",
+   "hipotesi": "Antigament les rentadores feien la bugada al riu.",
+   "referencia": "Antigament les rentadores feien la bugada al riu.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-071",
+   "entrada": "Són solucions rentadores suaus per a la pell.",
+   "hipotesi": "Són solucions rentadores suaus per a la pell.",
+   "referencia": "Són solucions rentadores suaus per a la pell.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-072",
+   "entrada": "Les dones rentadores cantaven mentre treballaven.",
+   "hipotesi": "Les dones rentadores cantaven mentre treballaven.",
+   "referencia": "Les dones rentadores cantaven mentre treballaven.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-089",
+   "entrada": "Ha comprat unes calces de cotó.",
+   "hipotesi": "Ha comprat unes calces de cotó.",
+   "referencia": "Ha comprat unes bragues de cotó.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-090",
+   "entrada": "Les calces són al calaix de la roba interior.",
+   "hipotesi": "Les calces són al calaix de la roba interior.",
+   "referencia": "Les bragues són al calaix de la roba interior.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-091",
+   "entrada": "Es va posar unes calces netes després de la dutxa.",
+   "hipotesi": "Es va posar unes calces netes després de la dutxa.",
+   "referencia": "Es va posar unes bragues netes després de la dutxa.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-092",
+   "entrada": "Al paquet hi ha tres calces de colors.",
+   "hipotesi": "Al paquet hi ha tres calces de colors.",
+   "referencia": "Al paquet hi ha tres bragues de colors.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-093",
+   "entrada": "En aquesta casa, qui porta les calces és la mare.",
+   "hipotesi": "En esta casa, qui porta les calces és la mare.",
+   "referencia": "En esta casa, qui porta les calces és la mare.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-094",
+   "entrada": "El patge duia unes calces vermelles i una gorra.",
+   "hipotesi": "El patge duia unes calces vermelles i una gorra.",
+   "referencia": "El patge duia unes calces vermelles i una gorra.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-095",
+   "entrada": "Al segle XVI els nobles vestien calces i jubó.",
+   "hipotesi": "Al segle XVI els nobles vestien calces i jubó.",
+   "referencia": "Al segle XVI els nobles vestien calces i jubó.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-096",
+   "entrada": "L'armadura del cavaller cobria les calces de llana.",
+   "hipotesi": "L'armadura del cavaller cobria les calces de llana.",
+   "referencia": "L'armadura del cavaller cobria les calces de llana.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-097",
+   "entrada": "S'ha estirat a la gandula de la piscina.",
+   "hipotesi": "S'ha estirat a l'hamaca de la piscina.",
+   "referencia": "S'ha estirat a l'hamaca de la piscina.",
+   "nota": 45.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "accuracy/mistranslation",
+     "text": "hamaca"
+    }
+   ]
+  },
+  {
+   "id": "HG2-098",
+   "entrada": "Hem comprat una gandula plegable per a la terrassa.",
+   "hipotesi": "Hem comprat una hamaca plegable per a la terrassa.",
+   "referencia": "Hem comprat una hamaca plegable per a la terrassa.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-099",
+   "entrada": "La gandula és massa a prop de l'aigua.",
+   "hipotesi": "L'hamaca és massa a prop de l'aigua.",
+   "referencia": "L'hamaca és massa a prop de l'aigua.",
+   "nota": 0.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-100",
+   "entrada": "Deixa la tovallola damunt de la gandula.",
+   "hipotesi": "Deixa la tovallola damunt de l'hamaca.",
+   "referencia": "Deixa la tovallola damunt de l'hamaca.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-101",
+   "entrada": "La meva germana és molt gandula i no ajuda mai.",
+   "hipotesi": "La meua germana és molt gandula i no ajuda mai.",
+   "referencia": "La meua germana és molt gandula i no ajuda mai.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-102",
+   "entrada": "No siguis gandula i acaba els deures.",
+   "hipotesi": "No sigues gandula i acaba els deures.",
+   "referencia": "No sigues gandula i acaba els deures.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-103",
+   "entrada": "És una gandula: es passa el dia al sofà.",
+   "hipotesi": "És una gandula: es passa el dia al sofà.",
+   "referencia": "És una gandula: es passa el dia al sofà.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-104",
+   "entrada": "Una estudiant gandula no aprova mai.",
+   "hipotesi": "Una estudiant gandula no aprova mai.",
+   "referencia": "Una estudiant gandula no aprova mai.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-105",
+   "entrada": "Han posat gandules noves a la platja.",
+   "hipotesi": "Han posat gandules noves a la platja.",
+   "referencia": "Han posat hamaques noves a la platja.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-106",
+   "entrada": "Les gandules de l'hotel són molt còmodes.",
+   "hipotesi": "Les hamaques de l'hotel són molt còmodes.",
+   "referencia": "Les hamaques de l'hotel són molt còmodes.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-107",
+   "entrada": "Al jardí hi ha dues gandules i una taula.",
+   "hipotesi": "Al jardí hi ha dos gandules i una taula.",
+   "referencia": "Al jardí hi ha dos hamaques i una taula.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-108",
+   "entrada": "Hem de plegar les gandules abans que plogui.",
+   "hipotesi": "Hem de plegar les gandules abans que ploga.",
+   "referencia": "Hem de plegar les hamaques abans que ploga.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-109",
+   "entrada": "Les meves cosines són molt gandules.",
+   "hipotesi": "Les meues cosines són molt gandules.",
+   "referencia": "Les meues cosines són molt gandules.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-110",
+   "entrada": "No sigueu gandules i netegeu l'habitació.",
+   "hipotesi": "No sigueu gandules i netegeu l'habitació.",
+   "referencia": "No sigueu gandules i netegeu l'habitació.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-111",
+   "entrada": "Eren unes alumnes gandules però simpàtiques.",
+   "hipotesi": "Eren unes alumnes gandules però simpàtiques.",
+   "referencia": "Eren unes alumnes gandules però simpàtiques.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-112",
+   "entrada": "Les gates de casa són molt gandules.",
+   "hipotesi": "Les gates de casa són molt gandules.",
+   "referencia": "Les gates de casa són molt gandules.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-113",
+   "entrada": "Ha torrat una panotxa a la brasa.",
+   "hipotesi": "Ha torrat una panolla a la brasa.",
+   "referencia": "Ha torrat una panolla a la brasa.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-114",
+   "entrada": "Cada panotxa té centenars de grans de blat de moro.",
+   "hipotesi": "Cada panotxa té centenars de grans de dacsa.",
+   "referencia": "Cada panolla té centenars de grans de dacsa.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-115",
+   "entrada": "Les gallines s'han menjat la panotxa sencera.",
+   "hipotesi": "Les gallines s'han menjat la panolla sencera.",
+   "referencia": "Les gallines s'han menjat la panolla sencera.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-116",
+   "entrada": "Va arrencar una panotxa de la planta.",
+   "hipotesi": "Va arrencar una panolla de la planta.",
+   "referencia": "Va arrencar una panolla de la planta.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-117",
+   "entrada": "La seva àvia era panotxa, de l'horta de Múrcia.",
+   "hipotesi": "La seua àvia era panotxa, de l'horta de Múrcia.",
+   "referencia": "La seua àvia era panotxa, de l'horta de Múrcia.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-118",
+   "entrada": "Una dona panotxa venia hortalisses al mercat.",
+   "hipotesi": "Una dona panotxa venia hortalisses al mercat.",
+   "referencia": "Una dona panotxa venia hortalisses al mercat.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-119",
+   "entrada": "La cultura panotxa de l'horta té moltes festes.",
+   "hipotesi": "La cultura panotxa de l'horta té moltes festes.",
+   "referencia": "La cultura panotxa de l'horta té moltes festes.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-120",
+   "entrada": "Cantava una cançó panotxa tradicional.",
+   "hipotesi": "Cantava una cançó panotxa tradicional.",
+   "referencia": "Cantava una cançó panotxa tradicional.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-121",
+   "entrada": "Hem collit vint panotxes de l'hort.",
+   "hipotesi": "Hem collit vint panolles de l'hort.",
+   "referencia": "Hem collit vint panolles de l'hort.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-122",
+   "entrada": "Les panotxes es posen a assecar al sol.",
+   "hipotesi": "Les panotxes es posen a assecar al sol.",
+   "referencia": "Les panolles es posen a assecar al sol.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-123",
+   "entrada": "Venen panotxes torrades a la fira.",
+   "hipotesi": "Venen panolles torrades a la fira.",
+   "referencia": "Venen panolles torrades a la fira.",
+   "nota": 95.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "accuracy/mistranslation",
+     "text": "panolles"
+    }
+   ]
+  },
+  {
+   "id": "HG2-124",
+   "entrada": "Els porcs mengen panotxes seques.",
+   "hipotesi": "Els porcs mengen panotxes seques.",
+   "referencia": "Els porcs mengen panolles seques.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-125",
+   "entrada": "Les dones panotxes portaven el vestit tradicional de l'horta.",
+   "hipotesi": "Les dones panotxes portaven el vestit tradicional de l'horta.",
+   "referencia": "Les dones panotxes portaven el vestit tradicional de l'horta.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-126",
+   "entrada": "Les cançons panotxes parlen de la vida al camp.",
+   "hipotesi": "Les cançons panotxes parlen de la vida al camp.",
+   "referencia": "Les cançons panotxes parlen de la vida al camp.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-127",
+   "entrada": "Les famílies panotxes celebren la festa de l'horta.",
+   "hipotesi": "Les famílies panotxes celebren la festa de l'horta.",
+   "referencia": "Les famílies panotxes celebren la festa de l'horta.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-128",
+   "entrada": "Les tradicions panotxes de Múrcia són molt antigues.",
+   "hipotesi": "Les tradicions panotxes de Múrcia són molt antigues.",
+   "referencia": "Les tradicions panotxes de Múrcia són molt antigues.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-129",
+   "entrada": "Ahir vam fer una fartanera de marisc.",
+   "hipotesi": "Ahir vam fer una fartada de marisc.",
+   "referencia": "Ahir vam fer una fartada de marisc.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-130",
+   "entrada": "Després de la fartanera de Nadal no em podia ni moure.",
+   "hipotesi": "Després de la fartada de Nadal no em podia ni moure.",
+   "referencia": "Després de la fartada de Nadal no em podia ni moure.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-131",
+   "entrada": "Quina fartanera de pastissos que es van fer!",
+   "hipotesi": "Quina fartanera de pastissos que es van fer!",
+   "referencia": "Quina fartada de pastissos que es van fer!",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-132",
+   "entrada": "La fartanera de la boda va durar tota la tarda.",
+   "hipotesi": "La fartada de la boda va durar tota la vesprada.",
+   "referencia": "La fartada de la boda va durar tota la vesprada.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-133",
+   "entrada": "La meva gossa és molt fartanera i s'ho menja tot.",
+   "hipotesi": "La meua gossa és molt fartanera i s'ho menja tot.",
+   "referencia": "La meua gossa és molt fartanera i s'ho menja tot.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-134",
+   "entrada": "És una nena fartanera que sempre té gana.",
+   "hipotesi": "És una xiqueta fartanera que sempre té gana.",
+   "referencia": "És una xiqueta fartanera que sempre té gana.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-135",
+   "entrada": "No siguis fartanera i deixa'n per als altres.",
+   "hipotesi": "No sigues fartanera i deixa'n per als altres.",
+   "referencia": "No sigues fartanera i deixa'n per als altres.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-136",
+   "entrada": "Una persona fartanera no sap dir que no al menjar.",
+   "hipotesi": "Una persona fartanera no sap dir que no al menjar.",
+   "referencia": "Una persona fartanera no sap dir que no al menjar.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-137",
+   "entrada": "A l'estiu fèiem fartaneres de síndria.",
+   "hipotesi": "A l'estiu fèiem fartaneres de meló d'Alger.",
+   "referencia": "A l'estiu fèiem fartades de síndria.",
+   "nota": 45.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "accuracy/mistranslation",
+     "text": "meló d'Alger"
+    }
+   ]
+  },
+  {
+   "id": "HG2-138",
+   "entrada": "Les fartaneres de les festes ens deixen rebentats.",
+   "hipotesi": "Les fartades de les festes ens deixen rebentats.",
+   "referencia": "Les fartades de les festes ens deixen rebentats.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-139",
+   "entrada": "No són bones aquestes fartaneres de dolços.",
+   "hipotesi": "No són bones estes fartaneres de dolços.",
+   "referencia": "No són bones estes fartades de dolços.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-140",
+   "entrada": "Recordo les fartaneres de castanyes de la tardor.",
+   "hipotesi": "Recorde les fartades de castanyes de la tardor.",
+   "referencia": "Recorde les fartades de castanyes de la tardor.",
+   "nota": 85.0,
+   "nota_spans": 97.5,
+   "error_spans": [
+    {
+     "severity": "minor",
+     "category": "terminology/inappropriate for context",
+     "text": "fartades"
+    }
+   ]
+  },
+  {
+   "id": "HG2-141",
+   "entrada": "Les meves nebodes són molt fartaneres.",
+   "hipotesi": "Les meues nebodes són molt fartaneres.",
+   "referencia": "Les meues nebodes són molt fartaneres.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-142",
+   "entrada": "Les gates fartaneres s'han menjat el peix.",
+   "hipotesi": "Les gates fartaneres s'han menjat el peix.",
+   "referencia": "Les gates fartaneres s'han menjat el peix.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-143",
+   "entrada": "Eren unes noies fartaneres i alegres.",
+   "hipotesi": "Eren unes xiques fartaneres i alegres.",
+   "referencia": "Eren unes xiques fartaneres i alegres.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-144",
+   "entrada": "Les oques fartaneres no paren de menjar.",
+   "hipotesi": "Les oques fartaneres no paren de menjar.",
+   "referencia": "Les oques fartaneres no paren de menjar.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-145",
+   "entrada": "Ha estat una campanya molt reeixida.",
+   "hipotesi": "Ha sigut una campanya molt exitosa.",
+   "referencia": "Ha sigut una campanya molt exitosa.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-146",
+   "entrada": "L'exposició va ser molt reeixida.",
+   "hipotesi": "L'exposició va ser molt exitosa.",
+   "referencia": "L'exposició va ser molt exitosa.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-147",
+   "entrada": "Va fer una carrera reeixida com a advocada.",
+   "hipotesi": "Va fer una carrera reeixida com a advocada.",
+   "referencia": "Va fer una carrera exitosa com a advocada.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-148",
+   "entrada": "És una adaptació reeixida de la novel·la.",
+   "hipotesi": "És una adaptació reeixida de la novel·la.",
+   "referencia": "És una adaptació exitosa de la novel·la.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-149",
+   "entrada": "La reeixida del projecte depèn de tots.",
+   "hipotesi": "La reeixida del projecte depén de tots.",
+   "referencia": "La reeixida del projecte depén de tots.",
+   "nota": 95.0,
+   "nota_spans": 97.5,
+   "error_spans": [
+    {
+     "severity": "minor",
+     "category": "fluency/spelling",
+     "text": "depén"
+    }
+   ]
+  },
+  {
+   "id": "HG2-150",
+   "entrada": "Celebrem la reeixida de la missió.",
+   "hipotesi": "Celebrem la reeixida de la missió.",
+   "referencia": "Celebrem la reeixida de la missió.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-151",
+   "entrada": "La clau de la seva reeixida és la constància.",
+   "hipotesi": "La clau de la seua reeixida és la constància.",
+   "referencia": "La clau de la seua reeixida és la constància.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-152",
+   "entrada": "Ningú no esperava una reeixida tan gran.",
+   "hipotesi": "Ningú no esperava una reeixida tan gran.",
+   "referencia": "Ningú no esperava una reeixida tan gran.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-153",
+   "entrada": "Han estat unes jornades molt reeixides.",
+   "hipotesi": "Han sigut unes jornades molt exitoses.",
+   "referencia": "Han sigut unes jornades molt exitoses.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-154",
+   "entrada": "Les dues últimes temporades van ser reeixides.",
+   "hipotesi": "Les dos últimes temporades van ser exitoses.",
+   "referencia": "Les dos últimes temporades van ser exitoses.",
+   "nota": 85.0,
+   "nota_spans": 97.5,
+   "error_spans": [
+    {
+     "severity": "minor",
+     "category": "terminology/inappropriate for context",
+     "text": "exitoses"
+    }
+   ]
+  },
+  {
+   "id": "HG2-155",
+   "entrada": "Són iniciatives reeixides que cal repetir.",
+   "hipotesi": "Són iniciatives exitoses que cal repetir.",
+   "referencia": "Són iniciatives exitoses que cal repetir.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-156",
+   "entrada": "Hem fet campanyes reeixides arreu del país.",
+   "hipotesi": "Hem fet campanyes reeixides arreu del país.",
+   "referencia": "Hem fet campanyes exitoses arreu del país.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-157",
+   "entrada": "Les reeixides de l'equip omplen el palmarès.",
+   "hipotesi": "Les reeixides de l'equip omplin el palmarés.",
+   "referencia": "Les reeixides de l'equip omplin el palmarés.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-158",
+   "entrada": "Les seves reeixides professionals la van fer famosa.",
+   "hipotesi": "Les seues reeixides professionals la van fer famosa.",
+   "referencia": "Les seues reeixides professionals la van fer famosa.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-159",
+   "entrada": "Totes les reeixides tenen un preu.",
+   "hipotesi": "Totes les reeixides tenen un preu.",
+   "referencia": "Totes les reeixides tenen un preu.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-160",
+   "entrada": "Ha acumulat moltes reeixides al llarg de la carrera.",
+   "hipotesi": "Ha acumulat moltes reeixides al llarg de la carrera.",
+   "referencia": "Ha acumulat moltes reeixides al llarg de la carrera.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  }
+ ]
+}
