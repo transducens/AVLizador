@@ -1,7 +1,16 @@
 """
-model_llengua/puntuador.py -- Probabilitat d'un text segons un model de
-llengua causal (`transformers`, en CPU). Dependència opcional: `torch` i
-`transformers` només s'importen en crear un `ModelLlengua`.
+flor.py -- Probabilitat d'un text segons un model de llengua causal
+(`transformers`, en CPU): FLOR-760M, el model de les paraules ambigües del
+23/10 al 12/11/2026. `torch` i `transformers` només s'importen en crear un
+`ModelLlengua` (cal instal·lar-los a banda: `pip install torch transformers
+--extra-index-url https://download.pytorch.org/whl/cpu`).
+
+FORA DEL PAQUET des de la versió 2.0.0 (17/11/2026, decisió de l'usuari):
+abans era `avlizador/traductor_cat_val/model_llengua/puntuador.py` i el
+traductor l'oferia com a opció (`model="flor"`). Ara el paquet només usa
+KenLM; este fitxer es queda ací perquè els experiments de `pipeline/`
+(comparador, traces, biaix, MaCoCu, `evalua_models.py`) es puguen repetir.
+`translate_cat_val_flor` reproduïx el sistema d'abans (motor + FLOR).
 
 `logprob(text)` = suma de log P(token | tokens d'abans) de tot el text,
 començant pel token d'inici. Quant més alta (menys negativa), més
@@ -91,3 +100,19 @@ class ModelLlengua:
                 ids = [self.bos] + self.tok(text, add_special_tokens=False)["input_ids"]
                 self._cache[text] = (self._logprob_sense_context(ids), len(ids) - 1)
         return self._cache[text]
+
+
+_MODEL = None
+
+
+def translate_cat_val_flor(text: str, model_id: str | None = None, criteri=None) -> str:
+    """Motor + FLOR-760M (el sistema per defecte del 23/10 al 12/11/2026),
+    només el text. Carrega el model la primera vegada. `criteri`: el
+    `Criteri()` per defecte (marge 2, la catalana per defecte), el de FLOR.
+    Era `translate_cat_val_ml` dins del paquet."""
+    global _MODEL
+    from avlizador.traductor_cat_val.model_llengua import Criteri, tradueix_cat_val_ml
+
+    if _MODEL is None or (model_id and _MODEL.model_id != model_id):
+        _MODEL = ModelLlengua(model_id or MODEL_PER_DEFECTE)
+    return tradueix_cat_val_ml(text, _MODEL, criteri or Criteri())[0]

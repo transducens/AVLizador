@@ -1,8 +1,9 @@
 """
 model_llengua/kenlm.py -- Puntuador KenLM (n-grames, CPU) i classificador
 de sentit per a les paraules ambigües. Integrat el 12/11/2026 com a
-alternativa a FLOR-760M; és el model PER DEFECTE des del 13/11/2026
-(decisió de l'usuari).
+alternativa a FLOR-760M; és el model per defecte des del 13/11/2026 i
+l'únic des de la versió 2.0.0 (decisions de l'usuari; FLOR ja no és en el
+paquet).
 
 Ocupa el MATEIX buit que FLOR: el motor construïx les frases valencianes
 de cada candidat i `ModelKenLM.logprob` les puntua. Dos diferències:
@@ -54,7 +55,9 @@ VAR_DIRECTORI = "AVLIZADOR_KENLM_DIR"
 NOM_MODEL = "valencia_net_dogv"
 # 16/11/2026: els fitxers també es poden baixar de Hugging Face.
 REPO_HF = "transducens/avlizador-kenlm-va"
-REVISIO_HF = "main"  # en cada versió del paquet, la revisió (etiqueta) del model que li correspon
+# Revisió del model que correspon a cada versió del paquet: el commit de Hugging Face
+# (no es pot crear una etiqueta des de la web). 2.0.0: commit db4a1f1, 17/11/2026.
+REVISIO_HF = "db4a1f10d55bbc30ad54728e1639d17d32526ef7"
 VAR_REVISIO = "AVLIZADOR_KENLM_REVISIO"
 VAR_DESCARREGA = "AVLIZADOR_KENLM_DESCARREGA"
 

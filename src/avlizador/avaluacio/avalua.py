@@ -4,14 +4,15 @@ una taula resum.
 
 Per defecte avalua el sistema final (motor + KenLM + classificador de
 sentit, `translate_cat_val`; des del 13/11/2026); `--motor` hi afig el
-motor sol per a comparar i `--model flor` avalua el sistema amb FLOR-760M
-(`--model kenlm flor`, els dos). Si falta KenLM, és un error (no s'avalua
-el motor sol en silenci).
+motor sol per a comparar. Si falta KenLM, és un error (no s'avalua el
+motor sol en silenci). FLOR-760M (el model fins al 12/11/2026) ja no és en
+el paquet des de la versió 2.0.0: per a avaluar-lo, els scripts de
+`pipeline/03_seleccio_de_model/model_llengua/` (`flor.py`).
 
     avlizador avalua                               # tots els benchmarks
     avlizador avalua --benchmarks manual           # el d'avaluació (mescla, 458)
     avlizador avalua --motor --limit 5             # prova ràpida
-    avlizador avalua --model kenlm flor --benchmarks homografs homografs_v2 manual
+    avlizador avalua --motor --benchmarks homografs homografs_v2 manual
     avlizador avalua --llista                      # benchmarks disponibles
     avlizador avalua --fitxer un_benchmark.json    # un benchmark qualsevol
 
@@ -71,17 +72,15 @@ def troba_dir_benchmarks() -> Path | None:
 
 
 def sistemes(amb_motor: bool, models: tuple[str, ...] = ("kenlm",)) -> list[tuple[str, str, callable]]:
-    """(clau, nom, funció) de cada sistema a avaluar. Fins al 12/11/2026 la
-    clau del sistema amb FLOR era `sistema_final` (fitxers antics)."""
+    """(clau, nom, funció) de cada sistema a avaluar. En fitxers antics, la
+    clau del sistema amb FLOR era `sistema_final` (fins al 12/11/2026) o
+    `flor` (fins a la 2.0.0)."""
     from ..traductor_cat_val import translate_cat_val, translate_cat_val_motor
 
     llista = []
     if "kenlm" in models:
         llista.append(("kenlm", "Motor + KenLM + sentit",
                        lambda text: translate_cat_val(text, model="kenlm")))
-    if "flor" in models:
-        llista.append(("flor", "Motor + FLOR-760M",
-                       lambda text: translate_cat_val(text, model="flor")))
     if amb_motor:
         llista.append(("motor", "Motor solo", translate_cat_val_motor))
     return llista
@@ -167,8 +166,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--fitxer", type=Path, action="append", default=[],
                         help="Un benchmark JSON qualsevol (es pot repetir).")
     parser.add_argument("--motor", action="store_true", help="Avalua també el motor sol.")
-    parser.add_argument("--model", nargs="+", choices=["kenlm", "flor"], default=["kenlm"],
-                        help="Model de llengua del sistema: kenlm (per defecte), flor o els dos.")
+    parser.add_argument("--model", nargs="+", choices=["kenlm"], default=["kenlm"],
+                        help="Model de llengua del sistema: kenlm (l'únic).")
     parser.add_argument("--limit", type=int, help="Només les N primeres frases de cada benchmark.")
     parser.add_argument("--eixida", type=Path, default=Path("resultats_avaluacio"),
                         help="Carpeta dels resultats (per defecte, resultats_avaluacio/).")
@@ -209,18 +208,14 @@ def main(argv: list[str] | None = None) -> int:
         except FaltaKenLM as e:
             print(f"ERROR: {e}", file=sys.stderr)
             return 1
-    if "flor" in args.model:
-        from ..traductor_cat_val.translate_invers import model_llengua_disponible
-
-        if not model_llengua_disponible():
-            print('ERROR: FLOR necessita torch i transformers: pip install "avlizador[ml]".', file=sys.stderr)
-            return 1
 
     args.eixida.mkdir(parents=True, exist_ok=True)
     ts = datetime.now().strftime("%Y%m%d_%H%M")
     files = []
     for nom, descripcio, fitxer in tasques:
         benchmark = json.loads(fitxer.read_text(encoding="utf-8"))
+        if isinstance(benchmark, dict):  # {"descripcio": ..., "frases": [...]} (p. ex. homògrafs v1)
+            benchmark = benchmark["frases"]
         if args.limit:
             benchmark = benchmark[:args.limit]
             descripcio += f" [limit {args.limit}]"

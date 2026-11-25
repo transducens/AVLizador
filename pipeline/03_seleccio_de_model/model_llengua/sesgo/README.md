@@ -176,5 +176,7 @@ ambiguas). La v2 se compara con las trazas del 02/11
 - Solo se han probado tres párrafos (P3 y P5 sin medir). Si se quiere
   afinar, probar más párrafos cortos y cotidianos como P1, eligiendo
   siempre con la v1.
-- `avalua_sense_context.py`: el sistema completo sin párrafo, para
-  repetir la comparación en el mismo día si cambia algo del motor.
+- `avalua_sense_context.py` (el sistema completo sin párrafo) se borró en
+  la versión 2.0.0 (17/11/2026): usaba `avlizador avalua` con FLOR, que ya
+  no está en el paquete. Está en el historial de git; FLOR se puede seguir
+  usando desde `../flor.py` (`ModelLlengua(context=None)`).

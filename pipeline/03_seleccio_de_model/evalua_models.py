@@ -1046,8 +1046,10 @@ def tradueix_traductor_ml(frase: str) -> str:
     if arrel_projecte not in sys.path:
         sys.path.insert(0, arrel_projecte)
 
-    from avlizador.traductor_cat_val.model_llengua import Criteri, translate_cat_val_ml
-    return translate_cat_val_ml(frase, MODEL_LLENGUA_ID, Criteri(model_irresolubles=MODEL_IRRESOLUBLES))
+    sys.path.insert(0, str(Path(__file__).resolve().parent / "model_llengua"))  # flor.py, fora del paquet
+    from avlizador.traductor_cat_val.model_llengua import Criteri
+    from flor import translate_cat_val_flor
+    return translate_cat_val_flor(frase, MODEL_LLENGUA_ID, Criteri(model_irresolubles=MODEL_IRRESOLUBLES))
 
 
 # ─── Pipeline d'avaluació ─────────────────────────────────────────────────────

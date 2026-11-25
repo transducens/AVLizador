@@ -24,10 +24,12 @@ Components i dades de tercers
 2. Model de llengua FLOR-760M (projecte-aina, Barcelona Supercomputing
    Center)
    Llicència: Apache 2.0. És una adaptació de BLOOM-1.1B (BigScience,
-   llicència BigScience RAIL 1.0). Opcional des del 13/11/2026 (extra
-   [ml], `model="flor"`). No s'inclou: es baixa de Hugging Face
-   (https://huggingface.co/projecte-aina/FLOR-760M) la primera vegada que
-   s'usa.
+   llicència BigScience RAIL 1.0). Va ser el model de les paraules
+   ambigües fins al 12/11/2026; des de la versió 2.0.0 ja no és en el
+   paquet. Només l'usen alguns scripts d'experiments de pipeline/
+   (pipeline/03_seleccio_de_model/model_llengua/flor.py). No s'inclou: es
+   baixa de Hugging Face (https://huggingface.co/projecte-aina/FLOR-760M)
+   si s'executen eixos scripts.
 
 3. Dataset gplsi/CA-VA_alignment_test (grup GPLSI, Universitat d'Alacant)
    Llicència: Creative Commons BY 4.0. Inclòs en dades/benchmarks/gplsi/ i
@@ -57,20 +59,22 @@ Components i dades de tercers
      GNU LGPL 2.1 (https://github.com/kpu/kenlm). Dependència opcional
      (extra [kenlm]): no s'inclou en el repositori.
    - Model valencia_net_dogv_o5 (KenLM, ordre 5), la seua taula de
-     freqüències i el classificador de sentit de "cop" (nb.json), entrenats
-     pel projecte. No són en el repositori (AVLIZADOR_KENLM_DIR); van dins
-     de la imatge Docker. Dades d'entrenament: frases valencianes de
-     MaCoCu-ca 1.0 (CLARIN.SI, hdl 11356/1837, CC0 1.0) i textos del Diari
-     Oficial de la Generalitat Valenciana (DOGV, 2025-2026,
-     https://dogv.gva.es), sense textos de l'AVL. Cal revisar les
-     condicions de reutilització del DOGV abans de publicar el model
-     (pendent; es publicarà en Hugging Face).
+     freqüències i el classificador de sentit (sentit.json), entrenats pel
+     projecte i publicats en Hugging Face amb llicència CC BY 4.0:
+     https://huggingface.co/transducens/avlizador-kenlm-va (versió 2.0.0:
+     commit db4a1f1 del 17/11/2026). No són en el repositori ni en el paquet: el paquet
+     els baixa la primera vegada que s'usen (o els llig d'AVLIZADOR_KENLM_DIR),
+     i van dins de la imatge Docker. Dades d'entrenament del model i de la
+     taula: frases valencianes de MaCoCu-ca 1.0 (CLARIN.SI, hdl 11356/1837,
+     CC0 1.0) i textos del Diari Oficial de la Generalitat Valenciana (DOGV,
+     2025-2026, https://dogv.gva.es). El classificador, a més, textos de la
+     web de l'AVL (punt 5), sense els documents ni les frases dels
+     benchmarks. La fitxa del model porta l'avís de retirada ("Notice and
+     take down").
 
 Dependències de Python (no incloses; les instal·la pip): spaCy i thinc
-(MIT), kenlm (LGPL 2.1; extra [kenlm]), PyTorch (BSD) i transformers,
-huggingface_hub, tokenizers i safetensors (Apache 2.0; extra [ml], només
-per a FLOR), sacrebleu i requests (Apache 2.0), numpy (BSD) i pytest
-(MIT). La interfície web (extra [web]) usa FastAPI i Pydantic (MIT),
+(MIT), kenlm (LGPL 2.1) i huggingface_hub (Apache 2.0; extra [kenlm]),
+sacrebleu i requests (Apache 2.0), numpy (BSD) i pytest (MIT). La interfície web (extra [web]) usa FastAPI i Pydantic (MIT),
 Starlette, uvicorn, Jinja2 i MarkupSafe (BSD-3-Clause).
 
 Les gramàtiques GNV (AVL) i GEIEC (IEC) es van usar com a referència
@@ -80,9 +84,8 @@ Imatge Docker
 =============
 
 La imatge Docker d'AVLizador (Dockerfile, docker-compose.yml) inclou, a més
-del codi i les dades del projecte, estos components de tercers. Des del
-13/11/2026 la imatge porta KenLM en lloc de FLOR-760M i PyTorch. Les
-versions de spaCy i del servidor web són les de la imatge avlizador:1.2.0
+del codi i les dades del projecte, estos components de tercers (sense
+PyTorch ni FLOR-760M des del 13/11/2026). Les versions de spaCy i del servidor web són les de la imatge avlizador:1.2.0
 construïda el 06/11/2026; s'han de revisar en construir la nova (la llista
 completa de paquets de Python és dins de la imatge, en
 /opt/versions_python.txt):
@@ -99,9 +102,10 @@ completa de paquets de Python és dins de la imatge, en
    Biblioteca: mòdul de Python kenlm, GNU LGPL 2.1
    (https://github.com/kpu/kenlm). Qui redistribuïsca la imatge ha de
    complir la LGPL 2.1 per a este component.
-   Model, freqüències i classificador de sentit: entrenats pel projecte amb
-   MaCoCu-ca (CC0 1.0) i el DOGV (vegeu el punt 7 de més amunt), en
-   /opt/kenlm.
+   Model, freqüències i classificador de sentit: els del projecte en
+   Hugging Face (CC BY 4.0; entrenats amb MaCoCu-ca, el DOGV i, el
+   classificador, textos de l'AVL: vegeu el punt 7 de més amunt), baixats
+   en construir la imatge, en /opt/kenlm.
 
 3. Programari del servidor web
    FastAPI 0.162.0 (MIT), Starlette 1.10.0 (BSD-3-Clause), uvicorn 0.54.0

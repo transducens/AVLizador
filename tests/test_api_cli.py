@@ -11,7 +11,7 @@ from avlizador.traductor_cat_val import translate_invers
 
 
 def test_versio():
-    assert avlizador.__version__ == "1.2.0"
+    assert avlizador.__version__ == "2.0.0"
 
 
 def test_api_traductor():
@@ -38,16 +38,19 @@ def test_sense_kenlm_usa_el_motor_i_avisa(monkeypatch):
         translate_invers.translate_cat_val("Aquest noi.")
 
 
-def test_flor_sense_extra_ml_usa_el_motor_i_avisa(monkeypatch):
-    monkeypatch.setattr(translate_invers, "model_llengua_disponible", lambda: False)
-    monkeypatch.setattr(translate_invers, "_AVISAT", False)
-    with pytest.warns(translate_invers.AvisSenseModelLlengua, match="FLOR"):
-        eixida = translate_invers.translate_cat_val("Un cop acabada la reunió, marxem.", model="flor")
-    assert eixida == translate_invers.translate_cat_val_motor("Un cop acabada la reunió, marxem.")
+def test_flor_ja_no_hi_es():
+    """Des de la versió 2.0.0 FLOR no és en el paquet, ni com a opció."""
+    with pytest.raises(ValueError, match="flor"):
+        translate_invers.translate_cat_val("Hola.", model="flor")
+    with pytest.raises(SystemExit):
+        cli.main(["tradueix", "--model", "flor", "Hola."])
+    import importlib.util
+    assert importlib.util.find_spec("avlizador.traductor_cat_val.model_llengua.puntuador") is None
 
 
 def test_model_per_defecte_es_kenlm():
     assert translate_invers.MODEL_PER_DEFECTE == "kenlm"
+    assert translate_invers.MODELS == ("kenlm",)
 
 
 def test_cli_tradueix_motor(capsys):

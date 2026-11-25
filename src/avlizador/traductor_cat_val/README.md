@@ -23,8 +23,8 @@ de `diccionarios/` (o `lexic/`), en `dades/lexic/`.
 de les dos eines que s'entreguen a la Conselleria (l'altra és el GD,
 `avlizador.grau_dialectal`), en equips només amb CPU. **Sistema
 principal = motor + KenLM + classificador de sentit** (des del 13/11/2026;
-del 30/10 al 12/11, motor + FLOR-760M, que continua com a opció amb
-`model="flor"`); el motor sol, com a comparació o si falta KenLM.
+del 30/10 al 12/11, motor + FLOR-760M, que des de la versió 2.0.0 ja no
+és en el paquet); el motor sol, com a comparació o si falta KenLM.
 
 ### Què hi ha en el paquet
 
@@ -41,9 +41,9 @@ traductor_cat_val/
 ├── rules/
 │   ├── __init__.py           Token, tokenize/detokenize, apòstrofs, concordança, homògrafs
 │   ├── pos_tagger.py         spaCy (ca_core_news_md, si no sm): categoria, gènere, lema, forma verbal
-│   ├── cat_val/              motor català → valencià (9 capes, vore baix)
+│   ├── cat_val/              motor català → valencià (11 capes, vore rules/cat_val/README.md)
 │   └── val_cat/              motor valencià → català (aparcat des del 20/10; l'usa el GD)
-└── model_llengua/            homògrafs cat→val: KenLM + classificador (extra [kenlm]) o FLOR ([ml])
+└── model_llengua/            homògrafs cat→val: KenLM + classificador (extra [kenlm])
 ```
 
 Fora del paquet: `scripts/sync_data.py` (arrel),
@@ -89,15 +89,13 @@ motor: `rules/cat_val/README.md`.
 
 ```python
 from avlizador.traductor_cat_val import translate_cat_val, translate_cat_val_motor
-translate_cat_val("Un cop acabada la reunió.")         # sistema principal: motor + KenLM (extra [kenlm], AVLIZADOR_KENLM_DIR)
+translate_cat_val("Un cop acabada la reunió.")         # sistema principal: motor + KenLM (extra [kenlm]; model de Hugging Face)
 translate_cat_val_motor("Aquest xiquet és molt bo.")   # motor sol (spaCy, sense model)
-translate_cat_val("Un cop acabada la reunió.", model="flor")   # motor + FLOR-760M (extra [ml])
 ```
 
 ```bash
 avlizador tradueix "Aquest xiquet és molt bo."
 avlizador tradueix --motor "Aquest xiquet és molt bo."
-avlizador tradueix --model flor "Aquest xiquet és molt bo."
 ```
 
 ### Resultats actuals (cat→val, 13/11/2026)

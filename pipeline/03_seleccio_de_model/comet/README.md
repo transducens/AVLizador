@@ -127,6 +127,35 @@ quedan las métricas de superficie (exactas, BLEU, chrF, TER, WER) y el
 como mucho, de control de que una traducción no rompe el significado:
 ningún sistema nuestro baja de los LLM malos en eso.
 
+### AVLizador 2.0.0 (17/11/2026, modo completo)
+
+Petición del usuario: puntuar también la versión 2.0.0 (KenLM
+`valencia_net_dogv2` + clasificador `sentit_dogv2_avl`), como el resto de
+sistemas. Entrada: `entrades/avlizador_2.0.0.json`, la salida de
+`avlizador avalua --benchmarks manual` de la evaluación de release
+(`resultats_release_2.0.0/kenlm_manual_20261117_1009.json`). Rama
+`version-2.0.0` (`19d995c`); el job vuelve a puntuar todos los sistemas
+y da las mismas notas que el 03/11 a los de antes.
+
+| Sistema | Mezcla | BOE | AVL | Frases con error |
+|---|---|---|---|---|
+| **AVLizador 2.0.0** (motor + KenLM + clasificador) | **97,44** | 98,06 | **96,73** | 168/458 |
+| Sin traducir (catalán tal cual) | 97,41 | **98,22** | 96,47 | **147/458** |
+| AVLizador 1.0.1 (motor + FLOR-760M) | 97,40 | 98,00 | 96,70 | 175/458 |
+| AVLizador 1.1.0 (motor + FLOR-760M, P1) | 97,40 | 98,01 | 96,70 | 174/458 |
+| qwen3:14b | 97,37 | 98,18 | 96,43 | 162/458 |
+| llama3.1:8b | 97,32 | 98,13 | 96,37 | 152/458 |
+| Motor solo | 97,29 | 97,85 | 96,64 | 182/458 |
+| gemma4:12b … qwen2.5:14b | 97,19 … 93,26 | | | 184-347/458 |
+
+La 2.0.0 queda primera por **0,03 puntos** sobre el "sin traducir", que
+sigue ganando en el BOE y tiene menos frases marcadas con error. La
+conclusión no cambia: **XCOMET-XL no ve el dialecto**; la 2.0.0 solo
+confirma que no rompe el significado (como las anteriores, por delante
+de todos los LLM). Las métricas que separan a AVLizador del "sin
+traducir" siguen siendo las de superficie y el GD (manual mezcla: TER
+5,58 frente a 15,76).
+
 ### Siguiente: dos modos más y pares contrastivos (04/11/2026, petición del supervisor)
 
 Para separar el problema del modelo del de cómo se le plantea la tarea,
