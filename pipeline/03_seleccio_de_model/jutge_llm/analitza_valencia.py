@@ -16,6 +16,7 @@ per comparar, els del prompt del 04/11 (`resultats/qwen3.6-35b-a3b/`).
 
     python analitza_valencia.py
     python analitza_valencia.py --model qwen3.6-35b-a3b_pensa
+    python analitza_valencia.py --prompt valencia2
 """
 
 from __future__ import annotations
@@ -260,13 +261,16 @@ def sentit(dades: dict[str, dict[str, dict]], conjunt: str, detall: list[str]) -
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--model", default="qwen3.6-35b-a3b_pensa")
-    ap.add_argument("--eixida", type=Path, default=DIR_VAL)
+    ap.add_argument("--prompt", default="valencia", help="valencia o valencia2 (carpeta de resultats/).")
+    ap.add_argument("--eixida", type=Path, default=None, help="Per defecte, resultats/<prompt>/.")
     args = ap.parse_args(argv)
+    dir_prompt = AQUI / "resultats" / args.prompt
+    args.eixida = args.eixida or dir_prompt
 
-    L = [f"# Jutge «valencia»: anàlisi ({args.model})", ""]
-    detall = [f"# Jutge «valencia»: detall frase a frase ({args.model})", ""]
+    L = [f"# Jutge «{args.prompt}»: anàlisi ({args.model})", ""]
+    detall = [f"# Jutge «{args.prompt}»: detall frase a frase ({args.model})", ""]
     for conjunt in CONJUNTS:
-        carpeta = DIR_VAL / conjunt / args.model
+        carpeta = dir_prompt / conjunt / args.model
         if not carpeta.exists():
             continue
         dades = llig(carpeta)

@@ -120,7 +120,7 @@ NORMA_VAL = """Valencian norm (read carefully before annotating):
 - Check gender and number agreement with the noun that is actually in the translation, not with the noun of the source: when a noun changes gender (la despesa -> el gasto, el préssec -> la bresquilla), the article, determiners and adjectives must agree with the Valencian noun. A determiner or adjective that does not agree is a grammar error.
 - A Valencian word with a different meaning from the source word (for example vegada "time, occasion" for cop "blow", bragues "underwear" for historical calces "hose", exitosa "successful" used as a noun for reeixida "success") is an accuracy/mistranslation error."""
 
-FASE1_VAL = """Catalan source:
+FASE1_VAL_BASE = """Catalan source:
 ```{src}```
 Valencian translation:
 ```{hyp}```
@@ -133,7 +133,8 @@ Minor:
 category/subcategory - "error span"
 Use one error per line and write no-error when a section is empty. Quote spans from the translation.
 Domain requirements: {domini}
-""" + NORMA_VAL
+"""
+FASE1_VAL = FASE1_VAL_BASE + NORMA_VAL
 
 FASE2_VAL = """Given the Catalan source, the Valencian machine translation and the annotated error spans, assign a score on a continuous scale from 0 to 100. The scale has the following reference points: 0="No meaning preserved", 33="Some meaning preserved", 66="Most meaning preserved and few grammar mistakes", up to 100="Perfect meaning and grammar".
 Domain requirements: {domini}
@@ -152,6 +153,26 @@ where N is an integer from 0 to 100."""
 # Empremta del prompt "valencia": entra en la clau de la memòria cau, i així
 # qualsevol canvi del prompt torna a puntuar-ho tot (24/11/2026).
 EMPREMTA_VAL = hashlib.sha1((SISTEMA + FASE1_VAL + FASE2_VAL).encode("utf-8")).hexdigest()[:8]
+
+
+# Prompt "valencia2" (25/11/2026): el mateix sense les formes que són
+# candidates d'un homògraf del lèxic (colp, llavadora, anou, brollador,
+# exitós/exitosa, vegades). Amb "valencia" el model se'n fiava més que del
+# sentit: "cotxe anou", "Les seues exitoses professionals" = 100.
+def _sense_homografs(norma: str) -> str:
+    for vell, nou in ((", colp, llavadora, bresquilla, dacsa, anou, brollador;", ", bresquilla, dacsa;"),
+                      ("(les dos parts, dos vegades)", "(les dos parts, dos persones)"),
+                      ("(gasto, exitós, exitosa, llavadora)", "(gasto)")):
+        assert vell in norma, vell
+        norma = norma.replace(vell, nou)
+    return norma
+
+
+NORMA_VAL2 = _sense_homografs(NORMA_VAL)
+FASE1_VAL2 = FASE1_VAL_BASE + NORMA_VAL2
+PROMPTS_VAL = {"valencia": (FASE1_VAL, FASE2_VAL), "valencia2": (FASE1_VAL2, FASE2_VAL)}
+EMPREMTES = {k: hashlib.sha1((SISTEMA + f1 + f2).encode("utf-8")).hexdigest()[:8]
+             for k, (f1, f2) in PROMPTS_VAL.items()}
 
 
 def domini_de(id_frase: str) -> str:
@@ -173,10 +194,11 @@ def clau(text: str, domini: str, src: str = "") -> str:
 
 def prompts(prompt: str, text: str, src: str, dom: str, spans: str | None = None) -> str:
     """La fase 1 (`spans` None) o la 2 del prompt triat."""
-    if prompt == "valencia":
+    if prompt in PROMPTS_VAL:
+        f1, f2 = PROMPTS_VAL[prompt]
         if spans is None:
-            return FASE1_VAL.format(src=src, hyp=text, domini=DOMINI[dom])
-        return FASE2_VAL.format(src=src, hyp=text, domini=DOMINI[dom], spans=spans)
+            return f1.format(src=src, hyp=text, domini=DOMINI[dom])
+        return f2.format(src=src, hyp=text, domini=DOMINI[dom], spans=spans)
     if spans is None:
         return FASE1.format(tgt="Valencian", hyp=text, domini=DOMINI[dom])
     return FASE2.format(tgt="Valencian", hyp=text, domini=DOMINI[dom], spans=spans)
@@ -266,9 +288,10 @@ def carrega_sistemes(fitxers: list[Path], limit: int | None) -> dict[str, dict]:
 
 def puntua(args) -> int:
     curt = args.model.replace(":", "-").replace("/", "-") + ("_pensa" if args.pensa else "")
-    valencia = args.prompt == "valencia"
+    valencia = args.prompt in PROMPTS_VAL
+    empremta = EMPREMTES.get(args.prompt)
     if args.eixida is None:
-        args.eixida = AQUI / "resultats" / ("valencia" if valencia else "")
+        args.eixida = AQUI / "resultats" / (args.prompt if valencia else "")
     eixida = args.eixida / (curt + (f"_limit{args.limit}" if args.limit else ""))
     eixida.mkdir(parents=True, exist_ok=True)
     cau_f = eixida / "cache.jsonl"
@@ -280,7 +303,7 @@ def puntua(args) -> int:
                 cau[r["clau"]] = r
     sistemes = carrega_sistemes(args.fitxers, args.limit)
     def clau_de(fr: dict) -> str:
-        return clau(fr["hipotesi"], domini_de(fr["id"]), f"{EMPREMTA_VAL}\n{fr['entrada']}" if valencia else "")
+        return clau(fr["hipotesi"], domini_de(fr["id"]), f"{empremta}\n{fr['entrada']}" if valencia else "")
 
     pendents = {}
     for s in sistemes.values():
@@ -331,7 +354,7 @@ def puntua(args) -> int:
         (eixida / f"{clau_s}.json").write_text(json.dumps({
             "sistema": s["nom"], "clau": clau_s, "model": args.model, "pensa": args.pensa,
             "mode": "amb_origen_valencia" if valencia else "nomes_traduccio",
-            "empremta_prompt": EMPREMTA_VAL if valencia else None,
+            "prompt": args.prompt, "empremta_prompt": empremta,
             "timestamp": datetime.now().isoformat(timespec="seconds"),
             "resultats": files}, ensure_ascii=False, indent=1), encoding="utf-8")
     return resum_carpeta(eixida)
@@ -352,7 +375,8 @@ def resum_carpeta(carpeta: Path) -> int:
         return 1
     model = next(iter(sistemes.values()))["model"]
     mode = next(iter(sistemes.values())).get("mode", "nomes_traduccio")
-    titol = ("amb l'original i la norma valenciana (prompt «valencia»)" if mode == "amb_origen_valencia"
+    prompt = next(iter(sistemes.values())).get("prompt", "valencia")
+    titol = (f"amb l'original i la norma valenciana (prompt «{prompt}»)" if mode == "amb_origen_valencia"
              else "només la traducció (GEMBA-ESA adaptat)")
     files = []
     for k, d in sistemes.items():
@@ -435,10 +459,10 @@ def main(argv=None) -> int:
     p.add_argument("--ollama-url", default="http://127.0.0.1:11434")
     p.add_argument("--pensa", action="store_true", help="Raonament activat en la fase 1 (més lent).")
     p.add_argument("--limit", type=int)
-    p.add_argument("--prompt", choices=["gemba", "valencia"], default="gemba",
-                   help="gemba: només la traducció (04/11/2026); valencia: amb l'original i la norma valenciana.")
+    p.add_argument("--prompt", choices=["gemba", "valencia", "valencia2"], default="gemba",
+                   help="gemba: només la traducció (04/11/2026); valencia: amb l'original i la norma valenciana; valencia2: el mateix sense les formes candidates d'un homògraf (25/11/2026).")
     p.add_argument("--eixida", type=Path, default=None,
-                   help="Carpeta (per defecte resultats/, o resultats/valencia/ amb --prompt valencia).")
+                   help="Carpeta (per defecte resultats/, o resultats/<prompt>/ amb --prompt valencia o valencia2).")
     r = sub.add_parser("resum")
     r.add_argument("carpeta", type=Path)
     args = ap.parse_args(argv)

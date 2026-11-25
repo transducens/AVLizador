@@ -15,8 +15,10 @@
 #   LIMIT=10 sbatch jutge_valencia.sh    # prova: 10 frases per sistema i conjunt
 #   sbatch jutge_valencia.sh             # tot (~2.200 textos, unes 4-5 h)
 #   CONJUNTS="homografs_v2" sbatch jutge_valencia.sh   # només un conjunt
+#   PROMPT=valencia2 sbatch jutge_valencia.sh   # sense les formes candidates d'un
+#                                               # homògraf (25/11/2026); en resultats/valencia2/
 # Si s'acaba per temps, es torna a llançar igual: continua des de la memòria
-# cau (resultats/valencia/<conjunt>/<model>/cache.jsonl).
+# cau (resultats/<prompt>/<conjunt>/<model>/cache.jsonl).
 #
 # En dos màquines (24/11/2026): les traduccions en Abaco, només CPU
 #   sbatch --mem=8G --cpus-per-task=4 --time=01:00:00 -o logs/%j_entrades.out \
@@ -37,6 +39,7 @@ set -euo pipefail
 
 MODEL="${MODEL:-qwen3.6:35b-a3b}"
 CONJUNTS="${CONJUNTS:-manual homografs homografs_v2}"
+PROMPT="${PROMPT:-valencia}"
 VENV="${AVLIZADOR_VENV:-$HOME/venvs/avlizador}"
 
 SCRIPT_DIR="${SLURM_SUBMIT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
@@ -46,7 +49,7 @@ ENTRADES="$SCRIPT_DIR/entrades_valencia"
 BASELINE="$SCRIPT_DIR/../baseline_llm/resultats"
 mkdir -p "$LOGS" "$ENTRADES"
 echo "Repo: $ARREL_REPO ($(git -C "$ARREL_REPO" log -1 --format='%h %s'))"
-echo "Model: $MODEL; conjunts: $CONJUNTS; en $(hostname)"
+echo "Model: $MODEL; prompt: $PROMPT; conjunts: $CONJUNTS; en $(hostname)"
 
 export PYTHONIOENCODING=utf-8
 PYTHON=python3
@@ -129,7 +132,7 @@ for c in $CONJUNTS; do
         *) echo "ERROR: conjunt desconegut: $c" >&2; exit 1 ;;
     esac
     echo "== $c =="
-    "$PYTHON" jutge_gemba.py puntua --prompt valencia --model "$MODEL" --ollama-url "http://$OLLAMA_HOST" \
-        --eixida "resultats/valencia/$c" ${LIMIT:+--limit "$LIMIT"} ${PENSA:+--pensa} "${FITXERS[@]}"
+    "$PYTHON" jutge_gemba.py puntua --prompt "$PROMPT" --model "$MODEL" --ollama-url "http://$OLLAMA_HOST" \
+        --eixida "resultats/$PROMPT/$c" ${LIMIT:+--limit "$LIMIT"} ${PENSA:+--pensa} "${FITXERS[@]}"
 done
 grep -iE "offload|layers|VRAM" "$LOGS/ollama_valencia_${NOM_LOG}_${SLURM_JOB_ID:-local}.log" | tail -5 || true
