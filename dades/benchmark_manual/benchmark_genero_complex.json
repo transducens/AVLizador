@@ -1,0 +1,1019 @@
+[
+  {
+    "id": 1,
+    "paraula_clau": "tomàquets / tomaques",
+    "problema": "cambio_genero",
+    "fenomen": "determinant+predicatiu",
+    "catala": "Aquests tomàquets tan madurs són els millors que hem collit enguany.",
+    "castella": "Estos tomates tan maduros son los mejores que hemos recogido este año.",
+    "valencia": "Estes tomaques tan madures són les millors que hem collit enguany."
+  },
+  {
+    "id": 2,
+    "paraula_clau": "xocolata / xocolate",
+    "problema": "cambio_genero",
+    "fenomen": "relativa+predicatiu",
+    "catala": "Aquesta xocolata negra que vam comprar ahir és boníssima.",
+    "castella": "Este chocolate negro que compramos ayer es buenísimo.",
+    "valencia": "Este xocolate negre que vam comprar ahir és boníssim."
+  },
+  {
+    "id": 3,
+    "paraula_clau": "galledes / poals",
+    "problema": "cambio_genero",
+    "fenomen": "quantificador+predicatiu",
+    "catala": "Totes les galledes estaven plenes d'aigua bruta.",
+    "castella": "Todos los cubos estaban llenos de agua sucia.",
+    "valencia": "Tots els poals estaven plens d'aigua bruta."
+  },
+  {
+    "id": 4,
+    "paraula_clau": "joguines / joguets",
+    "problema": "cambio_genero",
+    "fenomen": "relativa+predicatiu",
+    "catala": "Cap de les joguines que li vam regalar no està trencada.",
+    "castella": "Ninguno de los juguetes que le regalamos está roto.",
+    "valencia": "Cap dels joguets que li vam regalar no està trencat."
+  },
+  {
+    "id": 5,
+    "paraula_clau": "habitatges / vivendes",
+    "problema": "cambio_genero",
+    "fenomen": "adjectius+predicatiu",
+    "catala": "Els habitatges nous del barri són massa cars per a molta gent.",
+    "castella": "Las viviendas nuevas del barrio son demasiado caras para mucha gente.",
+    "valencia": "Les vivendes noves del barri són massa cares per a molta gent."
+  },
+  {
+    "id": 6,
+    "paraula_clau": "espelma / ciri",
+    "problema": "cambio_genero",
+    "fenomen": "anafora_ellipsi",
+    "catala": "Va encendre una altra espelma perquè la primera s'havia apagat.",
+    "castella": "Encendió otra vela porque la primera se había apagado.",
+    "valencia": "Va encendre un altre ciri perquè el primer s'havia apagat."
+  },
+  {
+    "id": 7,
+    "paraula_clau": "despeses / gastos",
+    "problema": "cambio_genero",
+    "fenomen": "anafora_ellipsi",
+    "catala": "Les despeses extraordinàries d'aquest mes són molt més altes que les del mes passat.",
+    "castella": "Los gastos extraordinarios de este mes son mucho más altos que los del mes pasado.",
+    "valencia": "Els gastos extraordinaris d'este mes són molt més alts que els del mes passat."
+  },
+  {
+    "id": 8,
+    "paraula_clau": "ensenyament / ensenyança",
+    "problema": "cambio_genero",
+    "fenomen": "apostrof+adjectiu",
+    "catala": "L'ensenyament públic necessita més recursos i una inversió estable.",
+    "castella": "La enseñanza pública necesita más recursos y una inversión estable.",
+    "valencia": "L'ensenyança pública necessita més recursos i una inversió estable."
+  },
+  {
+    "id": 9,
+    "paraula_clau": "naixença / naixement",
+    "problema": "cambio_genero",
+    "fenomen": "passiva",
+    "catala": "La naixença del seu primer fill va ser molt esperada per tota la família.",
+    "castella": "El nacimiento de su primer hijo fue muy esperado por toda la familia.",
+    "valencia": "El naixement del seu primer fill va ser molt esperat per tota la família."
+  },
+  {
+    "id": 10,
+    "paraula_clau": "finalitat / fi",
+    "problema": "cambio_genero",
+    "fenomen": "adjectius+predicatiu",
+    "catala": "La finalitat última del projecte no ha quedat del tot clara.",
+    "castella": "El fin último del proyecto no ha quedado del todo claro.",
+    "valencia": "El fi últim del projecte no ha quedat del tot clar."
+  },
+  {
+    "id": 11,
+    "paraula_clau": "espatlla / muscle",
+    "problema": "cambio_genero",
+    "fenomen": "apostrof+adjectius",
+    "catala": "Té l'espatlla esquerra inflamada des de fa una setmana.",
+    "castella": "Tiene el hombro izquierdo inflamado desde hace una semana.",
+    "valencia": "Té el muscle esquerre inflamat des de fa una setmana."
+  },
+  {
+    "id": 12,
+    "paraula_clau": "espatlles / muscles",
+    "problema": "cambio_genero",
+    "fenomen": "possessiu+aposicio",
+    "catala": "Les seves espatlles, amples i fortes, suportaven tot el pes.",
+    "castella": "Sus hombros, anchos y fuertes, soportaban todo el peso.",
+    "valencia": "Els seus muscles, amples i forts, suportaven tot el pes."
+  },
+  {
+    "id": 13,
+    "paraula_clau": "armilla / jupetí",
+    "problema": "cambio_genero",
+    "fenomen": "relativa_distractor+predicatiu",
+    "catala": "L'armilla que li va fer la seva àvia és gruixuda i molt calenta.",
+    "castella": "El chaleco que le hizo su abuela es grueso y muy caliente.",
+    "valencia": "El jupetí que li va fer la seua àvia és gruixut i molt calent."
+  },
+  {
+    "id": 14,
+    "paraula_clau": "calamarsa / graníssol",
+    "problema": "cambio_genero",
+    "fenomen": "predicatiu_llunya",
+    "catala": "La calamarsa d'ahir va ser tan forta que va destrossar tota la collita.",
+    "castella": "El granizo de ayer fue tan fuerte que destrozó toda la cosecha.",
+    "valencia": "El graníssol d'ahir va ser tan fort que va destrossar tota la collita."
+  },
+  {
+    "id": 15,
+    "paraula_clau": "carabassons / carabassetes",
+    "problema": "cambio_genero",
+    "fenomen": "relativa+predicatiu",
+    "catala": "Els carabassons farcits que va preparar estaven deliciosos.",
+    "castella": "Los calabacines rellenos que preparó estaban deliciosos.",
+    "valencia": "Les carabassetes farcides que va preparar estaven delicioses."
+  },
+  {
+    "id": 16,
+    "paraula_clau": "gruix / grossària",
+    "problema": "cambio_genero",
+    "fenomen": "clitic",
+    "catala": "El gruix de la paret no és suficient i caldrà augmentar-lo.",
+    "castella": "El grosor de la pared no es suficiente y habrá que aumentarlo.",
+    "valencia": "La grossària de la paret no és suficient i caldrà augmentar-la."
+  },
+  {
+    "id": 17,
+    "paraula_clau": "mongetes / fesols",
+    "problema": "cambio_genero",
+    "fenomen": "adjectiu+plural",
+    "catala": "Les mongetes seques s'han de deixar en remull tota la nit.",
+    "castella": "Las judías secas se tienen que dejar en remojo toda la noche.",
+    "valencia": "Els fesols secs s'han de deixar en remull tota la nit."
+  },
+  {
+    "id": 18,
+    "paraula_clau": "maons / rajoles",
+    "problema": "cambio_genero",
+    "fenomen": "relativa+clitic",
+    "catala": "Els maons vells que vam trobar al pati els aprofitarem per a la barbacoa.",
+    "castella": "Los ladrillos viejos que encontramos en el patio los aprovecharemos para la barbacoa.",
+    "valencia": "Les rajoles velles que vam trobar al pati les aprofitarem per a la barbacoa."
+  },
+  {
+    "id": 19,
+    "paraula_clau": "esment / menció",
+    "problema": "cambio_genero",
+    "fenomen": "adjectius_coordinats",
+    "catala": "Va fer un esment breu però molt encertat a la seva mare.",
+    "castella": "Hizo una mención breve pero muy acertada a su madre.",
+    "valencia": "Va fer una menció breu però molt encertada a la seua mare."
+  },
+  {
+    "id": 20,
+    "paraula_clau": "musclos / clòtxines",
+    "problema": "cambio_genero",
+    "fenomen": "predicatiu",
+    "catala": "Els musclos al vapor estaven tan bons que no en va quedar cap.",
+    "castella": "Los mejillones al vapor estaban tan buenos que no quedó ninguno.",
+    "valencia": "Les clòtxines al vapor estaven tan bones que no en va quedar cap."
+  },
+  {
+    "id": 21,
+    "paraula_clau": "condolences / condols",
+    "problema": "cambio_genero",
+    "fenomen": "possessiu+adjectiu_prenominal",
+    "catala": "Li vam donar les nostres més sinceres condolences.",
+    "castella": "Le dimos nuestras más sinceras condolencias.",
+    "valencia": "Li vam donar els nostres més sincers condols."
+  },
+  {
+    "id": 22,
+    "paraula_clau": "dosatge / dosificació",
+    "problema": "cambio_genero",
+    "fenomen": "participi+anafora",
+    "catala": "El dosatge recomanat pel metge és diferent del que indica el prospecte.",
+    "castella": "La dosificación recomendada por el médico es diferente de la que indica el prospecto.",
+    "valencia": "La dosificació recomanada pel metge és diferent de la que indica el prospecte."
+  },
+  {
+    "id": 23,
+    "paraula_clau": "romiatge / romeria",
+    "problema": "cambio_genero",
+    "fenomen": "adjectiu+predicatiu",
+    "catala": "El romiatge anual a l'ermita és molt concorregut.",
+    "castella": "La romería anual a la ermita es muy concurrida.",
+    "valencia": "La romeria anual a l'ermita és molt concorreguda."
+  },
+  {
+    "id": 24,
+    "paraula_clau": "presseguer / bresquillera",
+    "problema": "cambio_genero",
+    "fenomen": "predicatiu_distractor",
+    "catala": "El presseguer del fons de l'hort està ple de flors rosades.",
+    "castella": "El melocotonero del fondo del huerto está lleno de flores rosadas.",
+    "valencia": "La bresquillera del fons de l'hort està plena de flors rosades."
+  },
+  {
+    "id": 25,
+    "paraula_clau": "préssecs / bresquilles",
+    "problema": "cambio_genero",
+    "fenomen": "determinant+predicatiu",
+    "catala": "Aquests préssecs són tan sucosos i dolços que me'n menjaria un quilo.",
+    "castella": "Estos melocotones son tan jugosos y dulces que me comería un kilo.",
+    "valencia": "Estes bresquilles són tan sucoses i dolces que me'n menjaria un quilo."
+  },
+  {
+    "id": 26,
+    "paraula_clau": "préssecs / bresquilles",
+    "problema": "cambio_genero",
+    "fenomen": "numeral+ellipsi",
+    "catala": "Em vaig menjar dos préssecs madurs i un de verd.",
+    "castella": "Me comí dos melocotones maduros y uno verde.",
+    "valencia": "Em vaig menjar dues bresquilles madures i una de verda."
+  },
+  {
+    "id": 27,
+    "paraula_clau": "abreujament / abreviació",
+    "problema": "cambio_genero",
+    "fenomen": "determinant+clitic",
+    "catala": "Aquest abreujament no és correcte; l'has d'escriure sencer.",
+    "castella": "Esta abreviación no es correcta; tienes que escribirla entera.",
+    "valencia": "Esta abreviació no és correcta; l'has d'escriure sencera."
+  },
+  {
+    "id": 28,
+    "paraula_clau": "malt / malta",
+    "problema": "cambio_genero",
+    "fenomen": "adjectiu",
+    "catala": "El malt torrat dona a la cervesa un color fosc.",
+    "castella": "La malta tostada da a la cerveza un color oscuro.",
+    "valencia": "La malta torrada dona a la cervesa un color fosc."
+  },
+  {
+    "id": 29,
+    "paraula_clau": "corcadura / corcó",
+    "problema": "cambio_genero",
+    "fenomen": "predicatiu+clitic_distractor",
+    "catala": "La corcadura de la biga és tan profunda que caldrà substituir-la.",
+    "castella": "La carcoma de la viga es tan profunda que habrá que sustituirla.",
+    "valencia": "El corcó de la biga és tan profund que caldrà substituir-la."
+  },
+  {
+    "id": 30,
+    "paraula_clau": "farigola / timó",
+    "problema": "cambio_genero",
+    "fenomen": "clitic+participi",
+    "catala": "Hem collit farigola fresca a la muntanya i l'hem posada a assecar.",
+    "castella": "Hemos recogido tomillo fresco en la montaña y lo hemos puesto a secar.",
+    "valencia": "Hem collit timó fresc a la muntanya i l'hem posat a assecar."
+  },
+  {
+    "id": 31,
+    "paraula_clau": "nespres / nispros",
+    "problema": "cambio_genero",
+    "fenomen": "predicatiu+clitic",
+    "catala": "Les nespres encara estan massa verdes i no les podrem collir fins al maig.",
+    "castella": "Los nísperos todavía están demasiado verdes y no los podremos recoger hasta mayo.",
+    "valencia": "Els nispros encara estan massa verds i no els podrem collir fins al maig."
+  },
+  {
+    "id": 32,
+    "paraula_clau": "fura / furó",
+    "problema": "cambio_genero",
+    "fenomen": "possessiu+predicatiu",
+    "catala": "La fura del meu cosí és molt juganera i s'amaga a tot arreu.",
+    "castella": "El hurón de mi primo es muy juguetón y se esconde por todas partes.",
+    "valencia": "El furó del meu cosí és molt juganer i s'amaga a tot arreu."
+  },
+  {
+    "id": 33,
+    "paraula_clau": "aranja / pomelo",
+    "problema": "cambio_genero",
+    "fenomen": "indefinit+adjectiu",
+    "catala": "Una aranja rosada al dia és una bona manera de començar el matí.",
+    "castella": "Un pomelo rosado al día es una buena manera de empezar la mañana.",
+    "valencia": "Un pomelo rosat al dia és una bona manera de començar el matí."
+  },
+  {
+    "id": 34,
+    "paraula_clau": "embranzida / empenyiment",
+    "problema": "cambio_genero",
+    "fenomen": "indefinit+adjectiu",
+    "catala": "Amb una embranzida final molt potent, va superar tots els rivals.",
+    "castella": "Con un empuje final muy potente, superó a todos los rivales.",
+    "valencia": "Amb un empenyiment final molt potent, va superar tots els rivals."
+  },
+  {
+    "id": 35,
+    "paraula_clau": "llimoner / llimera + llimones / llimons",
+    "problema": "cambio_genero",
+    "fenomen": "dos_canvis",
+    "catala": "El llimoner que ens va regalar el veí ha crescut molt i ara està carregat de llimones.",
+    "castella": "El limonero que nos regaló el vecino ha crecido mucho y ahora está cargado de limones.",
+    "valencia": "La llimera que ens va regalar el veí ha crescut molt i ara està carregada de llimons."
+  },
+  {
+    "id": 36,
+    "paraula_clau": "deu / brollador",
+    "problema": "cambio_genero",
+    "fenomen": "homonimia+predicatiu",
+    "catala": "La deu de la muntanya està seca des de l'estiu passat.",
+    "castella": "El manantial de la montaña está seco desde el verano pasado.",
+    "valencia": "El brollador de la muntanya està sec des de l'estiu passat."
+  },
+  {
+    "id": 37,
+    "paraula_clau": "noguera / anouer",
+    "problema": "cambio_genero",
+    "fenomen": "apostrof+passiva",
+    "catala": "La noguera centenària de la plaça va ser talada ahir.",
+    "castella": "El nogal centenario de la plaza fue talado ayer.",
+    "valencia": "L'anouer centenari de la plaça va ser talat ahir."
+  },
+  {
+    "id": 38,
+    "paraula_clau": "nou / anou",
+    "problema": "cambio_genero",
+    "fenomen": "homonimia+apostrof",
+    "catala": "La nou que vaig obrir estava podrida per dins.",
+    "castella": "La nuez que abrí estaba podrida por dentro.",
+    "valencia": "L'anou que vaig obrir estava podrida per dins."
+  },
+  {
+    "id": 39,
+    "paraula_clau": "calcigament / xafada",
+    "problema": "cambio_genero",
+    "fenomen": "predicatiu_llunya",
+    "catala": "El calcigament va ser tan fort que se li va inflar el peu.",
+    "castella": "El pisotón fue tan fuerte que se le hinchó el pie.",
+    "valencia": "La xafada va ser tan forta que se li va inflar el peu."
+  },
+  {
+    "id": 40,
+    "paraula_clau": "llagosta / saltamartí",
+    "problema": "cambio_genero",
+    "fenomen": "indefinit+adjectius",
+    "catala": "Una llagosta verda enorme va saltar damunt de la taula.",
+    "castella": "Un saltamontes verde enorme saltó encima de la mesa.",
+    "valencia": "Un saltamartí verd enorme va saltar damunt de la taula."
+  },
+  {
+    "id": 41,
+    "paraula_clau": "xarampió / pallola",
+    "problema": "cambio_genero",
+    "fenomen": "aposicio+predicatiu",
+    "catala": "El xarampió, tan comú abans, ara és rar gràcies a les vacunes.",
+    "castella": "El sarampión, tan común antes, ahora es raro gracias a las vacunas.",
+    "valencia": "La pallola, tan comuna abans, ara és rara gràcies a les vacunes."
+  },
+  {
+    "id": 42,
+    "paraula_clau": "crestes / pastissets",
+    "problema": "cambio_genero",
+    "fenomen": "relativa+predicatiu",
+    "catala": "Les crestes que venen en aquesta pastisseria són boníssimes.",
+    "castella": "Las empanadillas que venden en esta pastelería son buenísimas.",
+    "valencia": "Els pastissets que venen en esta pastisseria són boníssims."
+  },
+  {
+    "id": 43,
+    "paraula_clau": "sorral / arenera",
+    "problema": "cambio_genero",
+    "fenomen": "apostrof+predicatiu",
+    "catala": "El sorral és tan extens que sembla un desert.",
+    "castella": "El arenal es tan extenso que parece un desierto.",
+    "valencia": "L'arenera és tan extensa que sembla un desert."
+  },
+  {
+    "id": 44,
+    "paraula_clau": "enagos / sinagües",
+    "problema": "cambio_genero",
+    "fenomen": "adjectius+predicatiu",
+    "catala": "Els enagos blancs de la núvia eren llargs i brodats.",
+    "castella": "Las enaguas blancas de la novia eran largas y bordadas.",
+    "valencia": "Les sinagües blanques de la núvia eren llargues i brodades."
+  },
+  {
+    "id": 45,
+    "paraula_clau": "garriga / coscollar",
+    "problema": "cambio_genero",
+    "fenomen": "determinant+adjectius",
+    "catala": "Aquesta garriga seca i pedregosa crema amb molta facilitat.",
+    "castella": "Este chaparral seco y pedregoso arde con mucha facilidad.",
+    "valencia": "Este coscollar sec i pedregós crema amb molta facilitat."
+  },
+  {
+    "id": 46,
+    "paraula_clau": "garrofers / garroferes",
+    "problema": "cambio_genero",
+    "fenomen": "adjectiu",
+    "catala": "Els garrofers vells del secà són un patrimoni que cal protegir.",
+    "castella": "Los algarrobos viejos del secano son un patrimonio que hay que proteger.",
+    "valencia": "Les garroferes velles del secà són un patrimoni que cal protegir."
+  },
+  {
+    "id": 47,
+    "paraula_clau": "falciots / falcies",
+    "problema": "cambio_genero",
+    "fenomen": "ordinal+aposicio",
+    "catala": "Els primers falciots de la primavera ja han arribat, cansats del llarg viatge.",
+    "castella": "Los primeros vencejos de la primavera ya han llegado, cansados del largo viaje.",
+    "valencia": "Les primeres falcies de la primavera ja han arribat, cansades del llarg viatge."
+  },
+  {
+    "id": 48,
+    "paraula_clau": "amidaments / medicions",
+    "problema": "cambio_genero",
+    "fenomen": "relativa+predicatiu",
+    "catala": "Els amidaments que vam fer ahir estaven equivocats.",
+    "castella": "Las mediciones que hicimos ayer estaban equivocadas.",
+    "valencia": "Les medicions que vam fer ahir estaven equivocades."
+  },
+  {
+    "id": 49,
+    "paraula_clau": "esgarrapada / arrap",
+    "problema": "cambio_genero",
+    "fenomen": "adjectius_coordinats",
+    "catala": "Tenia una esgarrapada llarga i profunda al braç.",
+    "castella": "Tenía un arañazo largo y profundo en el brazo.",
+    "valencia": "Tenia un arrap llarg i profund al braç."
+  },
+  {
+    "id": 50,
+    "paraula_clau": "revoltim / rebolica",
+    "problema": "cambio_genero",
+    "fenomen": "exclamatiu",
+    "catala": "Quin revoltim tan gros es va formar a la plaça!",
+    "castella": "¡Qué revoltijo tan grande se formó en la plaza!",
+    "valencia": "Quina rebolica tan grossa es va formar a la plaça!"
+  },
+  {
+    "id": 51,
+    "paraula_clau": "cop / vegada",
+    "problema": "cambio_genero",
+    "fenomen": "ordinal+distractor",
+    "catala": "L'últim cop que hi vaig anar, estava tancat.",
+    "castella": "La última vez que fui, estaba cerrado.",
+    "valencia": "L'última vegada que hi vaig anar, estava tancat."
+  },
+  {
+    "id": 52,
+    "paraula_clau": "cop de puny / punyada",
+    "problema": "cambio_genero",
+    "fenomen": "predicatiu+clitic_distractor",
+    "catala": "Li va clavar un cop de puny tan fort que el va tombar.",
+    "castella": "Le dio un puñetazo tan fuerte que lo tumbó.",
+    "valencia": "Li va clavar una punyada tan forta que el va tombar."
+  },
+  {
+    "id": 53,
+    "paraula_clau": "cop d'ull / ullada",
+    "problema": "cambio_genero",
+    "fenomen": "adjectiu+clitic_distractor",
+    "catala": "Va fer un cop d'ull ràpid al document i el va tornar.",
+    "castella": "Echó un vistazo rápido al documento y lo devolvió.",
+    "valencia": "Va fer una ullada ràpida al document i el va tornar."
+  },
+  {
+    "id": 54,
+    "paraula_clau": "cop de porta / portada",
+    "problema": "cambio_genero",
+    "fenomen": "adjectiu",
+    "catala": "Es va sentir un cop de porta molt sorollós.",
+    "castella": "Se oyó un portazo muy ruidoso.",
+    "valencia": "Es va sentir una portada molt sorollosa."
+  },
+  {
+    "id": 55,
+    "paraula_clau": "cop de cap / cabotada",
+    "problema": "cambio_genero",
+    "fenomen": "indefinit+adjectiu",
+    "catala": "Un cop de cap precís del davanter va decidir el partit.",
+    "castella": "Un cabezazo preciso del delantero decidió el partido.",
+    "valencia": "Una cabotada precisa del davanter va decidir el partit."
+  },
+  {
+    "id": 56,
+    "paraula_clau": "blat de moro / dacsa",
+    "problema": "cambio_genero",
+    "fenomen": "adjectiu+distractor",
+    "catala": "El blat de moro torrat és el berenar preferit dels meus fills.",
+    "castella": "El maíz tostado es la merienda preferida de mis hijos.",
+    "valencia": "La dacsa torrada és el berenar preferit dels meus fills."
+  },
+  {
+    "id": 57,
+    "paraula_clau": "síndria / meló d'Alger",
+    "problema": "cambio_genero",
+    "fenomen": "relativa+predicatiu",
+    "catala": "La síndria que vam comprar al mercat era dolça i ben fresca.",
+    "castella": "La sandía que compramos en el mercado era dulce y bien fresca.",
+    "valencia": "El meló d'Alger que vam comprar al mercat era dolç i ben fresc."
+  },
+  {
+    "id": 58,
+    "paraula_clau": "xatrac / tisoreta d'albufera",
+    "problema": "cambio_genero",
+    "fenomen": "indefinit+aposicio",
+    "catala": "Un xatrac solitari, blanc i esvelt, sobrevolava la platja.",
+    "castella": "Un charrán solitario, blanco y esbelto, sobrevolaba la playa.",
+    "valencia": "Una tisoreta d'albufera solitària, blanca i esvelta, sobrevolava la platja."
+  },
+  {
+    "id": 59,
+    "paraula_clau": "pioc salvatge / avitarda + cop / vegada",
+    "problema": "cambio_genero",
+    "fenomen": "dos_canvis",
+    "catala": "El pioc salvatge és cada cop més escàs a la península.",
+    "castella": "La avutarda es cada vez más escasa en la península.",
+    "valencia": "L'avitarda és cada vegada més escassa a la península."
+  },
+  {
+    "id": 60,
+    "paraula_clau": "cirerol / tomaca cherry",
+    "problema": "cambio_genero",
+    "fenomen": "clitic",
+    "catala": "Vaig tallar el cirerol per la meitat i el vaig afegir a l'amanida.",
+    "castella": "Corté el tomate cherry por la mitad y lo añadí a la ensalada.",
+    "valencia": "Vaig tallar la tomaca cherry per la mitat i la vaig afegir a l'ensalada."
+  },
+  {
+    "id": 61,
+    "paraula_clau": "tomàquet d'arbre / tomaca d'arbre",
+    "problema": "cambio_genero",
+    "fenomen": "predicatiu_llunya",
+    "catala": "El tomàquet d'arbre és agre quan no està madur.",
+    "castella": "El tomate de árbol es ácido cuando no está maduro.",
+    "valencia": "La tomaca d'arbre és agra quan no està madura."
+  },
+  {
+    "id": 62,
+    "paraula_clau": "cabdell / col copada",
+    "problema": "cambio_genero",
+    "fenomen": "relativa+predicatiu",
+    "catala": "El cabdell que vaig comprar estava fresc i cruixent.",
+    "castella": "El repollo que compré estaba fresco y crujiente.",
+    "valencia": "La col copada que vaig comprar estava fresca i cruixent."
+  },
+  {
+    "id": 63,
+    "paraula_clau": "abraçada / abraç",
+    "problema": "cambio_genero",
+    "fenomen": "indefinit+adjectius",
+    "catala": "Li va fer una abraçada llarga i sentida.",
+    "castella": "Le dio un abrazo largo y sentido.",
+    "valencia": "Li va fer un abraç llarg i sentit."
+  },
+  {
+    "id": 64,
+    "paraula_clau": "abraçades / abraços",
+    "problema": "cambio_genero",
+    "fenomen": "superlatiu",
+    "catala": "Les abraçades de la seva àvia eren les més càlides del món.",
+    "castella": "Los abrazos de su abuela eran los más cálidos del mundo.",
+    "valencia": "Els abraços de la seua àvia eren els més càlids del món."
+  },
+  {
+    "id": 65,
+    "paraula_clau": "escombraries / fem",
+    "problema": "cambio_genero",
+    "fenomen": "canvi_nombre+predicatiu",
+    "catala": "Les escombraries s'acumulaven al carrer, brutes i pudents.",
+    "castella": "La basura se acumulaba en la calle, sucia y maloliente.",
+    "valencia": "El fem s'acumulava al carrer, brut i pudent."
+  },
+  {
+    "id": 66,
+    "paraula_clau": "llimona / llimó",
+    "problema": "cambio_genero",
+    "fenomen": "comparativa+ellipsi",
+    "catala": "Una llimona ben madura és més sucosa que una de verda.",
+    "castella": "Un limón bien maduro es más jugoso que uno verde.",
+    "valencia": "Un llimó ben madur és més sucós que un de verd."
+  },
+  {
+    "id": 67,
+    "paraula_clau": "galleda / poal",
+    "problema": "cambio_genero",
+    "fenomen": "anafora_entre_oracions",
+    "catala": "On és la galleda blava? La vaig deixar al pati.",
+    "castella": "¿Dónde está el cubo azul? Lo dejé en el patio.",
+    "valencia": "On és el poal blau? El vaig deixar al pati."
+  },
+  {
+    "id": 68,
+    "paraula_clau": "tomàquet / tomaca",
+    "problema": "cambio_genero",
+    "fenomen": "subordinada+predicatiu",
+    "catala": "El tomàquet, quan és ben madur, es pot pelar fàcilment.",
+    "castella": "El tomate, cuando está bien maduro, se puede pelar fácilmente.",
+    "valencia": "La tomaca, quan és ben madura, es pot pelar fàcilment."
+  },
+  {
+    "id": 69,
+    "paraula_clau": "joguina / joguet",
+    "problema": "cambio_genero",
+    "fenomen": "possessiu+distractor",
+    "catala": "La seva joguina preferida és un camió vell de fusta.",
+    "castella": "Su juguete preferido es un camión viejo de madera.",
+    "valencia": "El seu joguet preferit és un camió vell de fusta."
+  },
+  {
+    "id": 70,
+    "paraula_clau": "habitatge / vivenda",
+    "problema": "cambio_genero",
+    "fenomen": "relativa+adjectius",
+    "catala": "L'habitatge que hem llogat és lluminós però una mica sorollós.",
+    "castella": "La vivienda que hemos alquilado es luminosa pero un poco ruidosa.",
+    "valencia": "La vivenda que hem llogat és lluminosa però un poc sorollosa."
+  },
+  {
+    "id": 71,
+    "paraula_clau": "espelmes / ciris",
+    "problema": "cambio_genero",
+    "fenomen": "quantificador+predicatiu",
+    "catala": "Totes les espelmes del pastís estaven enceses.",
+    "castella": "Todas las velas del pastel estaban encendidas.",
+    "valencia": "Tots els ciris del pastís estaven encesos."
+  },
+  {
+    "id": 72,
+    "paraula_clau": "mongeta / fesol + farigola / timó",
+    "problema": "cambio_genero",
+    "fenomen": "coordinacio_dos_canvis",
+    "catala": "La mongeta i la farigola collides ahir eren fresquíssimes.",
+    "castella": "La judía y el tomillo recogidos ayer estaban fresquísimos.",
+    "valencia": "El fesol i el timó collits ahir eren fresquíssims."
+  },
+  {
+    "id": 73,
+    "paraula_clau": "xocolata / xocolate",
+    "problema": "cambio_genero",
+    "fenomen": "coordinacio_mixta",
+    "catala": "La xocolata i la nata estaven fredes.",
+    "castella": "El chocolate y la nata estaban fríos.",
+    "valencia": "El xocolate i la nata estaven freds."
+  },
+  {
+    "id": 74,
+    "paraula_clau": "síndria / meló d'Alger",
+    "problema": "cambio_genero",
+    "fenomen": "coordinacio_mixta",
+    "catala": "La síndria i la pera eren dolces i sucoses.",
+    "castella": "La sandía y la pera eran dulces y jugosas.",
+    "valencia": "El meló d'Alger i la pera eren dolços i sucosos."
+  },
+  {
+    "id": 75,
+    "paraula_clau": "préssecs / bresquilles + presseguer / bresquillera",
+    "problema": "cambio_genero",
+    "fenomen": "dos_canvis",
+    "catala": "Els préssecs d'aquest presseguer són els més dolços de l'hort.",
+    "castella": "Los melocotones de este melocotonero son los más dulces del huerto.",
+    "valencia": "Les bresquilles d'esta bresquillera són les més dolces de l'hort."
+  },
+  {
+    "id": 76,
+    "paraula_clau": "noguera / anouer + nou / anou",
+    "problema": "cambio_genero",
+    "fenomen": "dos_canvis",
+    "catala": "Aquella noguera tan alta només va donar una nou.",
+    "castella": "Aquel nogal tan alto solo dio una nuez.",
+    "valencia": "Aquell anouer tan alt només va donar una anou."
+  },
+  {
+    "id": 77,
+    "paraula_clau": "garrofer / garrofera",
+    "problema": "cambio_genero",
+    "fenomen": "superlatiu",
+    "catala": "El garrofer més vell del poble té més de cinc-cents anys.",
+    "castella": "El algarrobo más viejo del pueblo tiene más de quinientos años.",
+    "valencia": "La garrofera més vella del poble té més de cinc-cents anys."
+  },
+  {
+    "id": 78,
+    "paraula_clau": "cop / vegada",
+    "problema": "cambio_genero",
+    "fenomen": "ordinal",
+    "catala": "El segon cop que ho va intentar, ho va aconseguir.",
+    "castella": "La segunda vez que lo intentó, lo consiguió.",
+    "valencia": "La segona vegada que ho va intentar, ho va aconseguir."
+  },
+  {
+    "id": 79,
+    "paraula_clau": "xocolata / xocolate",
+    "problema": "cambio_genero",
+    "fenomen": "quantificador",
+    "catala": "Es va menjar tota la xocolata ell sol.",
+    "castella": "Se comió todo el chocolate él solo.",
+    "valencia": "Es va menjar tot el xocolate ell sol."
+  },
+  {
+    "id": 80,
+    "paraula_clau": "xocolata / xocolate",
+    "problema": "cambio_genero",
+    "fenomen": "mateix+anafora",
+    "catala": "Sempre compra la mateixa xocolata, la de cacau pur.",
+    "castella": "Siempre compra el mismo chocolate, el de cacao puro.",
+    "valencia": "Sempre compra el mateix xocolate, el de cacau pur."
+  },
+  {
+    "id": 81,
+    "paraula_clau": "aranja / pomelo",
+    "problema": "cambio_genero",
+    "fenomen": "altre+demostratiu_pronominal",
+    "catala": "Vull una altra aranja; aquesta està massa amarga.",
+    "castella": "Quiero otro pomelo; este está demasiado amargo.",
+    "valencia": "Vull un altre pomelo; este està massa amarg."
+  },
+  {
+    "id": 82,
+    "paraula_clau": "nespra / nispro",
+    "problema": "cambio_genero",
+    "fenomen": "algun+clitics_combinats",
+    "catala": "Si trobes alguna nespra madura, porta-me-la.",
+    "castella": "Si encuentras algún níspero maduro, tráemelo.",
+    "valencia": "Si trobes algun nispro madur, porta-me'l."
+  },
+  {
+    "id": 83,
+    "paraula_clau": "despesa / gasto",
+    "problema": "cambio_genero",
+    "fenomen": "exclamatiu",
+    "catala": "Quina despesa més inútil!",
+    "castella": "¡Qué gasto más inútil!",
+    "valencia": "Quin gasto més inútil!"
+  },
+  {
+    "id": 84,
+    "paraula_clau": "espatlla / muscle",
+    "problema": "cambio_genero",
+    "fenomen": "possessiu+adjectiu",
+    "catala": "La meva espatlla dreta encara em fa mal.",
+    "castella": "Mi hombro derecho todavía me duele.",
+    "valencia": "El meu muscle dret encara em fa mal."
+  },
+  {
+    "id": 85,
+    "paraula_clau": "calamarsa / graníssol",
+    "problema": "cambio_genero",
+    "fenomen": "subjecte_postverbal+participi",
+    "catala": "Va arribar per fi la calamarsa, tan temuda pels agricultors.",
+    "castella": "Llegó por fin el granizo, tan temido por los agricultores.",
+    "valencia": "Va arribar per fi el graníssol, tan temut pels agricultors."
+  },
+  {
+    "id": 86,
+    "paraula_clau": "despeses / gastos",
+    "problema": "cambio_genero",
+    "fenomen": "passiva",
+    "catala": "Les despeses van ser aprovades per unanimitat.",
+    "castella": "Los gastos fueron aprobados por unanimidad.",
+    "valencia": "Els gastos van ser aprovats per unanimitat."
+  },
+  {
+    "id": 87,
+    "paraula_clau": "ensenyament / ensenyança",
+    "problema": "cambio_genero",
+    "fenomen": "passiva_distractor",
+    "catala": "L'ensenyament de llengües estrangeres va ser molt criticat.",
+    "castella": "La enseñanza de lenguas extranjeras fue muy criticada.",
+    "valencia": "L'ensenyança de llengües estrangeres va ser molt criticada."
+  },
+  {
+    "id": 88,
+    "paraula_clau": "dosatge / dosificació",
+    "problema": "cambio_genero",
+    "fenomen": "predicatiu_llunya",
+    "catala": "El dosatge, segons el que va explicar el farmacèutic, ha de ser molt precís.",
+    "castella": "La dosificación, según lo que explicó el farmacéutico, tiene que ser muy precisa.",
+    "valencia": "La dosificació, segons el que va explicar el farmacèutic, ha de ser molt precisa."
+  },
+  {
+    "id": 89,
+    "paraula_clau": "habitatge / vivenda",
+    "problema": "cambio_genero",
+    "fenomen": "relatiu_el_qual+passiva",
+    "catala": "L'habitatge, el qual estava abandonat des de feia anys, va ser restaurat.",
+    "castella": "La vivienda, la cual estaba abandonada desde hacía años, fue restaurada.",
+    "valencia": "La vivenda, la qual estava abandonada des de feia anys, va ser restaurada."
+  },
+  {
+    "id": 90,
+    "paraula_clau": "tomàquet / tomaca",
+    "problema": "cambio_genero",
+    "fenomen": "contraccio_del",
+    "catala": "El color del tomàquet canvia quan madura.",
+    "castella": "El color del tomate cambia cuando madura.",
+    "valencia": "El color de la tomaca canvia quan madura."
+  },
+  {
+    "id": 91,
+    "paraula_clau": "carabassó / carabasseta",
+    "problema": "cambio_genero",
+    "fenomen": "contraccio_al+clitic",
+    "catala": "Afegeix sal al carabassó abans de coure'l.",
+    "castella": "Añade sal al calabacín antes de cocerlo.",
+    "valencia": "Afegix sal a la carabasseta abans de coure-la."
+  },
+  {
+    "id": 92,
+    "paraula_clau": "sorral / arenera",
+    "problema": "cambio_genero",
+    "fenomen": "contraccio_pel",
+    "catala": "Va passar pel sorral sense adonar-se'n.",
+    "castella": "Pasó por el arenal sin darse cuenta.",
+    "valencia": "Va passar per l'arenera sense adonar-se'n."
+  },
+  {
+    "id": 93,
+    "paraula_clau": "armilla / jupetí",
+    "problema": "cambio_genero",
+    "fenomen": "contraccio_de_l",
+    "catala": "Va deixar les claus a la butxaca de l'armilla.",
+    "castella": "Dejó las llaves en el bolsillo del chaleco.",
+    "valencia": "Va deixar les claus a la butxaca del jupetí."
+  },
+  {
+    "id": 94,
+    "paraula_clau": "cops / vegades",
+    "problema": "cambio_genero",
+    "fenomen": "numeral+anafora",
+    "catala": "Ho he intentat tres cops i tots han fallat.",
+    "castella": "Lo he intentado tres veces y todas han fallado.",
+    "valencia": "Ho he intentat tres vegades i totes han fallat."
+  },
+  {
+    "id": 95,
+    "paraula_clau": "finalitats / fins",
+    "problema": "cambio_genero",
+    "fenomen": "determinant+predicatiu",
+    "catala": "Les finalitats d'aquesta associació són clares i ben definides.",
+    "castella": "Los fines de esta asociación son claros y bien definidos.",
+    "valencia": "Els fins d'esta associació són clars i ben definits."
+  },
+  {
+    "id": 96,
+    "paraula_clau": "condolença / condol",
+    "problema": "cambio_genero",
+    "fenomen": "adjectiu",
+    "catala": "Va rebre la condolença sincera de tots els companys.",
+    "castella": "Recibió la condolencia sincera de todos los compañeros.",
+    "valencia": "Va rebre el condol sincer de tots els companys."
+  },
+  {
+    "id": 97,
+    "paraula_clau": "musclo / clòtxina",
+    "problema": "cambio_genero",
+    "fenomen": "distributiu+predicatiu",
+    "catala": "Cada musclo estava farcit d'arròs.",
+    "castella": "Cada mejillón estaba relleno de arroz.",
+    "valencia": "Cada clòtxina estava farcida d'arròs."
+  },
+  {
+    "id": 98,
+    "paraula_clau": "llagostes / saltamartins",
+    "problema": "cambio_genero",
+    "fenomen": "indefinit+adjectius",
+    "catala": "Unes llagostes grosses i verdes saltaven pel camp.",
+    "castella": "Unos saltamontes grandes y verdes saltaban por el campo.",
+    "valencia": "Uns saltamartins grossos i verds saltaven pel camp."
+  },
+  {
+    "id": 99,
+    "paraula_clau": "fures / furons",
+    "problema": "cambio_genero",
+    "fenomen": "adjectius_coordinats",
+    "catala": "Les fures del caçador eren blanques i llargues.",
+    "castella": "Los hurones del cazador eran blancos y largos.",
+    "valencia": "Els furons del caçador eren blancs i llargs."
+  },
+  {
+    "id": 100,
+    "paraula_clau": "esgarrapades / arraps",
+    "problema": "cambio_genero",
+    "fenomen": "adjectius_coordinats",
+    "catala": "Les esgarrapades del gat eren superficials però molestes.",
+    "castella": "Los arañazos del gato eran superficiales pero molestos.",
+    "valencia": "Els arraps del gat eren superficials però molestos."
+  },
+  {
+    "id": 101,
+    "paraula_clau": "naixences / naixements",
+    "problema": "cambio_genero",
+    "fenomen": "participi+comparativa",
+    "catala": "Les naixences registrades aquest any són menys nombroses que l'any passat.",
+    "castella": "Los nacimientos registrados este año son menos numerosos que el año pasado.",
+    "valencia": "Els naixements registrats este any són menys nombrosos que l'any passat."
+  },
+  {
+    "id": 102,
+    "paraula_clau": "deus / brolladors",
+    "problema": "cambio_genero",
+    "fenomen": "homonimia+passiva_distractor",
+    "catala": "Les deus d'aigua termal són molt apreciades a la comarca.",
+    "castella": "Los manantiales de agua termal son muy apreciados en la comarca.",
+    "valencia": "Els brolladors d'aigua termal són molt apreciats a la comarca."
+  },
+  {
+    "id": 103,
+    "paraula_clau": "tomàquet / tomaca + carabassó / carabasseta",
+    "problema": "cambio_genero",
+    "fenomen": "coordinacio_dos_canvis",
+    "catala": "El tomàquet i el carabassó, tallats a daus, s'han de fregir junts.",
+    "castella": "El tomate y el calabacín, cortados en dados, se tienen que freír juntos.",
+    "valencia": "La tomaca i la carabasseta, tallades a daus, s'han de fregir juntes."
+  },
+  {
+    "id": 104,
+    "paraula_clau": "galleda / poal + escombraries / fem",
+    "problema": "cambio_genero",
+    "fenomen": "dos_canvis",
+    "catala": "Buida la galleda de les escombraries, que ja està plena.",
+    "castella": "Vacía el cubo de la basura, que ya está lleno.",
+    "valencia": "Buida el poal del fem, que ja està ple."
+  },
+  {
+    "id": 105,
+    "paraula_clau": "deu / brollador",
+    "problema": "cambio_genero",
+    "fenomen": "homonimia_numeral",
+    "catala": "Hi havia deu persones al voltant de la deu.",
+    "castella": "Había diez personas alrededor del manantial.",
+    "valencia": "Hi havia deu persones al voltant del brollador."
+  },
+  {
+    "id": 106,
+    "paraula_clau": "llimones / llimons",
+    "problema": "cambio_genero",
+    "fenomen": "determinant+adjectius",
+    "catala": "Les llimones d'aquest arbre són àcides i grosses.",
+    "castella": "Los limones de este árbol son ácidos y grandes.",
+    "valencia": "Els llimons d'este arbre són àcids i grossos."
+  },
+  {
+    "id": 107,
+    "paraula_clau": "xocolata / xocolate",
+    "problema": "cambio_genero",
+    "fenomen": "dislocacio+clitic",
+    "catala": "La xocolata, la guardarem per a després.",
+    "castella": "El chocolate, lo guardaremos para después.",
+    "valencia": "El xocolate, el guardarem per a després."
+  },
+  {
+    "id": 108,
+    "paraula_clau": "síndria / meló d'Alger",
+    "problema": "cambio_genero",
+    "fenomen": "clitic+participi_predicatiu",
+    "catala": "Ja t'he dit que la síndria no la vull tallada.",
+    "castella": "Ya te he dicho que la sandía no la quiero cortada.",
+    "valencia": "Ja t'he dit que el meló d'Alger no el vull tallat."
+  },
+  {
+    "id": 109,
+    "paraula_clau": "xocolata / xocolate",
+    "problema": "cambio_genero",
+    "fenomen": "frase_llarga",
+    "catala": "Quan vam arribar a casa, la xocolata que havíem deixat damunt de la taula de la cuina estava completament desfeta per culpa del sol.",
+    "castella": "Cuando llegamos a casa, el chocolate que habíamos dejado encima de la mesa de la cocina estaba completamente derretido por culpa del sol.",
+    "valencia": "Quan vam arribar a casa, el xocolate que havíem deixat damunt de la taula de la cuina estava completament desfet per culpa del sol."
+  },
+  {
+    "id": 110,
+    "paraula_clau": "xocolata / xocolate",
+    "problema": "cambio_genero",
+    "fenomen": "adjectiu_prenominal+coordinats",
+    "catala": "Una bona xocolata desfeta i ben calenta és ideal per a l'hivern.",
+    "castella": "Un buen chocolate deshecho y bien caliente es ideal para el invierno.",
+    "valencia": "Un bon xocolate desfet i ben calent és ideal per a l'hivern."
+  },
+  {
+    "id": 111,
+    "paraula_clau": "aranja / pomelo",
+    "problema": "cambio_genero",
+    "fenomen": "exclamatiu",
+    "catala": "Quina aranja més amarga!",
+    "castella": "¡Qué pomelo más amargo!",
+    "valencia": "Quin pomelo més amarg!"
+  },
+  {
+    "id": 112,
+    "paraula_clau": "galleda / poal",
+    "problema": "cambio_genero",
+    "fenomen": "complement_predicatiu",
+    "catala": "Vaig trobar la galleda trencada al fons del pou.",
+    "castella": "Encontré el cubo roto en el fondo del pozo.",
+    "valencia": "Vaig trobar el poal trencat al fons del pou."
+  },
+  {
+    "id": 113,
+    "paraula_clau": "espelma / ciri",
+    "problema": "cambio_genero",
+    "fenomen": "imperatiu+predicatiu",
+    "catala": "Deixa l'espelma encesa tota la nit.",
+    "castella": "Deja la vela encendida toda la noche.",
+    "valencia": "Deixa el ciri encés tota la nit."
+  }
+]
