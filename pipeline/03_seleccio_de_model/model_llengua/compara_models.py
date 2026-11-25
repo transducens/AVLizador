@@ -26,6 +26,7 @@ queda per defecte). Ací cada model és un puntuador:
 | `kenlm_dogv2_c1` | KenLM amb més text (16/11/2026; `prova_corpus.sh`): MaCoCu net + el DOGV nou sencer (2025-2026, +5.413 documents), + classificador |
 | `kenlm_dogv2_avl_c1` | ídem + la AVL (sense els documents ni les frases dels benchmarks; `termes_ambigus.py`) |
 | `kenlm_dogv2_avl_ua_c1` | ídem + les notícies de la UA (frases de GD ≥ 0,8) |
+| `kenlm_dogv2_sint_c1`, `kenlm_dogv2_sint3_c1` | el KenLM del sistema 2.0.1 (`valencia_net_dogv2`) + les frases sintètiques d'homògrafs (`dades/sintetic_homografs/`, 25/11/2026; `prova_sintetic.sh`), una vegada o tres (la poda lleva els n-grames que només hi són una vegada) |
 | `kenlm_lemes_tot_dogv2`, `kenlm_lemes_tot_dogv2_c1`, `kenlm_mescla_tot_dogv2_c1` | ídem, però amb TOT el text a lema, també les candidates i les que concorden (`LematitzadorLM(tot=True)`); el prior, de la taula de formes de la 2.0.0 (20/11/2026; `TOT=1 prova_lemes_dogv2.sh`) |
 | `kenlm_lemes_dogv2`, `kenlm_lemes_dogv2_c1`, `kenlm_mescla_dogv2_c1` | com `kenlm_lemes*` i `kenlm_mescla_c1`, però amb el text del sistema 2.0.0 (`valencia_net_dogv2`) passat a lemes; la mescla, amb el KenLM de formes de la 2.0.0 (20/11/2026; `prova_lemes_dogv2.sh`) |
 | `kenlm_lemes_ref_dogv2`, `kenlm_lemes_tot_ref_dogv2` (+ `_c1`), `kenlm_mescla_ref_dogv2_c1`, `kenlm_mescla_tot_ref_dogv2_c1` | els mateixos, però amb el context lematitzat UNA vegada, sobre la frase del motor (`KenLMLemes(referencia=True)`, 23/11/2026; `REF=1 prova_lemes_dogv2.sh`) |
@@ -123,7 +124,8 @@ TIPUS_MODEL = ("colisio", "irresoluble")
 MODELS = ("motor", "flor", "kenlm_cat", "kenlm_cat30", "kenlm_val", "kenlm_val_net", "kenlm_val_net_dogv",
           "kenlm_val_net_dogv_np", "kenlm_val_tot_np", "kenlm_val_net_dogv_bi", "kenlm_val_net_dogv_c1", "kenlm_lemes", "kenlm_lemes_c1",
           "kenlm_mescla_c1", "kenlm_o6_c1", "kenlm_o7_c1", "kenlm_o8_c1", "kenlm_dogv2_c1", "kenlm_dogv2_avl_c1",
-          "kenlm_dogv2_avl_ua_c1", "kenlm_lemes_dogv2", "kenlm_lemes_dogv2_c1", "kenlm_mescla_dogv2_c1",
+          "kenlm_dogv2_avl_ua_c1", "kenlm_dogv2_sint_c1", "kenlm_dogv2_sint3_c1",
+          "kenlm_lemes_dogv2", "kenlm_lemes_dogv2_c1", "kenlm_mescla_dogv2_c1",
           "kenlm_lemes_tot_dogv2", "kenlm_lemes_tot_dogv2_c1", "kenlm_mescla_tot_dogv2_c1",
           "kenlm_lemes_ref_dogv2", "kenlm_lemes_ref_dogv2_c1", "kenlm_mescla_ref_dogv2_c1",
           "kenlm_lemes_tot_ref_dogv2", "kenlm_lemes_tot_ref_dogv2_c1", "kenlm_mescla_tot_ref_dogv2_c1",
@@ -153,7 +155,9 @@ ORDRES_KENLM = {"kenlm_o6_c1": 6, "kenlm_o7_c1": 7, "kenlm_o8_c1": 8}
 # 16/11/2026: el KenLM del sistema (ordre 5, mateixa poda) amb més text, cadascun amb la seua taula
 # de freqüències (`prova_corpus.sh`).
 CORPUS_KENLM = {"kenlm_dogv2_c1": "valencia_net_dogv2", "kenlm_dogv2_avl_c1": "valencia_net_dogv2_avl",
-                "kenlm_dogv2_avl_ua_c1": "valencia_net_dogv2_avl_ua"}
+                "kenlm_dogv2_avl_ua_c1": "valencia_net_dogv2_avl_ua",
+                # 25/11/2026: + les frases sintètiques d'homògrafs (`prova_sintetic.sh`).
+                "kenlm_dogv2_sint_c1": "valencia_net_dogv2_sint", "kenlm_dogv2_sint3_c1": "valencia_net_dogv2_sint3"}
 # Fitxer de cada KenLM (dades/macocu/kenlm/<nom>_o5.binary i, si n'hi ha, <nom>_freq.json).
 # 11/11/2026: `_np` = sense poda; `valencia_tot_np` = net + DOGV + AVL + UA (GD >= 0,8), sense poda.
 FITXERS_KENLM = {"kenlm_cat": "macocu_tot", "kenlm_cat30": "macocu_30pc", "kenlm_val": "valencia",
