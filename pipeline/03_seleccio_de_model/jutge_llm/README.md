@@ -321,5 +321,7 @@ comprovar-ho:
     nvidia-smi --query-gpu=index,pci.bus_id --format=csv,noheader
     nvidia-smi --query-compute-apps=gpu_bus_id,pid,used_memory --format=csv,noheader | while IFS=, read bus pid mem; do echo "$bus $pid $mem $(ps -o user= -p $pid)"; done
 
-Arreglament proposat (no aplicat): `export CUDA_DEVICE_ORDER=PCI_BUS_ID`
-en `jutge_valencia.sh` abans d'`ollama serve`, i 8 CPU.
+Arreglat: `jutge_valencia.sh` fa `export CUDA_DEVICE_ORDER=PCI_BUS_ID` abans
+d'`ollama serve` (CUDA numera aleshores les GPU com SLURM), i diu que no es
+baixen les CPU per davall de les 8 per defecte. El job 2527 es va cancel·lar
+a mitjan manual.

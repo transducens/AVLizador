@@ -26,6 +26,12 @@
 # i el jutge en una màquina amb GPU sense SLURM (p. ex. nevis, A100 40 GB),
 # amb entrades_valencia/ copiada i Ollama al PATH (no cal el venv):
 #   OLLAMA_VULKAN=1 bash jutge_valencia.sh      # nevis: la GPU només per Vulkan
+#
+# En caiman (25/11/2026): CONJUNTS=... PENSA=1 sbatch --partition=gpu --gres=gpu:1 jutge_valencia.sh
+# Sense baixar les CPU: amb --cpus-per-task=4 el llama-server (36 fils, 410 %
+# de CPU, GPU al 17 %) generava a ~110 tokens/s, i amb les 8 per defecte
+# (job 2455) a ~240 (manual: 30 s/text en compte de 12). Probablement és la
+# CPU; no s'ha comprovat a banda.
 
 #SBATCH --job-name=jutge-val
 #SBATCH --output=logs/%j_jutge_valencia.out
@@ -106,6 +112,10 @@ else
     export OLLAMA_VULKAN=0 GGML_VK_VISIBLE_DEVICES=-1
 fi
 export OLLAMA_SCHED_SPREAD=true
+# CUDA numera les GPU per velocitat i SLURM (i nvidia-smi) pel bus PCI: sense
+# açò, CUDA_VISIBLE_DEVICES=0 de SLURM pot ser una altra GPU física. En caiman
+# (job 2527, 25/11/2026) SLURM va donar la 0 i Ollama va carregar en la 3.
+export CUDA_DEVICE_ORDER=PCI_BUS_ID
 # Ollama instal·lat en ~/ollama sense root (Abaco, nevis): sbatch hereta el
 # PATH de la sessió, que pot no tindre'l.
 command -v ollama > /dev/null || export PATH="$HOME/ollama/bin:$PATH"
