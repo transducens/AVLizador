@@ -325,3 +325,48 @@ Arreglat: `jutge_valencia.sh` fa `export CUDA_DEVICE_ORDER=PCI_BUS_ID` abans
 d'`ollama serve` (CUDA numera aleshores les GPU com SLURM), i diu que no es
 baixen les CPU per davall de les 8 per defecte. El job 2527 es va cancel·lar
 a mitjan manual.
+
+### Meta-avaluació en els homògrafs: ¿el jutge encerta? (25/11/2026)
+
+`python meta_homografs.py --resultats resultats --eixida
+resultats/meta_homografs.md` (sense tornar a puntuar res). Veritat: el
+benchmark diu la paraula catalana (`paraula`) i la correcta (`esperat`) de
+cada frase; per a cada eixida (referència, AVLizador, motor sol) es busca la
+paraula que hi ha en eixe lloc (alineada amb l'original) i es classifica en
+correcta valenciana (anou fruit, colp, bragues…), correcta catalana (nou
+adjectiu, calces de vestir…), deixa el català (lleu) o error de sentit
+(greu). El jutge «marca» el lloc si un tros amb error conté la paraula. Tots
+els errors de sentit són del motor (90); la referència i AVLizador en tenen
+0.
+
+| | «valencia» | «valencia2» |
+|---|---|---|
+| Errors de sentit marcats (exhaustivitat) | 47/90 (52 %) | 64/90 (71 %) |
+| Precisió (dels llocs marcats, quants són errors) | 57 % | 43 % |
+| Forma valenciana **correcta** marcada | 33/306 (11 %) | 80/306 (26 %) |
+| Paraula catalana correcta marcada | 2/237 (1 %) | 4/237 (2 %) |
+| Deixa el català (lleu) marcat | 1/75 (1 %) | 0/75 |
+| AUC de la nota (error vs. correcta) | 0,74 | 0,78 |
+| Nota mitjana: forma valenciana correcta / catalana correcta | 94,4 / 99,6 | 92,4 / 98,9 |
+
+- **Sí que penalitza formes valencianes correctes**, deu vegades més que les
+  catalanes correctes, però no per ser valencianes sinó **perquè no sap què
+  volen dir** (ho diu en el raonament): «panolla» = «a small loaf of bread»
+  (és la panotxa), «gandula» = gandula (no sap que és hamaca, i marca
+  «hamaca» com a *mistranslation*), «calces» = mitges (marca «bragues»), i
+  en «valencia2», «the standard Valencian word for nut is nou» (marca
+  «anou»), «de cop» = fixed expression (marca «colp»).
+- Els errors que veu millor són de les mateixes paraules que marca encara
+  que siguen correctes (calces, gandula): part de l'«exhaustivitat» és
+  marcar la forma, no el sentit.
+- Deixar el català no el castiga mai (com volíem: és un error lleu).
+
+**Proposta per a fer-lo útil (no provada)**: en compte d'una llista fixa de
+formes correctes, donar-li en cada frase el significat de les paraules
+dialectals que hi ha, tret del lèxic (`lexic_general.json`: català,
+valencià, castellà). Per exemple: «anou = nou (cat.) = nuez; hamaca = gandula
+(cat.) = tumbona; panolla = panotxa (cat.) = mazorca». Així pot jutjar el
+sentit («cotxe anou» = cotxe nuez) sense que la forma diga res a favor ni en
+contra. Es mesuraria amb `meta_homografs.py`: ha de baixar la forma
+valenciana correcta marcada (11 %) sense baixar l'exhaustivitat; després, el
+manual, per a vore que no torna a castigar el valencià.
