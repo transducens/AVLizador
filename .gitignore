@@ -79,3 +79,8 @@ dades/dogv_apunt/
 dades/hf_benchmarks/
 # Fitxers del model KenLM per a construir la imatge Docker (13/11/2026; vore Dockerfile)
 docker/kenlm/
+
+# Pla de migració a Apertium: document local de treball, no es versiona (24/11/2026)
+documentacio/hoja_de_ruta_apertium.md
+# Apertium: dades i eines de tercers (GPL-3), es clonen i compilen en local; vore documentacio/hoja_de_ruta_apertium.md (24/11/2026)
+apertium/

@@ -4,6 +4,7 @@
     "paraula_clau": "xatrac / tisoreta d'albufera",
     "problema": "cambio_genero",
     "catala": "El xatrac és una au migratòria molt elegant.",
+    "castella": "El charrán es un ave migratoria muy elegante.",
     "valencia": "La tisoreta d'albufera és una au migratòria molt elegant."
   },
   {
@@ -11,6 +12,7 @@
     "paraula_clau": "xocolata blanca / xocolate blanc",
     "problema": "cambio_genero",
     "catala": "La xocolata blanca és molt dolça i cremosa.",
+    "castella": "El chocolate blanco es muy dulce y cremoso.",
     "valencia": "El xocolate blanc és molt dolç i cremós."
   },
   {
@@ -18,6 +20,7 @@
     "paraula_clau": "tomàquet d'arbre / tomaca d'arbre",
     "problema": "cambio_genero",
     "catala": "El tomàquet d'arbre és un fruit exòtic poc conegut.",
+    "castella": "El tomate de árbol es un fruto exótico poco conocido.",
     "valencia": "La tomaca d'arbre és un fruit exòtic poc conegut."
   },
   {
@@ -25,6 +28,7 @@
     "paraula_clau": "cirerol / tomaca cherry",
     "problema": "cambio_genero",
     "catala": "El cirerol és perfecte per a les amanides.",
+    "castella": "El tomate cherry es perfecto para las ensaladas.",
     "valencia": "La tomaca cherry és perfecta per a les ensalades."
   },
   {
@@ -32,6 +36,7 @@
     "paraula_clau": "pioc salvatge / avitarda",
     "problema": "cambio_genero",
     "catala": "El pioc salvatge és l'au terrestre més pesant d'Europa.",
+    "castella": "La avutarda es el ave terrestre más pesada de Europa.",
     "valencia": "L'avitarda és l'au terrestre més pesant d'Europa."
   },
   {
@@ -39,6 +44,7 @@
     "paraula_clau": "síndria / meló d'Alger",
     "problema": "cambio_genero",
     "catala": "La síndria és la fruita de l'estiu per excel·lència.",
+    "castella": "La sandía es la fruta del verano por excelencia.",
     "valencia": "El meló d'Alger és la fruita de l'estiu per excel·lència."
   },
   {
@@ -46,6 +52,7 @@
     "paraula_clau": "blat de moro / dacsa",
     "problema": "cambio_genero",
     "catala": "El blat de moro s'utilitza per a molts productes.",
+    "castella": "El maíz se utiliza para muchos productos.",
     "valencia": "La dacsa s'utilitza per a molts productes."
   },
   {
@@ -53,6 +60,7 @@
     "paraula_clau": "cop de porta / portada",
     "problema": "cambio_genero",
     "catala": "El cop de porta va fer que tots s'alarméssin.",
+    "castella": "El portazo hizo que todos se alarmaran.",
     "valencia": "La portada va fer que tots s'alarméssin."
   },
   {
@@ -60,6 +68,7 @@
     "paraula_clau": "cop de puny / punyada",
     "problema": "cambio_genero",
     "catala": "El cop de puny va trencar el vidre.",
+    "castella": "El puñetazo rompió el cristal.",
     "valencia": "La punyada va trencar el vidre."
   },
   {
@@ -67,6 +76,7 @@
     "paraula_clau": "cop de cap / cabotada",
     "problema": "cambio_genero",
     "catala": "El cop de cap va ser l'acció definitiva del partit.",
+    "castella": "El cabezazo fue la acción definitiva del partido.",
     "valencia": "La cabotada va ser l'acció definitiva del partit."
   },
   {
@@ -74,6 +84,7 @@
     "paraula_clau": "cabdell / col copada",
     "problema": "cambio_genero",
     "catala": "El cabdell és un dels vegetals més nutritius.",
+    "castella": "El repollo es uno de los vegetales más nutritivos.",
     "valencia": "La col copada és un dels vegetals més nutritius."
   },
   {
@@ -81,6 +92,7 @@
     "paraula_clau": "cop d'ull / ullada",
     "problema": "cambio_genero",
     "catala": "Fes un cop d'ull als documents abans de signar.",
+    "castella": "Echa un vistazo a los documentos antes de firmar.",
     "valencia": "Fes una ullada als documents abans de firmar."
   },
   {
@@ -88,6 +100,7 @@
     "paraula_clau": "abraçada / abraç (sg)",
     "problema": "cambio_genero",
     "catala": "L'abraçada de la mare va ser molt emotiva.",
+    "castella": "El abrazo de la madre fue muy emotivo.",
     "valencia": "L'abraç de la mare va ser molt emotiu."
   },
   {
@@ -95,6 +108,7 @@
     "paraula_clau": "abraçades / abraços (pl)",
     "problema": "cambio_genero",
     "catala": "Les abraçades entre amics demostren afecte.",
+    "castella": "Los abrazos entre amigos demuestran afecto.",
     "valencia": "Els abraços entre amics demostren afecte."
   },
   {
@@ -102,6 +116,7 @@
     "paraula_clau": "escombraries / fem",
     "problema": "cambio_genero",
     "catala": "Les escombraries s'han de separar per reciclar bé.",
+    "castella": "La basura se debe separar para reciclar bien.",
     "valencia": "El fem s'ha de separar per a reciclar bé."
   },
   {
@@ -109,6 +124,7 @@
     "paraula_clau": "petó / bes",
     "problema": "cambio_genero",
     "catala": "El petó de benvinguda és un costum molt estès.",
+    "castella": "El beso de bienvenida es una costumbre muy extendida.",
     "valencia": "El bes de benvinguda és un costum molt estés."
   },
   {
@@ -116,6 +132,7 @@
     "paraula_clau": "xocolata / xocolate",
     "problema": "cambio_genero",
     "catala": "La xocolata negra té molts beneficis per a la salut.",
+    "castella": "El chocolate negro tiene muchos beneficios para la salud.",
     "valencia": "El xocolate negre té molts beneficis per a la salut."
   },
   {
@@ -123,6 +140,7 @@
     "paraula_clau": "galleda / poal (sg)",
     "problema": "cambio_genero",
     "catala": "La galleda d'aigua estava plena fins a dalt.",
+    "castella": "El cubo de agua estaba lleno hasta arriba.",
     "valencia": "El poal d'aigua estava ple fins a dalt."
   },
   {
@@ -130,6 +148,7 @@
     "paraula_clau": "galledes / poals (pl)",
     "problema": "cambio_genero",
     "catala": "Necessitem tres galledes per a netejar el terra.",
+    "castella": "Necesitamos tres cubos para limpiar el suelo.",
     "valencia": "Necessitem tres poals per a netejar el terra."
   },
   {
@@ -137,6 +156,7 @@
     "paraula_clau": "ensenyament / ensenyança",
     "problema": "cambio_genero",
     "catala": "L'ensenyament públic ha de ser de qualitat.",
+    "castella": "La enseñanza pública debe ser de calidad.",
     "valencia": "L'ensenyança pública ha de ser de qualitat."
   },
   {
@@ -144,6 +164,7 @@
     "paraula_clau": "espatlla / muscle (sg)",
     "problema": "cambio_genero",
     "catala": "L'espatlla dreta li feia molt de mal.",
+    "castella": "El hombro derecho le dolía mucho.",
     "valencia": "El muscle dret li feia molt de mal."
   },
   {
@@ -151,6 +172,7 @@
     "paraula_clau": "espatlles / muscles (pl)",
     "problema": "cambio_genero",
     "catala": "Les espatlles del nedador eren molt amples.",
+    "castella": "Los hombros del nadador eran muy anchos.",
     "valencia": "Els muscles del nedador eren molt amples."
   },
   {
@@ -158,6 +180,7 @@
     "paraula_clau": "llimona / llimó (sg)",
     "problema": "cambio_genero",
     "catala": "La llimona dóna un toc àcid als plats.",
+    "castella": "El limón da un toque ácido a los platos.",
     "valencia": "El llimó dóna un toc àcid als plats."
   },
   {
@@ -165,6 +188,7 @@
     "paraula_clau": "llimones / llimons (pl)",
     "problema": "cambio_genero",
     "catala": "Les llimones que hem collit estan molt madures.",
+    "castella": "Los limones que hemos recogido están muy maduros.",
     "valencia": "Els llimons que hem collit estan molt madurs."
   },
   {
@@ -172,6 +196,7 @@
     "paraula_clau": "espelma / ciri (sg)",
     "problema": "cambio_genero",
     "catala": "L'espelma s'apagà amb un buf suau.",
+    "castella": "La vela se apagó con un soplo suave.",
     "valencia": "El ciri s'apagà amb un buf suau."
   },
   {
@@ -179,6 +204,7 @@
     "paraula_clau": "espelmes / ciris (pl)",
     "problema": "cambio_genero",
     "catala": "Les espelmes il·luminaven la capella de nit.",
+    "castella": "Las velas iluminaban la capilla de noche.",
     "valencia": "Els ciris il·luminaven la capella de nit."
   },
   {
@@ -186,6 +212,7 @@
     "paraula_clau": "habitatge / vivenda (sg)",
     "problema": "cambio_genero",
     "catala": "L'habitatge social és un dret fonamental.",
+    "castella": "La vivienda social es un derecho fundamental.",
     "valencia": "La vivenda social és un dret fonamental."
   },
   {
@@ -193,6 +220,7 @@
     "paraula_clau": "habitatges / vivendes (pl)",
     "problema": "cambio_genero",
     "catala": "Els habitatges de la zona eren molt antics.",
+    "castella": "Las viviendas de la zona eran muy antiguas.",
     "valencia": "Les vivendes de la zona eren molt antigues."
   },
   {
@@ -200,6 +228,7 @@
     "paraula_clau": "armilla / jupetí (sg)",
     "problema": "cambio_genero",
     "catala": "L'armilla de punt li quedava molt bé.",
+    "castella": "El chaleco de punto le quedaba muy bien.",
     "valencia": "El jupetí de punt li quedava molt bé."
   },
   {
@@ -207,6 +236,7 @@
     "paraula_clau": "armilles / jupetins (pl)",
     "problema": "cambio_genero",
     "catala": "Les armilles reflectants són obligatòries en obres.",
+    "castella": "Los chalecos reflectantes son obligatorios en obras.",
     "valencia": "Els jupetins reflectants són obligatoris en obres."
   },
   {
@@ -214,6 +244,7 @@
     "paraula_clau": "calamarsa / graníssol (sg)",
     "problema": "cambio_genero",
     "catala": "La calamarsa va fer malbé les collites.",
+    "castella": "El granizo estropeó las cosechas.",
     "valencia": "El graníssol va fer malbé les collites."
   },
   {
@@ -221,6 +252,7 @@
     "paraula_clau": "calamarses / graníssols (pl)",
     "problema": "cambio_genero",
     "catala": "Les calamarses de la tardor solen ser intenses.",
+    "castella": "Los granizos de otoño suelen ser intensos.",
     "valencia": "Els graníssols de la tardor solen ser intensos."
   },
   {
@@ -228,6 +260,7 @@
     "paraula_clau": "carabassó / carabasseta",
     "problema": "cambio_genero",
     "catala": "El carabassó a la planxa és un plat senzill i sa.",
+    "castella": "El calabacín a la plancha es un plato sencillo y sano.",
     "valencia": "La carabasseta a la planxa és un plat senzill i sa."
   },
   {
@@ -235,6 +268,7 @@
     "paraula_clau": "gruix / grossària",
     "problema": "cambio_genero",
     "catala": "El gruix de la paret és de trenta centímetres.",
+    "castella": "El grosor de la pared es de treinta centímetros.",
     "valencia": "La grossària de la paret és de trenta centímetres."
   },
   {
@@ -242,6 +276,7 @@
     "paraula_clau": "mongeta / fesol (sg)",
     "problema": "cambio_genero",
     "catala": "La mongeta tendra és excel·lent en amanida.",
+    "castella": "La judía verde es excelente en ensalada.",
     "valencia": "El fesol tendre és excel·lent en ensalada."
   },
   {
@@ -249,6 +284,7 @@
     "paraula_clau": "mongetes / fesols (pl)",
     "problema": "cambio_genero",
     "catala": "Les mongetes s'han de bullir ben bé abans de menjar.",
+    "castella": "Las judías se deben hervir bien antes de comer.",
     "valencia": "Els fesols s'han de bullir ben bé abans de menjar."
   },
   {
@@ -256,6 +292,7 @@
     "paraula_clau": "joguina / joguet (sg)",
     "problema": "cambio_genero",
     "catala": "La joguina preferida dels infants era el tren de fusta.",
+    "castella": "El juguete preferido de los niños era el tren de madera.",
     "valencia": "El joguet preferit dels infants era el tren de fusta."
   },
   {
@@ -263,6 +300,7 @@
     "paraula_clau": "joguines / joguets (pl)",
     "problema": "cambio_genero",
     "catala": "Les joguines educatives estimulen la creativitat.",
+    "castella": "Los juguetes educativos estimulan la creatividad.",
     "valencia": "Els joguets educatius estimulen la creativitat."
   },
   {
@@ -270,6 +308,7 @@
     "paraula_clau": "maó / rajola",
     "problema": "cambio_genero",
     "catala": "El maó és el material bàsic de construcció.",
+    "castella": "El ladrillo es el material básico de construcción.",
     "valencia": "La rajola és el material bàsic de construcció."
   },
   {
@@ -277,6 +316,7 @@
     "paraula_clau": "tomàquet / tomaca",
     "problema": "cambio_genero",
     "catala": "El tomàquet madur és indispensable en la cuina mediterrània.",
+    "castella": "El tomate maduro es indispensable en la cocina mediterránea.",
     "valencia": "La tomaca madura és indispensable en la cuina mediterrània."
   },
   {
@@ -284,6 +324,7 @@
     "paraula_clau": "esment / menció (sg)",
     "problema": "cambio_genero",
     "catala": "L'esment a l'obra original és molt important.",
+    "castella": "La mención a la obra original es muy importante.",
     "valencia": "La menció a l'obra original és molt important."
   },
   {
@@ -291,6 +332,7 @@
     "paraula_clau": "esments / mencions (pl)",
     "problema": "cambio_genero",
     "catala": "Els esments a les fonts han d'estar ben citats.",
+    "castella": "Las menciones a las fuentes deben estar bien citadas.",
     "valencia": "Les mencions a les fonts han d'estar ben citades."
   },
   {
@@ -298,6 +340,7 @@
     "paraula_clau": "musclo / clòtxina",
     "problema": "cambio_genero",
     "catala": "El musclo és molt popular en la cuina catalana.",
+    "castella": "El mejillón es muy popular en la cocina catalana.",
     "valencia": "La clòtxina és molt popular en la cuina catalana."
   },
   {
@@ -305,6 +348,7 @@
     "paraula_clau": "condolença / condol (sg)",
     "problema": "cambio_genero",
     "catala": "La condolença de la família va ser molt sentida.",
+    "castella": "La condolencia de la familia fue muy sentida.",
     "valencia": "El condol de la família va ser molt sentit."
   },
   {
@@ -312,6 +356,7 @@
     "paraula_clau": "condolences / condols (pl)",
     "problema": "cambio_genero",
     "catala": "Les condolences dels companys van arribar aviat.",
+    "castella": "Las condolencias de los compañeros llegaron pronto.",
     "valencia": "Els condols dels companys van arribar prompte."
   },
   {
@@ -319,6 +364,7 @@
     "paraula_clau": "dosatge / dosificació (sg)",
     "problema": "cambio_genero",
     "catala": "El dosatge del medicament ha de ser precís.",
+    "castella": "La dosificación del medicamento debe ser precisa.",
     "valencia": "La dosificació del medicament ha de ser precisa."
   },
   {
@@ -326,6 +372,7 @@
     "paraula_clau": "dosatges / dosificacions (pl)",
     "problema": "cambio_genero",
     "catala": "Els dosatges han de revisar-se periòdicament.",
+    "castella": "Las dosificaciones deben revisarse periódicamente.",
     "valencia": "Les dosificacions han de revisar-se periòdicament."
   },
   {
@@ -333,6 +380,7 @@
     "paraula_clau": "romiatge / romeria",
     "problema": "cambio_genero",
     "catala": "El romiatge de la primavera reuneix milers de persones.",
+    "castella": "La romería de la primavera reúne a miles de personas.",
     "valencia": "La romeria de la primavera reunix milers de persones."
   },
   {
@@ -340,6 +388,7 @@
     "paraula_clau": "tenidor / forqueta",
     "problema": "cambio_genero",
     "catala": "El tenidor és un dels estris essencials de la taula.",
+    "castella": "El tenedor es uno de los utensilios esenciales de la mesa.",
     "valencia": "La forqueta és un dels estris essencials de la taula."
   },
   {
@@ -347,6 +396,7 @@
     "paraula_clau": "presseguer / bresquillera",
     "problema": "cambio_genero",
     "catala": "El presseguer floreix a principis de primavera.",
+    "castella": "El melocotonero florece a principios de primavera.",
     "valencia": "La bresquillera florix a principis de primavera."
   },
   {
@@ -354,6 +404,7 @@
     "paraula_clau": "abreujament / abreviació (sg)",
     "problema": "cambio_genero",
     "catala": "L'abreujament del text facilita la lectura.",
+    "castella": "La abreviación del texto facilita la lectura.",
     "valencia": "L'abreviació del text facilita la lectura."
   },
   {
@@ -361,6 +412,7 @@
     "paraula_clau": "abreujaments / abreviacions (pl)",
     "problema": "cambio_genero",
     "catala": "Els abreujaments han d'explicar-se al glossari.",
+    "castella": "Las abreviaciones deben explicarse en el glosario.",
     "valencia": "Les abreviacions han d'explicar-se al glossari."
   },
   {
@@ -368,6 +420,7 @@
     "paraula_clau": "malt / malta",
     "problema": "cambio_genero",
     "catala": "El malt s'utilitza per a fer cervesa artesana.",
+    "castella": "La malta se utiliza para hacer cerveza artesana.",
     "valencia": "La malta s'utilitza per a fer cervesa artesana."
   },
   {
@@ -375,6 +428,7 @@
     "paraula_clau": "corcadura / corcó (sg)",
     "problema": "cambio_genero",
     "catala": "La corcadura de la fusta indica que l'insecte ja hi era.",
+    "castella": "La carcoma de la madera indica que el insecto ya estaba allí.",
     "valencia": "El corcó de la fusta indica que l'insecte ja hi era."
   },
   {
@@ -382,6 +436,7 @@
     "paraula_clau": "corcadures / corcons (pl)",
     "problema": "cambio_genero",
     "catala": "Les corcadures en el moble antic el feien irrecuperable.",
+    "castella": "Las carcomas en el mueble antiguo lo hacían irrecuperable.",
     "valencia": "Els corcons en el moble antic el feien irrecuperable."
   },
   {
@@ -389,6 +444,7 @@
     "paraula_clau": "farigola / timó (sg)",
     "problema": "cambio_genero",
     "catala": "La farigola és una herba aromàtica molt apreciada.",
+    "castella": "El tomillo es una hierba aromática muy apreciada.",
     "valencia": "El timó és una herba aromàtica molt apreciada."
   },
   {
@@ -396,6 +452,7 @@
     "paraula_clau": "farigoles / timons (pl)",
     "problema": "cambio_genero",
     "catala": "Les farigoles del jardí perfumen tot l'ambient.",
+    "castella": "Los tomillos del jardín perfuman todo el ambiente.",
     "valencia": "Els timons del jardí perfumen tot l'ambient."
   },
   {
@@ -403,6 +460,7 @@
     "paraula_clau": "nespra / nispro (sg)",
     "problema": "cambio_genero",
     "catala": "La nespra és una fruita de primavera molt delicada.",
+    "castella": "El níspero es una fruta de primavera muy delicada.",
     "valencia": "El nispro és una fruita de primavera molt delicada."
   },
   {
@@ -410,6 +468,7 @@
     "paraula_clau": "nespres / nispros (pl)",
     "problema": "cambio_genero",
     "catala": "Les nespres maduren ràpidament quan fa calor.",
+    "castella": "Los nísperos maduran rápidamente cuando hace calor.",
     "valencia": "Els nispros maduren ràpidament quan fa calor."
   },
   {
@@ -417,6 +476,7 @@
     "paraula_clau": "fura / furó (sg)",
     "problema": "cambio_genero",
     "catala": "La fura és un animal molt curiós i juganer.",
+    "castella": "El hurón es un animal muy curioso y juguetón.",
     "valencia": "El furó és un animal molt curiós i juganer."
   },
   {
@@ -424,6 +484,7 @@
     "paraula_clau": "fures / furons (pl)",
     "problema": "cambio_genero",
     "catala": "Les fures utilitzen la vista i l'olfacte per caçar.",
+    "castella": "Los hurones utilizan la vista y el olfato para cazar.",
     "valencia": "Els furons utilitzen la vista i l'olfacte per a caçar."
   },
   {
@@ -431,6 +492,7 @@
     "paraula_clau": "aranja / pomelo (sg)",
     "problema": "cambio_genero",
     "catala": "L'aranja és una fruita cítrica lleugerament amarga.",
+    "castella": "El pomelo es una fruta cítrica ligeramente amarga.",
     "valencia": "El pomelo és una fruita cítrica lleugerament amarga."
   },
   {
@@ -438,6 +500,7 @@
     "paraula_clau": "aranges / pomelos (pl)",
     "problema": "cambio_genero",
     "catala": "Les aranges d'aquest arbre estan molt sucoses.",
+    "castella": "Los pomelos de este árbol están muy jugosos.",
     "valencia": "Els pomelos d'este arbre estan molt sucosos."
   },
   {
@@ -445,6 +508,7 @@
     "paraula_clau": "embranzida / empenyiment (sg)",
     "problema": "cambio_genero",
     "catala": "L'embranzida de l'equip va ser suficient per a guanyar.",
+    "castella": "El empuje del equipo fue suficiente para ganar.",
     "valencia": "L'empenyiment de l'equip va ser suficient per a guanyar."
   },
   {
@@ -452,6 +516,7 @@
     "paraula_clau": "embranzides / empenyiments (pl)",
     "problema": "cambio_genero",
     "catala": "Les embranzides finals del corredor van sorprendre tots.",
+    "castella": "Los empujes finales del corredor sorprendieron a todos.",
     "valencia": "Els empenyiments finals del corredor van sorprendre tots."
   },
   {
@@ -459,6 +524,7 @@
     "paraula_clau": "llimoner / llimera",
     "problema": "cambio_genero",
     "catala": "El llimoner del jardí és vell però dona molt de fruit.",
+    "castella": "El limonero del jardín es viejo pero da mucho fruto.",
     "valencia": "La llimera del jardí és vella però dona molt de fruit."
   },
   {
@@ -466,6 +532,7 @@
     "paraula_clau": "deu / brollador",
     "problema": "cambio_genero",
     "catala": "La deu de muntanya és freda i cristal·lina.",
+    "castella": "El manantial de montaña es frío y cristalino.",
     "valencia": "El brollador de muntanya és fred i cristal·lí."
   },
   {
@@ -473,6 +540,7 @@
     "paraula_clau": "noguera / anouer (sg)",
     "problema": "cambio_genero",
     "catala": "La noguera és un arbre majestuós i longeu.",
+    "castella": "El nogal es un árbol majestuoso y longevo.",
     "valencia": "L'anouer és un arbre majestuós i longeu."
   },
   {
@@ -480,6 +548,7 @@
     "paraula_clau": "nogueres / anouers (pl)",
     "problema": "cambio_genero",
     "catala": "Les nogueres del camp omplien el sòl de nous.",
+    "castella": "Los nogales del campo llenaban el suelo de nueces.",
     "valencia": "Els anouers del camp omplien el sòl de nous."
   },
   {
@@ -487,6 +556,7 @@
     "paraula_clau": "calcigament / xafada",
     "problema": "cambio_genero",
     "catala": "El calcigament del camp per part dels excursionistes preocupa.",
+    "castella": "El pisoteo del campo por parte de los excursionistas preocupa.",
     "valencia": "La xafada del camp per part dels excursionistes preocupa."
   },
   {
@@ -494,6 +564,7 @@
     "paraula_clau": "llagosta / saltamartí (sg)",
     "problema": "cambio_genero",
     "catala": "La llagosta saltava d'herba en herba pel prat.",
+    "castella": "El saltamontes saltaba de hierba en hierba por el prado.",
     "valencia": "El saltamartí saltava d'herba en herba pel prat."
   },
   {
@@ -501,6 +572,7 @@
     "paraula_clau": "llagostes / saltamartins (pl)",
     "problema": "cambio_genero",
     "catala": "Les llagostes van envair el camp de blat de moro.",
+    "castella": "Los saltamontes invadieron el campo de maíz.",
     "valencia": "Els saltamartins van envair el camp de dacsa."
   },
   {
@@ -508,6 +580,7 @@
     "paraula_clau": "estel / milotxa",
     "problema": "cambio_genero",
     "catala": "L'estel de paper pujava alt gràcies al vent.",
+    "castella": "La cometa de papel subía alto gracias al viento.",
     "valencia": "La milotxa de paper pujava alt gràcies al vent."
   },
   {
@@ -515,6 +588,7 @@
     "paraula_clau": "ensorrament / solsida",
     "problema": "cambio_genero",
     "catala": "L'ensorrament del pont va tallar la carretera.",
+    "castella": "El derrumbe del puente cortó la carretera.",
     "valencia": "La solsida del pont va tallar la carretera."
   },
   {
@@ -522,6 +596,7 @@
     "paraula_clau": "préssec / bresquilla",
     "problema": "cambio_genero",
     "catala": "El préssec és la fruita emblema de l'estiu.",
+    "castella": "El melocotón es la fruta emblema del verano.",
     "valencia": "La bresquilla és la fruita emblema de l'estiu."
   },
   {
@@ -529,6 +604,7 @@
     "paraula_clau": "xarampió / pallola",
     "problema": "cambio_genero",
     "catala": "El xarampió és una malaltia que la vacuna ha reduït molt.",
+    "castella": "El sarampión es una enfermedad que la vacuna ha reducido mucho.",
     "valencia": "La pallola és una malaltia que la vacuna ha reduït molt."
   },
   {
@@ -536,6 +612,7 @@
     "paraula_clau": "cresta / pastisset (sg)",
     "problema": "cambio_genero",
     "catala": "La cresta de tonyina és un aperitiu molt popular a les pastisseries.",
+    "castella": "La empanadilla de atún es un aperitivo muy popular en las pastelerías.",
     "valencia": "El pastisset de tonyina és un aperitiu molt popular a les pastisseries."
   },
   {
@@ -543,6 +620,7 @@
     "paraula_clau": "crestes / pastissets (pl)",
     "problema": "cambio_genero",
     "catala": "Les crestes de cabell d'àngel es venen per Nadal.",
+    "castella": "Las empanadillas de cabello de ángel se venden por Navidad.",
     "valencia": "Els pastissets de cabell d'àngel es venen per Nadal."
   },
   {
@@ -550,6 +628,7 @@
     "paraula_clau": "sorral / arenera",
     "problema": "cambio_genero",
     "catala": "El sorral del parc era el lloc preferit dels nens.",
+    "castella": "El arenal del parque era el lugar preferido de los niños.",
     "valencia": "L'arenera del parc era el lloc preferit dels xiquets."
   },
   {
@@ -557,6 +636,7 @@
     "paraula_clau": "enagos / sinagües",
     "problema": "cambio_genero",
     "catala": "Els enagos de randa eren típics de la vestimenta tradicional.",
+    "castella": "Las enaguas de encaje eran típicas de la vestimenta tradicional.",
     "valencia": "Les sinagües de randa eren típiques de la vestimenta tradicional."
   },
   {
@@ -564,6 +644,7 @@
     "paraula_clau": "garriga / coscollar (sg)",
     "problema": "cambio_genero",
     "catala": "La garriga mediterrània és un ecosistema molt ric.",
+    "castella": "El chaparral mediterráneo es un ecosistema muy rico.",
     "valencia": "El coscollar mediterrani és un ecosistema molt ric."
   },
   {
@@ -571,6 +652,7 @@
     "paraula_clau": "garrigues / coscollars (pl)",
     "problema": "cambio_genero",
     "catala": "Les garrigues de la costa allotgen moltes espècies d'ocells.",
+    "castella": "Los chaparrales de la costa albergan muchas especies de aves.",
     "valencia": "Els coscollars de la costa allotgen moltes espècies d'ocells."
   },
   {
@@ -578,6 +660,7 @@
     "paraula_clau": "garrofer / garrofera",
     "problema": "cambio_genero",
     "catala": "El garrofer és un arbre molt resistent a la sequera.",
+    "castella": "El algarrobo es un árbol muy resistente a la sequía.",
     "valencia": "La garrofera és un arbre molt resistent a la sequera."
   },
   {
@@ -585,6 +668,7 @@
     "paraula_clau": "despesa / gasto (sg)",
     "problema": "cambio_genero",
     "catala": "La despesa en educació ha augmentat enguany.",
+    "castella": "El gasto en educación ha aumentado este año.",
     "valencia": "El gasto en educació ha augmentat enguany."
   },
   {
@@ -592,6 +676,7 @@
     "paraula_clau": "despeses / gastos (pl)",
     "problema": "cambio_genero",
     "catala": "Les despeses del viatge van ser superiors al previst.",
+    "castella": "Los gastos del viaje fueron superiores a lo previsto.",
     "valencia": "Els gastos del viatge van ser superiors al previst."
   },
   {
@@ -599,6 +684,7 @@
     "paraula_clau": "falciot / falcia",
     "problema": "cambio_genero",
     "catala": "El falciot vola a gran velocitat pels carrers de la ciutat.",
+    "castella": "El vencejo vuela a gran velocidad por las calles de la ciudad.",
     "valencia": "La falcia vola a gran velocitat pels carrers de la ciutat."
   },
   {
@@ -606,6 +692,7 @@
     "paraula_clau": "amidament / medició (sg)",
     "problema": "cambio_genero",
     "catala": "L'amidament exacte és imprescindible en arquitectura.",
+    "castella": "La medición exacta es imprescindible en arquitectura.",
     "valencia": "La medició exacta és imprescindible en arquitectura."
   },
   {
@@ -613,6 +700,7 @@
     "paraula_clau": "amidaments / medicions (pl)",
     "problema": "cambio_genero",
     "catala": "Els amidaments de la parcel·la s'han de fer dues vegades.",
+    "castella": "Las mediciones de la parcela se deben hacer dos veces.",
     "valencia": "Les medicions de la parcel·la s'han de fer dos vegades."
   },
   {
@@ -620,6 +708,7 @@
     "paraula_clau": "nou / anou",
     "problema": "cambio_genero",
     "catala": "La nou és el fruit sec més ric en omega-3.",
+    "castella": "La nuez es el fruto seco más rico en omega-3.",
     "valencia": "L'anou és el fruit sec més ric en omega-3."
   },
   {
@@ -627,6 +716,7 @@
     "paraula_clau": "esgarrapada / arrap (sg)",
     "problema": "cambio_genero",
     "catala": "L'esgarrapada del gat li va deixar marca al braç.",
+    "castella": "El arañazo del gato le dejó marca en el brazo.",
     "valencia": "L'arrap del gat li va deixar marca al braç."
   },
   {
@@ -634,6 +724,7 @@
     "paraula_clau": "esgarrapades / arraps (pl)",
     "problema": "cambio_genero",
     "catala": "Les esgarrapades de l'animal van necessitar atenció mèdica.",
+    "castella": "Los arañazos del animal necesitaron atención médica.",
     "valencia": "Els arraps de l'animal van necessitar atenció mèdica."
   },
   {
@@ -641,6 +732,7 @@
     "paraula_clau": "revoltim / rebolica (sg)",
     "problema": "cambio_genero",
     "catala": "El revoltim de cables darrere de la tele era perillós.",
+    "castella": "El revoltijo de cables detrás de la tele era peligroso.",
     "valencia": "La rebolica de cables darrere de la tele era perillosa."
   },
   {
@@ -648,6 +740,7 @@
     "paraula_clau": "revoltims / reboliques (pl)",
     "problema": "cambio_genero",
     "catala": "Els revoltims de papers feien impossible trobar res.",
+    "castella": "Los revoltijos de papeles hacían imposible encontrar nada.",
     "valencia": "Les reboliques de papers feien impossible trobar res."
   },
   {
@@ -655,6 +748,7 @@
     "paraula_clau": "cop / vegada (sg)",
     "problema": "cambio_genero",
     "catala": "Aquell cop, la decisió va sorprendre tothom.",
+    "castella": "Aquella vez, la decisión sorprendió a todo el mundo.",
     "valencia": "Aquella vegada, la decisió va sorprendre tothom."
   },
   {
@@ -662,6 +756,7 @@
     "paraula_clau": "cops / vegades (pl)",
     "problema": "cambio_genero",
     "catala": "Molts cops hem parlat d'aquest tema sense arribar a cap acord.",
+    "castella": "Muchas veces hemos hablado de este tema sin llegar a ningún acuerdo.",
     "valencia": "Moltes vegades hem parlat d'este tema sense arribar a cap acord."
   },
   {
@@ -669,6 +764,7 @@
     "paraula_clau": "finalitat / fi (sg)",
     "problema": "cambio_genero",
     "catala": "La finalitat del projecte és millorar la qualitat de vida.",
+    "castella": "La finalidad del proyecto es mejorar la calidad de vida.",
     "valencia": "El fi del projecte és millorar la qualitat de vida."
   },
   {
@@ -676,6 +772,7 @@
     "paraula_clau": "finalitats / fins (pl)",
     "problema": "cambio_genero",
     "catala": "Les finalitats de l'associació estan recollides als estatuts.",
+    "castella": "Las finalidades de la asociación están recogidas en los estatutos.",
     "valencia": "Els fins de l'associació estan recollits als estatuts."
   },
   {
@@ -683,6 +780,7 @@
     "paraula_clau": "naixença / naixement (sg)",
     "problema": "cambio_genero",
     "catala": "La naixença d'un nou fill és un moment inoblidable.",
+    "castella": "El nacimiento de un nuevo hijo es un momento inolvidable.",
     "valencia": "El naixement d'un nou fill és un moment inoblidable."
   },
   {
@@ -690,6 +788,7 @@
     "paraula_clau": "naixences / naixements (pl)",
     "problema": "cambio_genero",
     "catala": "Les naixences han disminuït en els darrers anys.",
+    "castella": "Los nacimientos han disminuido en los últimos años.",
     "valencia": "Els naixements han disminuït en els últims anys."
   },
   {
@@ -697,6 +796,7 @@
     "paraula_clau": "síndria / meló d'Alger (extra)",
     "problema": "cambio_genero",
     "catala": "El médic va recomanar una síndria ben freda per a la calor.",
+    "castella": "El médico recomendó una sandía bien fría para el calor.",
     "valencia": "El médic va recomanar un meló d'Alger ben fred per a la calor."
   },
   {
@@ -704,6 +804,7 @@
     "paraula_clau": "blat de moro / dacsa (extra)",
     "problema": "cambio_genero",
     "catala": "El blat de moro bullit és un esmorzar típic d'algunes cultures.",
+    "castella": "El maíz hervido es un desayuno típico de algunas culturas.",
     "valencia": "La dacsa bullida és un esmorzar típic d'algunes cultures."
   },
   {
@@ -711,6 +812,7 @@
     "paraula_clau": "xocolata / xocolate (extra)",
     "problema": "cambio_genero",
     "catala": "Vam posar la xocolata al bany maria per fondre-la.",
+    "castella": "Pusimos el chocolate al baño maría para fundirlo.",
     "valencia": "Vam posar el xocolate al bany maria per fondre'l."
   },
   {
@@ -718,6 +820,7 @@
     "paraula_clau": "armilla / jupetí (extra)",
     "problema": "cambio_genero",
     "catala": "L'armilla salvavides és obligatòria en qualsevol embarcació.",
+    "castella": "El chaleco salvavidas es obligatorio en cualquier embarcación.",
     "valencia": "El jupetí salvavides és obligatori en qualsevol embarcació."
   },
   {
@@ -725,6 +828,7 @@
     "paraula_clau": "galleda / poal (extra)",
     "problema": "cambio_genero",
     "catala": "La galleda s'utilitza per a regar les plantes del balcó.",
+    "castella": "El cubo se utiliza para regar las plantas del balcón.",
     "valencia": "El poal s'utilitza per a regar les plantes del balcó."
   },
   {
@@ -732,6 +836,7 @@
     "paraula_clau": "farigola / timó (extra)",
     "problema": "cambio_genero",
     "catala": "El gust de la farigola fresca és molt intens.",
+    "castella": "El sabor del tomillo fresco es muy intenso.",
     "valencia": "El gust del timó fresc és molt intens."
   },
   {
@@ -739,6 +844,7 @@
     "paraula_clau": "nespra / nispro (extra)",
     "problema": "cambio_genero",
     "catala": "La nespra és difícil de trobar fora de temporada.",
+    "castella": "El níspero es difícil de encontrar fuera de temporada.",
     "valencia": "El nispro és difícil de trobar fora de temporada."
   },
   {
@@ -746,6 +852,7 @@
     "paraula_clau": "deu / brollador (extra)",
     "problema": "cambio_genero",
     "catala": "La deu es va assecar durant l'estiu més sec dels darrers anys.",
+    "castella": "El manantial se secó durante el verano más seco de los últimos años.",
     "valencia": "El brollador es va assecar durant l'estiu més sec dels últims anys."
   },
   {
@@ -753,6 +860,7 @@
     "paraula_clau": "garriga / coscollar (extra)",
     "problema": "cambio_genero",
     "catala": "La garriga cobreix bona part del litoral de la Costa Daurada.",
+    "castella": "El chaparral cubre buena parte del litoral de la Costa Dorada.",
     "valencia": "El coscollar cobrix bona part del litoral de la Costa Daurada."
   },
   {
@@ -760,6 +868,7 @@
     "paraula_clau": "estel / milotxa (extra)",
     "problema": "cambio_genero",
     "catala": "L'estel va quedar enganxat en un arbre i es va trencar.",
+    "castella": "La cometa se quedó enganchada en un árbol y se rompió.",
     "valencia": "La milotxa va quedar enganxada en un arbre i es va trencar."
   },
   {
@@ -767,6 +876,7 @@
     "paraula_clau": "llimona / llimó (extra)",
     "problema": "cambio_genero",
     "catala": "La llimona recollida ahir era àcida i molt aromàtica.",
+    "castella": "El limón recogido ayer era ácido y muy aromático.",
     "valencia": "El llimó recollit ahir era àcid i molt aromàtic."
   },
   {
@@ -774,6 +884,7 @@
     "paraula_clau": "préssec / bresquilla (extra)",
     "problema": "cambio_genero",
     "catala": "El préssec de Lleida és famós arreu del món.",
+    "castella": "El melocotón de Lleida es famoso en todo el mundo.",
     "valencia": "La bresquilla de Lleida és famosa arreu del món."
   },
   {
@@ -781,6 +892,7 @@
     "paraula_clau": "embranzida / empenyiment (extra)",
     "problema": "cambio_genero",
     "catala": "L'embranzida popular va aconseguir el canvi esperat.",
+    "castella": "El empuje popular consiguió el cambio esperado.",
     "valencia": "L'empenyiment popular va aconseguir el canvi esperat."
   },
   {
@@ -788,6 +900,7 @@
     "paraula_clau": "mongeta / fesol (extra)",
     "problema": "cambio_genero",
     "catala": "La mongeta de Santa Pau té denominació d'origen protegida.",
+    "castella": "La judía de Santa Pau tiene denominación de origen protegida.",
     "valencia": "El fesol de Santa Pau té denominació d'origen protegida."
   },
   {
@@ -795,6 +908,7 @@
     "paraula_clau": "espatlla / muscle (extra)",
     "problema": "cambio_genero",
     "catala": "L'espatlla de xai al forn és un plat de festa major.",
+    "castella": "La paletilla de cordero al horno es un plato de fiesta mayor.",
     "valencia": "El muscle de xai al forn és un plat de festa major."
   },
   {
@@ -802,6 +916,7 @@
     "paraula_clau": "condolença / condol (extra)",
     "problema": "cambio_genero",
     "catala": "La condolença expressa el dolor compartit per la pèrdua.",
+    "castella": "La condolencia expresa el dolor compartido por la pérdida.",
     "valencia": "El condol expressa el dolor compartit per la pèrdua."
   },
   {
@@ -809,6 +924,7 @@
     "paraula_clau": "dosatge / dosificació (extra)",
     "problema": "cambio_genero",
     "catala": "El dosatge inadequat pot causar efectes secundaris greus.",
+    "castella": "La dosificación inadecuada puede causar efectos secundarios graves.",
     "valencia": "La dosificació inadequada pot causar efectes secundaris greus."
   },
   {
@@ -816,6 +932,7 @@
     "paraula_clau": "calcigament / xafada (extra)",
     "problema": "cambio_genero",
     "catala": "El calcigament repetit mata la vegetació dels camins.",
+    "castella": "El pisoteo repetido mata la vegetación de los caminos.",
     "valencia": "La xafada repetida mata la vegetació dels camins."
   },
   {
@@ -823,6 +940,7 @@
     "paraula_clau": "ensorrament / solsida (extra)",
     "problema": "cambio_genero",
     "catala": "L'ensorrament de l'edifici va mobilitzar tots els veïns.",
+    "castella": "El derrumbe del edificio movilizó a todos los vecinos.",
     "valencia": "La solsida de l'edifici va mobilitzar tots els veïns."
   },
   {
@@ -830,6 +948,7 @@
     "paraula_clau": "despesa / gasto (extra)",
     "problema": "cambio_genero",
     "catala": "La despesa en investigació és fonamental per al progrés.",
+    "castella": "El gasto en investigación es fundamental para el progreso.",
     "valencia": "El gasto en investigació és fonamental per al progrés."
   }
 ]
