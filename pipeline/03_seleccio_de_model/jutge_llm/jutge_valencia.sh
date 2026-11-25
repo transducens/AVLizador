@@ -17,6 +17,8 @@
 #   CONJUNTS="homografs_v2" sbatch jutge_valencia.sh   # només un conjunt
 #   PROMPT=valencia2 sbatch jutge_valencia.sh   # sense les formes candidates d'un
 #                                               # homògraf (25/11/2026); en resultats/valencia2/
+#   PROMPT=valencia3 sbatch jutge_valencia.sh   # valencia2 + glossari de la frase tret
+#                                               # del lèxic (25/11/2026); en resultats/valencia3/
 # Si s'acaba per temps, es torna a llançar igual: continua des de la memòria
 # cau (resultats/<prompt>/<conjunt>/<model>/cache.jsonl).
 #

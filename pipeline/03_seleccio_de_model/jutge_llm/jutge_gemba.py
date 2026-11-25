@@ -47,6 +47,13 @@ trepitja la del prompt anterior).
     python jutge_gemba.py puntua --prompt valencia --model qwen3.6:35b-a3b \
         --eixida resultats/valencia/manual ../baseline_llm/resultats/copia.json ...
 
+Prompt "valencia3" (`--prompt valencia3`, 25/11/2026): el de "valencia2" més
+un glossari de cada frase tret del lèxic (`src/avlizador/traductor_cat_val/data/
+lexic_general.json`): les paraules catalanes de l'original i les valencianes
+que introduïx la traducció, amb el castellà o la categoria i les lectures de
+la forma catalana ("nou" només com a nom és "anou"). Dona el significat, no
+diu quina és la correcta. Eixida en `resultats/valencia3/`.
+
 Sense dependències fora de la biblioteca estàndard (parla amb Ollama per HTTP).
 """
 
@@ -170,9 +177,126 @@ def _sense_homografs(norma: str) -> str:
 
 NORMA_VAL2 = _sense_homografs(NORMA_VAL)
 FASE1_VAL2 = FASE1_VAL_BASE + NORMA_VAL2
-PROMPTS_VAL = {"valencia": (FASE1_VAL, FASE2_VAL), "valencia2": (FASE1_VAL2, FASE2_VAL)}
-EMPREMTES = {k: hashlib.sha1((SISTEMA + f1 + f2).encode("utf-8")).hexdigest()[:8]
-             for k, (f1, f2) in PROMPTS_VAL.items()}
+
+# Prompt "valencia3" (25/11/2026): el de "valencia2" més un glossari de la
+# frase tret del lèxic (`lexic_general.json`). La meta-avaluació dels
+# homògrafs (`meta_homografs.py`) va mostrar que el jutge marca formes
+# valencianes correctes perquè no sap què volen dir ("panolla" = "a small
+# loaf of bread", "gandula" = gandula, "calces" = mitges): el glossari li
+# dona el significat sense dir quina paraula és la correcta en la frase.
+INTRO_GLOSSARI = """
+Glossary for this sentence, from our Catalan-Valencian lexicon. It gives the meaning of dialectal words; it does NOT say which word is right in this sentence. Use it to check that the meaning of each Valencian word fits the meaning of the source word. The Valencian words listed are correct Valencian words for the meaning given:
+"""
+FASE1_VAL3 = FASE1_VAL2 + "{glossari}"
+PROMPTS_VAL = {"valencia": (FASE1_VAL, FASE2_VAL), "valencia2": (FASE1_VAL2, FASE2_VAL),
+               "valencia3": (FASE1_VAL3, FASE2_VAL)}
+AMB_GLOSSARI = {"valencia3"}
+EMPREMTES = {k: hashlib.sha1((SISTEMA + f1 + f2 + (INTRO_GLOSSARI if k in AMB_GLOSSARI else "")).encode("utf-8"))
+             .hexdigest()[:8] for k, (f1, f2) in PROMPTS_VAL.items()}
+
+LEXIC = AQUI.parents[2] / "src" / "avlizador" / "traductor_cat_val" / "data" / "lexic_general.json"
+MAX_GLOSSARI = 15
+CATEGORIES = {"n": "noun", "adj": "adjective", "adv": "adverb", "num": "numeral", "pr": "preposition",
+              "prn": "pronoun", "v": "verb", "cnjadv": "conjunction"}
+_LEXIC: list[dict] | None = None
+
+
+def paraules(text: str) -> list[str]:
+    """
+    >>> paraules("Afig d’anous a l'ensalada.")
+    ['afig', 'd', 'anous', 'a', 'l', 'ensalada']
+    """
+    return re.findall(r"[\w·]+", text.replace("’", "'").lower())
+
+
+def _conte(tokens: list[str], forma: list[str]) -> bool:
+    n = len(forma)
+    return any(tokens[i:i + n] == forma for i in range(len(tokens) - n + 1)) if n else False
+
+
+def lexic() -> list[dict]:
+    """Entrades del lèxic per al glossari: amb les dos formes distintes i sense
+    determinants (els demostratius i possessius ja són en el bloc de la norma)."""
+    global _LEXIC
+    if _LEXIC is None:
+        _LEXIC = [e for e in json.loads(LEXIC.read_text(encoding="utf-8"))
+                  if e.get("catalan") and e.get("valenciano") and e.get("categoria") != "det"
+                  and e["catalan"].lower() != e["valenciano"].lower()]
+    return _LEXIC
+
+
+def _categories_lemes(lemes: list[str]) -> set[str]:
+    """
+    >>> sorted(_categories_lemes(["nou [adj, n]", "nou [n]", "nou [num]"]))
+    ['adj', 'n', 'num']
+    """
+    return {c.strip() for l in lemes for c in re.findall(r"\[([^\]]*)\]", l)[0].split(",")} if lemes else set()
+
+
+def linia_glossari(cat: str, entrades: list[dict]) -> str:
+    """Una línia per forma catalana (pot tindre més d'una forma valenciana).
+
+    >>> linia_glossari("gandula", [{"catalan": "gandula", "valenciano": "hamaca", "espanol": "tumbona",
+    ...     "categoria": "n", "lemas": ["gandul [adj, n]", "gandula [n]"]}])
+    '- Catalan «gandula» = Valencian «hamaca» (Spanish «tumbona»). The Catalan form «gandula» has several readings (gandul [adj, n]; gandula [n]): only the one meaning «tumbona» is «hamaca» in Valencian; the other readings stay «gandula».'
+    >>> linia_glossari("nou", [{"catalan": "nou", "valenciano": "anou", "espanol": None, "categoria": "n",
+    ...     "lemas": ["nou [adj, n]", "nou [n]", "nou [num]"]}])
+    '- Catalan «nou» = Valencian «anou» (noun). The Catalan form «nou» has several readings (nou [adj, n]; nou [n]; nou [num]): only as a noun it is «anou» in Valencian; as adjective or numeral it stays «nou».'
+    >>> linia_glossari("cop", [{"catalan": "cop", "valenciano": "colp", "categoria": "n"},
+    ...     {"catalan": "cop", "valenciano": "vegada", "categoria": "n"}])
+    '- Catalan «cop» = Valencian «colp» or «vegada», depending on the meaning.'
+    """
+    vals = []
+    for e in entrades:
+        if e["valenciano"] not in vals:
+            vals.append(e["valenciano"])
+    e = entrades[0]
+    if len(vals) > 1:
+        return f"- Catalan «{cat}» = Valencian " + " or ".join(f"«{v}»" for v in vals) + ", depending on the meaning."
+    es, categoria = e.get("espanol"), e.get("categoria")
+    linia = f"- Catalan «{cat}» = Valencian «{vals[0]}»"
+    linia += f" (Spanish «{es}»)." if es else (f" ({CATEGORIES.get(categoria, categoria)})." if categoria else ".")
+    lemes = e.get("lemas") or []
+    if len(lemes) > 1:
+        linia += f" The Catalan form «{cat}» has several readings ({'; '.join(lemes)}): "
+        altres = sorted(_categories_lemes(lemes) - {categoria})
+        if es:
+            linia += f"only the one meaning «{es}» is «{vals[0]}» in Valencian; the other readings stay «{cat}»."
+        elif altres and categoria:
+            linia += (f"only as a {CATEGORIES.get(categoria, categoria)} it is «{vals[0]}» in Valencian; as "
+                      f"{' or '.join(CATEGORIES.get(c, c) for c in altres)} it stays «{cat}».")
+        else:
+            linia += f"only one of them is «{vals[0]}» in Valencian."
+    return linia
+
+
+def glossari(src: str, hyp: str, entrades: list[dict] | None = None) -> str:
+    """Glossari de la frase: entrades del lèxic amb la forma catalana en
+    l'original, o amb la forma valenciana en la traducció quan no és ja en
+    l'original (així "vegada" en les dos no hi porta "cop"). Buit si no n'hi ha.
+
+    >>> lex = [{"catalan": "nou", "valenciano": "anou", "categoria": "n", "lemas": ["nou [adj, n]", "nou [n]"]},
+    ...        {"catalan": "cop", "valenciano": "vegada", "categoria": "n"},
+    ...        {"catalan": "servei", "valenciano": "servici", "espanol": "servicio", "categoria": "n"}]
+    >>> print(glossari("Ha comprat un cotxe nou.", "Ha comprat un cotxe anou.", lex))  # doctest: +ELLIPSIS
+    <BLANKLINE>
+    Glossary for this sentence, ...
+    - Catalan «nou» = Valencian «anou» (noun). ...
+    >>> glossari("Una altra vegada.", "Una altra vegada.", lex)
+    ''
+    >>> glossari("El servei.", "El servici.", lex).splitlines()[-1]
+    '- Catalan «servei» = Valencian «servici» (Spanish «servicio»).'
+    """
+    s, h = paraules(src), paraules(hyp)
+    grups: dict[str, list[dict]] = {}
+    for e in (lexic() if entrades is None else entrades):
+        fc, fv = paraules(e["catalan"]), paraules(e["valenciano"])
+        if _conte(s, fc) or (_conte(h, fv) and not _conte(s, fv)):
+            grups.setdefault(e["catalan"].lower(), []).append(e)
+    if not grups:
+        return ""
+    linies = [linia_glossari(c, es) for c, es in list(grups.items())[:MAX_GLOSSARI]]
+    return INTRO_GLOSSARI + "\n".join(linies)
 
 
 def domini_de(id_frase: str) -> str:
@@ -197,7 +321,8 @@ def prompts(prompt: str, text: str, src: str, dom: str, spans: str | None = None
     if prompt in PROMPTS_VAL:
         f1, f2 = PROMPTS_VAL[prompt]
         if spans is None:
-            return f1.format(src=src, hyp=text, domini=DOMINI[dom])
+            g = glossari(src, text) if prompt in AMB_GLOSSARI else ""
+            return f1.format(src=src, hyp=text, domini=DOMINI[dom], glossari=g)
         return f2.format(src=src, hyp=text, domini=DOMINI[dom], spans=spans)
     if spans is None:
         return FASE1.format(tgt="Valencian", hyp=text, domini=DOMINI[dom])
@@ -302,8 +427,15 @@ def puntua(args) -> int:
                 r = json.loads(linia)
                 cau[r["clau"]] = r
     sistemes = carrega_sistemes(args.fitxers, args.limit)
+    amb_glossari = args.prompt in AMB_GLOSSARI
+
     def clau_de(fr: dict) -> str:
-        return clau(fr["hipotesi"], domini_de(fr["id"]), f"{empremta}\n{fr['entrada']}" if valencia else "")
+        if not valencia:
+            return clau(fr["hipotesi"], domini_de(fr["id"]))
+        src = f"{empremta}\n{fr['entrada']}"
+        if amb_glossari:  # si canvia el lèxic, canvia el glossari: es torna a puntuar
+            src += "\n" + glossari(fr["entrada"], fr["hipotesi"])
+        return clau(fr["hipotesi"], domini_de(fr["id"]), src)
 
     pendents = {}
     for s in sistemes.values():
@@ -329,6 +461,8 @@ def puntua(args) -> int:
                         "nota": llig_nota(crua2), "fase2": crua2}
                 if valencia:
                     fila["entrada"] = src
+                if amb_glossari:
+                    fila["glossari"] = glossari(src, text)
                 if pensament1:
                     fila["pensament1"] = pensament1
             except Exception as e:  # noqa: BLE001 -- es registra i es continua
@@ -459,10 +593,10 @@ def main(argv=None) -> int:
     p.add_argument("--ollama-url", default="http://127.0.0.1:11434")
     p.add_argument("--pensa", action="store_true", help="Raonament activat en la fase 1 (més lent).")
     p.add_argument("--limit", type=int)
-    p.add_argument("--prompt", choices=["gemba", "valencia", "valencia2"], default="gemba",
-                   help="gemba: només la traducció (04/11/2026); valencia: amb l'original i la norma valenciana; valencia2: el mateix sense les formes candidates d'un homògraf (25/11/2026).")
+    p.add_argument("--prompt", choices=["gemba", "valencia", "valencia2", "valencia3"], default="gemba",
+                   help="gemba: només la traducció (04/11/2026); valencia: amb l'original i la norma valenciana; valencia2: el mateix sense les formes candidates d'un homògraf (25/11/2026); valencia3: valencia2 + glossari de la frase tret del lèxic (25/11/2026).")
     p.add_argument("--eixida", type=Path, default=None,
-                   help="Carpeta (per defecte resultats/, o resultats/<prompt>/ amb --prompt valencia o valencia2).")
+                   help="Carpeta (per defecte resultats/, o resultats/<prompt>/ amb --prompt valencia, valencia2 o valencia3).")
     r = sub.add_parser("resum")
     r.add_argument("carpeta", type=Path)
     args = ap.parse_args(argv)

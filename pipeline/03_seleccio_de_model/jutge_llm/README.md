@@ -370,3 +370,34 @@ sentit («cotxe anou» = cotxe nuez) sense que la forma diga res a favor ni en
 contra. Es mesuraria amb `meta_homografs.py`: ha de baixar la forma
 valenciana correcta marcada (11 %) sense baixar l'exhaustivitat; després, el
 manual, per a vore que no torna a castigar el valencià.
+
+### Prompt «valencia3»: glossari de la frase (25/11/2026, preparat)
+
+`--prompt valencia3` (`PROMPT=valencia3` en `jutge_valencia.sh`; empremta
+`9212d48f`; eixida en `resultats/valencia3/`): el de «valencia2» més un
+glossari de cada frase tret del lèxic (`lexic_general.json`, sense els
+determinants, que ja són en el bloc de la norma). Hi entren les paraules
+catalanes de l'original i les valencianes que introduïx la traducció (si ja
+són en l'original, no: «vegada» en les dos no hi porta «cop»); una línia per
+forma catalana, amb el castellà del lèxic i, si la forma té diverses
+lectures (`lemas`), quina és la que canvia. On el lèxic no té castellà (nou,
+cop, finalitat), la categoria. Exemples:
+
+    - Catalan «nou» = Valencian «anou» (noun). The Catalan form «nou» has several readings (nou [adj, n]; nou [n]; nou [num]): only as a noun it is «anou» in Valencian; as adjective or numeral it stays «nou».
+    - Catalan «gandula» = Valencian «hamaca» (Spanish «tumbona»). The Catalan form «gandula» has several readings (gandul [adj, n]; gandula [n]): only the one meaning «tumbona» is «hamaca» in Valencian; the other readings stay «gandula».
+    - Catalan «cop» = Valencian «colp» or «vegada», depending on the meaning.
+
+El glossari dona el significat i diu que la paraula valenciana és correcta
+per a eixe significat, però no quina paraula toca en la frase. El text del
+glossari entra en la clau de la memòria cau (si canvia el lèxic, es torna a
+puntuar) i es guarda en la memòria cau (`glossari`). En el manual, 272 de 458
+frases porten glossari (0,8 línies de mitjana, 4 com a molt). Falta: el
+lèxic no té castellà en 1.056 de 1.610 entrades (entre elles nou → anou i
+cop → colp/vegada); si el jutge no n'endevina el sentit, es podria omplir
+(és un canvi de dades: el decidixen l'usuari i el company).
+
+Prova: primer els homògrafs (`CONJUNTS="homografs_v2 homografs"`) i
+`meta_homografs.py --prompts valencia valencia2 valencia3`. Ha de baixar la
+forma valenciana correcta marcada (11 % amb «valencia») sense baixar
+l'exhaustivitat (52 %); si és així, el manual, per a vore que no torna a
+castigar el valencià.
