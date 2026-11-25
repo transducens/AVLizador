@@ -1,0 +1,1357 @@
+# Jutge «valencia»: detall frase a frase (qwen3.6-35b-a3b_pensa)
+
+### manual: AVLizador 2.0.1, guanya la referència (22)
+
+- **BM-BOE-118** ref 95 / sistema 65; canvis: `Era necessari,→Calia,`
+  - errors (sistema): major grammar/major «sol·licitaren»; major grammar/major «verificara»
+  - errors (ref.): major fluency/grammar «sol·licitaren»
+- **BM-BOE-086** ref 100 / sistema 85; canvis: `l'assumpte,→l'afer,`
+  - errors (sistema): minor fluency/spelling «perjuí»; minor fluency/grammar «fer valdre»
+- **BM-AVL-171** ref 100 / sistema 85; canvis: `xiquets→xics`
+  - errors (sistema): minor fluency/grammar «estes espais»; minor fluency/spelling «es»
+- **BM-AVL-189** ref 100 / sistema 85; canvis: `un sol colp d'ull→una sola ullada`
+  - errors (sistema): minor terminology/inappropriate for context «la ferramenta de busca»
+- **BM-BOE-032** ref 95 / sistema 85; canvis: `certitud→certesa`
+  - errors (sistema): minor spelling/servici «servici»
+  - errors (ref.): minor spelling «emmagatzamatge»
+- **BM-BOE-045** ref 95 / sistema 85; canvis: `dediquen respectivament→dediquen, respectivament,`; `en reforç de→per a reforçar`
+  - errors (sistema): minor fluency/grammar «les dos funcions»; minor fluency/spelling «depòsits»
+  - errors (ref.): minor fluency/spelling «depòsits»; minor style/awkward «en reforç de»
+- **BM-BOE-239** ref 95 / sistema 85; canvis: `este efecte,→estos efectes,`
+  - errors (sistema): minor fluency/grammar «ascendix»
+- **BM-BOE-247** ref 95 / sistema 85; canvis: `podran→poden`
+  - errors (sistema): major accuracy/mistranslation «díhuit»; minor terminology/inconsistent use «botella»
+  - errors (ref.): major accuracy/mistranslation «díhuit»
+- **BM-BOE-029** ref 100 / sistema 95; canvis: `podran→poden`
+  - errors (sistema): minor fluency/spelling «toves»
+- **BM-BOE-040** ref 100 / sistema 95; canvis: `barcos,→vaixells,`
+  - errors (sistema): minor fluency/grammar «atempten»
+- **BM-BOE-048** ref 100 / sistema 95; canvis: `van firmar→∅`; `∅→van firmar`
+  - errors (sistema): minor fluency/spelling «irlandés»
+- **BM-BOE-082** ref 100 / sistema 95; canvis: `s'acrediten hauran→s'hi acrediten han`
+  - errors (sistema): minor fluency/grammar «acrediten»
+- **BM-BOE-094** ref 100 / sistema 95; canvis: `S'entendrà→S'entén`; `∅→el`
+  - errors (sistema): minor fluency/grammar «redunden»
+- **BM-BOE-106** ref 100 / sistema 95; canvis: `del present→d'este`; `seran→són`; `es dirigisca→s'adrece`
+  - errors (sistema): minor fluency/spelling «s'adrece»
+- **BM-BOE-142** ref 100 / sistema 95; canvis: `previst en→que preveu`; `serà→és`; `arredonit→arrodonit`
+  - errors (sistema): minor terminology/inappropriate for context «sèptims»
+- **BM-BOE-173** ref 100 / sistema 95; canvis: `on→en què`; `∅→seua`; `possessió d'estos.→possessió.`
+  - errors (sistema): minor spelling «nove»
+- **BM-BOE-182** ref 100 / sistema 95; canvis: `∅→ací`; `ací→∅`; `connectats,→connectats`; `tant,→tant`; `disponibles.→disponible.`
+  - errors (sistema): minor fluency/grammar «disponible»
+- **BM-BOE-229** ref 100 / sistema 95; canvis: `dels→els`; `manera→forma`; `manera→forma`
+  - errors (sistema): minor fluency/grammar «estes casos»; minor fluency/spelling «verdader»
+- **BM-BOE-246** ref 100 / sistema 95; canvis: `corregudes→curses`; `bous,→braus,`; `festejos→celebracions`; `vinculats→vinculades`; `bou, que→bou que,`; `torn→torn,`
+  - errors (sistema): minor terminology/inappropriate for context «bou»
+- **BM-AVL-062** ref 100 / sistema 95; canvis: `xiquet→xic`; `xiqueta→xica`
+  - errors (sistema): minor spelling/grammar «insistix»
+- **BM-AVL-070** ref 100 / sistema 95; canvis: `xiquets→xics`
+- **BM-AVL-159** ref 100 / sistema 95; canvis: `dues→dos`
+
+### manual: AVLizador 2.0.1, guanya el sistema (103)
+
+- **BM-BOE-185** ref 45 / sistema 100; canvis: `Mentres→Mentre`; `∅→no`; `prestarà→ha de prestar`
+  - errors (ref.): major accuracy/omission «no»; major accuracy/mistranslation «prestarà»
+- **BM-BOE-183** ref 45 / sistema 95; canvis: `figurarà→ha de figurar`; `que→∅`; `la→que`
+  - errors (ref.): major accuracy/addition «que»; major accuracy/mistranslation «en la incloga»; minor accuracy «figurará»
+- **BM-BOE-039** ref 65 / sistema 100; canvis: `tindran→tenen`
+  - errors (ref.): major accuracy/mistranslation «tindran»
+- **BM-BOE-071** ref 65 / sistema 100; canvis: `es remetrà a→s'ha de remetre als`
+  - errors (ref.): major accuracy/mistranslation «es remetrà»
+- **BM-BOE-087** ref 65 / sistema 100; canvis: `a→∅`; `un altre→l'altre`; `eixa mateixa finalitat d'obligar-lo→este mateix fi d'obligar-la`
+  - errors (ref.): major accuracy/mistranslation «un altre»; major accuracy/mistranslation «obligar-lo»
+- **BM-BOE-123** ref 65 / sistema 100; canvis: `serà→és`; `barcos→vaixells`; `en el→al`
+  - errors (ref.): major accuracy/mistranslation «no serà aplicable»; minor fluency/grammar «que no efectuen»
+- **BM-BOE-124** ref 65 / sistema 100; canvis: `que preveu→previstos en`; `llei→llei,`; `retret→encongit`
+  - errors (ref.): major accuracy/mistranslation «retret»; minor fluency/punctuation «llei no»; minor fluency/grammar «preveu»
+- **BM-BOE-146** ref 65 / sistema 100; canvis: `s'inclouran→s'inclouen`; `mentres els referits→mentre estos`
+  - errors (ref.): major accuracy/mistranslation «s'inclouran»; minor fluency/spelling «mentres»; minor fluency/grammar «negocien»; minor fluency/grammar «posen»; minor accuracy/addition «referits»
+- **BM-BOE-150** ref 65 / sistema 100; canvis: `s'interconnectarà→s'ha d'interconnectar`
+  - errors (ref.): major accuracy/mistranslation «s'interconnectarà»; minor fluency/grammar «articulen»; minor fluency/grammar «concloguen»
+- **BM-BOE-179** ref 65 / sistema 100; canvis: `publicaran→han de publicar`; `∅→els`
+  - errors (ref.): major accuracy/mistranslation «publicaran»
+- **BM-BOE-019** ref 65 / sistema 95; canvis: `regularan→regulen`
+  - errors (sistema): minor fluency/grammar «sigan»
+  - errors (ref.): major mistranslation «es regularan»; minor grammar «destenen»
+- **BM-BOE-180** ref 65 / sistema 95; canvis: `aplicaran→han d'aplicar`; `cessaran→cessar`
+  - errors (sistema): minor fluency/grammar «aprecien»
+  - errors (ref.): major accuracy/mistranslation «no aplicaran o cessaran»
+- **BM-BOE-184** ref 65 / sistema 95; canvis: `hauran→han`; `l'esmentada→la mencionada`; `siga procedent,→escaiga,`
+  - errors (sistema): minor grammar/fluency «permeten»
+  - errors (ref.): major accuracy/mistranslation «hauran d'establir»; major accuracy/mistranslation «permeten»
+- **BM-BOE-218** ref 65 / sistema 95; canvis: `produirà→ha de produir`; `de l'esmentat→del`
+  - errors (sistema): minor spelling «depòsit»
+  - errors (ref.): major accuracy/mistranslation «no produirà»; minor fluency/spelling «depòsit»; minor fluency/grammar «complixen»; minor accuracy/addition «l'esmentat»
+- **BM-BOE-075** ref 75 / sistema 100; canvis: `mentres va estar→mentre estava`
+  - errors (ref.): minor fluency/spelling «perjuí»; minor fluency/grammar «impugne»; minor accuracy/mistranslation «va estar en vigor»
+- **BM-BOE-096** ref 75 / sistema 100; canvis: `s'absorbiran→s'absorbixen`; `que es puguen suprimir→de la seua supressió`
+  - errors (ref.): minor fluency/spelling «perjuí»; minor terminology/inappropriate for context «sense perjuí que es puguen suprimir»
+- **BM-BOE-099** ref 75 / sistema 100; canvis: `També ací→Ací també`; `tindrà,→té`; `dubte,→dubte`
+  - errors (ref.): major accuracy/mistranslation «tindrà»
+- **BM-BOE-107** ref 75 / sistema 100; canvis: `Esport aniran→Esports han d'estar`
+  - errors (ref.): major accuracy/mistranslation «aniran»; minor fluency/grammar «practiquen»
+- **BM-BOE-110** ref 75 / sistema 100; canvis: `quedarà→queda`; `se'ls computarà→se li computa`; `∅→hi`; `en esta→∅`
+  - errors (ref.): minor accuracy/mistranslation «quedarà»; minor accuracy/mistranslation «se'ls computarà»; minor grammar/gender-agreement «en esta»
+- **BM-BOE-125** ref 75 / sistema 100; canvis: `es comunicaran→s'han de comunicar`
+  - errors (ref.): major accuracy/mistranslation «es comunicaran»; minor fluency/grammar «comence»
+- **BM-BOE-148** ref 75 / sistema 100; canvis: `Cada un→Cadascun`; `llei disposaran→Llei han de disposar`; `∅→en`; `seu→∅`; `correspondrà→correspon`; `a la→∅`
+  - errors (ref.): major accuracy/mistranslation «disposaran»; major accuracy/mistranslation «correspondrà»
+- **BM-BOE-157** ref 75 / sistema 100; canvis: `es realitzarà→s'ha de realitzar`
+  - errors (ref.): major accuracy/mistranslation «es realitzarà»
+- **BM-BOE-163** ref 75 / sistema 100; canvis: `separació,→separació`; `llei,→llei`; `s'exigirà→s'exigix`
+  - errors (ref.): major accuracy/mistranslation «no s'exigirà»; minor fluency/grammar «implicen»
+- **BM-BOE-172** ref 75 / sistema 100; canvis: `al qual→a què`; `s'haurà→s'ha`; `de les→dels`
+  - errors (ref.): minor spelling «servicis»; minor accuracy/mistranslation «s'haurà d'assignar»
+- **BM-BOE-210** ref 75 / sistema 100; canvis: `La→Té la`; `tindrà→∅`; `per via→a través`
+  - errors (ref.): major accuracy/mistranslation «tindrà»
+- **BM-BOE-228** ref 75 / sistema 100; canvis: `contingudes en→que conté`; `s'entendran→s'entenen`
+  - errors (ref.): major terminology/inappropriate for context «Vivenda»; minor accuracy/mistranslation «s'entendran»
+- **BM-BOE-103** ref 45 / sistema 65; canvis: `defineixen→definixen`
+  - errors (sistema): major accuracy/mistranslation «fins»
+  - errors (ref.): major accuracy/mistranslation «fins»
+- **BM-BOE-152** ref 75 / sistema 95; canvis: `podran→poden`; `control,→control o`; `ambdós,→totes dos,`; `esmentades→∅`; `ministerials.→ministerials mencionades.`
+  - errors (ref.): minor accuracy/mistranslation «es podran»; minor fluency/punctuation «control, informació de vol»; minor fluency/grammar «ambdós»
+- **BM-BOE-155** ref 65 / sistema 85; canvis: `correspondrà→correspon`
+  - errors (sistema): minor fluency/grammar «acorden»; minor fluency/grammar «sumen»; minor fluency/spelling «comité»
+  - errors (ref.): major accuracy/mistranslation «correspondrà»; minor fluency/grammar «acorden»; minor fluency/grammar «sumen»; minor fluency/spelling «comité»
+- **BM-BOE-175** ref 65 / sistema 85; canvis: `partits→partits,`; `podran→poden`; `realitzen la successió de→succeïsquen`
+  - errors (sistema): major fluency/grammar «continuen»
+  - errors (ref.): major accuracy/mistranslation «no podran»; major fluency/grammar «continuen»; major style/awkward «realitzen la successió de»; minor fluency/spelling «suspés»
+- **BM-BOE-237** ref 75 / sistema 95; canvis: `es farà→s'ha de fer`; `en el→al`
+  - errors (sistema): minor fluency/spelling «estés»
+  - errors (ref.): major accuracy/mistranslation «es farà»; minor fluency/spelling «estés»
+- **BM-BOE-010** ref 85 / sistema 100; canvis: `es faran→s'han d'efectuar`
+  - errors (ref.): major accuracy/mistranslation «es faran»
+- **BM-BOE-014** ref 85 / sistema 100; canvis: `el→al`; `el canvi de→canviar-ne la`; `a fi→per tal`
+  - errors (ref.): minor fluency/grammar «el setembre»; minor fluency/spelling «interés»
+- **BM-BOE-020** ref 85 / sistema 100; canvis: `∅→amb`; `els→∅`; `s'imposarà→s'ha d'imposar`
+  - errors (ref.): minor fluency/grammar «dos»; minor accuracy/addition «els»
+- **BM-BOE-030** ref 85 / sistema 100; canvis: `seua→∅`; `compliran→han de complir`; `seues→∅`
+  - errors (ref.): minor accuracy/mistranslation «passen»; minor accuracy/mistranslation «compliran»
+- **BM-BOE-050** ref 85 / sistema 100; canvis: `més,→més`; `serà→és`
+  - errors (ref.): minor accuracy/mistranslation «serà aplicable»
+- **BM-BOE-054** ref 85 / sistema 100; canvis: `∅→que hi ha hui`; `en→a`; `estatal que hi ha hui.→estatal.`
+  - errors (ref.): minor fluency/grammar «en l'inici»; minor style/awkward «que hi ha hui»
+- **BM-BOE-055** ref 85 / sistema 100; canvis: `el fet→la`
+  - errors (ref.): minor fluency/grammar «obri»; minor accuracy/addition «el fet»
+- **BM-BOE-058** ref 85 / sistema 100; canvis: `es determinarà→s'ha de determinar`
+  - errors (ref.): major accuracy/mistranslation «es determinarà»
+- **BM-BOE-070** ref 85 / sistema 100; canvis: `tindran→tenen`; `es→∅`; `tancament→tancament,`
+  - errors (ref.): minor fluency/grammar «que es deriven»; minor fluency/punctuation «,»
+- **BM-BOE-078** ref 85 / sistema 100; canvis: `per→a`; `fet→efectuat`; `haja sigut→l'haja`; `pel→el`
+  - errors (ref.): minor fluency/grammar «presumix»; minor terminology/accuracy «per compte del»; minor style/style «fet»
+- **BM-BOE-081** ref 85 / sistema 100; canvis: `La mencionada administració traslladarà→L'administració corresponent ha de traslladar`; `es pronuncie→∅`; `∅→es pronuncie`; `què→la qual`
+  - errors (ref.): major accuracy/mistranslation «mencionada»; minor accuracy/mistranslation «traslladarà»
+- **BM-BOE-083** ref 85 / sistema 100; canvis: `podrà→pot`; `dit→∅`
+  - errors (ref.): minor accuracy/addition «el dit transportista»; minor accuracy/mistranslation «podrà»
+- **BM-BOE-088** ref 85 / sistema 100; canvis: `podrà→pot`; `ha sigut→l'ha`; `per→∅`
+  - errors (ref.): minor grammar/spelling «prove»; minor accuracy/mistranslation «podrà»
+- **BM-BOE-101** ref 85 / sistema 100; canvis: `este efecte, s'entendrà→estos efectes, s'entén`; `realitzar→exercir`; `indicat.→mencionat.`
+  - errors (ref.): minor accuracy/omission «A este efecte»; minor fluency/grammar «superen»
+- **BM-BOE-111** ref 85 / sistema 100; canvis: `qual→quals`
+  - errors (ref.): minor fluency/grammar «als qual»; minor fluency/spelling «contribuïsquen»
+- **BM-BOE-116** ref 85 / sistema 100; canvis: `d'un→un`; `de l'ICEX→d'ICEX`
+  - errors (ref.): minor fluency/grammar «demana d'un»
+- **BM-BOE-119** ref 85 / sistema 100; canvis: `d'emergències→emergències`; `catàstrofes,→catàstrofes`
+  - errors (ref.): minor fluency/grammar «potencien i milloren»; minor fluency/punctuation «, que ja va preveure»; minor fluency/grammar «davant d'emergències»
+- **BM-BOE-128** ref 85 / sistema 100; canvis: `junt→juntament`; `al mateix temps→alhora`; `s'aplicarà→s'aplica`
+  - errors (ref.): minor accuracy/mistranslation «s'aplicarà»
+- **BM-BOE-136** ref 85 / sistema 100; canvis: `du→porta`; `l'atròfia;→l'atròfia,`
+  - errors (ref.): minor fluency/spelling «du»
+- **BM-BOE-138** ref 85 / sistema 100; canvis: `a→∅`
+  - errors (ref.): minor accuracy/mistranslation «es troben»; minor accuracy/mistranslation «corresponen»
+- **BM-BOE-171** ref 85 / sistema 100; canvis: `dita→∅`; `∅→mencionada`; `tindrà→té`
+  - errors (ref.): minor accuracy/mistranslation «tindrà»; minor fluency/spelling «servici»
+- **BM-BOE-178** ref 85 / sistema 100; canvis: `suspendran→suspenen`; `a este.→al Fons.`
+  - errors (ref.): minor accuracy/mistranslation «se suspendran»; minor style/awkward «a este»
+- **BM-BOE-197** ref 85 / sistema 100; canvis: `L'esquema→L'Esquema`; `serà aplicat→s'ha d'aplicar`
+  - errors (ref.): major accuracy/mistranslation «serà aplicat»
+- **BM-BOE-199** ref 85 / sistema 100; canvis: `es→l'arrendatari hi`; `oposició per l'arrendatari,→oposició,`; `seguirà→ha de seguir`
+  - errors (ref.): major accuracy/mistranslation «seguirà»
+- **BM-BOE-201** ref 85 / sistema 100; canvis: `Serà→És`; `seua→∅`; `∅→en`; `a fi→per tal`
+  - errors (ref.): minor fluency/grammar «un 50 per 100»; minor fluency/punctuation «permanent,»; minor fluency/punctuation «almenys,»
+- **BM-BOE-213** ref 85 / sistema 100; canvis: `ordenarà→ha d'ordenar`
+  - errors (ref.): major accuracy/mistranslation «ordenarà»
+- **BM-BOE-221** ref 85 / sistema 100; canvis: `a→∅`; `sotmetrà→ha de sotmetre a proves de resistència`; `supervisa a proves de resistència,→supervisa,`
+  - errors (ref.): major accuracy/mistranslation «sotmetrà»
+- **BM-BOE-223** ref 85 / sistema 100; canvis: `definiran→han de definir`; `societat,→societat`
+  - errors (ref.): major accuracy/mistranslation «que definiran»; minor fluency/spelling «al·ludix»; minor fluency/punctuation «,»
+- **BM-BOE-011** ref 85 / sistema 95; canvis: `serà→ha d'anar`; `és el cas,→s'escau,`
+  - errors (sistema): minor fluency/spelling «comité»
+  - errors (ref.): major accuracy/mistranslation «serà acompanyada»; minor fluency/spelling «comité»
+- **BM-BOE-016** ref 85 / sistema 95; canvis: `eixe→este`; `beneficiara→beneficie`
+  - errors (sistema): minor fluency/spelling «permés»
+  - errors (ref.): minor fluency/spelling «permés»; minor fluency/grammar «beneficiara»
+- **BM-BOE-080** ref 85 / sistema 95; canvis: `bastaran→n'hi ha prou amb`; `∅→seu`
+  - errors (sistema): minor fluency/grammar «manifesten»
+  - errors (ref.): major fluency/grammar «es manifesten»
+- **BM-BOE-089** ref 85 / sistema 95; canvis: `esta finalitat,→este fi,`; `podrà→pot`
+  - errors (sistema): minor fluency/spelling «detraure»
+  - errors (ref.): minor accuracy/mistranslation «podrà»; minor fluency/spelling «detraure»
+- **BM-BOE-114** ref 65 / sistema 75; canvis: `d'eixos→d'estos`
+  - errors (sistema): minor fluency/grammar «implanten»; minor fluency/grammar «reben»
+  - errors (ref.): major accuracy/mistranslation «reben»; minor fluency/grammar «implanten»
+- **BM-BOE-192** ref 85 / sistema 95; canvis: `la→∅`; `civil,→civil`; `correspondrà→correspon`; `què correspondrà→el qual correspon`
+  - errors (sistema): minor fluency/spelling «interés»
+  - errors (ref.): minor fluency/spelling «se situe»
+- **BM-BOE-196** ref 85 / sistema 95; canvis: `seu→∅`; `Espanya, tindran→Espanya tenen`; `els→∅`; `les cures→atencions`
+  - errors (sistema): minor fluency/spelling «díhuit»
+  - errors (ref.): minor fluency/spelling «díhuit»; minor terminology/inappropriate for context «cures»
+- **BM-BOE-214** ref 75 / sistema 85; canvis: `Podran demanar→Poden arreplegar`; `actuacions,→actuacions`; `tindran→tenen`
+  - errors (sistema): minor accuracy/mistranslation «consideren»; minor accuracy/mistranslation «inspeccionen»
+  - errors (ref.): minor accuracy/mistranslation «demanar»
+- **BM-BOE-226** ref 85 / sistema 95; canvis: `incloent-hi→inclosa`
+  - errors (ref.): major accuracy/mistranslation «reinvertix»
+- **BM-BOE-002** ref 95 / sistema 100; canvis: `∅→una`; `contra la liquidació→∅`; `dita taxació.→taxació mencionada contra la liquidació.`
+- **BM-BOE-005** ref 95 / sistema 100; canvis: `foren→són`
+  - errors (ref.): minor fluency/grammar «si foren diferents»
+- **BM-BOE-006** ref 95 / sistema 100; canvis: `fa possible→possibilita`; `financera,→financera`; `arreplegar→obtindre`
+- **BM-BOE-024** ref 95 / sistema 100; canvis: `calga→siga necessari`; `invitació,→invitació`; `haurà→ha`; `ho→la`
+  - errors (ref.): minor grammar «quan ho sol·liciten»
+- **BM-BOE-025** ref 95 / sistema 100; canvis: `l'objectiu de les quals és→que té com a objectiu`; `que→què`
+  - errors (ref.): minor fluency/spelling «amb que»
+- **BM-BOE-035** ref 95 / sistema 100; canvis: `podrà→pot`; `habilitats→habilitats,`; `les famílies→la família`; `∅→la família`
+  - errors (ref.): minor spelling «interés»
+- **BM-BOE-043** ref 95 / sistema 100; canvis: `∅→les`; `a estes→∅`; `d'eixa→d'esta`; `l'Estat,→l'Estat`; `a l'exigir→ja que exigix`; `estes».→estes.`
+  - errors (ref.): minor punctuation/addition «».»
+- **BM-BOE-060** ref 95 / sistema 100; canvis: `a→∅`; `haurà→ha`
+  - errors (ref.): minor accuracy/addition «designe a Espanya»
+- **BM-BOE-064** ref 95 / sistema 100; canvis: `podrà→∅`; `∅→pot`; `mentres→mentre`; `els→∅`
+  - errors (ref.): minor accuracy/addition «podrà»; minor accuracy/addition «els»
+- **BM-BOE-067** ref 95 / sistema 100; canvis: `comerç→tràfic`
+  - errors (ref.): minor terminology/inappropriate for context «comerç»
+- **BM-BOE-076** ref 95 / sistema 100; canvis: `podrà→pot`
+  - errors (ref.): minor accuracy/tense shift «podrà»
+- **BM-BOE-084** ref 95 / sistema 100; canvis: `ha→s'ha`; `presentar-se→presentar`
+  - errors (ref.): minor accuracy/mistranslation «ha de presentar-se»
+- **BM-BOE-093** ref 95 / sistema 100; canvis: `s'aplicarà→s'ha d'aplicar`; `en→a`; `d'eixe→d'este`; `serà→és`
+- **BM-BOE-095** ref 95 / sistema 100; canvis: `podrà→pot`; `de l'anterior titular.→del titular anterior.`
+  - errors (ref.): minor fluency/grammar «establides»; minor fluency/grammar «subrogue»
+- **BM-BOE-126** ref 95 / sistema 100; canvis: `es→∅`; `fugues→fuites`
+  - errors (ref.): minor fluency/grammar «es deriva»
+- **BM-BOE-127** ref 95 / sistema 100; canvis: `∅→les`; `prevegen→preveuen`
+  - errors (ref.): minor fluency/spelling «prevegen»
+- **BM-BOE-139** ref 95 / sistema 100; canvis: `indemnització→indemnització,`
+  - errors (ref.): minor punctuation/missing comma «indemnització l'entitat»
+- **BM-BOE-140** ref 95 / sistema 100; canvis: `podrà confirmar-lo,→el pot confirmar,`
+  - errors (ref.): minor accuracy/mistranslation «podrà»
+- **BM-BOE-149** ref 95 / sistema 100; canvis: `S'imposarà→S'ha d'imposar`; `seua→∅`
+  - errors (ref.): minor fluency/grammar «afecten»; minor fluency/grammar «cometen»
+- **BM-BOE-153** ref 95 / sistema 100; canvis: `podrà→pot`
+  - errors (ref.): minor accuracy/tense shift «podrà»
+- **BM-BOE-158** ref 95 / sistema 100; canvis: `podrà→pot`; `això→∅`; `d'emergències,→emergències,`
+  - errors (ref.): minor accuracy/addition «això»
+- **BM-BOE-164** ref 95 / sistema 100; canvis: `el→∅`; `serà→és`
+  - errors (ref.): minor accuracy/addition «en el còmput anual»
+- **BM-BOE-165** ref 95 / sistema 100; canvis: `estaran→estan`; `siga establida,→s'establisca,`; `∅→en`; `dita→∅`
+  - errors (ref.): minor fluency/grammar «establida»
+- **BM-BOE-186** ref 95 / sistema 100; canvis: `el dit→este`; `podrà→pot`; `resulte→es derive`
+  - errors (ref.): minor accuracy/addition «el dit supòsit»
+- **BM-BOE-194** ref 95 / sistema 100; canvis: `en el→al`; `Sofía→Sofia`; `reconeixerà→ha de reconéixer`
+- **BM-BOE-195** ref 95 / sistema 100; canvis: `∅→hi`
+  - errors (ref.): minor fluency/grammar «cremen»
+- **BM-BOE-202** ref 95 / sistema 100; canvis: `es procedirà→s'ha de procedir`
+  - errors (ref.): minor spelling «instrueïsca»
+- **BM-BOE-222** ref 95 / sistema 100; canvis: `és→∅`; `major→és més gran`; `i possibiliten el→al`
+  - errors (ref.): minor accuracy/addition «i possibiliten»
+- **BM-BOE-225** ref 95 / sistema 100; canvis: `obrint→i obri`; `sigut reeixides.→tingut èxit.`
+- **BM-BOE-233** ref 95 / sistema 100; canvis: `dirigir notificarà→adreçar ha de notificar`; `es considerarà resolt→∅`; `conveni.→conveni s'entén resolt.`
+- **BM-BOE-234** ref 95 / sistema 100; canvis: `∅→freqüència`; `major freqüència,→més gran`
+  - errors (ref.): minor style/awkward «la seua cada vegada major freqüència»
+- **BM-BOE-238** ref 95 / sistema 100; canvis: `la partió→el límit`; `∅→següent`; `següent,→∅`; `vora el→al costat del`
+- **BM-BOE-245** ref 95 / sistema 100; canvis: `∅→un`
+  - errors (ref.): minor accuracy/omission «un estatus»
+- **BM-BOE-250** ref 95 / sistema 100; canvis: `Estarà→Està`
+  - errors (ref.): minor accuracy/mistranslation «Estarà»
+- **BM-AVL-025** ref 95 / sistema 100; canvis: `generar→reportar`
+  - errors (ref.): minor accuracy/mistranslation «colpejant-los»
+
+### manual: Sense traduir, guanya la referència (18)
+
+- **BM-AVL-004** ref 100 / sistema 65; canvis: `seues→seves`; `n'extrauen→n'extreuen`; `créixer.→crèixer.`
+  - errors (sistema): minor grammar «dels l'arbres»
+- **BM-AVL-016** ref 100 / sistema 65; canvis: `permet→permeto`; `entropessa.→ensopega.`
+  - errors (sistema): minor fluency/grammar «permeto»
+- **BM-AVL-070** ref 100 / sistema 65; canvis: `xiquets→nois`; `este→aquest`; `permet→permeto`
+  - errors (sistema): minor fluency/grammar «lligen»; minor fluency/spelling «permeto»
+- **BM-AVL-094** ref 95 / sistema 65; canvis: `servici→servei`; `nàixer.→néixer.`
+  - errors (sistema): minor accuracy/mistranslation «entomo»
+  - errors (ref.): minor spelling «territory»
+- **BM-AVL-127** ref 95 / sistema 65; canvis: `seues→seves`; `siga→sigui`; `vosté→vostè`
+  - errors (sistema): minor fluency/grammar «al Introducció»
+- **BM-AVL-003** ref 100 / sistema 85; canvis: `paren→parin`; `créixer→crèixer`; `permet→permeto`
+  - errors (sistema): minor fluency/spelling «parin»; minor fluency/spelling «permeto»
+- **BM-AVL-075** ref 100 / sistema 85; canvis: `vegada→cop`
+  - errors (sistema): minor fluency/spelling «alguna cop»
+- **BM-BOE-025** ref 95 / sistema 85; canvis: `l'objectiu de les quals és→que té com a objectiu`; `tindre→tenir`; `que→què`; `nàixer.→néixer.`
+  - errors (sistema): minor fluency/grammar «té»
+  - errors (ref.): minor fluency/spelling «amb que»
+- **BM-AVL-011** ref 95 / sistema 85; canvis: `este→aquest`; `interés→interès`; `conéixer→conèixer`
+  - errors (sistema): minor fluency/spelling «Academia»; minor fluency/spelling «Lengua»
+  - errors (ref.): minor fluency/spelling «interés»
+- **BM-AVL-114** ref 95 / sistema 85; canvis: `Estes→Aquestes`
+  - errors (sistema): minor fluency/spelling «nivel»
+  - errors (ref.): minor fluency/spelling «nivel»
+- **BM-BOE-182** ref 100 / sistema 95; canvis: `∅→aquí`; `ací→∅`; `connectats,→connectats`; `tant,→tant`; `servici→servei`; `adeqüe→adeqüi`
+  - errors (sistema): minor fluency/grammar «disponible»
+- **BM-AVL-031** ref 100 / sistema 95; canvis: `t'abellix eixir esta→t'abelleix sortir aquesta`
+  - errors (sistema): minor spelling/grammar «t'abelleix»
+- **BM-AVL-047** ref 100 / sistema 95; canvis: `Este→Aquest`; `naix→neix`; `després→desprès`
+  - errors (sistema): minor fluency/spelling «desprès»
+- **BM-AVL-061** ref 100 / sistema 95; canvis: `faça→faci`; `siga→sigui`; `s'haja→s'hagi`
+  - errors (sistema): minor fluency/grammar «publicat»
+- **BM-AVL-139** ref 100 / sistema 95; canvis: `estos→aquests`; `dos vegades→dues cops`
+  - errors (sistema): minor fluency/grammar «dues cops»
+- **BM-AVL-161** ref 100 / sistema 95; canvis: `després,→desprès,`; `esta→aquesta`
+  - errors (sistema): minor spelling «desprès»
+- **BM-AVL-171** ref 100 / sistema 95; canvis: `xiquets→nois`; `estos→aquests`
+  - errors (sistema): minor fluency/spelling «es»
+- **BM-AVL-210** ref 100 / sistema 95; canvis: `seues→seves`; `l'ensenyança→l'ensenyament`
+  - errors (sistema): minor fluency/grammar «no universitària»
+
+### manual: Sense traduir, guanya el sistema (175)
+
+- **BM-BOE-103** ref 45 / sistema 100; canvis: `perseguisca fins→persegueixi finalitats`; `vulneren→vulnerin`
+  - errors (ref.): major accuracy/mistranslation «fins»
+- **BM-BOE-183** ref 45 / sistema 100; canvis: `Ací figurarà→Aquí ha de figurar`; `que→∅`; `la incloga→que inclogui`; `a→∅`
+  - errors (ref.): major accuracy/addition «que»; major accuracy/mistranslation «en la incloga»; minor accuracy «figurará»
+- **BM-BOE-185** ref 45 / sistema 100; canvis: `Mentres→Mentre`; `∅→no`; `dote→doti`; `prestarà→ha de prestar`; `seues→seves`
+  - errors (ref.): major accuracy/omission «no»; major accuracy/mistranslation «prestarà»
+- **BM-BOE-019** ref 65 / sistema 100; canvis: `esta→aquesta`; `regularan→regulen`; `esta→aquesta`; `destinen→destinin`; `siguen→siguin`
+  - errors (ref.): major mistranslation «es regularan»; minor grammar «destenen»
+- **BM-BOE-039** ref 65 / sistema 100; canvis: `realitzen→realitzin`; `tindran→tenen`; `a→∅`; `mantindre,→mantenir,`; `desenrotllar→desenvolupar`
+  - errors (ref.): major accuracy/mistranslation «tindran»
+- **BM-BOE-071** ref 65 / sistema 100; canvis: `esta→aquesta`; `puga→pugui`; `es remetrà a→s'ha de remetre als`; `origine→origini`
+  - errors (ref.): major accuracy/mistranslation «es remetrà»
+- **BM-BOE-087** ref 65 / sistema 100; canvis: `a→∅`; `utilitze→utilitzi`; `a→∅`; `un altre→l'altre`; `eixa→aquesta`; `d'obligar-lo→d'obligar-la`
+  - errors (ref.): major accuracy/mistranslation «un altre»; major accuracy/mistranslation «obligar-lo»
+- **BM-BOE-114** ref 65 / sistema 100; canvis: `implanten este→implantin aquest`; `d'eixos→d'aquests`; `reben→rebin`
+  - errors (ref.): major accuracy/mistranslation «reben»; minor fluency/grammar «implanten»
+- **BM-BOE-123** ref 65 / sistema 100; canvis: `Esta→Aquesta`; `serà→és`; `barcos→vaixells`; `efectuen en el→efectuïn al`
+  - errors (ref.): major accuracy/mistranslation «no serà aplicable»; minor fluency/grammar «que no efectuen»
+- **BM-BOE-124** ref 65 / sistema 100; canvis: `este→aquest`; `reunisquen→reuneixin`; `que preveu esta llei→previstos en aquesta llei,`; `retret→encongit`
+  - errors (ref.): major accuracy/mistranslation «retret»; minor fluency/punctuation «llei no»; minor fluency/grammar «preveu»
+- **BM-BOE-146** ref 65 / sistema 100; canvis: `s'inclouran→s'inclouen`; `este→aquest`; `negocien→negociïn`; `mentres els referits→mentre aquests`; `posen→posin`
+  - errors (ref.): major accuracy/mistranslation «s'inclouran»; minor fluency/spelling «mentres»; minor fluency/grammar «negocien»; minor fluency/grammar «posen»; minor accuracy/addition «referits»
+- **BM-BOE-150** ref 65 / sistema 100; canvis: `s'interconnectarà→s'ha d'interconnectar`; `servicis→serveis`; `articulen→articulin`; `determine→determini`; `concloguen→concloguin`; `este→aquest`
+  - errors (ref.): major accuracy/mistranslation «s'interconnectarà»; minor fluency/grammar «articulen»; minor fluency/grammar «concloguen»
+- **BM-BOE-155** ref 65 / sistema 100; canvis: `correspondrà→correspon`; `estes→aquestes`; `acorden,→acordin,`; `sumen→sumin`; `comité→comitè`
+  - errors (ref.): major accuracy/mistranslation «correspondrà»; minor fluency/grammar «acorden»; minor fluency/grammar «sumen»; minor fluency/spelling «comité»
+- **BM-BOE-175** ref 65 / sistema 100; canvis: `partits→partits,`; `podran→poden`; `continuen→continuïn`; `realitzen la successió de→succeeixin`; `suspés.→suspès.`
+  - errors (ref.): major accuracy/mistranslation «no podran»; major fluency/grammar «continuen»; major style/awkward «realitzen la successió de»; minor fluency/spelling «suspés»
+- **BM-BOE-179** ref 65 / sistema 100; canvis: `publicaran→han de publicar`; `∅→els`; `plurianuals→pluriennals`; `fixen→fixin`; `seua→seva`
+  - errors (ref.): major accuracy/mistranslation «publicaran»
+- **BM-BOE-180** ref 65 / sistema 100; canvis: `aplicaran→han d'aplicar`; `cessaran→cessar`; `prompte→aviat`; `aprecien→apreciïn`
+  - errors (ref.): major accuracy/mistranslation «no aplicaran o cessaran»
+- **BM-BOE-184** ref 65 / sistema 100; canvis: `a→∅`; `seua→seva`; `hauran→han`; `permeten→permetin`; `siga procedent,→escaigui,`
+  - errors (ref.): major accuracy/mistranslation «hauran d'establir»; major accuracy/mistranslation «permeten»
+- **BM-BOE-212** ref 65 / sistema 100; canvis: `Afirmen→Afirmin`; `creen→creïn`; `seua→seva`
+  - errors (ref.): major fluency/grammar «Afirmen»; major fluency/grammar «crean»
+- **BM-BOE-218** ref 65 / sistema 100; canvis: `Una vegada→Un cop`; `esta→aquesta`; `depòsit→dipòsit`; `produirà→ha de produir`; `complixen→compleixen`; `depòsit→dipòsit`
+  - errors (ref.): major accuracy/mistranslation «no produirà»; minor fluency/spelling «depòsit»; minor fluency/grammar «complixen»; minor accuracy/addition «l'esmentat»
+- **BM-BOE-244** ref 65 / sistema 100; canvis: `testimonis→testimonis,`; `coneguen→coneguin`; `firma→la signatura`; `testador declararen→testador, declarin`; `∅→cap`; `firmat→signat`
+  - errors (ref.): major fluency/grammar «declararen»; major fluency/grammar «faltaren»; minor accuracy/omission «cap»
+- **BM-BOE-075** ref 75 / sistema 100; canvis: `este→aquest`; `perjuí→perjudici`; `impugne→impugni`; `haja→hagi`; `mentres va estar→mentre estava`
+  - errors (ref.): minor fluency/spelling «perjuí»; minor fluency/grammar «impugne»; minor accuracy/mistranslation «va estar en vigor»
+- **BM-BOE-096** ref 75 / sistema 100; canvis: `s'absorbiran→s'absorbeixen`; `establides→establertes`; `preste servicis→presti serveis`; `perjuí que es puguen suprimir→perjudici de la seva supressió`; `canvie→canviï`
+  - errors (ref.): minor fluency/spelling «perjuí»; minor terminology/inappropriate for context «sense perjuí que es puguen suprimir»
+- **BM-BOE-099** ref 75 / sistema 100; canvis: `També ací→Aquí també`; `tindrà,→té`; `dubte,→dubte`; `servicis→serveis`; `oferits→oferts`
+  - errors (ref.): major accuracy/mistranslation «tindrà»
+- **BM-BOE-107** ref 75 / sistema 100; canvis: `practiquen→practiquin`; `Esport aniran→Esports han d'estar`; `advertisca d'esta→adverteixi d'aquesta`; `s'establisquen→s'estableixin`
+  - errors (ref.): major accuracy/mistranslation «aniran»; minor fluency/grammar «practiquen»
+- **BM-BOE-110** ref 75 / sistema 100; canvis: `d'esta→d'aquesta`; `s'incorpore→s'incorpori`; `quedarà→queda`; `se'ls computarà→se li computa`; `romanga en esta→hi romangui`
+  - errors (ref.): minor accuracy/mistranslation «quedarà»; minor accuracy/mistranslation «se'ls computarà»; minor grammar/gender-agreement «en esta»
+- **BM-BOE-125** ref 75 / sistema 100; canvis: `es comunicaran estes→s'han de comunicar aquestes`; `comence→comenci`; `d'este.→d'aquest.`
+  - errors (ref.): major accuracy/mistranslation «es comunicaran»; minor fluency/grammar «comence»
+- **BM-BOE-135** ref 75 / sistema 100; canvis: `D'esta→D'aquesta`; `s'aconseguix→s'aconsegueix`; `dels gastos associats→de les despeses associades`; `incidisca→incideixi`
+  - errors (ref.): minor fluency/grammar «s'aconseguix»; minor terminology/inappropriate for context «gastos»
+- **BM-BOE-144** ref 75 / sistema 100; canvis: `d'esta→d'aquesta`; `perjuí→perjudici`; `disposa→disposen`; `en→∅`; `seus→∅`; `actuen→actuïn`
+  - errors (ref.): minor fluency/grammar «disposa»; minor accuracy/addition «en els seus llibres»; minor fluency/grammar «actuen»; minor fluency/spelling «alié»
+- **BM-BOE-148** ref 75 / sistema 100; canvis: `Cada un→Cadascun`; `d'esta llei disposaran→d'aquesta Llei han de disposar`; `facilite→en faciliti`; `seu→∅`; `correspondrà→correspon`; `a la→∅`
+  - errors (ref.): major accuracy/mistranslation «disposaran»; major accuracy/mistranslation «correspondrà»
+- **BM-BOE-152** ref 75 / sistema 100; canvis: `estos servicis→aquests serveis`; `podran→poden`; `control,→control o`; `ambdós,→totes dues,`; `determinen→determinin`; `esmentades ordes ministerials.→ordres ministerials esmentades.`
+  - errors (ref.): minor accuracy/mistranslation «es podran»; minor fluency/punctuation «control, informació de vol»; minor fluency/grammar «ambdós»
+- **BM-BOE-157** ref 75 / sistema 100; canvis: `es realitzarà→s'ha de realitzar`; `quede→quedi`; `desenrotllament→desenvolupament`; `d'esta→d'aquesta`
+  - errors (ref.): major accuracy/mistranslation «es realitzarà»
+- **BM-BOE-163** ref 75 / sistema 100; canvis: `referisquen→refereixin`; `impliquen→impliquin`; `seua separació,→seva separació`; `d'esta llei,→d'aquesta llei`; `s'exigirà→s'exigeix`
+  - errors (ref.): major accuracy/mistranslation «no s'exigirà»; minor fluency/grammar «implicen»
+- **BM-BOE-172** ref 75 / sistema 100; canvis: `al qual→a què`; `referixen→refereixen`; `s'haurà→s'ha`; `servicis→serveis`; `de les→dels`; `aparega→aparegui`
+  - errors (ref.): minor spelling «servicis»; minor accuracy/mistranslation «s'haurà d'assignar»
+- **BM-BOE-210** ref 75 / sistema 100; canvis: `La→Té la`; `tindrà→∅`; `per via→a través`; `facen→facin`; `obtinga→obtingui`; `seua→seva`
+  - errors (ref.): major accuracy/mistranslation «tindrà»
+- **BM-BOE-214** ref 75 / sistema 100; canvis: `Podran demanar→Poden recollir`; `consideren→considerin`; `inspeccionen→inspeccionin`; `seues actuacions,→seves actuacions`; `tindran→tenen`
+  - errors (ref.): minor accuracy/mistranslation «demanar»
+- **BM-BOE-228** ref 75 / sistema 100; canvis: `contingudes en esta→que conté aquesta`; `Vivenda,→Habitatge,`; `s'entendran→s'entenen`; `substituïxen→substitueixen`; `assumixen→assumeixen`; `seues→seves`
+  - errors (ref.): major terminology/inappropriate for context «Vivenda»; minor accuracy/mistranslation «s'entendran»
+- **BM-BOE-237** ref 75 / sistema 100; canvis: `requerix→requereix`; `seua→seva`; `es farà→s'ha de fer`; `en el→al`; `estés→estès`
+  - errors (ref.): major accuracy/mistranslation «es farà»; minor fluency/spelling «estés»
+- **BM-BOE-010** ref 85 / sistema 100; canvis: `es faran→s'han d'efectuar`; `comprés→comprès`; `referix→refereix`; `d'este→d'aquest`; `acabe→acabi`; `seua→seva`
+  - errors (ref.): major accuracy/mistranslation «es faran»
+- **BM-BOE-011** ref 85 / sistema 100; canvis: `inicie este→iniciï aquest`; `serà→ha d'anar`; `emés→emès`; `comité→comitè`; `és el cas,→s'escau,`; `d'estes→d'aquestes`
+  - errors (ref.): major accuracy/mistranslation «serà acompanyada»; minor fluency/spelling «comité»
+- **BM-BOE-014** ref 85 / sistema 100; canvis: `Atés→Atès`; `el→al`; `el canvi de→canviar-ne la`; `a fi→per tal`; `este→aquest`; `interés→interès`
+  - errors (ref.): minor fluency/grammar «el setembre»; minor fluency/spelling «interés»
+- **BM-BOE-016** ref 85 / sistema 100; canvis: `eixe→aquest`; `seua→seva`; `permés→permès`; `beneficiara→beneficiï`
+  - errors (ref.): minor fluency/spelling «permés»; minor fluency/grammar «beneficiara»
+- **BM-BOE-017** ref 85 / sistema 100; canvis: `puga→pugui`; `estes→aquestes`; `persistisquen→persisteixin`; `siguen→siguin`; `comprometen→comprometin`; `seua→seva`
+  - errors (ref.): major fluency/grammar «comprometen»
+- **BM-BOE-020** ref 85 / sistema 100; canvis: `constituïsca dos→constitueixi dues`; `esta→aquesta`; `∅→amb`; `els siguen→siguin`; `s'imposarà→s'ha d'imposar`
+  - errors (ref.): minor fluency/grammar «dos»; minor accuracy/addition «els»
+- **BM-BOE-023** ref 85 / sistema 100; canvis: `servicis→serveis`; `siguen→siguin`; `siguen→siguin`; `servicis→serveis`; `concerten→concertin`; `subministren→subministrin`
+  - errors (ref.): minor accuracy/mistranslation «concerten o subministren»
+- **BM-BOE-030** ref 85 / sistema 100; canvis: `passen→passin`; `tindre→tenir`; `seua→∅`; `compliran→han de complir`; `seues→∅`; `esta actue→aquesta actuï`
+  - errors (ref.): minor accuracy/mistranslation «passen»; minor accuracy/mistranslation «compliran»
+- **BM-BOE-050** ref 85 / sistema 100; canvis: `més,→més`; `afig→afegeix`; `estos→aquests`; `serà→és`; `puga→pugui`
+  - errors (ref.): minor accuracy/mistranslation «serà aplicable»
+- **BM-BOE-055** ref 85 / sistema 100; canvis: `obri esta→obre aquesta`; `el fet→la`; `servicis→serveis`
+  - errors (ref.): minor fluency/grammar «obri»; minor accuracy/addition «el fet»
+- **BM-BOE-058** ref 85 / sistema 100; canvis: `referisca→refereixi`; `es determinarà→s'ha de determinar`; `s'haja→s'hagi`; `contraure.→contreure.`
+  - errors (ref.): major accuracy/mistranslation «es determinarà»
+- **BM-BOE-070** ref 85 / sistema 100; canvis: `Estos→Aquests`; `tindran→tenen`; `es deriven→derivin`; `tancament→tancament,`; `s'haja→s'hagi`
+  - errors (ref.): minor fluency/grammar «que es deriven»; minor fluency/punctuation «,»
+- **BM-BOE-078** ref 85 / sistema 100; canvis: `presumix→presumeix`; `per→a`; `seua→seva`; `derive→derivi`; `fet→efectuat`; `haja sigut→l'hagi`
+  - errors (ref.): minor fluency/grammar «presumix»; minor terminology/accuracy «per compte del»; minor style/style «fet»
+- **BM-BOE-080** ref 85 / sistema 100; canvis: `haja→hagi`; `bastaran→n'hi ha prou amb`; `firmes→signatures`; `∅→seu`; `manifesten→manifestin`; `firmes.→signatures.`
+  - errors (ref.): major fluency/grammar «es manifesten»
+- **BM-BOE-081** ref 85 / sistema 100; canvis: `La mencionada administració traslladarà→L'administració corresponent ha de traslladar`; `seua→seva`; `es pronuncie→∅`; `∅→es pronunciï`; `què→la qual`; `retrotrauen→retrotreuen`
+  - errors (ref.): major accuracy/mistranslation «mencionada»; minor accuracy/mistranslation «traslladarà»
+- **BM-BOE-083** ref 85 / sistema 100; canvis: `depositari→dipositari`; `hagen→hagin`; `referix este→refereix aquest`; `podrà→pot`; `dit→∅`
+  - errors (ref.): minor accuracy/addition «el dit transportista»; minor accuracy/mistranslation «podrà»
+- **BM-BOE-088** ref 85 / sistema 100; canvis: `podrà prevaldre→pot prevaler`; `seua→seva`; `prove→provi`; `ha sigut→l'ha`; `per→∅`; `seua→seva`
+  - errors (ref.): minor grammar/spelling «prove»; minor accuracy/mistranslation «podrà»
+- **BM-BOE-089** ref 85 / sistema 100; canvis: `esta→aquesta`; `establix→estableix`; `d'esta→d'aquesta`; `podrà detraure→pot detreure`
+  - errors (ref.): minor accuracy/mistranslation «podrà»; minor fluency/spelling «detraure»
+- **BM-BOE-097** ref 85 / sistema 100; canvis: `esta→aquesta`; `aprofundixen→aprofundeixen`; `del gasto públic→de la despesa pública`; `establides→establertes`
+  - errors (ref.): minor terminology/inappropriate for context «gasto»
+- **BM-BOE-111** ref 85 / sistema 100; canvis: `D'esta→D'aquesta`; `qual s'aplique este→quals s'apliqui aquest`; `contribuïsquen→contribueixin`
+  - errors (ref.): minor fluency/grammar «als qual»; minor fluency/spelling «contribuïsquen»
+- **BM-BOE-116** ref 85 / sistema 100; canvis: `Este→Aquest`; `d'un→un`; `de l'ICEX→d'ICEX`; `faça→faci`; `aglutine→aglutini`; `aconseguisca→aconsegueixi`
+  - errors (ref.): minor fluency/grammar «demana d'un»
+- **BM-BOE-119** ref 85 / sistema 100; canvis: `Esta→Aquesta`; `potencien→potenciïn`; `milloren→millorin`; `d'emergències→emergències`; `catàstrofes,→catàstrofes`
+  - errors (ref.): minor fluency/grammar «potencien i milloren»; minor fluency/punctuation «, que ja va preveure»; minor fluency/grammar «davant d'emergències»
+- **BM-BOE-128** ref 85 / sistema 100; canvis: `s'oferisca junt→s'ofereixi juntament`; `al mateix temps→alhora`; `este, s'aplicarà→aquest, s'aplica`
+  - errors (ref.): minor accuracy/mistranslation «s'aplicarà»
+- **BM-BOE-136** ref 85 / sistema 100; canvis: `du→porta`; `l'atròfia;→l'atròfia,`; `exigix→exigeix`; `protegisquen→protegeixin`; `fomenten→fomentin`; `desenrotllament→desenvolupament`
+  - errors (ref.): minor fluency/spelling «du»
+- **BM-BOE-151** ref 85 / sistema 100; canvis: `depositaris→dipositaris`; `previstes en→que preveuen`; `d'esta→d'aquesta`; `comporten→comportin`; `perjuí→perjudici`
+  - errors (ref.): minor fluency/grammar «comporten»; minor fluency/punctuation «.»
+- **BM-BOE-171** ref 85 / sistema 100; canvis: `dita→∅`; `∅→esmentada`; `transmeta,→transmeti,`; `tindrà→té`; `servici,→servei,`; `complisca→compleixi`
+  - errors (ref.): minor accuracy/mistranslation «tindrà»; minor fluency/spelling «servici»
+- **BM-BOE-178** ref 85 / sistema 100; canvis: `suspendran→suspenen`; `compromés→compromès`; `iguale→iguali`; `supere→superi`; `depòsits→dipòsits`; `a este.→al Fons.`
+  - errors (ref.): minor accuracy/mistranslation «se suspendran»; minor style/awkward «a este»
+- **BM-BOE-191** ref 85 / sistema 100; canvis: `eixe→aquest`; `s'adopten→s'adoptin`; `manera→forma`; `necessiten servicis→necessitin serveis`
+  - errors (ref.): major fluency/grammar «s'adopten»
+- **BM-BOE-192** ref 85 / sistema 100; canvis: `situe→situï`; `la→∅`; `civil,→civil`; `correspondrà→correspon`; `siga d'interés→sigui d'interès`; `què correspondrà→el qual correspon`
+  - errors (ref.): minor fluency/spelling «se situe»
+- **BM-BOE-196** ref 85 / sistema 100; canvis: `díhuit→divuit`; `tinguen→tinguin`; `seu→∅`; `Espanya, tindran→Espanya tenen`; `els servicis→serveis`; `les cures→atencions`
+  - errors (ref.): minor fluency/spelling «díhuit»; minor terminology/inappropriate for context «cures»
+- **BM-BOE-197** ref 85 / sistema 100; canvis: `L'esquema→L'Esquema`; `serà aplicat→s'ha d'aplicar`; `a→∅`; `servicis→serveis`; `gestionen→gestionin`; `seues→seves`
+  - errors (ref.): major accuracy/mistranslation «serà aplicat»
+- **BM-BOE-198** ref 85 / sistema 100; canvis: `este fi,→aquesta finalitat,`; `podrà→pot`; `seues,→seves,`; `tals→tal`; `esmentades qüestions, aproven→qüestions esmentades, aprovin`; `comités→comitès`
+  - errors (ref.): minor fluency/grammar «aproven»; minor fluency/spelling «comités»
+- **BM-BOE-199** ref 85 / sistema 100; canvis: `accedisquen→accedeixin`; `es formule oposició per l'arrendatari,→l'arrendatari hi formuli oposició,`; `seguirà→ha de seguir`; `juí→judici`; `siga→sigui`; `siga→sigui`
+  - errors (ref.): major accuracy/mistranslation «seguirà»
+- **BM-BOE-200** ref 85 / sistema 100; canvis: `∅→alt`; `responguen→responguin`; `seues→seves`; `complementen→complementin`; `∅→serveis generalistes`; `servicis generalistes→∅`
+  - errors (ref.): minor accuracy/omission «alt»; minor fluency/grammar «responguen»; minor fluency/grammar «complementen»
+- **BM-BOE-201** ref 85 / sistema 100; canvis: `Serà→És`; `reduïsca→redueixi`; `seua→∅`; `∅→en`; `seua duració, a fi→seva durada, per tal`; `dedique→dediqui`
+  - errors (ref.): minor fluency/grammar «un 50 per 100»; minor fluency/punctuation «permanent,»; minor fluency/punctuation «almenys,»
+- **BM-BOE-213** ref 85 / sistema 100; canvis: `ordenarà→ha d'ordenar`; `reflectisca→reflecteixi`; `resulten→resultin`; `seua→seva`
+  - errors (ref.): major accuracy/mistranslation «ordenarà»
+- **BM-BOE-221** ref 85 / sistema 100; canvis: `una vegada a→un cop`; `sotmetrà→ha de sotmetre a proves de resistència`; `supervisa a proves de resistència,→supervisa,`; `este→aquest`
+  - errors (ref.): major accuracy/mistranslation «sotmetrà»
+- **BM-BOE-223** ref 85 / sistema 100; canvis: `d'este→d'aquest`; `d'esta→d'aquesta`; `al·ludix→al·ludeix`; `definiran esta societat,→han de definir aquesta societat`
+  - errors (ref.): major accuracy/mistranslation «que definiran»; minor fluency/spelling «al·ludix»; minor fluency/punctuation «,»
+- **BM-BOE-226** ref 85 / sistema 100; canvis: `Estos→Aquests`; `atribuïx,→atribueix,`; `tots els gastos→totes les despeses`; `incloent-hi→inclosa`; `d'estos→d'aquests`; `reinvertix→reinverteix`
+  - errors (ref.): major accuracy/mistranslation «reinvertix»
+- **BM-BOE-231** ref 85 / sistema 100; canvis: `este→aquest`; `ferramenta→eina`
+  - errors (ref.): minor terminology/inappropriate for context «ferramenta»
+- **BM-AVL-013** ref 85 / sistema 100; canvis: `ferramentes→eines`; `orde→ordre`; `conéixer→conèixer`
+  - errors (ref.): minor fluency/spelling «orde»; minor terminology/inappropriate for context «ferramentes»
+- **BM-AVL-086** ref 85 / sistema 100; canvis: `bou→toro`; `blanca,→garsa,`; `atraure→atreure`; `pujara→pugés`
+  - errors (ref.): major accuracy/mistranslation «bou»
+- **BM-AVL-103** ref 85 / sistema 100; canvis: `sigut→estat`; `dos→dues`
+  - errors (ref.): minor fluency/grammar «dos»
+- **BM-AVL-165** ref 85 / sistema 100; canvis: `esta→aquesta`; `hereua,→hereva,`
+  - errors (ref.): minor spelling «hereua»
+- **BM-AVL-197** ref 85 / sistema 100; canvis: `ferramentes→eines`; `a→∅`
+  - errors (ref.): minor terminology/inappropriate for context «ferramentes»
+- **BM-AVL-212** ref 85 / sistema 100; canvis: `xocolate;→xocolata;`; `seua→seva`; `roses→crispetes`; `dacsa.→blat de moro.`
+  - errors (ref.): major accuracy/mistranslation «roses de dacsa»; minor terminology/inappropriate for context «xocolate»
+- **BM-AVL-216** ref 85 / sistema 100; canvis: `ferramenta→eina`; `seues→seves`
+  - errors (ref.): minor terminology/inappropriate for context «ferramenta»
+- **BM-BOE-054** ref 85 / sistema 95; canvis: `Este→Aquest`; `naix→neix`; `∅→que hi ha avui`; `en→a`; `estatal que hi ha hui.→estatal.`
+  - errors (sistema): minor grammar/spelling «de la integració»
+  - errors (ref.): minor fluency/grammar «en l'inici»; minor style/awkward «que hi ha hui»
+- **BM-BOE-101** ref 85 / sistema 95; canvis: `este efecte, s'entendrà→aquests efectes, s'entén`; `pretenga realitzar→pretengui exercir`; `superen→superin`; `indicat.→esmentat.`
+  - errors (sistema): minor terminology/inappropriate for context «Trasplantaments»
+  - errors (ref.): minor accuracy/omission «A este efecte»; minor fluency/grammar «superen»
+- **BM-BOE-134** ref 85 / sistema 95; canvis: `suprimixen→suprimeixen`; `vacacions→vacances`; `contradiguen estes→contradiguin aquestes`
+  - errors (sistema): minor fluency/spelling «suspenen»
+  - errors (ref.): minor terminology/inappropriate for context «vacacions»; minor fluency/grammar «contradiguen»
+- **BM-AVL-021** ref 85 / sistema 95; canvis: `fera→fes`; `abellira.→apetís.`
+  - errors (sistema): minor fluency/grammar «apetís»
+  - errors (ref.): minor fluency/grammar «fera»; minor fluency/grammar «abellira»
+- **BM-AVL-179** ref 85 / sistema 95; canvis: `eixa→aqueixa`; `a→∅`; `seua→seva`
+  - errors (sistema): minor fluency/grammar «un altra»
+  - errors (ref.): minor grammar «un altra»
+- **BM-BOE-002** ref 95 / sistema 100; canvis: `suspén→suspèn`; `a→∅`; `sol·licite→sol·liciti una`; `atés→atès`; `∅→es promogués la taxació esmentada`; `liquidació es promoguera la dita taxació.→liquidació.`
+- **BM-BOE-005** ref 95 / sistema 100; canvis: `impedix→impedeix`; `haja comés→hagi comès`; `residisca→resideixi`; `seua→seva`; `foren→són`
+  - errors (ref.): minor fluency/grammar «si foren diferents»
+- **BM-BOE-006** ref 95 / sistema 100; canvis: `Esta→Aquesta`; `fa possible→possibilita`; `puguen→puguin`; `seua→seva`; `financera, atés→financera atès`; `arreplegar→obtenir`
+- **BM-BOE-013** ref 95 / sistema 100; canvis: `Esta→Aquesta`; `urgent, atés→urgent atès`; `esta→aquesta`; `d'este→d'aquest`
+- **BM-BOE-024** ref 95 / sistema 100; canvis: `calga entregar→sigui necessari lliurar`; `s'haja→s'hagi`; `invitació,→invitació`; `haurà d'entregar→ha de lliurar`; `ho sol·liciten,→la sol·licitin,`
+  - errors (ref.): minor grammar «quan ho sol·liciten»
+- **BM-BOE-028** ref 95 / sistema 100; canvis: `requerirà tindre dèsset→requereix tenir disset`; `complits→complerts`
+  - errors (ref.): minor fluency/grammar «complit»
+- **BM-BOE-032** ref 95 / sistema 100; canvis: `a tindre certitud→tenir certesa`; `s'establix→s'estableix`; `servici s'atorgue→servei s'atorgui`; `dos→dues`
+  - errors (ref.): minor spelling «emmagatzamatge»
+- **BM-BOE-035** ref 95 / sistema 100; canvis: `podrà tindre→pot tenir`; `habilitats→habilitats,`; `aconselle l'interés→aconselli l'interès`; `les famílies→la família`; `∅→la família`
+  - errors (ref.): minor spelling «interés»
+- **BM-BOE-042** ref 95 / sistema 100; canvis: `alça esta→aixeca aquesta`; `(d'acord→(en línia`; `produïx en→produeix amb`
+- **BM-BOE-043** ref 95 / sistema 100; canvis: `∅→les`; `a estes→∅`; `d'eixa→d'aquesta`; `l'Estat,→l'Estat`; `erigix→erigeix`; `a l'exigir→ja que exigeix`
+  - errors (ref.): minor punctuation/addition «».»
+- **BM-BOE-044** ref 95 / sistema 100; canvis: `D'esta→D'aquesta`; `s'arreplega→es recull`; `produïxen→produeixen`; `cada un→cadascun`
+  - errors (ref.): minor fluency/grammar «produïxen»
+- **BM-BOE-045** ref 95 / sistema 100; canvis: `seua→seva`; `dediquen respectivament→dediquen, respectivament,`; `desenrotllar→desenvolupar`; `dos→dues`; `depòsits→dipòsits`; `en reforç de→per reforçar`
+  - errors (ref.): minor fluency/spelling «depòsits»; minor style/awkward «en reforç de»
+- **BM-BOE-049** ref 95 / sistema 100; canvis: `s'obri→s'obre`; `puga→pugui`; `seues→seves`; `notifiquen→notifiquin`
+  - errors (ref.): minor fluency/grammar «s'obri»
+- **BM-BOE-059** ref 95 / sistema 100; canvis: `s'elimina així→s'elimina, així,`; `distints→diferents`; `estos puguen atraure→aquests puguin atreure`; `seua→seva`
+  - errors (ref.): minor fluency/grammar «estes»
+- **BM-BOE-060** ref 95 / sistema 100; canvis: `concedisca→concedeixi`; `designe a→designi`; `haurà→ha`; `haja sigut→hagi estat`
+  - errors (ref.): minor accuracy/addition «designe a Espanya»
+- **BM-BOE-061** ref 95 / sistema 100; canvis: `podrà→pot`; `reunisca→reuneixi`; `haja sigut→hagi estat`; `representen→representin`
+  - errors (ref.): minor fluency/grammar «representen»
+- **BM-BOE-063** ref 95 / sistema 100; canvis: `esta→aquesta`; `garantix→garanteix`; `puguen→puguin`; `oferides→ofertes`; `complisquen→compleixin`; `d'interés→d'interès`
+  - errors (ref.): minor fluency/spelling «interés»
+- **BM-BOE-064** ref 95 / sistema 100; canvis: `podrà→∅`; `∅→pot`; `seues→seves`; `mentres→mentre`; `s'hagen complit→s'hagin complert`; `els→∅`
+  - errors (ref.): minor accuracy/addition «podrà»; minor accuracy/addition «els»
+- **BM-BOE-067** ref 95 / sistema 100; canvis: `huitena→vuitena`; `hagen sigut→hagin estat`; `comerç→tràfic`
+  - errors (ref.): minor terminology/inappropriate for context «comerç»
+- **BM-BOE-076** ref 95 / sistema 100; canvis: `haja→hagi`; `dos→dues`; `concloga→conclogui`; `podrà→pot`
+  - errors (ref.): minor accuracy/tense shift «podrà»
+- **BM-BOE-077** ref 95 / sistema 100; canvis: `dos→dues`; `podrà→pot`; `recaiga una→recaigui`; `distint,→diferent,`; `este s'hi haja→aquest s'hagi`; `constituïx l'objecte→constitueixi objecte`
+- **BM-BOE-084** ref 95 / sistema 100; canvis: `este→aquest`; `xicotet→petit`; `haja→hagi`; `ha→s'ha`; `presentar-se→presentar`
+  - errors (ref.): minor accuracy/mistranslation «ha de presentar-se»
+- **BM-BOE-093** ref 95 / sistema 100; canvis: `s'aplicarà esta→s'ha d'aplicar aquesta`; `manifeste→manifesti`; `establits en→establerts a`; `del mencionat→de l'esmentat`; `d'eixe→d'aquest`; `serà→és`
+- **BM-BOE-095** ref 95 / sistema 100; canvis: `Esta→Aquesta`; `podrà→pot`; `acredite→acrediti`; `establides→establertes`; `seua→seva`; `subrogue→subrogui`
+  - errors (ref.): minor fluency/grammar «establides»; minor fluency/grammar «subrogue»
+- **BM-BOE-098** ref 95 / sistema 100; canvis: `Esta→Aquesta`; `establida→establerta`; `a→∅`
+  - errors (ref.): minor spelling «establida»
+- **BM-BOE-118** ref 95 / sistema 100; canvis: `Era necessari,→Calia,`; `sol·licitaren→sol·licitessin`; `verificara→verifiqués`; `esta.→aquesta.`
+  - errors (ref.): major fluency/grammar «sol·licitaren»
+- **BM-BOE-122** ref 95 / sistema 100; canvis: `Estaran→Estan`; `d'esta→d'aquesta`; `estacionen→estacionin`; `este→aquest`
+  - errors (ref.): minor accuracy/mistranslation «estacionen»
+- **BM-BOE-126** ref 95 / sistema 100; canvis: `es→∅`; `establisca→estableixi`; `d'estos→d'aquests`; `previnga→previngui`; `fugues→fuites`
+  - errors (ref.): minor fluency/grammar «es deriva»
+- **BM-BOE-127** ref 95 / sistema 100; canvis: `∅→les`; `d'esta→d'aquesta`; `prevegen esta→preveuen aquesta`; `subscriga→subscrigui`
+  - errors (ref.): minor fluency/spelling «prevegen»
+- **BM-BOE-129** ref 95 / sistema 100; canvis: `d'estos→d'aquests`; `vivendes, incloent-hi→habitatges, incloses`; `dos→dues`; `aquells→aquests`; `s'arrenden→s'arrendin`
+- **BM-BOE-137** ref 95 / sistema 100; canvis: `Es preferix este→Aquest`; `∅→es prefereix`; `autonòmica,→autonòmica`; `a→∅`; `juxtapose→juxtaposi`; `reduïsquen→redueixin`
+  - errors (ref.): minor fluency/spelling «interés»
+- **BM-BOE-139** ref 95 / sistema 100; canvis: `Esta→Aquesta`; `exigix→exigeix`; `produïsca→produeixi`; `motive→motivi`; `indemnització→indemnització,`; `estiga→estigui`
+  - errors (ref.): minor punctuation/missing comma «indemnització l'entitat»
+- **BM-BOE-141** ref 95 / sistema 100; canvis: `Constituïx→Constitueix`; `refonguen→refonguin`; `harmonitzen→s'harmonitzin`; `seua→seva`; `distintes→diferents`; `estos→aquests`
+  - errors (ref.): minor fluency/grammar «en estes moments»; minor fluency/grammar «harmonitzen»
+- **BM-BOE-149** ref 95 / sistema 100; canvis: `S'imposarà→S'ha d'imposar`; `seua mitat→meitat`; `afecten→afectin`; `cometen→cometin`; `estes→aquestes`
+  - errors (ref.): minor fluency/grammar «afecten»; minor fluency/grammar «cometen»
+- **BM-BOE-153** ref 95 / sistema 100; canvis: `aconsellen,→aconsellin,`; `podrà→pot`; `l'alçament→l'aixecament`; `esta→aquesta`
+  - errors (ref.): minor accuracy/tense shift «podrà»
+- **BM-BOE-158** ref 95 / sistema 100; canvis: `Esta→Aquesta`; `podrà→pot`; `això pose→posi`; `desenrotllament→desenvolupament`; `d'emergències,→emergències,`
+  - errors (ref.): minor accuracy/addition «això»
+- **BM-BOE-159** ref 95 / sistema 100; canvis: `a→∅`; `d'esta→d'aquesta`; `podrà→pot`; `servicis→serveis`; `de servicis→dels serveis`; `suspenguen→suspenguin`
+- **BM-BOE-162** ref 95 / sistema 100; canvis: `És essencial, per→Per`; `∅→és essencial`; `esta→aquesta`; `duga→dugui`; `a→∅`; `en estos→entre aquests`
+  - errors (ref.): minor accuracy/mistranslation «en estos»
+- **BM-BOE-164** ref 95 / sistema 100; canvis: `d'esta→d'aquesta`; `veja→vegi`; `seues→seves`; `el→∅`; `serà→és`; `l'absorbisca.→l'absorbeixi.`
+  - errors (ref.): minor accuracy/addition «en el còmput anual»
+- **BM-BOE-170** ref 95 / sistema 100; canvis: `prohibix→prohibeix`; `la→∅`; `beneficis,→beneficis`; `siga,→sigui,`; `dels gastos d'investigació→de les despeses de recerca`; `desenrotllament→desenvolupament`
+- **BM-BOE-174** ref 95 / sistema 100; canvis: `s'establix→s'estableix`; `proposen→proposin`; `podrà→pot`; `∅→un`; `dels gastos→de les despeses`; `servici→servei`
+- **BM-BOE-186** ref 95 / sistema 100; canvis: `el dit→aquest`; `reba→rebi`; `reserve→reservi`; `podrà→pot`; `resulte→es derivi`; `servici.→servei.`
+  - errors (ref.): minor accuracy/addition «el dit supòsit»
+- **BM-BOE-190** ref 95 / sistema 100; canvis: `cause perjuí→causi perjudici`; `l'interés→l'interès`; `lesionen→lesionin`
+  - errors (ref.): minor fluency/spelling «interés»
+- **BM-BOE-194** ref 95 / sistema 100; canvis: `passe→passi`; `servicis en el→serveis al`; `Sofía→Sofia`; `reconeixerà→ha de reconèixer`; `servicis→serveis`
+- **BM-BOE-195** ref 95 / sistema 100; canvis: `∅→hi`; `siga→sigui`; `investigació,→recerca,`; `desenrotllament→desenvolupament`; `cremen→cremin`
+  - errors (ref.): minor fluency/grammar «cremen»
+- **BM-BOE-202** ref 95 / sistema 100; canvis: `es procedirà→s'ha de procedir`; `seua→seva`; `perjuí→perjudici`; `instruïsca→instrueixi`
+  - errors (ref.): minor spelling «instrueïsca»
+- **BM-BOE-208** ref 95 / sistema 100; canvis: `inicien→iniciïn`; `seua→seva`; `radiquen→radiquin`; `seues→seves`
+  - errors (ref.): minor fluency/grammar «inicien»
+- **BM-BOE-215** ref 95 / sistema 100; canvis: `i→de manera que`; `distingixen estes dos→distingeixen aquestes dues`; `propi, mentres→propi mentre`
+- **BM-BOE-216** ref 95 / sistema 100; canvis: `esta→aquesta`; `sobreïxen dos→sobresurten dues`; `xicotets→petits`
+- **BM-BOE-222** ref 95 / sistema 100; canvis: `este→aquest`; `∅→cada cop`; `cada vegada major→més gran`; `i possibiliten el desenrotllament→al desenvolupament`
+  - errors (ref.): minor accuracy/addition «i possibiliten»
+- **BM-BOE-225** ref 95 / sistema 100; canvis: `oferix→ofereix`; `esta→aquesta`; `obrint→i obre`; `ací→aquí`; `sigut reeixides.→tingut èxit.`
+- **BM-BOE-233** ref 95 / sistema 100; canvis: `una vegada→un cop`; `dirigir notificarà→adreçar ha de notificar`; `firmants→signants`; `es considerarà resolt→∅`; `conveni.→conveni s'entén resolt.`
+- **BM-BOE-234** ref 95 / sistema 100; canvis: `seua→seva freqüència`; `vegada major freqüència,→cop més gran`
+  - errors (ref.): minor style/awkward «la seua cada vegada major freqüència»
+- **BM-BOE-238** ref 95 / sistema 100; canvis: `d'ací→d'aquí`; `quasi→gairebé`; `prosseguix la partió→prossegueix el límit`; `∅→següent`; `següent,→∅`; `vora el→al costat del`
+- **BM-BOE-239** ref 95 / sistema 100; canvis: `este efecte,→aquests efectes,`; `gastos→despeses`; `ascendix→ascendeix`
+- **BM-BOE-240** ref 95 / sistema 100; canvis: `cobrix→cobreix`; `oferixen→ofereixen`; `servicis→serveis`; `seues→seves`
+  - errors (ref.): minor fluency/spelling «servicis»
+- **BM-BOE-245** ref 95 / sistema 100; canvis: `∅→un`; `últims→darrers`; `l'interés→l'interès`
+  - errors (ref.): minor accuracy/omission «un estatus»
+- **BM-BOE-247** ref 95 / sistema 100; canvis: `podran→poden`; `díhuit→divuit`; `botella.→ampolla.`
+  - errors (ref.): major accuracy/mistranslation «díhuit»
+- **BM-BOE-249** ref 95 / sistema 100; canvis: `huitanta-quatre→vuitanta-quatre`; `huit→vuit`; `dènou→dinou`
+  - errors (ref.): minor fluency/spelling «dènou»
+- **BM-BOE-250** ref 95 / sistema 100; canvis: `Estarà→Està`; `huit→vuit`; `huit→vuit`
+  - errors (ref.): minor accuracy/mistranslation «Estarà»
+- **BM-AVL-025** ref 95 / sistema 100; canvis: `alçant→aixecant`; `siga colpejant-los→sigui copejant-los`; `siga→sigui`; `servix→serveix`; `generar→reportar`
+  - errors (ref.): minor accuracy/mistranslation «colpejant-los»
+- **BM-AVL-032** ref 95 / sistema 100; canvis: `vosté→vostè`; `d'esta→d'aquesta`; `mantindre→mantenir`
+  - errors (ref.): minor fluency/spelling «vosté»
+- **BM-AVL-034** ref 95 / sistema 100; canvis: `arreplega→recull`; `dos galletes→dues galetes`
+- **BM-AVL-038** ref 95 / sistema 100; canvis: `xiquet→noi`; `tindre→tenir`; `xiquet.→noi.`
+- **BM-AVL-049** ref 95 / sistema 100; canvis: `depén,→depèn,`; `última→darrera`
+  - errors (ref.): minor fluency/spelling «depén»
+- **BM-AVL-054** ref 95 / sistema 100; canvis: `depén→depèn`; `depén,→depèn,`
+  - errors (ref.): minor fluency/spelling «depén»
+- **BM-AVL-060** ref 95 / sistema 100; canvis: `haja→hagi`; `s'associen→s'associïn`
+  - errors (ref.): minor fluency/grammar «s'associen»
+- **BM-AVL-073** ref 95 / sistema 100; canvis: `vostés→vostès`; `poguérem→poguéssim`; `tancada→closa`
+  - errors (ref.): minor spelling/accentuation «vostés»
+- **BM-AVL-077** ref 95 / sistema 100; canvis: `représ→reprès`; `enuig→empipament`
+  - errors (ref.): minor fluency/spelling «représ»
+- **BM-AVL-091** ref 95 / sistema 100; canvis: `Eixe→Aqueix`; `seua→seva`; `seua→seva`; `valdre→valer`
+  - errors (ref.): minor fluency/grammar «va valdre»
+- **BM-AVL-099** ref 95 / sistema 100; canvis: `fóra→fos`; `eixes→aqueixes`
+  - errors (ref.): minor fluency/grammar «no fóra cas que»
+- **BM-AVL-101** ref 95 / sistema 100; canvis: `d'estos xicotets→d'aquests petits`; `sigut→estat`
+  - errors (ref.): minor accuracy/mistranslation «ha sigut»
+- **BM-AVL-102** ref 95 / sistema 100; canvis: `Este→Aquest`; `sigut l'últim→estat el darrer`; `seua→seva`
+- **BM-AVL-118** ref 95 / sistema 100; canvis: `perjuí→perjudici`; `d'estos→d'aquests`; `tinga→tingui`; `seua→seva`
+- **BM-AVL-136** ref 95 / sistema 100; canvis: `eixa→aqueixa`; `d'este→d'aquest`
+  - errors (ref.): minor fluency/punctuation «d'este»
+- **BM-AVL-141** ref 95 / sistema 100; canvis: `Esta→Aquesta`; `febra roja→febre vermella`; `primera vegada→primer cop`
+  - errors (ref.): minor fluency/spelling «febra»
+- **BM-AVL-145** ref 95 / sistema 100; canvis: `d'estos→d'aquests`; `aconseguix→aconsegueix`
+  - errors (ref.): minor fluency/spelling «si aconseguix»
+- **BM-AVL-163** ref 95 / sistema 100; canvis: `vostés esta→vostès aquesta`
+  - errors (ref.): minor fluency/spelling «vostés»
+- **BM-AVL-170** ref 95 / sistema 100; canvis: `l'interés→l'interès`; `esta→aquesta`
+  - errors (ref.): minor fluency/spelling «podrán»
+- **BM-AVL-184** ref 95 / sistema 100; canvis: `de l'última→del darrera`; `dos→dues`
+- **BM-AVL-186** ref 95 / sistema 100; canvis: `Dos→Dues`; `seues→seves`
+- **BM-AVL-199** ref 95 / sistema 100; canvis: `seua→seva`; `estés→estès`
+  - errors (ref.): minor fluency/spelling «estés»
+- **BM-AVL-204** ref 95 / sistema 100; canvis: `vos→us`; `butla→butlla`
+  - errors (ref.): minor fluency/grammar «vos»
+- **BM-AVL-206** ref 95 / sistema 100; canvis: `comité→comitè`; `l'interés→l'interès`
+  - errors (ref.): minor fluency/spelling «comité»; minor fluency/spelling «interés»
+- **BM-AVL-207** ref 95 / sistema 100; canvis: `tomaca→tomàquet`; `pimentó,→pebrot,`
+  - errors (ref.): minor terminology/inappropriate for context «pimentó»
+- **BM-AVL-208** ref 95 / sistema 100; canvis: `díhuit→divuit`; `duració.→durada.`
+  - errors (ref.): minor fluency/spelling «díhuit»
+
+### manual: gemma3:12b, guanya la referència (120)
+
+- **BM-AVL-041** ref 100 / sistema 45; canvis: `llavar;→rentat;`; `llavada→rentat`; `llavada,→rentat,`; `petar la xarrada.→xerrar.`
+  - errors (sistema): major accuracy/mistranslation «fer xerrar»; minor accuracy/mistranslation «rentat»
+- **BM-AVL-169** ref 100 / sistema 45; canvis: `estes→aquestes`; `es completaran→s'emplenaran`; `xarrades→xerrades`; `unes→a`; `vicentines→de la comarca de la Ribera,`
+  - errors (sistema): major accuracy/mistranslation «s'emplenaran»; major accuracy/mistranslation «de la comarca de la Ribera»
+- **BM-AVL-190** ref 100 / sistema 45; canvis: `Viuen→Viven`; `muden→moren`; `huit→vuit`; `vegades.→cops.`
+  - errors (sistema): major accuracy/mistranslation «moren»
+- **BM-AVL-218** ref 100 / sistema 45; canvis: `-u-: meua, meues, teua, teues, seua, seues.→-u: meu, meus, teu, teus, seu, seus.`
+  - errors (sistema): major accuracy/mistranslation «meu, meus, teu, teus, seu, seus»
+- **BM-BOE-060** ref 95 / sistema 45; canvis: `designe a→designue`; `haurà→ha`; `a l'espanyol→al valencià`; `sigut→estat`
+  - errors (sistema): major accuracy/mistranslation «al valencià»
+  - errors (ref.): minor accuracy/addition «designe a Espanya»
+- **BM-BOE-118** ref 95 / sistema 45; canvis: `Era necessari,→Calia,`; `sol·licitaren→sol·licitessin`; `es verificara→s'ha verificat`; `esta.→aquesta.`
+  - errors (sistema): major fluency/grammar «s'ha verificat»
+  - errors (ref.): major fluency/grammar «sol·licitaren»
+- **BM-AVL-086** ref 85 / sistema 45; canvis: `Transformat→Transformada`; `blanca,→guapa,`; `atraure→atreure`; `llom→damunt`; `emportar-se-la→portar-la`; `Creta.→Còrsega.`
+  - errors (sistema): major accuracy/mistranslation «Còrsega»; minor grammar «Transformada»
+  - errors (ref.): major accuracy/mistranslation «bou»
+- **BM-BOE-009** ref 100 / sistema 65; canvis: `Este dictamen→Aquesta resolució`; `dos→dues`; `perquè→perquè,`; `dies→dies,`; `el dictamen emés.→la resolució emesa.`
+  - errors (sistema): major accuracy/mistranslation «resolució»; major fluency/grammar «presenten»
+- **BM-BOE-094** ref 100 / sistema 65; canvis: `S'entendrà complida esta→S'entén complertament aquesta`; `servicis→serveis`; `∅→el`
+  - errors (sistema): major accuracy/mistranslation «complertament»; minor fluency/grammar «redunden»
+- **BM-AVL-015** ref 100 / sistema 65; canvis: `en canvi,→però,`; `tindre que,→haver de,`; `tindre→tenir`
+  - errors (sistema): major accuracy/mistranslation «haver de»
+- **BM-AVL-031** ref 100 / sistema 65; canvis: `bé..., que→doncs...,`; `t'abellix eixir→t'agrada sortir`
+  - errors (sistema): minor accuracy/mistranslation «doncs»; minor accuracy/mistranslation «t'agrada»
+- **BM-AVL-046** ref 100 / sistema 65; canvis: `esta→aquesta`; `accepció encunyada→acceptació encunada`
+  - errors (sistema): major accuracy/mistranslation «acceptació»
+- **BM-AVL-066** ref 100 / sistema 65; canvis: `este→aquest`; `corpus.→cos.`
+  - errors (sistema): major accuracy/mistranslation «cos»
+- **BM-AVL-081** ref 100 / sistema 65; canvis: `trellat→sentit`
+  - errors (sistema): major accuracy/mistranslation «res de sentit»
+- **BM-AVL-089** ref 100 / sistema 65; canvis: `Tot i→Malgrat`; `jaure→brollar`; `eixe→aquell`; `verdader→vertader`
+  - errors (sistema): major accuracy/mistranslation «brollar»
+- **BM-AVL-115** ref 100 / sistema 65; canvis: `diu→dit`; `d'eixa→d'aquesta`; `s'impedix→s'impedeix`; `espermatozous→espermatozoïdes`
+  - errors (sistema): major accuracy/mistranslation «El dit»
+- **BM-AVL-119** ref 100 / sistema 65; canvis: `confós,→confús,`
+  - errors (sistema): major accuracy/mistranslation «pronuncien»; major accuracy/mistranslation «confús»
+- **BM-AVL-155** ref 100 / sistema 65; canvis: `últims→darrers`; `d'algunes d'estes→d'alguna d'aquestes`; `dalt o baix,→a poc,`
+  - errors (sistema): major accuracy/mistranslation «poc a poc»
+- **BM-BOE-043** ref 95 / sistema 65; canvis: `És→Éssent`; `∅→les`; `a estes→∅`; `d'eixa comanda→d'aquesta ordre`; `l'Estat,→l'Estat`; `erigix→erigeix`
+  - errors (sistema): major accuracy/mistranslation «Éssent a dir»
+  - errors (ref.): minor punctuation/addition «».»
+- **BM-BOE-158** ref 95 / sistema 65; canvis: `Esta posada en comú→Aquesta comunicació`; `podrà→pot`; `això pose→posa`; `desenrotllament→desenvolupament`; `d'emergències,→emergències,`
+  - errors (sistema): major accuracy/mistranslation «comunicació»; minor grammar «posa»
+  - errors (ref.): minor accuracy/addition «això»
+- **BM-AVL-034** ref 95 / sistema 65; canvis: `preparar-nos—→preparar-nos`; `xàmbit,→xamigot,`; `arreplega→recull`; `dos galletes→dues galetes`; `neula».→neulà».`
+  - errors (sistema): major accuracy/mistranslation «xamigot»; minor fluency/punctuation «—o preparar-nos»; minor fluency/spelling «neulà»
+- **BM-AVL-077** ref 95 / sistema 65; canvis: `représ→reprès`; `enuig→avorriment`
+  - errors (sistema): major accuracy/mistranslation «avorriment»
+  - errors (ref.): minor fluency/spelling «représ»
+- **BM-AVL-127** ref 95 / sistema 65; canvis: `al Introducció→a l'introductor`; `d'acomiadament,→de comiat,`
+  - errors (sistema): major accuracy/mistranslation «a l'introductor»
+- **BM-AVL-186** ref 95 / sistema 65; canvis: `Dos→Dues`; `s'adiuen→s'entenen`; `dirimixen→resoldrien`
+  - errors (sistema): major accuracy/mistranslation «resoldrien»
+- **BM-BOE-033** ref 100 / sistema 75; canvis: `depòsit haurà→dipòsit ha`; `firmada→signada`; `depositant→diposità`; `depòsit→dipòsit`; `depositar→dipositar`
+  - errors (sistema): major terminology/inappropriate for context «diposità»
+- **BM-BOE-166** ref 100 / sistema 75; canvis: `el Govern→la Generalitat`; `dicte→dicta`; `d'esta→d'aquesta`
+  - errors (sistema): major fluency/grammar «dicta»
+- **BM-AVL-012** ref 100 / sistema 75; canvis: `«Ballar→Ballar`; `esdevindre→convertir-se`; `percudit→percebut`; `identitari→identari`; `de→∅`; `aforismat→aforístic`
+  - errors (sistema): major accuracy/mistranslation «percebut»; minor fluency/spelling «identari»; minor fluency/punctuation «singular,»
+- **BM-AVL-030** ref 100 / sistema 75; canvis: `d'esta→d'aquesta`; `al·ludix→al·ludeix`; `d'algun→d'algú`; `d'algun→d'algú`
+  - errors (sistema): minor fluency/spelling «algú acte»; minor fluency/spelling «algú fet»
+- **BM-AVL-063** ref 100 / sistema 75; canvis: `es planteja→s'afronta`; `l'emet),→la transmet),`
+  - errors (sistema): major accuracy/mistranslation «s'afronta»; minor accuracy/mistranslation «la transmet»
+- **BM-AVL-076** ref 100 / sistema 75; canvis: `últimes→darreres`; `saben→sabeu`; `vostés,→vosaltres,`; `puga→pugui`; `solitari.→solitud.`
+  - errors (sistema): major accuracy/mistranslation «en solitud»
+- **BM-AVL-122** ref 100 / sistema 75; canvis: `compromés→compromès`; `l'equipara→el compara`
+  - errors (sistema): major accuracy/mistranslation «el compara»
+- **BM-AVL-135** ref 100 / sistema 75; canvis: `∅→hi`; `estos→açò`; `estes→aquestes`; `en té→n'ha`
+  - errors (sistema): major grammar «que no n'ha cap»; minor mistranslation «a açò»
+- **BM-AVL-164** ref 100 / sistema 75; canvis: `Eixa,→Aquesta,`; `afegir→afegir-hi`; `dispars:→disparats:`; `creïlles,→patates,`; `vostés vullguen.→vosotros vulgueu.`
+  - errors (sistema): major fluency/spelling «vosotros»; minor accuracy/mistranslation «disparats»
+- **BM-AVL-166** ref 100 / sistema 75; canvis: `Soc→Sóc`; `este càrrec→aquesta càrrega`; `vetla→vetlla`; `lingüístiques.→lingüística.`
+  - errors (sistema): major terminology/inappropriate for context «aquesta càrrega»
+- **BM-AVL-181** ref 100 / sistema 75; canvis: `emfasitza que→∅`; `en→de`; `“eixa→“aqueixa`; `polièdrica”.→polifacètica”.`
+  - errors (sistema): minor accuracy/omission «emfasitza que»; minor grammar/preposition «de relleu»
+- **BM-AVL-219** ref 100 / sistema 75; canvis: `«Em→M'en`; `meua→meva`; `valencià».→valencià.`
+  - errors (sistema): major fluency/grammar «M'en»
+- **BM-BOE-005** ref 95 / sistema 75; canvis: `acudir-hi impedix→acudix-hi impedeix`; `acudir→acudix`; `en què→on`; `en què residisca→on resideisca`; `foren→són`
+  - errors (sistema): minor fluency/grammar «acudix-hi»; minor fluency/grammar «acudix»
+  - errors (ref.): minor fluency/grammar «si foren diferents»
+- **BM-BOE-032** ref 95 / sistema 75; canvis: `tindre certitud de l'òptim→tenir certesa del correcte`; `s'establix→s'estableix`; `de posada en servici→d'obertura al servei`; `dos→dues`
+  - errors (sistema): minor accuracy/mistranslation «del correcte funcionament»; minor terminology/inappropriate for context «d'obertura al servei»
+  - errors (ref.): minor spelling «emmagatzamatge»
+- **BM-BOE-151** ref 85 / sistema 65; canvis: `depositaris→depositari`; `previstes en→que preveuen`; `d'esta→d'aquesta`; `perjuí→perjudici`; `partícips→participants`
+  - errors (sistema): minor fluency/spelling «depositari»; minor fluency/grammar «dels depositari»; minor fluency/grammar «comporten»; minor terminology/inappropriate for context «participants»
+  - errors (ref.): minor fluency/grammar «comporten»; minor fluency/punctuation «.»
+- **BM-BOE-164** ref 95 / sistema 75; canvis: `d'esta→d'aquesta`; `el còmput→compte`; `serà→és`; `transitori→transitòri`; `l'absorbisca.→l'absorbeixi.`
+  - errors (sistema): major accuracy/mistranslation «en compte anual»; minor fluency/spelling «transitòri»
+  - errors (ref.): minor accuracy/addition «en el còmput anual»
+- **BM-BOE-012** ref 100 / sistema 85; canvis: `podran comparéixer→poden comparèixer`; `juí→judici`; `arbitratges→arbitrages`; `convinga→convé`; `l'interés→l'interès`
+  - errors (sistema): minor fluency/spelling «arbitrages»; minor accuracy/mistranslation «convé»
+- **BM-BOE-015** ref 100 / sistema 85; canvis: `Respecte→Pel que fa`; `duració,→durada,`; `s'opta→s'optarà`; `duració→durada`; `atés→atès`; `s'entén→es considera`
+  - errors (sistema): minor accuracy/mistranslation «s'optarà»
+- **BM-BOE-051** ref 100 / sistema 85; canvis: `Se suspén→Es suspèn`; `del→de la`; `incís→part`; `d'1→de 1`; `Poder Judicial:→poder judicial:`; `estes→aquestes`
+- **BM-BOE-068** ref 100 / sistema 85; canvis: `tracte→tracti`; `només→∅`; `∅→sol`; `cònjuges→cònjugs,`; `requerirà,→requereix,`; `este exercisca→aquest n'exerceixi`
+  - errors (sistema): minor fluency/spelling «potestad»
+- **BM-BOE-082** ref 100 / sistema 85; canvis: `s'acrediten hauran→s'hi acrediten han`; `cobrisca→cobreixi`; `quantia→quantitat`; `s'establisca→s'estableisca`
+  - errors (sistema): major fluency/grammar «acrediten»; minor terminology/inappropriate for context «quantitat»
+- **BM-BOE-121** ref 100 / sistema 85; canvis: `El titular del Ministeri d'Economia i Hisenda autoritzarà les→Les`; `∅→han d'autoritzar-les el titular de la Conselleria d'Economia i Hisenda,`; `el seu→la`; `d'este,→d'aquest pressupost,`; `el Govern les autoritzarà→la Generalitat,`
+  - errors (sistema): minor fluency/grammar «la import»
+- **BM-BOE-154** ref 100 / sistema 85; canvis: `inclòs→inclosa`; `esta→aquesta`; `compartisquen servicis→comparteixin serveis`
+  - errors (sistema): minor fluency/grammar «inclosa»; minor fluency/grammar «se sotmeten»
+- **BM-BOE-167** ref 100 / sistema 85; canvis: `estos→∅`; `considerarà→considera`; `en→∅`; `lloc→∅`; `provinga→provenga`
+  - errors (sistema): minor accuracy/omission «A efectes»; minor accuracy/omission «primer»
+- **BM-BOE-187** ref 100 / sistema 85; canvis: `d'edat deixaran→deixen`; `servicis haurà d'oferir-los→serveis els ha d'oferir`; `comporte→comporti`; `d'eixes→d'aquestes`
+  - errors (sistema): minor fluency/grammar «arriben»; minor accuracy/omission «d'edat»
+- **BM-BOE-203** ref 100 / sistema 85; canvis: `servici→servei`; `es necessite autorització administrativa→siga necessari autoritzar administrativament de manera`; `dirigiran→han d'adreçar`
+  - errors (sistema): minor accuracy/mistranslation «siga necessari autoritzar administrativament de manera singular»
+- **BM-BOE-206** ref 100 / sistema 85; canvis: `alimentària→tròfica`; `a→∅`
+  - errors (sistema): major terminology/inappropriate for context «cadena tròfica»
+- **BM-BOE-229** ref 100 / sistema 85; canvis: `estos→aquests`; `dels→els`; `verdader→veritable`; `manera→forma`; `resoldre→resoldré`; `manera→forma`
+  - errors (sistema): major accuracy/mistranslation «resoldré»
+- **BM-BOE-235** ref 100 / sistema 85; canvis: `este efecte,→aquests efectes,`; `xicotetes→petites`; `entitats es tindran→empreses s'han de tenir`; `s'establixen en→estableixen`; `entitats→empreses`; `xicoteta dimensió.→dimensió petita.`
+  - errors (sistema): major terminology/inappropriate for context «empreses»
+- **BM-AVL-053** ref 100 / sistema 85; canvis: `larves→llarves`
+  - errors (sistema): minor fluency/spelling «llarves»
+- **BM-AVL-071** ref 100 / sistema 85; canvis: `esta→aquesta`; `es deu→deu-se`; `fou→va ser`; `investigació.→recerca.`
+  - errors (sistema): minor fluency/grammar «deu-se»
+- **BM-AVL-105** ref 100 / sistema 85; canvis: `No obstant això,→Tanmateix,`; `tal→∅`; `evidencia→demostra`; `recurrència→recurrentment`; `sigut→estat`; `últims→darrers`
+  - errors (sistema): minor fluency/grammar «la recurrentment»
+- **BM-AVL-112** ref 100 / sistema 85; canvis: `Estes→Aquestes`; `confidències→confidences`; `∅→la`
+  - errors (sistema): minor fluency/spelling «confidences»
+- **BM-AVL-133** ref 100 / sistema 85; canvis: `Així i tot,→Encara així,`; `el gros→la immensa majoria`; `seua.→seva.`
+  - errors (sistema): minor accuracy/addition «la immensa majoria»
+- **BM-AVL-150** ref 100 / sistema 85; canvis: `d'estos→d'aquests`; `convertix en discrecionals→fa discionaris`
+  - errors (sistema): minor fluency/spelling «discionaris»
+- **BM-AVL-152** ref 100 / sistema 85; canvis: `este últim cas,→aquest cas particular,`
+  - errors (sistema): major accuracy/mistranslation «cas particular»
+- **BM-AVL-191** ref 100 / sistema 85; canvis: `seques,→secques,`; `ametles,→almendres,`; `anous,→nous,`
+  - errors (sistema): minor fluency/spelling «secques»; minor terminology/inappropriate for context «almendres»
+- **BM-AVL-217** ref 100 / sistema 85; canvis: `huitanta,→vuitanta,`; `esguitades→esgarridores`; `entroncades amb→arrelades en`
+  - errors (sistema): major accuracy/mistranslation «arrelades en»; minor accuracy/mistranslation «esgarridores»
+- **BM-BOE-045** ref 95 / sistema 85; canvis: `Per la seua banda,→Pel seu cantó,`; `dediquen respectivament→dediquen, respectivament,`; `desenrotllar→desenvolupar`; `dos→dues`; `depòsits→dipòsits`; `en reforç de→per reforçar`
+  - errors (sistema): major accuracy/mistranslation «Pel seu cantó»
+  - errors (ref.): minor fluency/spelling «depòsits»; minor style/awkward «en reforç de»
+- **BM-BOE-049** ref 95 / sistema 85; canvis: `s'obri→s'obre`
+  - errors (sistema): minor fluency/grammar «es notifiquen»
+  - errors (ref.): minor fluency/grammar «s'obri»
+- **BM-BOE-098** ref 95 / sistema 85; canvis: `Esta→Aquesta`; `l'ocupació.→la ocupació.`
+  - errors (sistema): minor fluency/spelling «la ocupació»
+  - errors (ref.): minor spelling «establida»
+- **BM-BOE-099** ref 75 / sistema 65; canvis: `També ací→Ací també`; `tindrà,→té`; `dubte,→dubte repercussions`; `repercussions→∅`; `l'avanç→l'avantatge`; `servicis→serveis`
+  - errors (sistema): major accuracy/mistranslation «avantatge»
+  - errors (ref.): major accuracy/mistranslation «tindrà»
+- **BM-BOE-107** ref 75 / sistema 65; canvis: `del Ministeri→de la Conselleria`; `aniran→han d'estar`; `d'esta→d'aquesta`; `s'establisquen→s'estableixin`
+  - errors (sistema): major accuracy/mistranslation «Conselleria d'Educació, Cultura i Esport»
+  - errors (ref.): major accuracy/mistranslation «aniran»; minor fluency/grammar «practiquen»
+- **BM-BOE-122** ref 95 / sistema 85; canvis: `Estaran obligats→Estan obligades`; `d'esta→d'aquesta`; `este→aquest`
+  - errors (sistema): minor fluency/grammar «obligades»; minor accuracy/mistranslation «estacionen»
+  - errors (ref.): minor accuracy/mistranslation «estacionen»
+- **BM-BOE-136** ref 85 / sistema 75; canvis: `Ans→Açò és just`; `du→porta`; `l'atròfia;→l'atròfia,`; `exigix→exigeix`; `desenrotllament→desenvolupament`; `este.→aquest.`
+  - errors (sistema): major accuracy/addition «Açò és just»
+  - errors (ref.): minor fluency/spelling «du»
+- **BM-BOE-174** ref 95 / sistema 85; canvis: `s'establix→s'estableix`; `podrà→pot`; `∅→un`; `dels gastos→de les despeses`
+  - errors (sistema): minor fluency/grammar «proposen»; minor fluency/spelling «servici»
+- **BM-BOE-186** ref 95 / sistema 85; canvis: `el dit→aquest`; `podrà→pot`; `resulte→derive`
+  - errors (sistema): minor fluency/spelling «reba»; minor accuracy/omission «que derive»
+  - errors (ref.): minor accuracy/addition «el dit supòsit»
+- **BM-BOE-190** ref 95 / sistema 85; canvis: `adopció→l'adopció`; `cause perjuí greu→causen danys greus`; `l'interés→l'interès`; `es→se`
+  - errors (sistema): major accuracy/mistranslation «es causen»
+  - errors (ref.): minor fluency/spelling «interés»
+- **BM-BOE-195** ref 95 / sistema 85; canvis: `estan incloses→s'hi inclouen`; `investigació,→recerca,`; `desenrotllament→desenvolupament`; `cremen→crem`
+  - errors (sistema): minor fluency/grammar «crem»
+  - errors (ref.): minor fluency/grammar «cremen»
+- **BM-AVL-136** ref 95 / sistema 85; canvis: `eixa→aquesta`; `a pesar de→malgrat`; `emana d'este→ema d'aquest`
+  - errors (sistema): minor fluency/spelling «ema»
+  - errors (ref.): minor fluency/punctuation «d'este»
+- **BM-AVL-184** ref 95 / sistema 85; canvis: `apuntar→assenyalar`; `l'última→la darrera`; `arrítmia,→arítmia,`; `dos→dues`
+  - errors (sistema): major accuracy/mistranslation «arítmia»
+- **BM-AVL-207** ref 95 / sistema 85; canvis: `tomaca→tomàquet`; `pimentó,→pebrot,`; `es passa→s'apassà`
+  - errors (sistema): minor fluency/grammar «s'apassà»
+  - errors (ref.): minor terminology/inappropriate for context «pimentó»
+- **BM-AVL-212** ref 85 / sistema 75; canvis: `rovell→rovella`; `xocolate;→xocolata;`; `roses→flamets`; `dacsa.→blat de moro.`
+  - errors (sistema): major accuracy/mistranslation «flamets»; minor accuracy/mistranslation «rovella»
+  - errors (ref.): major accuracy/mistranslation «roses de dacsa»; minor terminology/inappropriate for context «xocolate»
+- **BM-BOE-018** ref 100 / sistema 95; canvis: `quint→cinquè`; `als qui→les persones que`; `valorats→valorades`; `se'ls haja→se les hagi`
+  - errors (sistema): minor accuracy/mistranslation «se les»; minor accuracy/addition «les persones que»
+- **BM-BOE-021** ref 100 / sistema 95; canvis: `Es faculten→Se faculta`; `execució→l'execució`; `establix este→estableix aquest`
+  - errors (sistema): minor fluency/grammar «Se faculta»
+- **BM-BOE-040** ref 100 / sistema 95; canvis: `Mantindre→Mantenir`; `barcos, aeronaus→vaixells, aeronaues`
+  - errors (sistema): minor fluency/spelling «aeronaues»
+- **BM-BOE-074** ref 100 / sistema 95; canvis: `d'estos→d'aquests`; `supòsits→casos`; `PIMES→PIME`; `∅→incentius`; `incentius→∅`; `estes→aquestes`
+  - errors (sistema): minor accuracy/mistranslation «PIME»
+- **BM-BOE-086** ref 100 / sistema 95; canvis: `a què→al qual`; `referix→refereix`; `d'este→d'aquest`; `perjuí→perjudici`; `valdre→valer`
+  - errors (sistema): minor terminology/inappropriate for context «l'assumpte»
+- **BM-BOE-106** ref 100 / sistema 95; canvis: `del present→d'este`; `seran→són`; `es dirigisca→s'adrexi`; `pignorats→pignatats`
+  - errors (sistema): minor fluency/spelling «pignatats»
+- **BM-BOE-108** ref 100 / sistema 95; canvis: `d'emmagatzemament o que,→d'emmagatzematge o,`; `∅→ho disposi`; `ho dispose esta→aquesta`; `tinga,→que exerceixi,`; `d'emmagatzemament.→d'emmagatzematge.`
+  - errors (sistema): minor fluency/spelling «explot»; minor fluency/spelling «control»
+- **BM-BOE-113** ref 100 / sistema 95; canvis: `esta,→açò,`; `mantinga→mantingga`
+  - errors (sistema): minor accuracy/mistranslation «açò»
+- **BM-BOE-142** ref 100 / sistema 95; canvis: `previst en este→que preveu aquest`; `serà→és`; `resulte→resulti`; `sèptims→sètims`; `arredonit→arrodonat`
+  - errors (sistema): minor terminology/inappropriate for context «sètims»
+- **BM-BOE-143** ref 100 / sistema 95; canvis: `els→als`; `xicoteta→petita`
+  - errors (sistema): minor fluency/grammar «als»
+- **BM-BOE-147** ref 100 / sistema 95; canvis: `∅→ve`; `d'este→d'aquest`; `apreciable→∅`; `∅→considerable`; `és el cas,→escau,`
+  - errors (sistema): minor fluency/grammar «entren»; minor fluency/grammar «si escau»
+- **BM-BOE-156** ref 100 / sistema 95; canvis: `Es→Se`; `perquè establisca→per a establir`; `a què s'ajustaran→als quals s'han d'ajustar`; `menció→esment`; `d'este→d'aquest`
+  - errors (sistema): minor fluency/grammar «Se»
+- **BM-BOE-160** ref 100 / sistema 95; canvis: `A estos efectes s'entendrà→Per a aquests efectes, entén-se`; `formada→composta`; `en la vivenda.→a l'habitatge.`
+  - errors (sistema): minor fluency/grammar «entén-se»
+- **BM-BOE-176** ref 100 / sistema 95; canvis: `això, podrà→açò, pot`; `prevista en→que preveu`; `sext→sisé`; `què→la qual`; `decidisca→decideix`
+  - errors (sistema): minor fluency/grammar «es decideix»
+- **BM-BOE-188** ref 100 / sistema 95; canvis: `En seran→Són`; `presten servicis→prestin serveis`; `servicis→serveis`
+  - errors (sistema): minor fluency/grammar «prestin»
+- **BM-BOE-193** ref 100 / sistema 95; canvis: `s'acorde→s'acord`; `sobre→quant a`; `gasto→despesa`
+  - errors (sistema): minor fluency/grammar «s'acord»
+- **BM-BOE-205** ref 100 / sistema 95; canvis: `major→màxima`; `professionalitzat→professionalitzat,`; `àmplia→∅`; `∅→àmplia,`; `d'eixa→d'aquesta`; `és→n'és`
+  - errors (sistema): minor style/awkward «amb diferència àmplia»
+- **BM-BOE-227** ref 100 / sistema 95; canvis: `Estes→Aquestes`; `constituïxen→constitueixen`; `a→∅`; `fluida→fluïda`; `servici→servei`
+  - errors (sistema): minor fluency/spelling «fluïda»
+- **BM-BOE-230** ref 100 / sistema 95; canvis: `falta→manca`; `∅→el`; `en→a`; `d'eixida→de sortida,`; `a→∅`; `este→aquest`
+  - errors (sistema): minor fluency/spelling «suspés»
+- **BM-BOE-236** ref 100 / sistema 95; canvis: `octau→vuitè`; `es concedixen→se concedeixen`; `un→∅`; `d'investigació→de recerca`
+  - errors (sistema): minor fluency/grammar «se»
+- **BM-BOE-241** ref 100 / sistema 95; canvis: `eixos→aquests`; `introduïx→introdueix`; `en→a`; `d'inversió→de inversió`; `huit→vuit`
+  - errors (sistema): minor fluency/punctuation «de inversió»
+- **BM-BOE-242** ref 100 / sistema 95; canvis: `interferix amb→interfereix en`; `amb→en`; `prestadors→proveïdors`; `igual→de la mateixa manera`
+  - errors (sistema): minor terminology/inappropriate for context «proveïdors»
+- **BM-BOE-243** ref 100 / sistema 95; canvis: `eixa→aquesta`; `reduïxen→redueixen`; `per a agilitzar→agilitzant`; `Reestructuració→Restructuració`
+  - errors (sistema): minor fluency/spelling «Restructuració»
+- **BM-AVL-006** ref 100 / sistema 95; canvis: `vol conéixer→vols conèixer`; `faça→fes`
+  - errors (sistema): minor style/awkward «vols»; minor style/awkward «fes»
+- **BM-AVL-016** ref 100 / sistema 95; canvis: `L'al·lusió→L'alusió`; `en tant que→com a`; `entropessa.→s'ensopega.`
+  - errors (sistema): minor fluency/spelling «alusió»
+- **BM-AVL-018** ref 100 / sistema 95; canvis: `mescla→barreja`; `emmotlable;→malleable;`; `convertix→converteix`
+  - errors (sistema): minor accuracy/mistranslation «malleable»
+- **BM-AVL-019** ref 100 / sistema 95; canvis: `una vegada establida→un cop establerta`; `tot seguit→següentment`
+  - errors (sistema): minor accuracy/mistranslation «següentment»
+- **BM-AVL-023** ref 100 / sistema 95; canvis: `d'oferir creàrem→de oferir creéssim`; `creàrem→creéssim`; `creàrem→creéssim`; `d'este→d'aquest`; `generàrem→reportéssim`
+  - errors (sistema): minor fluency/spelling «de oferir»
+- **BM-AVL-024** ref 100 / sistema 95; canvis: `este→aquest`; `esta→aquesta`; `d'obtindre tot el→d'obtenir allò`; `desitjara.→desitgés.`
+  - errors (sistema): minor accuracy/mistranslation «allò»
+- **BM-AVL-033** ref 100 / sistema 95; canvis: `este→aquest`; `Pobles→Poble`; `arreplegar→recollir`
+  - errors (sistema): minor grammar «Poble»
+- **BM-AVL-050** ref 100 / sistema 95; canvis: `s'obri→s'obre`; `al públic→pública`
+  - errors (sistema): minor fluency/spelling «allegacions»
+- **BM-AVL-052** ref 100 / sistema 95; canvis: `ofén→ofens`
+  - errors (sistema): minor fluency/grammar «ofens»
+- **BM-AVL-072** ref 100 / sistema 95; canvis: `més d'afavorir→banda de facilitar`; `estes→aquestes`; `tot→∅`; `puga→pugui`
+  - errors (sistema): minor accuracy/omission «un conjunt de»
+- **BM-AVL-079** ref 100 / sistema 95; canvis: `Conforme→Com`; `d'Orde,→d'Ordre,`; `citades→esmentades`; `correlativa→corresponent`
+  - errors (sistema): minor fluency/grammar «facen»
+- **BM-AVL-083** ref 100 / sistema 95; canvis: `TITOL→TÍTOL`; `la AVL CAPITOL→l'AVL CAPÍTOL`; `Personal→personal`; `haja→hagi`; `servicis→serveis`; `la AVL→l'AVL`
+  - errors (sistema): minor fluency/spelling «Rèxim»
+- **BM-AVL-093** ref 100 / sistema 95; canvis: `Trèveris→Trevís`
+  - errors (sistema): minor fluency/spelling «Trevís»
+- **BM-AVL-095** ref 100 / sistema 95; canvis: `lletrat→∅`; `d'extraure→d'extreure`; `orde→ordre`
+  - errors (sistema): minor accuracy/omission «lletrat»
+- **BM-AVL-109** ref 100 / sistema 95; canvis: `Escoltes→Escolta`; `i tal altre,→o qual,`
+- **BM-AVL-151** ref 100 / sistema 95; canvis: `Este últim→Aquest darrer`; `desitgen→desigen`; `La→la`
+  - errors (sistema): minor fluency/punctuation «la Xarxa»
+- **BM-AVL-159** ref 100 / sistema 95; canvis: `d'esta→d'aquesta`; `tindrà lloc→hi haurà`; `∅→la`; `per l'investigador→pel investigador`
+  - errors (sistema): minor fluency/grammar «pel investigador»
+- **BM-AVL-176** ref 100 / sistema 95; canvis: `d'esta→d'aquesta`; `l'orde→l'ordre`; `Clarisses.→clarisses.`
+  - errors (sistema): minor fluency/spelling «clarisses»
+- **BM-AVL-194** ref 100 / sistema 95; canvis: `un→una`; `m'oferix→m'ofereix`; `meua→meva`; `meua→meva`
+  - errors (sistema): minor fluency/grammar «una honor»
+- **BM-AVL-195** ref 100 / sistema 95; canvis: `«¡Vine ací,→«Ving aquí,`; `bonica,→bufona,`; `¡ Xata!»,→¡Xata!»,`
+  - errors (sistema): minor fluency/punctuation ««Ving»
+
+### manual: gemma3:12b, guanya el sistema (124)
+
+- **BM-BOE-183** ref 45 / sistema 100; canvis: `figurarà→ha de figurar`; `que→∅`; `la incloga tots els supòsits utilitzats per a calcular la taxa]→∅`; `crèdit.→crèdit, incloent tots els supòsits utilitzats per calcular la taxa].`
+  - errors (ref.): major accuracy/addition «que»; major accuracy/mistranslation «en la incloga»; minor accuracy «figurará»
+- **BM-BOE-185** ref 45 / sistema 100; canvis: `Mentres→Mentre`; `∅→no`; `dote→doti`; `prestarà→ha de prestar`
+  - errors (ref.): major accuracy/omission «no»; major accuracy/mistranslation «prestarà»
+- **BM-BOE-103** ref 45 / sistema 95; canvis: `perseguisca fins→persegueixi finalitats`
+  - errors (sistema): minor accuracy/mistranslation «vulneren»
+  - errors (ref.): major accuracy/mistranslation «fins»
+- **BM-BOE-019** ref 65 / sistema 100; canvis: `esta→aquesta`; `regularan→regulen`; `esta→aquesta`; `destinen→destinin`
+  - errors (ref.): major mistranslation «es regularan»; minor grammar «destenen»
+- **BM-BOE-039** ref 65 / sistema 100; canvis: `tindran→tenen`; `a→als`; `mantindre,→mantenir`; `desenrotllar→desenvolupar`
+  - errors (ref.): major accuracy/mistranslation «tindran»
+- **BM-BOE-087** ref 65 / sistema 100; canvis: `a→∅`; `coactius→coercitius`; `a→∅`; `un altre→l'altre`; `eixa→aquesta`; `d'obligar-lo→d'obligar-la`
+  - errors (ref.): major accuracy/mistranslation «un altre»; major accuracy/mistranslation «obligar-lo»
+- **BM-BOE-146** ref 65 / sistema 100; canvis: `s'inclouran→s'inclouen`; `este→aquest`; `mentres els referits→mentre aquests`
+  - errors (ref.): major accuracy/mistranslation «s'inclouran»; minor fluency/spelling «mentres»; minor fluency/grammar «negocien»; minor fluency/grammar «posen»; minor accuracy/addition «referits»
+- **BM-BOE-179** ref 65 / sistema 100; canvis: `publicaran→han de publicar`; `∅→els`; `plurianuals→pluriennals`
+  - errors (ref.): major accuracy/mistranslation «publicaran»
+- **BM-BOE-180** ref 65 / sistema 100; canvis: `aplicaran o cessaran→han d'aplicar ni deixar`; `prompte→aviat`
+  - errors (ref.): major accuracy/mistranslation «no aplicaran o cessaran»
+- **BM-BOE-212** ref 65 / sistema 100; canvis: `Afirmen→Afirmar`; `creen→crear`
+  - errors (ref.): major fluency/grammar «Afirmen»; major fluency/grammar «crean»
+- **BM-BOE-218** ref 65 / sistema 100; canvis: `Una vegada efectuada esta→Un cop feta aquesta`; `del depòsit→en el dipòsit`; `produirà→ha de produir`; `complixen→compleixen`; `depòsit→dipòsit`; `de l'esmentat→del`
+  - errors (ref.): major accuracy/mistranslation «no produirà»; minor fluency/spelling «depòsit»; minor fluency/grammar «complixen»; minor accuracy/addition «l'esmentat»
+- **BM-BOE-071** ref 65 / sistema 95; canvis: `això, esta→açò, aquesta`; `puga→pogui`; `es remetrà a→s'ha de remetre als`; `origine→origini`
+  - errors (sistema): minor fluency/spelling «açò»
+  - errors (ref.): major accuracy/mistranslation «es remetrà»
+- **BM-BOE-123** ref 65 / sistema 95; canvis: `Esta→Aquesta`; `serà aplicable a aquells barcos→s'aplica als vaixells`; `efectuen en el→efectuïn al`; `∅→la`
+  - errors (sistema): minor accuracy/omission «aquells»
+  - errors (ref.): major accuracy/mistranslation «no serà aplicable»; minor fluency/grammar «que no efectuen»
+- **BM-BOE-124** ref 65 / sistema 95; canvis: `este motiu,→aquesta raó,`; `que preveu esta llei→previstos en aquesta llei,`; `retret→reduït`
+  - errors (sistema): minor fluency/spelling «sotmesos»
+  - errors (ref.): major accuracy/mistranslation «retret»; minor fluency/punctuation «llei no»; minor fluency/grammar «preveu»
+- **BM-BOE-184** ref 65 / sistema 95; canvis: `a→∅`; `hauran→han`; `siga procedent,→escau,`
+  - errors (sistema): minor fluency/grammar «permeten»
+  - errors (ref.): major accuracy/mistranslation «hauran d'establir»; major accuracy/mistranslation «permeten»
+- **BM-BOE-096** ref 75 / sistema 100; canvis: `s'absorbiran→s'absorbeixen`; `establides→establertes`; `servicis→serveis`; `perjuí que es puguen suprimir→perjudici de la seua supressió`
+  - errors (ref.): minor fluency/spelling «perjuí»; minor terminology/inappropriate for context «sense perjuí que es puguen suprimir»
+- **BM-BOE-125** ref 75 / sistema 100; canvis: `es comunicaran estes→s'han de comunicar aquestes`
+  - errors (ref.): major accuracy/mistranslation «es comunicaran»; minor fluency/grammar «comence»
+- **BM-BOE-144** ref 75 / sistema 100; canvis: `d'esta→d'aquesta`; `perjuí→perjudici`; `disposa→disposen`; `en→∅`; `seus→∅`; `actuen→actuïn`
+  - errors (ref.): minor fluency/grammar «disposa»; minor accuracy/addition «en els seus llibres»; minor fluency/grammar «actuen»; minor fluency/spelling «alié»
+- **BM-BOE-148** ref 75 / sistema 100; canvis: `Cada un→Cadascun`; `d'esta llei disposaran→d'aquesta Llei ha de disposar`; `∅→en`; `seu→∅`; `correspondrà→correspon`; `a la→∅`
+  - errors (ref.): major accuracy/mistranslation «disposaran»; major accuracy/mistranslation «correspondrà»
+- **BM-BOE-152** ref 75 / sistema 100; canvis: `En funció de→Segons`; `dels→els`; `estos servicis→aquests serveis`; `podran→poden`; `control,→control o`; `ambdós,→totes dues,`
+  - errors (ref.): minor accuracy/mistranslation «es podran»; minor fluency/punctuation «control, informació de vol»; minor fluency/grammar «ambdós»
+- **BM-BOE-157** ref 75 / sistema 100; canvis: `es realitzarà→s'ha de realitzar`; `desenrotllament→desenvolupament`
+  - errors (ref.): major accuracy/mistranslation «es realitzarà»
+- **BM-BOE-163** ref 75 / sistema 100; canvis: `separació,→separació`; `d'esta llei,→d'aquesta llei`; `s'exigirà→s'exigeix`
+  - errors (ref.): major accuracy/mistranslation «no s'exigirà»; minor fluency/grammar «implicen»
+- **BM-BOE-172** ref 75 / sistema 100; canvis: `referixen→refereixen`; `s'haurà→s'ha`; `servicis→serveis`; `de les→dels`
+  - errors (ref.): minor spelling «servicis»; minor accuracy/mistranslation «s'haurà d'assignar»
+- **BM-BOE-228** ref 75 / sistema 100; canvis: `contingudes en esta→que conté aquesta`; `Vivenda,→Habitatge`; `s'entendran→s'entenen`; `substituïxen→substitueixen`; `assumixen→assumeixen`
+  - errors (ref.): major terminology/inappropriate for context «Vivenda»; minor accuracy/mistranslation «s'entendran»
+- **BM-BOE-237** ref 75 / sistema 100; canvis: `requerix→requereix`; `es farà→s'ha de fer`; `en el→al`; `estés→expedit`
+  - errors (ref.): major accuracy/mistranslation «es farà»; minor fluency/spelling «estés»
+- **BM-BOE-135** ref 75 / sistema 95; canvis: `D'esta→D'aquesta`; `s'aconseguix→s'aconsegueix`; `dels gastos associats→de les despeses associades`; `incidisca→influïsca`
+  - errors (sistema): minor terminology/inappropriate for context «influïsca»
+  - errors (ref.): minor fluency/grammar «s'aconseguix»; minor terminology/inappropriate for context «gastos»
+- **BM-BOE-150** ref 65 / sistema 85; canvis: `s'interconnectarà→ha de interconnectar-se`; `servicis→serveis`; `forma→manera`; `este→aquest`
+  - errors (sistema): minor fluency/punctuation «ha de interconnectar-se»; minor fluency/spelling «concloguen»
+  - errors (ref.): major accuracy/mistranslation «s'interconnectarà»; minor fluency/grammar «articulen»; minor fluency/grammar «concloguen»
+- **BM-BOE-155** ref 65 / sistema 85; canvis: `correspondrà→correspon`; `estes així→aquestes`; `comité→comitè`
+  - errors (sistema): major fluency/grammar «acorden»; major fluency/grammar «sumen»
+  - errors (ref.): major accuracy/mistranslation «correspondrà»; minor fluency/grammar «acorden»; minor fluency/grammar «sumen»; minor fluency/spelling «comité»
+- **BM-BOE-214** ref 75 / sistema 95; canvis: `Podran demanar→Poden recollir`; `actuacions,→actuacions`; `tindran→tenen`
+  - errors (sistema): minor fluency/grammar «consideren»; minor fluency/grammar «inspeccionen»
+  - errors (ref.): minor accuracy/mistranslation «demanar»
+- **BM-BOE-244** ref 65 / sistema 85; canvis: `testimonis→testimonis,`; `firma→la signatura`; `testador declararen→testador, declaren`; `∅→cap`; `firmat→signat`; `podrà→pot`
+  - errors (sistema): minor fluency/grammar «coneguen»; minor fluency/grammar «declaren»; minor fluency/punctuation «.»
+  - errors (ref.): major fluency/grammar «declararen»; major fluency/grammar «faltaren»; minor accuracy/omission «cap»
+- **BM-BOE-011** ref 85 / sistema 100; canvis: `demanda→sol·licitud`; `inicie este→iniciï aquest`; `serà→ha d'anar`; `comité→comitè`; `és el cas,→escau,`; `d'estes→d'aquestes`
+  - errors (ref.): major accuracy/mistranslation «serà acompanyada»; minor fluency/spelling «comité»
+- **BM-BOE-014** ref 85 / sistema 100; canvis: `el→al`; `el canvi de→canviar-ne la`; `∅→per`; `fi de→∅`; `este→aquest`; `interés→interès`
+  - errors (ref.): minor fluency/grammar «el setembre»; minor fluency/spelling «interés»
+- **BM-BOE-020** ref 85 / sistema 100; canvis: `dos→dues`; `∅→amb`; `els→∅`; `s'imposarà→s'ha d'imposar`
+  - errors (ref.): minor fluency/grammar «dos»; minor accuracy/addition «els»
+- **BM-BOE-023** ref 85 / sistema 100; canvis: `servicis→serveis`; `servicis→serveis`
+  - errors (ref.): minor accuracy/mistranslation «concerten o subministren»
+- **BM-BOE-055** ref 85 / sistema 100; canvis: `obri esta Llei→obre aquesta llei`; `el fet d'adequar→la d'adaptar`; `servicis→serveis`
+  - errors (ref.): minor fluency/grammar «obri»; minor accuracy/addition «el fet»
+- **BM-BOE-058** ref 85 / sistema 100; canvis: `es determinarà→s'ha de determinar`; `què→la qual`
+  - errors (ref.): major accuracy/mistranslation «es determinarà»
+- **BM-BOE-070** ref 85 / sistema 100; canvis: `Estos→Aquests`; `tindran→tenen`; `es→∅`; `tancament→tancament,`
+  - errors (ref.): minor fluency/grammar «que es deriven»; minor fluency/punctuation «,»
+- **BM-BOE-078** ref 85 / sistema 100; canvis: `presumix→presumeix`; `per→a`; `derive→derivi`; `fet→efectuat`; `haja sigut→l'haja`; `pel→el`
+  - errors (ref.): minor fluency/grammar «presumix»; minor terminology/accuracy «per compte del»; minor style/style «fet»
+- **BM-BOE-083** ref 85 / sistema 100; canvis: `depositari→dipositàri`; `referix este→refereix aquest`; `podrà→pot`; `dit→∅`
+  - errors (ref.): minor accuracy/addition «el dit transportista»; minor accuracy/mistranslation «podrà»
+- **BM-BOE-088** ref 85 / sistema 100; canvis: `es podrà prevaldre→pot prevaldre's`; `prove→provi`; `ha sigut→l'ha`; `per→∅`
+  - errors (ref.): minor grammar/spelling «prove»; minor accuracy/mistranslation «podrà»
+- **BM-BOE-097** ref 85 / sistema 100; canvis: `esta→aquesta`; `aprofundixen→aprofundeixen`; `del gasto públic→de la despesa pública`; `establides→establertes`
+  - errors (ref.): minor terminology/inappropriate for context «gasto»
+- **BM-BOE-111** ref 85 / sistema 100; canvis: `D'esta→D'aquesta`; `qual s'aplique este→quals s'apliqui aquest`; `en el→a`
+  - errors (ref.): minor fluency/grammar «als qual»; minor fluency/spelling «contribuïsquen»
+- **BM-BOE-116** ref 85 / sistema 100; canvis: `Este→Aquest`; `d'un→un`; `emergir→sorgir`
+  - errors (ref.): minor fluency/grammar «demana d'un»
+- **BM-BOE-119** ref 85 / sistema 100; canvis: `Esta→Aquesta`; `potencien→potenciïn`; `davant d'emergències→front emergències`; `catàstrofes,→catàstrofes`
+  - errors (ref.): minor fluency/grammar «potencien i milloren»; minor fluency/punctuation «, que ja va preveure»; minor fluency/grammar «davant d'emergències»
+- **BM-BOE-128** ref 85 / sistema 100; canvis: `junt→juntament`; `al mateix temps→alhora`; `este, s'aplicarà→aquest, s'aplica`
+  - errors (ref.): minor accuracy/mistranslation «s'aplicarà»
+- **BM-BOE-138** ref 85 / sistema 100; canvis: `este fi,→aquesta finalitat,`; `assistix a esta per→assisteix aquesta`; `l'Administració→l'administració`; `a→∅`
+  - errors (ref.): minor accuracy/mistranslation «es troben»; minor accuracy/mistranslation «corresponen»
+- **BM-BOE-171** ref 85 / sistema 100; canvis: `dita→∅`; `∅→esmentada`; `transmeta,→transmeti,`; `tindrà→té igualment`; `igualment→∅`; `servici,→servei,`
+  - errors (ref.): minor accuracy/mistranslation «tindrà»; minor fluency/spelling «servici»
+- **BM-BOE-191** ref 85 / sistema 100; canvis: `eixe→aquest`; `s'adopten→s'adoptin`; `manera→forma`; `servicis→serveis`
+  - errors (ref.): major fluency/grammar «s'adopten»
+- **BM-BOE-192** ref 85 / sistema 100; canvis: `la→∅`; `correspondrà→correspon`; `d'interés→d'interès`; `què correspondrà→el qual correspon`
+  - errors (ref.): minor fluency/spelling «se situe»
+- **BM-BOE-197** ref 85 / sistema 100; canvis: `L'esquema→L'Esquema`; `serà aplicat→s'ha d'aplicar`; `a→∅`; `servicis→serveis`
+  - errors (ref.): major accuracy/mistranslation «serà aplicat»
+- **BM-BOE-198** ref 85 / sistema 100; canvis: `este fi,→aquesta finalitat,`; `podrà→pot`; `tals→tal`; `esmentades qüestions, aproven→qüestions esmentades, aprovin`; `comités→comitès`; `la→∅`
+  - errors (ref.): minor fluency/grammar «aproven»; minor fluency/spelling «comités»
+- **BM-BOE-199** ref 85 / sistema 100; canvis: `accedisquen→accedeixin`; `es→l'arrendatari hi`; `oposició per l'arrendatari,→oposició,`; `seguirà→ha de seguir`; `juí→judici`
+  - errors (ref.): major accuracy/mistranslation «seguirà»
+- **BM-BOE-201** ref 85 / sistema 100; canvis: `Serà→És`; `seua→∅`; `∅→en`; `duració, a fi→durada, per tal`; `permanent,→permanent`
+  - errors (ref.): minor fluency/grammar «un 50 per 100»; minor fluency/punctuation «permanent,»; minor fluency/punctuation «almenys,»
+- **BM-BOE-213** ref 85 / sistema 100; canvis: `ordenarà→ha d'ordenar`
+  - errors (ref.): major accuracy/mistranslation «ordenarà»
+- **BM-BOE-221** ref 85 / sistema 100; canvis: `una vegada→un cop`; `sotmetrà→ha de sotmetre a proves de resistència`; `supervisa a proves de resistència,→supervisa,`; `este→aquest`
+  - errors (ref.): major accuracy/mistranslation «sotmetrà»
+- **BM-BOE-223** ref 85 / sistema 100; canvis: `al·ludix→al·ludeix`; `definiran→han de definir`; `societat,→societat`
+  - errors (ref.): major accuracy/mistranslation «que definiran»; minor fluency/spelling «al·ludix»; minor fluency/punctuation «,»
+- **BM-BOE-226** ref 85 / sistema 100; canvis: `Estos→Aquests`; `atribuïx,→atribueix,`; `tots els gastos→totes les despeses`; `d'estos→d'aquests`; `reinvertix→reinverteix`
+  - errors (ref.): major accuracy/mistranslation «reinvertix»
+- **BM-BOE-231** ref 85 / sistema 100; canvis: `este→aquest`; `ferramenta→eina`
+  - errors (ref.): minor terminology/inappropriate for context «ferramenta»
+- **BM-AVL-103** ref 85 / sistema 100; canvis: `la única→l'única`; `dos→dues`
+  - errors (ref.): minor fluency/grammar «dos»
+- **BM-AVL-165** ref 85 / sistema 100; canvis: `esta→aquesta`; `hereua, jueua→hereva, jueva`
+  - errors (ref.): minor spelling «hereua»
+- **BM-AVL-179** ref 85 / sistema 100; canvis: `eixa→aquesta`; `a→∅`; `lingüística→lingüística,`; `un→una`
+  - errors (ref.): minor grammar «un altra»
+- **BM-AVL-197** ref 85 / sistema 100; canvis: `ferramentes→eines`; `pròxims;→propers;`
+  - errors (ref.): minor terminology/inappropriate for context «ferramentes»
+- **BM-AVL-216** ref 85 / sistema 100; canvis: `ferramenta→eina`
+  - errors (ref.): minor terminology/inappropriate for context «ferramenta»
+- **BM-BOE-050** ref 85 / sistema 98; canvis: `més,→més`; `afig→afegeix`; `estos→aquests`; `serà→és`; `puga→pugui`; `50 per cent→50%`
+  - errors (sistema): minor fluency/punctuation «50%»
+  - errors (ref.): minor accuracy/mistranslation «serà aplicable»
+- **BM-BOE-010** ref 85 / sistema 95; canvis: `es faran→s'han de fer`; `comprés→comprès`; `referix→refereix`; `d'este→d'aquest`; `acabe→acabi`
+  - errors (sistema): minor terminology/inappropriate for context «fer»
+  - errors (ref.): major accuracy/mistranslation «es faran»
+- **BM-BOE-017** ref 85 / sistema 95; canvis: `estes→aquestes`; `comprometen→comprometgen`; `en relació amb→respecte a`
+  - errors (sistema): minor fluency/grammar «sigan»; minor fluency/grammar «comprometgen»
+  - errors (ref.): major fluency/grammar «comprometen»
+- **BM-BOE-030** ref 85 / sistema 95; canvis: `seua→∅`; `compliran→han de complir`; `seues→∅`; `esta→aquesta`
+  - errors (sistema): major accuracy/mistranslation «passen»
+  - errors (ref.): minor accuracy/mistranslation «passen»; minor accuracy/mistranslation «compliran»
+- **BM-BOE-075** ref 75 / sistema 85; canvis: `este→aquest`; `perjuí→perjudici`; `l'eliminació→la eliminació`; `mentres va estar→mentre estiguera`
+  - errors (sistema): minor spelling «mientras»; minor grammar «la eliminació»
+  - errors (ref.): minor fluency/spelling «perjuí»; minor fluency/grammar «impugne»; minor accuracy/mistranslation «va estar en vigor»
+- **BM-BOE-080** ref 85 / sistema 95; canvis: `bastaran→n'hi ha prou amb`; `firmes→signatures`; `∅→seu`; `firmes.→signatures.`
+  - errors (sistema): minor fluency/grammar «manifesten»
+  - errors (ref.): major fluency/grammar «es manifesten»
+- **BM-BOE-101** ref 85 / sistema 95; canvis: `este efecte, s'entendrà→aquests efectes, s'entén`; `pretenga realitzar→pretengui exercir`; `preteses superen→pretendes superin`; `indicat.→esmentat.`
+  - errors (sistema): minor fluency/spelling «pretendes»
+  - errors (ref.): minor accuracy/omission «A este efecte»; minor fluency/grammar «superen»
+- **BM-BOE-110** ref 75 / sistema 85; canvis: `d'esta→d'aquesta`; `s'incorpore→s'incorporà`; `quedarà→queda`; `se'ls computarà→se li computa`; `∅→hi`; `en esta→∅`
+  - errors (sistema): major fluency/grammar «s'incorporà»
+  - errors (ref.): minor accuracy/mistranslation «quedarà»; minor accuracy/mistranslation «se'ls computarà»; minor grammar/gender-agreement «en esta»
+- **BM-BOE-134** ref 85 / sistema 95; canvis: `suprimixen→suprimeixen`; `vacacions→vacances`; `el dels→els`; `estes→aquestes`
+  - errors (sistema): minor accuracy/omission «en els dies»
+  - errors (ref.): minor terminology/inappropriate for context «vacacions»; minor fluency/grammar «contradiguen»
+- **BM-BOE-175** ref 65 / sistema 75; canvis: `tot→qualsevol`; `partits→partits,`; `d'electors→d'electorats`; `podran→poden`; `realitzen la successió de→succeeixen`
+  - errors (sistema): minor terminology/inappropriate for context «electorats»; minor fluency/grammar «continuen o succeeixen»; minor fluency/spelling «suspés»
+  - errors (ref.): major accuracy/mistranslation «no podran»; major fluency/grammar «continuen»; major style/awkward «realitzen la successió de»; minor fluency/spelling «suspés»
+- **BM-BOE-178** ref 85 / sistema 95; canvis: `Fons→fons`; `suspendran→suspenen`; `compromés→compromès`; `Fons→fons`; `depòsits→dipòsits`; `a este.→al fons.`
+  - errors (sistema): minor fluency/inconsistency «fons»
+  - errors (ref.): minor accuracy/mistranslation «se suspendran»; minor style/awkward «a este»
+- **BM-BOE-210** ref 75 / sistema 85; canvis: `La→Té la`; `tindrà→∅`; `per via→a través`; `∅→a`
+  - errors (sistema): minor accuracy/addition «per a o per a»
+  - errors (ref.): major accuracy/mistranslation «tindrà»
+- **BM-AVL-013** ref 85 / sistema 95; canvis: `atles→atlas`; `ferramentes→eines`; `orde→ordre`; `conéixer→conèixer`; `valencià.→valencià».`
+  - errors (sistema): minor fluency/spelling «atlas»
+  - errors (ref.): minor fluency/spelling «orde»; minor terminology/inappropriate for context «ferramentes»
+- **BM-BOE-002** ref 95 / sistema 100; canvis: `a→∅`; `se sol·licite→es sol·liciti una`; `∅→es promogués la taxació esmentada`; `liquidació es promoguera la dita taxació.→liquidació.`
+- **BM-BOE-006** ref 95 / sistema 100; canvis: `Esta→Aquesta`; `fa possible→possibilita`; `financera, atés→financera atès`; `arreplegar→obtenir`
+- **BM-BOE-013** ref 95 / sistema 100; canvis: `Esta→Aquesta`; `urgent,→urgent`; `esta→aquesta`
+- **BM-BOE-024** ref 95 / sistema 100; canvis: `calga entregar→siga necessari lliurar`; `invitació,→invitació`; `haurà d'entregar→ha de lliurar`; `ho→la`
+  - errors (ref.): minor grammar «quan ho sol·liciten»
+- **BM-BOE-028** ref 95 / sistema 100; canvis: `requerirà tindre dèsset→requereix tenir disset`; `complits→complerts`
+  - errors (ref.): minor fluency/grammar «complit»
+- **BM-BOE-059** ref 95 / sistema 100; canvis: `s'elimina així→s'elimina, així,`; `d'un→del`; `distints→diferents`; `estos→aquests`; `atraure→atreure`
+  - errors (ref.): minor fluency/grammar «estes»
+- **BM-BOE-061** ref 95 / sistema 100; canvis: `podrà→pot`; `sigut→estat`
+  - errors (ref.): minor fluency/grammar «representen»
+- **BM-BOE-063** ref 95 / sistema 100; canvis: `esta→aquesta`; `garantix→garanteix`; `oferides→ofertes`; `d'interés→d'interès`
+  - errors (ref.): minor fluency/spelling «interés»
+- **BM-BOE-064** ref 95 / sistema 100; canvis: `podrà→∅`; `∅→pot`; `mentres→mentre`; `complit→complert`; `els→∅`; `substituïsca puga→substitueisca pugui`
+  - errors (ref.): minor accuracy/addition «podrà»; minor accuracy/addition «els»
+- **BM-BOE-067** ref 95 / sistema 100; canvis: `huitena→vuitena`; `de→del`; `sigut→estat`; `comerç→tràfic`
+  - errors (ref.): minor terminology/inappropriate for context «comerç»
+- **BM-BOE-077** ref 95 / sistema 100; canvis: `dos→dues`; `podrà→pot`; `una→∅`; `distint,→diferent,`; `este s'hi haja→aquest s'haja`; `constituïx l'objecte→constituïsca objecte`
+- **BM-BOE-084** ref 95 / sistema 100; canvis: `este→aquest`; `xicotet→petit`; `cada un→cadascun`; `ha→s'ha`; `presentar-se→presentar`
+  - errors (ref.): minor accuracy/mistranslation «ha de presentar-se»
+- **BM-BOE-093** ref 95 / sistema 100; canvis: `s'aplicarà esta→s'ha d'aplicar aquesta`; `establits en→establerts a`; `del mencionat→de l'esmentat`; `d'eixe→d'aquest`; `serà→és`
+- **BM-BOE-095** ref 95 / sistema 100; canvis: `Esta→Aquesta`; `podrà→pot`; `establides→establertes`; `de l'anterior titular.→del titular anterior.`
+  - errors (ref.): minor fluency/grammar «establides»; minor fluency/grammar «subrogue»
+- **BM-BOE-126** ref 95 / sistema 100; canvis: `es→∅`; `establisca→estableixi`; `d'estos→d'aquests`; `previnga→prevenga`
+  - errors (ref.): minor fluency/grammar «es deriva»
+- **BM-BOE-129** ref 95 / sistema 100; canvis: `d'estos→d'aquests`; `vivendes, incloent-hi→habitatges, incloses`; `dos→dues`; `aquells→aquests`; `s'arrenden→s'arrendin`
+- **BM-BOE-137** ref 95 / sistema 100; canvis: `Es preferix este mitjà→Aquest mecanisme es prefereix`; `autonòmica,→autonòmica`; `a→∅`; `es reduïsquen→reduir`; `detriment→menyscabament`; `l'interés→l'interès`
+  - errors (ref.): minor fluency/spelling «interés»
+- **BM-BOE-139** ref 95 / sistema 100; canvis: `Esta→Aquesta`; `exigix→exigeix`; `produïsca→produeisca`; `indemnització→indemnització,`
+  - errors (ref.): minor punctuation/missing comma «indemnització l'entitat»
+- **BM-BOE-140** ref 95 / sistema 100; canvis: `reflectix→reflecteix`; `d'este→d'aquest`; `podrà confirmar-lo,→el pot confirmar,`
+  - errors (ref.): minor accuracy/mistranslation «podrà»
+- **BM-BOE-141** ref 95 / sistema 100; canvis: `Constituïx→Constitueix`; `refonguen→refonguin`; `harmonitzen→s'harmonitzin`; `distintes→diferents`; `estos→aquests`
+  - errors (ref.): minor fluency/grammar «en estes moments»; minor fluency/grammar «harmonitzen»
+- **BM-BOE-149** ref 95 / sistema 100; canvis: `S'imposarà→S'ha d'imposar`; `seua mitat→meitat`; `afecten→afectin`; `cometen→cometin`; `estes→aquestes`
+  - errors (ref.): minor fluency/grammar «afecten»; minor fluency/grammar «cometen»
+- **BM-BOE-153** ref 95 / sistema 100; canvis: `aconsellen,→aconsellin,`; `podrà→pot`; `l'alçament→l'aixecament`; `esta→aquesta`
+  - errors (ref.): minor accuracy/tense shift «podrà»
+- **BM-BOE-159** ref 95 / sistema 100; canvis: `a→∅`; `l'efectivitat d'esta→l'eficàcia d'aquesta`; `podrà→pot`; `servicis→serveis`; `de servicis→dels serveis`; `∅→servei`
+- **BM-BOE-162** ref 95 / sistema 100; canvis: `És essencial, per→Per`; `∅→és essencial`; `esta→aquesta`; `duga a terme→faça`; `a→∅`; `en estos→entre aquests`
+  - errors (ref.): minor accuracy/mistranslation «en estos»
+- **BM-BOE-165** ref 95 / sistema 100; canvis: `estaran→estan`; `l'efectivitat→l'eficàcia`; `cobrisquen→cobreixin`; `siga establida,→s'estableixi,`; `esta→aquesta en`; `dita→∅`
+  - errors (ref.): minor fluency/grammar «establida»
+- **BM-BOE-194** ref 95 / sistema 100; canvis: `passe→passi`; `servicis en el→serveis al`; `Sofía→Sofia`; `laboral→laboral,`; `reconeixerà→ha de reconèixer`; `servicis→serveis`
+- **BM-BOE-216** ref 95 / sistema 100; canvis: `esta→aquesta`; `sobreïxen dos→destaquen dues`; `són→ara`
+- **BM-BOE-225** ref 95 / sistema 100; canvis: `oferix→ofereix`; `esta→aquesta`; `obrint→i obre`; `sigut reeixides.→tingut èxit.`
+- **BM-BOE-233** ref 95 / sistema 100; canvis: `una vegada→un cop`; `l'incompliment→la falta de compliment`; `dirigir notificarà→adreçar ha de notificar`; `firmants→signants`; `es considerarà resolt→∅`; `conveni.→conveni s'entén resolt.`
+- **BM-BOE-234** ref 95 / sistema 100; canvis: `∅→freqüència`; `vegada major freqüència,→volta més gran,`
+  - errors (ref.): minor style/awkward «la seua cada vegada major freqüència»
+- **BM-BOE-238** ref 95 / sistema 100; canvis: `quasi→gairebé`; `prosseguix la partió→prossegueix el límit`; `∅→següent`; `següent,→∅`; `vora el→al costat del`
+- **BM-BOE-239** ref 95 / sistema 100; canvis: `este efecte,→aquests efectes,`; `gastos→despeses`; `ascendix→ascendeix`
+- **BM-BOE-240** ref 95 / sistema 100; canvis: `No obstant això,→Tanmateix,`; `cobrix→cobreix`; `oferixen→ofereixen`; `servicis→serveis`
+  - errors (ref.): minor fluency/spelling «servicis»
+- **BM-BOE-245** ref 95 / sistema 100; canvis: `∅→un`; `últims→darrers`; `xix,→XIX,`; `l'interés→l'interès`
+  - errors (ref.): minor accuracy/omission «un estatus»
+- **BM-BOE-247** ref 95 / sistema 100; canvis: `podran→poden`; `díhuit→divuit`; `botella.→ampolla.`
+  - errors (ref.): major accuracy/mistranslation «díhuit»
+- **BM-BOE-249** ref 95 / sistema 100; canvis: `huitanta-quatre→vuitanta-quatre`; `huit→vuit`; `dènou→dinou`
+  - errors (ref.): minor fluency/spelling «dènou»
+- **BM-BOE-250** ref 95 / sistema 100; canvis: `Estarà→Està`; `huit→vuit`; `huit→vuit`
+  - errors (ref.): minor accuracy/mistranslation «Estarà»
+- **BM-AVL-011** ref 95 / sistema 100; canvis: `este→aquest`; `l'Academia→l'Acadèmia`; `Lengua→Llengua`; `interés→interès`; `conéixer→conèixer`
+  - errors (ref.): minor fluency/spelling «interés»
+- **BM-AVL-025** ref 95 / sistema 100; canvis: `alçant→aixecant`; `colpejant-los lleument→copejant-los suaument`; `servix→serveix`; `generar→reportar`
+  - errors (ref.): minor accuracy/mistranslation «colpejant-los»
+- **BM-AVL-049** ref 95 / sistema 100; canvis: `depén,→depèn,`; `última instància,→definitiva,`
+  - errors (ref.): minor fluency/spelling «depén»
+- **BM-AVL-054** ref 95 / sistema 100; canvis: `cert→veritat`; `depén→depèn`; `depén,→depèn,`
+  - errors (ref.): minor fluency/spelling «depén»
+- **BM-AVL-060** ref 95 / sistema 100; canvis: `en relació→respecte`; `hòmens→homes`
+  - errors (ref.): minor fluency/grammar «s'associen»
+- **BM-AVL-099** ref 95 / sistema 100; canvis: `fóra→fos`; `eixes→aquestes`
+  - errors (ref.): minor fluency/grammar «no fóra cas que»
+- **BM-AVL-102** ref 95 / sistema 100; canvis: `Este→Aquest`
+- **BM-AVL-114** ref 95 / sistema 100; canvis: `Estes→Aquestes`; `nivel→nivell`
+  - errors (ref.): minor fluency/spelling «nivel»
+- **BM-AVL-118** ref 95 / sistema 100; canvis: `això→açò`; `perjuí→perjudici`; `d'estos→d'aquests`
+- **BM-AVL-141** ref 95 / sistema 100; canvis: `Esta→Aquesta`; `febra roja→febre vermella`
+  - errors (ref.): minor fluency/spelling «febra»
+- **BM-AVL-204** ref 95 / sistema 100; canvis: `Nos,→Nosaltres,`; `vos→us`; `butla→butlla`
+  - errors (ref.): minor fluency/grammar «vos»
+
+### homografs: AVLizador 2.0.1, guanya la referència (5)
+
+- **RC002** ref 100 / sistema 45; canvis: `rentar→llavar`
+  - errors (sistema): major accuracy/mistranslation «llavar»
+- **RC144** ref 100 / sistema 45; canvis: `cinqué, sisé,→quint, sext,`
+  - errors (sistema): major accuracy/mistranslation «quint»; major accuracy/mistranslation «sext»; major fluency/spelling «alé»; major fluency/spelling «café»; major fluency/spelling «obscé»; major fluency/spelling «seré»
+- **RC044** ref 95 / sistema 65; canvis: `la civada→l'avena`
+  - errors (sistema): major accuracy/mistranslation «l'avena»; minor fluency/spelling «ségol»
+  - errors (ref.): minor fluency/spelling «ségol»
+- **RC083** ref 100 / sistema 85; canvis: `confinis,→confines,`; `finis,→fines,`
+  - errors (sistema): minor accuracy/mistranslation «confines»; minor accuracy/mistranslation «fines»
+- **RC128** ref 100 / sistema 95; canvis: `Ensenyament→Ensenyança`
+  - errors (sistema): minor fluency/spelling «Ensenyança»
+
+### homografs: AVLizador 2.0.1, guanya el sistema (5)
+
+- **HG053** ref 20 / sistema 100; canvis: `hamaques→gandules`
+- **RC138** ref 85 / sistema 95; canvis: `mentres→mentre`
+  - errors (sistema): minor fluency/grammar «dos terceres parts»
+  - errors (ref.): minor fluency/grammar «dos terceres parts»; minor fluency/spelling «mentres que»
+- **HG034** ref 95 / sistema 100; canvis: `bragues→calces`
+  - errors (ref.): major accuracy/mistranslation «bragues»
+- **HG058** ref 95 / sistema 100; canvis: `anou→nou`
+- **HG076** ref 95 / sistema 100; canvis: `faltes→manques`
+
+### homografs: Motor sol, guanya la referència (24)
+
+- **HG055** ref 100 / sistema 25; canvis: `gandules→hamaques`
+  - errors (sistema): major accuracy/mistranslation «hamaques»
+- **RC002** ref 100 / sistema 45; canvis: `rentar→llavar`
+  - errors (sistema): major accuracy/mistranslation «llavar»
+- **RC144** ref 100 / sistema 45; canvis: `cinqué, sisé,→quint, sext,`
+  - errors (sistema): major accuracy/mistranslation «quint»; major accuracy/mistranslation «sext»; major fluency/spelling «alé»; major fluency/spelling «café»; major fluency/spelling «obscé»; major fluency/spelling «seré»
+- **HG048** ref 100 / sistema 45; canvis: `gandula→hamaca`
+  - errors (sistema): major accuracy/mistranslation «hamaca»
+- **HG049** ref 100 / sistema 45; canvis: `gandula→hamaca`
+  - errors (sistema): major accuracy/mistranslation «hamaca»
+- **HG050** ref 100 / sistema 45; canvis: `gandula:→hamaca:`
+  - errors (sistema): major accuracy/mistranslation «hamaca»
+- **HG054** ref 100 / sistema 45; canvis: `gandules→hamaques`
+  - errors (sistema): major accuracy/mistranslation «hamaques»
+- **HG074** ref 100 / sistema 45; canvis: `manca→falta`
+  - errors (sistema): major accuracy/mistranslation «falta de»
+- **HG095** ref 100 / sistema 45; canvis: `fartanera.→fartada.`
+  - errors (sistema): major accuracy/mistranslation «fartada»
+- **HG056** ref 95 / sistema 45; canvis: `gandules→hamaques`
+  - errors (sistema): major accuracy/mistranslation «hamaques»
+  - errors (ref.): minor fluency/grammar «aneu»
+- **HG096** ref 95 / sistema 45; canvis: `fartanera.→fartada.`
+  - errors (sistema): major accuracy/mistranslation «fartada»
+- **HG042** ref 100 / sistema 65; canvis: `calces→bragues`
+  - errors (sistema): major accuracy/mistranslation «bragues»
+- **HG047** ref 100 / sistema 65; canvis: `gandula→hamaca`
+  - errors (sistema): major accuracy/mistranslation «hamaca»
+- **RC044** ref 95 / sistema 65; canvis: `la civada→l'avena`
+  - errors (sistema): major accuracy/mistranslation «l'avena»; minor fluency/spelling «ségol»
+  - errors (ref.): minor fluency/spelling «ségol»
+- **RC076** ref 100 / sistema 75; canvis: `un nou→una anou`
+  - errors (sistema): minor fluency/grammar «una anou procés»
+- **RC083** ref 100 / sistema 85; canvis: `confinis,→confines,`; `finis,→fines,`
+  - errors (sistema): minor accuracy/mistranslation «confines»; minor accuracy/mistranslation «fines»
+- **HG039** ref 100 / sistema 85; canvis: `calces→bragues`
+  - errors (sistema): major accuracy/mistranslation «bragues»
+- **RC097** ref 100 / sistema 95; canvis: `el nou→l'anou`
+- **RC128** ref 100 / sistema 95; canvis: `Ensenyament→Ensenyança`
+  - errors (sistema): minor fluency/spelling «Ensenyança»
+- **HG038** ref 100 / sistema 95; canvis: `calces→bragues`
+  - errors (sistema): major accuracy/mistranslation «bragues»
+- **HG040** ref 100 / sistema 95; canvis: `calces→bragues`
+  - errors (sistema): major accuracy/mistranslation «bragues»
+- **HG041** ref 100 / sistema 95; canvis: `calces→bragues`
+  - errors (sistema): major accuracy/mistranslation «bragues»
+- **HG067** ref 100 / sistema 95; canvis: `nous→anous`
+- **HG072** ref 100 / sistema 95; canvis: `manca→falta`
+
+### homografs: Motor sol, guanya el sistema (2)
+
+- **RC138** ref 85 / sistema 95; canvis: `mentres→mentre`
+  - errors (sistema): minor fluency/grammar «dos terceres parts»
+  - errors (ref.): minor fluency/grammar «dos terceres parts»; minor fluency/spelling «mentres que»
+- **HG030** ref 95 / sistema 100; canvis: `Algunes vegades→Alguns cops`
+
+### homografs_v2: AVLizador 2.0.1, guanya la referència (2)
+
+- **HG2-137** ref 100 / sistema 45; canvis: `fartades→fartaneres`; `síndria.→meló d'Alger.`
+  - errors (sistema): major accuracy/mistranslation «meló d'Alger»
+- **HG2-067** ref 100 / sistema 95; canvis: `llavadores.→rentadores.`
+  - errors (sistema): minor terminology/inappropriate for context «rentadores»
+
+### homografs_v2: AVLizador 2.0.1, guanya el sistema (7)
+
+- **HG2-090** ref 45 / sistema 100; canvis: `bragues→calces`
+  - errors (ref.): major accuracy/mistranslation «bragues»
+- **HG2-092** ref 45 / sistema 100; canvis: `bragues→calces`
+  - errors (ref.): major accuracy/mistranslation «bragues»
+- **HG2-105** ref 45 / sistema 100; canvis: `hamaques→gandules`
+  - errors (ref.): minor fluency/spelling «hamaques»
+- **HG2-036** ref 65 / sistema 100; canvis: `faltes→manques`
+  - errors (ref.): minor terminology/inappropriate for context «faltes»
+- **HG2-139** ref 65 / sistema 100; canvis: `fartades→fartaneres`
+  - errors (ref.): major accuracy/mistranslation «fartades»
+- **HG2-045** ref 85 / sistema 95; canvis: `freda.→fred.`
+  - errors (ref.): minor fluency/grammar «freda»
+- **HG2-089** ref 95 / sistema 100; canvis: `bragues→calces`
+  - errors (ref.): major accuracy/mistranslation «bragues»
+
+### homografs_v2: Motor sol, guanya la referència (38)
+
+- **HG2-109** ref 100 / sistema 25; canvis: `gandules.→hamaques.`
+  - errors (sistema): major accuracy/mistranslation «hamaques»
+- **HG2-111** ref 100 / sistema 25; canvis: `gandules→hamaques`
+  - errors (sistema): major accuracy/mistranslation «hamaques»
+- **HG2-112** ref 100 / sistema 25; canvis: `gandules.→hamaques.`
+  - errors (sistema): major accuracy/mistranslation «hamaques»
+- **HG2-030** ref 100 / sistema 45; canvis: `manca→falta`
+  - errors (sistema): major accuracy/mistranslation «falta»
+- **HG2-042** ref 100 / sistema 45; canvis: `manques→faltes`
+  - errors (sistema): major accuracy/mistranslation «faltes»
+- **HG2-043** ref 100 / sistema 45; canvis: `manques→faltes`
+  - errors (sistema): major accuracy/mistranslation «faltes»
+- **HG2-061** ref 100 / sistema 45; canvis: `rentadora→llavadora`
+  - errors (sistema): major terminology/inappropriate for context «llavadora de plats»
+- **HG2-071** ref 100 / sistema 45; canvis: `rentadores→llavadores`
+  - errors (sistema): major terminology/inappropriate for context «llavadores»
+- **HG2-101** ref 100 / sistema 45; canvis: `gandula→hamaca`
+  - errors (sistema): major accuracy/mistranslation «hamaca»
+- **HG2-102** ref 100 / sistema 45; canvis: `gandula→hamaca`
+  - errors (sistema): major accuracy/mistranslation «hamaca»
+- **HG2-103** ref 100 / sistema 45; canvis: `gandula:→hamaca:`
+  - errors (sistema): major accuracy/mistranslation «hamaca»
+- **HG2-104** ref 100 / sistema 45; canvis: `gandula→hamaca`
+  - errors (sistema): major accuracy/mistranslation «hamaca»
+- **HG2-110** ref 100 / sistema 45; canvis: `gandules→hamaques`
+  - errors (sistema): major accuracy/mistranslation «hamaques»
+- **HG2-137** ref 100 / sistema 45; canvis: `síndria.→meló d'Alger.`
+  - errors (sistema): major accuracy/mistranslation «fartades»; major accuracy/mistranslation «meló d'Alger»
+- **HG2-141** ref 100 / sistema 45; canvis: `fartaneres.→fartades.`
+  - errors (sistema): major accuracy/mistranslation «fartades»
+- **HG2-029** ref 100 / sistema 65; canvis: `manca→falta`
+  - errors (sistema): major accuracy/mistranslation «falta»
+- **HG2-032** ref 100 / sistema 65; canvis: `manca→falta`
+  - errors (sistema): major accuracy/mistranslation «falta»
+- **HG2-041** ref 100 / sistema 65; canvis: `manques→faltes`
+  - errors (sistema): major accuracy/mistranslation «faltes»
+- **HG2-063** ref 100 / sistema 65; canvis: `rentadora→llavadora`
+  - errors (sistema): major accuracy/mistranslation «llavadora»
+- **HG2-064** ref 100 / sistema 65; canvis: `rentadora→llavadora`
+  - errors (sistema): major terminology/inappropriate for context «llavadora»
+- **HG2-128** ref 100 / sistema 65; canvis: `panotxes→panolles`
+  - errors (sistema): minor accuracy/mistranslation «panolles»
+- **HG2-133** ref 100 / sistema 65; canvis: `fartanera→fartada`
+  - errors (sistema): major accuracy/mistranslation «fartada»
+- **HG2-134** ref 100 / sistema 65; canvis: `fartanera→fartada`
+  - errors (sistema): major accuracy/mistranslation «fartada»
+- **HG2-136** ref 100 / sistema 65; canvis: `fartanera→fartada`
+  - errors (sistema): major accuracy/mistranslation «fartada»
+- **HG2-144** ref 100 / sistema 65; canvis: `fartaneres→fartades`
+  - errors (sistema): major accuracy/mistranslation «fartades»
+- **HG2-160** ref 100 / sistema 65; canvis: `reeixides→exitoses`
+  - errors (sistema): major accuracy/mistranslation «exitoses»
+- **HG2-142** ref 100 / sistema 85; canvis: `fartaneres→fartades`
+  - errors (sistema): major accuracy/mistranslation «fartades»
+- **HG2-020** ref 95 / sistema 85; canvis: `nous→anous`
+  - errors (sistema): minor fluency/grammar «anous»
+  - errors (ref.): minor fluency/grammar «nous»
+- **HG2-005** ref 100 / sistema 95; canvis: `nou→anou`
+- **HG2-006** ref 100 / sistema 95; canvis: `El nou→L'anou`
+- **HG2-008** ref 100 / sistema 95; canvis: `nou→anou`
+- **HG2-031** ref 100 / sistema 95; canvis: `manca→falta`
+- **HG2-039** ref 100 / sistema 95; canvis: `manques→faltes`
+  - errors (sistema): minor terminology/inappropriate for context «faltes»
+- **HG2-044** ref 100 / sistema 95; canvis: `manques→faltes`
+- **HG2-072** ref 100 / sistema 95; canvis: `rentadores→llavadores`
+  - errors (sistema): major accuracy/mistranslation «llavadores»
+- **HG2-094** ref 100 / sistema 95; canvis: `calces→bragues`
+  - errors (sistema): major accuracy/mistranslation «bragues»
+- **HG2-095** ref 100 / sistema 95; canvis: `calces→bragues`
+  - errors (sistema): major accuracy/mistranslation «bragues»
+- **HG2-096** ref 100 / sistema 95; canvis: `calces→bragues`
+  - errors (sistema): major accuracy/mistranslation «bragues»
+
+### homografs_v2: Motor sol, guanya el sistema (2)
+
+- **HG2-069** ref 85 / sistema 100; canvis: `rentadores→llavadores`
+  - errors (ref.): minor terminology/inappropriate for context «rentadora»
+- **HG2-045** ref 85 / sistema 95; canvis: `freda.→fred.`
+  - errors (ref.): minor fluency/grammar «freda»

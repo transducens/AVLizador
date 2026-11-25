@@ -170,4 +170,97 @@ sbatch jutge_valencia.sh              # tot (~2.200 textos, unes 4-5 h)
 ```
 
 Eixida en `resultats/valencia/<conjunt>/qwen3.6-35b-a3b/` (`resum.md` amb
-la taula «cada sistema contra la referència»). Resultats: pendents.
+la taula «cada sistema contra la referència»).
+
+### Resultats (caiman, amb raonament; jobs 2455, 2456, 2484 i 2526, 24-25/11/2026)
+
+Qwen 3.6 amb raonament (`PENSA=1`), prompt `341f0eeb`. Carpetes
+`resultats/valencia/<conjunt>/qwen3.6-35b-a3b_pensa/`; l'anàlisi,
+`python analitza_valencia.py` → `resultats/valencia/analisi.md` (taules) i
+`analisi_detall.md` (frase a frase). Falta una frase: la referència de
+BM-BOE-001 (manual) fa caure el llama-server cada vegada (HTTP 500, també
+en tornar-la a llançar, job 2526); el manual de la referència té 457
+frases. El benchmark d'homògrafs v1 té l'id RC047 repetit (dues variants
+de la mateixa frase): `analitza_valencia.py` en compta una (248).
+
+**Manual (458)**:
+
+| Sistema | Nota (fase 2) | BOE | AVL | Frases amb error |
+|---|---|---|---|---|
+| Sense traduir | 99,25 | 99,76 | 98,66 | 28 |
+| AVLizador 2.0.1 | 97,72 | 97,09 | 98,44 | 98 |
+| Referència | 94,64 | 91,18 | 98,63 | 159 / 457 |
+| gemma3:12b | 94,17 | 94,71 | 93,54 | 171 |
+
+- **Ja no castiga el valencià.** Trossos amb error de la referència: 893 →
+  245, i els que cauen en una forma valenciana (marcador del GD de la frase),
+  426 → 70 (mateix càlcul per als dos prompts). Els que queden són sobretot
+  accents tancats i paraules del DNV: interés 7, comité 3, perjuí 3, díhuit
+  3, ferramenta(es) 4, estés 2, depén 2, servicis 2; esta/este/seua/siga, que
+  abans eren els més marcats, quasi desapareixen.
+- **En l'AVL** (la referència només canvia el dialecte) el jutge és quasi
+  neutral: referència / sense traduir 16 guanya la referència, 160 empats,
+  35 guanya el català (nota 98,63 / 98,66). Amb el prompt del 04/11, en tot
+  el manual: 132 / 151 / 175.
+- **En el BOE la referència perd perquè s'aparta de l'original**, i el jutge
+  ara ho veu (86 errors d'*accuracy*, 53 majors, enfront de 0 del català):
+  futur per present («podrà» 7, «tindrà» 3, «es remetrà», «es regularan»),
+  «no» omés (BM-BOE-185), «un altre» per «l'altre», «obligar-lo» per
+  «obligar-la». Alguns són errors del jutge («fins» per «finalitats»,
+  «reben»). Per això el català sense traduir guanya 140 de 245 frases del
+  BOE i n'empata 103.
+- **AVLizador contra la referència**: 225 frases distintes; el jutge marca
+  alguna de les paraules que canvien en 7. Qui guanya (22 la referència, 100
+  empats, 103 AVLizador) és soroll i el BOE de la referència; en l'AVL, 15
+  frases distintes: 5 / 9 / 1. Cap error real d'AVLizador nou en les 22 (el
+  jutge marca «sol·licitaren» major en AVLizador i menor en la referència,
+  o trossos que no hi són: «estes espais»).
+- **gemma3:12b sí que perd** (errors de sentit i gramàtica): en l'AVL la
+  referència guanya 61 frases i gemma 17.
+
+**Homògrafs**:
+
+| Conjunt | Referència | AVLizador 2.0.1 | Motor sol |
+|---|---|---|---|
+| v1 (249) | 97,97 | 97,75 | 94,80 |
+| v2 (144) | 96,46 | 97,78 | 87,29 |
+
+On el motor sol és distint de la referència, guanya la referència 24 / 70
+(v1) i 38 / 69 (v2); el motor, 2 i 2. **El jutge castiga els errors de
+sentit, però en veu la meitat més o menys.** En v2 (quasi tot són errors
+de sentit del motor): gandula(es) → hamaca(es) 8 de 8, fartanera(es) →
+fartada(es) 6/8, rentadora(es) → llavadora(es) 5/8, manques → faltes 5/8,
+manca → falta 4/7, calces → bragues 3/4; però nou → anou 3/8 (empat en «cotxe
+anou», «a les anou en punt»), nous → anous 1/4, panotxa(es) → panolla(es) 1/8,
+reeixides → exitoses 1/2 («Les seues exitoses professionals» = 100). En v1,
+cop → vegada/colp no apareix: on el motor és distint és perquè deixa «cop»
+(no tria en les col·lisions), i el jutge ho empata (correcte: no és error).
+
+Dues causes:
+
+1. **La llista del bloc «Valencian norm» guanya al sentit.** «anou»,
+   «llavadora», «exitosa» i «colp» hi són com a formes correctes, i en el
+   raonament el model ho diu: «the prompt explicitly says: anou... so it's
+   definitely correct» (cotxe anou), «exitoses... explicitly allowed». La
+   línia que diu que una paraula d'un altre sentit és *mistranslation* (amb
+   l'exemple d'«exitosa» com a nom) no ho compensa.
+2. **No coneix el sentit menys freqüent del català**: «calces» = bragues,
+   «gandula» = hamaca, «manques» = faltes, «fartanera» = fartada. Castiga la
+   referència quan tradueix bé aquests sentits (HG2-090 «Les bragues són al
+   calaix», 45; HG053 «hamaques», 20) i premia AVLizador quan deixa la
+   paraula catalana: d'ací ve que AVLizador passe la referència en v2 (guanya
+   7, perd 2: en 6 dels 7 la referència tradueix i AVLizador deixa el català;
+el setè és HG2-045, on prefereix «aigua molt fred» d'AVLizador, que és
+l'error de concordança conegut).
+
+**Conclusió**: amb l'original i el bloc de la norma, el jutge ja no
+penalitza el valencià (AVL quasi neutral) i detecta la meitat dels errors de
+sentit dels homògrafs i les desviacions de la referència del BOE. No mesura
+el dialecte (el català sense traduir n'ix primer, com s'havia decidit: això
+ho fa el GD) i premia deixar la paraula catalana en un homògraf, igual que
+el nostre criteri (no traduir és un error lleu). Per a mesurar els errors de
+sentit, el comparador de homògrafs (encerts / greus) continua sent més
+fiable. Possible millora, no provada: llevar de la llista del prompt les
+formes que són candidates d'un homògraf (anou, llavadora, exitosa, colp);
+canvia l'empremta i obliga a tornar a puntuar-ho tot (~4 h el manual, ~1 h
+els homògrafs en caiman).
