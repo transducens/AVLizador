@@ -1,4 +1,4 @@
-## 04/11/2026 15:12 — qwen3.6:35b-a3b, només la traducció (GEMBA-ESA adaptat)
+## 20/11/2026 00:03 — qwen3.6:35b-a3b, només la traducció (GEMBA-ESA adaptat)
 
 | Sistema | Nota (fase 2) | BOE | AVL | Nota des dels errors | Frases amb error |
 |---|---|---|---|---|---|
@@ -12,6 +12,7 @@
 | Referencia valenciana (manual) | 77.0 | 75.16 | 79.14 | 88.89 | 402/458 |
 | AVLizador 1.1.0: motor + FLOR-760M (P1) | 76.62 | 74.45 | 79.14 | 87.97 | 405/458 |
 | AVLizador: motor + FLOR-760M | 76.61 | 74.43 | 79.14 | 88.0 | 404/458 |
+| Motor + KenLM + sentit | 76.6 | 74.41 | 79.14 | 88.09 | 405/458 |
 | AVLizador: motor solo | 76.2 | 74.15 | 78.58 | 87.97 | 406/458 |
 | qwen2.5:7b | 75.59 | 74.33 | 77.05 | 90.38 | 362/458 |
 | qwen2.5:14b | 70.61 | 69.21 | 72.23 | 87.53 | 400/458 |

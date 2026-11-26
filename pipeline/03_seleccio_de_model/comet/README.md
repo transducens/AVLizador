@@ -254,3 +254,64 @@ Lectura:
 AVLizador y que la propia referencia valenciana. Para esta tarea se
 quedan las métricas de superficie (exactas, BLEU, chrF, TER, WER) junto
 con el GD, que es el único que separa el valenciano del catalán.
+
+## Cómo interpretar XCOMET en esta tarea (conclusión, 20/11/2026)
+
+Con la 2.0.0 puntuada en modo `qe` y el desglose frase a frase
+(`../desglossament_frases/README.es.md`, secciones del 19 y el 20/11).
+
+**Qué mide.** XCOMET-XL imita valoraciones humanas de traducciones entre
+lenguas distintas (WMT: inglés–alemán, chino–inglés…). Sin referencia, lo
+que responde es: «¿esta frase dice lo mismo que el original y está bien
+escrita?». En una adaptación catalán → valenciano el significado no cambia,
+así que la nota más alta la saca lo más parecido al original. No sabe que
+el destino es el valenciano normativo de la AVL.
+
+**Pruebas:**
+
+- En modo `qe`, sin traducir saca 97,04, igual que AVLizador 2.0.0
+  (97,04), y la referencia valenciana algo menos (96,82).
+- En la 2.0.0, de los 596 tramos que marca como error, 263 caen en una
+  forma valenciana del léxico (esta, servicis, xic…) y ninguno en una
+  catalana.
+- En modo `ref`, la referencia comparada consigo misma saca 96,54, por
+  debajo de sin traducir (97,17); marca error en 187 frases idénticas a la
+  referencia. Del catalán sin traducir solo marca 3 de 245 «aquest*» en
+  modo completo (4 en `qe`).
+- Entre la referencia y la 2.0.0 (+0,22 para la 2.0.0) no decide el
+  dialecto (GD 0,998 y 1,000), sino quién se aparta menos del catalán: le
+  resta el futuro del BOE valenciano oficial («podrà» frente a «pot») y le
+  resta «xic».
+- Frase a frase es ruidoso: la confianza de los tramos ronda 0,42 (solo 7
+  de 596 por encima de 0,5 en la 2.0.0) y la diferencia entre la referencia
+  y la 2.0.0 varía 2,4 puntos de una frase a otra.
+
+**Usos:**
+
+| Uso | ¿Sirve? |
+|---|---|
+| Medir cuán valenciano es un texto | No: no ve el dialecto |
+| Ordenar sistemas de adaptación dialectal | No: gana el que menos cambia, incluso no traducir |
+| Comparar con la referencia | No: castiga su estilo y su valenciano normativo |
+| Recompensa para entrenar un modelo | No: enseñaría a no traducir |
+| Control de que no se rompe el sentido | Sí, con cuidado |
+
+Un adaptador perfecto debería sacar en XCOMET más o menos lo mismo que el
+catalán sin traducir, porque no cambia el significado. La 2.0.0 saca eso
+(97,04) y, frente a la 1.1.0, no baja en ninguna frase. Una bajada clara
+frente a sin traducir sería una alarma solo si es de varios puntos y en
+una frase donde el sistema se aparta de la referencia; las diferencias
+pequeñas son ruido.
+
+La calidad de la adaptación se mide contra la referencia (exactas, chrF,
+TER) y con el GD/GDV de la salida; si hace falta, con evaluación humana.
+El juez LLM (`../jutge_llm/`, Qwen 3.6) lleva a la misma conclusión: tampoco
+ve el dialecto y llega a premiar una concordancia equivocada («Amb esta fi»
+65 frente a «Amb este fi» 45).
+
+Para explicarlo: «XCOMET mide la fidelidad al original, no el dialecto de
+destino. En una adaptación catalán → valenciano la nota más alta la saca el
+texto sin cambiar. Que AVLizador empate con el catalán sin traducir significa
+que no pierde sentido ni fluidez, que es lo único que XCOMET puede decirnos
+aquí. Para medir la adaptación usamos la referencia y el Grau Dialectal.»
+

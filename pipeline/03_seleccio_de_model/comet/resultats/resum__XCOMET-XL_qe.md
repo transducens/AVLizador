@@ -1,4 +1,4 @@
-## 09/11/2026 13:02 — Unbabel/XCOMET-XL (fp16, mode qe)
+## 19/11/2026 12:55 — Unbabel/XCOMET-XL (fp16, mode qe)
 
 | Sistema | Mescla | BOE | AVL | Frases amb error |
 |---|---|---|---|---|
@@ -6,6 +6,7 @@
 | hdnh2006/salamandra-7b-instruct | 97.11 | 97.98 | 96.09 | 185/458 |
 | llama3.1:8b | 97.09 | 97.7 | 96.37 | 193/458 |
 | Sin traducir (catalán tal cual) | 97.04 | 97.66 | 96.32 | 184/458 |
+| Motor + KenLM + sentit | 97.04 | 97.55 | 96.45 | 279/458 |
 | AVLizador: motor + FLOR-760M | 97.0 | 97.49 | 96.43 | 284/458 |
 | gemma4:12b | 96.98 | 97.51 | 96.38 | 238/458 |
 | AVLizador 1.1.0: motor + FLOR-760M (P1) | 96.98 | 97.49 | 96.4 | 285/458 |

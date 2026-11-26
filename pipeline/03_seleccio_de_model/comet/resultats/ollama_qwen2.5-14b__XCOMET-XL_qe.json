@@ -5,8 +5,8 @@
  "precisio": "fp16",
  "mode": "qe",
  "amb_referencia": false,
- "timestamp": "2026-11-09T13:01:13",
- "segons": 20.9,
+ "timestamp": "2026-11-19T12:53:30",
+ "segons": 18.1,
  "resum": {
   "total": 93.56,
   "n": 458,

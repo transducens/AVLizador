@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Desglossament per frase</title>
+<style>
+:root {
+  --bg: #fafaf8; --panel: #ffffff; --text: #1d1d1b; --muted: #6b6b66; --line: #e2e1dc;
+  --xcomet: #fbd5cf; --xcomet-line: #c0392b; --jutge: #3b6fd1;
+  --val: #1d7a4f; --cat: #b5611b; --accent: #2f5aa8; --bo: #1d7a4f; --dolent: #b33a2b;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161615; --panel: #1f1f1d; --text: #ecebe6; --muted: #9c9b94; --line: #34342f;
+    --xcomet: #5a2a24; --xcomet-line: #ef7a68; --jutge: #8fb2f5;
+    --val: #6fd3a0; --cat: #f0a35e; --accent: #8fb2f5; --bo: #6fd3a0; --dolent: #f08a7a;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161615; --panel: #1f1f1d; --text: #ecebe6; --muted: #9c9b94; --line: #34342f;
+  --xcomet: #5a2a24; --xcomet-line: #ef7a68; --jutge: #8fb2f5;
+  --val: #6fd3a0; --cat: #f0a35e; --accent: #8fb2f5; --bo: #6fd3a0; --dolent: #f08a7a;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+header { position: sticky; top: 0; z-index: 2; background: var(--panel); border-bottom: 1px solid var(--line); padding: 12px 16px; }
+h1 { font-size: 18px; margin: 0 0 8px; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; font-size: 14px; }
+.controls label { display: flex; gap: 6px; align-items: center; color: var(--muted); }
+select, input { font: inherit; color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 3px 6px; }
+.legend { margin-top: 8px; font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 14px; }
+main { max-width: 1200px; margin: 0 auto; padding: 16px; }
+.count { color: var(--muted); font-size: 14px; margin-bottom: 10px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; }
+.cap { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; margin-bottom: 6px; }
+.cap b { font-size: 15px; }
+.tag { font-size: 12px; color: var(--muted); border: 1px solid var(--line); border-radius: 10px; padding: 0 7px; }
+.delta { font-size: 13px; }
+.pos { color: var(--bo); } .neg { color: var(--dolent); }
+.src { color: var(--muted); font-size: 14px; margin: 2px 0; }
+table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 14px; }
+th, td { text-align: left; vertical-align: top; padding: 6px 8px; border-top: 1px solid var(--line); }
+th { font-weight: 600; color: var(--muted); font-size: 12px; }
+td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+td.sis { white-space: nowrap; font-weight: 600; }
+.x { background: var(--xcomet); border-radius: 2px; }
+.j { text-decoration: underline 2px var(--jutge); text-underline-offset: 3px; }
+.mv { color: var(--val); font-weight: 600; }
+.mc { color: var(--cat); font-weight: 600; }
+.igual { font-size: 11px; color: var(--bo); margin-left: 4px; }
+.nt { font-size: 12px; color: var(--muted); margin-top: 3px; }
+button { font: inherit; font-size: 13px; color: var(--accent); background: none; border: 1px solid var(--line); border-radius: 6px; padding: 3px 10px; cursor: pointer; }
+.mes { text-align: center; margin: 16px 0; }
+@media (max-width: 700px) {
+  table, thead, tbody, tr, td, th { display: block; }
+  thead { display: none; }
+  tr { border-top: 1px solid var(--line); padding: 6px 0; }
+  td { border: 0; padding: 2px 0; }
+  td.num { text-align: left; display: inline-block; margin-right: 12px; }
+  td.num::before { content: attr(data-l) " "; color: var(--muted); font-size: 12px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>XCOMET-XL sense referència i jutge Qwen 3.6, frase a frase</h1>
+  <div class="controls">
+    <label>Subconjunt <select id="sub"><option value="">Tots</option><option>BOE</option><option>AVL</option></select></label>
+    <label>Parell <select id="parell"></select></label>
+    <label>Mètrica <select id="metrica"></select></label>
+    <label>Ordre <select id="ordre">
+      <option value="asc">Més prefereix B primer</option>
+      <option value="desc">Més prefereix A primer</option>
+      <option value="inv">Més discrepància XCOMET / jutge</option>
+      <option value="id">Per id</option>
+    </select></label>
+    <label><input type="checkbox" id="nomesdif"> Només A ≠ B</label>
+    <label>Cerca <input id="cerca" size="16" placeholder="id o paraula"></label>
+  </div>
+  <div class="legend">
+    <span><span class="x">fons</span> = error de XCOMET</span>
+    <span><span class="j">subratllat</span> = error del jutge</span>
+    <span><span class="mv">verd</span> = forma valenciana del lèxic</span>
+    <span><span class="mc">taronja</span> = forma catalana del lèxic</span>
+    <span>Diferència A − B: <span class="pos">positiva</span> = prefereix A</span>
+  </div>
+</header>
+<main>
+  <div class="count" id="count"></div>
+  <div id="llista"></div>
+  <div class="mes"><button id="mes" hidden>Mostra'n més</button></div>
+</main>
+<script>
+const D = /*DADES*/null;
+const NOM = Object.fromEntries(D.sistemes);
+const $ = (id) => document.getElementById(id);
+const PAS = 40;
+let mostrades = PAS;
+
+for (const [a, b] of D.parells) $("parell").add(new Option(`${NOM[a]} / ${NOM[b]}`, `${a}|${b}`));
+for (const [m, n] of D.metriques) $("metrica").add(new Option(n, m));
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const f = (v, d = 2) => v === null || v === undefined ? "—" : (typeof v === "number" ? v.toFixed(d).replace(".", ",") : v);
+const dif = (x, y) => x === null || y === null || x === undefined || y === undefined ? null : x - y;
+
+function pinta(s) {
+  const t = s.hipotesi, low = t.toLowerCase(), n = t.length;
+  const x = new Array(n).fill(false), j = new Array(n).fill(false);
+  const noTrobats = [];
+  const marca = (trossos, arr, quin) => {
+    for (const tr of trossos) {
+      const txt = (tr.text || "").trim();
+      const p = txt ? low.indexOf(txt.toLowerCase()) : -1;
+      if (p < 0) { noTrobats.push(`${quin}: «${txt.slice(0, 80)}»`); continue; }
+      for (let k = p; k < p + txt.length; k++) arr[k] = true;
+    }
+  };
+  marca(s.xcomet_trossos, x, "XCOMET");
+  marca(s.jutge_trossos, j, "jutge");
+  const val = new Set(s.marcadors_val), cat = new Set(s.marcadors_cat);
+  const m = new Array(n).fill("");
+  for (const mm of t.matchAll(/[\p{L}\p{N}·]+/gu)) {
+    const w = mm[0].toLowerCase(), cls = val.has(w) ? "mv" : cat.has(w) ? "mc" : "";
+    if (cls) for (let k = mm.index; k < mm.index + mm[0].length; k++) m[k] = cls;
+  }
+  let html = "", i = 0;
+  while (i < n) {
+    let k = i;
+    while (k < n && x[k] === x[i] && j[k] === j[i] && m[k] === m[i]) k++;
+    const cls = [x[i] ? "x" : "", j[i] ? "j" : "", m[i]].filter(Boolean).join(" ");
+    html += cls ? `<span class="${cls}">${esc(t.slice(i, k))}</span>` : esc(t.slice(i, k));
+    i = k;
+  }
+  return { html, noTrobats };
+}
+
+function filtra() {
+  const sub = $("sub").value, [a, b] = $("parell").value.split("|"), m = $("metrica").value;
+  const q = $("cerca").value.trim().toLowerCase(), ordre = $("ordre").value, nomesdif = $("nomesdif").checked;
+  let fs = D.frases.filter((fr) => (!sub || fr.sub === sub)
+    && (!nomesdif || fr.sis[a].hipotesi !== fr.sis[b].hipotesi)
+    && (!q || fr.id.toLowerCase().includes(q) || fr.entrada.toLowerCase().includes(q)
+        || Object.values(fr.sis).some((s) => s.hipotesi.toLowerCase().includes(q))));
+  const d = (fr) => dif(fr.sis[a][m], fr.sis[b][m]);
+  if (ordre === "asc") fs.sort((p, r) => (d(p) ?? 1e9) - (d(r) ?? 1e9));
+  else if (ordre === "desc") fs.sort((p, r) => (d(r) ?? -1e9) - (d(p) ?? -1e9));
+  else if (ordre === "inv") fs.sort((p, r) => r.inv - p.inv);
+  else fs.sort((p, r) => p.id.localeCompare(r.id));
+  return { fs, a, b, m };
+}
+
+function render() {
+  const { fs, a, b, m } = filtra();
+  $("count").textContent = `${fs.length} frases`;
+  const nomM = Object.fromEntries(D.metriques);
+  let html = "";
+  for (const fr of fs.slice(0, mostrades)) {
+    const deltes = D.metriques.map(([mm, nm]) => {
+      const v = dif(fr.sis[a][mm], fr.sis[b][mm]);
+      const cls = v > 0 ? "pos" : v < 0 ? "neg" : "";
+      return `<span class="delta ${mm === m ? "" : ""}">${nm}: <span class="${cls}">${v === null ? "—" : (v > 0 ? "+" : "") + f(v, mm === "gd" ? 3 : 2)}</span></span>`;
+    }).join(" · ");
+    let files = "";
+    for (const [s, ns] of D.sistemes) {
+      const x = fr.sis[s], p = pinta(x);
+      files += `<tr><td class="sis">${esc(ns)}${x.igual_referencia && s !== "referencia" ? '<span class="igual">= ref.</span>' : ""}</td>
+        <td>${p.html}${p.noTrobats.length ? `<div class="nt">No trobat en el text: ${esc(p.noTrobats.join(" · "))}</div>` : ""}</td>
+        <td class="num" data-l="XCOMET">${f(x.xcomet)}</td><td class="num" data-l="Jutge">${f(x.jutge, 0)}</td>
+        <td class="num" data-l="GD">${f(x.gd, 2)}</td><td class="num" data-l="chrF">${f(x.chrf, 1)}</td></tr>`;
+    }
+    html += `<article class="card">
+      <div class="cap"><b>${esc(fr.id)}</b><span class="tag">${fr.sub}</span><span class="tag">${fr.inv} inversions</span>
+        <span class="delta">${esc(NOM[a])} − ${esc(NOM[b])}: ${deltes}</span></div>
+      <div class="src"><b>Català:</b> ${esc(fr.entrada)}</div>
+      <table><thead><tr><th>Sistema</th><th>Traducció</th><th>XCOMET</th><th>Jutge</th><th>GD</th><th>chrF</th></tr></thead>
+      <tbody>${files}</tbody></table></article>`;
+  }
+  $("llista").innerHTML = html;
+  $("mes").hidden = fs.length <= mostrades;
+}
+
+for (const id of ["sub", "parell", "metrica", "ordre", "nomesdif"]) $(id).addEventListener("change", () => { mostrades = PAS; render(); });
+$("cerca").addEventListener("input", () => { mostrades = PAS; render(); });
+$("mes").addEventListener("click", () => { mostrades += PAS; render(); });
+render();
+</script>
+</body>
+</html>

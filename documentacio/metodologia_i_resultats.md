@@ -1272,6 +1272,67 @@ catalán de entrada de algunas frases de la AVL (BM-AVL-003, 004, 016 y
 070: "permeto", "parin", que vienen del borrador automático val→cat);
 afectan igual a todos los sistemas y no se han tocado.
 
+### Métricas aprendidas: XCOMET-XL y juez LLM (03-20/11/2026)
+
+La pregunta: ¿sirven las métricas aprendidas habituales en traducción
+automática para evaluar la adaptación catalán → valenciano? Se probaron
+dos sobre el manual mezcla (458), con AVLizador, el catalán sin traducir,
+la referencia valenciana como un sistema más y los LLM del baseline:
+**XCOMET-XL** (Unbabel, ~3.500 M de parámetros; modos completo, solo
+referencia `ref` y sin referencia `qe`) y un **juez LLM** (Qwen 3.6
+35B-A3B con GEMBA-ESA, solo con la traducción). Detalle en
+`pipeline/03_seleccio_de_model/comet/`, `jutge_llm/` y
+`desglossament_frases/`.
+
+| Sistema (manual mezcla, 458) | XCOMET `qe` | Juez Qwen 3.6 | GD |
+|---|---|---|---|
+| Sin traducir (catalán tal cual) | 97,04 | 79,22 | 0,010 |
+| AVLizador 2.0.0 | 97,04 | 76,60 | 1,000 |
+| gemma3:12b | 96,87 | 78,83 | 0,360 |
+| Referencia valenciana | 96,82 | 77,00 | 0,998 |
+
+**Qué mide XCOMET.** Imita valoraciones humanas de traducciones entre
+lenguas distintas (WMT). Sin referencia responde «¿esta frase dice lo mismo
+que el original y está bien escrita?». En una adaptación dialectal el
+significado no cambia, así que la mejor nota la saca lo más parecido al
+original; no sabe que el destino es el valenciano normativo.
+
+Pruebas:
+
+- **El catalán sin traducir empata con AVLizador y supera a la
+  referencia** en modo `qe`. En modo `ref` la referencia comparada consigo
+  misma (96,54) queda por debajo de sin traducir (97,17).
+- **Castiga el valenciano normativo, nunca el catalán**: en la 2.0.0, 263
+  de los 596 tramos de error caen en formas valencianas del léxico (esta,
+  servicis, xic…) y ninguno en una catalana; del catalán sin traducir solo
+  marca 4 de 245 «aquest*».
+- **Entre la referencia y AVLizador decide el estilo, no el dialecto**: en
+  232 frases son idénticas (misma nota); en el resto, la referencia del BOE
+  (el BOE valenciano oficial, traducido del castellano) se aparta más del
+  catalán (futuro «podrà» frente a «pot», reformulaciones: 7,2 palabras
+  editadas frente a 3,9) y pierde; en la AVL pierde AVLizador por «xic»
+  («un xic» es «una mica» en catalán).
+- **Es ruidoso frase a frase**: confianza de los tramos en torno a 0,42 y
+  diferencias que varían 2,4 puntos entre frases.
+- **El juez LLM da la misma lectura**: prefiere el catalán al valenciano en
+  los pares contrastivos (175 frente a 132), 449 de sus 924 tramos de error
+  en la 2.0.0 caen en formas valencianas y premia una concordancia
+  equivocada («Amb esta fi» 65 frente a «Amb este fi» 45). Además, apenas
+  coincide con XCOMET frase a frase (Spearman ≈ 0,3).
+
+**Interpretación.** XCOMET mide la fidelidad al original, no el dialecto de
+destino. No sirve para medir lo valenciano de un texto, ni para ordenar
+sistemas de adaptación (ganaría no traducir), ni para comparar con la
+referencia, ni como recompensa para entrenar (enseñaría a no traducir).
+Solo sirve como **control de que no se rompe el sentido**: un adaptador
+perfecto debería sacar lo mismo que el catalán sin traducir, y AVLizador
+2.0.0 saca exactamente eso (97,04; frente a la 1.1.0 no baja en ninguna
+frase). Una bajada de varios puntos en una frase donde el sistema se aparta
+de la referencia sería una alarma; las diferencias pequeñas son ruido. La
+calidad de la adaptación se mide contra la referencia (exactas, chrF, TER),
+con el Grau Dialectal de la salida (sección 14) y, si hace falta, con
+evaluación humana.
+
 ## 16. Reestructuración del repositorio (14/10/2026)
 
 Tras varias semanas de trabajo acumulado, el repositorio tenía una
