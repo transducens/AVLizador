@@ -33,6 +33,11 @@ real i si eixes traduccions noves són bones.
    criteri del sistema i l'últim marge; l'informe afig les frases on no
    coincidix amb el sistema.
 
+6. (26/11/2026) Amb `--mostra-de JSON`, la mostra (i els recomptes) es
+   prenen d'una eixida anterior d'este script en lloc de recórrer
+   `catala_pur.jsonl` (2 GB): mateixes frases, per a comparar dos versions
+   del codi frase a frase o executar-ho en una màquina sense el corpus.
+
 Ús (en Abaco o on hi haja `kenlm`; el model de la 2.0.0 en `AVLIZADOR_KENLM_DIR`):
     python pipeline/03_seleccio_de_model/model_llengua/prova_marge_text_real.py --per-paraula 200
     python .../prova_marge_text_real.py --limit-linies 20000 --per-paraula 5   # prova
@@ -90,6 +95,23 @@ def mostra(entrada: Path, formes: set[str], per_paraula: int, llavor: int,
                     if j < per_paraula:
                         mostres[f][j] = text
     return dict(comptes), mostres, total
+
+
+def mostra_de(path: Path) -> tuple[dict, dict, int]:
+    """Recomptes, mostra per forma i total d'una eixida anterior (`--mostra-de`).
+
+    >>> import tempfile
+    >>> p = Path(tempfile.mkdtemp()) / "r.json"
+    >>> _ = p.write_text(json.dumps({"total": 4, "comptes": {"cop": 2}, "files": [
+    ...     {"forma": "cop", "text": "Un cop."}, {"forma": "cop", "text": "Cop!"}]}), encoding="utf-8")
+    >>> mostra_de(p)
+    ({'cop': 2}, {'cop': ['Un cop.', 'Cop!']}, 4)
+    """
+    dades = json.loads(path.read_text(encoding="utf-8"))
+    mostres: dict = {}
+    for f in dades["files"]:
+        mostres.setdefault(f["forma"], []).append(f["text"])
+    return dades["comptes"], mostres, dades["total"]
 
 
 def clau_mescla(marge: float, desempat: float) -> str:
@@ -246,6 +268,8 @@ def main(argv: list[str] | None = None) -> None:
                         "criteris de la mescla (per defecte 3:4 1:4)")
     p.add_argument("--dir-models", type=Path, default=ARREL / "dades" / "macocu",
                    help="carpeta amb kenlm/ (models de la mescla), com en compara_models.py")
+    p.add_argument("--mostra-de", type=Path, default=None, metavar="JSON",
+                   help="(26/11/2026) la mostra d'una eixida anterior, sense llegir --entrada")
     p.add_argument("--alt", default=None, metavar="CLAU",
                    help="(26/11/2026) puntua també amb aquest KenLM del comparador (p. ex. kenlm_dogv2_sint3_fs_c1)")
     a = p.parse_args(argv)
@@ -256,7 +280,10 @@ def main(argv: list[str] | None = None) -> None:
 
     formes = {f.lower() for f in carrega_punts()}
     t0 = time.time()
-    comptes, mostres, total = mostra(a.entrada, formes, a.per_paraula, a.llavor, a.limit_linies)
+    if a.mostra_de:
+        comptes, mostres, total = mostra_de(a.mostra_de)
+    else:
+        comptes, mostres, total = mostra(a.entrada, formes, a.per_paraula, a.llavor, a.limit_linies)
     print(f"Recompte: {total} frases, {time.time() - t0:.0f} s; {dict(sorted(comptes.items()))}", flush=True)
     t0 = time.time()
     mescla = mescla_ref(a.dir_models) if criteris_mescla else None
