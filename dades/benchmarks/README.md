@@ -40,7 +40,8 @@ siguen allí (columna "Origen").
 - **AVL**: textos públicos de la web de l'Acadèmia Valenciana de la Llengua
   (citando la fuente).
 - Los benchmarks propios (manual, curado, homógrafos, BOE estricto y
-  amplio): Apache 2.0, la licencia del repositorio. Detalle en `NOTICE`.
+  amplio): GPL-2.0-or-later, la licencia del repositorio desde el
+  26/11/2026 (antes Apache 2.0). Detalle en `NOTICE`.
 
 ## Reglas
 

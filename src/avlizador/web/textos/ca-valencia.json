@@ -77,7 +77,7 @@
     {
       "titol": "Versió i llicències",
       "paragrafs": [
-        "{versio}. Desenvolupat per Transducens (Universitat d'Alacant). El codi té la llicència Apache 2.0 i fa servir components de tercers amb altres llicències (el model d'spaCy ca_core_news_md, amb llicència GPL-3.0, i la biblioteca KenLM, amb llicència LGPL-2.1): vegeu el fitxer NOTICE del projecte."
+        "{versio}. Desenvolupat per Transducens (Universitat d'Alacant). El codi té la llicència GNU GPL 2.0 o posterior i fa servir components de tercers amb altres llicències (el diccionari morfològic d'Apertium, amb llicència GPL-2.0, el model d'spaCy ca_core_news_md, amb llicència GPL-3.0, i la biblioteca KenLM, amb llicència LGPL-2.1): vegeu el fitxer NOTICE del projecte."
       ]
     }
   ],

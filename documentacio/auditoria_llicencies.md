@@ -57,3 +57,29 @@ repositorio `transducens/AVLizador` es público en GitHub.
   `avlizador.__version__`). El release `v1.0.0` no se modifica, porque una
   versión publicada no debe cambiar; el código del traductor y del GD es
   el mismo en las dos.
+
+## Cambio a GPL-2.0-or-later (26/11/2026)
+
+- **Motivo**: el diccionario morfológico catalán
+  (`dades/lexic/catalan_sin_top_loc_prefijos_participios.txt`, que usa la
+  regla de concordancia de género desde la 2.0.0) es la expansión del
+  diccionario de Apertium ([`apertium-cat`](https://github.com/apertium/apertium-cat)),
+  con licencia **GPL 2.0** (su `COPYING`). Va dentro del paquete y de la
+  imagen Docker, así que AVLizador no puede seguir con Apache 2.0, que no
+  es compatible con la GPL 2.0.
+- **Decisión del usuario: GPL-2.0-or-later** («versión 2 o posterior»), no
+  «solo la 2»: es compatible con Apertium y también con el modelo de spaCy
+  `ca_core_news_md` (GPL-3.0) que va en la imagen Docker. La «solo 2» no
+  lo es con la GPL-3.0.
+- `apertium-cat` no dice en sus ficheros si es «solo la 2» o «2 o
+  posterior» (Debian lo empaqueta como GPL-2+ en las versiones recientes);
+  en los dos casos se puede usar en un proyecto GPL-2.0-or-later.
+- Cambiado: `LICENSE` (texto de la GPL v2 de la FSF), `pyproject.toml`
+  (`license = "GPL-2.0-or-later"`), `NOTICE` (cabecera, punto 8 de
+  Apertium, final), los dos README, `dades/benchmarks/README.md` y la
+  página «Sobre» de la web.
+- Las versiones publicadas hasta la **2.0.1** siguen con Apache 2.0 (una
+  versión publicada no cambia). Los datasets y el modelo de Hugging Face
+  tienen su propia licencia (CC0 / CC BY 4.0) y no cambian.
+- Pendiente: confirmar con el compañero el origen exacto del diccionario
+  (versión de `apertium-cat`) y que el grupo está de acuerdo con el cambio.

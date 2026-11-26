@@ -1,13 +1,17 @@
 AVLizador
 Copyright 2026 Transducens, Universitat d'Alacant
 
-Este producte es distribuïx amb la Llicència Apache, versió 2.0 (vegeu
-LICENSE). Això inclou el codi (src/, scripts/, tests/, pipeline/) i les
-dades pròpies del projecte:
+Este producte es distribuïx amb la Llicència Pública General de GNU,
+versió 2 o (a la vostra elecció) qualsevol versió posterior
+(GPL-2.0-or-later; vegeu LICENSE), des del 26/11/2026. Les versions
+publicades fins a la 2.0.1 inclosa es van distribuir amb la Llicència
+Apache 2.0 i la conserven. Això inclou el codi (src/, scripts/, tests/,
+pipeline/) i les dades pròpies del projecte:
 
 - dades/lexic/ (i les còpies de src/avlizador/traductor_cat_val/data/):
   lèxic, conjugacions i verbs català-valencià, recopilats i revisats a mà
-  per l'equip d'AVLizador.
+  per l'equip d'AVLizador. El diccionari morfològic
+  catalan_sin_top_loc_prefijos_participios.txt ve d'Apertium (punt 8).
 - Els benchmarks construïts pel projecte (manual, curat de 151 frases,
   homògrafs, BOE estricte i ampli) i els resultats d'avaluació.
 
@@ -73,6 +77,15 @@ Components i dades de tercers
      benchmarks. La fitxa del model porta l'avís de retirada ("Notice and
      take down").
 
+8. Diccionari morfològic català d'Apertium (apertium-cat)
+   Font: https://github.com/apertium/apertium-cat (projecte Apertium).
+   Llicència: GNU GPL 2.0 (fitxer COPYING del repositori).
+   dades/lexic/catalan_sin_top_loc_prefijos_participios.txt (i la còpia de
+   src/avlizador/traductor_cat_val/data/) és l'expansió del diccionari
+   (forma:lema<categoria><gènere><nombre>), sense topònims, locucions ni
+   prefixos; l'usa la regla de concordança de gènere. Va dins del paquet
+   i de la imatge Docker: per això AVLizador es distribuïx amb la GPL.
+
 Dependències de Python (no incloses; les instal·la pip): spaCy i thinc
 (MIT), kenlm (LGPL 2.1) i huggingface_hub (Apache 2.0; extra [kenlm]),
 sacrebleu i requests (Apache 2.0), numpy (BSD) i pytest (MIT). La interfície web (extra [web]) usa FastAPI i Pydantic (MIT),
@@ -116,4 +129,4 @@ completa de paquets de Python és dins de la imatge, en
 4. Imatge base python:3.12-slim (Debian), amb els paquets del sistema i les
    seues llicències respectives.
 
-El codi d'AVLizador es distribuïx amb la llicència Apache 2.0.
+El codi d'AVLizador es distribuïx amb la llicència GPL-2.0-or-later.
