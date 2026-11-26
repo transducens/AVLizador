@@ -17,7 +17,12 @@ import collections
 import difflib
 import json
 import re
+import sys
 from pathlib import Path
+
+for _stream in (sys.stdout, sys.stderr):  # consola de Windows (cp1252): «≠», «…»
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(encoding="utf-8")
 
 ARREL = Path(__file__).resolve().parents[3]  # arrel del repositori (en jutge_llm/)
 BENCH = {

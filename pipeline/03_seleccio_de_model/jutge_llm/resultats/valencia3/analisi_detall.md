@@ -1,0 +1,322 @@
+# Jutge «valencia3»: detall frase a frase (qwen3.6-35b-a3b_pensa)
+
+### homografs: AVLizador 2.0.1, guanya la referència (12)
+
+- **RC044** ref 95 / sistema 65; canvis: `la civada→l'avena`
+  - errors (sistema): major accuracy/omission «l'avena, l'avena»
+  - errors (ref.): minor fluency/spelling «ségol»
+- **RC083** ref 100 / sistema 85; canvis: `confinis,→confines,`; `finis,→fines,`
+  - errors (sistema): minor accuracy/mistranslation «confines»; minor accuracy/mistranslation «fines»
+- **RC025** ref 100 / sistema 95; canvis: `llavadora→rentadora`
+  - errors (sistema): minor terminology/inappropriate for context «rentadora»
+- **RC126** ref 100 / sistema 95; canvis: `Valencià».→Valenciana».`
+  - errors (sistema): major accuracy/mistranslation «Valenciana»
+- **HG033** ref 100 / sistema 95; canvis: `bragues→calces`
+  - errors (sistema): major accuracy/mistranslation «calces»
+- **HG034** ref 100 / sistema 95; canvis: `bragues→calces`
+  - errors (sistema): minor terminology/inappropriate for context «calces»
+- **HG036** ref 100 / sistema 95; canvis: `bragues→calces`
+  - errors (sistema): minor terminology/inappropriate for context «calces»
+- **HG052** ref 100 / sistema 95; canvis: `hamaques→gandules`
+  - errors (sistema): major accuracy/mistranslation «gandules»
+- **HG066** ref 100 / sistema 95; canvis: `d'anous.→de nous.`
+  - errors (sistema): minor terminology/inappropriate for context «nous»
+- **HG070** ref 100 / sistema 95; canvis: `falta→manca`
+  - errors (sistema): minor terminology/inappropriate for context «manca»
+- **HG071** ref 100 / sistema 95; canvis: `falta→manca`
+  - errors (sistema): minor terminology/inappropriate for context «manca»
+- **HG075** ref 100 / sistema 95; canvis: `faltes→manques`
+  - errors (sistema): minor terminology/inappropriate for context «manques»
+
+### homografs: AVLizador 2.0.1, guanya el sistema (2)
+
+- **HG053** ref 20 / sistema 95; canvis: `hamaques→gandules`
+  - errors (sistema): major accuracy/mistranslation «gandules»
+- **RC002** ref 65 / sistema 95; canvis: `rentar→llavar`
+  - errors (sistema): minor fluency/spelling «mentre»
+  - errors (ref.): minor accuracy/mistranslation «llavar»
+
+### homografs: Motor sol, guanya la referència (39)
+
+- **HG055** ref 100 / sistema 25; canvis: `gandules→hamaques`
+  - errors (sistema): major accuracy/mistranslation «hamaques»
+- **HG048** ref 100 / sistema 45; canvis: `gandula→hamaca`
+  - errors (sistema): major accuracy/mistranslation «hamaca»
+- **HG049** ref 100 / sistema 45; canvis: `gandula→hamaca`
+  - errors (sistema): major accuracy/mistranslation «hamaca»
+- **HG050** ref 100 / sistema 45; canvis: `gandula:→hamaca:`
+  - errors (sistema): major accuracy/mistranslation «hamaca»
+- **HG056** ref 100 / sistema 45; canvis: `gandules→hamaques`
+  - errors (sistema): major accuracy/mistranslation «hamaques»
+- **HG054** ref 95 / sistema 45; canvis: `gandules→hamaques`
+  - errors (sistema): major accuracy/mistranslation «hamaques»
+  - errors (ref.): minor fluency/spelling «una mica»
+- **HG047** ref 100 / sistema 65; canvis: `gandula→hamaca`
+  - errors (sistema): major accuracy/mistranslation «hamaca»
+- **HG064** ref 100 / sistema 65; canvis: `nou→anou`
+  - errors (sistema): major accuracy/mistranslation «anou»
+- **HG067** ref 100 / sistema 65; canvis: `nous→anous`
+  - errors (sistema): major accuracy/mistranslation «anous»
+- **HG068** ref 100 / sistema 65; canvis: `nous→anous`
+  - errors (sistema): major accuracy/mistranslation «anous»
+- **RC044** ref 95 / sistema 65; canvis: `la civada→l'avena`
+  - errors (sistema): major accuracy/omission «l'avena, l'avena»
+  - errors (ref.): minor fluency/spelling «ségol»
+- **HG063** ref 100 / sistema 75; canvis: `nou→anou`
+  - errors (sistema): minor accuracy/mistranslation «anou»
+- **RC076** ref 100 / sistema 85; canvis: `un nou→una anou`
+  - errors (sistema): minor fluency/grammar «una anou»
+- **RC083** ref 100 / sistema 85; canvis: `confinis,→confines,`; `finis,→fines,`
+  - errors (sistema): minor accuracy/mistranslation «confines»; minor accuracy/mistranslation «fines»
+- **RC097** ref 100 / sistema 85; canvis: `el nou→l'anou`
+  - errors (sistema): minor fluency/spelling «l'anou»
+- **HG061** ref 100 / sistema 85; canvis: `nou.→anou.`
+  - errors (sistema): minor accuracy/mistranslation «anou»
+- **RC070** ref 100 / sistema 95; canvis: `al nou→a l'anou`
+  - errors (sistema): minor grammar/grammar «a l'anou»
+- **RC126** ref 100 / sistema 95; canvis: `Valencià».→Valenciana».`
+  - errors (sistema): major accuracy/mistranslation «Valenciana»
+- **HG001** ref 100 / sistema 95; canvis: `colp→cop`
+  - errors (sistema): minor accuracy/mistranslation «cop»
+- **HG004** ref 100 / sistema 95; canvis: `colp→cop`
+  - errors (sistema): minor accuracy/mistranslation «cop»
+- **HG005** ref 100 / sistema 95; canvis: `colp→cop`
+  - errors (sistema): minor terminology/inappropriate for context «cop»
+- **HG006** ref 100 / sistema 95; canvis: `colp→cop`
+  - errors (sistema): minor fluency/spelling «cop»
+- **HG007** ref 100 / sistema 95; canvis: `colp→cop`
+  - errors (sistema): minor terminology/inappropriate for context «cop»
+- **HG008** ref 100 / sistema 95; canvis: `colp→cop`
+  - errors (sistema): minor accuracy/mistranslation «cop»
+- **HG010** ref 100 / sistema 95; canvis: `colp.→cop.`
+  - errors (sistema): minor accuracy/mistranslation «cop»
+- **HG013** ref 100 / sistema 95; canvis: `una vegada→un cop`
+  - errors (sistema): minor accuracy/mistranslation «un cop»
+- **HG014** ref 100 / sistema 95; canvis: `Una altra vegada→Un altre cop`
+  - errors (sistema): minor terminology/inappropriate for context «cop»
+- **HG015** ref 100 / sistema 95; canvis: `Una vegada→Un cop`
+  - errors (sistema): minor accuracy/mistranslation «cop»
+- **HG016** ref 100 / sistema 95; canvis: `Esta vegada→Este cop`
+  - errors (sistema): minor accuracy/mistranslation «cop»
+- **HG017** ref 100 / sistema 95; canvis: `primera vegada,→primer cop,`
+  - errors (sistema): minor terminologia/inappropriate for context «cop»
+- **HG018** ref 100 / sistema 95; canvis: `vegada→cop`
+  - errors (sistema): minor accuracy/mistranslation «cop»
+- **HG021** ref 100 / sistema 95; canvis: `colps→cops`
+  - errors (sistema): minor fluency/spelling «cops»
+- **HG022** ref 100 / sistema 95; canvis: `colps→cops`
+  - errors (sistema): minor terminology/inappropriate for context «cops»
+- **HG024** ref 100 / sistema 95; canvis: `colps→cops`
+  - errors (sistema): minor terminology/inappropriate for context «cops»
+- **HG025** ref 100 / sistema 95; canvis: `colps→cops`
+  - errors (sistema): minor terminology/inappropriate for context «cops»
+- **HG026** ref 100 / sistema 95; canvis: `colps→cops`
+  - errors (sistema): minor fluency/spelling «cops»
+- **HG028** ref 100 / sistema 95; canvis: `Moltes vegades→Molts cops`
+  - errors (sistema): minor fluency/spelling «cops»
+- **HG031** ref 100 / sistema 95; canvis: `diverses vegades.→diversos cops.`
+  - errors (sistema): minor terminologia/inapropiada «cops»
+- **HG062** ref 100 / sistema 95; canvis: `nou→anou`
+  - errors (sistema): major accuracy/mistranslation «anou»
+
+### homografs: Motor sol, guanya el sistema (8)
+
+- **RC002** ref 65 / sistema 95; canvis: `rentar→llavar`
+  - errors (sistema): minor fluency/spelling «mentre»
+  - errors (ref.): minor accuracy/mistranslation «llavar»
+- **HG038** ref 95 / sistema 100; canvis: `calces→bragues`
+  - errors (ref.): minor terminology/inappropriate for context «calces»
+- **HG039** ref 95 / sistema 100; canvis: `calces→bragues`
+  - errors (ref.): minor terminology/inappropriate for context «calces»
+- **HG040** ref 95 / sistema 100; canvis: `calces→bragues`
+  - errors (ref.): minor accuracy/mistranslation «calces»
+- **HG041** ref 95 / sistema 100; canvis: `calces→bragues`
+  - errors (ref.): minor accuracy/mistranslation «calces»
+- **HG077** ref 95 / sistema 100; canvis: `manques→faltes`
+  - errors (ref.): major terminology/inappropriate for context «manques»
+- **HG078** ref 95 / sistema 100; canvis: `manques→faltes`
+  - errors (ref.): minor accuracy/mistranslation «manques»
+- **HG095** ref 95 / sistema 100; canvis: `fartanera.→fartada.`
+  - errors (ref.): minor terminology/inappropriate for context «fartanera»
+
+### homografs_v2: AVLizador 2.0.1, guanya la referència (27)
+
+- **HG2-015** ref 100 / sistema 65; canvis: `anous→nous`
+  - errors (sistema): major accuracy/mistranslation «nous»
+- **HG2-036** ref 100 / sistema 65; canvis: `faltes→manques`
+  - errors (sistema): minor terminology/inappropriate for context «manques»
+- **HG2-092** ref 100 / sistema 65; canvis: `bragues→calces`
+  - errors (sistema): minor terminology/inappropriate for context «calces»
+- **HG2-068** ref 100 / sistema 85; canvis: `llavadores→rentadores`
+  - errors (sistema): major terminology/inappropriate for context «rentadores»
+- **HG2-013** ref 100 / sistema 95; canvis: `d'anous→de nous`
+  - errors (sistema): minor accuracy/mistranslation «nous»
+- **HG2-021** ref 100 / sistema 95; canvis: `falta→manca`
+  - errors (sistema): minor terminology/inappropriate for context «manca»
+- **HG2-023** ref 100 / sistema 95; canvis: `falta→manca`
+  - errors (sistema): minor terminology/inappropriate for context «manca»
+- **HG2-034** ref 100 / sistema 95; canvis: `faltes→manques`
+  - errors (sistema): minor terminology/inappropriate for context «manques»
+- **HG2-035** ref 100 / sistema 95; canvis: `faltes→manques`
+  - errors (sistema): minor terminology/inappropriate for context «manques»
+- **HG2-057** ref 100 / sistema 95; canvis: `llavadora.→rentadora.`
+  - errors (sistema): minor terminology/inappropriate for context «rentadora»
+- **HG2-058** ref 100 / sistema 95; canvis: `llavadora→rentadora`
+  - errors (sistema): minor terminology/inappropriate for context «rentadora»
+- **HG2-060** ref 100 / sistema 95; canvis: `llavadora→rentadora`
+  - errors (sistema): minor terminology/inappropriate for context «rentadora»
+- **HG2-066** ref 100 / sistema 95; canvis: `llavadores→rentadores`
+  - errors (sistema): minor terminology/inappropriate for context «rentadores»
+- **HG2-067** ref 100 / sistema 95; canvis: `llavadores.→rentadores.`
+  - errors (sistema): minor terminology/inappropriate for context «rentadores»
+- **HG2-089** ref 100 / sistema 95; canvis: `bragues→calces`
+  - errors (sistema): minor terminology/inappropriate for context «calces»
+- **HG2-091** ref 100 / sistema 95; canvis: `bragues→calces`
+  - errors (sistema): minor terminology/inappropriate for context «calces»
+- **HG2-107** ref 100 / sistema 95; canvis: `hamaques→gandules`
+  - errors (sistema): minor terminology/inappropriate for context «gandules»
+- **HG2-108** ref 100 / sistema 95; canvis: `hamaques→gandules`
+  - errors (sistema): major accuracy/mistranslation «gandules»
+- **HG2-114** ref 100 / sistema 95; canvis: `panolla→panotxa`
+  - errors (sistema): minor terminology/inappropriate for context «panotxa»
+- **HG2-122** ref 100 / sistema 95; canvis: `panolles→panotxes`
+  - errors (sistema): minor terminology/inappropriate for context «panotxes»
+- **HG2-124** ref 100 / sistema 95; canvis: `panolles→panotxes`
+  - errors (sistema): minor terminology/inappropriate for context «panotxes»
+- **HG2-131** ref 100 / sistema 95; canvis: `fartada→fartanera`
+  - errors (sistema): minor terminology/inappropriate for context «fartanera»
+- **HG2-137** ref 100 / sistema 95; canvis: `fartades→fartaneres`; `síndria.→meló d'Alger.`
+- **HG2-139** ref 100 / sistema 95; canvis: `fartades→fartaneres`
+  - errors (sistema): minor terminology/inappropriate for context «fartaneres»
+- **HG2-147** ref 100 / sistema 95; canvis: `exitosa→reeixida`
+  - errors (sistema): minor terminology/inappropriate for context «reeixida»
+- **HG2-148** ref 100 / sistema 95; canvis: `exitosa→reeixida`
+  - errors (sistema): minor terminology/inappropriate for context «reeixida»
+- **HG2-156** ref 100 / sistema 95; canvis: `exitoses→reeixides`
+  - errors (sistema): minor terminology/inappropriate for context «reeixides»
+
+### homografs_v2: AVLizador 2.0.1, guanya el sistema (1)
+
+- **HG2-105** ref 0 / sistema 95; canvis: `hamaques→gandules`
+  - errors (sistema): major accuracy/mistranslation «gandules»
+
+### homografs_v2: Motor sol, guanya la referència (30)
+
+- **HG2-109** ref 100 / sistema 25; canvis: `gandules.→hamaques.`
+  - errors (sistema): major accuracy/mistranslation «hamaques»
+- **HG2-111** ref 100 / sistema 25; canvis: `gandules→hamaques`
+  - errors (sistema): major accuracy/mistranslation «hamaques»
+- **HG2-112** ref 95 / sistema 25; canvis: `gandules.→hamaques.`
+  - errors (sistema): major accuracy/mistranslation «hamaques»
+  - errors (ref.): minor terminology/inappropriate for context «gandules»
+- **HG2-043** ref 100 / sistema 45; canvis: `manques→faltes`
+  - errors (sistema): major accuracy/mistranslation «faltes»
+- **HG2-071** ref 100 / sistema 45; canvis: `rentadores→llavadores`
+  - errors (sistema): major accuracy/mistranslation «llavadores»
+- **HG2-101** ref 100 / sistema 45; canvis: `gandula→hamaca`
+  - errors (sistema): major accuracy/mistranslation «hamaca»
+- **HG2-102** ref 100 / sistema 45; canvis: `gandula→hamaca`
+  - errors (sistema): major accuracy/mistranslation «hamaca»
+- **HG2-103** ref 100 / sistema 45; canvis: `gandula:→hamaca:`
+  - errors (sistema): major accuracy/mistranslation «hamaca»
+- **HG2-104** ref 100 / sistema 45; canvis: `gandula→hamaca`
+  - errors (sistema): major accuracy/mistranslation «hamaca»
+- **HG2-110** ref 100 / sistema 45; canvis: `gandules→hamaques`
+  - errors (sistema): major accuracy/mistranslation «hamaques»
+- **HG2-061** ref 100 / sistema 50; canvis: `rentadora→llavadora`
+- **HG2-137** ref 100 / sistema 50; canvis: `síndria.→meló d'Alger.`
+- **HG2-007** ref 100 / sistema 65; canvis: `nou.→anou.`
+  - errors (sistema): major accuracy/mistranslation «anou»
+- **HG2-009** ref 100 / sistema 65; canvis: `nou→anou`
+  - errors (sistema): minor accuracy/mistranslation «anou»
+- **HG2-010** ref 100 / sistema 65; canvis: `nou→anou`
+  - errors (sistema): major accuracy/mistranslation «anou»
+- **HG2-011** ref 100 / sistema 65; canvis: `nou→anou`
+  - errors (sistema): major accuracy/mistranslation «anou»
+- **HG2-017** ref 100 / sistema 65; canvis: `nous→anous`
+  - errors (sistema): major accuracy/mistranslation «anous»
+- **HG2-032** ref 100 / sistema 65; canvis: `manca→falta`
+  - errors (sistema): major accuracy/mistranslation «falta»
+- **HG2-020** ref 95 / sistema 65; canvis: `nous→anous`
+  - errors (sistema): major accuracy/mistranslation «anous»
+  - errors (ref.): minor fluency/grammar «nous»
+- **HG2-005** ref 100 / sistema 85; canvis: `nou→anou`
+  - errors (sistema): minor fluency/spelling «anou»
+- **HG2-006** ref 100 / sistema 85; canvis: `El nou→L'anou`
+  - errors (sistema): minor fluency/spelling «anou»
+- **HG2-008** ref 100 / sistema 85; canvis: `nou→anou`
+  - errors (sistema): minor fluency/spelling «anou»
+- **HG2-018** ref 100 / sistema 85; canvis: `nous→anous`
+  - errors (sistema): minor accuracy/mistranslation «anous»
+- **HG2-019** ref 100 / sistema 85; canvis: `nous→anous`
+  - errors (sistema): major accuracy/mistranslation «anous»
+- **HG2-134** ref 100 / sistema 85; canvis: `fartanera→fartada`
+  - errors (sistema): minor accuracy/mistranslation «fartada»
+- **HG2-012** ref 100 / sistema 95; canvis: `nou→anou`
+  - errors (sistema): minor fluency/spelling «anou»
+- **HG2-026** ref 100 / sistema 95; canvis: `manca→falta`
+  - errors (sistema): minor accuracy/mistranslation «una mica»
+  - errors (ref.): major accuracy/mistranslation «manca»; minor accuracy/mistranslation «una mica»
+- **HG2-044** ref 100 / sistema 95; canvis: `manques→faltes`
+- **HG2-048** ref 100 / sistema 95; canvis: `d'un brollador→d'una deu`
+  - errors (sistema): minor terminology/inappropriate for context «deu»
+- **HG2-154** ref 100 / sistema 95; canvis: `exitoses.→reeixides.`
+  - errors (sistema): minor terminology/inappropriate for context «reeixides»
+
+### homografs_v2: Motor sol, guanya el sistema (27)
+
+- **HG2-062** ref 65 / sistema 100; canvis: `rentadora→llavadora`
+  - errors (ref.): minor terminology/inappropriate for context «rentadora»
+- **HG2-069** ref 65 / sistema 100; canvis: `rentadores→llavadores`
+  - errors (ref.): minor terminology/inappropriate for context «rentadores»
+- **HG2-118** ref 65 / sistema 100; canvis: `panotxa→panolla`
+  - errors (ref.): major terminology/inappropriate for context «panotxa»
+- **HG2-119** ref 65 / sistema 100; canvis: `panotxa→panolla`
+  - errors (ref.): minor terminology/inappropriate for context «panotxa»
+- **HG2-120** ref 65 / sistema 100; canvis: `panotxa→panolla`
+  - errors (ref.): minor terminology/inappropriate for context «panotxa»
+- **HG2-125** ref 65 / sistema 100; canvis: `panotxes→panolles`
+  - errors (ref.): major accuracy/mistranslation «panotxes»
+- **HG2-126** ref 65 / sistema 100; canvis: `panotxes→panolles`
+  - errors (ref.): minor terminology/inappropriate for context «panotxes»
+- **HG2-127** ref 65 / sistema 100; canvis: `panotxes→panolles`
+  - errors (ref.): minor terminology/inappropriate for context «panotxes»
+- **HG2-128** ref 65 / sistema 100; canvis: `panotxes→panolles`
+  - errors (ref.): minor terminology/inappropriate for context «panotxes»
+- **HG2-142** ref 65 / sistema 100; canvis: `fartaneres→fartades`
+  - errors (ref.): minor terminology/inappropriate for context «fartaneres»
+- **HG2-160** ref 65 / sistema 85; canvis: `reeixides→exitoses`
+  - errors (sistema): minor accuracy/mistranslation «exitoses»
+  - errors (ref.): minor terminology/inappropriate for context «reeixides»
+- **HG2-041** ref 85 / sistema 100; canvis: `manques→faltes`
+  - errors (ref.): minor terminology/inappropriate for context «manques»
+- **HG2-072** ref 85 / sistema 100; canvis: `rentadores→llavadores`
+  - errors (ref.): minor terminology/inappropriate for context «rentadores»
+- **HG2-027** ref 95 / sistema 100; canvis: `manca→falta`
+  - errors (ref.): minor accuracy/mistranslation «manca»
+- **HG2-029** ref 95 / sistema 100; canvis: `manca→falta`
+  - errors (ref.): minor fluency/grammar «manca»
+- **HG2-038** ref 95 / sistema 100; canvis: `manques→faltes`
+  - errors (ref.): minor terminology/inappropriate for context «manques»
+- **HG2-040** ref 95 / sistema 100; canvis: `manques,→faltes,`
+  - errors (ref.): minor accuracy/mistranslation «manques»
+- **HG2-093** ref 95 / sistema 100; canvis: `calces→bragues`
+  - errors (ref.): minor terminology/inappropriate for context «calces»
+- **HG2-094** ref 95 / sistema 100; canvis: `calces→bragues`
+  - errors (ref.): minor terminology/inappropriate for context «calces»
+- **HG2-095** ref 95 / sistema 100; canvis: `calces→bragues`
+  - errors (ref.): minor terminology/inappropriate for context «calces»
+- **HG2-096** ref 95 / sistema 100; canvis: `calces→bragues`
+  - errors (ref.): minor terminology/inappropriate for context «calces»
+- **HG2-117** ref 95 / sistema 100; canvis: `panotxa,→panolla,`
+  - errors (ref.): minor terminology/inappropriate for context «panotxa»
+- **HG2-133** ref 95 / sistema 100; canvis: `fartanera→fartada`
+  - errors (ref.): minor terminology/inappropriate for context «fartanera»
+- **HG2-135** ref 95 / sistema 100; canvis: `fartanera→fartada`
+  - errors (ref.): minor terminology/inappropriate for context «fartanera»
+- **HG2-143** ref 95 / sistema 100; canvis: `fartaneres→fartades`
+  - errors (ref.): minor accuracy/mistranslation «fartaneres»
+- **HG2-144** ref 95 / sistema 100; canvis: `fartaneres→fartades`
+  - errors (ref.): major accuracy/mistranslation «fartaneres»
+- **HG2-158** ref 95 / sistema 100; canvis: `reeixides→exitoses`
+  - errors (ref.): minor terminology/inappropriate for context «reeixides»

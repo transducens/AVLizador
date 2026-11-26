@@ -371,7 +371,7 @@ contra. Es mesuraria amb `meta_homografs.py`: ha de baixar la forma
 valenciana correcta marcada (11 %) sense baixar l'exhaustivitat; després, el
 manual, per a vore que no torna a castigar el valencià.
 
-### Prompt «valencia3»: glossari de la frase (25/11/2026, preparat)
+### Prompt «valencia3»: glossari de la frase (25/11/2026)
 
 `--prompt valencia3` (`PROMPT=valencia3` en `jutge_valencia.sh`; empremta
 `9212d48f`; eixida en `resultats/valencia3/`): el de «valencia2» més un
@@ -401,3 +401,49 @@ Prova: primer els homògrafs (`CONJUNTS="homografs_v2 homografs"`) i
 forma valenciana correcta marcada (11 % amb «valencia») sense baixar
 l'exhaustivitat (52 %); si és així, el manual, per a vore que no torna a
 castigar el valencià.
+
+#### Resultats (job 2569, caiman, 25/11/2026)
+
+Homògrafs v2 i v1 amb raonament, 8 CPU i 1 GPU: ~9 s per text, 195-250
+tokens/s (amb `CUDA_DEVICE_ORDER=PCI_BUS_ID` i 8 CPU torna a la velocitat
+normal; amb 4 CPU i Ollama en una altra GPU anava a ~110).
+
+| Conjunt | Referència | AVLizador 2.0.1 | Motor sol |
+|---|---|---|---|
+| v1 (249) | 98,43 (97,97) | 98,47 (97,75) | 95,82 (94,80) |
+| v2 (144) | 93,37 (96,46) | 92,40 (97,78) | 89,27 (87,29) |
+
+Entre parèntesis, «valencia».
+
+| | «valencia» | «valencia2» | «valencia3» |
+|---|---|---|---|
+| Errors de sentit marcats (exhaustivitat) | 47/90 (52 %) | 64/90 (71 %) | 40/90 (44 %) |
+| Precisió | 57 % | 43 % | 27 % |
+| Forma valenciana correcta marcada | 33/306 (11 %) | 80/306 (26 %) | **3/306 (1 %)** |
+| Paraula catalana correcta marcada | 2/237 (1 %) | 4/237 (2 %) | **107/237 (45 %)** |
+| Deixa el català (lleu) marcat | 1/75 (1 %) | 0/75 | 64/75 (85 %) |
+| AUC de la nota | 0,74 | 0,78 | 0,67 |
+
+**No complix el criteri.** Ja no castiga les formes valencianes correctes,
+però veu menys errors de sentit i el biaix canvia de costat: marca la
+paraula catalana ben mantinguda gairebé la meitat de les vegades, sempre com
+a error lleu (nota 95). Per paraula (catalana correcta marcada / error de
+sentit marcat): panotxa adjectiu 16/16 / 0/8, calces de vestir 16/18 / 0/9,
+fartanera adjectiu 16/20 / 1/10, manca verb 30/40 / 4/20, reeixida 16/28 /
+1/2; en canvi, gandula 2/30 / **15/15** i nou 2/36 / **18/18** («cotxe
+anou», que amb «valencia» traia 100, ara el marca).
+
+**Per què**: el jutge llig el glossari com una ordre de substituir. El
+lèxic només dona el significat de la lectura que canvia («calces» =
+«bragas»); de les altres, només el lema i la categoria («calça [n]»,
+«panotxo [adj, n]»), i el verb «mancar» ni hi apareix. Si el jutge no
+coneix ell sol l'altra lectura, conclou que calia traduir. Raonament en
+«Els cavallers medievals portaven calces de seda fins als genolls»: «the
+glossary explicitly says for this meaning it should be bragues. So it's an
+error per the given constraints». On ja coneix els dos sentits (gandula
+mandrosa, nou adjectiu i numeral), el glossari sí que l'ajuda.
+
+No es llança el manual. L'única via que queda és un glossari amb el
+significat de **totes** les lectures («calces» = mitges o calces d'època →
+es queda «calces»), i el lèxic no el té: cal completar-lo (canvi de dades,
+el decidixen l'usuari i el company).
