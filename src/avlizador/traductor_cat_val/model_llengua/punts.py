@@ -133,9 +133,13 @@ class Punt:
 
 
 _CATEGORIA_PER_POS = {pos: cat for cat, poss in _POS_PER_CATEGORIA.items() for pos in poss}
-# Relacions de dependència nominals d'UD: qui les té fa de sintagma nominal,
-# no d'adjectiu (26/11/2026, vore `decisio_spacy`).
-_DEP_NOMINALS = frozenset({"nsubj", "nsubj:pass", "obj", "iobj", "obl", "nmod", "appos"})
+# Relacions de dependència en què un "adjectiu" d'spaCy fa de nom (26/11/2026,
+# vore `decisio_spacy`): complement d'un nom ("un sac de nous") i aposició o
+# enumeració ("gandules i para-sols"). NO subjecte ni objecte: en text real el
+# parser posa `obj` a adjectius de veritat ("construir aquest edifici nou",
+# "en crea de nous") i el model els canviava per "anou(s)" (4 greus en 2.643
+# frases de MaCoCu, document viu 4.30).
+_DEP_NOMINALS = frozenset({"nmod", "appos"})
 
 
 def decisio_spacy(punt: Punt) -> str | None:
@@ -256,10 +260,11 @@ def decisio_spacy(punt: Punt) -> str | None:
     'gandula'
 
     Adjectiu en lloc de nom (26/11/2026): spaCy dona ADJ a "nous" o "manques"
-    també quan fan de nom ("un sac de nous", "assenyala greus manques"). Si
-    la lectura dialectal és un nom i el parser diu que la paraula té una
-    relació nominal (subjecte, objecte, complement d'un nom...: `dep`), la
-    lectura d'adjectiu no és segura i passa al model. Amb `amod` (modifica
+    també quan fan de nom ("un sac de nous", "un quilo de nous"). Si la
+    lectura dialectal és un nom i el parser diu que la paraula és complement
+    d'un nom o aposició (`dep`: `nmod`, `appos`), la lectura d'adjectiu no és
+    segura i passa al model. Com a objecte (`obj`) no: el parser s'hi
+    equivoca massa amb adjectius de veritat. Amb `amod` (modifica
     un nom: "un cotxe nou") o com a predicat ("és molt gandula": ROOT),
     spaCy decidix com abans:
 
