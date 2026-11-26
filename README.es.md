@@ -62,6 +62,25 @@ El paquete los descarga solo la primera vez que se usan (hace falta
 guarda en la caché de Hugging Face (`HF_HOME`); después funciona sin
 internet.
 
+Para dejarlo listo antes (en una instalación, al construir una imagen o
+para trabajar después sin internet), la orden `avlizador model`:
+
+```bash
+avlizador model info                      # qué modelo usa esta versión, dónde está y si está listo (sin red)
+avlizador model descarrega                # a la caché de Hugging Face, donde lo busca el paquete
+avlizador model descarrega --desti /opt/kenlm --origen docker/kenlm   # a una carpeta, para AVLIZADOR_KENLM_DIR
+avlizador model comprova                  # compara los ficheros con la revisión de Hugging Face
+```
+
+`descarrega` descarga siempre la revisión de esta versión del paquete y
+comprueba cada fichero con el tamaño y la huella (sha256 o sha1 de git) que
+tiene en Hugging Face: una copia de otra revisión no se usa, se vuelve a
+descargar. `--origen` aprovecha copias locales que correspondan; `--lemes`
+trae también la opción con lemas; `--sense-comprovar`, para trabajar sin
+red con `--origen`. Escribe en la salida estándar la carpeta donde queda el
+modelo y sale con 1 si algo falla. En Python, `info_model`,
+`descarrega_model` y `comprova_model` (`avlizador.traductor_cat_val`).
+
 #### Qué versión del modelo descarga cada versión del paquete
 
 Cada versión del paquete descarga siempre **el mismo commit** del
@@ -143,8 +162,25 @@ avlizador tradueix --motor "..."                       # solo el motor, sin el m
 avlizador gd --text "Este xiquet vol vindre hui."      # también gdv y gdc
 avlizador gd --corpus corpus.jsonl --camp text --html informe.html  # informe HTML frase a frase
 avlizador avalua --benchmarks manual                   # evaluación (necesita [avaluacio])
+avlizador model info                                   # el modelo KenLM (ver «Modelo de lenguaje»)
 avlizador --help
 ```
+
+### API pública
+
+Lo que se puede usar desde otro programa (por ejemplo, la interfaz web) es
+lo que exportan `avlizador`, `avlizador.traductor_cat_val` y
+`avlizador.grau_dialectal` (sus `__all__`):
+
+| Dónde | Qué |
+|---|---|
+| `avlizador.traductor_cat_val` | `translate_cat_val`, `translate_cat_val_motor`, `AvisSenseModelLlengua`; el modelo: `info_model`, `descarrega_model`, `comprova_model`, `ErrorModel`, `kenlm_disponible` |
+| `avlizador.grau_dialectal` | `calcula_gd`, `calcula_gdv`, `calcula_gdv_corpus`, `calcula_gdc`, `calcula_gdc_corpus`, `resalta_html` (el texto en HTML accesible con los marcadores resaltados) |
+| `avlizador` | `__version__` y las funciones principales de los dos anteriores |
+
+Los demás módulos son internos y pueden cambiar en cualquier versión.
+Cambiar o quitar algo de la API pública exige una versión mayor (3.0.0…);
+añadir, una menor. Lo vigila `tests/test_api_publica.py`.
 
 ## Interfaz web y Docker
 

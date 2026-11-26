@@ -121,7 +121,7 @@ d'`AVLIZADOR_KENLM_DIR` si està definida; si no, en la memòria cau de
 Hugging Face, i es baixen la primera vegada (`kenlm.FITXERS_HF_LEMES`: només
 eixos tres; qui usa l'opció per defecte no els baixa mai, `FITXERS_HF`). En
 Abaco, `~/kenlm_2.0.0` ja té els enllaços. En Docker, `KENLM_LEMES: "1"` en
-`docker-compose.yml` (`docker/prepara_kenlm.py`). Si falta alguna cosa,
+`docker-compose.yml` (`avlizador model descarrega --lemes`). Si falta alguna cosa,
 `FaltaKenLM` (no torna al motor sol). Per a publicar-los:
 `scripts/hf_model/kenlm.py ... --lemes valencia_net_dogv2_lemes`. Detall:
 `documentacio/resultats_model_llengua_kenlm.md`, 4.23-4.25.

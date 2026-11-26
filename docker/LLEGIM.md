@@ -7,9 +7,14 @@ Fitxers opcionals per a construir la imatge (`docker compose up --build`).
   `sentit.json`), la imatge porta eixos. Si la carpeta no hi és o està buida,
   la construcció baixa el model de Hugging Face
   (`transducens/avlizador-kenlm-va`, la revisió que diu el paquet o la de
-  `--build-arg KENLM_REVISIO=...`). Serveix per a provar un model encara no
-  publicat. Des del 23/11/2026 (`prepara_kenlm.py`) es mira fitxer a fitxer:
-  els que hi són es copien i els que falten es baixen.
+  `--build-arg KENLM_REVISIO=...`). Es mira fitxer a fitxer (des del
+  26/11/2026, amb `avlizador model descarrega`): cada fitxer es compara amb
+  la mida i l'empremta que té en Hugging Face en eixa revisió; els que hi
+  corresponen es copien i els altres (que falten o són d'una altra revisió)
+  es baixen. Per a provar un model encara **no publicat**:
+  `--build-arg KENLM_COMPROVA=0`, i es copien tal com estan, sense consultar
+  Hugging Face. Per a mirar-los abans: `avlizador model comprova --dir
+  docker/kenlm`.
 
 - Opció amb lemes (`--model kenlm-lemes`, 23/11/2026): amb `KENLM_LEMES: "1"`
   en `docker-compose.yml` (el valor que hi ha des del 23/11; `""` per a no
@@ -19,9 +24,6 @@ Fitxers opcionals per a construir la imatge (`docker compose up --build`).
   repositori). Sense, no s'hi posen encara que siguen en `kenlm/`. Dins del
   contenidor: `docker compose exec avlizador avlizador tradueix --model
   kenlm-lemes "..."` (la interfície web usa sempre l'opció per defecte).
-
-- `prepara_kenlm.py`: el que posa el model en `/opt/kenlm` en construir la
-  imatge (s'executa dins de la construcció).
 
 - `ca_core_news_md-3.8.0-py3-none-any.whl` (ignorat per git): el model
   català d'spaCy. Normalment pip el baixa dels *releases* de GitHub en

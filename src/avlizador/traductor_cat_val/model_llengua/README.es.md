@@ -123,7 +123,7 @@ modelo por defecto (misma `REVISIO_HF`) y se buscan igual: en la carpeta de
 y se descargan la primera vez (`kenlm.FITXERS_HF_LEMES`: solo esos tres; quien
 usa la opción por defecto no los descarga nunca, `FITXERS_HF`). En Abaco,
 `~/kenlm_2.0.0` ya tiene los enlaces. En Docker, `KENLM_LEMES: "1"` en
-`docker-compose.yml` (`docker/prepara_kenlm.py`). Si falta algo,
+`docker-compose.yml` (`avlizador model descarrega --lemes`). Si falta algo,
 `FaltaKenLM` (no vuelve al motor solo). Para publicarlos:
 `scripts/hf_model/kenlm.py ... --lemes valencia_net_dogv2_lemes`. Detalle:
 `documentacio/resultats_model_llengua_kenlm.md`, 4.23-4.25.
