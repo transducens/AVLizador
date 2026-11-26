@@ -6169,42 +6169,6 @@
     "genero_val": "f"
   },
   {
-    "espanol": "tumbona",
-    "catalan": "gandula",
-    "valenciano": "hamaca",
-    "tipo": "v:lexic_val_gva",
-    "fuente": "unificado",
-    "id": "E0591",
-    "categoria": "n",
-    "forma_problematica": "gandula",
-    "lado": "val",
-    "problema": "homonimia_lexica",
-    "lemas": [
-      "gandul [adj, n]",
-      "gandula [n]"
-    ],
-    "genero_cat": "f",
-    "genero_val": "f"
-  },
-  {
-    "espanol": "tumbona",
-    "catalan": "gandules",
-    "valenciano": "hamaques",
-    "tipo": "v:lexic_val_gva",
-    "fuente": "unificado",
-    "id": "E0592",
-    "categoria": "n",
-    "forma_problematica": "gandules",
-    "lado": "val",
-    "problema": "homonimia_lexica",
-    "lemas": [
-      "gandul [adj, n]",
-      "gandula [n]"
-    ],
-    "genero_cat": "f",
-    "genero_val": "f"
-  },
-  {
     "espanol": "chaparral",
     "catalan": "garriga",
     "valenciano": "coscollar",

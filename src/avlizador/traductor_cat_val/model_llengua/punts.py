@@ -73,8 +73,8 @@ def carrega_punts(path: Path = LEXIC_GENERAL_PATH) -> dict[str, dict]:
     ('colisio', ['colp', 'vegada'], ['colps', 'vegades'])
     >>> p["calces"]["tipus"], p["calces"]["candidats"], p["nou"]["tipus"], p["deu"]["tipus"]
     ('irresoluble', ['bragues', 'calces'], 'irresoluble', 'resoluble')
-    >>> p["gandula"]["categoria"], [sorted(l) for l in p["gandula"]["lectures"]]
-    ('n', [['adj', 'n'], ['n']])
+    >>> p["calces"]["categoria"], [sorted(l) for l in p["calces"]["lectures"]]
+    ('n', [['n'], ['n']])
     """
     resolubles, _ = carrega_homografs(path)
     punts: dict[str, dict] = {}
@@ -369,8 +369,8 @@ def aplica_candidat(base: list[Token], punt: Punt, candidat: str) -> list[Token]
     ...     return detokenize(aplica_candidat(base_neutra(motor, text, [p]), p, candidat))
     >>> prova("Un cop acabada la reunió, marxem.", "vegada"), prova("Un cop acabada la reunió.", "colp")
     ('Una vegada acabada la reunió, marxem.', 'Un colp acabada la reunió.')
-    >>> prova("Es va estirar a la gandula.", "hamaca"), prova("Es va estirar a la gandula.", "gandula")
-    ("Es va estirar a l'hamaca.", 'Es va estirar a la gandula.')
+    >>> prova("Ha trencat la nou amb el martell.", "anou"), prova("Ha trencat la nou amb el martell.", "nou")
+    ("Ha trencat l'anou amb el martell.", 'Ha trencat la nou amb el martell.')
     >>> prova("Arribarem a les nou del matí.", "nou")
     'Arribarem a les nou del matí.'
 
