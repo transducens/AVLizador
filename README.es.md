@@ -333,10 +333,16 @@ de la API pública.
 
 ## Licencia
 
-[Apache 2.0](LICENSE): el código y los datos propios del proyecto (el
-léxico de `dades/lexic/`, recopilado a mano por el equipo, y los
-benchmarks). Las piezas de terceros mantienen su licencia y se detallan
-en [`NOTICE`](NOTICE):
+[GNU GPL 2.0 o posterior](LICENSE) (GPL-2.0-or-later), desde el
+26/11/2026: el código y los datos propios del proyecto (el léxico de
+`dades/lexic/`, recopilado a mano por el equipo, y los benchmarks). Las
+versiones publicadas hasta la 2.0.1 incluida son Apache 2.0. Las piezas de
+terceros mantienen su licencia y se detallan en [`NOTICE`](NOTICE):
+
+- el diccionario morfológico catalán de `dades/lexic/`
+  (`catalan_sin_top_loc_prefijos_participios.txt`) viene de Apertium
+  ([`apertium-cat`](https://github.com/apertium/apertium-cat)), con
+  licencia **GPL 2.0**: es el motivo de la licencia GPL de AVLizador;
 
 - el modelo catalán de spaCy (`ca_core_news_md`) es **GPL 3.0**: no se
   incluye, pip lo instala como dependencia, y quien lo redistribuya tiene
@@ -350,7 +356,7 @@ en [`NOTICE`](NOTICE):
   autores;
 - los textos del BOE y de la AVL se reutilizan citando su fuente.
 
-**Imagen Docker.** El código de AVLizador es Apache 2.0, pero la
+**Imagen Docker.** El código de AVLizador es GPL-2.0-or-later, pero la
 imagen Docker incluye componentes de terceros con otras licencias (ver
 [`NOTICE`](NOTICE)), entre ellos el modelo de spaCy `ca_core_news_md`,
 con licencia GPL-3.0, la biblioteca KenLM (LGPL 2.1) y el modelo KenLM

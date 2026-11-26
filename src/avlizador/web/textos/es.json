@@ -77,7 +77,7 @@
     {
       "titol": "Versión y licencias",
       "paragrafs": [
-        "{versio}. Desarrollado por Transducens (Universidad de Alicante). El código tiene la licencia Apache 2.0 y usa componentes de terceros con otras licencias (el modelo de spaCy ca_core_news_md, con licencia GPL-3.0, y la biblioteca KenLM, con licencia LGPL-2.1): ver el fichero NOTICE del proyecto."
+        "{versio}. Desarrollado por Transducens (Universidad de Alicante). El código tiene la licencia GNU GPL 2.0 o posterior y usa componentes de terceros con otras licencias (el diccionario morfológico de Apertium, con licencia GPL-2.0, el modelo de spaCy ca_core_news_md, con licencia GPL-3.0, y la biblioteca KenLM, con licencia LGPL-2.1): ver el fichero NOTICE del proyecto."
       ]
     }
   ],

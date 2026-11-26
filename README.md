@@ -328,10 +328,16 @@ l'API pública.
 
 ## Llicència
 
-[Apache 2.0](LICENSE): el codi i les dades pròpies del projecte (el lèxic
-de `dades/lexic/`, recopilat a mà per l'equip, i els benchmarks). Les
-peces de tercers mantenen la seua llicència i es detallen en
-[`NOTICE`](NOTICE):
+[GNU GPL 2.0 o posterior](LICENSE) (GPL-2.0-or-later), des del
+26/11/2026: el codi i les dades pròpies del projecte (el lèxic de
+`dades/lexic/`, recopilat a mà per l'equip, i els benchmarks). Les versions
+publicades fins a la 2.0.1 inclosa són Apache 2.0. Les peces de tercers
+mantenen la seua llicència i es detallen en [`NOTICE`](NOTICE):
+
+- el diccionari morfològic català de `dades/lexic/`
+  (`catalan_sin_top_loc_prefijos_participios.txt`) ve d'Apertium
+  ([`apertium-cat`](https://github.com/apertium/apertium-cat)), amb
+  llicència **GPL 2.0**: és el motiu de la llicència GPL d'AVLizador;
 
 - el model català d'spaCy (`ca_core_news_md`) és **GPL 3.0**: no s'inclou,
   pip l'instal·la com a dependència, i qui el redistribuïsca ha de
@@ -345,7 +351,7 @@ peces de tercers mantenen la seua llicència i es detallen en
   autors;
 - els textos del BOE i de l'AVL es reutilitzen citant-ne la font.
 
-**Imatge Docker.** El codi d'AVLizador és Apache 2.0, però la imatge
+**Imatge Docker.** El codi d'AVLizador és GPL-2.0-or-later, però la imatge
 Docker inclou components de tercers amb altres llicències (vegeu
 [`NOTICE`](NOTICE)), entre els quals el model d'spaCy
 `ca_core_news_md`, amb llicència GPL-3.0, la biblioteca KenLM (LGPL 2.1)
