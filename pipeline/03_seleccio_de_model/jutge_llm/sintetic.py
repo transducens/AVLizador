@@ -8,10 +8,15 @@ propòsit. Mesura, abans i després del filtre de diccionari
 - si deixa passar la versió correcta (cap tros);
 - si la correcta trau més nota que l'errònia.
 
-    python sintetic.py prepara                 # entrades_valencia/sintetic/{correcta,erronia}.json
+    python sintetic.py prepara                 # entrades_valencia/sintetic/{original,correcta,erronia}.json
     python sintetic.py analitza resultats/valencia/sintetic/qwen3.6-35b-a3b_pensa [--md f.md] [--json f.json]
 
-`jutge_valencia.sh` amb `CONJUNTS=sintetic` fa el `prepara` i jutja les dos versions.
+`jutge_valencia.sh` amb `CONJUNTS=sintetic` fa el `prepara` i jutja les
+versions. Des del 26/11 també l'original català tal qual (com si el sistema
+no traduïra res: si el jutge no castiga el valencià, la correcta i
+l'original han de traure el mateix) i un segon fitxer amb el mateix
+esquema, `benchmark_errors_manual.json` (20 frases de l'AVL del manual amb un
+error posat a mà; `CONJUNTS=manual_errors`, `prepara --bench ...`).
 """
 
 from __future__ import annotations
@@ -30,15 +35,15 @@ import nota_filtrada as nf  # noqa: E402
 BENCH = AQUI / "benchmark_sintetic.json"
 
 
-def frases() -> list[dict]:
-    return json.loads(BENCH.read_text(encoding="utf-8"))["frases"]
+def frases(bench: Path = BENCH) -> list[dict]:
+    return json.loads(bench.read_text(encoding="utf-8"))["frases"]
 
 
-def prepara(eixida: Path) -> None:
+def prepara(eixida: Path, bench: Path = BENCH) -> None:
     eixida.mkdir(parents=True, exist_ok=True)
-    for versio in ("correcta", "erronia"):
+    for versio in ("original", "correcta", "erronia"):
         res = [{"id": f["id"], "entrada": f["original"], "hipotesi": f[versio], "referencia": f["correcta"]}
-               for f in frases()]
+               for f in frases(bench)]
         (eixida / f"{versio}.json").write_text(json.dumps({"sistema": nf.NOMS[versio], "resultats": res},
                                                           ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"{len(res)} parells en {eixida}")
@@ -110,13 +115,14 @@ def main(argv=None) -> int:
     sub = ap.add_subparsers(dest="ordre", required=True)
     p = sub.add_parser("prepara")
     p.add_argument("--eixida", type=Path, default=AQUI / "entrades_valencia" / "sintetic")
+    p.add_argument("--bench", type=Path, default=BENCH)
     a = sub.add_parser("analitza")
     a.add_argument("carpeta", type=Path)
     a.add_argument("--md", type=Path)
     a.add_argument("--json", type=Path)
     args = ap.parse_args(argv)
     if args.ordre == "prepara":
-        prepara(args.eixida)
+        prepara(args.eixida, args.bench)
         return 0
     L, files = analitza(args.carpeta)
     print("\n".join(L))

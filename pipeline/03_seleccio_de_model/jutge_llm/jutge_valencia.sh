@@ -146,7 +146,11 @@ for c in $CONJUNTS; do
         homografs|homografs_v2) FITXERS=("$ENTRADES/$c/avlizador.json" "$ENTRADES/$c/motor.json") ;;
         sintetic)  # benchmark_sintetic.json (26/11/2026): versió correcta i amb error de cada frase
             "$PYTHON" "$SCRIPT_DIR/sintetic.py" prepara --eixida "$ENTRADES/sintetic"
-            FITXERS=("$ENTRADES/sintetic/correcta.json" "$ENTRADES/sintetic/erronia.json") ;;
+            FITXERS=("$ENTRADES/sintetic/original.json" "$ENTRADES/sintetic/correcta.json" "$ENTRADES/sintetic/erronia.json") ;;
+        manual_errors)  # benchmark_errors_manual.json (26/11/2026): 20 frases de l'AVL amb un error posat a mà
+            "$PYTHON" "$SCRIPT_DIR/sintetic.py" prepara --bench "$SCRIPT_DIR/benchmark_errors_manual.json"                 --eixida "$ENTRADES/manual_errors"
+            FITXERS=("$ENTRADES/manual_errors/original.json" "$ENTRADES/manual_errors/correcta.json"
+                     "$ENTRADES/manual_errors/erronia.json") ;;
         *) echo "ERROR: conjunt desconegut: $c" >&2; exit 1 ;;
     esac
     echo "== $c =="

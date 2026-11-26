@@ -42,7 +42,7 @@ DADES = AQUI.parents[2] / "src" / "avlizador" / "traductor_cat_val" / "data"
 PARAULA_RE = re.compile(r"[\w·]+", re.UNICODE)
 NOMS = {"referencia": "Referència", "copia": "Sense traduir (català)", "avlizador": "AVLizador 2.0.1",
         "ollama_gemma3-12b": "gemma3:12b", "motor": "Motor sol", "correcta": "Versió correcta",
-        "erronia": "Versió amb error"}
+        "erronia": "Versió amb error", "original": "Original català (sense traduir)"}
 
 for _stream in (sys.stdout, sys.stderr):
     if hasattr(_stream, "reconfigure"):

@@ -1,0 +1,185 @@
+{
+ "descripcio": "Errors posats a mà en 20 frases de l'AVL del benchmark manual (26/11/2026): la referència valenciana (correcta) i la mateixa amb un error (com si la traducció haguera fallat), sense tocar cap forma valenciana. Totes tenien nota 100 del jutge «valencia» en valencià i en català.",
+ "frases": [
+  {
+   "id": "BM-AVL-005",
+   "tipus": "fidelitat",
+   "original": "Vivim en un món cada cop més interconnectat, i això fa que molta gent se senti encuriosida per conèixer paisatges exòtics i tastar nous sabors.",
+   "correcta": "Vivim en un món cada vegada més interconnectat, i això fa que molta gent se senta encuriosida per conéixer paisatges exòtics i tastar nous sabors.",
+   "erronia": "Vivim en un món cada vegada menys interconnectat, i això fa que molta gent se senta encuriosida per conéixer paisatges exòtics i tastar nous sabors.",
+   "tros_error": "cada vegada menys interconnectat",
+   "error": "«més» → «menys» (sentit contrari)"
+  },
+  {
+   "id": "BM-AVL-027",
+   "tipus": "concordanca",
+   "original": "Tanmateix, ara, l'avantprojecte de Llei de Funció Pública Valenciana recull aquesta reivindicació històrica de l'AVL.",
+   "correcta": "Tanmateix, ara, l'avantprojecte de Llei de Funció Pública Valenciana arreplega esta reivindicació històrica de l'AVL.",
+   "erronia": "Tanmateix, ara, l'avantprojecte de Llei de Funció Pública Valenciana arreplega este reivindicació històrica de l'AVL.",
+   "tros_error": "este reivindicació",
+   "error": "demostratiu masculí amb nom femení"
+  },
+  {
+   "id": "BM-AVL-037",
+   "tipus": "castellanisme",
+   "original": "S'usa en referència a la porció d'una substància que sobresurt de les ribes del recipient que la conté.",
+   "correcta": "S'usa en referència a la porció d'una substància que sobreïx de les vores del recipient que la conté.",
+   "erronia": "S'usa en referència a la porció d'una substància que sobreïx dels bordes del recipient que la conté.",
+   "tros_error": "dels bordes del recipient",
+   "error": "«bordes» (castellanisme) per «vores»"
+  },
+  {
+   "id": "BM-AVL-041",
+   "tipus": "fidelitat",
+   "original": "Les dones, en principi, hi anaven a rentar; però, entre rentada i rentada, hi havia temps per a fer petar la xerrada.",
+   "correcta": "Les dones, en principi, hi anaven a llavar; però, entre llavada i llavada, hi havia temps per a fer petar la xarrada.",
+   "erronia": "Les dones, en principi, hi anaven a cosir; però, entre llavada i llavada, hi havia temps per a fer petar la xarrada.",
+   "tros_error": "hi anaven a cosir",
+   "error": "«llavar» → «cosir» (canvi de sentit)"
+  },
+  {
+   "id": "BM-AVL-050",
+   "tipus": "fidelitat",
+   "original": "Després de l'aprovació per part del consistori, s'obre un període d'exposició al públic i d'al·legacions.",
+   "correcta": "Després de l'aprovació per part del consistori, s'obri un període d'exposició al públic i d'al·legacions.",
+   "erronia": "Després de l'aprovació per part del consistori, s'obri un període d'exposició al públic.",
+   "tros_error": "exposició al públic.",
+   "error": "omet «i d'al·legacions»"
+  },
+  {
+   "id": "BM-AVL-055",
+   "tipus": "fidelitat",
+   "original": "En la seva opinió, l'espectacle obre noves lectures de l'obra de l'escriptor de Sueca.",
+   "correcta": "En la seua opinió, l'espectacle obri noves lectures de l'obra de l'escriptor de Sueca.",
+   "erronia": "En la seua opinió, l'espectacle obri noves lectures de l'obra de l'escriptor d'Alzira.",
+   "tros_error": "l'escriptor d'Alzira",
+   "error": "canvia el lloc (Sueca → Alzira)"
+  },
+  {
+   "id": "BM-AVL-059",
+   "tipus": "fidelitat",
+   "original": "En el primer cas s'està dient de manera emfàtica que jo he estat testimoni del que estic contant; ningú m'ho ha contat.",
+   "correcta": "En el primer cas s'està dient de manera emfàtica que jo he sigut testimoni del que estic contant; ningú m'ho ha contat.",
+   "erronia": "En el primer cas s'està dient de manera emfàtica que jo he sigut testimoni del que estàs contant; ningú m'ho ha contat.",
+   "tros_error": "del que estàs contant",
+   "error": "canvia la persona (jo → tu)"
+  },
+  {
+   "id": "BM-AVL-066",
+   "tipus": "gramatica",
+   "original": "L'estudi dels noms geogràfics amb aquest mètode permet aprofundir en la informació i donar coherència al corpus.",
+   "correcta": "L'estudi dels noms geogràfics amb este mètode permet aprofundir en la informació i donar coherència al corpus.",
+   "erronia": "L'estudi dels noms geogràfics amb este mètode permeten aprofundir en la informació i donar coherència al corpus.",
+   "tros_error": "amb este mètode permeten aprofundir",
+   "error": "verb en plural amb subjecte singular"
+  },
+  {
+   "id": "BM-AVL-088",
+   "tipus": "ortografia",
+   "original": "Inicialment, aquesta aplicació informàtica va néixer en l'àmbit empresarial amb l'objectiu de facilitar una pluja d'idees sobre algun tema.",
+   "correcta": "Inicialment, esta aplicació informàtica va nàixer en l'àmbit empresarial amb l'objectiu de facilitar una pluja d'idees sobre algun tema.",
+   "erronia": "Inicialment, esta aplicació informàtica va nàixer en l'àmbit empresarial amb l'objectiu de facilitar una pluja de idees sobre algun tema.",
+   "tros_error": "una pluja de idees",
+   "error": "falta l'apòstrof"
+  },
+  {
+   "id": "BM-AVL-100",
+   "tipus": "fidelitat",
+   "original": "Aquest import s'ha repartit entre les seixanta-nou sol·licituds que han complert els requisits de la convocatòria.",
+   "correcta": "Este import s'ha repartit entre les seixanta-nou sol·licituds que han complit els requisits de la convocatòria.",
+   "erronia": "Este import s'ha repartit entre les setanta-nou sol·licituds que han complit els requisits de la convocatòria.",
+   "tros_error": "les setanta-nou sol·licituds",
+   "error": "canvia el número (69 → 79)"
+  },
+  {
+   "id": "BM-AVL-113",
+   "tipus": "fidelitat",
+   "original": "Aquestes activitats, que no formen part de les competències de l'AVL, continuïn vulnerant l'ordenament jurídic, segons s'apunta en el nou informe.",
+   "correcta": "Estes activitats, que no formen part de les competències de l'AVL, continuen vulnerant l'ordenament jurídic, segons s'apunta en el nou informe.",
+   "erronia": "Estes activitats, que no formen part de les competències de l'AVL, continuen respectant l'ordenament jurídic, segons s'apunta en el nou informe.",
+   "tros_error": "continuen respectant",
+   "error": "sentit contrari (vulnerar → respectar)"
+  },
+  {
+   "id": "BM-AVL-121",
+   "tipus": "fidelitat",
+   "original": "Així i tot, els estudiosos de la llengua detecten a cops errades importants en els materials que estudien.",
+   "correcta": "Així i tot, els estudiosos de la llengua detecten a vegades errades importants en els materials que estudien.",
+   "erronia": "Així i tot, els estudiosos de la llengua detecten sempre errades importants en els materials que estudien.",
+   "tros_error": "detecten sempre errades",
+   "error": "«a vegades» → «sempre»"
+  },
+  {
+   "id": "BM-AVL-134",
+   "tipus": "fidelitat",
+   "original": "Les rates penades són cegues; es guien i cacen per ecolocalització, a partir dels sons que emeten i recuperen en les seves grans orelles.",
+   "correcta": "Les rates penades són cegues; es guien i cacen per ecolocalització, a partir dels sons que emeten i recuperen en les seues grans orelles.",
+   "erronia": "Les rates penades són sordes; es guien i cacen per ecolocalització, a partir dels sons que emeten i recuperen en les seues grans orelles.",
+   "tros_error": "Les rates penades són sordes",
+   "error": "«cegues» → «sordes»"
+  },
+  {
+   "id": "BM-AVL-143",
+   "tipus": "fidelitat",
+   "original": "També la denominació cadernera, amb què hem encapçalat aquest article —la més general en el conjunt del domini lingüístic—, segueix aquest mateix patró.",
+   "correcta": "També la denominació cadernera, amb què hem encapçalat este article —la més general en el conjunt del domini lingüístic—, seguix este mateix patró.",
+   "erronia": "També la denominació cadernera, amb què hem encapçalat este article —la més general en el conjunt del domini lingüístic—, seguix un patró diferent.",
+   "tros_error": "seguix un patró diferent",
+   "error": "sentit contrari"
+  },
+  {
+   "id": "BM-AVL-148",
+   "tipus": "fidelitat",
+   "original": "Amb aquesta varietat de raïm s'elabora un vi anomenat fondellol, típic de la Marina Alta, que s'envelleix en bóta durant més de vuit anys.",
+   "correcta": "Amb esta varietat de raïm s'elabora un vi anomenat fondellol, típic de la Marina Alta, que s'envellix en bóta durant més de huit anys.",
+   "erronia": "Amb esta varietat de raïm s'elabora un vi anomenat fondellol, típic de la Marina Alta, que s'envellix en bóta durant més de huit mesos.",
+   "tros_error": "durant més de huit mesos",
+   "error": "«anys» → «mesos»"
+  },
+  {
+   "id": "BM-AVL-155",
+   "tipus": "gramatica",
+   "original": "Durant els darrers mesos s'ha aprovat la incorporació d'algunes d'aquestes fórmules fixades; poc dalt o baix, és a dir, aproximadament, una trentena.",
+   "correcta": "Durant els últims mesos s'ha aprovat la incorporació d'algunes d'estes fórmules fixades; poc dalt o baix, és a dir, aproximadament, una trentena.",
+   "erronia": "Durant els últims mesos s'han aprovat la incorporació d'algunes d'estes fórmules fixades; poc dalt o baix, és a dir, aproximadament, una trentena.",
+   "tros_error": "s'han aprovat la incorporació",
+   "error": "verb en plural amb subjecte singular"
+  },
+  {
+   "id": "BM-AVL-167",
+   "tipus": "fidelitat",
+   "original": "L'AVL té vocació de servei públic, i amb aquest butlletí que iniciem donem un pas més de servei i de transparència.",
+   "correcta": "L'AVL té vocació de servici públic, i amb este butlletí que iniciem donem un pas més de servici i de transparència.",
+   "erronia": "L'AVL té vocació de servici privat, i amb este butlletí que iniciem donem un pas més de servici i de transparència.",
+   "tros_error": "vocació de servici privat",
+   "error": "«públic» → «privat»"
+  },
+  {
+   "id": "BM-AVL-173",
+   "tipus": "castellanisme",
+   "original": "Tenim el desig de continuar prestant aquest servei a la societat, en general, i als investigadors, en particular.",
+   "correcta": "Tenim el desig de continuar prestant este servici a la societat, en general, i als investigadors, en particular.",
+   "erronia": "Tenim el deseo de continuar prestant este servici a la societat, en general, i als investigadors, en particular.",
+   "tros_error": "Tenim el deseo de",
+   "error": "«deseo» (castellà) per «desig»"
+  },
+  {
+   "id": "BM-AVL-190",
+   "tipus": "castellanisme",
+   "original": "Viuen associats en ambients aquàtics, necessaris per al creixement de les seves larves, que muden de pell de vuit a quinze cops.",
+   "correcta": "Viuen associats en ambients aquàtics, necessaris per al creixement de les seues larves, que muden de pell de huit a quinze vegades.",
+   "erronia": "Viuen associats en ambients aquàtics, necessaris per al creixement de les seues larves, que muden de piel de huit a quinze vegades.",
+   "tros_error": "que muden de piel",
+   "error": "«piel» (castellà) per «pell»"
+  },
+  {
+   "id": "BM-AVL-201",
+   "tipus": "concordanca",
+   "original": "Sabent això, que tots vostès, i molt especialment les dones que celebrin avui la seva onomàstica, tinguen un feliç dia!",
+   "correcta": "Sabent això, que tots vostés, i molt especialment les dones que celebren hui la seua onomàstica, tinguen un feliç dia!",
+   "erronia": "Sabent això, que tots vostés, i molt especialment les dones que celebren hui el seu onomàstica, tinguen un feliç dia!",
+   "tros_error": "el seu onomàstica",
+   "error": "article i possessiu masculins amb nom femení"
+  }
+ ]
+}
