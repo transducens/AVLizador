@@ -144,6 +144,9 @@ for c in $CONJUNTS; do
     case "$c" in
         manual) FITXERS=("$BASELINE/copia.json" "$BASELINE/ollama_gemma3-12b.json" "$ENTRADES/manual/avlizador.json") ;;
         homografs|homografs_v2) FITXERS=("$ENTRADES/$c/avlizador.json" "$ENTRADES/$c/motor.json") ;;
+        sintetic)  # benchmark_sintetic.json (26/11/2026): versió correcta i amb error de cada frase
+            "$PYTHON" "$SCRIPT_DIR/sintetic.py" prepara --eixida "$ENTRADES/sintetic"
+            FITXERS=("$ENTRADES/sintetic/correcta.json" "$ENTRADES/sintetic/erronia.json") ;;
         *) echo "ERROR: conjunt desconegut: $c" >&2; exit 1 ;;
     esac
     echo "== $c =="
