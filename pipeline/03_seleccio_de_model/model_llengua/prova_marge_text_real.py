@@ -26,9 +26,17 @@ real i si eixes traduccions noves són bones.
    i 1:4); l'informe afig les frases on la mescla no coincidix amb el sistema
    amb l'últim marge. Els models de la mescla es busquen en `--dir-models`.
 
+5. (26/11/2026) Amb `--alt CLAU`, cada frase es puntua també amb un altre
+   KenLM del comparador (`compara_models.py`, p. ex.
+   `kenlm_dogv2_sint3_fs_c1`: el del sistema + el corpus sintètic d'homògrafs
+   x3, amb la taula de freqüències del sistema; document viu, 4.29), amb el
+   criteri del sistema i l'últim marge; l'informe afig les frases on no
+   coincidix amb el sistema.
+
 Ús (en Abaco o on hi haja `kenlm`; el model de la 2.0.0 en `AVLIZADOR_KENLM_DIR`):
     python pipeline/03_seleccio_de_model/model_llengua/prova_marge_text_real.py --per-paraula 200
     python .../prova_marge_text_real.py --limit-linies 20000 --per-paraula 5   # prova
+    python .../prova_marge_text_real.py --marges 1 --alt kenlm_dogv2_sint3_fs_c1
 """
 
 from __future__ import annotations
@@ -93,6 +101,25 @@ def clau_mescla(marge: float, desempat: float) -> str:
     return f"mescla m{marge:g} d{desempat:g}"
 
 
+def clau_alt(clau: str) -> str:
+    """Nom del model alternatiu en l'eixida.
+
+    >>> clau_alt("kenlm_dogv2_sint3_fs_c1")
+    'alt kenlm_dogv2_sint3_fs_c1'
+    """
+    return f"alt {clau}"
+
+
+def puntuador_alt(dir_models: Path, clau: str):
+    """26/11/2026: un altre KenLM del comparador (`Carregador.puntuador`)."""
+    import sys
+
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from compara_models import Carregador
+
+    return Carregador(dir_models, None).puntuador(clau)
+
+
 def mescla_ref(dir_models: Path):
     """23/11/2026: la mescla formes + lemes parcials amb el context lematitzat
     una vegada (`kenlm_mescla_ref_dogv2_c1` del comparador, document viu 4.23)."""
@@ -116,7 +143,7 @@ def _decisions(forma, punt, punts, text_motor, criteris: dict) -> dict:
 
 
 def avalua(mostres: dict, marges: list[float], dir_kenlm: str | None, mescla=None,
-           criteris_mescla: list[tuple[float, float]] = ()) -> list[dict]:
+           criteris_mescla: list[tuple[float, float]] = (), alt: tuple[str, object] | None = None) -> list[dict]:
     from avlizador.avaluacio.metriques import normalitza_apostrofa
     from avlizador.traductor_cat_val.model_llengua import (CONCORDANCA_PER_DEFECTE, CRITERI_KENLM, _motor,
                                                            puntua_punts, sistema_kenlm)
@@ -156,6 +183,15 @@ def avalua(mostres: dict, marges: list[float], dir_kenlm: str | None, mescla=Non
                         fila["puntuacions_mescla"] = {c: {k: round(v[k], 3) for k in ("lp", "prior", "n")}
                                                       for c, v in punt_m.puntuacions.items()}
                         fila["decisions"].update(_decisions(forma, punt_m, punts_m, text_m, criteris_m))
+                if alt is not None:
+                    text_a, punts_a = puntua(text, alt[1])
+                    punt_a = next((p for p in punts_a if p.paraula.lower() == forma), None)
+                    if punt_a is not None:
+                        fila["puntuacions_alt"] = {c: {k: round(v[k], 3) for k in ("lp", "prior", "n")}
+                                                   for c, v in punt_a.puntuacions.items()}
+                        fila["sentit_alt"] = punt_a.sentit
+                        fila["decisions"].update(_decisions(forma, punt_a, punts_a, text_a,
+                                                            {clau_alt(alt[0]): criteris[str(marges[-1])]}))
             files.append(fila)
     return files
 
@@ -172,9 +208,9 @@ def _canvis(files: list[dict], a: str, b: str) -> list[str]:
 
 
 def informe(files: list[dict], comptes: dict, total: int, marges: list[float],
-            criteris_mescla: list[tuple[float, float]] = ()) -> str:
+            criteris_mescla: list[tuple[float, float]] = (), alt: str | None = None) -> str:
     ms = [str(m) for m in marges]
-    mes = [clau_mescla(m, d) for m, d in criteris_mescla]
+    mes = [clau_mescla(m, d) for m, d in criteris_mescla] + ([clau_alt(alt)] if alt else [])
     noms = [f"marge {m}" for m in ms] + mes
     md = ["# Marge del sistema 2.0.0 en text català real (MaCoCu)", "",
           f"{total:,} frases de `catala_pur.jsonl`; mostra a l'atzar per paraula. «Tradueix» = la tria no és "
@@ -190,7 +226,8 @@ def informe(files: list[dict], comptes: dict, total: int, marges: list[float],
         det = [f for f in fs if f["detectat"]]
         cel = [str(sum(f["decisions"].get(m, {}).get("traduix", False) for f in det)) for m in ms + mes]
         md.append(f"| {forma} | {comptes.get(forma, 0)} | {len(fs)} | {len(det)} | " + " | ".join(cel) + " |")
-    md += _canvis(files, ms[0], ms[-1])
+    if len(ms) > 1:
+        md += _canvis(files, ms[0], ms[-1])
     for m in mes:  # la mescla davant del sistema amb l'últim marge
         md += _canvis(files, ms[-1], m)
     return "\n".join(md) + "\n"
@@ -209,6 +246,8 @@ def main(argv: list[str] | None = None) -> None:
                         "criteris de la mescla (per defecte 3:4 1:4)")
     p.add_argument("--dir-models", type=Path, default=ARREL / "dades" / "macocu",
                    help="carpeta amb kenlm/ (models de la mescla), com en compara_models.py")
+    p.add_argument("--alt", default=None, metavar="CLAU",
+                   help="(26/11/2026) puntua també amb aquest KenLM del comparador (p. ex. kenlm_dogv2_sint3_fs_c1)")
     a = p.parse_args(argv)
     criteris_mescla = []
     if a.mescla is not None:
@@ -221,16 +260,18 @@ def main(argv: list[str] | None = None) -> None:
     print(f"Recompte: {total} frases, {time.time() - t0:.0f} s; {dict(sorted(comptes.items()))}", flush=True)
     t0 = time.time()
     mescla = mescla_ref(a.dir_models) if criteris_mescla else None
-    files = avalua(mostres, a.marges, a.dir_kenlm, mescla, criteris_mescla)
+    alt = (a.alt, puntuador_alt(a.dir_models, a.alt)) if a.alt else None
+    files = avalua(mostres, a.marges, a.dir_kenlm, mescla, criteris_mescla, alt)
     print(f"Avaluació: {len(files)} frases, {time.time() - t0:.0f} s", flush=True)
-    sufix = f"{datetime.now():%Y%m%d_%H%M}" + (f"_limit{a.limit_linies}" if a.limit_linies else "")
+    sufix = (f"{datetime.now():%Y%m%d_%H%M}" + (f"_limit{a.limit_linies}" if a.limit_linies else "")
+             + (f"_{a.alt}" if a.alt else ""))
     RESULTATS.mkdir(parents=True, exist_ok=True)
     (RESULTATS / f"prova_marge_text_real_{sufix}.json").write_text(
         json.dumps({"total": total, "comptes": comptes, "marges": a.marges, "mescla": criteris_mescla,
-                    "per_paraula": a.per_paraula, "llavor": a.llavor, "files": files},
+                    "per_paraula": a.per_paraula, "llavor": a.llavor, "alt": a.alt, "files": files},
                    ensure_ascii=False, indent=1), encoding="utf-8")
     (RESULTATS / f"prova_marge_text_real_{sufix}.md").write_text(
-        informe(files, comptes, total, a.marges, criteris_mescla), encoding="utf-8")
+        informe(files, comptes, total, a.marges, criteris_mescla, a.alt), encoding="utf-8")
     print(f"-> {RESULTATS / f'prova_marge_text_real_{sufix}.md'}")
 
 
