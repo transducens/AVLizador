@@ -1,0 +1,227 @@
+{
+ "sistema": "Motor + KenLM + sentit",
+ "clau": "avlizador",
+ "model": "qwen3.6:35b-a3b",
+ "pensa": true,
+ "mode": "amb_origen_valencia",
+ "prompt": "valencia_va",
+ "empremta_prompt": "36f78e02",
+ "timestamp": "2026-11-26T08:50:32",
+ "resultats": [
+  {
+   "id": "HG2-004",
+   "entrada": "Afegeix una nou picada a l'amanida.",
+   "hipotesi": "Afig una anou picada a l'ensalada.",
+   "referencia": "Afig una anou picada a l'ensalada.",
+   "nota": 95.0,
+   "nota_spans": 97.5,
+   "error_spans": [
+    {
+     "severity": "minor",
+     "category": "terminology/inappropriate for context",
+     "text": "ensalada"
+    }
+   ]
+  },
+  {
+   "id": "HG2-010",
+   "entrada": "El seu fill petit té nou anys.",
+   "hipotesi": "El seu fill xicotet té nou anys.",
+   "referencia": "El seu fill xicotet té nou anys.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-020",
+   "entrada": "Els veïns nous són molt amables.",
+   "hipotesi": "Els veïns nous són molt amables.",
+   "referencia": "Els veïns nous són molt amables.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-021",
+   "entrada": "La manca de pluja ha arruïnat la collita.",
+   "hipotesi": "La manca de pluja ha arruïnat la collita.",
+   "referencia": "La falta de pluja ha arruïnat la collita.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-027",
+   "entrada": "A l'equip li manca un jugador per poder començar.",
+   "hipotesi": "A l'equip li manca un jugador per a poder començar.",
+   "referencia": "A l'equip li manca un jugador per a poder començar.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-030",
+   "entrada": "La dona manca escrivia amb la mà esquerra.",
+   "hipotesi": "La dona manca escrivia amb la mà esquerra.",
+   "referencia": "La dona manca escrivia amb la mà esquerra.",
+   "nota": 75.0,
+   "nota_spans": 97.5,
+   "error_spans": [
+    {
+     "severity": "minor",
+     "category": "fluency/grammar",
+     "text": "manca"
+    }
+   ]
+  },
+  {
+   "id": "HG2-056",
+   "entrada": "La factura es deu pagar abans de divendres.",
+   "hipotesi": "La factura es deu pagar abans de divendres.",
+   "referencia": "La factura es deu pagar abans de divendres.",
+   "nota": 85.0,
+   "nota_spans": 97.5,
+   "error_spans": [
+    {
+     "severity": "minor",
+     "category": "fluency/grammar",
+     "text": "es deu pagar"
+    }
+   ]
+  },
+  {
+   "id": "HG2-057",
+   "entrada": "Posa els llençols a la rentadora.",
+   "hipotesi": "Posa els llençols a la rentadora.",
+   "referencia": "Posa els llençols a la llavadora.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-062",
+   "entrada": "Una dona rentadora portava la roba al riu.",
+   "hipotesi": "Una dona rentadora portava la roba al riu.",
+   "referencia": "Una dona rentadora portava la roba al riu.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-092",
+   "entrada": "Al paquet hi ha tres calces de colors.",
+   "hipotesi": "Al paquet hi ha tres calces de colors.",
+   "referencia": "Al paquet hi ha tres bragues de colors.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-094",
+   "entrada": "El patge duia unes calces vermelles i una gorra.",
+   "hipotesi": "El patge duia unes calces vermelles i una gorra.",
+   "referencia": "El patge duia unes calces vermelles i una gorra.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-097",
+   "entrada": "S'ha estirat a la gandula de la piscina.",
+   "hipotesi": "S'ha estirat a l'hamaca de la piscina.",
+   "referencia": "S'ha estirat a l'hamaca de la piscina.",
+   "nota": 65.0,
+   "nota_spans": 95.0,
+   "error_spans": [
+    {
+     "severity": "minor",
+     "category": "fluency/grammar",
+     "text": "l'hamaca"
+    },
+    {
+     "severity": "minor",
+     "category": "accuracy/mistranslation",
+     "text": "hamaca"
+    }
+   ]
+  },
+  {
+   "id": "HG2-101",
+   "entrada": "La meva germana és molt gandula i no ajuda mai.",
+   "hipotesi": "La meua germana és molt gandula i no ajuda mai.",
+   "referencia": "La meua germana és molt gandula i no ajuda mai.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-105",
+   "entrada": "Han posat gandules noves a la platja.",
+   "hipotesi": "Han posat gandules noves a la platja.",
+   "referencia": "Han posat hamaques noves a la platja.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-118",
+   "entrada": "Una dona panotxa venia hortalisses al mercat.",
+   "hipotesi": "Una dona panotxa venia hortalisses al mercat.",
+   "referencia": "Una dona panotxa venia hortalisses al mercat.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-123",
+   "entrada": "Venen panotxes torrades a la fira.",
+   "hipotesi": "Venen panolles torrades a la fira.",
+   "referencia": "Venen panolles torrades a la fira.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-135",
+   "entrada": "No siguis fartanera i deixa'n per als altres.",
+   "hipotesi": "No sigues fartanera i deixa'n per als altres.",
+   "referencia": "No sigues fartanera i deixa'n per als altres.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-139",
+   "entrada": "No són bones aquestes fartaneres de dolços.",
+   "hipotesi": "No són bones estes fartaneres de dolços.",
+   "referencia": "No són bones estes fartades de dolços.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-151",
+   "entrada": "La clau de la seva reeixida és la constància.",
+   "hipotesi": "La clau de la seua reeixida és la constància.",
+   "referencia": "La clau de la seua reeixida és la constància.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "HG2-160",
+   "entrada": "Ha acumulat moltes reeixides al llarg de la carrera.",
+   "hipotesi": "Ha acumulat moltes reeixides al llarg de la carrera.",
+   "referencia": "Ha acumulat moltes reeixides al llarg de la carrera.",
+   "nota": 85.0,
+   "nota_spans": 97.5,
+   "error_spans": [
+    {
+     "severity": "minor",
+     "category": "style/awkward",
+     "text": "moltes reeixides"
+    }
+   ]
+  }
+ ]
+}
