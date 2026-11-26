@@ -581,10 +581,21 @@ class Cronometre:
             self.crides += 1
 
     def fixa_referencia(self, text: str) -> None:
-        """Lematitzar la referència també és temps del model (23/11/2026)."""
+        """Lematitzar la referència també és temps del model (23/11/2026).
+        Un model sense `fixa_referencia` (el KenLM de formes) no fa res: com que
+        `Cronometre` sempre té el mètode, `puntua_punts` el crida per a tots
+        (bug del 25/11/2026: el job 3488 va petar amb `kenlm_dogv2_c1`).
+
+        >>> class M:
+        ...     def logprob(self, t): return (-1.0, 1)
+        >>> Cronometre(M()).fixa_referencia("x")
+        """
+        fixa = getattr(self.model, "fixa_referencia", None)
+        if fixa is None:
+            return
         t0 = time.perf_counter()
         try:
-            self.model.fixa_referencia(text)
+            fixa(text)
         finally:
             self.segons += time.perf_counter() - t0
 
