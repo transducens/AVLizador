@@ -59,12 +59,15 @@ def toca(spans: list[dict], hipotesi: str, tros_error: str) -> bool:
     True
     >>> toca([{"text": "total"}], "La gasto total.", "La gasto")
     False
+    >>> toca([{"text": "no"}], "L'ajuntament aprovarà el pressupost.", "aprovarà|no")
+    True
     """
-    obj = paraules(tros_error)
-    for s in spans:
-        a = nf.amplia_tros(s.get("text", ""), hipotesi) or s.get("text", "")
-        if paraules(a) & obj:
-            return True
+    for alt in tros_error.split("|"):  # omissions: també la paraula que falta
+        obj = paraules(alt)
+        for s in spans:
+            a = nf.amplia_tros(s.get("text", ""), hipotesi) or s.get("text", "")
+            if paraules(a) & obj:
+                return True
     return False
 
 

@@ -1,0 +1,348 @@
+{
+ "sistema": "Versió correcta",
+ "clau": "correcta",
+ "model": "qwen3.6:35b-a3b",
+ "pensa": true,
+ "mode": "amb_origen_valencia",
+ "prompt": "valencia",
+ "empremta_prompt": "341f0eeb",
+ "timestamp": "2026-11-26T09:34:59",
+ "resultats": [
+  {
+   "id": "SJ-001",
+   "entrada": "Va rebre un cop al cap amb la porta.",
+   "hipotesi": "Va rebre un colp al cap amb la porta.",
+   "referencia": "Va rebre un colp al cap amb la porta.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-002",
+   "entrada": "Hem comprat un cotxe nou per al viatge.",
+   "hipotesi": "Hem comprat un cotxe nou per al viatge.",
+   "referencia": "Hem comprat un cotxe nou per al viatge.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-003",
+   "entrada": "Els cavallers duien calces de seda fins als genolls.",
+   "hipotesi": "Els cavallers duien calces de seda fins als genolls.",
+   "referencia": "Els cavallers duien calces de seda fins als genolls.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-004",
+   "entrada": "La meva cosina és molt gandula i no estudia mai.",
+   "hipotesi": "La meua cosina és molt gandula i no estudia mai.",
+   "referencia": "La meua cosina és molt gandula i no estudia mai.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-005",
+   "entrada": "Tinc deu euros a la butxaca.",
+   "hipotesi": "Tinc deu euros a la butxaca.",
+   "referencia": "Tinc deu euros a la butxaca.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-006",
+   "entrada": "La despesa total ha estat molt alta.",
+   "hipotesi": "El gasto total ha sigut molt alt.",
+   "referencia": "El gasto total ha sigut molt alt.",
+   "nota": 95.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-007",
+   "entrada": "M'he menjat el préssec més madur.",
+   "hipotesi": "M'he menjat la bresquilla més madura.",
+   "referencia": "M'he menjat la bresquilla més madura.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-008",
+   "entrada": "Amb aquesta finalitat, s'ha creat una comissió.",
+   "hipotesi": "Amb este fi, s'ha creat una comissió.",
+   "referencia": "Amb este fi, s'ha creat una comissió.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-009",
+   "entrada": "Les despeses previstes no s'han pagat.",
+   "hipotesi": "Els gastos previstos no s'han pagat.",
+   "referencia": "Els gastos previstos no s'han pagat.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-010",
+   "entrada": "Han tancat l'habitatge buit del costat.",
+   "hipotesi": "Han tancat la vivenda buida del costat.",
+   "referencia": "Han tancat la vivenda buida del costat.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-011",
+   "entrada": "Des de demà, l'oficina obrirà a les nou.",
+   "hipotesi": "Des de demà, l'oficina obrirà a les nou.",
+   "referencia": "Des de demà, l'oficina obrirà a les nou.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-012",
+   "entrada": "Bé, ara ja podem començar la reunió.",
+   "hipotesi": "Bé, ara ja podem començar la reunió.",
+   "referencia": "Bé, ara ja podem començar la reunió.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-013",
+   "entrada": "Encara no sabem fins quan durarà l'obra.",
+   "hipotesi": "Encara no sabem fins quan durarà l'obra.",
+   "referencia": "Encara no sabem fins quan durarà l'obra.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-014",
+   "entrada": "No obstant això, el projecte continua.",
+   "hipotesi": "No obstant això, el projecte continua.",
+   "referencia": "No obstant això, el projecte continua.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-015",
+   "entrada": "Després de dinar anirem a la platja.",
+   "hipotesi": "Després de dinar anirem a la platja.",
+   "referencia": "Després de dinar anirem a la platja.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-016",
+   "entrada": "Cal que tots els alumnes portin el llibre.",
+   "hipotesi": "Cal que tots els alumnes porten el llibre.",
+   "referencia": "Cal que tots els alumnes porten el llibre.",
+   "nota": 65.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "fluency/grammar",
+     "text": "porten"
+    }
+   ]
+  },
+  {
+   "id": "SJ-017",
+   "entrada": "Nosaltres arribem sempre a l'hora.",
+   "hipotesi": "Nosaltres arribem sempre a l'hora.",
+   "referencia": "Nosaltres arribem sempre a l'hora.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-018",
+   "entrada": "Si tingués temps, t'ajudaria.",
+   "hipotesi": "Si tinguera temps, t'ajudaria.",
+   "referencia": "Si tinguera temps, t'ajudaria.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-019",
+   "entrada": "Les noies que he vist eren germanes.",
+   "hipotesi": "Les xiques que he vist eren germanes.",
+   "referencia": "Les xiques que he vist eren germanes.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-020",
+   "entrada": "Espero que vinguin a la festa.",
+   "hipotesi": "Espere que vinguen a la festa.",
+   "referencia": "Espere que vinguen a la festa.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-021",
+   "entrada": "L'ajuntament no aprovarà el pressupost aquest any.",
+   "hipotesi": "L'ajuntament no aprovarà el pressupost este any.",
+   "referencia": "L'ajuntament no aprovarà el pressupost este any.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-022",
+   "entrada": "La sol·licitud s'ha de presentar abans del 15 de març.",
+   "hipotesi": "La sol·licitud s'ha de presentar abans del 15 de març.",
+   "referencia": "La sol·licitud s'ha de presentar abans del 15 de març.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-023",
+   "entrada": "Hi van assistir tres-cents veïns.",
+   "hipotesi": "Hi van assistir tres-cents veïns.",
+   "referencia": "Hi van assistir tres-cents veïns.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-024",
+   "entrada": "El servei funciona de dilluns a divendres.",
+   "hipotesi": "El servici funciona de dilluns a divendres.",
+   "referencia": "El servici funciona de dilluns a divendres.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-025",
+   "entrada": "Els nens juguen al pati del col·legi.",
+   "hipotesi": "Els xiquets juguen al pati del col·legi.",
+   "referencia": "Els xiquets juguen al pati del col·legi.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-026",
+   "entrada": "Aquesta tarda aniré a comprar fruita.",
+   "hipotesi": "Esta vesprada aniré a comprar fruita.",
+   "referencia": "Esta vesprada aniré a comprar fruita.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-027",
+   "entrada": "El nen s'ha menjat una panotxa sencera.",
+   "hipotesi": "El xiquet s'ha menjat una panolla sencera.",
+   "referencia": "El xiquet s'ha menjat una panolla sencera.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-028",
+   "entrada": "Posa la roba bruta a la rentadora.",
+   "hipotesi": "Posa la roba bruta a la llavadora.",
+   "referencia": "Posa la roba bruta a la llavadora.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-029",
+   "entrada": "Els meus avis tenen una casa al poble.",
+   "hipotesi": "Els meus avis tenen una casa al poble.",
+   "referencia": "Els meus avis tenen una casa al poble.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-030",
+   "entrada": "Han trobat les eines al garatge.",
+   "hipotesi": "Han trobat les ferramentes al garatge.",
+   "referencia": "Han trobat les ferramentes al garatge.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-031",
+   "entrada": "M'he estirat a la gandula i m'he menjat una nou.",
+   "hipotesi": "M'he estirat a l'hamaca i m'he menjat una anou.",
+   "referencia": "M'he estirat a l'hamaca i m'he menjat una anou.",
+   "nota": 95.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-032",
+   "entrada": "Les calces són al calaix de dalt.",
+   "hipotesi": "Les bragues són al calaix de dalt.",
+   "referencia": "Les bragues són al calaix de dalt.",
+   "nota": 65.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "accuracy/mistranslation",
+     "text": "bragues"
+    }
+   ]
+  },
+  {
+   "id": "SJ-033",
+   "entrada": "Ahir vam fer una fartanera de dolços.",
+   "hipotesi": "Ahir vam fer una fartada de dolços.",
+   "referencia": "Ahir vam fer una fartada de dolços.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-034",
+   "entrada": "Aquesta decisió causa un perjudici als veïns.",
+   "hipotesi": "Esta decisió causa un perjuí als veïns.",
+   "referencia": "Esta decisió causa un perjuí als veïns.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-035",
+   "entrada": "Surt aviat de casa perquè no arribis tard.",
+   "hipotesi": "Ix prompte de casa perquè no arribes tard.",
+   "referencia": "Ix prompte de casa perquè no arribes tard.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  },
+  {
+   "id": "SJ-036",
+   "entrada": "Ell comprèn bé el problema però no té feina.",
+   "hipotesi": "Ell comprén bé el problema però no té faena.",
+   "referencia": "Ell comprén bé el problema però no té faena.",
+   "nota": 100.0,
+   "nota_spans": 100,
+   "error_spans": []
+  }
+ ]
+}
