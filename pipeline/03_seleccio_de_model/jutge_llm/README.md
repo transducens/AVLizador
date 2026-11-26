@@ -447,3 +447,40 @@ No es llança el manual. L'única via que queda és un glossari amb el
 significat de **totes** les lectures («calces» = mitges o calces d'època →
 es queda «calces»), i el lèxic no el té: cal completar-lo (canvi de dades,
 el decidixen l'usuari i el company).
+
+## Prompt «nota»: només la nota, una petició per text (26/11/2026)
+
+Petició de l'usuari: que el jutge no busque errors i que només pose la
+nota, amb cada versió en una petició a banda (el català sense traduir,
+AVLizador i la referència valenciana). `--prompt nota` (empremta
+`ecd25e31`): el mateix contingut que «valencia» (l'original català, l'escala
+de 0 a 100 i el bloc de la norma valenciana, reescrit per a la nota: «Do NOT
+lower the score for a Valencian form…»), una sola fase i la resposta
+`{"score": N}`. Conjunt `manual3` (`CONJUNTS=manual3 PENSA=1`): el manual
+mesclat (458) amb el català sense traduir, AVLizador 2.0.1 i la referència.
+Job 2672 en caiman (1.142 textos, amb raonament); resultats en
+`resultats/nota/manual3/qwen3.6-35b-a3b_pensa/`.
+
+| Text | Nota | BOE (246) | AVL (212) | Frases per davall de 100 |
+|---|---|---|---|---|
+| Català sense traduir | 99,85 | 100,00 | 99,67 | 4 |
+| AVLizador 2.0.1 | 99,53 | 99,29 | 99,80 | 23 |
+| Referència valenciana | 98,29 | 96,92 | 99,87 | 66 |
+
+- **Referència contra català**: guanya la referència 4, empat 388, guanya
+  el català 66 (62 del BOE). En l'AVL, 4 / 204 / 4: ja no castiga el
+  valencià de la referència.
+- **La referència del BOE baixa per apartar-se de l'original**: futurs on
+  el català diu present («pot» → «podrà», «correspon» → «correspondrà»), un
+  «no» omés (BM-BOE-185, 48) i reformulacions.
+- **AVLizador baixa en 23 frases, quasi totes per formes valencianes
+  correctes** que el jutge no reconeix: el subjuntiu en «-en» («manifesten»,
+  «implanten», «efectuen»; el pren per indicatiu, unes 14 de les 18 del BOE),
+  «ferramenta», «perjuí», «comités», «hereua», «reduïxen», «butla» i
+  «sèptim». L'únic cas discutible és «finalitats» → «fins» (BM-BOE-103, 65).
+- Davant de «valencia» en dues fases (job 2667) les notes s'apreten (BOE
+  d'AVLizador 97,08 → 99,29, referència del BOE 91,18 → 96,92), però l'ordre
+  i els motius són els mateixos.
+
+**Aparcat (decisió de l'usuari, 26/11)**: queda com una prova més; el
+català sense traduir continua per davant.
