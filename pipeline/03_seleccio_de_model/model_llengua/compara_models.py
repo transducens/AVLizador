@@ -27,6 +27,7 @@ queda per defecte). Ací cada model és un puntuador:
 | `kenlm_dogv2_avl_c1` | ídem + la AVL (sense els documents ni les frases dels benchmarks; `termes_ambigus.py`) |
 | `kenlm_dogv2_avl_ua_c1` | ídem + les notícies de la UA (frases de GD ≥ 0,8) |
 | `kenlm_dogv2_sint_c1`, `kenlm_dogv2_sint3_c1` | el KenLM del sistema 2.0.1 (`valencia_net_dogv2`) + les frases sintètiques d'homògrafs (`dades/sintetic_homografs/`, 25/11/2026; `prova_sintetic.sh`), una vegada o tres (la poda lleva els n-grames que només hi són una vegada) |
+| `kenlm_dogv2_sint_fs_c1`, `kenlm_dogv2_sint3_fs_c1` | els mateixos KenLM amb sintètic, però amb la taula de freqüències del sistema (`valencia_net_dogv2_freq.json`): separa el que aporta el KenLM del que canvia el prior (26/11/2026) |
 | `kenlm_lemes_tot_dogv2`, `kenlm_lemes_tot_dogv2_c1`, `kenlm_mescla_tot_dogv2_c1` | ídem, però amb TOT el text a lema, també les candidates i les que concorden (`LematitzadorLM(tot=True)`); el prior, de la taula de formes de la 2.0.0 (20/11/2026; `TOT=1 prova_lemes_dogv2.sh`) |
 | `kenlm_lemes_dogv2`, `kenlm_lemes_dogv2_c1`, `kenlm_mescla_dogv2_c1` | com `kenlm_lemes*` i `kenlm_mescla_c1`, però amb el text del sistema 2.0.0 (`valencia_net_dogv2`) passat a lemes; la mescla, amb el KenLM de formes de la 2.0.0 (20/11/2026; `prova_lemes_dogv2.sh`) |
 | `kenlm_lemes_ref_dogv2`, `kenlm_lemes_tot_ref_dogv2` (+ `_c1`), `kenlm_mescla_ref_dogv2_c1`, `kenlm_mescla_tot_ref_dogv2_c1` | els mateixos, però amb el context lematitzat UNA vegada, sobre la frase del motor (`KenLMLemes(referencia=True)`, 23/11/2026; `REF=1 prova_lemes_dogv2.sh`) |
@@ -125,6 +126,7 @@ MODELS = ("motor", "flor", "kenlm_cat", "kenlm_cat30", "kenlm_val", "kenlm_val_n
           "kenlm_val_net_dogv_np", "kenlm_val_tot_np", "kenlm_val_net_dogv_bi", "kenlm_val_net_dogv_c1", "kenlm_lemes", "kenlm_lemes_c1",
           "kenlm_mescla_c1", "kenlm_o6_c1", "kenlm_o7_c1", "kenlm_o8_c1", "kenlm_dogv2_c1", "kenlm_dogv2_avl_c1",
           "kenlm_dogv2_avl_ua_c1", "kenlm_dogv2_sint_c1", "kenlm_dogv2_sint3_c1",
+          "kenlm_dogv2_sint_fs_c1", "kenlm_dogv2_sint3_fs_c1",
           "kenlm_lemes_dogv2", "kenlm_lemes_dogv2_c1", "kenlm_mescla_dogv2_c1",
           "kenlm_lemes_tot_dogv2", "kenlm_lemes_tot_dogv2_c1", "kenlm_mescla_tot_dogv2_c1",
           "kenlm_lemes_ref_dogv2", "kenlm_lemes_ref_dogv2_c1", "kenlm_mescla_ref_dogv2_c1",
@@ -158,6 +160,11 @@ CORPUS_KENLM = {"kenlm_dogv2_c1": "valencia_net_dogv2", "kenlm_dogv2_avl_c1": "v
                 "kenlm_dogv2_avl_ua_c1": "valencia_net_dogv2_avl_ua",
                 # 25/11/2026: + les frases sintètiques d'homògrafs (`prova_sintetic.sh`).
                 "kenlm_dogv2_sint_c1": "valencia_net_dogv2_sint", "kenlm_dogv2_sint3_c1": "valencia_net_dogv2_sint3"}
+# 26/11/2026: els KenLM amb sintètic i la taula de freqüències del sistema (el prior, sense les
+# frases sintètiques: amb la seua taula, "gandula" 8 -> 113 i el prior empenyia a traduir-la).
+FREQ_SISTEMA_KENLM = {"kenlm_dogv2_sint_fs_c1": "valencia_net_dogv2_sint",
+                      "kenlm_dogv2_sint3_fs_c1": "valencia_net_dogv2_sint3"}
+FREQ_SISTEMA = "valencia_net_dogv2"
 # Fitxer de cada KenLM (dades/macocu/kenlm/<nom>_o5.binary i, si n'hi ha, <nom>_freq.json).
 # 11/11/2026: `_np` = sense poda; `valencia_tot_np` = net + DOGV + AVL + UA (GD >= 0,8), sense poda.
 FITXERS_KENLM = {"kenlm_cat": "macocu_tot", "kenlm_cat30": "macocu_30pc", "kenlm_val": "valencia",
@@ -498,6 +505,8 @@ class Carregador:
             return KenLM(self._kenlm("valencia_net_dogv", ORDRES_KENLM[clau]), 1.0, self._freq("valencia_net_dogv"))
         if clau in CORPUS_KENLM:  # 16/11/2026: el mateix amb més text
             return KenLM(self._kenlm(CORPUS_KENLM[clau]), 1.0, self._freq(CORPUS_KENLM[clau]))
+        if clau in FREQ_SISTEMA_KENLM:
+            return KenLM(self._kenlm(FREQ_SISTEMA_KENLM[clau]), 1.0, self._freq(FREQ_SISTEMA))
         ref = "_ref_" in clau  # 23/11/2026: context lematitzat una vegada (vore KenLMLemes)
         if clau in LEMES_KENLM:
             nom = LEMES_KENLM[clau]
@@ -539,6 +548,8 @@ class Carregador:
             return [self._nom_ordre("valencia_net_dogv", ORDRES_KENLM[clau])]
         if clau in CORPUS_KENLM:
             return [CORPUS_KENLM[clau]]
+        if clau in FREQ_SISTEMA_KENLM:
+            return [FREQ_SISTEMA_KENLM[clau]]
         if clau in LEMES_KENLM:
             return [LEMES_KENLM[clau]]
         if clau in LEMES_TOT_KENLM:

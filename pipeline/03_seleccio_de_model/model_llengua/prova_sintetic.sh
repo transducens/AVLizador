@@ -23,6 +23,7 @@
 # Ús (des de ~/scrapeo/AVLizador, en la branca kenlm-sintetic):
 #   bash pipeline/03_seleccio_de_model/model_llengua/prova_sintetic.sh
 #   NOMES_COMPARA=1 bash .../prova_sintetic.sh     # ja estan entrenats
+#   FS=1 NOMES_COMPARA=1 bash .../prova_sintetic.sh  # + amb la taula de freqüències del sistema
 # Resultats: pipeline/03_seleccio_de_model/resultats/compara_models_<data>_sintetic{,_detall}.{md,json}
 
 set -euo pipefail
@@ -58,9 +59,12 @@ fi
 DEP=()
 [[ ${#JOBS[@]} -gt 0 ]] && DEP=(--dependency=afterok:"$(IFS=:; echo "${JOBS[*]}")")
 
-MODELS="kenlm_dogv2_c1 kenlm_dogv2_sint_c1 kenlm_dogv2_sint3_c1"
+# MODELS= i ETIQUETA= canvien què es compara (26/11/2026: FS=1 afig els mateixos KenLM amb la
+# taula de freqüències del sistema, claus kenlm_dogv2_sint{,3}_fs_c1).
+MODELS="${MODELS:-kenlm_dogv2_c1 kenlm_dogv2_sint_c1 kenlm_dogv2_sint3_c1${FS:+ kenlm_dogv2_sint_fs_c1 kenlm_dogv2_sint3_fs_c1}}"
+ETIQUETA="${ETIQUETA:-sintetic${FS:+_fs}}"
 J3=$(cd "$MODEL_LL" && \
      MODELS="$MODELS" \
-     EXTRA="--benchmarks homografs homografs_v2 manual 151 --model-sentit $SENTIT --etiqueta sintetic --marges 1 --per-defecte catala --lams 1.5 --lams-colisio 0.75 --lams-irresoluble 1.25 --desempats 2 --detall" \
+     EXTRA="--benchmarks homografs homografs_v2 manual 151 --model-sentit $SENTIT --etiqueta $ETIQUETA --marges 1 --per-defecte catala --lams 1.5 --lams-colisio 0.75 --lams-irresoluble 1.25 --desempats 2 --detall" \
      sbatch --parsable --time=06:00:00 --job-name="compara-sintetic" ${DEP[@]+"${DEP[@]}"} compara_models.sh)
 echo "2. compara: $MODELS   job $J3${DEP:+ (després dels entrenaments)}"
