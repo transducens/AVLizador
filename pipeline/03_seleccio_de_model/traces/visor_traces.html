@@ -103,6 +103,10 @@ tr.win td { background: var(--ok-bg); }
 let DADES = /*__DADES__*/null;
 let TRACES = [], SEL = 0;
 const USADOS = new Set(["Gender", "VerbForm"]);
+function nomModel() {
+  const t = ((DADES && DADES.traces) || []).find(t => t.postprocessat && t.postprocessat.criteri && t.postprocessat.criteri.nom_model);
+  return t ? t.postprocessat.criteri.nom_model : "modelo";
+}
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
 const num = x => (x === null || x === undefined) ? "—" : Number(x).toFixed(2).replace(".", ",");
 
@@ -132,7 +136,7 @@ function pintaLlista() {
       <span class="txt muted">aciertos, quién decide y diferencias frente al margen</span></div>` : "") +
     f.map(([t, i]) => `<div class="item ${i === SEL ? "sel" : ""}" data-i="${i}">
       <span class="id">${esc(t.id)}</span>
-      ${t.postprocessat.entra ? '<span class="badge b-flor">FLOR</span>' : ""}
+      ${t.postprocessat.entra ? `<span class="badge b-flor">${esc(nomModel())}</span>` : ""}
       ${t.exacta === true ? '<span class="badge b-ok">exacta</span>' : t.exacta === false ? '<span class="badge b-ko">distinta</span>' : ""}
       ${teAvis(t) ? '<span class="badge b-warn">aviso</span>' : ""}
       <span class="txt">${esc(t.origen)}</span></div>`).join("") || '<div class="empty">Ninguna frase con estos filtros.</div>';
@@ -146,7 +150,7 @@ function vesA(id) {
 }
 
 function pintaResum() {
-  const DEC = {spacy: "spaCy", model: "FLOR", motor: "motor"};
+  const DEC = {spacy: "spaCy", model: nomModel(), motor: "motor", catala: "catalana", sentit: "sentido"};
   const perParaula = {}, punts = [];
   for (const t of TRACES) for (const p of t.postprocessat.punts || []) {
     punts.push([t, p]);
@@ -164,7 +168,7 @@ function pintaResum() {
       <span class="k">Quién decide</span><span class="v">${Object.entries(DEC).map(([k, v]) => `${v}: ${punts.filter(([, p]) => p.decidit === k).length}`).join(" · ")}</span>
     </div><p class="legend">Acierto = el candidato elegido es el único de los dos que aparece en la referencia. "Sin decidir" = la referencia no usa ninguno de los candidatos, o usa los dos.</p></section>`;
 
-  h += `<section><h2>Por palabra</h2><div class="tablewrap"><table><thead><tr><th>palabra</th><th>tipo</th><th>apariciones</th><th>aciertos</th><th>fallos</th><th>sin decidir</th><th>decide spaCy</th><th>decide FLOR</th><th>decide el motor</th></tr></thead><tbody>`;
+  h += `<section><h2>Por palabra</h2><div class="tablewrap"><table><thead><tr><th>palabra</th><th>tipo</th><th>apariciones</th><th>aciertos</th><th>fallos</th><th>sin decidir</th><th>decide spaCy</th><th>decide ${esc(nomModel())}</th><th>decide el motor</th></tr></thead><tbody>`;
   for (const [k, r] of Object.entries(perParaula).sort((a, b) => b[1].n - a[1].n))
     h += `<tr><td><b>${esc(k)}</b></td><td>${esc(r.tipus)}</td><td>${r.n}</td><td style="color:var(--ok)">${r.ok}</td><td style="color:var(--ko)">${r.ko || ""}</td><td class="muted">${r.nd || ""}</td><td>${r.spacy || ""}</td><td>${r.model || ""}</td><td>${r.motor || ""}</td></tr>`;
   h += `</tbody></table></div></section>`;
@@ -172,10 +176,10 @@ function pintaResum() {
   // diferencias de puntuación frente al margen
   const difs = punts.filter(([, p]) => p.diferencia !== null && p.diferencia !== undefined);
   const marge = difs.length ? difs[0][1].marge : 5;
-  const trams = [[-Infinity, 0, "≤ 0 (FLOR coincide con el motor o prefiere lo mismo)"], [0, marge, `0 – ${marge} (dentro del margen: se mantiene el motor)`],
+  const trams = [[-Infinity, 0, `≤ 0 (${nomModel()} prefiere lo mismo)`], [0, marge, `0 – ${marge} (dentro del margen: se mantiene el motor)`],
                  [marge, 2 * marge, `${marge} – ${2 * marge}`], [2 * marge, Infinity, `> ${2 * marge}`]];
-  h += `<section><h2>Diferencias de puntuación de FLOR <span class="n">· ${difs.length} palabras puntuadas · margen ${num(marge)}</span></h2>
-    <p class="legend">Diferencia = puntuación de la opción preferida por FLOR menos la de la opción del motor (o la segunda, si el motor no elige). Sirve para ver si el margen está bien puesto: cuántos aciertos y fallos caen en cada tramo.</p>
+  h += `<section><h2>Diferencias de puntuación de ${esc(nomModel())} <span class="n">· ${difs.length} palabras puntuadas · margen ${num(marge)}</span></h2>
+    <p class="legend">Diferencia = puntuación de la opción preferida por el modelo menos la de la opción del motor (o la segunda, si el motor no elige). Sirve para ver si el margen está bien puesto: cuántos aciertos y fallos caen en cada tramo.</p>
     <div class="tablewrap"><table><thead><tr><th>tramo</th><th>palabras</th><th>aciertos</th><th>fallos</th></tr></thead><tbody>`;
   for (const [a, b, nom] of trams) {
     const en = difs.filter(([, p]) => p.diferencia > a && p.diferencia <= b);
@@ -265,12 +269,12 @@ function pintaDetall(t) {
 
   // 3. postprocesado
   const post = t.postprocessat;
-  h += `<section><h2>3. Postprocesado con FLOR-760M ${post.entra ? '<span class="badge b-flor">entra</span>' : '<span class="badge">no entra</span>'}</h2>
+  h += `<section><h2>3. Postprocesado con ${esc(post.criteri && post.criteri.nom_model || "el modelo")} ${post.entra ? '<span class="badge b-flor">entra</span>' : '<span class="badge">no entra</span>'}</h2>
     <p>${esc(post.motiu)}</p>`;
   if (post.consumides && post.consumides.length)
     h += `<p class="why">Palabras ambiguas que no llegan porque ya las ha cambiado otra capa: ${post.consumides.map(c => `${esc(c.paraula)} → ${esc(c.traduccio)}`).join(", ")}</p>`;
   if (post.criteri && post.criteri.formula)
-    h += `<p class="legend"><b>Cómo puntúa:</b> ${esc(post.criteri.formula)}; λ = ${num(post.criteri.lam)}. Si el motor ya había elegido, FLOR solo lo cambia si gana por más de <b>${num(post.criteri.marge)}</b>. Modelo: ${esc(post.criteri.model)}; concordancia: ${esc(post.criteri.concordanca)}.${post.criteri.context ? ` Cada frase se puntúa detrás del párrafo: <i>${esc(post.criteri.context)}</i>` : " Sin párrafo de contexto."}</p>`;
+    h += `<p class="legend"><b>Cómo puntúa:</b> ${esc(post.criteri.formula)}; λ = ${num(post.criteri.lam)}. El modelo solo traduce (o cambia la elección del motor) si gana por más de <b>${num(post.criteri.marge)}</b>. Modelo: ${esc(post.criteri.model)}; concordancia: ${esc(post.criteri.concordanca)}.${post.criteri.context ? ` Cada frase se puntúa detrás del párrafo: <i>${esc(post.criteri.context)}</i>` : " Sin párrafo de contexto."}</p>`;
   for (const p of post.punts || []) {
     const s = p.spacy;
     const conPunts = p.candidats.filter(c => c.puntuacio !== undefined);
@@ -278,16 +282,16 @@ function pintaDetall(t) {
     h += `<div class="punt"><h3>«${esc(p.prefix + p.paraula)}» <span class="badge b-flor">${esc(p.tipus)}</span>
         <span class="muted" style="font-weight:normal">· candidatos del léxico: ${esc(p.candidats_lexic.join(" / "))} · elección del motor: <b>${esc(p.motor ?? "ninguna")}</b></span></h3>
       <div class="why">spaCy: <span class="pos used">${esc(s.pos)}</span> (categoría ${esc(s.categoria ?? "—")}) · lectura dialectal: <b>${esc(s.categoria_dialectal ?? "—")}</b> · lecturas del léxico (<span class="mono">lemas</span>): ${esc(JSON.stringify(s.lectures))}${s.decisio ? ` · <b>spaCy decide: ${esc(s.decisio)}</b>` : ""}</div>
-      <div class="tablewrap"><table style="margin-top:8px"><thead><tr><th></th><th>candidato</th><th>frase que recibe FLOR</th><th>lp</th><th>prior</th><th>puntuación</th><th></th></tr></thead><tbody>`;
+      <div class="tablewrap"><table style="margin-top:8px"><thead><tr><th></th><th>candidato</th><th>frase que recibe el modelo</th><th>lp</th><th>prior</th><th>puntuación</th><th></th></tr></thead><tbody>`;
     for (const c of p.candidats) {
       const w = c.puntuacio !== undefined && max > min ? (c.puntuacio - min) / (max - min) * 100 : (c.puntuacio !== undefined ? 100 : 0);
       h += `<tr class="${c.triat ? "win" : ""}"><td>${c.triat ? "✔" : ""}</td><td><b>${esc(c.candidat)}</b>${c.es_del_motor ? ' <span class="badge">motor</span>' : ""}</td>
         <td>${esc(c.frase || "")}${c.variants && c.variants.length > 1 ? `<details><summary>${c.variants.length} variantes de concordancia probadas</summary>${c.variants.map(v => `<div class="mono">${v.triada ? "▸ " : "  "}lp ${num(v.lp)} · ${esc(v.frase)}</div>`).join("")}</details>` : ""}</td>
         <td class="mono">${num(c.lp)}</td><td class="mono">${num(c.prior)}</td><td class="mono"><b>${num(c.puntuacio)}</b></td>
-        <td>${c.puntuacio !== undefined ? `<div class="bar"><span style="width:${Math.max(4, w)}%"></span></div>` : '<span class="muted">sin FLOR</span>'}</td></tr>`;
+        <td>${c.puntuacio !== undefined ? `<div class="bar"><span style="width:${Math.max(4, w)}%"></span></div>` : '<span class="muted">sin modelo</span>'}</td></tr>`;
     }
     h += `</tbody></table></div>
-      <div class="decision"><b>Decide: ${esc({spacy: "spaCy", model: "FLOR", motor: "el motor"}[p.decidit] || p.decidit)}</b> → <b>${esc(p.tria)}</b>
+      <div class="decision"><b>Decide: ${esc({spacy: "spaCy", model: post.criteri.nom_model || "el modelo", motor: "el motor", catala: "la catalana por defecto", sentit: "el clasificador de sentido"}[p.decidit] || p.decidit)}</b> → <b>${esc(p.tria)}</b>
         ${p.encert === true ? '<span class="badge b-ok">acierto</span>' : p.encert === false ? '<span class="badge b-ko">fallo</span>' : ""}
         ${p.referencia ? `<span class="why"> · la referencia usa: ${esc(p.referencia.join(", ") || "ninguno")}</span>` : ""}
         ${p.diferencia !== null && p.diferencia !== undefined ? ` · diferencia ${num(p.diferencia)} (margen ${num(p.marge)})` : ""}

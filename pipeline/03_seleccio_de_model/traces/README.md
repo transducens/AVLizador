@@ -23,27 +23,48 @@ sale idéntico.
      etiqueta como nombre propio", "la decide el postprocesado"...
    - un **aviso** cuando el traductor usa la etiqueta de otra aparición
      de la misma palabra y la suya propia sería distinta.
-2. **Motor**: las 9 capas en orden y qué cambia cada una, incluidos los
+2. **Motor**: las 11 capas en orden y qué cambia cada una, incluidos los
    vecinos (apóstrofo, contracciones).
-3. **Postprocesado con FLOR-760M**: si entra y por qué (o por qué no).
-   Para cada palabra ambigua muestra:
+3. **Postprocesado con el modelo de lengua**: si entra y por qué (o por
+   qué no). Desde la 2.0.0 (18/11/2026) es el sistema del paquete: KenLM +
+   clasificador de sentido con `CRITERI_KENLM` (margen 3, la catalana por
+   defecto, λ 1,5 en los homógrafos y 0,75 en las colisiones, desempate
+   < 2). `--model flor` repite el sistema de antes (FLOR-760M, margen 2,
+   λ 0,5; necesita `torch` y `transformers`). Para cada palabra ambigua
+   muestra:
    - la decisión de spaCy (categoría frente a la lectura dialectal y las
      lecturas de `lemas`);
-   - **las frases completas que recibe FLOR**, con las variantes de
+   - **las frases completas que recibe el modelo**, con las variantes de
      concordancia probadas;
-   - `lp`, `prior` y la puntuación (`lp − 0,5 × prior`);
-   - la diferencia frente al margen 5 y quién decide (spaCy, FLOR o el
-     motor), con la explicación.
+   - `lp`, `prior` y la puntuación (`lp − λ × prior`), la elección del
+     clasificador de sentido si la palabra tiene;
+   - la diferencia frente al margen y quién decide (spaCy, el modelo, la
+     catalana por defecto, el clasificador o el motor), con la
+     explicación.
+
+   El análisis de más abajo (homógrafos, margen 5, sesgo) es de FLOR, de
+   antes de la 2.0.0.
 
 ## Uso
 
 Desde la raíz del repositorio, con el paquete instalado
-(`pip install -e ".[ml]"`):
+(`pip install -e ".[kenlm]"`, en Linux). **En Windows** `kenlm` no se
+instala: se ejecuta con la imagen Docker (`avlizador:2.0.0`, que ya lleva
+`kenlm` y el modelo en `/opt/kenlm`), montando el repositorio. Desde Git
+Bash:
+
+```bash
+MSYS_NO_PATHCONV=1 docker run --rm -v "$(pwd -W):/repo" -w /repo --entrypoint python avlizador:2.0.0     pipeline/03_seleccio_de_model/traces/traca_traduccio.py "Un cop acabada la reunió, el noi marxarà."     --html pipeline/03_seleccio_de_model/traces/resultats/traca.html
+```
+
+(desde PowerShell, lo mismo con `-v "${PWD}:/repo"` y sin `MSYS_NO_PATHCONV=1`).
+La imagen usa el paquete que lleva instalado, no el código del
+repositorio: si se cambia el paquete, hay que reconstruirla.
 
 ```bash
 # en la terminal
 python pipeline/03_seleccio_de_model/traces/traca_traduccio.py "Un cop acabada la reunió, el noi marxarà."
-python pipeline/03_seleccio_de_model/traces/traca_traduccio.py --motor "..."      # sin FLOR
+python pipeline/03_seleccio_de_model/traces/traca_traduccio.py --motor "..."      # sin modelo
 
 # página HTML (y JSON) de un benchmark: solo las frases con palabras ambiguas
 python pipeline/03_seleccio_de_model/traces/traca_traduccio.py --benchmark manual --nomes-ambigues \
