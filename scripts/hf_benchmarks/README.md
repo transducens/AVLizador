@@ -7,7 +7,7 @@ fitxa `README.md`, `LICENSE`, `NOTICE` i bàner) en `dades/hf_benchmarks/<nom>/`
 | Script | Dataset (repo per defecte) | Frases |
 |---|---|---|
 | `manual.py` | `transducens/avlizador-manual-ca-va` | 458: 246 del BOE + 212 de l'AVL (`--sense-avl`: només el BOE) |
-| `homografs.py` | `transducens/avlizador-homographs-ca-va`, un dataset amb dos configuracions: `v2` (per defecte) i `v1` (l'únic amb cop/cops) | 160 / 98 |
+| `homografs.py` | `transducens/avlizador-homographs-ca-va`, un dataset amb dos configuracions: `v2` (per defecte) i `v1` (l'únic amb cop/cops) | 128 / 80 |
 | `boe_dialectal.py` | `transducens/avlizador-boe-strict-ca-va`, `…-boe-broad-ca-va` | 2.000 + 9.453 / 2.000 + 73.705 |
 
 ```bash
