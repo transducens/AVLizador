@@ -194,6 +194,71 @@ AMB_GLOSSARI = {"valencia3"}
 EMPREMTES = {k: hashlib.sha1((SISTEMA + f1 + f2 + (INTRO_GLOSSARI if k in AMB_GLOSSARI else "")).encode("utf-8"))
              .hexdigest()[:8] for k, (f1, f2) in PROMPTS_VAL.items()}
 
+# Prompt "valencia_va" (26/11/2026): el de "valencia" traduït al valencià
+# (missatge de sistema, domini, fases 1 i 2 i bloc de la norma), amb el
+# mateix contingut. Pregunta: raonant en valencià, ¿coneix millor el sentit
+# de les paraules? (en anglés, "panolla" = "a small loaf of bread"). Els
+# encapçalaments (Major/Minor), les categories i "no-error" es queden en
+# anglés: així `llig_spans` no canvia i les anotacions es comparen.
+SISTEMA_VA = "La teua tasca és identificar els errors d'una traducció automàtica i valorar-ne la qualitat."
+
+DOMINI_VA = {
+    "BOE": ("El text és d'un butlletí oficial (llenguatge jurídic i administratiu). La traducció ha d'estar en "
+            "valencià, segons la norma estàndard de l'Acadèmia Valenciana de la Llengua (AVL), amb un registre "
+            "formal."),
+    "AVL": ("El text és de publicacions de l'Acadèmia Valenciana de la Llengua (glossaris, gramàtica, notes de "
+            "premsa, acords normatius). La traducció ha d'estar en valencià, segons la norma estàndard de "
+            "l'Acadèmia Valenciana de la Llengua (AVL)."),
+    "GEN": ("El text és de llengua general (notícies, literatura, temes quotidians). La traducció ha d'estar en "
+            "valencià, segons la norma estàndard de l'Acadèmia Valenciana de la Llengua (AVL)."),
+}
+
+NORMA_VA = """Norma valenciana (llig-la amb atenció abans d'anotar):
+- La traducció és en valencià, segons la norma de l'Acadèmia Valenciana de la Llengua (AVL: Diccionari normatiu valencià i Gramàtica normativa valenciana). Tota forma acceptada per l'AVL és correcta. NO marques una forma valenciana com a error d'ortografia, de gramàtica, de registre o de terminologia, ni l'anotes perquè el català central en faria servir una altra.
+- Exemples de formes valencianes correctes: demostratius este, esta, estos, estes, eixe, eixa, eixos, eixes; possessius meua, teua, seua, meues, teues, seues; plurals servicis, edificis (servici, edifici); verbs siga, sigues, siguen, sigut, haja, hagen, tindre, vindre, traure, extraure, tinga, vinga, isca, pense, parle; present de subjuntiu en -en i en -a (parlen, presenten, consideren, permeta, establisca); formes en -ix / -ixen (servix, servixen, patix, impedix, referix, compartixen), conéixer, aparéixer; paraules hui, ací, eixir, xiquet, xicotet, prompte, faena, vesprada, colp, llavadora, bresquilla, dacsa, anou, brollador; per a + infinitiu (per a fer); dos amb noms femenins (les dos parts, dos vegades).
+- L'accentuació valenciana és correcta: é tancada (francés, anglés, cinqué, comprén, conéixer) i participis en -és (atés, entés, emés, comprés, promés, sotmés, admés), i els criteris de l'AVL per als accents diacrítics.
+- Les paraules del diccionari de l'AVL són correctes encara que pareguen castellanes (gasto, exitós, exitosa, llavadora). Marca una paraula com a castellanisme només si l'AVL no l'accepta.
+- Les formes compartides amb el català central que l'AVL també accepta (aquest, servei, -eix, avui) tampoc no són errors.
+- Mira la concordança de gènere i de nombre amb el nom que hi ha realment en la traducció, no amb el nom de l'original: quan un nom canvia de gènere (la despesa -> el gasto, el préssec -> la bresquilla), l'article, els determinants i els adjectius han de concordar amb el nom valencià. Un determinant o un adjectiu que no concorda és un error de gramàtica.
+- Una paraula valenciana amb un significat distint del de la paraula de l'original (per exemple, vegada «ocasió» per cop «colp», bragues «roba interior» per calces d'època «peça de vestir que cobria les cames», exitosa «que té èxit» usada com a nom per reeixida «èxit») és un error accuracy/mistranslation."""
+
+FASE1_VA = """Original en català:
+```{src}```
+Traducció al valencià:
+```{hyp}```
+A partir del segment original i de la traducció automàtica, que van entre tres accents greus, identifica els errors de la traducció i classifica'ls. Les categories d'error són: accuracy (addition, mistranslation, omission), és a dir, fidelitat (addició, traducció errònia, omissió); fluency (character encoding, grammar, inconsistency, punctuation, spelling), és a dir, correcció (codificació de caràcters, gramàtica, incoherència, puntuació, ortografia); style (awkward), és a dir, estil (forçat); terminology (inappropriate for context, inconsistent use), és a dir, terminologia (inadequada per al context, ús incoherent); other (altres); o no-error.
+Cada error té una de dos gravetats: major (greu) o minor (lleu). Els errors greus trenquen la fluïdesa, canvien el significat de l'original o fan que el text siga difícil o impossible d'entendre. Els errors lleus no trenquen gaire la fluïdesa, i el que el text vol dir s'entén igualment.
+Torna només les anotacions, en este format (els encapçalaments i les categories, en anglés, tal com apareixen ací):
+Major:
+category/subcategory - "tros amb error"
+Minor:
+category/subcategory - "tros amb error"
+Un error per línia; escriu no-error quan una secció estiga buida. Copia els trossos de la traducció.
+Requisits del domini: {domini}
+Raona en valencià.
+""" + NORMA_VA
+
+FASE2_VA = """A partir de l'original en català, la traducció automàtica al valencià i els trossos amb error anotats, posa una nota en una escala contínua de 0 a 100. Els punts de referència de l'escala són: 0 = «No conserva el significat», 33 = «Conserva una part del significat», 66 = «Conserva la major part del significat, amb pocs errors de gramàtica», fins a 100 = «Significat i gramàtica perfectes».
+Requisits del domini: {domini}
+Les formes valencianes acceptades per l'AVL són correctes i no han d'abaixar la nota.
+Puntua la traducció següent:
+Original en català:
+```{src}```
+Traducció al valencià:
+```{hyp}```
+Trossos amb error anotats:
+```{spans}```
+Respon NOMÉS amb un objecte JSON vàlid i res més: {{"score": N}}
+on N és un enter de 0 a 100."""
+
+PROMPTS_VAL["valencia_va"] = (FASE1_VA, FASE2_VA)
+SISTEMA_DE = {"valencia_va": SISTEMA_VA}  # la resta, SISTEMA
+DOMINI_DE = {"valencia_va": DOMINI_VA}    # la resta, DOMINI
+# L'empremta de "valencia_va" porta també el domini (està traduït); les altres
+# es queden com estaven perquè les memòries cau seguisquen valent.
+EMPREMTES["valencia_va"] = hashlib.sha1(
+    (SISTEMA_VA + FASE1_VA + FASE2_VA + "".join(DOMINI_VA.values())).encode("utf-8")).hexdigest()[:8]
+
 LEXIC = AQUI.parents[2] / "src" / "avlizador" / "traductor_cat_val" / "data" / "lexic_general.json"
 MAX_GLOSSARI = 15
 CATEGORIES = {"n": "noun", "adj": "adjective", "adv": "adverb", "num": "numeral", "pr": "preposition",
@@ -320,10 +385,11 @@ def prompts(prompt: str, text: str, src: str, dom: str, spans: str | None = None
     """La fase 1 (`spans` None) o la 2 del prompt triat."""
     if prompt in PROMPTS_VAL:
         f1, f2 = PROMPTS_VAL[prompt]
+        domini = DOMINI_DE.get(prompt, DOMINI)[dom]
         if spans is None:
             g = glossari(src, text) if prompt in AMB_GLOSSARI else ""
-            return f1.format(src=src, hyp=text, domini=DOMINI[dom], glossari=g)
-        return f2.format(src=src, hyp=text, domini=DOMINI[dom], spans=spans)
+            return f1.format(src=src, hyp=text, domini=domini, glossari=g)
+        return f2.format(src=src, hyp=text, domini=domini, spans=spans)
     if spans is None:
         return FASE1.format(tgt="Valencian", hyp=text, domini=DOMINI[dom])
     return FASE2.format(tgt="Valencian", hyp=text, domini=DOMINI[dom], spans=spans)
@@ -332,12 +398,13 @@ def prompts(prompt: str, text: str, src: str, dom: str, spans: str | None = None
 PENSAMENTS: dict[str, str] = {}  # últim raonament de cada crida amb `pensa` (24/11/2026)
 
 
-def xat(url: str, model: str, usuari: str, max_tokens: int, pensa: bool, num_ctx: int = 4096) -> str:
+def xat(url: str, model: str, usuari: str, max_tokens: int, pensa: bool, num_ctx: int = 4096,
+        sistema: str = SISTEMA) -> str:
     # Amb raonament, el context ha de cabre el prompt i el raonament (abans
     # 4096 fix: es tallava). Les dos fases han de dur el mateix `num_ctx`:
     # si canvia, Ollama torna a carregar el model a cada crida.
     cos = {"model": model, "stream": False, "think": pensa,
-           "messages": [{"role": "system", "content": SISTEMA}, {"role": "user", "content": usuari}],
+           "messages": [{"role": "system", "content": sistema}, {"role": "user", "content": usuari}],
            "options": {"temperature": 0, "num_predict": max_tokens, "num_ctx": num_ctx}}
     req = urllib.request.Request(f"{url}/api/chat", data=json.dumps(cos).encode("utf-8"),
                                  headers={"Content-Type": "application/json"})
@@ -396,13 +463,20 @@ def nota_des_de_spans(spans: list[dict]) -> float:
     return max(0.0, 100 - sum(10 if s["severity"] == "major" else 2.5 for s in spans))
 
 
-def carrega_sistemes(fitxers: list[Path], limit: int | None) -> dict[str, dict]:
+def carrega_sistemes(fitxers: list[Path], limit: int | None, ids: list[str] | None = None) -> dict[str, dict]:
+    """`ids` (26/11/2026): només eixes frases, per a una mostra triada a mà."""
     sistemes: dict[str, dict] = {}
     for f in fitxers:
         if "_limit" in f.stem:
             continue
         d = json.loads(f.read_text(encoding="utf-8"))
-        frases = d["resultats"][:limit] if limit else d["resultats"]
+        frases = d["resultats"]
+        if ids is not None:
+            falten = set(ids) - {fr["id"] for fr in frases}
+            if falten:
+                raise SystemExit(f"{f}: no hi ha les frases {sorted(falten)}")
+            frases = [fr for fr in frases if fr["id"] in set(ids)]
+        frases = frases[:limit] if limit else frases
         sistemes[f.stem] = {"nom": d.get("sistema", f.stem), "frases": frases}
         if "referencia" not in sistemes:
             sistemes["referencia"] = {"nom": NOM_REFERENCIA, "frases": [
@@ -417,7 +491,9 @@ def puntua(args) -> int:
     empremta = EMPREMTES.get(args.prompt)
     if args.eixida is None:
         args.eixida = AQUI / "resultats" / (args.prompt if valencia else "")
-    eixida = args.eixida / (curt + (f"_limit{args.limit}" if args.limit else ""))
+    ids = [i.strip() for i in args.ids.split(",") if i.strip()] if args.ids else None
+    eixida = args.eixida / (curt + (f"_limit{args.limit}" if args.limit else "")
+                            + (f"_mostra{len(ids)}" if ids else ""))
     eixida.mkdir(parents=True, exist_ok=True)
     cau_f = eixida / "cache.jsonl"
     cau = {}
@@ -426,8 +502,9 @@ def puntua(args) -> int:
             if linia.strip():
                 r = json.loads(linia)
                 cau[r["clau"]] = r
-    sistemes = carrega_sistemes(args.fitxers, args.limit)
+    sistemes = carrega_sistemes(args.fitxers, args.limit, ids)
     amb_glossari = args.prompt in AMB_GLOSSARI
+    sistema = SISTEMA_DE.get(args.prompt, SISTEMA)
 
     def clau_de(fr: dict) -> str:
         if not valencia:
@@ -452,11 +529,11 @@ def puntua(args) -> int:
         for i, (k, (text, dom, src)) in enumerate(pendents.items(), 1):
             try:
                 crua1 = xat(args.ollama_url, args.model, prompts(args.prompt, text, src, dom),
-                            8192 if args.pensa else 512, args.pensa, ctx)
+                            8192 if args.pensa else 512, args.pensa, ctx, sistema)
                 pensament1 = PENSAMENTS.get("darrer", "") if args.pensa else ""
                 spans = llig_spans(crua1)
                 crua2 = xat(args.ollama_url, args.model, prompts(args.prompt, text, src, dom, crua1.strip()),
-                            64, False, ctx)
+                            64, False, ctx, sistema)
                 fila = {"clau": k, "text": text, "domini": dom, "fase1": crua1, "spans": spans,
                         "nota": llig_nota(crua2), "fase2": crua2}
                 if valencia:
@@ -593,10 +670,11 @@ def main(argv=None) -> int:
     p.add_argument("--ollama-url", default="http://127.0.0.1:11434")
     p.add_argument("--pensa", action="store_true", help="Raonament activat en la fase 1 (més lent).")
     p.add_argument("--limit", type=int)
-    p.add_argument("--prompt", choices=["gemba", "valencia", "valencia2", "valencia3"], default="gemba",
-                   help="gemba: només la traducció (04/11/2026); valencia: amb l'original i la norma valenciana; valencia2: el mateix sense les formes candidates d'un homògraf (25/11/2026); valencia3: valencia2 + glossari de la frase tret del lèxic (25/11/2026).")
+    p.add_argument("--ids", help="Només estes frases (ids separats per comes): una mostra triada a mà.")
+    p.add_argument("--prompt", choices=["gemba", *PROMPTS_VAL], default="gemba",
+                   help="gemba: només la traducció (04/11/2026); valencia: amb l'original i la norma valenciana; valencia2: el mateix sense les formes candidates d'un homògraf (25/11/2026); valencia3: valencia2 + glossari de la frase tret del lèxic (25/11/2026); valencia_va: valencia traduït al valencià (26/11/2026).")
     p.add_argument("--eixida", type=Path, default=None,
-                   help="Carpeta (per defecte resultats/, o resultats/<prompt>/ amb --prompt valencia, valencia2 o valencia3).")
+                   help="Carpeta (per defecte resultats/, o resultats/<prompt>/ amb un prompt «valencia»).")
     r = sub.add_parser("resum")
     r.add_argument("carpeta", type=Path)
     args = ap.parse_args(argv)

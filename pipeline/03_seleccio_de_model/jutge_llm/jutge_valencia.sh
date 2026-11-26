@@ -19,6 +19,9 @@
 #                                               # homògraf (25/11/2026); en resultats/valencia2/
 #   PROMPT=valencia3 sbatch jutge_valencia.sh   # valencia2 + glossari de la frase tret
 #                                               # del lèxic (25/11/2026); en resultats/valencia3/
+#   PROMPT=valencia_va sbatch jutge_valencia.sh # "valencia" traduït al valencià (26/11/2026)
+#   IDS="HG2-004,HG2-010" CONJUNTS=homografs_v2 sbatch jutge_valencia.sh
+#                                               # només eixes frases (carpeta ..._mostraN)
 # Si s'acaba per temps, es torna a llançar igual: continua des de la memòria
 # cau (resultats/<prompt>/<conjunt>/<model>/cache.jsonl).
 #
@@ -145,6 +148,7 @@ for c in $CONJUNTS; do
     esac
     echo "== $c =="
     "$PYTHON" jutge_gemba.py puntua --prompt "$PROMPT" --model "$MODEL" --ollama-url "http://$OLLAMA_HOST" \
-        --eixida "resultats/$PROMPT/$c" ${LIMIT:+--limit "$LIMIT"} ${PENSA:+--pensa} "${FITXERS[@]}"
+        --eixida "resultats/$PROMPT/$c" ${LIMIT:+--limit "$LIMIT"} ${IDS:+--ids "$IDS"} ${PENSA:+--pensa} \
+        "${FITXERS[@]}"
 done
 grep -iE "offload|layers|VRAM" "$LOGS/ollama_valencia_${NOM_LOG}_${SLURM_JOB_ID:-local}.log" | tail -5 || true
