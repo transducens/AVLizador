@@ -55,7 +55,7 @@ def parells_per_defecte(mode: str) -> dict[tuple[str, str], Parell]:
     dins: el paquet no es carrega fins que es crida."""
 
     def cat_val(text: str) -> str:
-        from ..traductor_cat_val import translate_cat_val, translate_cat_val_motor
+        from avlizador.traductor_cat_val import translate_cat_val, translate_cat_val_motor
 
         return (translate_cat_val if mode == "complet" else translate_cat_val_motor)(text)
 

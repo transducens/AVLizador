@@ -51,7 +51,7 @@ from pydantic import BaseModel
 from starlette.concurrency import run_in_threadpool
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from .. import __version__
+from avlizador import __version__
 from .idiomes import TIPUS, Parell, parells_per_defecte
 from .missatges import IDIOMES_INTERFICIE, missatge, nombre, textos, tria_idioma
 
@@ -150,7 +150,7 @@ def resum_gd(text: str) -> dict:
     """GD, GDV i GDC d'un text amb UNA sola passada d'spaCy: GDV i GDC ixen
     dels mateixos comptadors que `calcula_gdv`/`calcula_gdc` (ho comprova
     `tests/test_web.py`)."""
-    from ..grau_dialectal import calcula_gd
+    from avlizador.grau_dialectal import calcula_gd
 
     r = calcula_gd(text)
     total = r["total_paraules"]
@@ -187,7 +187,7 @@ def _versio(paquet: str) -> str | None:
 def _precarrega(estat: Estat) -> None:
     """Carrega spaCy, els diccionaris i (en mode complet) KenLM abans de la
     primera petició."""
-    from ..traductor_cat_val.model_llengua.kenlm import NOM_MODEL, kenlm_disponible
+    from avlizador.traductor_cat_val import info_model, kenlm_disponible
 
     cfg = estat.config
     mode = cfg.mode
@@ -208,7 +208,7 @@ def _precarrega(estat: Estat) -> None:
         "kenlm": _versio("kenlm") if mode == "complet" else None,
     }
     if mode == "complet":
-        estat.versions["model_llengua"] = f"KenLM {NOM_MODEL}_o5 + classificador de sentit"
+        estat.versions["model_llengua"] = f"KenLM {info_model()['nom']}_o5 + classificador de sentit"
     estat.models_carregats = True
 
 
@@ -437,7 +437,7 @@ def create_app(config: Configuracio | None = None,
     def resultat_gd(text: str, t: dict) -> dict:
         """GD, GDV i GDC, el text amb les paraules marcades i les llistes,
         preparats per a la plantilla. `resalta_html` escapa el text."""
-        from ..grau_dialectal.gd import resalta_html
+        from avlizador.grau_dialectal import resalta_html
 
         r = resum_gd(text)
         html = resalta_html(text, etiquetes=(t["etiqueta_val"], t["etiqueta_cat"]))

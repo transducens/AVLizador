@@ -12,8 +12,13 @@ Subpaquets:
 - `avlizador.avaluacio`: mètriques i avaluació en els benchmarks
   (extra `[avaluacio]`).
 
-Línia d'ordres: `avlizador tradueix | gd | gdv | gdc | avalua` (vore
+Línia d'ordres: `avlizador tradueix | gd | gdv | gdc | avalua | model` (vore
 `avlizador --help`).
+
+API pública (26/11/2026): el que exporta este mòdul (`__all__`) i els
+`__all__` de `avlizador.traductor_cat_val` i `avlizador.grau_dialectal`.
+Canviar-la o llevar-ne alguna cosa exigix una versió major; afegir-ne, una
+menor. La resta de mòduls són interns.
 """
 
 __version__ = "2.0.1"
@@ -24,6 +29,11 @@ _API = {
     "calcula_gd": "grau_dialectal",
     "calcula_gdv": "grau_dialectal",
     "calcula_gdc": "grau_dialectal",
+    "resalta_html": "grau_dialectal",
+    "info_model": "traductor_cat_val",
+    "descarrega_model": "traductor_cat_val",
+    "comprova_model": "traductor_cat_val",
+    "kenlm_disponible": "traductor_cat_val",
 }
 
 __all__ = ["__version__", *_API]
