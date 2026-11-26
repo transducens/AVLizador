@@ -297,6 +297,37 @@ def etiqueta(tokens: list[Token]) -> None:
         tok.lemma = dt.lemma_.lower()
 
 
+def dependencia(tokens: list[Token], i: int) -> str:
+    """Relació de dependència d'spaCy (`dep_`) de la paraula del token `i`
+    (26/11/2026, vore `model_llengua.punts.decisio_spacy`). Executa el
+    parser, que `etiqueta` no executa per a no perdre velocitat: només es
+    crida per a les poques paraules ambigües que ho necessiten. "" si spaCy
+    no hi és o no es troba la paraula.
+
+    >>> from . import tokenize
+    >>> toks = tokenize("Ha collit un sac de nous.")
+    >>> dependencia(toks, next(i for i, t in enumerate(toks) if t.surface == "nous"))
+    'nmod'
+    >>> toks = tokenize("Hem comprat un cotxe nou.")
+    >>> dependencia(toks, next(i for i, t in enumerate(toks) if t.surface == "nou"))
+    'amod'
+    """
+    text = "".join(t.surface for t in tokens).replace("ʼ", "’")
+    net = text.strip()
+    if not net:
+        return ""
+    doc = analitza(net, amb_parser=True)
+    if doc is None:
+        return ""
+    desp = len(text) - len(text.lstrip())
+    tok = tokens[i]
+    prefix_resta = separa_prefix_elidit(tok.surface)
+    buscada = prefix_resta[1] if prefix_resta else tok.surface
+    inici = tok.start + len(tok.surface) - len(buscada)
+    dt = next((d for d in doc if d.idx + desp <= inici < d.idx + desp + len(d.text)), None)
+    return dt.dep_ if dt is not None else ""
+
+
 def es_participi(tokens: list[Token], i: int) -> bool:
     """`tokens[i]` és un participi segons spaCy? Si la paraula comença en
     majúscula, es torna a preguntar amb la paraula en minúscula: spaCy dona

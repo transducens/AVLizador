@@ -54,7 +54,7 @@ from ..rules import (
     separa_prefix_elidit,
 )
 from ..rules.cat_val.conjugacions_dict import _inici_de_frase
-from ..rules.pos_tagger import _GENERE_CURT, es_pronom_personal, genere_de
+from ..rules.pos_tagger import _GENERE_CURT, dependencia, es_pronom_personal, genere_de
 
 TIPUS = ("colisio", "irresoluble", "resoluble")
 # Des del 29/10/2026 (decisió de l'usuari) també els resolubles passen pel
@@ -129,9 +129,13 @@ class Punt:
     verb_form: str = ""    # VerbForm d'spaCy ("Part": el participi fa d'adjectiu; 19/11/2026)
     generes_nom: frozenset = frozenset()  # gèneres de les lectures de nom de la forma catalana (19/11/2026)
     majuscula_mig: bool = False  # en majúscula i no a l'inici de frase: possible nom propi (24/11/2026)
+    dep: str = ""          # dependència d'spaCy, només si dona ADJ i la lectura dialectal és nom (26/11/2026)
 
 
 _CATEGORIA_PER_POS = {pos: cat for cat, poss in _POS_PER_CATEGORIA.items() for pos in poss}
+# Relacions de dependència nominals d'UD: qui les té fa de sintagma nominal,
+# no d'adjectiu (26/11/2026, vore `decisio_spacy`).
+_DEP_NOMINALS = frozenset({"nsubj", "nsubj:pass", "obj", "iobj", "obl", "nmod", "appos"})
 
 
 def decisio_spacy(punt: Punt) -> str | None:
@@ -250,6 +254,21 @@ def decisio_spacy(punt: Punt) -> str | None:
     ...          pos="PROPN", categoria="n", majuscula_mig=True)
     >>> decisio_spacy(g)
     'gandula'
+
+    Adjectiu en lloc de nom (26/11/2026): spaCy dona ADJ a "nous" o "manques"
+    també quan fan de nom ("un sac de nous", "assenyala greus manques"). Si
+    la lectura dialectal és un nom i el parser diu que la paraula té una
+    relació nominal (subjecte, objecte, complement d'un nom...: `dep`), la
+    lectura d'adjectiu no és segura i passa al model. Amb `amod` (modifica
+    un nom: "un cotxe nou") o com a predicat ("és molt gandula": ROOT),
+    spaCy decidix com abans:
+
+    >>> n = Punt(0, "nous", "", "irresoluble", ["anous", "nous"], "anous", pos="ADJ", categoria="n",
+    ...          dep="nmod")
+    >>> decisio_spacy(n) is None
+    True
+    >>> n.dep = "amod"; decisio_spacy(n)
+    'nous'
     """
     catala = next(c for c in punt.candidats if c.lower() == punt.paraula.lower())
     if punt.majuscula_mig:
@@ -269,6 +288,8 @@ def decisio_spacy(punt: Punt) -> str | None:
         return None
     if punt.pos == "NUM" and (punt.det_indefinit_fem_sg or (punt.tipus == "resoluble" and punt.det_fem_sg)):
         return None  # "una nou", "la deu": no pot ser el numeral (vore més amunt)
+    if punt.pos == "ADJ" and punt.categoria == "n" and punt.dep in _DEP_NOMINALS:
+        return None  # "un sac de nous": fa de nom (vore més amunt)
     return catala
 
 
@@ -322,11 +343,14 @@ def detecta(tokens: list[Token], punts: dict[str, dict], tipus=TIPUS_PER_DEFECTE
         det_una = det_fem_sg and abans.pron_type == "Ind"
         majuscula_mig = (paraula[:1].isupper() and not paraula.isupper()
                          and not _inici_de_frase(tokens, i))  # "La Gandula", "Deu dirà" (24/11/2026)
+        # el parser, només quan pot canviar la decisió (26/11/2026, vore `decisio_spacy`)
+        dep = dependencia(tokens, i) if tok.pos == "ADJ" and info["categoria"] == "n" else ""
         trobats.append(Punt(i, paraula, prefix, info["tipus"], list(info["candidats"]), motor,
                             pos=tok.pos, categoria=info["categoria"], lectures=info["lectures"],
                             genere=tok.gender, genere_det=genere_det, pronom_abans=pronom_abans,
                             det_indefinit_fem_sg=det_una, det_fem_sg=det_fem_sg, verb_form=tok.verb_form,
-                            generes_nom=info.get("generes_nom", frozenset()), majuscula_mig=majuscula_mig))
+                            generes_nom=info.get("generes_nom", frozenset()), majuscula_mig=majuscula_mig,
+                            dep=dep))
     return trobats
 
 
