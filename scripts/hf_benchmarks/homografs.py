@@ -38,30 +38,31 @@ TIPUS = {
     "resoluble": "different grammatical categories: the part-of-speech tag decides",
 }
 
-# Resultats (23/11/2026, AVLizador 2.0.1 i el motor sol, `avlizador avalua`,
-# resultats_release_2.0.1 i resultats_hf_2.0.1; sense traduir, les mateixes mètriques
-# calculades sobre la catalana). Homògrafs corregits per l'usuari el 23/11 (fora
-# «recuita»; HG2-028 espera «falta»): v1 94 frases, v2 144. FLOR no s'hi ha mesurat.
+# Resultats (26/11/2026, AVLizador 2.0.1 amb el lèxic de `main` sense «gandula»
+# (E0591/E0592) i el motor sol; `avlizador avalua` en la imatge Docker amb
+# PYTHONPATH=/repo/src, resultats_hf_2.0.1b; sense traduir, les mateixes mètriques
+# calculades sobre la catalana). Fora «recuita» (23/11) i «gandula» (26/11):
+# v1 80 frases, v2 128. FLOR no s'hi ha mesurat.
 RESULTATS = {
     2: """| System | Exact match | BLEU | chrF | TER ↓ |
 |---|---|---|---|---|
-| **AVLizador 2.0.1** (rules + KenLM + sense classifier) | **113 / 144 (78.5 %)** | **91.61** | **95.75** | **3.10** |
-| AVLizador, rule engine only | 75 / 144 (52.1 %) | 82.34 | 91.74 | 6.56 |
-| Untranslated (Catalan as is) | 54 / 144 (37.5 %) | 74.89 | 87.92 | 10.76 |
+| **AVLizador 2.0.1** (rules + KenLM + sense classifier) | **100 / 128 (78.1 %)** | **91.46** | **95.86** | **3.16** |
+| AVLizador, rule engine only | 67 / 128 (52.3 %) | 82.65 | 92.37 | 6.53 |
+| Untranslated (Catalan as is) | 49 / 128 (38.3 %) | 75.10 | 88.35 | 10.41 |
 
 The rule engine alone almost always picks the dialectal reading. AVLizador
 2.0.1 decides each ambiguous word with a Valencian 5-gram KenLM model and a
 sense classifier ([`transducens/avlizador-kenlm-va`](https://huggingface.co/transducens/avlizador-kenlm-va)),
 and it is conservative: when the model is not sure (margin 1), it keeps the
 Catalan word, because a wrong replacement changes the meaning while an
-untranslated word only leaves a Catalan form. On the 237 ambiguous-word
-decisions of v1 and v2 (with AVLizador's 151 curated sentences) it makes 196
-right choices and no serious error (2.0.0, with margin 3: 186).""",
+untranslated word only leaves a Catalan form: on the ambiguous words of v1
+and v2 it makes no serious error (it never replaces a word that had to be
+kept).""",
     1: """| System | Exact match | BLEU | chrF | TER ↓ |
 |---|---|---|---|---|
-| **AVLizador 2.0.1** (rules + KenLM + sense classifier) | **83 / 94 (88.3 %)** | **95.08** | **97.60** | **1.67** |
-| AVLizador, rule engine only | 37 / 94 (39.4 %) | 77.74 | 87.87 | 9.74 |
-| Untranslated (Catalan as is) | 22 / 94 (23.4 %) | 68.00 | 82.52 | 15.72 |""",
+| **AVLizador 2.0.1** (rules + KenLM + sense classifier) | **71 / 80 (88.8 %)** | **95.07** | **97.72** | **1.67** |
+| AVLizador, rule engine only | 30 / 80 (37.5 %) | 76.84 | 87.89 | 10.54 |
+| Untranslated (Catalan as is) | 18 / 80 (22.5 %) | 68.02 | 82.83 | 15.55 |""",
 }
 
 
@@ -207,7 +208,7 @@ verb readings of *manca/manques* (*mancar*) and *deu* (*deure*).
 - Small and synthetic: the sentences are short and written to make one
   sense clear; real texts are harder.
 - The references follow AVLizador's lexicon for the dialectal
-  equivalents (*anou*, *colp*, *bragues*, *hamaca*…).
+  equivalents (*anou*, *colp*, *bragues*, *llavadora*…).
 
 ## License
 
