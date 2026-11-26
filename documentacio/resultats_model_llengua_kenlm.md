@@ -1983,6 +1983,179 @@ tria de margen 1 de cada muestra):
 
 124 tests y doctests de `punts.py` en verde.
 
+### 4.29 KenLM con un corpus sintético de homógrafos (25-26/11, petición del usuario; rama `kenlm-sintetic`, prueba aparte)
+
+Prueba fuera del sistema (los supervisores no querían mezclar texto
+sintético con el real): 680 frases valencianas escritas para los sentidos que
+casi no salen en el corpus (`dades/sintetic_homografs/*.jsonl`, reglas en
+`INSTRUCCIONS_GENERACIO.md`; fartanera 50+50, panotxa 50, gandula «vaga» 50,
+nou fruto 50, calces 50+50, rentadora 50+50, manca 30+50, deu 50, cop 50).
+Ninguna copia de los benchmarks (Jaccard máximo 0,47). Normalizadas con
+`prepara_sintetic.py` y añadidas a `valencia_net_dogv2.txt` una vez (`_sint`) o
+tres (`_sint3`: la poda quita los n-gramas únicos); cada KenLM con su tabla de
+frecuencias (`prova_sintetic.sh`, jobs 3486-3487; comparación 3491, criterio
+del sistema, clasificador `sentit_dogv2_avl`,
+`compara_models_20261126_0816_sintetic*`).
+
+De paso, arreglado un fallo del comparador (`1c0cd38`): `Cronometre` pasaba
+`fixa_referencia` a cualquier modelo y, desde que `puntua_punts` la llama si
+existe (24/11), el KenLM de formas petaba (job 3488).
+
+| KenLM | Aciertos /237 | Graves | Sin traducir | v1 | v2 | manual | 151 |
+|---|---|---|---|---|---|---|---|
+| sistema 2.0.1 (`dogv2`) | 196 | **0** | 41 | 228/249 | 113/144 | 232 | 144 |
+| + sintético ×1 | 198 | 2 | 37 | 228 | 114 | 232 | 144 |
+| + sintético ×3 | **203** | 3 | 31 | 229 | **118** | 232 | 144 |
+
+Manual y 151 idénticos (TER 5,58, chrF 99,62). Ganancias (×3): rentadora(es)
++4 (llavadora), calces +2 (bragues), manques +1, fartanera(es) +3, panotxa +1.
+Graves nuevos: **gandula «vaga» → hamaca** (HG050, HG2-103) y **reeixides
+«éxitos» → exitoses** (HG2-160); además pierde HG2-106 (gandules tumbonas) y
+HG2-121 (panotxes).
+
+Lectura: los graves salen justo en las dos palabras cuyo sintético era SOLO
+del sentido que se queda (gandula «vaga», reeixida «èxit»). Esas frases suben
+la frecuencia de «gandula»/«reeixides» en la tabla, y el prior (λ 1,5) castiga
+la forma frecuente: el sintético «es_queda» empuja hacia la traducción en vez
+de protegerla. Cautelas: las frases se escribieron pensando en estas mismas
+palabras (riesgo de parecerse en estilo a los benchmarks aunque no se copien)
+y falta el texto real (`prova_marge_text_real.py`). **No cambia el sistema.**
+
+Comprobado contando la tabla: «gandula» 8 → 43 (×1) → 113 (×3), «reeixides» 13
+→ 35 → 79, mientras «hamaca» (174) y «exitoses» (185) no cambian.
+
+**Con la tabla de frecuencias del sistema** (26/11, petición del usuario;
+claves `kenlm_dogv2_sint{,3}_fs_c1`, `FS=1 NOMES_COMPARA=1 prova_sintetic.sh`,
+job 3494, `compara_models_20261126_0827_sintetic_fs*`; `99f0c0b`): el KenLM
+con sintético y el prior sin él.
+
+| KenLM | Aciertos /237 | Graves | Sin traducir | v1 | v2 | manual | 151 |
+|---|---|---|---|---|---|---|---|
+| sistema 2.0.1 | 196 | 0 | 41 | 228/249 | 113/144 | 232 | 144 |
+| sintético ×1, tabla del sistema | 199 | **0** | 38 | 229 | 115 | 232 | 144 |
+| sintético ×3, tabla del sistema | **205** | **0** | 32 | 229 | **121** | 232 | 144 |
+
+Los graves desaparecen (HG050, HG2-103 y HG2-160 vuelven a acertar): venían
+del prior, no del KenLM. ×3 con la tabla del sistema frente al sistema: gana
+12 (calces → bragues 3, rentadora(es) → llavadora(es) 4, panotxa(es) →
+panolla(es) 2, fartanera(es) → fartada(es) 2, manques → faltes 1) y pierde 3,
+todos leves (se queda la catalana): HG035 «calces», HG043 y HG2-106
+«gandula(es)» tumbona. Manual y 151 idénticos.
+
+**Texto real** (job 3498, `prova_marge_text_real.py --marges 1 --alt
+kenlm_dogv2_sint3_fs_c1 --per-paraula 200`, opción nueva `--alt`, `3867064`;
+`prova_marge_text_real_20261126_0844_kenlm_dogv2_sint3_fs_c1.{md,json}`;
+2.643 frases de MaCoCu; ojo: el 23/11 era `--per-paraula 300`, la muestra no es
+la misma). Las dos decisiones difieren en 98 frases, revisadas a mano (por
+Claude, sin revisión del usuario):
+
+| | Frases |
+|---|---|
+| Traducción nueva correcta con el sintético | 57 (calces → bragues 20, reeixides → exitoses 11, rentadora(es) → llavadora(es) 16, panotxa(es) 4, manques 3, deus, fartaneres, gandula) |
+| Grave del sistema que el sintético arregla | 2 («alimentar gandules» → hamaques; «oblidant-se de les reeixides» → exitoses) |
+| Grave nuevo del sintético | 3 («Aquestes deus dones» → brolladors; «les rentadores, tan de riu com de bassa» = lavanderas → llavadores; el título «Les calces al sol») |
+| Leve nuevo (se queda la catalana donde el sistema traducía bien) | 34 (reeixida(es) adjetivo 15, gandula(es) tumbona 9, manca/manques 5, rentadora 3, calces, deus) |
+| Dudosas | 2 |
+
+Lectura: más traducciones buenas que el sistema (+57 frente a 34 leves), y
+graves casi iguales (3 nuevos, 2 arreglados). Las pérdidas se concentran en las
+palabras cuyo sintético era SOLO del sentido que se queda (gandula «vaga»,
+reeixida nombre) o tenía muchas frases de ese sentido (manca verbo): el KenLM
+aprende que la forma catalana también existe en valenciano y eso pasa a los
+otros sentidos. Además, gandula tumbona y reeixida adjetivo dependen de dudas
+del léxico sin resolver (DNV: «gandula» = tumbona también en valenciano).
+
+### 4.30 spaCy con el análisis sintáctico: adjetivo que hace de nombre (26/11, petición del usuario; rama `spacy-dep`)
+
+De los 32 fallos que quedan con el sintético ×3 (tabla del sistema), 6 son de
+spaCy: da ADJ a «nou/nous» fruto y a «manques» nombre, y `decisio_spacy` deja
+la catalana sin preguntar al modelo («Ha collit un sac de nous», «greus
+manques»). El parser (cargado pero no ejecutado desde el 21/10) distingue los
+adjetivos de verdad (`amod`, `ROOT` «és molt gandula», `xcomp` «sembla nou»)
+de los que están en un hueco de nombre. Regla (`punts.decisio_spacy`, campo
+`Punt.dep`, `pos_tagger.dependencia`; el parser solo corre en esas palabras):
+ADJ + lectura dialectal nombre + dependencia nominal → no decide spaCy, decide
+el modelo.
+
+- **Versión amplia** (`nsubj`, `obj`, `iobj`, `obl`, `nmod`, `appos`;
+  `96b5b9f`; Abaco 3499-3500): benchmarks +2 / +3 sin graves, pero en texto
+  real 4 graves de 6 cambios: «construir aquest edifici nou» → anou, «en crea
+  de nous», «afegit de nous», «en feien de nous» → anous (el parser pone `obj`
+  a adjetivos de verdad). **Descartada.**
+- **Versión final** (`nmod`, `appos`; `65736ff`; caimán 2665-2666, CPU;
+  `compara_models_20261126_0931_sintetic_dep2*`,
+  `prova_marge_text_real_20261126_0932_*`, misma muestra con `--mostra-de`).
+
+Resumen de todo (237 decisiones de homógrafos; texto real = 2.643 frases de
+MaCoCu, misma muestra; la comparación con el sistema es frase a frase y
+revisada a mano por Claude):
+
+| Configuración | Aciertos | Graves | Sin traducir | v1 /249 | v2 /144 | manual | 151 | Texto real: traduce | Texto real frente al sistema |
+|---|---|---|---|---|---|---|---|---|---|
+| **Sistema 2.0.1** | 196 | 0 | 41 | 228 | 113 | 232 | 144 | 843 | — |
+| Sistema + regla amplia (descartada) | 198 | 0 | 39 | 230 | 113 | 232 | 144 | 849 | +2 buenas, **4 graves** |
+| Sistema + regla `nmod`/`appos` | 197 | 0 | 40 | 229 | 113 | 232 | 144 | 844 | +1 buena |
+| Sintético ×3, su tabla | 203 | 3 | 31 | 229 | 118 | 232 | 144 | — | — |
+| Sintético ×3, tabla del sistema | 205 | 0 | 32 | 229 | 121 | 232 | 144 | 865 | +57 buenas, 2 graves arreglados, 3 graves y 34 leves nuevos |
+| Sintético ×3, tabla del sistema + regla amplia | 208 | 0 | 29 | 231 | 122 | 232 | 144 | 871 | ídem + 2 buenas y **4 graves** |
+| **Sintético ×3, tabla del sistema + regla `nmod`/`appos`** | **207** | **0** | 30 | 230 | **122** | 232 | 144 | 866 | +58 buenas, 2 graves arreglados, 3 graves y 34 leves nuevos |
+
+La regla final arregla «un sac de nous» (los dos) y «un quilo de nous» (con el
+sintético), y en texto real «a la seva disposició gandules i para-sols» →
+hamaques; ningún cambio a peor. 124 tests y doctests en verde.
+
+### 4.31 Sintético equilibrado y léxico sin «gandula» (26/11, petición del usuario; caimán, CPU)
+
+El usuario quitó «gandula»/«gandules» (E0591/E0592) del léxico (sincronizado;
+sin commitear). Sintético nuevo para equilibrar los sentidos (frases del
+sentido que se traduce donde solo había del que se queda, y al revés):
+`reeixida_2` (adjetivo → exitosa/exitoses, 50), `manca_2` (nombre → falta/
+faltes, 50), `rentadora_2` (rentadores máquinas → llavadores 30, lavanderas se
+quedan 20), `panotxa_2` (panotxa/panotxes «de l'horta de Múrcia», DNV, se
+quedan, 40); `gandula.jsonl` a `descartats/`. Total 820 frases (0 problemas,
+Jaccard máx. 0,47 con los benchmarks). KenLM `valencia_net_dogv2_sintb3` (×3)
+entrenado en caimán (ejecutables de Abaco en `~/kenlm_bin`, 29 s), clave
+`kenlm_dogv2_sintb3_fs_c1` (tabla del sistema; `b3ca827`). Todo con la regla de
+spaCy `nmod`/`appos` y el léxico nuevo (jobs 2668-2671;
+`compara_models_20261126_1015_sintb*`,
+`prova_marge_text_real_20261126_1016_*`).
+
+| KenLM (tabla del sistema) | Aciertos /237 | Graves | Sin traducir | v1 /249 | v2 /144 | manual | 151 | Texto real: traduce |
+|---|---|---|---|---|---|---|---|---|
+| sistema | 187 | 0 | 50 | 224 | 108 | 232 | 144 | 757 |
+| sintético anterior ×3 | **199** | 0 | 38 | 226 | **118** | 232 | 144 | 788 |
+| sintético equilibrado ×3 | 198 | 0 | 39 | 226 | 117 | 232 | 144 | 814 |
+
+(Sin «gandula» en el léxico, sus 30 frases de los benchmarks cuentan como
+acierto solo cuando esperan «gandula»: el sistema baja de 197 a 187; no se
+compara con las tablas anteriores. Benchmarks sin tocar.)
+
+Texto real, equilibrado frente al anterior: 54 frases distintas, revisadas a
+mano (Claude): **+38 buenas** (reeixida(es) adjetivo → exitosa(es) 21, rentadores
+→ llavadores 15, manca/manques → falta/faltes 2), **13 leves** (rentadores
+máquina que se queda 8, panotxa(es) mazorca que se queda 4 —«pèl de panotxa»,
+«una panotxa ... la milpa»—, «pel·lícules reeixides» 1), **1 grave** («l'aigua de
+les rentadores i la d'esbandir», pilas del lavadero → llavadores) y 2 dudosas
+(«rentadores batejades», «rentadores de cervells»). Por palabra (traduce,
+sistema / anterior / equilibrado): reeixida 78/68/78, reeixides 69/74/84,
+rentadores 54/60/68, manques 14/15/16, panotxa 14/15/12, panotxes 10/13/12.
+
+Lectura: equilibrar funciona donde faltaba el sentido que se traduce
+(reeixida adjetivo recupera lo que el sintético anterior había perdido y supera
+al sistema; manca un poco). Donde se añadió el sentido que se queda (panotxa
+murciana, rentadores lavanderas) el KenLM también deja la catalana en el
+sentido que se traduce (mazorca, máquinas): el mismo efecto de antes, en la
+otra dirección.
+
+**APARCADO (26/11, decisión del usuario)**: el sintético y la regla de spaCy
+quedan como pendiente a mejorar; el sistema sigue siendo la 2.0.1. Tabla para
+la reunión del 26/11 en `documentacio/informes/2026-11-26_kenlm_mejoras_reunion.md`.
+Pendiente: (1) quitar del sintético los sentidos raros (panotxa murciana,
+rentadores lavanderas) y quedarse con lo que sale a favor; (2) decidir con el
+equipo si un modelo con texto sintético puede ir al sistema publicado; (3) la
+regla de spaCy (`spacy-dep`) puede ir sola al sistema; (4) léxico de
+«reeixida» adjetivo y «manca» nombre con el compañero.
+
 ## 5. Cautelas
 - Los márgenes y los λ se ajustan **sobre los mismos homógrafos** con los que
   se evalúa: las cifras son optimistas. Hay que confirmarlas en el 151, el
