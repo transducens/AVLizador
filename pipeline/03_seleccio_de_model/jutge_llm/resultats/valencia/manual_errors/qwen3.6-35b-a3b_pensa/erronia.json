@@ -1,0 +1,322 @@
+{
+ "sistema": "Versió amb error",
+ "clau": "erronia",
+ "model": "qwen3.6:35b-a3b",
+ "pensa": true,
+ "mode": "amb_origen_valencia",
+ "prompt": "valencia",
+ "empremta_prompt": "341f0eeb",
+ "timestamp": "2026-11-26T10:24:23",
+ "resultats": [
+  {
+   "id": "BM-AVL-005",
+   "entrada": "Vivim en un món cada cop més interconnectat, i això fa que molta gent se senti encuriosida per conèixer paisatges exòtics i tastar nous sabors.",
+   "hipotesi": "Vivim en un món cada vegada menys interconnectat, i això fa que molta gent se senta encuriosida per conéixer paisatges exòtics i tastar nous sabors.",
+   "referencia": "Vivim en un món cada vegada més interconnectat, i això fa que molta gent se senta encuriosida per conéixer paisatges exòtics i tastar nous sabors.",
+   "nota": 45.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "accuracy/mistranslation",
+     "text": "cada vegada menys"
+    }
+   ]
+  },
+  {
+   "id": "BM-AVL-027",
+   "entrada": "Tanmateix, ara, l'avantprojecte de Llei de Funció Pública Valenciana recull aquesta reivindicació històrica de l'AVL.",
+   "hipotesi": "Tanmateix, ara, l'avantprojecte de Llei de Funció Pública Valenciana arreplega este reivindicació històrica de l'AVL.",
+   "referencia": "Tanmateix, ara, l'avantprojecte de Llei de Funció Pública Valenciana arreplega esta reivindicació històrica de l'AVL.",
+   "nota": 95.0,
+   "nota_spans": 97.5,
+   "error_spans": [
+    {
+     "severity": "minor",
+     "category": "fluency/grammar",
+     "text": "este"
+    }
+   ]
+  },
+  {
+   "id": "BM-AVL-037",
+   "entrada": "S'usa en referència a la porció d'una substància que sobresurt de les ribes del recipient que la conté.",
+   "hipotesi": "S'usa en referència a la porció d'una substància que sobreïx dels bordes del recipient que la conté.",
+   "referencia": "S'usa en referència a la porció d'una substància que sobreïx de les vores del recipient que la conté.",
+   "nota": 95.0,
+   "nota_spans": 97.5,
+   "error_spans": [
+    {
+     "severity": "minor",
+     "category": "fluency/spelling",
+     "text": "bordes"
+    }
+   ]
+  },
+  {
+   "id": "BM-AVL-041",
+   "entrada": "Les dones, en principi, hi anaven a rentar; però, entre rentada i rentada, hi havia temps per a fer petar la xerrada.",
+   "hipotesi": "Les dones, en principi, hi anaven a cosir; però, entre llavada i llavada, hi havia temps per a fer petar la xarrada.",
+   "referencia": "Les dones, en principi, hi anaven a llavar; però, entre llavada i llavada, hi havia temps per a fer petar la xarrada.",
+   "nota": 45.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "accuracy/mistranslation",
+     "text": "cosir"
+    }
+   ]
+  },
+  {
+   "id": "BM-AVL-050",
+   "entrada": "Després de l'aprovació per part del consistori, s'obre un període d'exposició al públic i d'al·legacions.",
+   "hipotesi": "Després de l'aprovació per part del consistori, s'obri un període d'exposició al públic.",
+   "referencia": "Després de l'aprovació per part del consistori, s'obri un període d'exposició al públic i d'al·legacions.",
+   "nota": 65.0,
+   "nota_spans": 87.5,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "accuracy/omission",
+     "text": "i d'al·legacions"
+    },
+    {
+     "severity": "minor",
+     "category": "fluency/grammar",
+     "text": "s'obri"
+    }
+   ]
+  },
+  {
+   "id": "BM-AVL-055",
+   "entrada": "En la seva opinió, l'espectacle obre noves lectures de l'obra de l'escriptor de Sueca.",
+   "hipotesi": "En la seua opinió, l'espectacle obri noves lectures de l'obra de l'escriptor d'Alzira.",
+   "referencia": "En la seua opinió, l'espectacle obri noves lectures de l'obra de l'escriptor de Sueca.",
+   "nota": 45.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "accuracy/mistranslation",
+     "text": "d'Alzira"
+    }
+   ]
+  },
+  {
+   "id": "BM-AVL-059",
+   "entrada": "En el primer cas s'està dient de manera emfàtica que jo he estat testimoni del que estic contant; ningú m'ho ha contat.",
+   "hipotesi": "En el primer cas s'està dient de manera emfàtica que jo he sigut testimoni del que estàs contant; ningú m'ho ha contat.",
+   "referencia": "En el primer cas s'està dient de manera emfàtica que jo he sigut testimoni del que estic contant; ningú m'ho ha contat.",
+   "nota": 65.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "accuracy/mistranslation",
+     "text": "estàs contant"
+    }
+   ]
+  },
+  {
+   "id": "BM-AVL-066",
+   "entrada": "L'estudi dels noms geogràfics amb aquest mètode permet aprofundir en la informació i donar coherència al corpus.",
+   "hipotesi": "L'estudi dels noms geogràfics amb este mètode permeten aprofundir en la informació i donar coherència al corpus.",
+   "referencia": "L'estudi dels noms geogràfics amb este mètode permet aprofundir en la informació i donar coherència al corpus.",
+   "nota": 75.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "fluency/grammar",
+     "text": "permeten"
+    }
+   ]
+  },
+  {
+   "id": "BM-AVL-088",
+   "entrada": "Inicialment, aquesta aplicació informàtica va néixer en l'àmbit empresarial amb l'objectiu de facilitar una pluja d'idees sobre algun tema.",
+   "hipotesi": "Inicialment, esta aplicació informàtica va nàixer en l'àmbit empresarial amb l'objectiu de facilitar una pluja de idees sobre algun tema.",
+   "referencia": "Inicialment, esta aplicació informàtica va nàixer en l'àmbit empresarial amb l'objectiu de facilitar una pluja d'idees sobre algun tema.",
+   "nota": 95.0,
+   "nota_spans": 97.5,
+   "error_spans": [
+    {
+     "severity": "minor",
+     "category": "fluency/spelling",
+     "text": "de idees"
+    }
+   ]
+  },
+  {
+   "id": "BM-AVL-100",
+   "entrada": "Aquest import s'ha repartit entre les seixanta-nou sol·licituds que han complert els requisits de la convocatòria.",
+   "hipotesi": "Este import s'ha repartit entre les setanta-nou sol·licituds que han complit els requisits de la convocatòria.",
+   "referencia": "Este import s'ha repartit entre les seixanta-nou sol·licituds que han complit els requisits de la convocatòria.",
+   "nota": 65.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "accuracy/mistranslation",
+     "text": "setanta-nou"
+    }
+   ]
+  },
+  {
+   "id": "BM-AVL-113",
+   "entrada": "Aquestes activitats, que no formen part de les competències de l'AVL, continuïn vulnerant l'ordenament jurídic, segons s'apunta en el nou informe.",
+   "hipotesi": "Estes activitats, que no formen part de les competències de l'AVL, continuen respectant l'ordenament jurídic, segons s'apunta en el nou informe.",
+   "referencia": "Estes activitats, que no formen part de les competències de l'AVL, continuen vulnerant l'ordenament jurídic, segons s'apunta en el nou informe.",
+   "nota": 45.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "accuracy/mistranslation",
+     "text": "respectant"
+    }
+   ]
+  },
+  {
+   "id": "BM-AVL-121",
+   "entrada": "Així i tot, els estudiosos de la llengua detecten a cops errades importants en els materials que estudien.",
+   "hipotesi": "Així i tot, els estudiosos de la llengua detecten sempre errades importants en els materials que estudien.",
+   "referencia": "Així i tot, els estudiosos de la llengua detecten a vegades errades importants en els materials que estudien.",
+   "nota": 65.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "accuracy/mistranslation",
+     "text": "sempre"
+    }
+   ]
+  },
+  {
+   "id": "BM-AVL-134",
+   "entrada": "Les rates penades són cegues; es guien i cacen per ecolocalització, a partir dels sons que emeten i recuperen en les seves grans orelles.",
+   "hipotesi": "Les rates penades són sordes; es guien i cacen per ecolocalització, a partir dels sons que emeten i recuperen en les seues grans orelles.",
+   "referencia": "Les rates penades són cegues; es guien i cacen per ecolocalització, a partir dels sons que emeten i recuperen en les seues grans orelles.",
+   "nota": 65.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "accuracy/mistranslation",
+     "text": "sordes"
+    }
+   ]
+  },
+  {
+   "id": "BM-AVL-143",
+   "entrada": "També la denominació cadernera, amb què hem encapçalat aquest article —la més general en el conjunt del domini lingüístic—, segueix aquest mateix patró.",
+   "hipotesi": "També la denominació cadernera, amb què hem encapçalat este article —la més general en el conjunt del domini lingüístic—, seguix un patró diferent.",
+   "referencia": "També la denominació cadernera, amb què hem encapçalat este article —la més general en el conjunt del domini lingüístic—, seguix este mateix patró.",
+   "nota": 45.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "accuracy/mistranslation",
+     "text": "un patró diferent"
+    }
+   ]
+  },
+  {
+   "id": "BM-AVL-148",
+   "entrada": "Amb aquesta varietat de raïm s'elabora un vi anomenat fondellol, típic de la Marina Alta, que s'envelleix en bóta durant més de vuit anys.",
+   "hipotesi": "Amb esta varietat de raïm s'elabora un vi anomenat fondellol, típic de la Marina Alta, que s'envellix en bóta durant més de huit mesos.",
+   "referencia": "Amb esta varietat de raïm s'elabora un vi anomenat fondellol, típic de la Marina Alta, que s'envellix en bóta durant més de huit anys.",
+   "nota": 65.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "accuracy/mistranslation",
+     "text": "huit mesos"
+    }
+   ]
+  },
+  {
+   "id": "BM-AVL-155",
+   "entrada": "Durant els darrers mesos s'ha aprovat la incorporació d'algunes d'aquestes fórmules fixades; poc dalt o baix, és a dir, aproximadament, una trentena.",
+   "hipotesi": "Durant els últims mesos s'han aprovat la incorporació d'algunes d'estes fórmules fixades; poc dalt o baix, és a dir, aproximadament, una trentena.",
+   "referencia": "Durant els últims mesos s'ha aprovat la incorporació d'algunes d'estes fórmules fixades; poc dalt o baix, és a dir, aproximadament, una trentena.",
+   "nota": 85.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "fluency/grammar",
+     "text": "s'han aprovat"
+    }
+   ]
+  },
+  {
+   "id": "BM-AVL-167",
+   "entrada": "L'AVL té vocació de servei públic, i amb aquest butlletí que iniciem donem un pas més de servei i de transparència.",
+   "hipotesi": "L'AVL té vocació de servici privat, i amb este butlletí que iniciem donem un pas més de servici i de transparència.",
+   "referencia": "L'AVL té vocació de servici públic, i amb este butlletí que iniciem donem un pas més de servici i de transparència.",
+   "nota": 45.0,
+   "nota_spans": 90,
+   "error_spans": [
+    {
+     "severity": "major",
+     "category": "accuracy/mistranslation",
+     "text": "servici privat"
+    }
+   ]
+  },
+  {
+   "id": "BM-AVL-173",
+   "entrada": "Tenim el desig de continuar prestant aquest servei a la societat, en general, i als investigadors, en particular.",
+   "hipotesi": "Tenim el deseo de continuar prestant este servici a la societat, en general, i als investigadors, en particular.",
+   "referencia": "Tenim el desig de continuar prestant este servici a la societat, en general, i als investigadors, en particular.",
+   "nota": 95.0,
+   "nota_spans": 97.5,
+   "error_spans": [
+    {
+     "severity": "minor",
+     "category": "fluency/spelling",
+     "text": "deseo"
+    }
+   ]
+  },
+  {
+   "id": "BM-AVL-190",
+   "entrada": "Viuen associats en ambients aquàtics, necessaris per al creixement de les seves larves, que muden de pell de vuit a quinze cops.",
+   "hipotesi": "Viuen associats en ambients aquàtics, necessaris per al creixement de les seues larves, que muden de piel de huit a quinze vegades.",
+   "referencia": "Viuen associats en ambients aquàtics, necessaris per al creixement de les seues larves, que muden de pell de huit a quinze vegades.",
+   "nota": 95.0,
+   "nota_spans": 97.5,
+   "error_spans": [
+    {
+     "severity": "minor",
+     "category": "fluency/spelling",
+     "text": "piel"
+    }
+   ]
+  },
+  {
+   "id": "BM-AVL-201",
+   "entrada": "Sabent això, que tots vostès, i molt especialment les dones que celebrin avui la seva onomàstica, tinguen un feliç dia!",
+   "hipotesi": "Sabent això, que tots vostés, i molt especialment les dones que celebren hui el seu onomàstica, tinguen un feliç dia!",
+   "referencia": "Sabent això, que tots vostés, i molt especialment les dones que celebren hui la seua onomàstica, tinguen un feliç dia!",
+   "nota": 75.0,
+   "nota_spans": 95.0,
+   "error_spans": [
+    {
+     "severity": "minor",
+     "category": "fluency/spelling",
+     "text": "vostés"
+    },
+    {
+     "severity": "minor",
+     "category": "fluency/grammar",
+     "text": "el seu onomàstica"
+    }
+   ]
+  }
+ ]
+}
