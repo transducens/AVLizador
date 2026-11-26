@@ -3,20 +3,24 @@ traca_traduccio.py -- Traça completa d'una traducció català -> valencià
 (02/11/2026): què fa spaCy amb cada paraula, què troba en el diccionari,
 què canvia cada capa del motor (i per què NO canvia una paraula que sí
 que està en el diccionari) i, si hi ha paraules ambigües, tot el
-postprocessat amb FLOR-760M: la decisió d'spaCy, les frases que rep el
-model, les seues puntuacions i la tria final.
+postprocessat amb el model de llengua: la decisió d'spaCy, les frases que
+rep el model, les seues puntuacions, el classificador de sentit i la tria
+final. Des del 18/11/2026 (2.0.0) usa el sistema del paquet, KenLM + el
+classificador de sentit amb `CRITERI_KENLM`; `--model flor` reproduïx el
+sistema d'abans (FLOR-760M, `model_llengua/flor.py`, cal torch).
 
 Fora del paquet a propòsit (decisió de l'usuari): no canvia cap
 traducció. Reproduïx els mateixos passos que `translate_cat_val` (les
 mateixes capes, en el mateix orde, amb el mateix model i el mateix
 criteri) i comprova que la traducció final ix idèntica.
 
-Ús (des de l'arrel del repo, amb el paquet instal·lat: `pip install -e ".[ml]"`):
+Ús (des de l'arrel del repo, amb el paquet instal·lat: `pip install -e ".[kenlm]"`;
+KenLM no s'instal·la en Windows: allí, amb la imatge Docker, vore el README):
     python pipeline/03_seleccio_de_model/traces/traca_traduccio.py "Un cop acabada la reunió, el noi marxarà."
     python pipeline/03_seleccio_de_model/traces/traca_traduccio.py --fitxer frases.txt --html traces.html
     python pipeline/03_seleccio_de_model/traces/traca_traduccio.py --benchmark manual --nomes-ambigues --html traces.html
     python pipeline/03_seleccio_de_model/traces/traca_traduccio.py --benchmark homografs --ids HG001 HG002 --json traces.json
-    python pipeline/03_seleccio_de_model/traces/traca_traduccio.py --motor "..."   # sense FLOR
+    python pipeline/03_seleccio_de_model/traces/traca_traduccio.py --motor "..."   # sense model
 
 L'HTML (`--html`) és una pàgina sola, sense servidor, feta a partir de
 `visor_traces.html` amb les dades dins. El visor també obri un JSON de
@@ -60,6 +64,8 @@ CAPES = {
     "IncoatiusInversRule": "Incoativos",
     "AccentuacioInversRule": "Acentuación",
     "PerAInfinitiuInversRule": "per a + infinitivo",
+    "CliticLhiRule": "Clíticos (l'hi)",
+    "ConcordancaGenereSnRule": "Concordancia de género",
 }
 
 # Rasgos de spaCy que el traductor copia al Token y usa (pos_tagger.etiqueta).
@@ -67,7 +73,7 @@ RASGOS_USADOS = {
     "POS": "categoría: filtros de las conjugaciones y de los homógrafos, incoativos, "
            "'per a' y la decisión de spaCy en las palabras ambiguas",
     "lemma": "incoativos (el lema tiene que acabar en -ir y estar en las conjugaciones)",
-    "Gender": "concordancia del artículo tras cambiar una palabra y candidatos de FLOR",
+    "Gender": "concordancia del artículo tras cambiar una palabra y candidatos del modelo",
     "VerbForm": "participios usados como adjetivo (conjugaciones) e infinitivo ('per a')",
 }
 RASGOS_CALCULADOS_NO_USADOS = {"Mood": "se guarda en el Token, pero ninguna regla de cat→val lo consulta"}
@@ -76,29 +82,37 @@ RASGOS_CALCULADOS_NO_USADOS = {"Mood": "se guarda en el Token, pero ninguna regl
 # ─── Recursos (se cargan una vez) ────────────────────────────────────────────
 
 class Recursos:
-    def __init__(self, amb_model: bool):
+    def __init__(self, model: str | None = "kenlm"):
         self.motor = RuleEngineInvers()
         self.capes = {type(r).__name__: r for r in self.motor._regles}
         self.nlp = pos_tagger._carrega_spacy()
         self.lexic_cru = self._index(json.loads((DATA / "lexic_general.json").read_text(encoding="utf-8")))
         conj = json.loads((DATA / "conjugacions_dialectals.json").read_text(encoding="utf-8"))
         self.conj_cru = self._index(conj["entradas"])
+        from avlizador.traductor_cat_val.model_llengua.punts import carrega_punts
+
         self.model = None
+        self.sentit = None
         self.criteri = None
-        self.punts = None
-        if amb_model:
+        self.nom_model = None
+        self.punts = carrega_punts()
+        if model == "kenlm":
+            from avlizador.traductor_cat_val.model_llengua import CRITERI_KENLM, sistema_kenlm
+            from avlizador.traductor_cat_val.model_llengua.kenlm import directori_kenlm
+
+            self.model, self.sentit = sistema_kenlm()
+            self.criteri = CRITERI_KENLM
+            self.nom_model = "KenLM"
+            self.id_model = f"KenLM ({directori_kenlm()})"
+        elif model == "flor":
             from avlizador.traductor_cat_val.model_llengua import Criteri
-            from avlizador.traductor_cat_val.model_llengua.punts import carrega_punts
             sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "model_llengua"))
             from flor import MODEL_PER_DEFECTE, ModelLlengua  # fora del paquet des de la 2.0.0
 
             self.model = ModelLlengua(MODEL_PER_DEFECTE)
             self.criteri = Criteri()
-            self.punts = carrega_punts()
-        else:
-            from avlizador.traductor_cat_val.model_llengua.punts import carrega_punts
-
-            self.punts = carrega_punts()
+            self.nom_model = "FLOR"
+            self.id_model = self.model.model_id
 
     @staticmethod
     def _index(entrades: list[dict]) -> dict[str, list[dict]]:
@@ -243,11 +257,12 @@ def motiu_sense_canvi(rec: Recursos, tok, dicc: dict) -> str | None:
     return None
 
 
-# ─── 4. Postprocesado (FLOR) ─────────────────────────────────────────────────
+# ─── 4. Postprocesado (modelo de lengua) ─────────────────────────────────────────────────
 
 def traca_postprocessat(rec: Recursos, text: str, tokens_motor) -> dict:
     from avlizador.traductor_cat_val.model_llengua import (
-        CONCORDANCA_PER_DEFECTE, _valor, aplica_tries, puntua_punts, puntuacio, tradueix_cat_val_ml,
+        CONCORDANCA_PER_DEFECTE, _valor, aplica_tries, criteri_del_punt, puntua_punts, puntuacio,
+        tradueix_cat_val_ml,
     )
     from avlizador.traductor_cat_val.model_llengua.punts import (
         _CATEGORIA_PER_POS, base_neutra, decisio_spacy, detecta, frases_candidates,
@@ -275,14 +290,25 @@ def traca_postprocessat(rec: Recursos, text: str, tokens_motor) -> dict:
 
     tipus_model = tuple(t for t in criteri.tipus if t != "irresoluble" or criteri.model_irresolubles)
     text_motor, trobats = puntua_punts(text, rec.model, criteri.tipus, CONCORDANCA_PER_DEFECTE, tipus_model)
+    if rec.sentit is not None and criteri.desempat is not None:
+        for punt in trobats:
+            if punt.puntuacions:
+                punt.sentit = rec.sentit.candidat(punt)
     final = aplica_tries(text_motor, trobats, criteri)
-    referencia = tradueix_cat_val_ml(text, rec.model, criteri)[0]
+    referencia = tradueix_cat_val_ml(text, rec.model, criteri, sentit=rec.sentit)[0]
+    if rec.nom_model == "KenLM":  # el sistema del paquet, tal qual
+        from avlizador import translate_cat_val
+
+        referencia_paquet = translate_cat_val(text)
+    else:
+        referencia_paquet = referencia
 
     punts = []
     for punt in trobats:
         cat_spacy = _CATEGORIA_PER_POS.get(punt.pos)
         d_spacy = decisio_spacy(punt) if punt.tipus == "irresoluble" and criteri.spacy_irresolubles else None
-        # todas las variantes que ve FLOR (las mismas llamadas; el modelo las tiene en caché)
+        c_punt = criteri_del_punt(punt, criteri)
+        # todas las variantes que ve el modelo (las mismas llamadas)
         variants = {}
         if punt.puntuacions:
             base = base_neutra(rec.motor, text, [punt])
@@ -299,26 +325,28 @@ def traca_postprocessat(rec: Recursos, text: str, tokens_motor) -> dict:
             fila = {"candidat": c, "es_del_motor": c == punt.motor, "triat": c == punt.tria}
             if d:
                 fila.update({"frase": d["frase"], "lp": round(d["lp"], 3), "n": d["n"],
-                             "prior": round(d["prior"], 3), "puntuacio": round(puntuacio(d, criteri), 3),
+                             "prior": round(d["prior"], 3), "puntuacio": round(puntuacio(d, c_punt), 3),
                              "variants": variants.get(c, [])})
             else:
                 fila["frase"] = punt.frases.get(c)
             candidats.append(fila)
-        explicacio, diferencia = _explica(punt, criteri, cat_spacy, d_spacy, _valor)
+        explicacio, diferencia = _explica(punt, c_punt, cat_spacy, d_spacy, _valor, rec.nom_model)
         punts.append({
             "i": punt.index, "paraula": punt.paraula, "prefix": punt.prefix, "tipus": punt.tipus,
             "candidats_lexic": punt.candidats, "motor": punt.motor, "tria": punt.tria, "decidit": punt.decidit,
             "spacy": {"pos": punt.pos, "categoria": cat_spacy, "categoria_dialectal": punt.categoria,
                       "lectures": [sorted(l) for l in punt.lectures], "decisio": d_spacy},
-            "candidats": candidats, "diferencia": diferencia, "marge": criteri.marge,
+            "candidats": candidats, "diferencia": diferencia, "marge": criteri.marge, "lam": c_punt.lam,
+            "sentit": punt.sentit,
             "explicacio": explicacio,
         })
     return {
         "entra": True,
         "motiu": f"{len(trobats)} palabra(s) ambigua(s) del léxico en la frase",
         "consumides": consumides,
-        "criteri": {"lam": criteri.lam, "norma": criteri.norma, "marge": criteri.marge,
-                    "concordanca": CONCORDANCA_PER_DEFECTE, "model": rec.model.model_id,
+        "criteri": {"lam": criteri.lam, "lam_colisio": criteri.lam_colisio, "norma": criteri.norma,
+                    "marge": criteri.marge, "per_defecte": criteri.per_defecte, "desempat": criteri.desempat,
+                    "concordanca": CONCORDANCA_PER_DEFECTE, "model": rec.id_model, "nom_model": rec.nom_model,
                     "context": getattr(rec.model, "context", None),
                     "formula": "puntuació = lp − lam × prior (lp: log-probabilitat de la frase; "
                                "prior: log-probabilitat de la paraula sola; les dos, darrere del "
@@ -326,35 +354,49 @@ def traca_postprocessat(rec: Recursos, text: str, tokens_motor) -> dict:
         "punts": punts,
         "text_motor_base": text_motor,
         "final": final,
-        "coincideix_amb_translate": final == referencia,
+        "coincideix_amb_translate": final == referencia == referencia_paquet,
     }
 
 
-def _explica(punt, criteri, cat_spacy, d_spacy, _valor) -> tuple[str, float | None]:
+def _explica(punt, criteri, cat_spacy, d_spacy, _valor, nom="el modelo") -> tuple[str, float | None]:
+    """Por qué se elige cada candidato, en palabras (sigue el orden de `tria`)."""
     if punt.decidit == "spacy":
         return (f"spaCy da {punt.pos} ({cat_spacy}), y la lectura dialectal es '{punt.categoria}': "
-                f"ese sentido no es posible → se deja la palabra catalana '{punt.tria}' sin preguntar a FLOR"), None
+                f"ese sentido no es posible → se deja la palabra catalana '{punt.tria}' sin preguntar a {nom}"), None
     if not punt.puntuacions:
-        return "este tipo de palabra no se manda a FLOR: se queda la elección del motor", None
+        return f"este tipo de palabra no se manda a {nom}: se queda la elección del motor", None
     previ = ""
     if (punt.tipus == "irresoluble" and punt.pos == "ADJ" and punt.genere and punt.genere_det
             and punt.genere != punt.genere_det and cat_spacy != punt.categoria):
         previ = (f"spaCy da ADJ ({punt.genere}), pero el determinante de delante es {punt.genere_det}: "
-                 f"no puede ser el adjetivo, así que no se hace caso a spaCy y decide FLOR. ")
+                 f"no puede ser el adjetivo, así que no se hace caso a spaCy y decide {nom}. ")
     valors = {c: _valor(d, criteri, False) for c, d in punt.puntuacions.items()}
     millor = max(valors, key=valors.get)
-    if punt.motor is None:
-        segon = sorted(valors.values())[-2] if len(valors) > 1 else valors[millor]
+    segon = max((v for c, v in valors.items() if c != millor), default=valors[millor])
+    if punt.decidit == "sentit":
         dif = round(valors[millor] - segon, 3)
-        return (previ + f"el motor no elige (colisión): gana la frase con más puntuación de FLOR, '{millor}', "
+        return (previ + f"{nom} prefiere '{millor}' solo por {dif} (menos que el desempate {criteri.desempat}): "
+                f"decide el clasificador de sentido, que elige '{punt.sentit}'"), dif
+    if punt.motor is None:
+        dif = round(valors[millor] - segon, 3)
+        return (previ + f"el motor no elige (colisión): gana la frase con más puntuación de {nom}, '{millor}', "
                 f"por {dif}"), dif
-    dif = round(valors[millor] - valors[punt.motor], 3)
-    if millor == punt.motor:
-        return previ + f"FLOR prefiere lo mismo que el motor ('{punt.motor}'): no cambia nada", dif
-    if dif <= criteri.marge:
-        return (previ + f"FLOR prefiere '{millor}', pero solo por {dif} (margen {criteri.marge}): "
+    if punt.decidit == "catala":
+        catala = punt.tria
+        dif = round(valors[millor] - valors[catala], 3)
+        return (previ + f"{nom} prefiere '{millor}', pero solo por {dif} frente a la catalana (margen "
+                f"{criteri.marge}): se deja la palabra catalana, '{catala}'"), dif
+    defecte = punt.motor
+    if criteri.per_defecte == "catala":
+        defecte = next((c for c in punt.candidats if c.lower() == punt.paraula.lower()), punt.motor)
+    if millor == defecte:
+        return previ + f"{nom} prefiere '{millor}', la opción por defecto: no cambia nada", round(valors[millor] - segon, 3)
+    dif = round(valors[millor] - valors[defecte], 3) if defecte in valors else round(valors[millor] - segon, 3)
+    if punt.decidit == "motor":
+        return (previ + f"{nom} prefiere '{millor}', pero solo por {dif} (margen {criteri.marge}): "
                 f"se mantiene la del motor, '{punt.motor}'"), dif
-    return previ + f"FLOR prefiere '{millor}' por {dif}, más que el margen {criteri.marge}: cambia la del motor", dif
+    return (previ + f"{nom} prefiere '{millor}' por {dif}, más que el margen {criteri.marge} frente a "
+            f"'{defecte}': se traduce"), dif
 
 
 # ─── Traza completa de una frase ─────────────────────────────────────────────
@@ -412,7 +454,7 @@ def traca(rec: Recursos, text: str, id_: str = "", referencia: str | None = None
         resultat["postprocessat"] = post
         resultat["final"] = post.get("final", text_motor)
     else:
-        resultat["postprocessat"] = {"entra": False, "motiu": "sin FLOR (--motor)", "punts": []}
+        resultat["postprocessat"] = {"entra": False, "motiu": "sin modelo (--motor)", "punts": []}
         resultat["final"] = text_motor
     if referencia is not None:
         resultat["referencia"] = referencia
@@ -480,13 +522,18 @@ def imprimeix(t: dict) -> None:
             w(f"   {p['capa']:<20} " + "; ".join(f"{c['abans']} → {c['despres'] or '∅'}" for c in p["canvis"]))
     w(f"   Resultado del motor: {t['motor']}")
     post = t["postprocessat"]
-    w("\n3. POSTPROCESADO (FLOR) " + "─" * 59)
+    cr = post.get("criteri") or {}
+    w(f"\n3. POSTPROCESADO ({cr.get('nom_model') or 'modelo'}) " + "─" * 55)
     w(f"   Entra: {'sí' if post['entra'] else 'no'} — {post['motiu']}")
+    if post.get("entra"):
+        w(f"   Criterio: margen {cr.get('marge')}, por defecto {cr.get('per_defecte')}, λ {cr.get('lam')}"
+          f" (colisiones {cr.get('lam_colisio')}), desempate {cr.get('desempat')}; puntuación = lp − λ × prior")
     for p in post.get("punts", []):
         s = p["spacy"]
         w(f"   · '{p['paraula']}' ({p['tipus']}): candidatos {p['candidats_lexic']}, motor: {p['motor']}")
         w(f"     spaCy: {s['pos']} ({s['categoria']}); lectura dialectal: {s['categoria_dialectal']}; "
-          f"lecturas: {s['lectures']}")
+          f"lecturas: {s['lectures']}; λ {p.get('lam')}"
+          + (f"; clasificador de sentido: {p['sentit']}" if p.get("sentit") else ""))
         for c in p["candidats"]:
             if "lp" in c:
                 w(f"     {'✔' if c['triat'] else ' '} {c['candidat']:<10} lp {c['lp']:>9}  prior {c['prior']:>8}  "
@@ -495,7 +542,7 @@ def imprimeix(t: dict) -> None:
                     if not v["triada"]:
                         w(f"         variante descartada: lp {v['lp']:>9}  «{v['frase']}»")
             else:
-                w(f"     {'✔' if c['triat'] else ' '} {c['candidat']:<10} (sin FLOR)  «{c.get('frase')}»")
+                w(f"     {'✔' if c['triat'] else ' '} {c['candidat']:<10} (sin modelo)  «{c.get('frase')}»")
         w(f"     → {p['explicacio']}")
         if "encert" in p:
             estat = {True: "ACIERTO", False: "FALLO", None: "sin decidir"}[p["encert"]]
@@ -505,6 +552,7 @@ def imprimeix(t: dict) -> None:
         w(f"REFERENCIA: {t['referencia']}  [{'exacta' if t['exacta'] else 'distinta'}]")
     if post.get("entra") and not post.get("coincideix_amb_translate", True):
         w("⚠ La traza no coincide con translate_cat_val: revisar.")
+    w("")
 
 
 # ─── Entrada / salida ────────────────────────────────────────────────────────
@@ -563,7 +611,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--limit", type=int, help="Solo las N primeras frases.")
     parser.add_argument("--nomes-ambigues", action="store_true",
                         help="Solo las frases que pasan por el postprocesado (palabras ambiguas).")
-    parser.add_argument("--motor", action="store_true", help="Sin FLOR: solo spaCy, diccionario y motor.")
+    parser.add_argument("--motor", action="store_true", help="Sin modelo: solo spaCy, diccionario y motor.")
+    parser.add_argument("--model", choices=["kenlm", "flor"], default="kenlm",
+                        help="kenlm (el sistema del paquet, per defecte) o flor (el d'abans de la 2.0.0; cal torch).")
     parser.add_argument("--json", type=Path, help="Guarda las trazas en JSON.")
     parser.add_argument("--html", type=Path, help="Página HTML con las trazas (visor_traces.html con los datos).")
     parser.add_argument("--silencios", action="store_true", help="No escribe las trazas en la terminal.")
@@ -572,7 +622,7 @@ def main(argv: list[str] | None = None) -> int:
     frases = frases_entrada(args)
     if not frases:
         parser.error("cap frase: pasa un texto, --fitxer o --benchmark")
-    rec = Recursos(amb_model=not args.motor)
+    rec = Recursos(None if args.motor else args.model)
     traces = []
     for n, (id_, text, ref) in enumerate(frases, 1):
         if args.nomes_ambigues:
