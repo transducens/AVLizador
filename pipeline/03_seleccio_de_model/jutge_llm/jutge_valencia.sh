@@ -143,6 +143,8 @@ cd "$SCRIPT_DIR"
 for c in $CONJUNTS; do
     case "$c" in
         manual) FITXERS=("$BASELINE/copia.json" "$BASELINE/ollama_gemma3-12b.json" "$ENTRADES/manual/avlizador.json") ;;
+        manual3)  # 26/11/2026: només el català sense traduir, AVLizador i la referència (s'hi afig sola)
+            FITXERS=("$BASELINE/copia.json" "$ENTRADES/manual/avlizador.json") ;;
         homografs|homografs_v2) FITXERS=("$ENTRADES/$c/avlizador.json" "$ENTRADES/$c/motor.json") ;;
         sintetic)  # benchmark_sintetic.json (26/11/2026): versió correcta i amb error de cada frase
             "$PYTHON" "$SCRIPT_DIR/sintetic.py" prepara --eixida "$ENTRADES/sintetic"

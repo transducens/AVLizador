@@ -259,6 +259,40 @@ DOMINI_DE = {"valencia_va": DOMINI_VA}    # la resta, DOMINI
 EMPREMTES["valencia_va"] = hashlib.sha1(
     (SISTEMA_VA + FASE1_VA + FASE2_VA + "".join(DOMINI_VA.values())).encode("utf-8")).hexdigest()[:8]
 
+# Prompt "nota" (26/11/2026, petició de l'usuari): UNA sola petició per text i
+# només la nota, sense la fase de detectar errors. Cada versió de la frase
+# (català sense traduir, AVLizador, referència) va en una petició a banda, com
+# sempre. Mateix contingut que "valencia" (original, domini, norma valenciana i
+# escala de significat), amb la norma reescrita per a puntuar en compte d'anotar.
+SISTEMA_NOTA = "Your task is to assess the quality of a machine translation."
+
+NORMA_NOTA = (NORMA_VAL
+              .replace("Valencian norm (read carefully before annotating):",
+                       "Valencian norm (read carefully before scoring):")
+              .replace("Do NOT mark a Valencian form as a spelling, grammar, register or terminology error, "
+                       "and do NOT annotate it because Central Catalan would use another form.",
+                       "Do NOT lower the score for a Valencian form, and do NOT lower it because Central Catalan "
+                       "would use another form.")
+              .replace("Mark a word as a Spanish borrowing only if it is not accepted by the AVL.",
+                       "Treat a word as a Spanish borrowing only if it is not accepted by the AVL.")
+              .replace("is an accuracy/mistranslation error.", "is a meaning error and must lower the score."))
+for _vell in ("before annotating", "do NOT annotate it", "Mark a word", "accuracy/mistranslation"):
+    assert _vell not in NORMA_NOTA, _vell
+
+PROMPT_NOTA = """Catalan source:
+```{src}```
+Valencian translation:
+```{hyp}```
+Score the Valencian machine translation of the Catalan source on a continuous scale from 0 to 100. The scale has the following reference points: 0="No meaning preserved", 33="Some meaning preserved", 66="Most meaning preserved and few grammar mistakes", up to 100="Perfect meaning and grammar".
+Domain requirements: {domini}
+""" + NORMA_NOTA + """
+Respond with ONLY a valid JSON object and nothing else: {{"score": N}}
+where N is an integer from 0 to 100."""
+
+PROMPTS_NOTA = {"nota": PROMPT_NOTA}
+SISTEMA_DE["nota"] = SISTEMA_NOTA
+EMPREMTES["nota"] = hashlib.sha1((SISTEMA_NOTA + PROMPT_NOTA).encode("utf-8")).hexdigest()[:8]
+
 LEXIC = AQUI.parents[2] / "src" / "avlizador" / "traductor_cat_val" / "data" / "lexic_general.json"
 MAX_GLOSSARI = 15
 CATEGORIES = {"n": "noun", "adj": "adjective", "adv": "adverb", "num": "numeral", "pr": "preposition",
@@ -382,7 +416,9 @@ def clau(text: str, domini: str, src: str = "") -> str:
 
 
 def prompts(prompt: str, text: str, src: str, dom: str, spans: str | None = None) -> str:
-    """La fase 1 (`spans` None) o la 2 del prompt triat."""
+    """La fase 1 (`spans` None) o la 2 del prompt triat. Amb "nota", l'única petició."""
+    if prompt in PROMPTS_NOTA:
+        return PROMPTS_NOTA[prompt].format(src=src, hyp=text, domini=DOMINI[dom])
     if prompt in PROMPTS_VAL:
         f1, f2 = PROMPTS_VAL[prompt]
         domini = DOMINI_DE.get(prompt, DOMINI)[dom]
@@ -487,7 +523,8 @@ def carrega_sistemes(fitxers: list[Path], limit: int | None, ids: list[str] | No
 
 def puntua(args) -> int:
     curt = args.model.replace(":", "-").replace("/", "-") + ("_pensa" if args.pensa else "")
-    valencia = args.prompt in PROMPTS_VAL
+    una_fase = args.prompt in PROMPTS_NOTA  # 26/11/2026: només la nota, una petició per text
+    valencia = args.prompt in PROMPTS_VAL or una_fase
     empremta = EMPREMTES.get(args.prompt)
     if args.eixida is None:
         args.eixida = AQUI / "resultats" / (args.prompt if valencia else "")
@@ -528,20 +565,28 @@ def puntua(args) -> int:
     with cau_f.open("a", encoding="utf-8") as fc:
         for i, (k, (text, dom, src)) in enumerate(pendents.items(), 1):
             try:
-                crua1 = xat(args.ollama_url, args.model, prompts(args.prompt, text, src, dom),
-                            8192 if args.pensa else 512, args.pensa, ctx, sistema)
-                pensament1 = PENSAMENTS.get("darrer", "") if args.pensa else ""
-                spans = llig_spans(crua1)
-                crua2 = xat(args.ollama_url, args.model, prompts(args.prompt, text, src, dom, crua1.strip()),
-                            64, False, ctx, sistema)
-                fila = {"clau": k, "text": text, "domini": dom, "fase1": crua1, "spans": spans,
-                        "nota": llig_nota(crua2), "fase2": crua2}
-                if valencia:
-                    fila["entrada"] = src
-                if amb_glossari:
-                    fila["glossari"] = glossari(src, text)
-                if pensament1:
-                    fila["pensament1"] = pensament1
+                if una_fase:
+                    crua = xat(args.ollama_url, args.model, prompts(args.prompt, text, src, dom),
+                               8192 if args.pensa else 64, args.pensa, ctx, sistema)
+                    fila = {"clau": k, "text": text, "domini": dom, "entrada": src, "spans": [],
+                            "nota": llig_nota(crua), "resposta": crua, "una_fase": True}
+                    if args.pensa and PENSAMENTS.get("darrer"):
+                        fila["pensament"] = PENSAMENTS["darrer"]
+                else:
+                    crua1 = xat(args.ollama_url, args.model, prompts(args.prompt, text, src, dom),
+                                8192 if args.pensa else 512, args.pensa, ctx, sistema)
+                    pensament1 = PENSAMENTS.get("darrer", "") if args.pensa else ""
+                    spans = llig_spans(crua1)
+                    crua2 = xat(args.ollama_url, args.model, prompts(args.prompt, text, src, dom, crua1.strip()),
+                                64, False, ctx, sistema)
+                    fila = {"clau": k, "text": text, "domini": dom, "fase1": crua1, "spans": spans,
+                            "nota": llig_nota(crua2), "fase2": crua2}
+                    if valencia:
+                        fila["entrada"] = src
+                    if amb_glossari:
+                        fila["glossari"] = glossari(src, text)
+                    if pensament1:
+                        fila["pensament1"] = pensament1
             except Exception as e:  # noqa: BLE001 -- es registra i es continua
                 print(f"  ERROR en {k[:8]}: {e}", flush=True)
                 continue
@@ -561,10 +606,11 @@ def puntua(args) -> int:
                 continue
             files.append({"id": fr["id"], "entrada": fr.get("entrada"), "hipotesi": fr["hipotesi"],
                           "referencia": fr["referencia"], "nota": r["nota"],
-                          "nota_spans": nota_des_de_spans(r["spans"]), "error_spans": r["spans"]})
+                          "nota_spans": None if r.get("una_fase") else nota_des_de_spans(r["spans"]),
+                          "error_spans": r["spans"]})
         (eixida / f"{clau_s}.json").write_text(json.dumps({
             "sistema": s["nom"], "clau": clau_s, "model": args.model, "pensa": args.pensa,
-            "mode": "amb_origen_valencia" if valencia else "nomes_traduccio",
+            "mode": "nota_directa" if una_fase else "amb_origen_valencia" if valencia else "nomes_traduccio",
             "prompt": args.prompt, "empremta_prompt": empremta,
             "timestamp": datetime.now().isoformat(timespec="seconds"),
             "resultats": files}, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -587,7 +633,8 @@ def resum_carpeta(carpeta: Path) -> int:
     model = next(iter(sistemes.values()))["model"]
     mode = next(iter(sistemes.values())).get("mode", "nomes_traduccio")
     prompt = next(iter(sistemes.values())).get("prompt", "valencia")
-    titol = (f"amb l'original i la norma valenciana (prompt «{prompt}»)" if mode == "amb_origen_valencia"
+    titol = ("només la nota, una petició per text (prompt «nota»)" if mode == "nota_directa"
+             else f"amb l'original i la norma valenciana (prompt «{prompt}»)" if mode == "amb_origen_valencia"
              else "només la traducció (GEMBA-ESA adaptat)")
     files = []
     for k, d in sistemes.items():
@@ -671,8 +718,8 @@ def main(argv=None) -> int:
     p.add_argument("--pensa", action="store_true", help="Raonament activat en la fase 1 (més lent).")
     p.add_argument("--limit", type=int)
     p.add_argument("--ids", help="Només estes frases (ids separats per comes): una mostra triada a mà.")
-    p.add_argument("--prompt", choices=["gemba", *PROMPTS_VAL], default="gemba",
-                   help="gemba: només la traducció (04/11/2026); valencia: amb l'original i la norma valenciana; valencia2: el mateix sense les formes candidates d'un homògraf (25/11/2026); valencia3: valencia2 + glossari de la frase tret del lèxic (25/11/2026); valencia_va: valencia traduït al valencià (26/11/2026).")
+    p.add_argument("--prompt", choices=["gemba", *PROMPTS_VAL, *PROMPTS_NOTA], default="gemba",
+                   help="gemba: només la traducció (04/11/2026); valencia: amb l'original i la norma valenciana; valencia2: el mateix sense les formes candidates d'un homògraf (25/11/2026); valencia3: valencia2 + glossari de la frase tret del lèxic (25/11/2026); valencia_va: valencia traduït al valencià (26/11/2026); nota: només la nota, una petició per text, sense detectar errors (26/11/2026).")
     p.add_argument("--eixida", type=Path, default=None,
                    help="Carpeta (per defecte resultats/, o resultats/<prompt>/ amb un prompt «valencia»).")
     r = sub.add_parser("resum")
