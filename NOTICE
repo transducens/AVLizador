@@ -84,49 +84,21 @@ Components i dades de tercers
    src/avlizador/traductor_cat_val/data/) és l'expansió del diccionari
    (forma:lema<categoria><gènere><nombre>), sense topònims, locucions ni
    prefixos; l'usa la regla de concordança de gènere. Va dins del paquet
-   i de la imatge Docker: per això AVLizador es distribuïx amb la GPL.
+   (i de la imatge Docker de la web): per això AVLizador es distribuïx
+   amb la GPL.
 
 Dependències de Python (no incloses; les instal·la pip): spaCy i thinc
 (MIT), kenlm (LGPL 2.1) i huggingface_hub (Apache 2.0; extra [kenlm]),
-sacrebleu i requests (Apache 2.0), numpy (BSD) i pytest (MIT). La interfície web (extra [web]) usa FastAPI i Pydantic (MIT),
-Starlette, uvicorn, Jinja2 i MarkupSafe (BSD-3-Clause).
+sacrebleu i requests (Apache 2.0), numpy (BSD) i pytest (MIT).
 
 Les gramàtiques GNV (AVL) i GEIEC (IEC) es van usar com a referència
 durant el desenvolupament i no es redistribuïxen amb este repositori.
 
-Imatge Docker
-=============
+Interfície web i imatge Docker
+==============================
 
-La imatge Docker d'AVLizador (Dockerfile, docker-compose.yml) inclou, a més
-del codi i les dades del projecte, estos components de tercers (sense
-PyTorch ni FLOR-760M des del 13/11/2026). Les versions de spaCy i del servidor web són les de la imatge avlizador:1.2.0
-construïda el 06/11/2026; s'han de revisar en construir la nova (la llista
-completa de paquets de Python és dins de la imatge, en
-/opt/versions_python.txt):
-
-1. Model d'spaCy ca_core_news_md
-   Versió: 3.8.0 (amb spaCy 3.8.18)
-   Llicència: GNU General Public License v3.0 (GPL-3.0)
-   Codi font: https://github.com/explosion/spacy-models
-   Qui redistribuïsca una imatge que el continga ha de complir la GPL-3.0
-   per a este component (incloure'n la llicència i donar accés al codi
-   font).
-
-2. KenLM i el model de llengua valencia_net_dogv_o5
-   Biblioteca: mòdul de Python kenlm, GNU LGPL 2.1
-   (https://github.com/kpu/kenlm). Qui redistribuïsca la imatge ha de
-   complir la LGPL 2.1 per a este component.
-   Model, freqüències i classificador de sentit: els del projecte en
-   Hugging Face (CC BY 4.0; entrenats amb MaCoCu-ca, el DOGV i, el
-   classificador, textos de l'AVL: vegeu el punt 7 de més amunt), baixats
-   en construir la imatge, en /opt/kenlm.
-
-3. Programari del servidor web
-   FastAPI 0.162.0 (MIT), Starlette 1.10.0 (BSD-3-Clause), uvicorn 0.54.0
-   (BSD-3-Clause), Pydantic 2.14.2 (MIT), Jinja2 3.1.6 i MarkupSafe 3.0.3
-   (BSD-3-Clause). Vegeu els repositoris respectius.
-
-4. Imatge base python:3.12-slim (Debian), amb els paquets del sistema i les
-   seues llicències respectives.
-
-El codi d'AVLizador es distribuïx amb la llicència GPL-2.0-or-later.
+Des del 27/11/2026 la interfície web i la imatge Docker no són en este
+repositori: són en https://github.com/transducens/traductor-transducens-web,
+amb el seu propi NOTICE (components de tercers de la imatge: model d'spaCy
+GPL-3.0, KenLM LGPL-2.1, servidor web, imatge base). Fins a la 2.0.1
+s'hi descrivien ací.

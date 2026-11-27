@@ -101,8 +101,8 @@ perfil); amb `AVLIZADOR_KENLM_DESCARREGA=0` no es baixa res:
 | **Linux / macOS** | `export AVLIZADOR_KENLM_DIR=/ruta/a/kenlm` |
 
 **Windows.** KenLM normalment no s'instal·la (no hi ha compilador de
-C++). Dos opcions: (1) la imatge Docker (README de l'arrel), que porta
-KenLM; (2) el motor sol (`pip install -e ".[avaluacio,dev]"`): el traductor
+C++). Dos opcions: (1) la imatge Docker de la interfície web
+(https://github.com/transducens/traductor-transducens-web), que porta KenLM; (2) el motor sol (`pip install -e ".[avaluacio,dev]"`): el traductor
 funciona, però no resol les paraules ambigües i avisa. FLOR-760M, el model
 fins a la versió 1.2.0, ja no és en el paquet.
 

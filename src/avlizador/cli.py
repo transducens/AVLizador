@@ -11,9 +11,10 @@
     avlizador model info                               # quin model KenLM usa i on és
     avlizador model descarrega [--desti DIR]           # deixa a punt el model (extra [kenlm])
     avlizador model comprova                           # comprova els fitxers del model
-    avlizador web                                      # interfície web (extra [web])
 
-`avlizador <subordre> --help` per a les opcions de cada una.
+`avlizador <subordre> --help` per a les opcions de cada una. La interfície
+web i la imatge Docker (abans `avlizador web`) són, des del 27/11/2026, en
+https://github.com/transducens/traductor-transducens-web.
 """
 
 from __future__ import annotations
@@ -29,7 +30,6 @@ SUBORDRES = {
     "gdc": "Grau Dialectal Català (1 = català pur).",
     "avalua": "Avalua el traductor en els benchmarks de dades/benchmarks/.",
     "model": "Model KenLM: info, descarrega i comprova.",
-    "web": "Interfície web i API (extra [web]): http://127.0.0.1:8000.",
 }
 
 
@@ -168,30 +168,6 @@ def _escriu_info(info: dict) -> None:
           f"{'sí' if info['lemes_disponible'] else 'no'})")
 
 
-def web(argv: list[str]) -> int:
-    parser = argparse.ArgumentParser(
-        prog="avlizador web",
-        description="Arranca la interfície web i l'API (un sol procés). La configuració es llig "
-                    "de les variables d'entorn (vore avlizador.web.main).",
-    )
-    parser.add_argument("--host", default="127.0.0.1",
-                        help="Adreça (127.0.0.1 = només este equip; 0.0.0.0 dins de Docker).")
-    parser.add_argument("--port", type=int, default=8000)
-    args = parser.parse_args(argv)
-    try:
-        import uvicorn
-    except ImportError:
-        print("Falta l'extra [web]: pip install \"avlizador[web]\"", file=sys.stderr)
-        return 1
-    import os
-
-    # Sense log d'accés: els textos i l'ús del servei no es registren
-    # (vore el comentari de PRIVACITAT en avlizador/web/main.py).
-    uvicorn.run("avlizador.web.main:app", host=args.host, port=args.port, workers=1,
-                access_log=False, log_level=os.environ.get("UVICORN_LOG_LEVEL", "warning"))
-    return 0
-
-
 def main(argv: list[str] | None = None) -> int:
     argv = list(sys.argv[1:] if argv is None else argv)
     for flux in (sys.stdout, sys.stderr):  # en Windows, la consola no és UTF-8
@@ -224,8 +200,6 @@ def main(argv: list[str] | None = None) -> int:
         return avalua(resta)
     if subordre == "model":
         return model(resta)
-    if subordre == "web":
-        return web(resta)
     print(f"Subordre desconeguda: {subordre!r}. Opcions: {', '.join(SUBORDRES)}.", file=sys.stderr)
     return 2
 

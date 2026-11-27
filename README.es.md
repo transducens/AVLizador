@@ -30,7 +30,7 @@ pip install ".[kenlm]"
 - `[kenlm]` instala la biblioteca KenLM, el modelo de lenguaje de las
   palabras ambiguas. Se compila al instalarla: hace falta un compilador de
   C++. En Linux y macOS funciona; en Windows normalmente no se instala:
-  usad Docker (abajo) o el motor solo.
+  usad la imagen Docker de la [interfaz web](https://github.com/transducens/traductor-transducens-web) o el motor solo.
 - Los ficheros del modelo KenLM no están en git ni en el paquete: se
   descargan de Hugging Face la primera vez que se usan (ver
   [Modelo de lenguaje](#modelo-de-lenguaje)).
@@ -68,7 +68,7 @@ para trabajar después sin internet), la orden `avlizador model`:
 ```bash
 avlizador model info                      # qué modelo usa esta versión, dónde está y si está listo (sin red)
 avlizador model descarrega                # a la caché de Hugging Face, donde lo busca el paquete
-avlizador model descarrega --desti /opt/kenlm --origen docker/kenlm   # a una carpeta, para AVLIZADOR_KENLM_DIR
+avlizador model descarrega --desti /opt/kenlm --origen copias/  # a una carpeta, para AVLIZADOR_KENLM_DIR
 avlizador model comprova                  # compara los ficheros con la revisión de Hugging Face
 ```
 
@@ -168,7 +168,7 @@ avlizador --help
 
 ### API pública
 
-Lo que se puede usar desde otro programa (por ejemplo, la interfaz web) es
+Lo que se puede usar desde otro programa (por ejemplo, la [interfaz web](https://github.com/transducens/traductor-transducens-web)) es
 lo que exportan `avlizador`, `avlizador.traductor_cat_val` y
 `avlizador.grau_dialectal` (sus `__all__`):
 
@@ -184,73 +184,14 @@ añadir, una menor. Lo vigila `tests/test_api_publica.py`.
 
 ## Interfaz web y Docker
 
-Una interfaz web accesible (WCAG 2.2 AA), en valenciano y castellano,
-con el título **Traductor Transducens**: una portada, "Traducción de
-idiomas" (preparada para otros traductores; todavía ningún par),
-"Adaptador dialectal" con la adaptación del catalán al valenciano
-(`/dialectes/adaptador`) y el Grado Dialectal (`/dialectes/gd`), y
-"Acerca de". El catalán y el valenciano son la misma lengua: la interfaz
-lo presenta como una adaptación entre dialectos, no como una traducción
-entre idiomas. Los textos no se guardan ni se registran.
-
-Sin Docker, desde una copia del repositorio:
-
-```bash
-pip install ".[kenlm,web]"
-avlizador web          # http://127.0.0.1:8000
-```
-
-Con Docker (la imagen lleva spaCy y KenLM dentro, sin torch, y
-funciona **sin internet**). Al construirla se descarga de Hugging Face el
-[modelo de lenguaje](#modelo-de-lenguaje) (hace falta internet solo en ese
-momento) y se guarda en `/opt/kenlm`; si los tres ficheros ya están en
-`docker/kenlm/` (carpeta ignorada por git), se copian de allí sin
-descargar nada. Otra revisión del modelo:
-`docker compose build --build-arg KENLM_REVISIO=...`. La imagen lleva
-también la opción con lemas (~80 MB más; `KENLM_LEMES: "1"` en
-`docker-compose.yml`; con `""` no la lleva). Detalle:
-[`docker/LLEGIM.md`](docker/LLEGIM.md).
-
-```bash
-docker compose up --build     # http://localhost:8000
-```
-
-La imagen necesita ~1 GB de RAM (`mem_limit: 2g` en
-`docker-compose.yml`).
-
-Para un equipo sin internet, la imagen se copia como un fichero:
-
-```bash
-docker save avlizador:2.0.1 > avlizador.tar   # en el equipo donde se ha construido
-docker load < avlizador.tar                   # en el equipo de destino
-docker compose up                             # con docker-compose.yml al lado
-```
-
-Por defecto solo se puede entrar desde el mismo equipo
-(`127.0.0.1:8000`); para abrirla a la red, cambiad el puerto en
-`docker-compose.yml` (y, fuera de una red interna, poned un proxy HTTPS
-delante). La imagen se ejecuta sin root y con el sistema de ficheros de
-solo lectura. Detalle del diseño:
+La interfaz web **Traductor Transducens** (adaptador catalán → valenciano
+y Grado Dialectal, accesible, en valenciano y castellano) y su imagen
+Docker están, desde el 27/11/2026, en un repositorio aparte:
+[`transducens/traductor-transducens-web`](https://github.com/transducens/traductor-transducens-web). Instala AVLizador como
+una dependencia, en una versión fijada, y solo usa su [API
+pública](#api-pública). Hasta la 2.0.1, la web estaba aquí (`avlizador web`,
+extra `[web]`); el diseño original está en
 [`documentacio/hoja_de_ruta_interfaz_docker.md`](documentacio/hoja_de_ruta_interfaz_docker.md).
-
-### Variables de entorno
-
-Se cambian en `docker-compose.yml` (`environment:`) sin reconstruir la
-imagen; fuera de Docker, como variables de entorno antes de
-`avlizador web`.
-
-| Variable | Por defecto | Qué hace | Cuándo cambiarla |
-|---|---|---|---|
-| `AVLIZADOR_MODE` | `complet` | `complet` = motor + KenLM; `motor` = solo reglas. Si en modo `complet` faltan los ficheros de KenLM, el servidor lo avisa en el registro y usa `motor` | `motor` si no se tienen los ficheros del modelo o si hace falta rapidez antes que acertar los homógrafos |
-| `AVLIZADOR_KENLM_DIR` | `/opt/kenlm` (en la imagen) | carpeta con los tres ficheros del [modelo de lenguaje](#modelo-de-lenguaje) | fuera de Docker no hace falta: sin la variable, el modelo se descarga de Hugging Face |
-| `MAX_CARACTERS` | 20000 | longitud máxima del texto por petición; si se pasa, HTTP 413 con un mensaje | subirla si se traducen documentos largos y el equipo lo aguanta; bajarla si las peticiones tardan demasiado |
-| `MAX_TRADUCCIONS_SIMULTANIES` | 2 | traducciones a la vez; si ya hay tantas, HTTP 429 ("El servicio está ocupado") | según los núcleos (regla de abajo); 1 en equipos de 1 núcleo |
-| `UVICORN_LOG_LEVEL` | `warning` | nivel de los mensajes del servidor (arranque, avisos, errores). No vuelve a activar las líneas por petición: no se registran nunca (privacidad) | `info` o `debug` solo para investigar un problema de arranque |
-| `AVLIZADOR_DOCS` | `0` | `1` = documentación interactiva de la API en `/docs` (carga JavaScript de un CDN) | solo en desarrollo, nunca en producción |
-
-**Regla de los núcleos**: KenLM usa un núcleo por traducción, así que
-`MAX_TRADUCCIONS_SIMULTANIES` ≤ núcleos del equipo. Si se pasa, las
-traducciones compiten por los mismos núcleos y todas van más lentas.
 
 ## Resultados
 
@@ -391,12 +332,3 @@ terceros mantienen su licencia y se detallan en [`NOTICE`](NOTICE):
 - el dataset gplsi de `dades/benchmarks/gplsi/` es CC BY 4.0 de sus
   autores;
 - los textos del BOE y de la AVL se reutilizan citando su fuente.
-
-**Imagen Docker.** El código de AVLizador es GPL-2.0-or-later, pero la
-imagen Docker incluye componentes de terceros con otras licencias (ver
-[`NOTICE`](NOTICE)), entre ellos el modelo de spaCy `ca_core_news_md`,
-con licencia GPL-3.0, la biblioteca KenLM (LGPL 2.1) y el modelo KenLM
-del proyecto. Quien
-distribuya una imagen con estos componentes dentro tiene que cumplir esas
-licencias. Por eso recomendamos construir la imagen en local
-(`docker compose build`) en lugar de distribuirla.

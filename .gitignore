@@ -82,9 +82,9 @@ dades/hf_model/
 # Avaluacions locals (com resultats_release_*)
 resultats_kenlm_*/
 resultats_hf_*/
-# Fitxers del model KenLM per a construir la imatge Docker (13/11/2026; vore Dockerfile)
+# Còpies locals que usava la imatge Docker quan era ací (fins al 27/11/2026; ara
+# en traductor-transducens-web): es mantenen ignorades per si en queden.
 docker/kenlm/
-# Model d'spaCy per a construir la imatge sense baixar-lo de GitHub (17/11/2026; vore docker/LLEGIM.md)
 docker/*.whl
 
 # Pla de migració a Apertium: document local de treball, no es versiona (24/11/2026)

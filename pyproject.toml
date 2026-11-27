@@ -32,14 +32,16 @@ dependencies = [
 # FLOR-760M i l'extra [ml] (torch, transformers) ja no hi són des de la 2.0.0.
 # KenLM: el model de llengua des del 13/11/2026 (sense ell,
 # `translate_cat_val` usa el motor sol i avisa). Es compila en instal·lar-lo
-# (en Windows cal compilador; la imatge Docker és Linux). Els fitxers del
-# model es baixen de Hugging Face (transducens/avlizador-kenlm-va) la primera
-# vegada, o es posen a mà en AVLIZADOR_KENLM_DIR.
+# (en Windows cal compilador; en Linux i en la imatge Docker de la web,
+# sense problemes). Els fitxers del model es baixen de Hugging Face
+# (transducens/avlizador-kenlm-va) la primera vegada, o es posen a mà en
+# AVLIZADOR_KENLM_DIR.
 kenlm = ["kenlm>=0.2", "huggingface_hub>=0.24,<2.0"]
 avaluacio = ["sacrebleu>=2.4"]
-# Interfície web i API (`avlizador web`; vore documentacio/hoja_de_ruta_interfaz_docker.md).
-web = ["fastapi>=0.110", "uvicorn>=0.29", "jinja2>=3.1"]
-dev = ["pytest>=8", "sacrebleu>=2.4", "fastapi>=0.110", "uvicorn>=0.29", "jinja2>=3.1", "httpx>=0.27"]
+# La interfície web i la imatge Docker (abans l'extra [web] i `avlizador
+# web`) són, des del 27/11/2026, en
+# https://github.com/transducens/traductor-transducens-web.
+dev = ["pytest>=8", "sacrebleu>=2.4"]
 
 [project.scripts]
 avlizador = "avlizador.cli:main"
@@ -52,7 +54,6 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 "avlizador.traductor_cat_val" = ["data/*.json", "data/*.txt"]
-"avlizador.web" = ["plantilles/*.html", "static/*", "textos/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
