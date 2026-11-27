@@ -16,7 +16,14 @@
 # --build-arg KENLM_LEMES=1 (o KENLM_LEMES: "1" en docker-compose.yml) la
 # imatge porta també valencia_net_dogv_lemes_o5.binary i _lemes_freq.json
 # (~80 MB més), del mateix repositori de Hugging Face o de docker/kenlm/.
-# Sense, no. Ho fa docker/prepara_kenlm.py.
+# Sense, no.
+#
+# Ho fa l'ordre del paquet `avlizador model descarrega` (26/11/2026; abans
+# docker/prepara_kenlm.py): cada fitxer de docker/kenlm/ es compara amb la
+# mida i l'empremta que té en Hugging Face en la revisió del paquet; si no hi
+# correspon (una còpia vella), es baixa. Per a provar un model encara no
+# publicat des de docker/kenlm/: --build-arg KENLM_COMPROVA=0 (es copia tal
+# com està, sense consultar Hugging Face).
 #
 # LLICÈNCIES: la imatge inclou el model d'spaCy ca_core_news_md (GPL-3.0) i
 # la biblioteca KenLM (LGPL-2.1). Vegeu NOTICE abans de distribuir-la; la
@@ -62,14 +69,18 @@ RUN if ls /tmp/whl/ca_core_news_md-*.whl >/dev/null 2>&1; then \
  && pip freeze > /opt/versions_python.txt
 
 # Fitxers del model KenLM (vore la capçalera): cada un de docker/kenlm/ si hi
-# és; els que falten, de Hugging Face. Si en falta algun, la construcció
-# s'atura ací (docker/prepara_kenlm.py).
+# és i correspon a la revisió; els altres, de Hugging Face. Si al final en
+# falta algun o no correspon, la construcció s'atura ací.
 ARG KENLM_REVISIO=""
 ARG KENLM_LEMES=""
+ARG KENLM_COMPROVA="1"
 COPY docker/ /tmp/docker/
-RUN python /tmp/docker/prepara_kenlm.py --origen /tmp/docker/kenlm --desti /opt/kenlm \
-      --revisio "$KENLM_REVISIO" --lemes "$KENLM_LEMES" \
- && rm -rf /tmp/docker /opt/kenlm/.cache
+RUN OPCIONS="" \
+ && if [ -n "$KENLM_REVISIO" ]; then OPCIONS="$OPCIONS --revisio $KENLM_REVISIO"; fi \
+ && if [ "$KENLM_LEMES" = "1" ]; then OPCIONS="$OPCIONS --lemes"; fi \
+ && if [ "$KENLM_COMPROVA" = "0" ]; then OPCIONS="$OPCIONS --sense-comprovar"; fi \
+ && avlizador model descarrega --desti /opt/kenlm --origen /tmp/docker/kenlm $OPCIONS \
+ && rm -rf /tmp/docker
 
 # --- Fase 2: imatge final, neta i sense root ------------------------------
 FROM python:3.12-slim

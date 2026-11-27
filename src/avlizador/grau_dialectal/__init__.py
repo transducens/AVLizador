@@ -11,11 +11,15 @@ Els marcadors ixen dels mateixos diccionaris que el traductor
     from avlizador.grau_dialectal import calcula_gd, calcula_gdv, calcula_gdc
     calcula_gd("Este xiquet vol vindre hui.")["gd"]  # -> 1.0
 
+`resalta_html(text)` torna el text en HTML amb els marcadors resaltats
+(accessible: el dialecte de cada marcador també va en text per al lector
+de pantalla).
+
 Des de la línia d'ordres: `avlizador gd|gdv|gdc --text "..."`.
 """
 
-from .gd import calcula_gd
+from .gd import calcula_gd, resalta_html
 from .gdc import calcula_gdc, calcula_gdc_corpus
 from .gdv import calcula_gdv, calcula_gdv_corpus
 
-__all__ = ["calcula_gd", "calcula_gdv", "calcula_gdv_corpus", "calcula_gdc", "calcula_gdc_corpus"]
+__all__ = ["calcula_gd", "calcula_gdv", "calcula_gdv_corpus", "calcula_gdc", "calcula_gdc_corpus", "resalta_html"]

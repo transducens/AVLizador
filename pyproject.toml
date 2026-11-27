@@ -8,9 +8,10 @@ version = "2.0.1"
 description = "Traductor dialectal català -> valencià (norma AVL) i Grau Dialectal (GD, GDV, GDC). Només CPU."
 readme = "README.md"
 requires-python = ">=3.10"
-# Apache 2.0 (decisió del grup, 02/11/2026). Les peces de tercers (model
-# d'spaCy GPL-3.0, KenLM LGPL-2.1, FLOR-760M, gplsi, BOE...) i les seues
-# llicències: NOTICE.
+# GPL-2.0-or-later des del 26/11/2026 (abans Apache 2.0): el diccionari
+# morfològic català del paquet ve d'apertium-cat (GPL 2.0). Les peces de
+# tercers (model d'spaCy GPL-3.0, KenLM LGPL-2.1, apertium-cat, gplsi,
+# BOE...) i les seues llicències: NOTICE.
 license = "GPL-2.0-or-later"
 license-files = ["LICENSE", "NOTICE"]
 authors = [{ name = "Transducens, Universitat d'Alacant" }]
