@@ -1,5 +1,10 @@
 # Hoja de ruta: interfaz web y Docker de AVLizador
 
+> **27/11/2026**: la web y el Docker ya no están en este repositorio: están
+> en [`transducens/traductor-transducens-web`](https://github.com/transducens/traductor-transducens-web),
+> que tiene una copia actualizada de este documento. Esta se queda como
+> histórico. Plan de la separación: `hoja_de_ruta_separar_web_docker.md`.
+
 Plan de trabajo (03/11/2026) para tener una interfaz web accesible y una
 imagen Docker que levante todo el sistema (traductor cat→val + Grau
 Dialectal) con una sola orden. Es un documento para **decidir**: cada

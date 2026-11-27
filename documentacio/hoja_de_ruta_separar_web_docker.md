@@ -45,9 +45,46 @@ cómo se conectarían los dos repositorios y qué hay que decidir.
 - [x] El `Dockerfile` usa la orden nueva en lugar de
   `docker/prepara_kenlm.py`, que se borra. `KENLM_COMPROVA=0` sirve para
   probar un modelo no publicado desde `docker/kenlm/`.
-- [ ] **Construir la imagen** con el `Dockerfile` nuevo (Docker no estaba
-  arrancado): `docker compose build` y comprobar que la web arranca.
+- [x] **Construir la imagen** con el `Dockerfile` nuevo: hecho por el
+  usuario el 27/11/2026, la web funciona. Fusionado en `main` (PR #45).
 - 144 pruebas en verde (antes 124).
+
+**Fase 2 (27/11/2026): repo de la web, HECHA.**
+[`transducens/traductor-transducens-web`](https://github.com/transducens/traductor-transducens-web)
+(privado de momento):
+
+- Historial de la web y el Docker conservado con `git filter-repo` (44
+  commits; los «#N» de los merges apuntan a `transducens/AVLizador#N`).
+- Paquete `transducens_web` (antes `avlizador.web`) y orden
+  `transducens-web` (antes `avlizador web`).
+- AVLizador fijado **en un commit** (`5c42b9e`, no en la `v2.0.1`, que no
+  tiene la API pública), siempre con `[kenlm]`: el modelo de lenguaje es
+  obligatorio (decisión del usuario). Se instala desde el `.tar.gz` del
+  commit en GitHub (sin `git` en la imagen) con `docker/instala.py`.
+- Los modelos se descargan de internet al construir la imagen (decisión
+  del usuario: no se copian de `docker/`).
+- Imagen construida y probada por el usuario: mismas traducciones que la de
+  AVLizador.
+- Rama `traductors-extensibles` (1.1.0): cada traductor del registro lleva
+  su frase de precarga y sus versiones; `documentacio/guia_traductors.md`
+  explica cómo cambiar la versión de AVLizador y cómo añadir un traductor.
+  El repo de `traductor-es-va-en` se hará público (decisión del usuario).
+
+**Fase 3 (27/11/2026, rama `sense-web-docker`): AVLizador sin web ni
+Docker.**
+
+- Fuera `src/avlizador/web/`, `tests/test_web*.py`,
+  `scripts/comprova_accessibilitat.py`, `Dockerfile`,
+  `docker-compose.yml`, `.dockerignore` y `docker/LLEGIM.md`.
+- Fuera la orden `avlizador web` (sin versión de aviso: decisión del
+  usuario) y el extra `[web]`; `[dev]` sin las dependencias de la web.
+- `tests/test_api_publica.py`: fuera la prueba de los imports de la web;
+  nueva prueba de las claves de los resultados que lee la web.
+- README, `NOTICE` (la sección de la imagen va al NOTICE del repo nuevo),
+  guías de instalación y README del modelo: apuntan al repo de la web.
+- `documentacio/hoja_de_ruta_interfaz_docker.md` se queda como histórico.
+- **Versión**: el número no se cambia todavía (no hay release). Cuando se
+  saque, tiene que ser **3.0.0**: desaparecen una orden y un extra.
 
 **Ojo, «probar con la release actual»**: la `v2.0.1` no tiene la API
 pública ni `avlizador model`. Mientras no haya release nueva, el repo de la

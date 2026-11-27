@@ -79,10 +79,10 @@ o l'antic de "cop", `nb.json`). Publicats en Hugging Face
 ([`transducens/avlizador-kenlm-va`](https://huggingface.co/transducens/avlizador-kenlm-va),
 CC BY 4.0; `REVISIO_HF` diu quina revisió baixa cada versió del paquet):
 sense `AVLIZADOR_KENLM_DIR`, `directori_kenlm` els busca en la memòria cau de
-Hugging Face i els baixa la primera vegada. En la imatge Docker van en
-`/opt/kenlm` (es baixen en construir-la, o es copien de `docker/kenlm/`).
+Hugging Face i els baixa la primera vegada. En la imatge Docker de la web
+([traductor-transducens-web](https://github.com/transducens/traductor-transducens-web)) van en `/opt/kenlm`: es baixen de Hugging Face en construir-la.
 Per a publicar-ne una versió nova: `scripts/hf_model/kenlm.py`. El paquet `kenlm` es compila en instal·lar-lo (`pip install
-"avlizador[kenlm]"`; en Windows cal compilador, la imatge Docker és Linux).
+"avlizador[kenlm]"`; en Windows cal compilador; en Linux i en la imatge Docker de la web, no hi ha problema).
 
 ## Opció: KenLM de lemes (`--model kenlm-lemes`, 23/11/2026)
 
@@ -120,8 +120,8 @@ per defecte (mateixa `REVISIO_HF`) i es busquen igual: en la carpeta
 d'`AVLIZADOR_KENLM_DIR` si està definida; si no, en la memòria cau de
 Hugging Face, i es baixen la primera vegada (`kenlm.FITXERS_HF_LEMES`: només
 eixos tres; qui usa l'opció per defecte no els baixa mai, `FITXERS_HF`). En
-Abaco, `~/kenlm_2.0.0` ja té els enllaços. En Docker, `KENLM_LEMES: "1"` en
-`docker-compose.yml` (`avlizador model descarrega --lemes`). Si falta alguna cosa,
+Abaco, `~/kenlm_2.0.0` ja té els enllaços. En la imatge Docker de la web,
+`KENLM_LEMES: "1"` en el seu `docker-compose.yml` (`avlizador model descarrega --lemes`). Si falta alguna cosa,
 `FaltaKenLM` (no torna al motor sol). Per a publicar-los:
 `scripts/hf_model/kenlm.py ... --lemes valencia_net_dogv2_lemes`. Detall:
 `documentacio/resultats_model_llengua_kenlm.md`, 4.23-4.25.
@@ -133,16 +133,15 @@ paraula ambigua nova o un corpus nou. Totes les ordres, des de l'arrel del
 repositori. En Abaco, amb el venv activat (`source
 ~/venvs/avlizador/bin/activate`) i la branca al dia (`git pull`).
 
-Els fitxers del model viuen en **tres llocs** de treball, i cada vegada que
-en canvie un cal copiar-lo als tres; el quart, Hugging Face, només es toca
-per a una versió nova del paquet:
+Els fitxers del model viuen en **dos llocs** de treball, i cada vegada que
+en canvie un cal copiar-lo als dos; el tercer, Hugging Face, només es toca
+per a una versió nova del paquet (i és d'on els baixa la imatge Docker de la web):
 
 | Lloc | Per a què |
 |---|---|
 | `dades/macocu/kenlm/` en Abaco | avaluar (`avalua_sistema.sh`, `compara_models.sh`) |
 | la carpeta d'`AVLIZADOR_KENLM_DIR` en el PC (si s'usa KenLM fora de Docker) | `translate_cat_val`, `avlizador tradueix` |
-| `docker/kenlm/` (fora de git) | la imatge Docker (`/opt/kenlm`); cal reconstruir-la |
-| Hugging Face (`transducens/avlizador-kenlm-va`) | el que baixa el paquet i la imatge si no hi ha `docker/kenlm/`. Només per a una versió nova del paquet: `scripts/hf_model/kenlm.py`, pujar-lo i posar el commit nou en `REVISIO_HF` (README de l'arrel, «Quina versió del model baixa cada versió del paquet») |
+| Hugging Face (`transducens/avlizador-kenlm-va`) | el que baixa el paquet i la imatge Docker de la web en construir-se (la imatge només canvia de model quan la web puja la versió d'AVLizador). Només per a una versió nova del paquet: `scripts/hf_model/kenlm.py`, pujar-lo i posar el commit nou en `REVISIO_HF` (README de l'arrel, «Quina versió del model baixa cada versió del paquet») |
 
 ### 1. Paraula ambigua nova
 
@@ -153,7 +152,7 @@ per a una versió nova del paquet:
 | 3 | Comprovar que les candidates són en la taula de freqüències. Si en falta alguna, regenerar-la (si no, compta com a 0 aparicions i amb λ guanya avantatge: va passar amb «faltes» el 13/11). | PC / Abaco |
 | 4 | **KenLM no es toca**: és un model general del valencià i puntua qualsevol frase. | — |
 | 5 | Reentrenar el classificador (secció 3). | PC o Abaco |
-| 6 | Copiar als tres llocs el que haja canviat (`valencia_net_dogv_freq.json`, `sentit.json`) i reconstruir la imatge Docker. | — |
+| 6 | Copiar als llocs de dalt el que haja canviat (`valencia_net_dogv_freq.json`, `sentit.json`). Per a la web: publicar-ho en Hugging Face, posar la revisió nova en `REVISIO_HF` i pujar la versió d'AVLizador en la web. | — |
 | 7 | Mesurar. | Abaco |
 
 Si es vol mesurar la paraula nova, cal afegir frases seues al benchmark
@@ -166,17 +165,17 @@ python scripts/sync_data.py --check          # "Tot sincronitzat"
 
 # 3. Falten candidates en la taula de freqüències? (sense kenlm: val en Windows)
 #    Imprimix [] si hi són totes. Canviar la ruta per la del fitxer que s'use.
-python -c "import json; from avlizador.traductor_cat_val.model_llengua.kenlm import ModelKenLM; from avlizador.traductor_cat_val.model_llengua.lemes import formes_candidates; f = json.load(open('docker/kenlm/valencia_net_dogv_freq.json', encoding='utf-8')); print(ModelKenLM(None, f).paraules_sense_freq(formes_candidates()))"
+python -c "import json; from avlizador.traductor_cat_val.model_llengua.kenlm import ModelKenLM; from avlizador.traductor_cat_val.model_llengua.lemes import formes_candidates; f = json.load(open('<carpeta>/valencia_net_dogv_freq.json', encoding='utf-8')); print(ModelKenLM(None, f).paraules_sense_freq(formes_candidates()))"
 #    (En carregar el sistema també ix l'avís AvisFreqKenLM.)
 
 # 3b. Si en falta alguna: regenerar-la en Abaco (llig el lèxic del paquet: abans, git pull)
 cp dades/macocu/kenlm/valencia_net_dogv_freq.json dades/macocu/kenlm/valencia_net_dogv_freq_$(date +%Y%m%d).json
 python pipeline/08_traduccio_corpus/macocu/kenlm/freq_unigrames.py dades/macocu/kenlm/valencia_net_dogv.txt
 #    -> dades/macocu/kenlm/valencia_net_dogv_freq.json. Al PC:
-scp nmartin@abaco:~/scrapeo/AVLizador/dades/macocu/kenlm/valencia_net_dogv_freq.json docker/kenlm/
+scp nmartin@abaco:~/scrapeo/AVLizador/dades/macocu/kenlm/valencia_net_dogv_freq.json <carpeta d'AVLIZADOR_KENLM_DIR>/
 
-# 6. Imatge Docker amb els fitxers nous de docker/kenlm/
-docker compose up --build
+# 6. Per a la web: python scripts/hf_model/kenlm.py ..., pujar a Hugging Face,
+#    REVISIO_HF nova i, en traductor-transducens-web, la versió nova d'AVLizador.
 
 # 7. Mesurar (Abaco, des de pipeline/03_seleccio_de_model/model_llengua)
 MODELS="kenlm" BENCHMARKS="homografs homografs_v2 manual" sbatch avalua_sistema.sh
@@ -204,7 +203,7 @@ El corpus servix per a dos coses distintes, i cadascuna té els seus passos.
 5. **Si millora, passar-lo al sistema**. El paquet busca sempre
    `valencia_net_dogv_o5.binary` i `valencia_net_dogv_freq.json`
    (`NOM_MODEL` en `kenlm.py`): o es renomenen els fitxers nous amb eixos
-   noms (guardant els vells), o es canvia `NOM_MODEL`. Després, als tres
+   noms (guardant els vells), o es canvia `NOM_MODEL`. Després, als dos
    llocs, i l'avaluació completa (`avalua_sistema.sh` amb tots els
    benchmarks). El classificador no depén de KenLM: no cal reentrenar-lo.
 
@@ -232,7 +231,7 @@ mv valencia_net_dogv_o5.binary valencia_net_dogv_o5_$(date +%Y%m%d).binary
 mv valencia_net_dogv_freq.json valencia_net_dogv_freq_$(date +%Y%m%d).json
 cp <nom>_o5.binary valencia_net_dogv_o5.binary
 cp <nom>_freq.json valencia_net_dogv_freq.json
-#    i al PC (docker/kenlm/ i AVLIZADOR_KENLM_DIR) amb scp, com en 3b.
+#    i al PC (AVLIZADOR_KENLM_DIR) amb scp, com en 3b.
 ```
 
 Altres ordres del KenLM: `ORDRE=<n>` en `entrena_kenlm.sh` (amb
@@ -295,10 +294,9 @@ python pipeline/03_seleccio_de_model/model_llengua/sentit_general.py entrena
 # Quines paraules han entrat (i amb quin encert)
 python -c "import json; d = json.load(open('dades/macocu/kenlm/sentit/sentit_entrenament.json', encoding='utf-8')); [print(s, list(x['punts']), x['frases'], x.get('balancejat')) for s in ('grups', 'descartats', 'sense_dades') for x in d[s].values()]"
 
-# Als tres llocs (des del PC)
-cp dades/macocu/kenlm/sentit/sentit.json docker/kenlm/
+# Als dos llocs (des del PC)
 scp dades/macocu/kenlm/sentit/sentit.json nmartin@abaco:~/scrapeo/AVLizador/dades/macocu/kenlm/sentit.json
-#    + la carpeta d'AVLIZADOR_KENLM_DIR, si s'usa; i docker compose up --build
+#    + la carpeta d'AVLIZADOR_KENLM_DIR, si s'usa; per a la web, el pas 6 de la secció 1
 ```
 
 El que ve a continuació és sobretot la història de FLOR (23/10-12/11/2026).

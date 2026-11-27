@@ -1,9 +1,10 @@
 """El contracte de l'API pública (26/11/2026): el que poden usar els que
-instal·len el paquet, com la interfície web. Si una d'estes proves falla
-perquè s'ha llevat o reanomenat alguna cosa, cal una versió major."""
-
-import ast
-from pathlib import Path
+instal·len el paquet, com la interfície web
+(https://github.com/transducens/traductor-transducens-web, que en fa servir
+`translate_cat_val`, `translate_cat_val_motor`, `calcula_gd`,
+`resalta_html`, `info_model`, `kenlm_disponible` i `__version__`). Si una
+d'estes proves falla perquè s'ha llevat o reanomenat alguna cosa, cal una
+versió major."""
 
 import pytest
 
@@ -33,18 +34,11 @@ def test_el_mateix_objecte_des_de_la_dalt_i_des_del_subpaquet():
     assert avlizador.resalta_html is grau_dialectal.resalta_html
 
 
-def test_la_web_nomes_usa_l_api_publica():
-    """La interfície web s'ha d'endur a un altre repositori: només pot
-    importar d'avlizador el que és públic."""
-    publics = {m.__name__: set(m.__all__) for m in API}
-    web = Path(avlizador.__file__).parent / "web"
-    for fitxer in web.glob("*.py"):
-        for node in ast.walk(ast.parse(fitxer.read_text(encoding="utf-8"))):
-            if not isinstance(node, ast.ImportFrom):
-                continue
-            assert node.level == 0 or node.module in ("idiomes", "missatges", "main"), (
-                f"{fitxer.name}: import relatiu a l'exterior de la web ({'.' * node.level}{node.module})")
-            if node.module and node.module.split(".")[0] == "avlizador":
-                assert node.module in publics, f"{fitxer.name}: {node.module} no és un mòdul públic"
-                for alies in node.names:
-                    assert alies.name in publics[node.module], f"{fitxer.name}: {node.module}.{alies.name}"
+def test_claus_que_llig_la_web():
+    """La web llig estes claus dels resultats: també són part del contracte."""
+    r = avlizador.calcula_gd("Este xiquet vol vindre hui.")
+    for clau in ("gd", "total_paraules", "total_occidentals", "total_orientals", "total_marcades",
+                 "marcadors_occidentals", "marcadors_orientals"):
+        assert clau in r, clau
+    assert "nom" in avlizador.info_model()
+    assert "<" in avlizador.resalta_html("Este xiquet", etiquetes=("val", "cat"))
